@@ -2,6 +2,8 @@
   <main>
     <NavBar />
 
+    <NuxtPage />
+
     <ToggleDarkMode />
   </main>
 </template>
