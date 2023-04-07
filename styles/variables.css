@@ -9,3 +9,11 @@
   --gray-1: #E3E3E3;
   --background: #000;
 }
+
+:root {
+  --vh: 100vh;
+
+  --size-4: 1rem;
+  --size-5: 1.25rem;
+  --size-6: 1.5rem;
+}

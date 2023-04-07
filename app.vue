@@ -1,23 +1,26 @@
 <template>
-  <div>
-    <h1>OpepenAI</h1>
-    <button @click="() => toggleDark()">
-      <Icon :type="isDark ? 'sun' : 'moon'" />
-    </button>
-  </div>
+  <main>
+    <NavBar />
+
+    <ToggleDarkMode />
+  </main>
 </template>
 
 <script setup>
-import { useDark, useToggle } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+/**
+ * Make 100vh CSS variable available (iOS is weird with native vh)
+ */
+const { height } = useWindowSize()
+const setHeight = () => document.documentElement.style.setProperty('--100vh', `${height.value}px`)
+watch(height, setHeight)
+onMounted(setHeight)
 </script>
 
 <style lang="postcss" scoped>
-  div,
-  h1 {
-    background-color: var(--background);
-    color: var(--color);
+  div {
+    height: var(--100vh);
+    overflow: hidden;
   }
 </style>
