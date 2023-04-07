@@ -14,7 +14,7 @@
     > :first-child {
       width: var(--size-7);
       height: var(--size-7);
-      color: var(--gray-z-7);
+      color: var(--gray-z-6);
     }
 
     > :last-child {
