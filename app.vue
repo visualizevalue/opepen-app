@@ -1,10 +1,13 @@
 <template>
   <div>
     <h1>OpepenAI</h1>
+    <button @click="() => toggleDark()">
+      <Icon :type="isDark ? 'sun' : 'moon'" />
+    </button>
   </div>
 </template>
 
-<script>
+<script setup>
 import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
