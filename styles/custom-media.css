@@ -1,0 +1,16 @@
+@custom-media --xs (min-width: 24rem);
+@custom-media --sm (min-width: 30rem);
+@custom-media --md (min-width: 45rem);
+@custom-media --lg (min-width: 66rem);
+@custom-media --xl (min-width: 88rem);
+@custom-media --xxl (min-width: 120rem);
+@custom-media --xxxl (min-width: 160rem);
+
+@custom-media --max-lg (max-width: 65.9999rem);
+@custom-media --max-md (max-width: 44.9999rem);
+@custom-media --max-sm (max-width: 29.9999rem);
+
+@custom-media --h-sm (min-height: 30rem);
+@custom-media --h-md (min-height: 45rem);
+@custom-media --h-lg (min-height: 66rem);
+@custom-media --h-cl (min-height: 88rem);
