@@ -39,6 +39,7 @@
   /* COMPONENTS */
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
   --page-height: calc(var(--100vh) - var(--navbar-height));
+  --content-width: 60rem;
 }
 
 /* LIGHT */

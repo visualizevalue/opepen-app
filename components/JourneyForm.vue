@@ -9,7 +9,7 @@
       <div class="group base-input">
         <label>
           <span>Base</span>
-          <Button>
+          <Button type="button">
             <IconsOpepenAiMedium />
           </Button>
         </label>
@@ -20,7 +20,7 @@
           <span>Prompt</span>
           <PromptInput v-model="prompt" :expanded="expanded" @submit="submit" />
         </label>
-        <button v-if="! expanded" class="expand muted" @click="expand">
+        <button v-if="! expanded" class="expand muted" @click="expanded = true">
           <span>Expand</span>
           <Icon type="chevron-right" />
         </button>
@@ -32,7 +32,6 @@
 
 <script setup>
 import { useElementBounding } from '@vueuse/core'
-import { useToggle } from '@vueuse/shared'
 
 const emit = defineEmits(['submit'])
 
@@ -42,11 +41,11 @@ const { height: formHeight } = useElementBounding(form)
 onMounted(() => form.value.style.setProperty('--height', `${formHeight.value}px`))
 
 // Whether the form is expanded
+// TODO: extract expanded up
 const expanded = ref(false)
-const expand = useToggle(expanded)
 
 // Prompt data
-const prompt = ref('')
+const prompt = ref('acrylic painting, rough strokes, black white, rough texture, wood canvas, trending on artstation')
 const opepen = ref({})
 
 const submit = () => {
@@ -54,9 +53,12 @@ const submit = () => {
 
   emit('submit', {
     prompt: prompt.value,
-    opepen: opepen.value,
-    foo: 'bar',
+    config: {
+      opepen: opepen.value,
+    },
   })
+
+  expanded.value = true
 }
 </script>
 
@@ -116,7 +118,7 @@ const submit = () => {
   }
 
   form.expanded {
-    --minmax-width: 60rem;
+    --minmax-width: var(--content-width);
 
     margin-top: var(--size-8);
 

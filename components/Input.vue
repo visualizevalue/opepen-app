@@ -18,24 +18,26 @@
 <script setup>
 import { useElementBounding } from '@vueuse/core'
 
-const textarea = ref(null)
-const { height } = useElementBounding(textarea)
-
 const props = defineProps(['modelValue', 'placeholder'])
 const emit = defineEmits(['update:modelValue', 'enter'])
 
+const textarea = ref(null)
+const { height } = useElementBounding(textarea)
+const setHeight = () => {
+  if (props.modelValue === '') {
+    textarea.value.style.height = null
+  }
+
+  if (height.value < textarea.value.scrollHeight) {
+    textarea.value.style.height = textarea.value.scrollHeight + 2 + 'px'
+  }
+}
+
+onMounted(() => setHeight())
 const onInput = event => {
   emit('update:modelValue', event.target.value)
 
   // Adjust the height of the area on input
-  setTimeout(() => {
-    if (props.modelValue === '') {
-      textarea.value.style.height = null
-    }
-
-    if (height.value < textarea.value.scrollHeight) {
-      textarea.value.style.height = textarea.value.scrollHeight + 2 + 'px'
-    }
-  }, 0)
+  setTimeout(() => setHeight(), 0)
 }
 </script>
