@@ -1,0 +1,75 @@
+.input {
+  position: relative;
+  line-height: 0;
+
+  .vue-feather,
+  .icon {
+    width: var(--size-4);
+    height: var(--size-4);
+    position: absolute;
+
+    &:first-child {
+      left: var(--size-4);
+      top: var(--size-4);
+    }
+    &:last-child {
+      right: var(--size-4);
+      top: calc(50% - var(--size-4)/2);
+    }
+  }
+}
+
+input,
+textarea {
+  --padding-y: var(--size-3);
+
+  width: 100%;
+  background: var(--gray-z-3);
+  padding: var(--padding-y) var(--size-5);
+
+  border: 1px solid var(--gray-z-4);
+  border-radius: var(--size-5);
+  border-top-left-radius: var(--size-1);
+  min-height: var(--size-8);
+  line-height: 1;
+
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-md);
+
+  transition: background var(--speed),
+              padding var(--speed),
+              border var(--speed),
+              color var(--speed);
+
+  &:--highlight {
+    outline: none;
+    border-color: var(--gray-z-5);
+  }
+
+  &::placeholder {
+    color: var(--gray-z-5);
+    opacity: 1;
+  }
+  &::-ms-input-placeholder {
+    color: var(--gray-z-5);
+  }
+}
+
+textarea {
+  overflow: hidden;
+  resize: none;
+  line-height: var(--line-height-base);
+}
+
+.input {
+  &.icon-before {
+    input, textarea {
+      padding-left: calc(var(--size-4) + var(--size-2) + var(--size-5));
+    }
+  }
+  &.icon-after {
+    input, textarea {
+      padding-right: calc(var(--size-4) + var(--size-2) + var(--size-5));
+    }
+  }
+}

@@ -3,7 +3,7 @@
     <Logo />
 
     <Button>
-      <Icon type="plus" size="1rem" />
+      <Icon type="plus" />
       <span>Create</span>
     </Button>
     <Button>jalil.eth</Button>
@@ -12,12 +12,18 @@
 
 <style lang="postcss" scoped>
   nav {
+    height: var(--navbar-height);
     padding: var(--size-4);
     display: flex;
     gap: var(--size-3);
 
     > :first-child {
       margin-right: auto;
+    }
+
+    :deep(+ div) {
+      height: var(--page-height);
+      position: relative;
     }
   }
 </style>

@@ -13,7 +13,7 @@
   --white: #FFFFFF;
 
   /* SIZES */
-  --vh: 100vh;
+  --100vh: 100vh;
   --size-1: 0.25rem;
   --size-2: 0.5rem;
   --size-3: 0.75rem;
@@ -26,11 +26,19 @@
 
   /* FONTS */
   --font-sm: var(--size-3);
-  --letter-spacing-md: 5%;
-  --letter-spacing-lg: 10%;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --letter-spacing-md: 0.05em;
+  --letter-spacing-lg: 0.1em;
+  --line-height-base: var(--size-6);
 
   /* ANIMATION */
-  --speed: 0.3s;
+  --speed-fast: 0.15s;
+  --speed:      0.3s;
+
+  /* COMPONENTS */
+  --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
+  --page-height: calc(var(--100vh) - var(--navbar-height));
 }
 
 /* LIGHT */

@@ -21,7 +21,7 @@ onMounted(setHeight)
 </script>
 
 <style lang="postcss" scoped>
-  div {
+  main {
     height: var(--100vh);
     overflow: hidden;
   }

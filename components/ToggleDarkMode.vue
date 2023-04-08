@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { useDark, useToggle, useWindowSize } from '@vueuse/core'
+import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -19,5 +19,10 @@ const toggleDark = useToggle(isDark)
     height: var(--size-5);
     width: var(--size-5);
     outline: none;
+
+    .vue-feather {
+      height: var(--size-5);
+      width: var(--size-5);
+    }
   }
 </style>

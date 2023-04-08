@@ -1,0 +1,41 @@
+<template>
+  <div class="input">
+    <slot name="before" />
+
+    <textarea
+      ref="textarea"
+      :value="modelValue"
+      :placeholder="placeholder"
+      @input="onInput"
+      @keydown.enter="$emit('enter', $event)"
+      rows="1"
+    ></textarea>
+
+    <slot name="after" />
+  </div>
+</template>
+
+<script setup>
+import { useElementBounding } from '@vueuse/core'
+
+const textarea = ref(null)
+const { height } = useElementBounding(textarea)
+
+const props = defineProps(['modelValue', 'placeholder'])
+const emit = defineEmits(['update:modelValue', 'enter'])
+
+const onInput = event => {
+  emit('update:modelValue', event.target.value)
+
+  // Adjust the height of the area on input
+  setTimeout(() => {
+    if (props.modelValue === '') {
+      textarea.value.style.height = null
+    }
+
+    if (height.value < textarea.value.scrollHeight) {
+      textarea.value.style.height = textarea.value.scrollHeight + 2 + 'px'
+    }
+  }, 0)
+}
+</script>

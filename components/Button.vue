@@ -13,12 +13,6 @@ const { to, exact, gridAligned } = defineProps({
 <style lang="postcss" scoped>
 .button,
 button {
-  display: flex;
-  gap: var(--size-1);
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  text-transform: uppercase;
   height: var(--size-7);
   background: var(--gray-z-3);
   color: var(--gray-z-8);
@@ -27,14 +21,10 @@ button {
   user-select: none;
   border-radius: var(--size-4);
   border-top-left-radius: var(--size-1);
-  font-size: var(--font-sm);
-  font-weight: bold;
-  letter-spacing: var(--letter-spacing-md);
-  line-height: 1;
+  border: 1px solid var(--gray-z-4);
 
   &:--highlight,
   &.active {
-    outline: none;
     background: var(--gray-z-4);
     color: var(--color);
   }
@@ -53,8 +43,19 @@ button {
 </style>
 
 <style lang="postcss">
+.button,
 button {
+  display: flex;
+  gap: var(--size-1);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   outline: none;
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-md);
+  line-height: 1;
+  text-transform: uppercase;
 
   &:--highlight {
     outline: none;
@@ -65,9 +66,15 @@ button {
     cursor: normal;
   }
 
+  &.muted {
+    color: var(--gray-z-6);
+  }
+
   .vue-feather,
   .icon {
     color: var(--gray-z-5);
+    width: var(--size-4);
+    height: var(--size-4);
 
     &:first-child {
       margin-left: calc(-1 * var(--size-1));
