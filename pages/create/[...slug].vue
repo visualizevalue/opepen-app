@@ -47,15 +47,6 @@ const submit = async input => {
   } else {
     steps.value.newStep(input)
   }
-
-  // // Generate AI Images for steps
-  // const images = await Promise.all([
-  //   post(`${config.public.opepenApi}/steps/${steps.value[0].uuid}/dream`),
-  //   post(`${config.public.opepenApi}/steps/${steps.value[0].uuid}/dream`),
-  //   post(`${config.public.opepenApi}/steps/${steps.value[0].uuid}/dream`),
-  // ])
-
-  // console.log(images)
 }
 </script>
 
