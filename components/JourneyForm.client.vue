@@ -20,9 +20,9 @@
           <span>Prompt</span>
           <PromptInput v-model="prompt" :expanded="expanded" @submit="submit" />
         </label>
-        <button v-if="! expanded" class="expand muted" @click="expanded = true">
-          <span>Expand</span>
-          <Icon type="chevron-right" />
+        <button class="expand muted" @click="() => toggleForceExpanded()">
+          <span>{{ expanded ? 'Advanced' : 'Expand' }}</span>
+          <Icon type="chevron-right" :class="{ active: forceExpanded }" />
         </button>
       </div>
     </div>
@@ -31,21 +31,26 @@
 </template>
 
 <script setup>
-import { useElementBounding } from '@vueuse/core'
+import { useElementBounding, useToggle } from '@vueuse/core'
 
+const props = defineProps({
+  journey: Object,
+})
 const emit = defineEmits(['submit'])
 
 // Our form element
 const form = ref(null)
 const { height: formHeight } = useElementBounding(form)
-onMounted(() => form.value.style.setProperty('--height', `${formHeight.value}px`))
+onMounted(() => form.value?.style.setProperty('--height', `${formHeight.value}px`))
 
 // Whether the form is expanded
 // TODO: extract expanded up
-const expanded = ref(false)
+const forceExpanded = ref(false)
+const toggleForceExpanded = useToggle(forceExpanded)
+const expanded = computed(() => props.journey || forceExpanded.value)
 
 // Prompt data
-const prompt = ref('acrylic painting, rough strokes, black white, rough texture, wood canvas, trending on artstation')
+const prompt = ref(props.journey?.lastStep.prompt || '')
 const opepen = ref({})
 
 const submit = () => {
@@ -57,10 +62,13 @@ const submit = () => {
       opepen: opepen.value,
     },
   })
-
-  expanded.value = true
 }
-</script>
+
+// Clear prompt the journey
+watch([props], () => {
+  prompt.value = props.journey?.lastStep.prompt || ''
+})
+</script>v
 
 <style lang="postcss" scoped>
   form {
@@ -120,7 +128,7 @@ const submit = () => {
   form.expanded {
     --minmax-width: var(--content-width);
 
-    margin-top: var(--size-8);
+    margin-top: var(--size-7);
 
     .base-input {
       display: block;
@@ -141,5 +149,11 @@ const submit = () => {
 
   .expand {
     margin: var(--size-3) var(--size-3) var(--size-3) auto;
+
+    .vue-feather {
+      &.active {
+        transform: rotate(90deg);
+      }
+    }
   }
 </style>

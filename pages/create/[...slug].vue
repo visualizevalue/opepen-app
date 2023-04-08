@@ -1,14 +1,16 @@
 <template>
-  <div class="create">
+  <div class="create scroll">
     <header v-if="journey">
       <h1 class="breadcrumb">
-        <span @click="expanded = false">Home</span>
-        <span>/</span>
+        <NuxtLink to="/create">Home</NuxtLink>
+        <span class="separator">/</span>
         <span>{{ journey.title }}</span>
       </h1>
     </header>
-    <JourneyForm @submit="submit" />
-    <JourneySteps v-if="journey" ref="steps" :journey="journey" />
+    <JourneyForm :journey="journey" @submit="submit" />
+    <ClientOnly>
+      <JourneySteps v-if="journey" ref="steps" :journey="journey" />
+    </ClientOnly>
   </div>
 </template>
 
@@ -16,14 +18,32 @@
 import { post, get } from '~/api'
 
 const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/journeys`
+const route = useRoute()
+const router = useRouter()
 
+// Validate route
+const [ uuid, ...invalid ] = route.params.slug
+if (invalid.length) router.replace(`/create/${uuid}`)
+
+const url = `${config.public.opepenApi}/journeys`
 const journey = ref(null)
 const steps = ref(null)
+
+// Maybe load journey
+onMounted(async () => {
+  if (uuid) {
+    try {
+      journey.value = await get(`${url}/${uuid}`)
+    } catch (e) {
+      router.replace(`/create`)
+    }
+  }
+})
 
 const submit = async input => {
   if (! journey.value) {
     journey.value = await post(url, input)
+    router.replace(`/create/${journey.value.uuid}`)
   } else {
     steps.value.newStep(input)
   }
@@ -47,7 +67,9 @@ const submit = async input => {
   }
 
   header {
+    width: 100%;
     max-width: var(--content-width);
+    margin: var(--size-5) auto 0;
 
     h1 {
       text-transform: uppercase;

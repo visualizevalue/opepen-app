@@ -1,0 +1,26 @@
+.breadcrumb {
+  display: flex;
+  gap: var(--size-2);
+
+  span,
+  a {
+    color: var(--gray-z-6);
+
+    &:last-child {
+      color: var(--gray-z-9);
+    }
+  }
+
+  a {
+    transition: all var(--speed);
+
+    &:--highlight {
+      color: var(--color)
+    }
+  }
+
+  .separator {
+    color: var(--gray-z-5);
+  }
+
+}

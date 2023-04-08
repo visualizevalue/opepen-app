@@ -10,6 +10,7 @@ export const get = async (url: string) => {
     method: 'get',
     ...config,
   })
+  if (response.status !== 200) throw Error()
   return await response.json()
 }
 
