@@ -19,7 +19,7 @@ const props = defineProps({
 })
 
 const image = ref(props.image)
-const loading = computed(() => !! image.value?.uuid)
+const loading = computed(() => ! image.value?.uuid)
 
 onMounted(async () => {
   if (! image.value.uuid) {

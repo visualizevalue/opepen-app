@@ -54,7 +54,7 @@ const submit = async input => {
   .create {
     display: flex;
     flex-direction: column;
-    padding: var(--size-4);
+    padding: 0 var(--size-4);
   }
 
   header {

@@ -32,22 +32,24 @@ defineExpose({
     position: relative;
     max-width: var(--content-width);
     width: 100%;
-    height: 100%;
     margin: 0 auto;
 
-
-    > * {
-      position: relative;
-
-      &:before {
-        content: '';
-        position: absolute;
-        width: 2px;
-        height: calc(100%);
-        top: var(--size-4);
-        left: var(--size-4);
-        background: var(--gray-z-3);
-      }
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      left: var(--size-4);
+    }
+    &:before {
+      height: calc(100% - var(--size-8));
+      top: var(--size-8);
+      background: var(--gray-z-3);
+    }
+    &:after {
+      height: var(--size-8);
+      bottom: 0;
+      background: linear-gradient(to bottom, var(--gray-z-3), var(--background));
     }
   }
 </style>

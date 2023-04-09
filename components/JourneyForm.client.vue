@@ -77,7 +77,7 @@ watch([props], () => {
 
     width: 100%;
     max-width: min(calc(100vw - 2 * var(--size-4)), var(--minmax-width));
-    margin: calc(var(--page-height)/2 - var(--height)/2 - var(--size-5)) auto var(--size-7);
+    margin: calc(var(--page-height)/2 - var(--height)/2 - var(--size-8)) auto var(--size-7);
     transition: margin var(--speed-fast) ease-out;
     animation: var(--speed-fast) ease-out 0s 1 appear;
 
