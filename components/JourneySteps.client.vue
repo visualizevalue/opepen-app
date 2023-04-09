@@ -3,8 +3,9 @@
     <PaginatedContent
       :url="stepsUrl"
       v-slot="{ items }"
+      ref="content"
     >
-      <JourneyStep v-for="item in items" :key="item.uuid" :step="item" />
+      <JourneyStep v-for="item in newSteps.concat(items)" :key="item.uuid" :step="item" />
     </PaginatedContent>
   </section>
 </template>
@@ -13,13 +14,16 @@
 import { post } from '~/api'
 
 const config = useRuntimeConfig()
-
 const { journey } = defineProps({ journey: Object })
+const emit = defineEmits(['newStep'])
 
 const url = `${config.public.opepenApi}/journeys`
 const stepsUrl = `${url}/${journey.uuid}/steps`
+const newSteps = ref([])
 const newStep = async input => {
-  await post(`${url}/${journey.uuid}/steps`, input)
+  const step = await post(`${url}/${journey.uuid}/steps`, input)
+  newSteps.value.push(step)
+  emit('newStep', step)
 }
 
 defineExpose({

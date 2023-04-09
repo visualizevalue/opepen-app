@@ -9,7 +9,12 @@
     </header>
     <JourneyForm :journey="journey" @submit="submit" />
     <ClientOnly>
-      <JourneySteps v-if="journey" ref="steps" :journey="journey" />
+      <JourneySteps
+        v-if="journey"
+        ref="steps"
+        :journey="journey"
+        @new-step="setLastStep"
+      />
     </ClientOnly>
   </div>
 </template>
@@ -47,6 +52,10 @@ const submit = async input => {
   } else {
     steps.value.newStep(input)
   }
+}
+
+const setLastStep = step => {
+  journey.value.lastStep = step
 }
 </script>
 

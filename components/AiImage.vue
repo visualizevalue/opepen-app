@@ -1,7 +1,7 @@
 <template>
   <article>
     <div class="inner">
-      <Loading v-if="loading" />
+      <Loading v-if="loading" txt="" />
       <template v-else>
         <img :src="image.uri" >
       </template>

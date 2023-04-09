@@ -56,6 +56,8 @@ const opepen = ref({})
 const submit = () => {
   if (! prompt.value) return
 
+  if (prompt.value === props.journey?.lastStep.prompt) return
+
   emit('submit', {
     prompt: prompt.value,
     config: {

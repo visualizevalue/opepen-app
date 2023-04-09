@@ -1,5 +1,5 @@
 <template>
-  <div><span class="spinner"></span><span class="text">{{ txt }}</span></div>
+  <div><span class="spinner"></span><span v-if="txt" class="text">{{ txt }}</span></div>
 </template>
 
 <script setup>

@@ -11,7 +11,6 @@
       ref="scrollMarker"
       v-intersection-observer="onMarkerVisible"
     ></aside>
-
   </div>
 </template>
 
@@ -73,12 +72,13 @@ const loadMore = async () => {
 }
 
 // Reset everything if the url changes
-watch([query, url], () => {
+const reset = () => {
   page.value = 0
   items.value = []
 
   loadMore()
-})
+}
+watch([query, url], () => reset())
 
 // Scroll marker autoloading
 function onMarkerVisible ([{ isIntersecting }]) {
