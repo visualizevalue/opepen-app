@@ -54,8 +54,8 @@ div {
     width: 0.75em;
     height: 0.75em;
     border-radius: 50%;
-    border: 2px solid var(--gray-200);
-    border-right-color: var(--gray-800);
+    border: 2px solid var(--gray-z-6);
+    border-right-color: var(--gray-z-3);
     flex-shrink: 0;
     animation: spin infinite linear 1s;
   }
