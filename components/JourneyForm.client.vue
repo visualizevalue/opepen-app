@@ -85,8 +85,13 @@ watch([props], () => {
 
     .row {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       gap: var(--size-9);
+
+      @media (--md) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
     }
 
     .group {

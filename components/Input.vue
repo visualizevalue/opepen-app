@@ -6,6 +6,7 @@
       ref="textarea"
       :value="modelValue"
       :placeholder="placeholder"
+      @focus="onInput"
       @input="onInput"
       @keydown.enter="$emit('enter', $event)"
       rows="1"

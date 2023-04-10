@@ -72,6 +72,8 @@ const newImage = () => images.value.push({})
       width: var(--size-7);
       height: var(--size-7);
       display: flex;
+      align-self: flex-start;
+      margin-top: var(--size-0);
       justify-content: center;
       align-items: center;
       background-color: var(--gray-z-3);
@@ -79,6 +81,7 @@ const newImage = () => images.value.push({})
       border-radius: var(--size-3);
       border-top-left-radius: var(--size-1);
       overflow: hidden;
+      flex-shrink: 0;
 
       .icon {
         width: var(--size-4);
