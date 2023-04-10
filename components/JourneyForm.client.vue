@@ -19,6 +19,7 @@
         <label>
           <span>Prompt</span>
           <PromptInput v-model="prompt" :expanded="expanded" @submit="submit" />
+          <span v-if="promptError" class="error">{{ promptError }}</span>
         </label>
         <button class="expand muted" @click="() => toggleForceExpanded()">
           <span>{{ expanded ? 'Advanced' : 'Expand' }}</span>
@@ -53,10 +54,21 @@ const expanded = computed(() => props.journey || forceExpanded.value)
 const prompt = ref(props.journey?.lastStep.prompt || '')
 const opepen = ref({})
 
-const submit = () => {
-  if (! prompt.value) return
+// Error handling
+const promptError = ref('')
 
-  if (prompt.value === props.journey?.lastStep.prompt) return
+const submit = () => {
+  promptError.value = ``
+
+  if (! prompt.value) {
+    promptError.value = `Please write a prompt to create a new version.`
+    return
+  }
+
+  if (prompt.value === props.journey?.lastStep.prompt) {
+    promptError.value = `Edit the prompt before adding a new version.`
+    return
+  }
 
   emit('submit', {
     prompt: prompt.value,

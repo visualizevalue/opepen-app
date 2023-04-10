@@ -1,0 +1,6 @@
+.error {
+  color: var(--error);
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-md);
+}

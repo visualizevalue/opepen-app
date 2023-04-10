@@ -20,6 +20,7 @@
       <nav class="centered">
         <!-- <button><Icon type="check" stroke-width="2" /></button> -->
         <button @click="reseed"><Icon type="refresh-cw" stroke-width="2" /></button>
+        <button @click="download"><Icon type="download" stroke-width="2" /></button>
       </nav>
     </div>
     <div v-else class="inner">
@@ -30,6 +31,8 @@
 
 <script setup>
 import { post } from '~/api'
+import downloadImage from '~/helpers/download-image'
+
 const config = useRuntimeConfig()
 
 const props = defineProps({
@@ -56,6 +59,12 @@ const reseed = async () => {
   image.value = await post(`${config.public.opepenApi}/ai-images/${image.value.uuid}/reseed`)
   image.value.uri += `?v=${Date.now()}`
   // Image will reload and call loaded event
+}
+const download = async () => {
+  await downloadImage(image.value.uri, {
+    name: image.value.uuid,
+    width: 512,
+  })
 }
 </script>
 

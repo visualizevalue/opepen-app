@@ -12,6 +12,10 @@
   --gray-900: #F2F2F2;
   --white: #FFFFFF;
 
+  /* COLORS */
+  --red: #ef4444;
+  --error: var(--red);
+
   /* SIZES */
   --100vh: 100vh;
   --size-0: 0.125rem;
