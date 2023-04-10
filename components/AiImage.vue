@@ -15,7 +15,7 @@
     <div v-if="loaded" class="inner overlay">
       <nav class="top">
         <!-- <button><Icon type="arrow-up-left" /></button> -->
-        <button><Icon type="x" /></button>
+        <!-- <button><Icon type="x" /></button> -->
       </nav>
       <nav class="centered">
         <!-- <button><Icon type="check" stroke-width="2" /></button> -->
