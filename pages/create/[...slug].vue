@@ -32,6 +32,7 @@ const [ uuid, ...invalid ] = route.params.slug
 if (invalid.length) router.replace(`/create/${uuid}`)
 
 const url = `${config.public.opepenApi}/journeys`
+console.log(url, config)
 const journey = ref(null)
 const steps = ref(null)
 
