@@ -29,9 +29,9 @@ button {
     color: var(--color);
   }
 
-  &.router-link-exact-active,
-  &.active {
-    background: var(--gray-z-5);
+  &.link.router-link-exact-active,
+  &.link.active {
+    background: var(--gray-z-4);
   }
 
   &[disabled]:not([disabled=false]) {

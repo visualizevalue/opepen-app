@@ -22,7 +22,7 @@ const stepsUrl = `${url}/${journey.uuid}/steps`
 const newSteps = ref([])
 const newStep = async input => {
   const step = await post(`${url}/${journey.uuid}/steps`, input)
-  newSteps.value.push(step)
+  newSteps.value.unshift(step)
   emit('newStep', step)
 }
 

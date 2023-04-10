@@ -1,7 +1,6 @@
 <template>
   <article :class="{ loaded }">
     <div class="inner">
-      <Loading v-if="! loaded" txt="" />
       <!-- TODO: Add preview image (SVG outline) -->
       <!-- <div v-if="!loaded && previewTokenUrl" class="preview">
         <img :src="previewTokenUrl" crossorigin="anonymous" loading="eager" >
@@ -15,9 +14,16 @@
     </div>
     <div v-if="loaded" class="inner overlay">
       <nav class="top">
-        <button><Icon type="arrow-up-left" /></button>
+        <!-- <button><Icon type="arrow-up-left" /></button> -->
         <button><Icon type="x" /></button>
       </nav>
+      <nav class="centered">
+        <!-- <button><Icon type="check" stroke-width="2" /></button> -->
+        <button @click="reseed"><Icon type="refresh-cw" stroke-width="2" /></button>
+      </nav>
+    </div>
+    <div v-else class="inner">
+      <Loading txt="" />
     </div>
   </article>
 </template>
@@ -43,6 +49,14 @@ onMounted(async () => {
     image.value = await post(`${config.public.opepenApi}/steps/${props.step.uuid}/dream`)
   }
 })
+
+// Actions
+const reseed = async () => {
+  loaded.value = false
+  image.value = await post(`${config.public.opepenApi}/ai-images/${image.value.uuid}/reseed`)
+  image.value.uri += `?v=${Date.now()}`
+  // Image will reload and call loaded event
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -84,25 +98,58 @@ article {
       z-index: 1;
     }
 
+    nav {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+      gap: var(--size-2);
+      pointer-events: none;
+      opacity: 0;
+      transform: all var(--speed);
+
+      &.top {
+        top: var(--size-3);
+        right: var(--size-3);
+
+        .icon,
+        .vue-feather {
+          width: var(--size-5);
+          height: var(--size-5);
+        }
+      }
+
+      &.centered {
+        gap: var(--size-4);
+
+        .icon,
+        .vue-feather {
+          width: var(--size-6);
+          height: var(--size-6);
+        }
+      }
+
+      button {
+        .icon,
+        .vue-feather {
+          color: var(--gray-z-7);
+        }
+
+        &:--highlight {
+          .icon,
+          .vue-feather {
+            color: var(--gray-z-9);
+          }
+        }
+      }
+    }
+
     &:hover {
       &:after {
         opacity: 0.5;
       }
-    }
-
-    nav {
-      position: absolute;
-      z-index: 2;
-      top: var(--size-3);
-      right: var(--size-3);
-      display: flex;
-      gap: var(--size-2);
-
-      .icon,
-      .vue-feather {
-        color: var(--gray-z-9);
-        width: var(--size-5);
-        height: var(--size-5);
+      nav {
+        opacity: 1;
+        pointer-events: all;
       }
     }
   }

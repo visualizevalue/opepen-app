@@ -2,11 +2,11 @@
   <nav>
     <Logo />
 
-    <Button>
+    <Button to="/create">
       <Icon type="plus" />
       <span>Create</span>
     </Button>
-    <Button>jalil.eth</Button>
+    <!-- <Button>jalil.eth</Button> -->
   </nav>
 </template>
 

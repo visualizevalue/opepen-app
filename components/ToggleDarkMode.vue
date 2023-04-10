@@ -19,10 +19,18 @@ const toggleDark = useToggle(isDark)
     height: var(--size-5);
     width: var(--size-5);
     outline: none;
+    z-index: 100;
 
     .vue-feather {
       height: var(--size-5);
       width: var(--size-5);
+      transition: all var(--speed);
+    }
+
+    &:--highlight {
+      .vue-feather {
+        color: var(--gray-z-7);
+      }
     }
   }
 </style>
