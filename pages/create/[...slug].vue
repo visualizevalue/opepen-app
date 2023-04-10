@@ -21,6 +21,7 @@
 
 <script setup>
 import { post, get } from '~/api'
+import { useMetaData } from '~/helpers/head';
 
 const config = useRuntimeConfig()
 const route = useRoute()
@@ -35,6 +36,7 @@ const journey = ref(null)
 const steps = ref(null)
 
 // Maybe load journey
+// FIXME: Refactor into $fetch / asyncData
 onMounted(async () => {
   if (uuid) {
     try {
@@ -57,6 +59,10 @@ const submit = async input => {
 const setLastStep = step => {
   journey.value.lastStep = step
 }
+
+useMetaData({
+  title: journey.value ? journey.value?.title : 'Create',
+})
 </script>
 
 <style lang="postcss" scoped>
