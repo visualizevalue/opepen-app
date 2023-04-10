@@ -14,6 +14,13 @@
         :step="step"
         :image="image"
       />
+      <article @click="newImage" class="ai-image create">
+        <div class="inner overlay semi active">
+          <nav class="centered">
+            <button><Icon type="plus" stroke-width="2" /></button>
+          </nav>
+        </div>
+      </article>
     </div>
   </section>
 </template>
@@ -31,6 +38,8 @@ if (images.value.length < MINIMUM_TO_GENERATE) {
 
   ;([...Array(toGenerate)]).forEach(() => images.value.push({}))
 }
+
+const newImage = () => images.value.push({})
 </script>
 
 <style lang="postcss" scoped>
@@ -96,5 +105,9 @@ if (images.value.length < MINIMUM_TO_GENERATE) {
     @media (--md) {
       --image-width: 15rem;
     }
+  }
+
+  .create {
+    cursor: pointer;
   }
 </style>

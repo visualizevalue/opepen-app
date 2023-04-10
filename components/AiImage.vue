@@ -1,5 +1,5 @@
 <template>
-  <article :class="{ loaded }">
+  <article class="ai-image" :class="{ loaded }">
     <div class="inner">
       <!-- TODO: Add preview image (SVG outline) -->
       <!-- <div v-if="!loaded && previewTokenUrl" class="preview">
@@ -59,8 +59,8 @@ const reseed = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
-article {
+<style lang="postcss">
+article.ai-image {
   overflow: hidden;
   background-color: var(--gray-z-3);
   border: 1px solid var(--gray-z-4);
@@ -143,9 +143,13 @@ article {
       }
     }
 
+    &.active,
     &:hover {
       &:after {
         opacity: 0.5;
+      }
+      &.semi:after {
+        opacity: 0.1;
       }
       nav {
         opacity: 1;
