@@ -49,6 +49,10 @@ const newImage = () => images.value.push({})
     padding-left: calc(var(--size-4) + var(--size-6));
     position: relative;
 
+    &:first-child {
+      margin-top: 0;
+    }
+
     &:before {
       content: '';
       position: absolute;
