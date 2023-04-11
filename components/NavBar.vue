@@ -1,14 +1,28 @@
 <template>
   <nav>
-    <Logo />
+    <NuxtLink to="/">
+      <Logo />
+    </NuxtLink>
 
-    <Button to="/create">
+    <Button to="/create" @click="onCreateClick">
       <Icon type="plus" />
       <span>Create</span>
     </Button>
     <!-- <Button>jalil.eth</Button> -->
   </nav>
 </template>
+
+<script setup>
+const onCreateClick = () => {
+  setTimeout(() => {
+    nextTick(() => {
+      const el = document.querySelector('.prompt-input textarea')
+
+      el?.focus()
+    })
+  }, 50)
+}
+</script>
 
 <style lang="postcss" scoped>
   nav {
