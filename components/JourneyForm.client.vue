@@ -21,7 +21,7 @@
           <PromptInput v-model="prompt" :expanded="expanded" @submit="submit" />
           <span v-if="promptError" class="error">{{ promptError }}</span>
         </label>
-        <button class="expand muted" @click="() => toggleForceExpanded()">
+        <button type="button" class="expand muted" @click="() => toggleForceExpanded()">
           <span>{{ expanded ? 'Advanced' : 'Expand' }}</span>
           <Icon type="chevron-right" :class="{ active: forceExpanded }" />
         </button>
