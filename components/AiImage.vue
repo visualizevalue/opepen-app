@@ -63,7 +63,7 @@ const reseed = async () => {
 const download = async () => {
   await downloadImage(image.value.uri, {
     name: image.value.uuid,
-    width: 512,
+    width: 768,
   })
 }
 </script>
