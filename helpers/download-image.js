@@ -10,34 +10,20 @@ export const image2Blob = (canvas, mime, quality) =>
 
 const downloadImage = async (url, {
   name = url,
-  width = 1080,
-  aspectRatio = 1,
-  height = width * aspectRatio,
-  canvasWidth = parseInt(width),
-  canvasHeight = parseInt(height),
-  backgroundColor = null,
-  sharp = true,
   mime = 'image/png',
   quality = 0.8,
 }) => {
-  const canvas = document.createElement('canvas')
-  canvas.width = canvasWidth
-  canvas.height = canvasHeight
-  const ctx = canvas.getContext('2d')
-  if (sharp) {
-    ctx.webkitImageSmoothingEnabled = false
-    ctx.mozImageSmoothingEnabled = false
-    ctx.imageSmoothingEnabled = false
-  }
-
-  if (backgroundColor) {
-    ctx.fillStyle = backgroundColor
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight)
-  }
-
-  // Load and the image
+  // Load the image
   const img = await loadImage(url)
-  ctx.drawImage(img, (canvasWidth - width) / 2, (canvasHeight - height) / 2, width, height)
+
+  // Set up canvas
+  const canvas = document.createElement('canvas')
+  canvas.width = img.naturalWidth
+  canvas.height = img.naturalHeight
+  const ctx = canvas.getContext('2d')
+
+  // Draw the image
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
   // Get the blob
   const image = await image2Blob(canvas, mime, quality)
