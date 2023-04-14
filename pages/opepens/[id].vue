@@ -63,7 +63,8 @@ onMounted(() => {
 
 // Define metadata
 useMetaData({
-  title: `Opepen Image of ${journey.value.title}`
+  title: `Opepen Image of ${journey.value.title}`,
+  og: upscaled.value ? image.value.uri.replace(`.png`, `@lg.png`) : image.value.uri
 })
 </script>
 
