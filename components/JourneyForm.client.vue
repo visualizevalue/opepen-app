@@ -36,6 +36,7 @@ import { useElementBounding, useToggle } from '@vueuse/core'
 
 const props = defineProps({
   journey: Object,
+  journeyId: String,
 })
 const emit = defineEmits(['submit'])
 
@@ -46,7 +47,7 @@ onMounted(() => form.value?.style.setProperty('--height', `${formHeight.value}px
 
 // Whether the form is expanded
 // TODO: extract expanded up
-const forceExpanded = ref(false)
+const forceExpanded = ref(!! props.journeyId)
 const toggleForceExpanded = useToggle(forceExpanded)
 const expanded = computed(() => props.journey || forceExpanded.value)
 

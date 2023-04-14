@@ -7,7 +7,7 @@
         <span>{{ journey.title }}</span>
       </h1>
     </PageHeader>
-    <JourneyForm :journey="journey" @submit="submit" />
+    <JourneyForm :journey="journey" :journey-id="uuid" @submit="submit" />
     <ClientOnly>
       <JourneySteps
         v-if="journey"
@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-import { post, get } from '~/api'
-import { useMetaData } from '~/helpers/head';
+import { post } from '~/api'
+import { useMetaData } from '~/helpers/head'
 
 const config = useRuntimeConfig()
 const route = useRoute()
@@ -32,20 +32,14 @@ const [ uuid, ...invalid ] = route.params.slug
 if (invalid.length) router.replace(`/create/${uuid}`)
 
 const url = `${config.public.opepenApi}/journeys`
-const journey = ref(null)
+const { data: journey, execute } = await useFetch(`${url}/${uuid}`, { immediate: false })
 const steps = ref(null)
 
-// Maybe load journey
-// FIXME: Refactor into $fetch / asyncData
-onMounted(async () => {
-  if (uuid) {
-    try {
-      journey.value = await get(`${url}/${uuid}`)
-    } catch (e) {
-      router.replace(`/create`)
-    }
-  }
-})
+if (uuid) {
+  await execute()
+} else {
+  router.replace(`/create`)
+}
 
 const submit = async input => {
   if (! journey.value) {
