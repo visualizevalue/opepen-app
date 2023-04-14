@@ -31,6 +31,7 @@
 
 <script setup>
 import { post } from '~/api'
+import { useMetaData } from '~/helpers/head'
 import { delay } from '~/helpers/time'
 
 const route = useRoute()
@@ -58,6 +59,11 @@ onMounted(() => {
   if (! image.value.versions?.lg) {
     loadHighRes()
   }
+})
+
+// Define metadata
+useMetaData({
+  title: `Opepen Image of ${journey.value.title}`
 })
 </script>
 
