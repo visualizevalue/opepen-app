@@ -21,8 +21,8 @@
     <slot name="overlay" :loaded="loaded">
       <div v-if="loaded" class="inner overlay">
         <nav class="top">
-          <button><Icon type="arrow-up-left" :stroke-width="2.5" /></button>
-          <button><Icon type="x" :stroke-width="2.5" /></button>
+          <!-- <button><Icon type="arrow-up-left" :stroke-width="2.5" /></button>
+          <button><Icon type="x" :stroke-width="2.5" /></button> -->
           <NuxtLink :to="`/opepens/${image.uuid}`" class="button"><Icon type="maximize" :stroke-width="3" class="wide" /></NuxtLink>
         </nav>
         <nav class="centered">
