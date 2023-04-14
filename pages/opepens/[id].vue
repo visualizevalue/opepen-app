@@ -70,7 +70,7 @@ useMetaData({
 
 <style lang="postcss" scoped>
 div.scroll {
-  padding: 0 var(--size-4);
+  padding: 0 var(--size-4) var(--size-7);
 
   > * {
     max-width: var(--content-width);
