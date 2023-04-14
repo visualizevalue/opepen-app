@@ -1,12 +1,12 @@
 <template>
   <div class="create scroll">
-    <header v-if="journey">
+    <PageHeader v-if="journey">
       <h1 class="breadcrumb">
         <NuxtLink to="/create">Home</NuxtLink>
         <span class="separator">/</span>
         <span>{{ journey.title }}</span>
       </h1>
-    </header>
+    </PageHeader>
     <JourneyForm :journey="journey" @submit="submit" />
     <ClientOnly>
       <JourneySteps
@@ -70,18 +70,5 @@ useMetaData({
     display: flex;
     flex-direction: column;
     padding: 0 var(--size-4);
-  }
-
-  header {
-    width: 100%;
-    max-width: var(--content-width);
-    margin: var(--size-5) auto 0;
-
-    h1 {
-      text-transform: uppercase;
-      font-size: var(--size-4);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: var(--letter-spacing-md);
-    }
   }
 </style>

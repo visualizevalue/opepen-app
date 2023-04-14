@@ -18,6 +18,7 @@
     "@vueuse/components": "^9.13.0",
     "@vueuse/core": "^9.13.0",
     "feather-icons": "4",
+    "luxon": "^3.3.0",
     "vue-feather": "2"
   }
 }

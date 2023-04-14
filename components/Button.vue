@@ -56,19 +56,7 @@ button {
   letter-spacing: var(--letter-spacing-md);
   line-height: 1;
   text-transform: uppercase;
-
-  &:--highlight {
-    outline: none;
-  }
-
-  &[disabled]:not([disabled=false]) {
-    pointer-events: none;
-    cursor: normal;
-  }
-
-  &.muted {
-    color: var(--gray-z-6);
-  }
+  color: var(--gray-z-6);
 
   .vue-feather,
   .icon {
@@ -79,6 +67,25 @@ button {
     &:first-child {
       margin-left: calc(-1 * var(--size-1));
     }
+  }
+
+  &:--highlight {
+    outline: none;
+    color: var(--color);
+
+    .vue-feather,
+    .icon {
+      color: var(--gray-z-8);
+    }
+  }
+
+  &[disabled]:not([disabled=false]) {
+    pointer-events: none;
+    cursor: normal;
+  }
+
+  &.muted {
+    color: var(--gray-z-6);
   }
 }
 </style>

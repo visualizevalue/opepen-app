@@ -1,6 +1,9 @@
 .breadcrumb {
   display: flex;
   gap: var(--size-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   span,
   a {
@@ -13,6 +16,21 @@
 
   a {
     transition: all var(--speed);
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+
+    .icon,
+    .vue-feather {
+      color: var(--gray-z-6);
+
+      + span {
+        width: calc(100% - var(--size-2) - var(--size-5));
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
 
     &:--highlight {
       color: var(--color)
