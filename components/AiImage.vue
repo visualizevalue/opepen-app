@@ -21,8 +21,8 @@
     <slot name="overlay" :loaded="loaded">
       <div v-if="loaded" class="inner overlay">
         <nav class="top">
-          <!-- <button><Icon type="arrow-up-left" :stroke-width="2.5" /></button>
-          <button><Icon type="x" :stroke-width="2.5" /></button> -->
+          <!-- <button><Icon type="arrow-up-left" :stroke-width="2.5" /></button> -->
+          <button @click="detach"><Icon type="x" :stroke-width="2.5" /></button>
           <NuxtLink :to="`/opepens/${image.uuid}`" class="button"><Icon type="maximize" :stroke-width="3" class="wide" /></NuxtLink>
         </nav>
         <nav class="centered">
@@ -49,6 +49,7 @@ const props = defineProps({
   image: Object,
   version: String,
 })
+const emit = defineEmits(['detach'])
 
 const image = ref(props.image)
 const imageEl = ref(null)
@@ -81,6 +82,12 @@ const reseed = async () => {
   image.value.uri += `?v=${Date.now()}`
   uri.value = image.value.uri
   // Image will reload and call loaded event
+}
+const detach = async () => {
+  if (! confirm(`Do you really want to delete this image?`)) return
+
+  $fetch(`${config.public.opepenApi}/ai-images/${image.value.uuid}`, { method: 'DELETE' })
+  emit('detach', image.value)
 }
 const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${image.value.uuid}@${props.version}` : image.value.uuid })
 const downloadHD = async () => await downloadImage(image.value.uri.replace(`.png`, `@2048.png`), { name: `${image.value.uuid}@2048` })
