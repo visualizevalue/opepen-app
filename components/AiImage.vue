@@ -70,6 +70,7 @@ const imageLoaded = () => loaded.value = true
 onMounted(async () => {
   if (! image.value.uuid) {
     image.value = await post(`${config.public.opepenApi}/steps/${props.step.uuid}/dream`)
+    uri.value = image.value.uri
   }
 })
 
