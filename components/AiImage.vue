@@ -79,6 +79,7 @@ const reseed = async () => {
   loaded.value = false
   image.value = await post(`${config.public.opepenApi}/ai-images/${image.value.uuid}/reseed`)
   image.value.uri += `?v=${Date.now()}`
+  uri.value = image.value.uri
   // Image will reload and call loaded event
 }
 const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${image.value.uuid}@${props.version}` : image.value.uuid })
