@@ -32,7 +32,6 @@
 <script setup>
 import { post } from '~/api'
 import { useMetaData } from '~/helpers/head'
-import { delay } from '~/helpers/time'
 
 const route = useRoute()
 const router = useRouter()
@@ -48,12 +47,15 @@ const journey = computed(() => image.value.journeyStep.journey)
 const upscaling = ref(false)
 const upscaled = ref(!! image.value.versions?.lg)
 const loadHighRes = async () => {
-  upscaling.value = true
-  await post(`${uri}/upscale`)
-  image.value.versions.lg = true
-  upscaling.value = false
-  await delay(200)
-  upscaled.value = true
+  try {
+    upscaling.value = true
+    await post(`${uri}/upscale`)
+    image.value.versions.lg = true
+    upscaling.value = false
+    upscaled.value = true
+  } catch (e) {
+    // ...
+  }
 }
 onMounted(() => {
   if (! image.value.versions?.lg) {
