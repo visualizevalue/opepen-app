@@ -77,11 +77,15 @@ onMounted(async () => {
 
 // Actions
 const reseed = async () => {
-  loaded.value = false
-  image.value = await post(`${config.public.opepenApi}/ai-images/${image.value.uuid}/reseed`)
-  image.value.uri += `?v=${Date.now()}`
-  uri.value = image.value.uri
-  // Image will reload and call loaded event
+  try {
+    loaded.value = false
+    image.value = await post(`${config.public.opepenApi}/ai-images/${image.value.uuid}/reseed`)
+    image.value.uri += `?v=${Date.now()}`
+    uri.value = image.value.uri
+    // Image will reload and call loaded event
+  } catch (e) {
+    loaded.value = true
+  }
 }
 const detach = async () => {
   if (! confirm(`Do you really want to delete this image?`)) return
