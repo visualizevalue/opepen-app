@@ -39,6 +39,7 @@ if (uuid) {
   await execute()
 } else {
   router.replace(`/create`)
+  journey.value = null
 }
 
 const submit = async input => {
