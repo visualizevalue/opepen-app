@@ -1,4 +1,4 @@
-export const makeTitle = (title: string) => title + ` | OpepenAI`
+export const makeTitle = (title: string) => title + ` | Opepen`
 
 type HeadConfig = {
   title: string;

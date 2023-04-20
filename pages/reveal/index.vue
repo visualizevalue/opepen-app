@@ -5,5 +5,5 @@
 <script setup>
 const router = useRouter()
 
-router.replace('/reveal')
+router.replace('/reveal/rare')
 </script>
