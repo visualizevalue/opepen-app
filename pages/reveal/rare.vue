@@ -45,7 +45,7 @@ header {
   padding: var(--size-6) 0;
 
   h1 {
-    font-size: var(--size-7);
+    font-size: var(--font-title);
     text-transform: uppercase;
     font-weight: var(--font-weight-bold);
     letter-spacing: var(--letter-spacing-md);
