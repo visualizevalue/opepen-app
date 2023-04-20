@@ -28,7 +28,7 @@ import { useMetaData } from '~/helpers/head'
 const revealTime = 1682125199
 
 useMetaData({
-  title: 'Reveal',
+  title: 'Rare Opepen',
   description: 'Reveal your Rare Opepen Packs.',
   og: 'https://next.opepen.art/og/rare.png',
 })
@@ -37,6 +37,7 @@ useMetaData({
 <style lang="postcss" scoped>
 .reveal {
   padding: var(--size-4);
+  user-select: none;
 }
 
 header {

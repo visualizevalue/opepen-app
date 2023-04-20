@@ -1,5 +1,3 @@
-export const makeTitle = (title: string) => title + ` | Opepen`
-
 type HeadConfig = {
   title: string;
   description?: string;
@@ -7,12 +5,10 @@ type HeadConfig = {
 }
 
 export const makeHead = ({
-  title: t,
+  title,
   description = '',
   og = '',
 }: HeadConfig) => {
-  const title = makeTitle(t)
-
   return {
     title,
     meta: [
