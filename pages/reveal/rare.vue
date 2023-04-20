@@ -30,7 +30,7 @@ const revealTime = 1682125199
 useMetaData({
   title: 'Reveal',
   description: 'Reveal your Rare Opepen Packs.',
-  og: 'https://next.opepen.art/og/rare/png',
+  og: 'https://next.opepen.art/og/rare.png',
 })
 </script>
 
