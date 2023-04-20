@@ -25,7 +25,7 @@
 <script setup>
 import { useMetaData } from '~/helpers/head'
 
-const revealTime = 1682125199
+const revealTime = 1682121600
 
 useMetaData({
   title: 'Rare Opepen',
