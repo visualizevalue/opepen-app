@@ -31,7 +31,7 @@ const router = useRouter()
 const [ uuid, ...invalid ] = route.params.slug
 if (invalid.length) router.replace(`/create/${uuid}`)
 
-const url = `${config.public.opepenApi}/journeys`
+const url = `${config.public.opepenAiApi}/journeys`
 const { data: journey, execute } = await useFetch(`${url}/${uuid}`, { immediate: false })
 const steps = ref(null)
 

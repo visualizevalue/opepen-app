@@ -34,6 +34,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      opepenAiApi: '',
       opepenApi: '',
     },
   },

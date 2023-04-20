@@ -17,7 +17,7 @@ const config = useRuntimeConfig()
 const { journey } = defineProps({ journey: Object })
 const emit = defineEmits(['newStep'])
 
-const url = `${config.public.opepenApi}/journeys`
+const url = `${config.public.opepenAiApi}/journeys`
 const stepsUrl = `${url}/${journey.uuid}/steps`
 const newSteps = ref([])
 const newStep = async input => {

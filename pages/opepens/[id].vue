@@ -37,7 +37,7 @@ const route = useRoute()
 const router = useRouter()
 const config = useRuntimeConfig()
 
-const uri = `${config.public.opepenApi}/ai-images/${route.params.id}`
+const uri = `${config.public.opepenAiApi}/ai-images/${route.params.id}`
 const { data: image } = await useFetch(uri)
 if (! image) router.replace('/')
 

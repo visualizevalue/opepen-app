@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "opepen-app",
   "private": true,
   "scripts": {
     "build": "nuxt build",

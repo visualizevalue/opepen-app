@@ -70,7 +70,7 @@ const imageLoaded = () => loaded.value = true
 
 onMounted(async () => {
   if (! image.value.uuid) {
-    image.value = await post(`${config.public.opepenApi}/steps/${props.step.uuid}/dream`)
+    image.value = await post(`${config.public.opepenAiApi}/steps/${props.step.uuid}/dream`)
     uri.value = image.value.uri
   }
 })
@@ -79,7 +79,7 @@ onMounted(async () => {
 const reseed = async () => {
   try {
     loaded.value = false
-    image.value = await post(`${config.public.opepenApi}/ai-images/${image.value.uuid}/reseed`)
+    image.value = await post(`${config.public.opepenAiApi}/ai-images/${image.value.uuid}/reseed`)
     image.value.uri += `?v=${Date.now()}`
     uri.value = image.value.uri
     // Image will reload and call loaded event
@@ -90,7 +90,7 @@ const reseed = async () => {
 const detach = async () => {
   if (! confirm(`Do you really want to delete this image?`)) return
 
-  $fetch(`${config.public.opepenApi}/ai-images/${image.value.uuid}`, { method: 'DELETE' })
+  $fetch(`${config.public.opepenAiApi}/ai-images/${image.value.uuid}`, { method: 'DELETE' })
   emit('detach', image.value)
 }
 const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${image.value.uuid}@${props.version}` : image.value.uuid })
