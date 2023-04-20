@@ -13,7 +13,7 @@
         :key="image.uuid || index"
         :step="step"
         :image="image"
-        @detach="() => detach(index)"
+        @detach="() => detach(image)"
       />
       <article @click="newImage" class="ai-image create">
         <div class="inner overlay semi active">
@@ -42,7 +42,11 @@ if (images.value.length < MINIMUM_TO_GENERATE) {
 
 const newImage = () => images.value.push({})
 
-const detach = index => images.value.splice(index, 1)
+const detach = image => {
+  if (! image.uuid) return
+
+  images.value = images.value.filter(i => i.uuid !== image.uuid)
+}
 </script>
 
 <style lang="postcss" scoped>
