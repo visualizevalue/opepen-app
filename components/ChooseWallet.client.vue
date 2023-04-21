@@ -39,10 +39,6 @@ import { WalletConnectConnector } from 'vagmi/connectors/walletConnect'
 
 const config = useRuntimeConfig()
 
-console.log(config.public.rpc)
-console.log(config.public.rpc)
-console.log(config.public.rpc)
-
 const ic = new InjectedConnector()
 const mm = new MetaMaskConnector()
 const wc = new WalletConnectConnector({
