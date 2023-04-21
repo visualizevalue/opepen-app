@@ -1,45 +1,32 @@
 <template>
-<article class="opepen-pack" :style="wrapperStyle">
+<article class="opepen-card" :style="wrapperStyle">
   <div @click="onClick">
-    <div class="marked">
-      <CountDown :until="revealTime"></CountDown>
-      <small>
-        <Account v-if="isConnected" :address="address" :hide-avatar="true" />
-      </small>
+    <img :src="`https://opepen.nyc3.cdn.digitaloceanspaces.com/images/rare/${set}.svg`" :alt="`Rare 1/${set} Opepen Preview ${id}`">
+
+    <div class="text">
+      <h1>Opepen {{ id }}</h1>
+      <p>Edition of {{ set }}</p>
     </div>
   </div>
 </article>
 </template>
 
 <script setup>
-import { useAccount } from 'vagmi'
 import { getRandomArbitrary } from '~/helpers/random'
-import { delay, nowInSeconds } from '~/helpers/time'
+import { delay } from '~/helpers/time'
 
 const {
-  revealTime,
-  reveal,
+  id,
+  set,
 } = defineProps({
-  revealTime: Number,
-  reveal: String,
-})
-
-const emit = defineEmits(['reveal'])
-
-const { address, isConnected } = useAccount()
-const maybeReveal = () => {
-  if (revealTime && revealTime < nowInSeconds()) {
-    emit('reveal')
-  }
-}
-onMounted(() => {
-  maybeReveal()
+  id: Number,
+  set: Number,
 })
 
 // ==============================================================
 // Style & Interaction
 // ==============================================================
-const rotation = ref(getRandomArbitrary(-5, 5))
+const rotation = ref(getRandomArbitrary(-15, 15))
 const scale = ref(1)
 const wrapperStyle = computed(() => ({
   transform: `rotate(${rotation.value}deg) scale(${scale.value})`,
@@ -56,18 +43,19 @@ const wiggle = async () => {
   scale.value = 1
   rotation.value = getRandomArbitrary(-5, 5)
 }
-const onClick = () => {
+const onClick = async () => {
   wiggle()
-  maybeReveal()
+  await delay(150)
+  window.open(`https://opensea.io/assets/ethereum/0x6339e5e072086621540d0362c4e3cea0d643e114/${id}`, '_blank')
 }
 </script>
 
 <style lang="postcss" scoped>
-.opepen-pack {
+.opepen-card {
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 150%;
+  padding-bottom: 125%;
   transition: all var(--speed-fast);
   transform-origin: center;
 
@@ -80,25 +68,38 @@ const onClick = () => {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/opepen-pack-shadow.png');
-    background-size: contain;
-    background-position: center;
+    background: var(--gray-z-1);
+    border: var(--border);
+    border-radius: var(--size-4);
+    border-top-left-radius: var(--size-0);
+    box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi);
 
-    .marked {
-      position: absolute;
+    img {
+      border-top-right-radius: var(--size-4);
+      border-top-left-radius: var(--size-0);
+      border-bottom: var(--border);
+    }
+
+    .text {
+      padding: var(--size-3) var(--size-4);
+      height: calc(25% - var(--size-3) * 2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
       text-transform: uppercase;
       font-weight: var(--font-weight-bold);
       letter-spacing: var(--letter-spacing-md);
-      text-align: center;
-      width: 100%;
-      color: rgba(255, 255, 255, 0.9);
-      bottom: 25%;
-      bottom: 35cqw;
       font-size: 5cqw;
       user-select: none;
 
-      small {
-        margin: var(--size-2) 0;
+      h1 {
+        margin-top: var(--size-1);
+      }
+
+      p {
+        font-size: var(--font-sm);
+        color: var(--gray-z-7);
       }
     }
   }

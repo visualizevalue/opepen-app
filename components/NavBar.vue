@@ -8,7 +8,7 @@
       <Icon type="plus" />
       <span>Create</span>
     </Button> -->
-    <!-- <Button>jalil.eth</Button> -->
+    <Connect />
   </nav>
 </template>
 

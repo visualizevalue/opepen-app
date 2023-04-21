@@ -36,6 +36,10 @@ export default defineNuxtConfig({
     public: {
       opepenAiApi: '',
       opepenApi: '',
+      rpc: 'http://127.0.0.1:8545',
+      alchemy: '',
+      chainName: 'mainnet',
+      chainId: '1',
     },
   },
   css: [

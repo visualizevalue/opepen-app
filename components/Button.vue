@@ -21,7 +21,7 @@ button {
   user-select: none;
   border-radius: var(--size-4);
   border-top-left-radius: var(--size-1);
-  border: 1px solid var(--gray-z-4);
+  border: var(--border);
 
   &:--highlight,
   &.active {

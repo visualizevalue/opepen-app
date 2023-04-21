@@ -12,6 +12,10 @@
   --gray-900: #F2F2F2;
   --white: #FFFFFF;
 
+  /* SEMI */
+  --semi-light: rgba(255, 255, 255, 0.8);
+  --semi-dark: rgba(0, 0, 0, 0.8);
+
   /* COLORS */
   --red: #ef4444;
   --error: var(--red);
@@ -47,6 +51,10 @@
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
   --page-height: calc(var(--100vh) - var(--navbar-height));
   --content-width: 60rem;
+
+  /* BORDERS */
+  --border: 1px solid var(--gray-z-4);
+  --border-dark: 1px solid var(--gray-z-2);
 }
 
 /* LIGHT */
@@ -62,6 +70,7 @@
   --gray-z-8: var(--gray-200);
   --gray-z-9: var(--gray-100);
   --color: var(--black);
+  --semi: var(--semi-light);
 }
 
 /* DARK */
@@ -77,4 +86,5 @@
   --gray-z-8: var(--gray-800);
   --gray-z-9: var(--gray-900);
   --color: var(--white);
+  --semi: var(--semi-dark);
 }
