@@ -3,7 +3,7 @@
     <header>
       <h1>
         <small>Reveal</small>
-        <span>Rare Opepen Packs</span>
+        <span>Rare Opepen</span>
       </h1>
     </header>
 
@@ -29,8 +29,8 @@ const revealTime = 1682121600
 
 useMetaData({
   title: 'Rare Opepen',
-  description: 'Reveal your Rare Opepen Packs.',
-  og: 'https://next.opepen.art/og/rare.png',
+  description: 'Reveal your Rare Opepen Cards.',
+  og: 'https://opepen.art/og/rare.png',
 })
 </script>
 
