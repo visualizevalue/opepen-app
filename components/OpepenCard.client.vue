@@ -72,7 +72,7 @@ const onClick = async () => {
     border: var(--border);
     border-radius: var(--size-4);
     border-top-left-radius: var(--size-0);
-    box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi);
+    box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi-dark);
 
     img {
       border-top-right-radius: var(--size-4);
