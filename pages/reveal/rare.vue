@@ -108,10 +108,20 @@ section {
 }
 
 .opepens {
+  container-type: inline-size;
   flex-wrap: wrap;
+  max-width: var(--content-width);
+  width: 100%;
+  margin: 5vh auto;
+  gap: var(--size-4);
 
   > div {
-    max-width: min(40vw, calc(40vh / 1.5));
+    @container (width > 20rem) {
+      max-width: min(50cqw, calc(50cqh / 1.5));
+    }
+    @container (width > 30rem) {
+      max-width: min(33.33cqw, calc(33.33cqh / 1.5));
+    }
   }
 }
 </style>

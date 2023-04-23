@@ -26,7 +26,7 @@ const {
 // ==============================================================
 // Style & Interaction
 // ==============================================================
-const rotation = ref(getRandomArbitrary(-15, 15))
+const rotation = ref(getRandomArbitrary(-12, 12))
 const scale = ref(1)
 const wrapperStyle = computed(() => ({
   transform: `rotate(${rotation.value}deg) scale(${scale.value})`,
@@ -72,7 +72,9 @@ const onClick = async () => {
     border: var(--border);
     border-radius: var(--size-4);
     border-top-left-radius: var(--size-0);
-    box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi-dark);
+    box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi-shade);
+    display: grid;
+    grid-template-rows: 4fr 1fr;
 
     img {
       border-top-right-radius: var(--size-4);
@@ -81,24 +83,23 @@ const onClick = async () => {
     }
 
     .text {
-      padding: var(--size-3) var(--size-4);
-      height: calc(25% - var(--size-3) * 2);
+      padding: 0 var(--size-4);
       display: flex;
       flex-direction: column;
       justify-content: center;
-
       text-transform: uppercase;
       font-weight: var(--font-weight-bold);
       letter-spacing: var(--letter-spacing-md);
-      font-size: 5cqw;
       user-select: none;
+      line-height: 1;
 
       h1 {
-        margin-top: var(--size-1);
+        font-size: 6cqw;
+        margin-bottom: 2cqw;
       }
 
       p {
-        font-size: var(--font-sm);
+        font-size: 4.5cqw;
         color: var(--gray-z-7);
       }
     }

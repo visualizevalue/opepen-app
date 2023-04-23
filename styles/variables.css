@@ -13,8 +13,9 @@
   --white: #FFFFFF;
 
   /* SEMI */
-  --semi-light: rgba(255, 255, 255, 0.7);
-  --semi-dark: rgba(0, 0, 0, 0.7);
+  --semi-light: rgba(255, 255, 255, 0.9);
+  --semi-dark: rgba(0, 0, 0, 0.9);
+  --semi-shade: rgba(0, 0, 0, 0.33);
 
   /* COLORS */
   --red: #ef4444;
@@ -50,6 +51,7 @@
   /* COMPONENTS */
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
   --page-height: calc(var(--100vh) - var(--navbar-height));
+  --content-width-wide: 90rem;
   --content-width: 60rem;
 
   /* BORDERS */
