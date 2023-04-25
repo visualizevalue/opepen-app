@@ -28,6 +28,13 @@
       </div>
     </div>
 
+    <div v-if="! expanded" class="create-pack">
+      <span>OR</span>
+      <Button to="/create/submit">
+        <Icon type="upload" />
+        <span>Upload Pack</span>
+      </Button>
+    </div>
   </form>
 </template>
 
@@ -43,7 +50,9 @@ const emit = defineEmits(['submit'])
 // Our form element
 const form = ref(null)
 const { height: formHeight } = useElementBounding(form)
-onMounted(() => form.value?.style.setProperty('--height', `${formHeight.value}px`))
+watch(formHeight, () => {
+  form.value?.style.setProperty('--height', `${formHeight.value}px`)
+})
 
 // Whether the form is expanded
 // TODO: extract expanded up
@@ -92,8 +101,8 @@ watch([props], () => {
 
     width: 100%;
     max-width: min(calc(100vw - 2 * var(--size-4)), var(--minmax-width));
-    margin: calc(var(--page-height)/2 - var(--height)/2 - var(--size-8)) auto var(--size-7);
-    transition: margin var(--speed-fast) ease-out;
+    margin: calc(var(--page-height)/2 - var(--height)/2 - var(--size-8)) auto var(--size-5);
+    transition: all var(--speed-fast) ease-out;
     animation: var(--speed-fast) ease-out 0s 1 appear;
 
     .row {
@@ -175,5 +184,47 @@ watch([props], () => {
         transform: rotate(90deg);
       }
     }
+  }
+
+  .create-pack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    > span {
+      position: relative;
+      width: 100%;
+      max-width: 24rem;
+      text-align: center;
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--letter-spacing-md);
+      margin: var(--size-5) 0 var(--size-8);
+      color: var(--gray-z-5);
+      font-size: var(--font-sm);
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        height: 1px;
+        z-index: -1;
+      }
+
+      &:before {
+        left: 0;
+        width: 100%;
+        background-color: var(--gray-z-2);
+      }
+
+      &:after {
+        left: calc(50% - 1.5rem);
+        width: 3rem;
+        background-color: var(--background);
+      }
+    }
+
   }
 </style>
