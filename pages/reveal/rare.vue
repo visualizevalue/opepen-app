@@ -1,5 +1,5 @@
 <template>
-  <div class="reveal scroll">
+  <div class="reveal">
     <header>
       <h1>
         <small>Reveal</small>
@@ -38,13 +38,11 @@
 <script setup>
 import { useAccount } from 'vagmi'
 import { useMetaData } from '~/helpers/head'
-import { nowInSeconds } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
 
 const reveal = 'rare'
-// const revealTime = nowInSeconds() + 10
 const revealTime = 1682121600
 const revealData = ref(null)
 const revealed = ref(false)
@@ -66,7 +64,6 @@ useMetaData({
 
 <style lang="postcss" scoped>
 .reveal {
-  padding: var(--size-4);
   user-select: none;
 }
 

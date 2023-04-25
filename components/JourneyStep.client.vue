@@ -13,7 +13,7 @@
         :key="image.uuid || index"
         :step="step"
         :image="image"
-        @detach="() => detach(image)"
+        @detach="() => detach(image.uuid)"
       />
       <article @click="newImage" class="ai-image create">
         <div class="inner overlay semi active">
@@ -42,10 +42,10 @@ if (images.value.length < MINIMUM_TO_GENERATE) {
 
 const newImage = () => images.value.push({})
 
-const detach = image => {
-  if (! image.uuid) return
+const detach = id => {
+  if (! id) return
 
-  images.value = images.value.filter(i => i.uuid !== image.uuid)
+  images.value = images.value.filter(i => i.uuid !== id)
 }
 </script>
 

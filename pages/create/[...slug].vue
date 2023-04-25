@@ -1,5 +1,5 @@
 <template>
-  <div class="create scroll">
+  <div class="create">
     <PageHeader v-if="journey">
       <h1 class="breadcrumb">
         <NuxtLink to="/create">Home</NuxtLink>
@@ -64,6 +64,5 @@ useMetaData({
   .create {
     display: flex;
     flex-direction: column;
-    padding: 0 var(--size-4);
   }
 </style>
