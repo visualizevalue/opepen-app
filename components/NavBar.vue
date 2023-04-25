@@ -53,6 +53,14 @@ const onCreateClick = () => {
 
     > :first-child {
       margin-right: auto;
+
+      :deep(svg:last-child) {
+        display: none;
+
+        @media (--sm) {
+          display: initial;
+        }
+      }
     }
 
     :deep(+ div) {
