@@ -16,7 +16,7 @@ button {
   height: var(--size-7);
   background: var(--gray-z-3);
   color: var(--gray-z-8);
-  padding: var(--size-3) var(--size-4);
+  padding: calc(var(--size-0) + var(--size-2)) var(--size-4);
   transition: background var(--speed), color var(--speed);
   user-select: none;
   border-radius: var(--size-4);
