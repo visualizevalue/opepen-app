@@ -1,5 +1,4 @@
 <template>
-  <slot name="before" :download="download" :downloadHD="downloadHD" />
   <article class="ai-image" :class="{ loaded }">
     <div class="inner image">
       <!-- TODO: Add preview image (SVG outline) -->
@@ -95,6 +94,11 @@ const detach = async () => {
 }
 const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${image.value.uuid}@${props.version}` : image.value.uuid })
 const downloadHD = async () => await downloadImage(image.value.uri.replace(`.png`, `@2048.png`), { name: `${image.value.uuid}@2048` })
+
+defineExpose({
+  download,
+  downloadHD,
+})
 </script>
 
 <style lang="postcss">
@@ -199,8 +203,7 @@ article.ai-image {
       }
     }
 
-    &.active,
-    &:hover {
+    &:--highlight {
       &:after {
         opacity: 0.5;
       }

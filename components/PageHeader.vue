@@ -11,7 +11,7 @@
   header {
     width: 100%;
     max-width: var(--content-width);
-    margin: var(--size-5) auto 0;
+    margin: 0 auto;
 
     :deep(h1) {
       text-transform: uppercase;

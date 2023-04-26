@@ -1,1 +1,1 @@
-@custom-selector :--highlight :hover, :active, :focus;
+@custom-selector :--highlight :hover, :active, :focus, .active;

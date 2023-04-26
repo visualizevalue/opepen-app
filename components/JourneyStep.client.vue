@@ -55,6 +55,7 @@ const detach = id => {
     margin: var(--size-6) auto var(--size-7);
     padding-left: calc(var(--size-4) + var(--size-6));
     position: relative;
+    user-select: none;
 
     &:first-child {
       margin-top: 0;
