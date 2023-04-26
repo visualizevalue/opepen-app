@@ -15,7 +15,12 @@
     </PageHeader>
 
     <div class="image-wrapper">
-      <AiImage ref="aiImage" :image="imageData" :step="imageData.journeyStep" :version="upscaled ? 'lg' : ''">
+      <AiImage
+        ref="aiImage"
+        :ai-image="{...imageData.ai_image, image: imageData}"
+        :step="imageData.journeyStep"
+        :version="upscaled ? 'lg' : ''"
+      >
         <template #overlay="{ loaded }">
           <div v-if="upscaling || ! loaded" class="inner overlay active">
             <Loading v-if="upscaling" txt="Upscaling..." />
@@ -31,6 +36,7 @@
 <script setup>
 import { post } from '~/api'
 import { useMetaData } from '~/helpers/head'
+import { imageURI } from '~/helpers/images'
 
 const route = useRoute()
 const router = useRouter()
@@ -38,11 +44,10 @@ const config = useRuntimeConfig()
 
 const aiImage = ref(null)
 
-const uri = `${config.public.opepenAiApi}/ai-images/${route.params.id}`
-const { data: imageData } = await useFetch(uri)
+const { data: imageData } = await useFetch(`${config.public.opepenApi}/opepen/images/${route.params.id}`)
 if (! imageData) router.replace('/')
 
-const journey = computed(() => imageData.value.journeyStep.journey)
+const journey = computed(() => imageData.value.ai_image.journeyStep.journey)
 
 // Load high resolution image
 const upscaling = ref(false)
@@ -50,7 +55,7 @@ const upscaled = ref(!! imageData.value.versions?.lg)
 const loadHighRes = async () => {
   try {
     upscaling.value = true
-    await post(`${uri}/upscale`)
+    await post(`${config.public.opepenAiApi}/ai-images/${imageData.value.ai_image.uuid}/upscale`)
     imageData.value.versions.lg = true
     upscaling.value = false
     upscaled.value = true
@@ -67,7 +72,7 @@ onMounted(() => {
 // Define metadata
 useMetaData({
   title: `Opepen Image of ${journey.value.title}`,
-  og: upscaled.value ? imageData.value.uri.replace(`.png`, `@lg.png`) : imageData.value.uri
+  og: imageURI(imageData.value, upscaled.value ? 'lg' : undefined)
 })
 </script>
 

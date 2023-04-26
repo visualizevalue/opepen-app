@@ -40,47 +40,48 @@
 <script setup>
 import { post } from '~/api'
 import downloadImage from '~/helpers/download-image'
+import { imageURI } from '~/helpers/images'
 
 const config = useRuntimeConfig()
 
 const props = defineProps({
   step: Object,
-  image: Object,
+  aiImage: Object,
   version: String,
 })
 const emit = defineEmits(['detach'])
 
-const image = ref(props.image)
+const aiImage = ref(props.aiImage)
 const imageEl = ref(null)
 const loaded = ref(false)
 const uri = ref('')
-const versionedUri = computed(() => props.version
-  ? image.value.uri.replace(`.png`, `@${props.version}.png`)
-  : image.value.uri
-)
+const loadImage = () => uri.value = imageURI(image.value)
+const image = computed(() => aiImage.value?.image)
+const versionedUri = computed(() => imageURI(image.value, props.version))
 
 // Load image
-onMounted(() => {
-  uri.value = image.value.uri
+watch(props, () => {
+  console.log('props changed', props.aiImage)
+  aiImage.value = props.value
+  loadImage()
 })
-
-// Image loaded
-const imageLoaded = () => loaded.value = true
-
 onMounted(async () => {
-  if (! image.value.uuid) {
-    image.value = await post(`${config.public.opepenAiApi}/steps/${props.step.uuid}/dream`)
-    uri.value = image.value.uri
+  if (! aiImage.value.uuid) {
+    aiImage.value = await post(`${config.public.opepenAiApi}/steps/${props.step.uuid}/dream`)
   }
+
+  loadImage()
 })
+
+// Image loaded event
+const imageLoaded = () => loaded.value = true
 
 // Actions
 const reseed = async () => {
   try {
     loaded.value = false
-    image.value = await post(`${config.public.opepenAiApi}/ai-images/${image.value.uuid}/reseed`)
-    image.value.uri += `?v=${Date.now()}`
-    uri.value = image.value.uri
+    aiImage.value = await post(`${config.public.opepenAiApi}/ai-images/${aiImage.value.uuid}/reseed`)
+    uri.value += `?v=${Date.now()}`
     // Image will reload and call loaded event
   } catch (e) {
     loaded.value = true
@@ -89,11 +90,11 @@ const reseed = async () => {
 const detach = async () => {
   if (! confirm(`Do you really want to delete this image?`)) return
 
-  $fetch(`${config.public.opepenAiApi}/ai-images/${image.value.uuid}`, { method: 'DELETE' })
-  emit('detach', image.value)
+  $fetch(`${config.public.opepenAiApi}/ai-images/${aiImage.value.uuid}`, { method: 'DELETE' })
+  emit('detach', aiImage.value)
 }
-const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${image.value.uuid}@${props.version}` : image.value.uuid })
-const downloadHD = async () => await downloadImage(image.value.uri.replace(`.png`, `@2048.png`), { name: `${image.value.uuid}@2048` })
+const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${aiImage.value.uuid}@${props.version}` : aiImage.value.uuid })
+const downloadHD = async () => await downloadImage(imageURI(aiImage.value.image, 'xl'), { name: `${aiImage.value.uuid}@xl` })
 
 defineExpose({
   download,

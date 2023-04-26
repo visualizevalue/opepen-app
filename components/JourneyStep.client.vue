@@ -12,7 +12,7 @@
         v-for="(image, index) in images"
         :key="image.uuid || index"
         :step="step"
-        :image="image"
+        :ai-image="image"
         @detach="() => detach(image.uuid)"
       />
       <article @click="newImage" class="ai-image create">
@@ -31,7 +31,7 @@ const { step } = defineProps({
   step: Object,
 })
 
-const images = ref(step.images || [])
+const images = ref(step.ai_images || [])
 
 const MINIMUM_TO_GENERATE = 3
 if (images.value.length < MINIMUM_TO_GENERATE) {
@@ -124,5 +124,9 @@ const detach = id => {
 
   .create {
     cursor: pointer;
+
+    nav {
+      opacity: 1 !important;
+    }
   }
 </style>
