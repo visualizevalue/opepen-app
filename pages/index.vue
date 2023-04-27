@@ -1,9 +1,25 @@
 <template>
-  <div></div>
+  <div class="home">
+    <PageHeader class="centered">
+      <h1>
+        Opepen
+        <small>the age of abundance</small>
+      </h1>
+    </PageHeader>
+
+    <section>
+      <FeaturedGallery />
+    </section>
+  </div>
 </template>
 
 <script setup>
-const router = useRouter()
-
-router.replace('/reveal')
 </script>
+
+<style lang="postcss" scoped>
+  section {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: var(--size-5) auto;
+  }
+</style>

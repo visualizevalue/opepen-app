@@ -20,4 +20,26 @@
       letter-spacing: var(--letter-spacing-md);
     }
   }
+
+  header.centered {
+    text-align: center;
+    padding: var(--size-6) 0;
+
+    :deep(h1) {
+      font-size: var(--font-title);
+      line-height: var(--line-height-md);
+
+      small {
+        display: block;
+        color: var(--gray-z-6);
+        margin: 0 0 var(--size-2);
+      }
+    }
+
+    :deep(.actions) {
+      display: flex;
+      justify-content: center;
+      margin: var(--size-4) 0;
+    }
+  }
 </style>

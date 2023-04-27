@@ -1,6 +1,6 @@
 <template>
   <div class="reveal">
-    <header>
+    <PageHeader class="centered">
       <h1>
         <small>Reveal</small>
         <span>Rare Opepen</span>
@@ -10,7 +10,7 @@
           <Connect />
         </div>
       </ClientOnly>
-    </header>
+    </PageHeader>
 
     <section v-if="! revealed">
       <div>
@@ -65,31 +65,6 @@ useMetaData({
 <style lang="postcss" scoped>
 .reveal {
   user-select: none;
-}
-
-header {
-  text-align: center;
-  padding: var(--size-6) 0;
-
-  h1 {
-    font-size: var(--font-title);
-    text-transform: uppercase;
-    font-weight: var(--font-weight-bold);
-    letter-spacing: var(--letter-spacing-md);
-    line-height: var(--line-height-md);
-
-    small {
-      display: block;
-      color: var(--gray-z-6);
-      margin: 0 0 var(--size-2);
-    }
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center;
-    margin: var(--size-4) 0;
-  }
 }
 
 section {

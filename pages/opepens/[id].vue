@@ -112,7 +112,7 @@ div.opepen-detail {
   }
 
   .image-wrapper {
-    margin: var(--size-6) auto;
+    margin: var(--size-4) auto;
   }
 }
 </style>

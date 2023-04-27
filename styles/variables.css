@@ -47,6 +47,7 @@
   /* ANIMATION */
   --speed-fast: 0.15s;
   --speed:      0.3s;
+  --speed-slow: 0.5s;
 
   /* COMPONENTS */
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
