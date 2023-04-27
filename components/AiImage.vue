@@ -6,6 +6,7 @@
         <img :src="previewTokenUrl" crossorigin="anonymous" loading="eager" >
       </div> -->
       <img
+        v-if="uri"
         ref="imageEl"
         :src="uri"
         loading="lazy"
@@ -49,25 +50,23 @@ const props = defineProps({
   aiImage: Object,
   version: String,
 })
-const emit = defineEmits(['detach'])
+const emit = defineEmits(['created', 'detach'])
 
 const aiImage = ref(props.aiImage)
 const imageEl = ref(null)
 const loaded = ref(false)
 const uri = ref('')
-const loadImage = () => uri.value = imageURI(image.value)
 const image = computed(() => aiImage.value?.image)
 const versionedUri = computed(() => imageURI(image.value, props.version))
+const loadImage = () => uri.value = imageURI(image.value)
 
 // Load image
-watch(props, () => {
-  console.log('props changed', props.aiImage)
-  aiImage.value = props.value
-  loadImage()
-})
+// FIXME: This has nothing to do here. extract to journey step...
 onMounted(async () => {
   if (! aiImage.value.uuid) {
     aiImage.value = await post(`${config.public.opepenAiApi}/steps/${props.step.uuid}/dream`)
+
+    emit('created', aiImage.value)
   }
 
   loadImage()
