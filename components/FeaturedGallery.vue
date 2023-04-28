@@ -29,6 +29,11 @@ const url = `${config.public.opepenApi}/opepen/images/featured`
   grid-auto-flow: dense;
   gap: var(--gap);
 
+  > *:nth-child(4n) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
   @media (--sm) {
     --image-width: 12rem;
   }
@@ -38,7 +43,7 @@ const url = `${config.public.opepenApi}/opepen/images/featured`
   }
 
   @media (--lg) {
-    --gap: var(--size-7);
+    --gap: var(--size-8);
   }
 }
 </style>

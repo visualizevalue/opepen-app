@@ -25,8 +25,17 @@ const props = defineProps({
 const uri = ref('')
 const loaded = ref(false)
 
-const loadImage = () => uri.value = imageURI(props.image, props.version)
-const loadOriginal = () => uri.value = imageURI(props.image)
+const loadImage = ([{ isIntersecting }]) => {
+  if (! isIntersecting) return
+
+  console.log(props.image.uuid)
+
+  uri.value = imageURI(props.image, props.version)
+}
+const loadOriginal = () => {
+  console.log('error')
+  // uri.value = imageURI(props.image)
+}
 
 // Image loaded event
 const imageLoaded = () => loaded.value = true
@@ -83,9 +92,17 @@ article.image {
     transform: translateY(3rem);
     transition: all var(--speed-slow);
 
+    img {
+      opacity: 0.001;
+    }
+
     &.loaded {
       opacity: 1;
       transform: translateY(0);
+
+      img {
+        opacity: 1;
+      }
     }
   }
 }

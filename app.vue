@@ -29,13 +29,11 @@ useMetaData({
 <style lang="postcss" scoped>
   main {
     min-height: var(--100vh);
-    overflow-x: hidden;
   }
 </style>
 
 <style lang="postcss">
   body {
     min-height: var(--100vh);
-    overflow-x: hidden;
   }
 </style>

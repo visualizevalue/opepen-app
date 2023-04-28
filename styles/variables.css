@@ -39,6 +39,7 @@
   --font-title: min(calc(var(--size-4) + 1vw * 2), var(--size-7));
   --font-weight-medium: 500;
   --font-weight-bold: 700;
+  --letter-spacing-sm: -0.025em;
   --letter-spacing-md: 0.05em;
   --letter-spacing-lg: 0.1em;
   --line-height-base: var(--size-6);
@@ -47,7 +48,7 @@
   /* ANIMATION */
   --speed-fast: 0.15s;
   --speed:      0.3s;
-  --speed-slow: 0.5s;
+  --speed-slow: 1.5s;
 
   /* COMPONENTS */
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
