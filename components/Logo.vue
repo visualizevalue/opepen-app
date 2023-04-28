@@ -2,6 +2,7 @@
   <span>
     <IconsOpepenAiMedium />
     <OpepenAiTextLogo />
+    <slot />
   </span>
 </template>
 

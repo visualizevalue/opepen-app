@@ -1,10 +1,7 @@
 <template>
   <div class="home">
     <PageHeader class="centered">
-      <h1>
-        Opepen
-        <small>the age of abundance</small>
-      </h1>
+      <h1>The Opepen Meta</h1>
     </PageHeader>
 
     <section>

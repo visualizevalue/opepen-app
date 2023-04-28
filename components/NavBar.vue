@@ -4,10 +4,10 @@
       <Logo />
     </NuxtLink>
 
-    <Button to="/create" @click="onCreateClick">
+    <!-- <Button to="/create" @click="onCreateClick">
       <Icon type="plus" />
       <span>Create</span>
-    </Button>
+    </Button> -->
     <Connect />
   </nav>
 </template>

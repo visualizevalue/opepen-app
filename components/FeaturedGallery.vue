@@ -8,6 +8,7 @@
       v-for="image in items"
       :key="image.uuid"
       :image="image"
+      version="sm"
       class="appear"
     />
   </PaginatedContent>

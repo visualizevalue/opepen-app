@@ -1,11 +1,11 @@
 <template>
-  <article class="image" :class="{ loaded }">
+  <article class="image" :class="{ loaded }" v-intersection-observer="loadImage">
     <div class="inner image">
       <img
         v-if="uri"
         ref="imageEl"
         :src="uri"
-        loading="lazy"
+        @error="loadOriginal"
         @load="imageLoaded"
       >
       <Loading v-else txt="" />
@@ -14,18 +14,19 @@
 </template>
 
 <script setup>
+import { vIntersectionObserver } from '@vueuse/components'
 import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
   image: Object,
+  version: String,
 })
 
 const uri = ref('')
 const loaded = ref(false)
 
-onMounted(() => {
-  uri.value= imageURI(props.image)
-})
+const loadImage = () => uri.value = imageURI(props.image, props.version)
+const loadOriginal = () => uri.value = imageURI(props.image)
 
 // Image loaded event
 const imageLoaded = () => loaded.value = true
