@@ -2,10 +2,10 @@
   <div class="home">
     <h1>The <span class="nowrap">Opepen Meta</span></h1>
 
-    <aside v-if="viewPreviews" class="previews">
+    <!-- <aside v-if="viewPreviews" class="previews">
       <SetPreview :id="1" />
       <SetPreview :id="2" />
-    </aside>
+    </aside> -->
 
     <section>
       <FeaturedGallery />
@@ -14,10 +14,10 @@
 </template>
 
 <script setup>
-import { SET_TIMESTAMPS } from '~/helpers/sets'
-import { nowInSeconds } from '~/helpers/time'
+// import { SET_TIMESTAMPS } from '~/helpers/sets'
+// import { nowInSeconds } from '~/helpers/time'
 
-const viewPreviews = SET_TIMESTAMPS['1'] < nowInSeconds() || true
+// const viewPreviews = SET_TIMESTAMPS['1'] < nowInSeconds() || true
 </script>
 
 <style lang="postcss" scoped>

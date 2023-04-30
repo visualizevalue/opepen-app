@@ -9,10 +9,10 @@
       <span>Create</span>
     </Button> -->
 
-    <!-- <Button to="/sets/001">
+    <Button to="/sets/001">
       <Icon type="grid" />
       <span>Sets</span>
-    </Button> -->
+    </Button>
     <Connect />
   </nav>
 </template>
