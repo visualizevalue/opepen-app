@@ -84,7 +84,7 @@
       <span class="check" :class="{ active: minDemand && edition40Demand >= minDemand }"><Check /></span>
     </section>
 
-    <section v-if="minDemand" class="opt-in">
+    <section v-if="set.name" class="opt-in">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="1683046800" minimal class="inline nowrap" />.</div>
       <Button @click="optInOpen = true">
         <Icon type="feather" />
