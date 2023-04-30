@@ -14,7 +14,7 @@
     <section class="stats">
       <span>Edition</span>
       <span class="light">Opt-Ins</span>
-      <span class="light">Demand</span>
+      <span class="light">Demand <small class="muted">(min {{ minDemand }}%)</small></span>
       <span></span>
 
       <span class="light">One</span>
@@ -172,6 +172,7 @@ useMetaData({
 
     > * {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-transform: uppercase;
@@ -179,10 +180,16 @@ useMetaData({
       font-size: var(--font-sm);
       box-shadow: 0 0 0 1px var(--gray-z-4);
       background-color: var(--gray-z-1);
+      line-height: var(--line-height-md);
     }
 
     .light{
       background-color: var(--gray-z-2);
+
+    }
+
+    .muted {
+      color: var(--gray-z-7);
     }
 
     .check {
