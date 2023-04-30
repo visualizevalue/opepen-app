@@ -104,7 +104,7 @@
     </section>
 
     <section v-if="set.name" class="opt-in">
-      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="SET_TIMESTAMPS[set.id]" minimal class="inline nowrap" />.</div>
+      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="revealsAt" minimal class="inline nowrap" />.</div>
       <Button @click="optInOpen = true">
         <Icon type="feather" />
         <span class="nowrap">Opt-In</span>
@@ -120,9 +120,9 @@
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'
-import { SET_TIMESTAMPS } from '~/helpers/sets'
 
 const config = useRuntimeConfig()
 
@@ -131,6 +131,8 @@ const setId = parseInt(route.params.id)
 
 const url = `${config.public.opepenApi}/opepen/sets/${setId}`
 const { data: set, refresh } = await useFetch(url)
+
+const revealsAt = computed(() => DateTime.fromISO(set.value?.reveals_at).toUnixInteger())
 
 // COUNTS
 const edition1Count = computed(() => set.value?.submitted_opepen['1']?.length)
