@@ -1,5 +1,5 @@
 <template>
-  <Modal :open="open" modal-classes="wide" scroll @close="$emit('close')">
+  <Modal :open="open" scroll @close="$emit('close')">
     <div class="opt-in-flow">
       <header>
         <h1>{{ title }}</h1>
@@ -34,9 +34,10 @@
       </section>
       <footer v-if="isConnected">
         <div v-if="selected.length" class="left">
+          <span>Submitting</span>
           <template v-for="(_, g) in grouped">
             <div v-if="selectedInGroup(g).length" class="group">
-              <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ g }}</span></span>
+              <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ WRITTEN_GROUPS[g] }}</span></span>
             </div>
           </template>
         </div>
@@ -59,6 +60,15 @@ const { open, set } = defineProps({
   open: Boolean,
   set: Object,
 })
+
+const WRITTEN_GROUPS = {
+  1: 'One',
+  4: 'Four',
+  5: 'Five',
+  10: 'Ten',
+  20: 'Twenty',
+  40: 'Fourty',
+}
 
 const emit = defineEmits(['close'])
 
@@ -175,6 +185,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   p {
     margin: var(--size-7) 0;
@@ -229,6 +240,7 @@ section {
       .edition {
         color: var(--gray-z-6);
         font-size: var(--font-sm);
+        text-align: right;
       }
 
       &:--highlight {
@@ -242,6 +254,7 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  z-index: 6;
 
   padding: var(--size-4);
 
@@ -256,17 +269,28 @@ footer {
   .left {
     margin-right: auto;
     display: flex;
+    flex-wrap: wrap;
     gap: var(--size-2);
     font-size: var(--font-sm);
     align-items: center;
     font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-display);
+    text-transform: uppercase;
+    line-height: 0.75;
+
+    span:first-child {
+      width: 100%;
+      color: var(--gray-z-6);
+      margin-bottom: -0.25em;
+    }
 
     .times {
       color: var(--gray-z-6);
+      text-transform: lowercase;
     }
 
     .edition {
-      color: var(--gray-z-7);
+      color: var(--gray-z-9);
     }
   }
 }

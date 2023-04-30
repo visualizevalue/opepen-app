@@ -104,9 +104,9 @@ defineEmits(['close'])
 
     button {
       position: absolute;
-      top: var(--size-3);
+      top: var(--size-5);
       right: var(--size-3);
-      width: auto;
+      width: var(--size-6);
       z-index: 10;
 
       &:--highlight {
@@ -143,12 +143,6 @@ defineEmits(['close'])
   &.wide {
     section {
       max-width: min(calc(100vw - 2*var(--size-4)), var(--content-width));
-
-      button {
-        top: var(--size-5);
-        right: var(--size-3);
-        width: var(--size-6);
-      }
     }
   }
 

@@ -1,6 +1,7 @@
 <template>
   <button @click="() => toggleDark()">
-    <Icon :type="isDark ? 'sun' : 'moon'" :size="20" />
+    <Icon v-if="isDark" type="sun" :size="20" />
+    <Icon v-else type="moon" :size="20" />
   </button>
 </template>
 
@@ -8,6 +9,7 @@
 import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
+isDark.value = true
 const toggleDark = useToggle(isDark)
 </script>
 

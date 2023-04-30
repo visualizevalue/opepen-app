@@ -63,6 +63,7 @@
   /* BORDERS */
   --border: 1px solid var(--gray-z-4);
   --border-dark: 1px solid var(--gray-z-2);
+  --border-light: 1px solid var(--gray-z-6);
 
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
