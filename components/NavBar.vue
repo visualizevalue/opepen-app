@@ -44,7 +44,7 @@ const onCreateClick = () => {
     z-index: 200;
     border-bottom: var(--border);
     border-color: transparent;
-    backdrop-filter: blur(var(--size-1));
+    backdrop-filter: var(--blur);
     transition: all var(--speed-fast);
 
     &.scrolled {

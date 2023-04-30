@@ -62,6 +62,9 @@
   /* BORDERS */
   --border: 1px solid var(--gray-z-4);
   --border-dark: 1px solid var(--gray-z-2);
+
+  /* BACKGROUNDS */
+  --blur: blur(var(--size-1));
 }
 
 /* LIGHT */

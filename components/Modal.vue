@@ -8,14 +8,14 @@
 
     <Transition name="modal">
       <section v-if="open" :class="{ 'is-scrollable': scroll, light }">
-        <button v-if="xClose" @click="$emit('close')" class="close-modal">
+        <button v-if="xClose" @click="$emit('close')">
           <Icon type="x" />
         </button>
         <div v-if="scroll" class="scroll">
           <slot />
         </div>
         <template v-else>
-          <h1 v-if="title" class="medium upper">{{ title }}</h1>
+          <h1 v-if="title">{{ title }}</h1>
           <slot />
         </template>
       </section>
@@ -92,6 +92,7 @@ defineEmits(['close'])
     border: var(--border-dark);
     border-radius: var(--size-4);
     border-top-left-radius: var(--size-1);
+    overflow: hidden;
 
     h1 {
       text-align: center;
@@ -114,8 +115,13 @@ defineEmits(['close'])
     }
 
     &.is-scrollable {
-      height: calc(10 * var(--grid-size));
+      max-height: calc(0.8 * var(--100vh));
       padding: 0;
+
+      :deep(.scroll) {
+        max-height: calc(0.8 * var(--100vh));
+        height: 100%;
+      }
     }
 
     &.light {
@@ -134,8 +140,20 @@ defineEmits(['close'])
     }
   }
 
+  &.wide {
+    section {
+      max-width: min(calc(100vw - 2*var(--size-4)), var(--content-width));
+
+      button {
+        top: var(--size-5);
+        right: var(--size-3);
+        width: var(--size-6);
+      }
+    }
+  }
+
   :deep(.actions) {
-    margin: var(--size-7) calc(-1 * var(--size-5)) calc(-1 * var(--size-6));
+    margin: var(--size-7) 0 calc(-1 * var(--size-6));
     overflow: hidden;
     border-top: var(--border);
     gap: 0;

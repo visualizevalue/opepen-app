@@ -36,7 +36,7 @@ button {
 
   &[disabled]:not([disabled=false]) {
     pointer-events: none;
-    color: var(--gray-z-3);
+    color: var(--gray-z-5);
     cursor: normal;
   }
 }
