@@ -7,7 +7,7 @@
     <div class="overlay" @click="clickOutside && $emit('close')"></div>
 
     <Transition name="modal">
-      <section v-if="open" :class="{ 'is-scrollable': scroll, light }">
+      <section v-if="open" :class="{ 'is-scrollable': scroll }">
         <button v-if="xClose" @click="$emit('close')">
           <Icon type="x" />
         </button>
@@ -37,7 +37,6 @@ const { open, title, scroll } = defineProps({
   },
   title: String,
   scroll: Boolean,
-  light: Boolean,
   modalClasses: String,
 })
 
@@ -122,10 +121,6 @@ defineEmits(['close'])
         max-height: calc(0.8 * var(--100vh));
         height: 100%;
       }
-    }
-
-    &.light {
-      background: var(--gray-z-2);
     }
 
     &.modal-enter-active,

@@ -6,11 +6,27 @@
 </template>
 
 <script setup>
-import { useDark, useToggle } from '@vueuse/core'
+import { useToggle } from '@vueuse/core'
 
-const isDark = useDark()
-isDark.value = true
+const isDark = ref(false)
 const toggleDark = useToggle(isDark)
+
+watch(isDark, () => {
+  if (isDark.value) {
+    document.documentElement.classList.remove('lightmode')
+    localStorage.setItem('color-scheme', 'dark')
+  } else {
+    document.documentElement.classList.add('lightmode')
+    localStorage.setItem('color-scheme', 'light')
+  }
+})
+
+onMounted(() => {
+  if (localStorage.getItem('color-scheme') === 'light') {
+    isDark.value = false
+    document.documentElement.classList.add('lightmode')
+  }
+})
 </script>
 
 <style lang="postcss" scoped>

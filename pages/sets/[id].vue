@@ -49,36 +49,36 @@
 
     <section class="stats">
       <span>Edition</span>
-      <span class="light">Opt-Ins</span>
-      <span class="light">Demand <small class="muted">(min {{ minDemand }}%)</small></span>
+      <span class="th">Opt-Ins</span>
+      <span class="th">Demand <small class="muted">(min {{ minDemand }}%)</small></span>
       <span></span>
 
-      <span class="light">One</span>
+      <span class="th">One</span>
       <span>{{ edition1Count }}</span>
       <span>{{ edition1Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition1Demand >= minDemand }"><Check /></span>
 
-      <span class="light">Four</span>
+      <span class="th">Four</span>
       <span>{{ edition4Count }}</span>
       <span>{{ edition4Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition4Demand >= minDemand }"><Check /></span>
 
-      <span class="light">Five</span>
+      <span class="th">Five</span>
       <span>{{ edition5Count }}</span>
       <span>{{ edition5Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition5Demand >= minDemand }"><Check /></span>
 
-      <span class="light">Ten</span>
+      <span class="th">Ten</span>
       <span>{{ edition10Count }}</span>
       <span>{{ edition10Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition10Demand >= minDemand }"><Check /></span>
 
-      <span class="light">Twenty</span>
+      <span class="th">Twenty</span>
       <span>{{ edition20Count }}</span>
       <span>{{ edition20Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition20Demand >= minDemand }"><Check /></span>
 
-      <span class="light">Forty</span>
+      <span class="th">Forty</span>
       <span>{{ edition40Count }}</span>
       <span>{{ edition40Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition40Demand >= minDemand }"><Check /></span>
@@ -255,9 +255,8 @@ useMetaData({
       line-height: var(--line-height-md);
     }
 
-    .light{
+    .th{
       background-color: var(--gray-z-2);
-
     }
 
     .muted {
