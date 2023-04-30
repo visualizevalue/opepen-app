@@ -19,11 +19,19 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
+
 const config = useRuntimeConfig()
 const route = useRoute()
 const url = `${config.public.opepenApi}/accounts/${route.params.id}`
 const { data: account } = await useFetch(url)
 const { data: opepens } = await useFetch(`${url}/opepen`)
+
+useMetaData({
+  title: `${ account.value.display } | Opepen`,
+  description: `Opepen owned by ${account.value.display}.`,
+  og: 'https://opepen.art/og/rare.png',
+})
 </script>
 
 <style lang="postcss" scoped>
