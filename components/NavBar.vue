@@ -8,6 +8,11 @@
       <Icon type="plus" />
       <span>Create</span>
     </Button> -->
+
+    <!-- <Button to="/sets/001">
+      <Icon type="grid" />
+      <span>Sets</span>
+    </Button> -->
     <Connect />
   </nav>
 </template>
@@ -53,6 +58,8 @@ const onCreateClick = () => {
 
     > :first-child {
       margin-right: auto;
+      display: flex;
+      align-items: center;
 
       :deep(svg:last-child) {
         display: none;

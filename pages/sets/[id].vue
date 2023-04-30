@@ -104,7 +104,7 @@
     </section>
 
     <section v-if="set.name" class="opt-in">
-      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="1683046800" minimal class="inline nowrap" />.</div>
+      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="SET_TIMESTAMPS[set.id]" minimal class="inline nowrap" />.</div>
       <Button @click="optInOpen = true">
         <Icon type="feather" />
         <span class="nowrap">Opt-In</span>
@@ -122,6 +122,7 @@
 <script setup>
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'
+import { SET_TIMESTAMPS } from '~/helpers/sets'
 
 const config = useRuntimeConfig()
 
