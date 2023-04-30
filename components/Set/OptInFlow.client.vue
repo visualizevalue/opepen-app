@@ -6,7 +6,8 @@
       </header>
       <section>
         <div v-if="! isConnected" class="connect">
-          <Connect />
+          <p>Please connect your wallet in order to select the Opepen tokens you'd like to submit.</p>
+          <ChooseWallet />
         </div>
         <div v-else>
           <Loading v-if="opepenLoading" />
@@ -31,7 +32,7 @@
           </div>
         </div>
       </section>
-      <footer>
+      <footer v-if="isConnected">
         <Button @click="$emit('close')">Cancel</Button>
         <Button :disabled="signing" @click="sign">
           <span v-if="signing">Confirming</span>
@@ -159,8 +160,16 @@ header {
 .connect {
   padding: var(--size-9) var(--size-4);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  p {
+    margin: var(--size-7) 0;
+    text-transform: uppercase;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-sm);
+  }
 }
 
 section {
