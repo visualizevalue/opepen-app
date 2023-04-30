@@ -67,7 +67,7 @@ const WRITTEN_GROUPS = {
   5: 'Five',
   10: 'Ten',
   20: 'Twenty',
-  40: 'Fourty',
+  40: 'Forty',
 }
 
 const emit = defineEmits(['close'])

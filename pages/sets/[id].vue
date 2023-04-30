@@ -42,7 +42,7 @@
       <span>{{ edition20Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition20Demand >= minDemand }"><Check /></span>
 
-      <span class="light">Fourty</span>
+      <span class="light">Forty</span>
       <span>{{ edition40Count }}</span>
       <span>{{ edition40Demand }}%</span>
       <span class="check" :class="{ active: minDemand && edition40Demand >= minDemand }"><Check /></span>
