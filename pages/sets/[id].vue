@@ -56,32 +56,50 @@
       <span class="th">One</span>
       <span>{{ edition1Count }}</span>
       <span>{{ edition1Demand }}%</span>
-      <span class="check" :class="{ active: minDemand && edition1Demand >= minDemand }"><Check /></span>
+      <span class="check" :class="{
+        active: minDemand && edition1Demand >= minDemand,
+        closeToActive: minDemand && edition1Demand >= minDemand/2,
+      }"><Check /></span>
 
       <span class="th">Four</span>
       <span>{{ edition4Count }}</span>
       <span>{{ edition4Demand }}%</span>
-      <span class="check" :class="{ active: minDemand && edition4Demand >= minDemand }"><Check /></span>
+      <span class="check" :class="{
+        active: minDemand && edition4Demand >= minDemand,
+        closeToActive: minDemand && edition4Demand >= minDemand/2,
+      }"><Check /></span>
 
       <span class="th">Five</span>
       <span>{{ edition5Count }}</span>
       <span>{{ edition5Demand }}%</span>
-      <span class="check" :class="{ active: minDemand && edition5Demand >= minDemand }"><Check /></span>
+      <span class="check" :class="{
+        active: minDemand && edition5Demand >= minDemand,
+        closeToActive: minDemand && edition5Demand >= minDemand/2,
+      }"><Check /></span>
 
       <span class="th">Ten</span>
       <span>{{ edition10Count }}</span>
       <span>{{ edition10Demand }}%</span>
-      <span class="check" :class="{ active: minDemand && edition10Demand >= minDemand }"><Check /></span>
+      <span class="check" :class="{
+        active: minDemand && edition10Demand >= minDemand,
+        closeToActive: minDemand && edition10Demand >= minDemand/2,
+      }"><Check /></span>
 
       <span class="th">Twenty</span>
       <span>{{ edition20Count }}</span>
       <span>{{ edition20Demand }}%</span>
-      <span class="check" :class="{ active: minDemand && edition20Demand >= minDemand }"><Check /></span>
+      <span class="check" :class="{
+        active: minDemand && edition20Demand >= minDemand,
+        closeToActive: minDemand && edition20Demand >= minDemand/2,
+      }"><Check /></span>
 
       <span class="th">Forty</span>
       <span>{{ edition40Count }}</span>
       <span>{{ edition40Demand }}%</span>
-      <span class="check" :class="{ active: minDemand && edition40Demand >= minDemand }"><Check /></span>
+      <span class="check" :class="{
+        active: minDemand && edition40Demand >= minDemand,
+        closeToActive: minDemand && edition40Demand >= minDemand/2,
+      }"><Check /></span>
     </section>
 
     <section v-if="set.name" class="opt-in">
@@ -265,6 +283,10 @@ useMetaData({
 
     .check {
       color: var(--gray-z-5);
+
+      &.closeToActive {
+        color: var(--yellow);
+      }
 
       &.active {
         color: var(--success)

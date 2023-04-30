@@ -19,8 +19,10 @@
 
   /* COLORS */
   --red: #ef4444;
-  --error: var(--red);
   --green: #94E337;
+  --yellow: #F2A840;
+
+  --error: var(--red);
   --success: var(--green);
 
   /* SIZES */
