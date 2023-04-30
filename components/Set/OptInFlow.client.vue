@@ -17,7 +17,7 @@
               <div v-if="opepens.length">
                 <h1>Editions of {{ g }}:</h1>
 
-                <button v-if="allInGroupSelected(g)" @click="() => deselectAll(g)" class="sm">Deselect All</button>
+                <button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</button>
                 <button v-else @click="() => selectAll(g)" class="sm">Select All</button>
               </div>
 
@@ -33,6 +33,13 @@
         </div>
       </section>
       <footer v-if="isConnected">
+        <div v-if="selected.length" class="left">
+          <div v-for="(_, g) in grouped" class="group">
+            <div v-if="selectedInGroup(g).length">
+              <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ g }}</span></span>
+            </div>
+          </div>
+        </div>
         <Button @click="$emit('close')">Cancel</Button>
         <Button :disabled="signing" @click="sign">
           <span v-if="signing">Confirming</span>
@@ -95,8 +102,11 @@ const deselectAll = (group) => {
     selected.value.splice(i, 1)
   })
 }
-const allInGroupSelected = group => {
-  return grouped.value[group].filter(o => ! selected.value.includes(o.token_id)).length === 0
+const selectedInGroup = group => {
+  return grouped.value[group].filter(o => selected.value.includes(o.token_id))
+}
+const hasCompleteGroupSelection = group => {
+  return selectedInGroup(group).length === grouped.value[group].length
 }
 
 const signing = ref(false)
@@ -135,6 +145,8 @@ const sign = async () => {
 <style lang="postcss" scoped>
 .opt-in-flow {
   --header-height: calc(var(--size-8) + var(--size-2));
+
+  font-family: var(--font-family-display);
 }
 
 header {
@@ -240,5 +252,22 @@ footer {
   display: flex;
   justify-content: flex-end;
   gap: var(--size-4);
+
+  .left {
+    margin-right: auto;
+    display: flex;
+    gap: var(--size-2);
+    font-size: var(--font-sm);
+    align-items: center;
+    font-weight: var(--font-weight-bold);
+
+    .times {
+      color: var(--gray-z-6);
+    }
+
+    .edition {
+      color: var(--gray-z-7);
+    }
+  }
 }
 </style>

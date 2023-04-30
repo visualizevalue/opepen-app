@@ -159,6 +159,7 @@ useMetaData({
   }
 
   .stats {
+    font-family: var(--font-family-display);
     border-radius: var(--size-6);
     border-top-left-radius: var(--size-1);
     border: var(--border-dark);
@@ -199,6 +200,7 @@ useMetaData({
   }
 
   .opt-in {
+    font-family: var(--font-family-display);
     display: flex;
     justify-content: space-between;
     align-items: center;
