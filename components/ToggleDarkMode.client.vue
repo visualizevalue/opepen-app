@@ -8,7 +8,7 @@
 <script setup>
 import { useToggle } from '@vueuse/core'
 
-const isDark = ref(false)
+const isDark = ref(localStorage.getItem('color-scheme') === 'light')
 const toggleDark = useToggle(isDark)
 
 watch(isDark, () => {
@@ -22,8 +22,7 @@ watch(isDark, () => {
 })
 
 onMounted(() => {
-  if (localStorage.getItem('color-scheme') === 'light') {
-    isDark.value = false
+  if (! isDark.value) {
     document.documentElement.classList.add('lightmode')
   }
 })
