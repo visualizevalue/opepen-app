@@ -99,7 +99,7 @@ watch(optInOpen, () => {
 })
 
 useMetaData({
-  title: `Set ${pad(set.value.id, 3)}: ${set.value.name} | Opepen`,
+  title: `Set ${pad(set.value.id, 3)}: ${set.value.name || 'Locked'} | Opepen`,
   description: `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
   og: 'https://opepen.art/og/rare.png',
 })
