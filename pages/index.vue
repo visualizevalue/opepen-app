@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>The Opepen Meta</h1>
+    <h1>The <span class="nowrap">Opepen Meta</span></h1>
 
     <section>
       <FeaturedGallery />
@@ -14,11 +14,16 @@
 <style lang="postcss" scoped>
   h1 {
     text-align: center;
-    font-size: var(--size-8);
+    color: var(--gray-z-8);
+    font-size: var(--font-display);
     letter-spacing: var(--letter-spacing-sm);
     font-weight: var(--font-weight-bold);
     margin: 8vh 0 15vh;
     line-height: 1em;
+
+    .nowrap {
+      white-space: nowrap;
+    }
   }
 
   section {

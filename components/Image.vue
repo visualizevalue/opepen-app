@@ -88,8 +88,8 @@ article.image {
   }
 
   &.appear {
-    opacity: 0;
-    transform: translateY(3rem);
+    opacity: 0.15;
+    transform: translateY(var(--size-6));
     transition: all var(--speed-slow);
 
     img {
