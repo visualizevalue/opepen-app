@@ -34,11 +34,11 @@
       </section>
       <footer v-if="isConnected">
         <div v-if="selected.length" class="left">
-          <div v-for="(_, g) in grouped" class="group">
-            <div v-if="selectedInGroup(g).length">
+          <template v-for="(_, g) in grouped">
+            <div v-if="selectedInGroup(g).length" class="group">
               <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ g }}</span></span>
             </div>
-          </div>
+          </template>
         </div>
         <Button @click="$emit('close')">Cancel</Button>
         <Button :disabled="signing" @click="sign">
