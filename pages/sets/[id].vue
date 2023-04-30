@@ -2,6 +2,7 @@
   <div class="set">
     <SetPagination :set="set" />
 
+    <!-- TODO: Refactor... -->
     <section class="items">
       <div class="preview">
         <Image :image="set?.edition1Image" version="sm" class="appear" />
