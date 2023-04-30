@@ -65,6 +65,9 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
+import pad from '~/helpers/pad'
+
 const config = useRuntimeConfig()
 
 const route = useRoute()
@@ -93,6 +96,12 @@ const edition40Demand = computed(() => parseInt(edition40Count.value / 40 * 100)
 const optInOpen = ref(false)
 watch(optInOpen, () => {
   if (optInOpen.value === false) refresh()
+})
+
+useMetaData({
+  title: `Set ${pad(set.value.id, 3)}: ${set.value.name} | Opepen`,
+  description: `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
+  og: 'https://opepen.art/og/rare.png',
 })
 </script>
 
