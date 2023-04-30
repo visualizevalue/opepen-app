@@ -5,7 +5,7 @@
 
     <div class="text">
       <h1>Opepen {{ id }}</h1>
-      <p>Edition of {{ set }}</p>
+      <p v-if="set">Edition of {{ set }}</p>
     </div>
   </div>
 </article>

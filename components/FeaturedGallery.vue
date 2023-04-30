@@ -9,7 +9,7 @@
       :key="image.uuid"
       :image="image"
       version="sm"
-      class="appear"
+      class="appear up"
     />
   </PaginatedContent>
 </template>

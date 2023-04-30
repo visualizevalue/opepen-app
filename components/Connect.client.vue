@@ -2,7 +2,7 @@
   <Button v-if="! isConnected" @click="open = true" id="main-connect">
     <slot>Connect</slot>
   </Button>
-  <Button v-else>
+  <Button :to="`/holders/${address}`" v-else>
     <Account :address="address" class="connected" />
   </Button>
 

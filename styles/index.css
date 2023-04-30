@@ -1,5 +1,6 @@
 @import "./variables.css";
 @import "./normalize.css";
+@import "./utilities.css";
 @import "./base.css";
 @import "./forms.css";
 @import "./animation.css";

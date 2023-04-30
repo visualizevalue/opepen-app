@@ -20,6 +20,8 @@
   /* COLORS */
   --red: #ef4444;
   --error: var(--red);
+  --green: #5bc697;
+  --success: var(--green);
 
   /* SIZES */
   --100vh: 100vh;

@@ -28,8 +28,6 @@ const loaded = ref(false)
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
 
-  console.log(props.image.uuid)
-
   uri.value = imageURI(props.image, props.version)
 }
 const loadOriginal = () => {
@@ -89,11 +87,14 @@ article.image {
 
   &.appear {
     opacity: 0.15;
-    transform: translateY(var(--size-6));
     transition: all var(--speed-slow);
 
     img {
       opacity: 0.001;
+    }
+
+    &.up {
+      transform: translateY(var(--size-6));
     }
 
     &.loaded {

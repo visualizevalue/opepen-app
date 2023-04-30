@@ -1,0 +1,5 @@
+.hidden-sm {
+  @media(--max-sm) {
+    display: none;
+  }
+}

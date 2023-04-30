@@ -46,7 +46,7 @@ button {
 .button,
 button {
   display: flex;
-  gap: var(--size-1);
+  gap: var(--size-2);
   justify-content: center;
   align-items: center;
   text-align: center;
