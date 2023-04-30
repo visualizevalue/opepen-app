@@ -20,35 +20,35 @@
       <span class="light">One</span>
       <span>{{ edition1Count }}</span>
       <span>{{ edition1Demand }}%</span>
-      <span class="check" :class="{ active: edition1Demand >= set.min_subscription_percentage }"><Check /></span>
+      <span class="check" :class="{ active: minDemand && edition1Demand >= minDemand }"><Check /></span>
 
       <span class="light">Four</span>
       <span>{{ edition4Count }}</span>
       <span>{{ edition4Demand }}%</span>
-      <span class="check" :class="{ active: edition4Demand >= set.min_subscription_percentage }"><Check /></span>
+      <span class="check" :class="{ active: minDemand && edition4Demand >= minDemand }"><Check /></span>
 
       <span class="light">Five</span>
       <span>{{ edition5Count }}</span>
       <span>{{ edition5Demand }}%</span>
-      <span class="check" :class="{ active: edition5Demand >= set.min_subscription_percentage }"><Check /></span>
+      <span class="check" :class="{ active: minDemand && edition5Demand >= minDemand }"><Check /></span>
 
       <span class="light">Ten</span>
       <span>{{ edition10Count }}</span>
       <span>{{ edition10Demand }}%</span>
-      <span class="check" :class="{ active: edition10Demand >= set.min_subscription_percentage }"><Check /></span>
+      <span class="check" :class="{ active: minDemand && edition10Demand >= minDemand }"><Check /></span>
 
       <span class="light">Twenty</span>
       <span>{{ edition20Count }}</span>
       <span>{{ edition20Demand }}%</span>
-      <span class="check" :class="{ active: edition20Demand >= set.min_subscription_percentage }"><Check /></span>
+      <span class="check" :class="{ active: minDemand && edition20Demand >= minDemand }"><Check /></span>
 
       <span class="light">Fourty</span>
       <span>{{ edition40Count }}</span>
       <span>{{ edition40Demand }}%</span>
-      <span class="check" :class="{ active: edition40Demand >= set.min_subscription_percentage }"><Check /></span>
+      <span class="check" :class="{ active: minDemand && edition40Demand >= minDemand }"><Check /></span>
     </section>
 
-    <section class="opt-in">
+    <section v-if="minDemand" class="opt-in">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="1683046800" minimal class="inline nowrap" />.</div>
       <Button @click="optInOpen = true">
         <Icon type="feather" />
@@ -82,6 +82,7 @@ const edition20Count = computed(() => set.value?.submitted_opepen['20']?.length)
 const edition40Count = computed(() => set.value?.submitted_opepen['40']?.length)
 
 // OVERSUBSCRIBED
+const minDemand = computed(() => set.value.min_subscription_percentage)
 const edition1Demand = computed(() => parseInt(edition1Count.value / 1 * 100))
 const edition4Demand = computed(() => parseInt(edition4Count.value / 4 * 100))
 const edition5Demand = computed(() => parseInt(edition5Count.value / 5 * 100))

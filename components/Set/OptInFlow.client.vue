@@ -1,42 +1,44 @@
 <template>
   <Modal :open="open" modal-classes="wide" scroll @close="$emit('close')">
-    <header>
-      <h1>{{ title }}</h1>
-    </header>
-    <section>
-      <div v-if="! isConnected" class="connect">
-        <Connect />
-      </div>
-      <div v-else>
-        <Loading v-if="opepenLoading" />
+    <div class="opt-in-flow">
+      <header>
+        <h1>{{ title }}</h1>
+      </header>
+      <section>
+        <div v-if="! isConnected" class="connect">
+          <Connect />
+        </div>
+        <div v-else>
+          <Loading v-if="opepenLoading" />
 
-        <div v-else class="opepens">
-          <div v-for="(opepens, g) in grouped" class="group">
-            <div v-if="opepens.length">
-              <h1>Editions of {{ g }}:</h1>
+          <div v-else class="opepens">
+            <div v-for="(opepens, g) in grouped" class="group">
+              <div v-if="opepens.length">
+                <h1>Editions of {{ g }}:</h1>
 
-              <button v-if="allInGroupSelected(g)" @click="() => deselectAll(g)" class="sm">Deselect All</button>
-              <button v-else @click="() => selectAll(g)" class="sm">Select All</button>
+                <button v-if="allInGroupSelected(g)" @click="() => deselectAll(g)" class="sm">Deselect All</button>
+                <button v-else @click="() => selectAll(g)" class="sm">Select All</button>
+              </div>
+
+              <label
+                v-for="o in opepens"
+              >
+                <input type="checkbox" :value="o.token_id" v-model="selected">
+                <span>Opepen #{{ o.token_id }}</span>
+                <span class="edition">(Edition of {{ o.data.edition }})</span>
+              </label>
             </div>
-
-            <label
-              v-for="o in opepens"
-            >
-              <input type="checkbox" :value="o.token_id" v-model="selected">
-              <span>Opepen #{{ o.token_id }}</span>
-              <span class="edition">(Edition of {{ o.data.edition }})</span>
-            </label>
           </div>
         </div>
-      </div>
-    </section>
-    <footer>
-      <Button @click="$emit('close')">Cancel</Button>
-      <Button :disabled="signing" @click="sign">
-        <span v-if="signing">Confirming</span>
-        <span v-else>Confirm</span>
-      </Button>
-    </footer>
+      </section>
+      <footer>
+        <Button @click="$emit('close')">Cancel</Button>
+        <Button :disabled="signing" @click="sign">
+          <span v-if="signing">Confirming</span>
+          <span v-else>Confirm</span>
+        </Button>
+      </footer>
+    </div>
   </Modal>
 </template>
 
@@ -130,13 +132,19 @@ const sign = async () => {
 </script>
 
 <style lang="postcss" scoped>
+.opt-in-flow {
+  --header-height: calc(var(--size-8) + var(--size-2));
+}
+
 header {
   padding: var(--size-4);
   border-bottom: var(--border-dark);
 
   position: absolute;
+  z-index: 4;
   top: 0;
   width: 100%;
+  height: var(--header-height);
 
   background-color: var(--semi);
   backdrop-filter: var(--blur);
@@ -156,7 +164,7 @@ header {
 }
 
 section {
-  padding: var(--size-9) 0;
+  padding: var(--header-height) 0 var(--size-9);
 }
 
 .opepens {
@@ -167,6 +175,9 @@ section {
       font-size: var(--font-sm);
       padding: var(--size-1) var(--size-4);
       letter-spacing: var(--letter-spacing-md);
+      position: sticky;
+      top: var(--header-height);
+      z-index: 2;
 
       display: flex;
       justify-content: space-between;
