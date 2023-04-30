@@ -8,7 +8,6 @@
         @error="loadOriginal"
         @load="imageLoaded"
       >
-      <Loading v-else txt="" />
     </div>
   </article>
 </template>
@@ -32,7 +31,7 @@ const loadImage = ([{ isIntersecting }]) => {
 }
 const loadOriginal = () => {
   console.log('error')
-  // uri.value = imageURI(props.image)
+  uri.value = imageURI(props.image)
 }
 
 // Image loaded event
@@ -86,7 +85,7 @@ article.image {
   }
 
   &.appear {
-    opacity: 0.15;
+    opacity: 0.5;
     transition: all var(--speed-slow);
 
     img {
