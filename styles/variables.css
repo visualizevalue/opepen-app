@@ -37,6 +37,7 @@
   /* FONTS */
   --font-sm: var(--size-3);
   --font-title: min(calc(var(--size-4) + 1vw * 2), var(--size-7));
+  --font-display: min(calc(var(--size-6) + 1vw * 2), var(--size-9));
   --font-weight-medium: 500;
   --font-weight-bold: 700;
   --letter-spacing-sm: -0.025em;
