@@ -66,6 +66,8 @@
   --border-dark: 1px solid var(--gray-z-2);
   --border-light: 1px solid var(--gray-z-6);
 
+  --shadow: 0 0.1em 0.3em 0 var(--semi-shade);
+
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
 }
