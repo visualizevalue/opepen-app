@@ -119,7 +119,7 @@ const sign = async () => {
   try {
     signing.value = true
     const signer = await fetchSigner()
-    const message = `I want to submit my Opepen to be included in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
+    const message = `I want to submit my opepen for possible artwork reveal in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
 
     const signature = await signer.signMessage(message)
 
