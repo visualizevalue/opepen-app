@@ -24,6 +24,8 @@
   header.centered {
     text-align: center;
     padding: var(--size-6) 0;
+    font-family: var(--font-family-display);
+    text-transform: none;
 
     :deep(h1) {
       font-size: var(--font-title);

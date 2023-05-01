@@ -13,7 +13,6 @@ const { to, exact, gridAligned } = defineProps({
 <style lang="postcss" scoped>
 .button,
 button {
-  font-family: var(--font-family-display);
   height: var(--size-7);
   background: var(--gray-z-3);
   color: var(--gray-z-8);

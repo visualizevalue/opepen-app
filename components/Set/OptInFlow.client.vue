@@ -168,8 +168,6 @@ const sign = async () => {
 <style lang="postcss" scoped>
 .opt-in-flow {
   --header-height: calc(var(--size-8) + var(--size-2));
-
-  font-family: var(--font-family-display);
 }
 
 header {
@@ -287,7 +285,6 @@ footer {
     font-size: var(--font-sm);
     align-items: center;
     font-weight: var(--font-weight-bold);
-    font-family: var(--font-family-display);
     text-transform: uppercase;
     line-height: 0.75;
 

@@ -237,7 +237,6 @@ useMetaData({
         transition: all var(--speed);
         margin: 0;
         line-height: 1;
-        font-family: var(--font-family-display);
         font-weight: var(--font-weight-bold);
         text-transform: uppercase;
         text-shadow: 0 0.1em 0.5em var(--black);
@@ -263,7 +262,6 @@ useMetaData({
   }
 
   .stats {
-    font-family: var(--font-family-display);
     border-radius: var(--size-6);
     border-top-left-radius: var(--size-1);
     border: var(--border-dark);
@@ -314,7 +312,6 @@ useMetaData({
   }
 
   .opt-in {
-    font-family: var(--font-family-display);
     display: flex;
     justify-content: space-between;
     align-items: center;

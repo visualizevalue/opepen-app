@@ -20,7 +20,6 @@ const nextSetId = computed(() => set.id < 200 ? pad(set.id + 1, 3) : '')
 
 <style lang="postcss" scoped>
 .pagination {
-  font-family: var(--font-family-display);
   display: flex;
   justify-content: center;
   align-items: center;

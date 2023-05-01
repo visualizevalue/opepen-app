@@ -25,6 +25,8 @@
     text-align: center;
     color: var(--gray-z-8);
     font-size: var(--font-display);
+    font-family: var(--font-family-display);
+    text-transform: none;
     letter-spacing: var(--letter-spacing-sm);
     font-weight: var(--font-weight-bold);
     margin: 8vh 0 15vh;
