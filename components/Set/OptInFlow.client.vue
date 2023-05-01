@@ -52,7 +52,7 @@
 
   <Modal v-if="signed" :open="true" title="Success" @close="() => signed = false">
     <div class="success-modal">
-      <p>You submitted {{ selected.length }} Opepen to be included in set #{{ pad(set.id, 3) }}!</p>
+      <p>You submitted {{ selected.length }} Opepen to be included in <span class="nowrap">set #{{ pad(set.id, 3) }}!</span></p>
       <p>If your Opepen {{ selected.length > 1 ? 'are' : 'is' }} selected as part of this set, your metadata will update after the opt-in window closes.</p>
 
       <div class="action">
