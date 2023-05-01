@@ -103,6 +103,9 @@
       }"><Check /></span>
     </section>
 
+    <SetItemsMeta :set="set" />
+    <SetStatsMeta :set="set" />
+
     <section v-if="set.name" class="opt-in">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="revealsAt" minimal class="inline nowrap" />.</div>
       <Button @click="optInOpen = true">
@@ -176,8 +179,10 @@ useMetaData({
     grid-template-areas:
                 "pagination"
                 "items"
+                "items-meta"
                 "opt-in"
                 "details"
+                "details-meta"
                 "leaderboard";
 
     @media (--md) {
@@ -190,6 +195,7 @@ useMetaData({
       grid-template-areas:
                   "pagination pagination"
                   "items details"
+                  "items-meta details-meta"
                   "opt-in opt-in"
                   "leaderboard leaderboard";
     }
@@ -197,6 +203,8 @@ useMetaData({
     .pagination { grid-area: pagination; }
     .items { grid-area: items; }
     .opt-in { grid-area: opt-in; }
+    .items-meta { grid-area: items-meta; }
+    .details-meta { grid-area: details-meta; }
   }
 
   .items,
@@ -274,7 +282,7 @@ useMetaData({
       text-transform: uppercase;
       font-weight: var(--font-weight-bold);
       font-size: var(--font-sm);
-      box-shadow: 0 0 0 1px var(--gray-z-4);
+      box-shadow: var(--border-shadow);
       background-color: var(--gray-z-1);
       line-height: var(--line-height-md);
     }
@@ -310,6 +318,11 @@ useMetaData({
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: var(--size-2) var(--size-2) var(--size-2) var(--size-4);
+    border: var(--border);
+    border-radius: var(--size-5);
+    border-top-left-radius: var(--size-1);
+    background-color: var(--gray-z-0);
 
     > div {
       font-weight: var(--font-weight-bold);
