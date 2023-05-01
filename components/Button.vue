@@ -40,6 +40,11 @@ button {
     color: var(--gray-z-5);
     cursor: normal;
   }
+
+  @media (--md) {
+    padding: calc(var(--size-1) + var(--size-2)) var(--size-4);
+    height: calc(var(--size-7) + var(--size-1));
+  }
 }
 </style>
 

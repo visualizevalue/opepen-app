@@ -105,3 +105,10 @@
   --color: var(--black);
   --semi: var(--semi-light);
 }
+
+/* SCALING */
+@media (--md) {
+  :root {
+    --font-sm: calc(var(--size-3) + var(--size-0));
+  }
+}
