@@ -49,6 +49,17 @@
       </footer>
     </div>
   </Modal>
+
+  <Modal v-if="signed" :open="true" title="Success" @close="() => signed = false">
+    <div class="success-modal">
+      <p>You submitted {{ selected.length }} Opepen to be included in set #{{ pad(set.id, 3) }}!</p>
+      <p>If your Opepen {{ selected.length > 1 ? 'are' : 'is' }} selected as part of this set, your metadata will update after the opt-in window closes.</p>
+
+      <div class="action">
+        <Button @click="() => signed = false">Ok</Button>
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <script setup>
@@ -120,6 +131,7 @@ const hasCompleteGroupSelection = group => {
 }
 
 const signing = ref(false)
+const signed = ref(false)
 const sign = async () => {
   if (! selected.value?.length) {
     alert(`Please select at least one Opepen to submit to the drop first!`)
@@ -129,7 +141,7 @@ const sign = async () => {
   try {
     signing.value = true
     const signer = await fetchSigner()
-    const message = `I want to submit my opepen for possible artwork reveal in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
+    const message = `I want to submit my Opepen for possible artwork reveal in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
 
     const signature = await signer.signMessage(message)
 
@@ -143,6 +155,7 @@ const sign = async () => {
       })
     })
 
+    signed.value = true
   } catch (e) {
     // ...
   }
@@ -292,6 +305,19 @@ footer {
     .edition {
       color: var(--gray-z-9);
     }
+  }
+}
+
+.success-modal {
+  p {
+    font-weight: var(--font-weight-bold);
+    margin: var(--size-2) 0;
+  }
+
+  .action {
+    margin-top: var(--size-5);
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>
