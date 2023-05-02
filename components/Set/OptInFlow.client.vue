@@ -1,5 +1,6 @@
 <template>
-  <Modal :open="open" scroll @close="$emit('close')">
+<div>
+  <Modal :open="open" scroll @close="$emit('close')" :click-outside="clickOutside">
     <div class="opt-in-flow">
       <header>
         <h1>{{ title }}</h1>
@@ -60,6 +61,7 @@
       </div>
     </div>
   </Modal>
+</div>
 </template>
 
 <script setup>
@@ -71,6 +73,7 @@ import { fetchAddresses } from '~/helpers/delegate-cash'
 const { open, set } = defineProps({
   open: Boolean,
   set: Object,
+  clickOutside: Boolean,
 })
 
 const WRITTEN_GROUPS = {
