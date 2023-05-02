@@ -46,7 +46,7 @@ const onCreateClick = () => {
     display: flex;
     gap: var(--size-3);
     background-color: var(--semi);
-    z-index: 200;
+    z-index: 195;
     border-bottom: var(--border);
     border-color: transparent;
     backdrop-filter: var(--blur);
