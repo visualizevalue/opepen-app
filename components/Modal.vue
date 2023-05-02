@@ -89,7 +89,7 @@ defineEmits(['close'])
     transform: translateY(0);
     transition: all var(--speed);
     border: var(--border-dark);
-    border-radius: var(--size-4);
+    border-radius: var(--size-5);
     border-top-left-radius: var(--size-1);
     overflow: hidden;
 
@@ -137,7 +137,7 @@ defineEmits(['close'])
 
   &.wide {
     section {
-      max-width: min(calc(100vw - 2*var(--size-4)), var(--content-width));
+      max-width: min(calc(100vw - 2*var(--size-4)), 40rem);
     }
   }
 

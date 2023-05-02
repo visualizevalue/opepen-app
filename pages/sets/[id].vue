@@ -4,48 +4,12 @@
 
     <!-- TODO: Refactor... -->
     <section class="items">
-      <div class="preview">
-        <Image :image="set?.edition1Image" version="sm" class="appear" />
-        <div class="meta">
-          <h1>{{ set?.edition1Name }}</h1>
-          <p>One of One</p>
-        </div>
-      </div>
-      <div class="preview">
-        <Image :image="set?.edition4Image" version="sm" class="appear" />
-        <div class="meta">
-          <h1>{{ set?.edition4Name }}</h1>
-          <p>Four Editions</p>
-        </div>
-      </div>
-      <div class="preview">
-        <Image :image="set?.edition5Image" version="sm" class="appear" />
-        <div class="meta">
-          <h1>{{ set?.edition5Name }}</h1>
-          <p>Five Editions</p>
-        </div>
-      </div>
-      <div class="preview">
-        <Image :image="set?.edition10Image" version="sm" class="appear" />
-        <div class="meta">
-          <h1>{{ set?.edition10Name }}</h1>
-          <p>Ten Editions</p>
-        </div>
-      </div>
-      <div class="preview">
-        <Image :image="set?.edition20Image" version="sm" class="appear" />
-        <div class="meta">
-          <h1>{{ set?.edition20Name }}</h1>
-          <p>Twenty Editions</p>
-        </div>
-      </div>
-      <div class="preview">
-        <Image :image="set?.edition40Image" version="sm" class="appear" />
-        <div class="meta">
-          <h1>{{ set?.edition40Name }}</h1>
-          <p>Forty Editions</p>
-        </div>
-      </div>
+      <SetPreviewImage :set="set" :edition="1" />
+      <SetPreviewImage :set="set" :edition="4" />
+      <SetPreviewImage :set="set" :edition="5" />
+      <SetPreviewImage :set="set" :edition="10" />
+      <SetPreviewImage :set="set" :edition="20" />
+      <SetPreviewImage :set="set" :edition="40" />
     </section>
 
     <section class="stats">
@@ -223,41 +187,6 @@ useMetaData({
     > :first-child {
       grid-column: span 2;
       grid-row: span 2;
-    }
-
-    .preview {
-      position: relative;
-
-      .meta {
-        font-size: var(--font-sm);
-        opacity: 0;
-        position: absolute;
-        bottom: var(--size-1);
-        left: var(--size-4);
-        transition: all var(--speed);
-        margin: 0;
-        line-height: 1;
-        font-weight: var(--font-weight-bold);
-        text-transform: uppercase;
-        text-shadow: 0 0.1em 0.5em var(--black);
-        color: var(--white);
-
-        h1 {
-          margin-bottom: var(--size-1);
-          font-size: 1rem;
-        }
-
-        p {
-          color: var(--gray-700);
-        }
-      }
-
-      &:--highlight {
-        .meta {
-          opacity: 1;
-          bottom: var(--size-3);
-        }
-      }
     }
   }
 
