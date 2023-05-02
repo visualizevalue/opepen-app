@@ -1,4 +1,3 @@
-// export const useMetaData = (config: HeadConfig) => useHead(makeHead(config))
 import { ethers } from 'ethers'
 import { DelegateCash } from 'delegatecash'
 import { fetchSigner } from '@wagmi/core'
