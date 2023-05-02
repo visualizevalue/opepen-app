@@ -2686,6 +2686,13 @@ delay@^5.0.0:
   resolved "https://registry.yarnpkg.com/delay/-/delay-5.0.0.tgz#137045ef1b96e5071060dd5be60bf9334436bd1d"
   integrity sha512-ReEBKkIfe4ya47wlPYf/gu5ib6yUG0/Aez0JQZQz94kiWtRQvZIQbTiehsnwHvLSWJnQdhVeqYue7Id1dKr0qw==
 
+delegatecash@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/delegatecash/-/delegatecash-0.4.1.tgz#0ff5a522eac5b75a9f4f02a366b572cf24470b05"
+  integrity sha512-udA3nGyCLnPacoekeeIdDO6o3aRzM9imGuaOilPOOExpCz8OLHKNtKlwHZg58Wjh6VfRPKD1EsQeI0ltCvKL2w==
+  dependencies:
+    ethers "^5.7.1"
+
 delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
@@ -2991,7 +2998,7 @@ eth-rpc-errors@^4.0.2:
   dependencies:
     fast-safe-stringify "^2.0.6"
 
-ethers@^5.7.2:
+ethers@^5.7.1, ethers@^5.7.2:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.7.2.tgz#3a7deeabbb8c030d4126b24f84e525466145872e"
   integrity sha512-wswUsmWo1aOK8rR7DIKiWSw9DbLWe6x98Jrn8wcTflTVvaXhAMaB5zGAXy0GYQEQp9iO1iSHWVyARQm11zUtyg==

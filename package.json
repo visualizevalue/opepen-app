@@ -20,6 +20,7 @@
     "@vueuse/components": "^9.13.0",
     "@vueuse/core": "^9.13.0",
     "buffer": "^6.0.3",
+    "delegatecash": "^0.4.1",
     "ethers": "^5.7.2",
     "events": "^3.3.0",
     "feather-icons": "4",

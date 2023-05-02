@@ -108,16 +108,16 @@
 
     <section v-if="set.name" class="opt-in">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="revealsAt" minimal class="inline nowrap" />.</div>
-      <Button @click="optInOpen = true">
-        <Icon type="feather" />
-        <span class="nowrap">Opt-In</span>
-      </Button>
       <SetOptInFlow
         :set="set"
         :open="optInOpen"
         @close="optInOpen = false"
         :click-outside="false"
       />
+      <Button @click="optInOpen = true">
+        <Icon type="feather" />
+        <span class="nowrap">Opt-In</span>
+      </Button>
     </section>
   </div>
 </template>

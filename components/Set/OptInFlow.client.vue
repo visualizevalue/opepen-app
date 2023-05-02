@@ -66,6 +66,7 @@
 import { fetchSigner } from '@wagmi/core'
 import { useAccount } from 'vagmi'
 import pad from '~/helpers/pad'
+import { fetchAddresses } from '~/helpers/delegate-cash'
 
 const { open, set } = defineProps({
   open: Boolean,
@@ -90,17 +91,25 @@ const { address, isConnected } = useAccount()
 
 const opepen = ref([])
 const opepenLoading = ref(false)
+
+const delegatedAddresses = ref(await fetchAddresses())
+
 const fetchOpepen = async () => {
   opepenLoading.value = true
-  const opepenUrl = `${config.public.opepenApi}/accounts/${address.value}/opepen`
-  opepen.value = await $fetch(opepenUrl)
+  const addresses = [ address.value, ...delegatedAddresses.value ]
+  const responses = await Promise.all(addresses.map(a =>
+    $fetch(`${config.public.opepenApi}/accounts/${a}/opepen`)
+  ))
+  opepen.value = responses.reduce((opepen, response) => {
+    return opepen.concat(response.data)
+  }, [])
   opepenLoading.value = false
 }
 watch(isConnected, () => fetchOpepen())
 onMounted(() => fetchOpepen())
 
 const grouped = computed(() => {
-  const items = opepen.value?.data || []
+  const items = opepen.value || []
 
   return items.reduce((groups, o) => {
     groups[o.data.edition].push(o)
@@ -152,6 +161,7 @@ const sign = async () => {
         opepen: selected.value,
         message,
         signature,
+        delegated_by: delegatedAddresses.value.join(',')
       })
     })
 
