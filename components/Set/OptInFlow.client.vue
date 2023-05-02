@@ -13,6 +13,10 @@
         <div v-else>
           <Loading v-if="opepenLoading" />
 
+          <div v-else-if="! opepen.length" class="empty">
+            <p>No Opepen to opt-in found.</p>
+          </div>
+
           <div v-else class="opepens">
             <div v-for="(opepens, g) in grouped" class="group">
               <div v-if="opepens.length">
@@ -221,6 +225,12 @@ header {
 
 section {
   padding: var(--header-height) 0 var(--size-9);
+}
+
+.empty {
+  padding: var(--size-8) var(--size-4);
+  text-align: center;
+  color: var(--gray-z-5);
 }
 
 .opepens {
