@@ -2,7 +2,7 @@
 
   <section v-if="set.name" class="opt-in">
     <header v-if="! revealed">
-      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="revealsAt" class="inline nowrap" />.</div>
+      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" />.</div>
       <ClientOnly>
         <SetOptInFlow
           :set="set"
@@ -33,8 +33,11 @@ const props = defineProps({ set: Object })
 const emit = defineEmits(['update'])
 const { address } = useAccount()
 
-const revealsAt = computed(() => DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
-const revealed = computed(() => revealsAt.value < DateTime.now().toUnixInteger())
+const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
+const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const onComplete = () => {
+  revealed.value = true
+}
 
 const url = `${config.public.opepenApi}/accounts/${address.value}/sets/${props.set.id}`
 const { data: subscription, refresh } = await useLazyFetch(url)
