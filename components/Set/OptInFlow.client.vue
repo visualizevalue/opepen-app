@@ -1,7 +1,7 @@
 <template>
 <div>
   <Modal :open="open" scroll @close="$emit('close')" :click-outside="clickOutside">
-    <div class="opt-in-flow">
+    <div class="opt-in-flow" :class="{ signing }">
       <header>
         <h1>{{ title }}</h1>
       </header>
@@ -161,7 +161,7 @@ const sign = async () => {
 
     const signature = await signer.signMessage(message)
 
-    const { data } = await $fetch(`${config.public.opepenApi}/opepen/sets/${set.id}/subscribe`, {
+    await $fetch(`${config.public.opepenApi}/opepen/sets/${set.id}/subscribe`, {
       method: 'POST',
       body: JSON.stringify({
         address: address.value,
@@ -185,6 +185,14 @@ const sign = async () => {
 <style lang="postcss" scoped>
 .opt-in-flow {
   --header-height: calc(var(--size-8) + var(--size-2));
+
+  &.signing {
+    > section {
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.5;
+    }
+  }
 }
 
 header {
