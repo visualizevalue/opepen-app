@@ -12,7 +12,7 @@
       @close="() => zoomed = false"
       modal-classes="preview-modal wide"
     >
-      <Image :image="image" class="appear" />
+      <Image :image="image" version="lg" class="appear" />
 
       <div class="text">
         <h1>{{ name }}</h1>
