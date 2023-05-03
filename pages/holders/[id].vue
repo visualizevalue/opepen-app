@@ -10,7 +10,7 @@
         :key="token.token_id"
       >
         <OpepenCard
-          :id="token.token_id"
+          :token="token"
           :set="token.data?.edition || 40"
         />
       </div>

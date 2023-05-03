@@ -1,7 +1,8 @@
 <template>
 <article class="opepen-card" :style="wrapperStyle">
   <div @click="onClick">
-    <img :src="`https://opepen.nyc3.cdn.digitaloceanspaces.com/images/rare/${set}.svg`" :alt="`Rare 1/${set} Opepen Preview ${id}`">
+    <img v-if="! token.revealed_at" :src="`https://opepen.nyc3.cdn.digitaloceanspaces.com/images/rare/${set}.svg`" :alt="`Rare 1/${set} Opepen Preview ${id}`">
+    <img v-else :src="`https://metadata.opepen.art/${id}/image.png`">
 
     <div class="text">
       <h1>Opepen {{ id }}</h1>
@@ -16,12 +17,14 @@ import { getRandomArbitrary } from '~/helpers/random'
 import { delay } from '~/helpers/time'
 
 const {
-  id,
+  token,
   set,
 } = defineProps({
-  id: Number,
+  token: Object,
   set: Number,
 })
+
+const id = token.token_id
 
 // ==============================================================
 // Style & Interaction
