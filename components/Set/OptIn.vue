@@ -1,7 +1,7 @@
 <template>
 
   <section v-if="set.name" class="opt-in">
-    <header>
+    <header v-if="! revealed">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown :until="revealsAt" class="inline nowrap" />.</div>
       <ClientOnly>
         <SetOptInFlow
@@ -34,6 +34,7 @@ const emit = defineEmits(['update'])
 const { address } = useAccount()
 
 const revealsAt = computed(() => DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
+const revealed = computed(() => revealsAt.value < DateTime.now().toUnixInteger())
 
 const url = `${config.public.opepenApi}/accounts/${address.value}/sets/${props.set.id}`
 const { data: subscription, refresh } = await useLazyFetch(url)
@@ -72,10 +73,13 @@ watch(optInOpen, () => {
         text-transform: uppercase;
         letter-spacing: var(--letter-spacing-md);
       }
+
+      + .selection {
+        border-top: var(--border);
+      }
     }
 
     .selection {
-      border-top: var(--border);
       font-size: var(--font-sm);
       padding: var(--size-3) var(--size-2) var(--size-3) var(--size-4);
 
