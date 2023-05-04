@@ -85,10 +85,6 @@ watch(optInOpen, () => {
     .selection {
       font-size: var(--font-sm);
       padding: var(--size-3) var(--size-2) var(--size-3) var(--size-4);
-
-      .muted {
-        color: var(--gray-z-6);
-      }
     }
   }
 </style>

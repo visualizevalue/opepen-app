@@ -7,3 +7,11 @@
 .nowrap {
   white-space: nowrap;
 }
+
+.centered {
+  text-align: center;
+}
+
+.muted {
+  color: var(--gray-z-6);
+}

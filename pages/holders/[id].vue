@@ -15,6 +15,9 @@
         />
       </div>
     </section>
+    <section v-else>
+      <p class="centered muted">No Opepen found for this account.</p>
+    </section>
   </div>
 </template>
 
@@ -28,8 +31,8 @@ const { data: account } = await useFetch(url)
 const { data: opepens } = await useFetch(`${url}/opepen`)
 
 useMetaData({
-  title: `${ account.value.display } | Opepen`,
-  description: `Opepen owned by ${account.value.display}.`,
+  title: `${ account.value?.display } | Opepen`,
+  description: `Opepen owned by ${account.value?.display}.`,
   og: 'https://opepen.art/og/rare.png',
 })
 </script>
