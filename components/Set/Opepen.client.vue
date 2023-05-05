@@ -51,7 +51,7 @@ const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
         max-width: min(50cqw, calc(50cqh / 1.5));
       }
       @container (width > 30rem) {
-        max-width: min(33.33cqw, calc(33.33cqh / 1.5));
+        max-width: calc(25cqw - var(--size-4));
       }
     }
   }
