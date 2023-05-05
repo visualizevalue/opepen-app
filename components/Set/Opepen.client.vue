@@ -9,7 +9,11 @@
         <OpepenCard
           :token="token"
           :set="token.data?.edition || 40"
-        />
+        >
+          <template #subline>
+            <p>owned by <NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null">{{ token.ownerAccount?.display }}</NuxtLink></p>
+          </template>
+        </OpepenCard>
       </div>
     </div>
   </section>

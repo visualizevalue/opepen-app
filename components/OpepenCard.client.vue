@@ -6,7 +6,9 @@
 
     <div class="text">
       <h1>Opepen {{ id }}</h1>
-      <p v-if="set">Edition of {{ set }}</p>
+      <slot name="subline">
+        <p>Edition of {{ set }}</p>
+      </slot>
     </div>
   </div>
 </article>
@@ -103,15 +105,21 @@ const onClick = async () => {
       letter-spacing: var(--letter-spacing-md);
       user-select: none;
       line-height: 1;
+      width: 100%;
+      overflow: hidden;
 
       h1 {
         font-size: 6cqw;
         margin-bottom: 2cqw;
       }
 
-      p {
+      :deep(p) {
         font-size: 4.5cqw;
         color: var(--gray-z-7);
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
