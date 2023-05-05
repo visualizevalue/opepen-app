@@ -6,6 +6,7 @@
     <SetItemsMeta :set="set" />
     <SetStatsMeta :set="set" />
     <SetOptIn :set="set" @update="refresh" />
+    <SetOpepen :set="set" />
   </div>
 </template>
 
@@ -45,7 +46,8 @@ useMetaData({
                 "opt-in"
                 "details"
                 "details-meta"
-                "leaderboard";
+                "leaderboard"
+                "opepen";
 
     @media (--md) {
       display: grid;
@@ -59,7 +61,8 @@ useMetaData({
                   "items details"
                   "items-meta details-meta"
                   "opt-in opt-in"
-                  "leaderboard leaderboard";
+                  "leaderboard leaderboard"
+                  "opepen opepen";
     }
 
     .pagination { grid-area: pagination; }
@@ -67,6 +70,7 @@ useMetaData({
     .opt-in { grid-area: opt-in; }
     .items-meta { grid-area: items-meta; }
     .details-meta { grid-area: details-meta; }
+    .set-opepen { grid-area: opepen; }
   }
 
   .items,

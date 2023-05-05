@@ -1,8 +1,8 @@
 <template>
 <article class="opepen-card" :style="wrapperStyle">
   <div @click="onClick">
-    <img v-if="! token.revealed_at" :src="`https://opepen.nyc3.cdn.digitaloceanspaces.com/images/rare/${set}.svg`" :alt="`Rare 1/${set} Opepen Preview ${id}`">
-    <img v-else :src="`https://metadata.opepen.art/${id}/image.png`">
+    <Image v-if="token.image" :image="token.image" version="sm" />
+    <img v-else :src="`https://opepen.nyc3.cdn.digitaloceanspaces.com/images/rare/${set}.svg`" :alt="`Rare 1/${set} Opepen Preview ${id}`">
 
     <div class="text">
       <h1>Opepen {{ id }}</h1>
@@ -21,7 +21,7 @@ const {
   set,
 } = defineProps({
   token: Object,
-  set: Number,
+  set: [Number, String],
 })
 
 const id = token.token_id
@@ -78,6 +78,14 @@ const onClick = async () => {
     box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi-shade);
     display: grid;
     grid-template-rows: 4fr 1fr;
+
+    .image {
+      border: none !important;
+      border-radius: 0;
+      border-top-right-radius: var(--size-4);
+      border-top-left-radius: var(--size-0);
+      border-bottom: var(--border);
+    }
 
     img {
       border-top-right-radius: var(--size-4);
