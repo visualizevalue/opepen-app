@@ -14,7 +14,7 @@ defineProps({
   .stats-meta {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-sm);
-    line-height: var(--line-height-sm);
+    line-height: var(--line-height-md);
 
     margin-top: calc(-1 * var(--size-4));
 

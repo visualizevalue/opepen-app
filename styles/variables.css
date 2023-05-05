@@ -50,7 +50,7 @@
   --letter-spacing-sm: -0.025em;
   --letter-spacing-md: 0.05em;
   --letter-spacing-lg: 0.1em;
-  --line-height-sm: 100%;
+  --line-height-sm: 105%;
   --line-height-base: var(--size-6);
   --line-height-md: 120%;
   --line-height-lg: 190%;
