@@ -118,11 +118,13 @@ onMounted(() => fetchOpepen())
 const grouped = computed(() => {
   const items = opepen.value || []
 
-  return items.reduce((groups, o) => {
-    groups[o.data.edition].push(o)
+  return items
+    .filter(o => ! o.revealed_at)
+    .reduce((groups, o) => {
+      groups[o.data.edition].push(o)
 
-    return groups
-  }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
+      return groups
+    }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
 })
 
 const selected = ref([])
