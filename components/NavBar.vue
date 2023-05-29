@@ -9,7 +9,7 @@
       <span>Create</span>
     </Button> -->
 
-    <Button to="/sets/001">
+    <Button to="/sets/003">
       <Icon type="grid" />
       <span>Sets</span>
     </Button>
