@@ -7,48 +7,48 @@
     <span></span>
 
     <span class="th">One</span>
-    <span>{{ edition1Count }}</span>
-    <span>{{ edition1Demand.toLocaleString('en-US') }}%</span>
+    <span>{{ formatNumber(edition1Count) }}</span>
+    <span>{{ formatNumber(edition1Demand) }}%</span>
     <span class="check" :class="{
       active: minDemand && edition1Demand >= minDemand,
       closeToActive: minDemand && edition1Demand >= minDemand/2,
     }"><Check /></span>
 
     <span class="th">Four</span>
-    <span>{{ edition4Count }}</span>
-    <span>{{ edition4Demand.toLocaleString('en-US') }}%</span>
+    <span>{{ formatNumber(edition4Count) }}</span>
+    <span>{{ formatNumber(edition4Demand) }}%</span>
     <span class="check" :class="{
       active: minDemand && edition4Demand >= minDemand,
       closeToActive: minDemand && edition4Demand >= minDemand/2,
     }"><Check /></span>
 
     <span class="th">Five</span>
-    <span>{{ edition5Count }}</span>
-    <span>{{ edition5Demand.toLocaleString('en-US') }}%</span>
+    <span>{{ formatNumber(edition5Count) }}</span>
+    <span>{{ formatNumber(edition5Demand) }}%</span>
     <span class="check" :class="{
       active: minDemand && edition5Demand >= minDemand,
       closeToActive: minDemand && edition5Demand >= minDemand/2,
     }"><Check /></span>
 
     <span class="th">Ten</span>
-    <span>{{ edition10Count }}</span>
-    <span>{{ edition10Demand.toLocaleString('en-US') }}%</span>
+    <span>{{ formatNumber(edition10Count) }}</span>
+    <span>{{ formatNumber(edition10Demand) }}%</span>
     <span class="check" :class="{
       active: minDemand && edition10Demand >= minDemand,
       closeToActive: minDemand && edition10Demand >= minDemand/2,
     }"><Check /></span>
 
     <span class="th">Twenty</span>
-    <span>{{ edition20Count }}</span>
-    <span>{{ edition20Demand.toLocaleString('en-US') }}%</span>
+    <span>{{ formatNumber(edition20Count) }}</span>
+    <span>{{ formatNumber(edition20Demand) }}%</span>
     <span class="check" :class="{
       active: minDemand && edition20Demand >= minDemand,
       closeToActive: minDemand && edition20Demand >= minDemand/2,
     }"><Check /></span>
 
     <span class="th">Forty</span>
-    <span>{{ edition40Count }}</span>
-    <span>{{ edition40Demand.toLocaleString('en-US') }}%</span>
+    <span>{{ formatNumber(edition40Count) }}</span>
+    <span>{{ formatNumber(edition40Demand) }}%</span>
     <span class="check" :class="{
       active: minDemand && edition40Demand >= minDemand,
       closeToActive: minDemand && edition40Demand >= minDemand/2,
@@ -58,6 +58,8 @@
 </template>
 
 <script setup>
+import { formatNumber } from '~/helpers/format'
+
 const props = defineProps({ set: Object })
 
 // COUNTS
