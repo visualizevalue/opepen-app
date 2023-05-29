@@ -1,6 +1,7 @@
 <template>
   <div class="preview">
     <Image @click="zoomed = true" :image="image" version="sm" class="appear" />
+
     <div class="meta">
       <h1>{{ name }}</h1>
       <p>{{ tagline }}</p>
@@ -54,6 +55,7 @@ const zoomed = ref(false)
 
   > .image {
     cursor: pointer;
+    overflow: hidden;
   }
 
   .meta {
@@ -62,15 +64,27 @@ const zoomed = ref(false)
     font-size: var(--font-sm);
     opacity: 0;
     position: absolute;
-    bottom: var(--size-1);
-    left: var(--size-4);
+    bottom: -1rem;
+    left: 0;
+    right: 0;
+    top: 0;
+    min-width: 100%;
+    min-height: 100%;
+    padding: calc(var(--size-4));
     transition: all var(--speed);
     margin: 0;
     line-height: 1;
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     text-shadow: 0 0.1em 0.5em var(--black);
-    color: var(--white);
+    color: var(--gray-z-8);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    border-radius: var(--size-5);
+    border-top-left-radius: var(--size-1);
+    border: var(--border);
 
     h1 {
       margin-bottom: var(--size-1);
@@ -78,14 +92,19 @@ const zoomed = ref(false)
     }
 
     p {
-      color: var(--gray-700);
+      color: var(--gray-z-6);
     }
   }
 
   &:--highlight {
     .meta {
       opacity: 1;
-      bottom: var(--size-3);
+      bottom: -1px;
+      background-color: var(--semi);
+    }
+
+    > .image :deep(img) {
+      transform: scale(1.15);
     }
   }
 }
