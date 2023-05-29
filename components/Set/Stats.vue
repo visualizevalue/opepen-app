@@ -8,7 +8,7 @@
 
     <span class="th">One</span>
     <span>{{ edition1Count }}</span>
-    <span>{{ edition1Demand }}%</span>
+    <span>{{ edition1Demand.toLocaleString('en-US') }}%</span>
     <span class="check" :class="{
       active: minDemand && edition1Demand >= minDemand,
       closeToActive: minDemand && edition1Demand >= minDemand/2,
@@ -16,7 +16,7 @@
 
     <span class="th">Four</span>
     <span>{{ edition4Count }}</span>
-    <span>{{ edition4Demand }}%</span>
+    <span>{{ edition4Demand.toLocaleString('en-US') }}%</span>
     <span class="check" :class="{
       active: minDemand && edition4Demand >= minDemand,
       closeToActive: minDemand && edition4Demand >= minDemand/2,
@@ -24,7 +24,7 @@
 
     <span class="th">Five</span>
     <span>{{ edition5Count }}</span>
-    <span>{{ edition5Demand }}%</span>
+    <span>{{ edition5Demand.toLocaleString('en-US') }}%</span>
     <span class="check" :class="{
       active: minDemand && edition5Demand >= minDemand,
       closeToActive: minDemand && edition5Demand >= minDemand/2,
@@ -32,7 +32,7 @@
 
     <span class="th">Ten</span>
     <span>{{ edition10Count }}</span>
-    <span>{{ edition10Demand }}%</span>
+    <span>{{ edition10Demand.toLocaleString('en-US') }}%</span>
     <span class="check" :class="{
       active: minDemand && edition10Demand >= minDemand,
       closeToActive: minDemand && edition10Demand >= minDemand/2,
@@ -40,7 +40,7 @@
 
     <span class="th">Twenty</span>
     <span>{{ edition20Count }}</span>
-    <span>{{ edition20Demand }}%</span>
+    <span>{{ edition20Demand.toLocaleString('en-US') }}%</span>
     <span class="check" :class="{
       active: minDemand && edition20Demand >= minDemand,
       closeToActive: minDemand && edition20Demand >= minDemand/2,
@@ -48,7 +48,7 @@
 
     <span class="th">Forty</span>
     <span>{{ edition40Count }}</span>
-    <span>{{ edition40Demand }}%</span>
+    <span>{{ edition40Demand.toLocaleString('en-US') }}%</span>
     <span class="check" :class="{
       active: minDemand && edition40Demand >= minDemand,
       closeToActive: minDemand && edition40Demand >= minDemand/2,
