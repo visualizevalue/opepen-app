@@ -1,9 +1,3 @@
-.hidden-sm {
-  @media(--max-sm) {
-    display: none;
-  }
-}
-
 .nowrap {
   white-space: nowrap;
 }
@@ -14,4 +8,16 @@
 
 .muted {
   color: var(--gray-z-6);
+}
+
+.hidden-sm {
+  @media (--max-sm) {
+    display: none;
+  }
+}
+
+.hidden-md {
+  @media (--max-lg) {
+    display: none;
+  }
 }

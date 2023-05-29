@@ -56,7 +56,10 @@
 
     <span class="th">Overall</span>
     <span class="th">{{ formatNumber(totalCount) }}</span>
-    <span class="th">{{ formatNumber(avgDemand) }}% <small>(<abbr title="average" class="muted">avg.</abbr>)</small></span>
+    <span class="th">
+      {{ formatNumber(avgDemand) }}%
+      <!-- <small>(<abbr title="average" class="muted">avg.</abbr>)</small> -->
+    </span>
     <span class="check th" :class="{
       active: edition40Active,
       closeToActive: edition40CloseToActive,

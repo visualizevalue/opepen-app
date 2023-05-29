@@ -9,7 +9,7 @@
       <span>Create</span>
     </Button> -->
 
-    <Button to="/sets/003">
+    <Button :to="setUrl">
       <Icon type="grid" />
       <span>Sets</span>
     </Button>
@@ -19,10 +19,16 @@
 
 <script setup>
 import { useWindowScroll } from '@vueuse/core'
+import pad from '~/helpers/pad'
+import { useSets } from '~/helpers/sets'
 
 const { y } = useWindowScroll()
 
 const isScrolled = computed(() => y.value > 5)
+
+const { currentSet, fetchSets } = useSets()
+const setUrl = computed(() => `/sets/${currentSet.value ? pad(currentSet.value.id) : '003'}`)
+onMounted(() => fetchSets())
 
 const onCreateClick = () => {
   setTimeout(() => {
