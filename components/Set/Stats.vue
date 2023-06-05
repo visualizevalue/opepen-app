@@ -3,7 +3,7 @@
   <section class="stats">
     <span>Edition</span>
     <span class="th">Opt-Ins</span>
-    <span class="th">Demand <small class="muted">(min {{ minDemand }}%)</small></span>
+    <span class="th">Demand <small class="muted">(min {{ formatNumber(minDemand) }}%)</small></span>
     <span class="check"></span>
 
     <span class="th">One</span>
