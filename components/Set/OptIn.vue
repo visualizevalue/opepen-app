@@ -10,6 +10,7 @@
       <ClientOnly>
         <SetOptInFlow
           :set="set"
+          :subscribed="subscription?.opepen_ids || []"
           :open="optInOpen"
           @close="optInOpen = false"
           :click-outside="false"
@@ -21,8 +22,13 @@
       </Button>
     </header>
     <div v-if="subscription" class="selection">
-      <p>You submitted {{ subscription.opepen_ids.length }} Opepen for potential reveal:</p>
-      <p class="muted">{{ subscription.opepen_ids.map(id => `#${id}`).join(', ') }}.</p>
+      <template v-if="subscription.opepen_ids.length">
+        <p>You submitted {{ subscription.opepen_ids.length }} Opepen for potential reveal:</p>
+        <p class="muted">{{ subscription.opepen_ids.map(id => `#${id}`).join(', ') }}.</p>
+      </template>
+      <template v-else>
+        <p>You opted out all opepen submissions.</p>
+      </template>
     </div>
   </section>
 

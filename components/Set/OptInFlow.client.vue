@@ -3,7 +3,10 @@
   <Modal :open="open" scroll @close="$emit('close')" :click-outside="clickOutside">
     <div class="opt-in-flow" :class="{ signing }">
       <header>
-        <h1>{{ title }}</h1>
+        <h1>
+          <template v-if="subscribed?.length && !selected.length">Opt-Out of Set "{{ set.name }}"</template>
+          <template v-else>Opt-In to Set "{{ set.name }}"</template>
+        </h1>
       </header>
       <section>
         <div v-if="! isConnected" class="connect">
@@ -49,7 +52,10 @@
         <Button @click="$emit('close')">Cancel</Button>
         <Button :disabled="signing" @click="sign">
           <span v-if="signing">Confirming</span>
-          <span v-else>Confirm</span>
+          <span v-else>
+            <template v-if="subscribed?.length && !selected.length">Opt-Out</template>
+            <template v-else>Confirm</template>
+          </span>
         </Button>
       </footer>
     </div>
@@ -75,15 +81,14 @@ import pad from '~/helpers/pad'
 import { fetchAddresses } from '~/helpers/delegate-cash'
 import { getEditionName } from '~/helpers/editions'
 
-const { open, set } = defineProps({
+const props = defineProps({
   open: Boolean,
   set: Object,
   clickOutside: Boolean,
+  subscribed: Array,
 })
 
 const emit = defineEmits(['close'])
-
-const title = computed(() => `Opt-In to Set "${set.name}"`)
 
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
@@ -119,7 +124,7 @@ const grouped = computed(() => {
     }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
 })
 
-const selected = ref([])
+const selected = ref(props.subscribed ? props.subscribed : [])
 const selectAll = (group) => {
   grouped.value[group].forEach(o => {
     if (! selected.value.includes(o.token_id)) {
@@ -143,12 +148,13 @@ const hasCompleteGroupSelection = group => {
 const signing = ref(false)
 const signed = ref(false)
 const sign = async () => {
-  if (! selected.value?.length) {
+  if (! selected.value?.length && ! props.subscribed.length) {
     alert(`Please select at least one Opepen to submit to the drop first!`)
     return
   }
 
   try {
+    const set = props.set
     signing.value = true
     const signer = await fetchSigner()
     const message = `I want to submit my Opepen for possible artwork reveal in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
