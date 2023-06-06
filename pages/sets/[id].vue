@@ -46,7 +46,6 @@ useMetaData({
                 "opt-in"
                 "details"
                 "details-meta"
-                "leaderboard"
                 "opepen";
 
     @media (--md) {
@@ -61,7 +60,6 @@ useMetaData({
                   "items details"
                   "items-meta details-meta"
                   "opt-in opt-in"
-                  "leaderboard leaderboard"
                   "opepen opepen";
     }
 

@@ -1,19 +1,21 @@
 <template>
   <section v-if="revealed" class="set-opepen">
     <Loading v-if="pending" />
-    <div v-else class="list">
+    <div v-else class="groups">
       <div
-        v-for="token in opepen"
-        :key="token.token_id"
+        v-for="[key, group] in Object.entries(groupedOpepen)"
+        :key="key"
+        class="list"
+        :class="[getEditionNameLower(key)]"
       >
-        <OpepenCard
-          :token="token"
-          :set="token.data?.edition || 40"
+        <div
+          v-for="token in group"
+          :key="token.token_id"
         >
-          <template #subline>
-            <p>owned by <NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null">{{ token.ownerAccount?.display }}</NuxtLink></p>
-          </template>
-        </OpepenCard>
+          <NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null">
+            <Image :image="token.image" version="sm" />
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </section>
@@ -21,6 +23,7 @@
 
 <script setup>
 import { DateTime } from 'luxon'
+import { getEditionNameLower } from '~/helpers/editions'
 
 const { set } = defineProps({
   set: Object,
@@ -30,15 +33,127 @@ const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/opepen/sets/${set.id}/opepen`
 const { data: opepen, pending } = await useLazyFetch(url)
 
+const groupedOpepen = computed(() => {
+  return opepen.value.reduce((groups, opepen) => {
+    groups[opepen.data.edition].push(opepen)
+    return groups
+  }, {
+    1: [],
+    4: [],
+    5: [],
+    10: [],
+    20: [],
+    40: [],
+  })
+})
+
 const revealsAt = ref(DateTime.fromISO(set.reveals_at).toUnixInteger())
 const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 </script>
 
 <style lang="postcss" scoped>
-  .list {
-    display: flex;
-    justify-content: center;
+  .groups {
+    display: grid;
     container-type: inline-size;
+    gap: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(20, minmax(0, 1fr));
+    border-radius: var(--size-5);
+    border-top-left-radius: var(--size-1);
+    overflow: hidden;
+    border: var(--border);
+
+    grid-template-areas:
+      "one  five ten ten"
+      "four five ten ten"
+      "four five ten ten"
+      "four five ten ten"
+      "four five ten ten"
+      "twenty twenty twenty twenty"
+      "twenty twenty twenty twenty"
+      "twenty twenty twenty twenty"
+      "twenty twenty twenty twenty"
+      "twenty twenty twenty twenty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty"
+      "forty forty forty forty";
+
+    .list {
+      background: var(--background);
+      box-shadow: var(--border-shadow);
+      padding: var(--size-4);
+    }
+
+    .one {
+      grid-area: one;
+      grid-template-columns: 1fr;
+      background: var(--gray-z-2);
+    }
+    .four {
+      grid-area: four;
+      grid-template-columns: 1fr;
+      background: var(--gray-z-1);
+    }
+    .five {
+      grid-area: five;
+      grid-template-columns: 1fr;
+      background: var(--gray-z-3);
+    }
+    .ten {
+      grid-area: ten;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      background: var(--gray-z-1);
+    }
+    .twenty {
+      grid-area: twenty;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      background: var(--gray-z-2);
+    }
+    .forty {
+      grid-area: forty;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      background: var(--gray-z-2);
+    }
+
+    @media (--md) {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-rows: repeat(10, minmax(0, 1fr));
+
+      grid-template-areas:
+        "one  five ten ten twenty twenty twenty twenty"
+        "four five ten ten twenty twenty twenty twenty"
+        "four five ten ten twenty twenty twenty twenty"
+        "four five ten ten twenty twenty twenty twenty"
+        "four five ten ten twenty twenty twenty twenty"
+        "forty forty forty forty forty forty forty forty"
+        "forty forty forty forty forty forty forty forty"
+        "forty forty forty forty forty forty forty forty"
+        "forty forty forty forty forty forty forty forty"
+        "forty forty forty forty forty forty forty forty";
+
+      .forty {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+      }
+
+      .four,
+      .five,
+      .ten,
+      .twenty,
+      .forty {
+        padding-bottom: var(--size-2);
+      }
+    }
+  }
+
+  .list {
+    display: grid;
     flex-wrap: wrap;
     max-width: var(--content-width);
     width: 100%;
@@ -47,16 +162,16 @@ const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 
     > div {
       width: 100%;
-      max-width: min(50vw, calc(50vh / 1.5));
+      justify-self: center;
     }
 
     > div {
-      @container (width > 20rem) {
-        max-width: min(50cqw, calc(50cqh / 1.5));
-      }
-      @container (width > 30rem) {
-        max-width: calc(25cqw - var(--size-4));
+      max-width: calc(25cqw - 2*var(--size-4));
+
+      @media (--md) {
+        max-width: calc(12.5cqw - 2*var(--size-4));
       }
     }
+
   }
 </style>

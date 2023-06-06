@@ -21,9 +21,14 @@ import { delay } from '~/helpers/time'
 const {
   token,
   set,
+  rotate
 } = defineProps({
   token: Object,
   set: [Number, String],
+  rotate: {
+    type: Boolean,
+    default: true,
+  }
 })
 
 const id = token.token_id
@@ -31,7 +36,7 @@ const id = token.token_id
 // ==============================================================
 // Style & Interaction
 // ==============================================================
-const rotation = ref(getRandomArbitrary(-12, 12))
+const rotation = ref(rotate ? getRandomArbitrary(-12, 12) : 0)
 const scale = ref(1)
 const wrapperStyle = computed(() => ({
   transform: `rotate(${rotation.value}deg) scale(${scale.value})`,

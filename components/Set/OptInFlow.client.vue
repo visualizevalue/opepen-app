@@ -42,7 +42,7 @@
           <span>Submitting</span>
           <template v-for="(_, g) in grouped">
             <div v-if="selectedInGroup(g).length" class="group">
-              <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ WRITTEN_GROUPS[g] }}</span></span>
+              <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span></span>
             </div>
           </template>
         </div>
@@ -73,21 +73,13 @@ import { fetchSigner } from '@wagmi/core'
 import { useAccount } from 'vagmi'
 import pad from '~/helpers/pad'
 import { fetchAddresses } from '~/helpers/delegate-cash'
+import { getEditionName } from '~/helpers/editions'
 
 const { open, set } = defineProps({
   open: Boolean,
   set: Object,
   clickOutside: Boolean,
 })
-
-const WRITTEN_GROUPS = {
-  1: 'One',
-  4: 'Four',
-  5: 'Five',
-  10: 'Ten',
-  20: 'Twenty',
-  40: 'Forty',
-}
 
 const emit = defineEmits(['close'])
 
