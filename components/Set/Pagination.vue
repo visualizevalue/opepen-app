@@ -1,6 +1,6 @@
 <template>
   <div class="pagination">
-    <NuxtLink :disabled="!previousSetId" :to="previousSetId">
+    <NuxtLink :disabled="!previousSetId" :to="`/sets/${previousSetId}`">
       <Icon type="chevron-left" />
 
       <template v-if="previous">
@@ -23,7 +23,7 @@
       </span>
     </span>
 
-    <NuxtLink :disabled="!nextSetId" :to="nextSetId">
+    <NuxtLink :disabled="!nextSetId" :to="`/sets/${nextSetId}`">
       <template v-if="next">
         <span class="icon">
           <Image :image="next.edition1Image" version="sm" />
@@ -38,7 +38,7 @@
 
 <script setup>
 import pad from '~/helpers/pad'
-import { useSets } from '~/helpers/sets';
+import { useSets } from '~/helpers/sets'
 
 const { set } = defineProps({ set: Object })
 const previousSetId = computed(() => set.id > 1 ? pad(set.id - 1, 3) : '')
