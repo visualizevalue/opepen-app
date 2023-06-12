@@ -61,8 +61,8 @@
       <!-- <small>(<abbr title="average" class="muted">avg.</abbr>)</small> -->
     </span>
     <span class="check th" :class="{
-      active: edition40Active,
-      closeToActive: edition40CloseToActive,
+      active: overAllActive,
+      closeToActive: overAllCloseToActive,
     }"><Check /></span>
   </section>
 
@@ -116,7 +116,22 @@ const edition20Active = computed(() => minDemand.value && edition20Demand.value 
 const edition20CloseToActive = computed(() => minDemand.value && edition20Demand.value >= minDemand.value / 2)
 const edition40Active = computed(() => minDemand.value && edition40Demand.value >= minDemand.value)
 const edition40CloseToActive = computed(() => minDemand.value && edition40Demand.value >= minDemand.value / 2)
-// const overAllActive = computed(() => )
+const overAllActive = computed(() =>
+  edition1Active.value &&
+  edition4Active.value &&
+  edition5Active.value &&
+  edition10Active.value &&
+  edition20Active.value &&
+  edition40Active.value
+)
+const overAllCloseToActive = computed(() =>
+  edition1CloseToActive.value &&
+  edition4CloseToActive.value &&
+  edition5CloseToActive.value &&
+  edition10CloseToActive.value &&
+  edition20CloseToActive.value &&
+  edition40CloseToActive.value
+)
 </script>
 
 <style lang="postcss" scoped>
