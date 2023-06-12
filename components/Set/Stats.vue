@@ -55,7 +55,7 @@
     }"><Check /></span>
 
     <span class="th">Overall</span>
-    <span class="th">{{ formatNumber(totalCount) }}</span>
+    <span class="th">{{ formatNumber(totalCount) }} <small class="muted">(of {{ formatNumber(eligibleOpepenCount) }})</small></span>
     <span class="th">
       {{ formatNumber(avgDemand) }}%
       <!-- <small>(<abbr title="average" class="muted">avg.</abbr>)</small> -->
@@ -87,6 +87,7 @@ const totalCount = computed(() => edition1Count.value +
                                   edition20Count.value +
                                   edition40Count.value
 )
+const eligibleOpepenCount = computed(() => 16_000 - 80 * (props.set.id - 1))
 
 // OVERSUBSCRIBED
 const minDemand = computed(() => props.set.min_subscription_percentage)
