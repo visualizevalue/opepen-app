@@ -2,6 +2,7 @@
   <div class="set">
     <SetPagination :set="set" />
     <SetPreviewImages :set="set" class="items" />
+    <SetAbout :set="set" />
     <SetStats :set="set" class="stats" />
     <SetItemsMeta :set="set" />
     <SetStatsMeta :set="set" />
@@ -43,6 +44,7 @@ useMetaData({
                 "pagination"
                 "items"
                 "items-meta"
+                "about"
                 "opt-in"
                 "details"
                 "details-meta"
@@ -59,6 +61,7 @@ useMetaData({
                   "pagination pagination"
                   "items details"
                   "items-meta details-meta"
+                  "about about"
                   "opt-in opt-in"
                   "opepen opepen";
     }
@@ -69,6 +72,7 @@ useMetaData({
     .items-meta { grid-area: items-meta; }
     .details-meta { grid-area: details-meta; }
     .set-opepen { grid-area: opepen; }
+    .about { grid-area: about; }
   }
 
   .items,
