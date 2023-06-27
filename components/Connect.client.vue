@@ -1,6 +1,6 @@
 <template>
   <Button v-if="! isConnected" @click="open = true" id="main-connect">
-    <slot>Connect</slot>
+    <slot>Check-In</slot>
   </Button>
   <Button :to="`/holders/${address}`" v-else>
     <Account :address="address" class="connected" />
