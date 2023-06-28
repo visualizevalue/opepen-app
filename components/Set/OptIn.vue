@@ -16,7 +16,7 @@
           :click-outside="false"
         />
       </ClientOnly>
-      <Button @click="optInOpen = true">
+      <Button @click="startOptIn">
         <Icon type="feather" />
         <span class="nowrap"><span v-if="subscription?.opepen_ids?.length">Change</span> Opt-In</span>
       </Button>
@@ -41,7 +41,7 @@ import { useAccount } from 'vagmi'
 const config = useRuntimeConfig()
 const props = defineProps({ set: Object })
 const emit = defineEmits(['update'])
-const { address } = useAccount()
+const { address, isConnected } = useAccount()
 
 const revealDate = ref(DateTime.fromISO(props.set?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
@@ -50,17 +50,41 @@ const onComplete = () => {
   revealed.value = true
 }
 
-const url = `${config.public.opepenApi}/accounts/${address.value}/sets/${props.set.id}`
-const { data: subscription, refresh } = await useLazyFetch(url)
+const url = computed(() => `${config.public.opepenApi}/accounts/${address.value}/sets/${props.set.id}`)
+const subscription = ref(null)
+const fetchSubscription = async () => {
+  subscription.value = await $fetch(url.value)
+}
+
+if (isConnected.value) {
+  await fetchSubscription()
+}
 
 const optInOpen = ref(false)
 watch(optInOpen, () => {
   if (optInOpen.value === false) {
     emit('update')
-    refresh()
+    fetchSubscription()
   }
 })
 
+watch(address, async () => {
+  if (! address.value) {
+    subscription.value = null
+    return
+  }
+
+  emit('update')
+  await fetchSubscription()
+})
+
+const startOptIn = () => {
+  if (! isConnected.value) {
+    document.querySelector('#main-connect').click()
+  }
+
+  optInOpen.value = true
+}
 </script>
 
 <style lang="postcss" scoped>
