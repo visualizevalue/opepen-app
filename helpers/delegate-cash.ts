@@ -1,16 +1,16 @@
-import { ethers } from 'ethers'
+import { providers } from 'ethers'
 import { DelegateCash } from 'delegatecash'
 import { fetchSigner } from '@wagmi/core'
 import { delay } from './time'
 
-export async function fetchAddresses (): Promise<string[]> {
+export async function fetchAddresses (rpc: string): Promise<string[]> {
   const signer = await fetchSigner()
-  if (! signer || ! signer.provider) {
+  if (! signer) {
     await delay(1_000)
-    return fetchAddresses()
+    return fetchAddresses(rpc)
   }
 
-  const dc = new DelegateCash(signer.provider as unknown as ethers.providers.Web3Provider)
+  const dc = new DelegateCash(new providers.JsonRpcProvider(rpc, 'any'))
 
   const delegations = await dc.getDelegationsByDelegate(await signer.getAddress())
 

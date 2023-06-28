@@ -101,7 +101,7 @@ const { address, isConnected } = useAccount()
 const opepen = ref([])
 const opepenLoading = ref(false)
 
-const delegatedAddresses = ref(await fetchAddresses())
+const delegatedAddresses = ref(await fetchAddresses(config.public.rpc))
 
 const fetchOpepen = async () => {
   opepenLoading.value = true
