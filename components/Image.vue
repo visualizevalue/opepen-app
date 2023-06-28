@@ -27,6 +27,8 @@ const loaded = ref(false)
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
 
+  if (! props.image) return
+
   const version = props.image.versions[props.version] ? props.version : ''
 
   uri.value = imageURI(props.image, version)

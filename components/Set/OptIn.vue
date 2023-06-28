@@ -57,7 +57,11 @@ const fetchSubscription = async () => {
 }
 
 if (isConnected.value) {
-  await fetchSubscription()
+  try {
+    await fetchSubscription()
+  } catch (e) {
+    // ...
+  }
 }
 
 const optInOpen = ref(false)
