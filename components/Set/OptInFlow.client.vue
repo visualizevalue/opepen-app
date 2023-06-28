@@ -80,8 +80,8 @@
 </template>
 
 <script setup>
-import { fetchSigner } from '@wagmi/core'
-import { useAccount } from 'vagmi'
+import { signMessage } from '@wagmi/core'
+import { useAccount } from '~/helpers/use-wagmi'
 import pad from '~/helpers/pad'
 import { fetchAddresses } from '~/helpers/delegate-cash'
 import { getEditionName } from '~/helpers/editions'
@@ -101,7 +101,10 @@ const { address, isConnected } = useAccount()
 const opepen = ref([])
 const opepenLoading = ref(false)
 
-const delegatedAddresses = ref(await fetchAddresses(config.public.rpc))
+const delegatedAddresses = ref(await fetchAddresses(config.public.rpc, address.value))
+watch(address, async () => {
+  delegatedAddresses.value = await fetchAddresses(config.public.rpc, address.value)
+})
 
 const fetchOpepen = async () => {
   opepenLoading.value = true
@@ -114,7 +117,7 @@ const fetchOpepen = async () => {
   }, [])
   opepenLoading.value = false
 }
-watch(isConnected, () => fetchOpepen())
+watch([isConnected, delegatedAddresses], () => fetchOpepen())
 onMounted(() => fetchOpepen())
 
 const grouped = computed(() => {
@@ -129,7 +132,10 @@ const grouped = computed(() => {
     }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
 })
 
-const selected = ref(props.subscribed ? props.subscribed : [])
+const selected = ref(props.subscribed ? [...props.subscribed] : [])
+watch(() => props.subscribed, () => {
+  selected.value = [...props.subscribed] || []
+})
 const selectAll = (group) => {
   grouped.value[group].forEach(o => {
     if (! selected.value.includes(o.token_id)) {
@@ -161,10 +167,12 @@ const sign = async () => {
   try {
     const set = props.set
     signing.value = true
-    const signer = await fetchSigner()
+
     const message = `I want to submit my Opepen for possible artwork reveal in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
 
-    const signature = await signer.signMessage(message)
+    const signature = await signMessage({
+      message,
+    })
 
     await $fetch(`${config.public.opepenApi}/opepen/sets/${set.id}/subscribe`, {
       method: 'POST',

@@ -36,7 +36,7 @@ onMounted(() => {
     height: var(--size-5);
     width: var(--size-5);
     outline: none;
-    z-index: 100;
+    z-index: 40;
 
     .vue-feather {
       height: var(--size-5);

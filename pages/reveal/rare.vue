@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { useAccount } from 'vagmi'
+import { useAccount } from '~/helpers/use-wagmi'
 import { useMetaData } from '~/helpers/head'
 
 const config = useRuntimeConfig()

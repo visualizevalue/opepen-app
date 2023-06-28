@@ -49,7 +49,7 @@ defineEmits(['close'])
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 200;
+  z-index: 50;
   top: 0;
   left: 0;
   right: 0;
@@ -79,7 +79,7 @@ defineEmits(['close'])
 
   section {
     position: fixed;
-    z-index: 300;
+    z-index: 60;
     width: 100%;
     margin-bottom: var(--size-6);
     max-width: min(calc(100vw - 2*var(--size-4)), 30rem);

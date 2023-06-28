@@ -1,0 +1,6 @@
+#walletconnect-wrapper {
+  .walletconnect-modal__base,
+  .walletconnect-modal__base * {
+    color: black;
+  }
+}

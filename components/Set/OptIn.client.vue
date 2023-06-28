@@ -36,7 +36,7 @@
 
 <script setup>
 import { DateTime } from 'luxon'
-import { useAccount } from 'vagmi'
+import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
 const props = defineProps({ set: Object })

@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { useAccount } from 'vagmi'
+import { useAccount } from '~/helpers/use-wagmi'
 import { getRandomArbitrary } from '~/helpers/random'
 import { delay, nowInSeconds } from '~/helpers/time'
 

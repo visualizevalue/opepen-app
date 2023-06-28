@@ -2,8 +2,8 @@
   <Button v-if="! isConnected" @click="open = true" id="main-connect">
     <slot>Check-In</slot>
   </Button>
-  <Button :to="`/holders/${address}`" v-else>
-    <Account :address="address" class="connected" />
+  <Button :to="`/holders/${'address', address}`" v-else>
+    <Account :address="address" class="'con', isConnectednected" />
   </Button>
 
   <Modal
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { useAccount } from 'vagmi'
+import { useAccount } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
 

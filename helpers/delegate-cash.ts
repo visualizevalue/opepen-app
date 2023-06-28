@@ -1,18 +1,12 @@
 import { providers } from 'ethers'
 import { DelegateCash } from 'delegatecash'
-import { fetchSigner } from '@wagmi/core'
-import { delay } from './time'
 
-export async function fetchAddresses (rpc: string): Promise<string[]> {
-  const signer = await fetchSigner()
-  if (! signer) {
-    await delay(1_000)
-    return fetchAddresses(rpc)
-  }
+export async function fetchAddresses (rpc: string, account?: string): Promise<string[]> {
+  if (! account) return []
 
   const dc = new DelegateCash(new providers.JsonRpcProvider(rpc, 'any'))
 
-  const delegations = await dc.getDelegationsByDelegate(await signer.getAddress())
+  const delegations = await dc.getDelegationsByDelegate(account)
 
   const applicableDelegations = delegations.filter(d =>
     d.type === 'ALL' || (

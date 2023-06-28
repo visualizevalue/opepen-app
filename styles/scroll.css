@@ -11,7 +11,7 @@
   &::-webkit-scrollbar {
     height: calc(var(--size-0) + var(--size-1)); /* Mostly for horizontal scrollbars */
     width: calc(var(--size-0) + var(--size-1)); /* Mostly for vertical scrollbars */
-    z-index: 9999;
+    z-index: 69;
     border-left: var(--border);
   }
   &::-webkit-scrollbar-thumb { /* Foreground */

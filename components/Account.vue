@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { useEnsName, useEnsAvatar } from 'vagmi'
+// import { useEnsName, useEnsAvatar } from '~/helpers/use-wagmi'
 import { computed } from 'vue';
 import shortAddress from '~~/helpers/short-address'
 
@@ -16,8 +16,11 @@ const props = defineProps({
   hideAvatar: Boolean,
 })
 
-const { data: ens } = useEnsName({ address: props.address })
-const { data: avatar } = useEnsAvatar({ addressOrName: props.address })
+const ens = ref('')
+const avatar = ref('')
+
+// const { data: ens } = useEnsName({ address: props.address })
+// const { data: avatar } = useEnsAvatar({ addressOrName: props.address })
 
 const display = computed(() => {
   if (ens.value) return ens.value

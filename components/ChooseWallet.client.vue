@@ -2,7 +2,7 @@
   <div>
     <button
       :disabled="!ic.ready"
-      @click="connect(ic)"
+      @click="connectWallet(ic)"
       class="base"
     >
       <template v-if="ic.name === 'Coinbase Wallet'">
@@ -17,7 +17,7 @@
     </button>
 
     <button
-      @click="connect(wc)"
+      @click="connectWallet(wc)"
       class="base"
     >
       <img src="/wc.svg" alt="WalletConnect" />
@@ -32,31 +32,37 @@
 </template>
 
 <script setup>
-import { chain, useConnect } from 'vagmi'
-import { InjectedConnector } from 'vagmi/connectors/injected'
-import { MetaMaskConnector } from 'vagmi/connectors/metaMask'
-import { WalletConnectConnector } from 'vagmi/connectors/walletConnect'
+import { connect, InjectedConnector } from '@wagmi/core'
+import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
+
+const { isConnecting } = useAccount()
 
 const ic = new InjectedConnector()
 const mm = new MetaMaskConnector()
 const wc = new WalletConnectConnector({
-  chains: [chain.mainnet],
   options: {
+    projectId: config.public.walletConnectProjectId,
     qrcode: true,
     rpc: {
       1: config.public.rpc,
-    }
+    },
   },
 })
 
-const {
-  connect,
-  error,
-  isConnecting,
-  pendingConnector,
-} = useConnect({ chainId: config.public.chainId })
+const pendingConnector = ref(null)
+const error = ref(null)
+
+const connectWallet = async (connector) => {
+  pendingConnector.value = connector
+
+  await connect({
+    connector,
+  })
+}
 </script>
 
 <style lang="postcss" scoped>
