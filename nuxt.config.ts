@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         },
         {
           name: 'twitter:site',
-          content: '@opepenai',
+          content: '@opepenedition',
         },
         {
           name: 'viewport',
