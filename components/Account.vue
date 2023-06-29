@@ -8,7 +8,7 @@
 
 <script setup>
 // import { useEnsName, useEnsAvatar } from '~/helpers/use-wagmi'
-import { computed } from 'vue';
+import { useEnsName, useEnsAvatar } from '~/helpers/use-wagmi'
 import shortAddress from '~~/helpers/short-address'
 
 const props = defineProps({
@@ -16,11 +16,8 @@ const props = defineProps({
   hideAvatar: Boolean,
 })
 
-const ens = ref('')
-const avatar = ref('')
-
-// const { data: ens } = useEnsName({ address: props.address })
-// const { data: avatar } = useEnsAvatar({ addressOrName: props.address })
+const ens = useEnsName(props.address)
+const avatar = useEnsAvatar(ens)
 
 const display = computed(() => {
   if (ens.value) return ens.value
@@ -40,16 +37,6 @@ span {
     height: var(--size-5);
     border-radius: 50%;
     align-self: center;
-  }
-
-  &.avatar {
-    /* span {
-      display: none;
-
-      @media (--md) {
-        display: inline-block;
-      }
-    } */
   }
 }
 </style>

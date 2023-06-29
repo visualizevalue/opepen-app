@@ -1,5 +1,6 @@
 import {
-  getAccount,
+  fetchEnsAvatar,
+  fetchEnsName,
   watchAccount,
 } from '@wagmi/core'
 
@@ -15,7 +16,6 @@ const account = reactive({
 let unwatchAccount;
 
 export const useAccount = () => {
-  console.log('unwatchAccount', unwatchAccount)
   if (! unwatchAccount) {
     unwatchAccount = watchAccount(updatedAccount => {
       account.address = updatedAccount.address
@@ -29,4 +29,27 @@ export const useAccount = () => {
   }
 
   return toRefs(account)
+}
+
+export const useEnsName = (address) => {
+  const name = ref('')
+
+  fetchEnsName({ address }).then(ens => {
+    name.value = ens
+  })
+
+  return name
+}
+
+export const useEnsAvatar = (name) => {
+  const avatar = ref('')
+
+  if (name.value) {
+    fetchEnsAvatar({ name }).then(url => avatar.value = url)
+  }
+  watch(name, async () => {
+    avatar.value = await fetchEnsAvatar({ name: name.value })
+  })
+
+  return avatar
 }
