@@ -2469,10 +2469,9 @@ anymatch@^3.1.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apg-js@^4.1.1:
+apg-js@^4.1.1, "apg-js@git+https://github.com/runic-inc/apg-js#8bb92ff0780819170fee7e756d26e0562e442983":
   version "4.1.3"
-  resolved "https://registry.yarnpkg.com/apg-js/-/apg-js-4.1.3.tgz#0cb9dc99f8830740d7a8f9fc0048fa618ae4d199"
-  integrity sha512-XYyDcoBho8OpnWPRnedMwyL+76ovCtsESerHZEfY39dO4IrEqN97mdEYkOyHa0XTX5+3+U5FmpqPLttK0f7n6g==
+  resolved "git+https://github.com/runic-inc/apg-js#8bb92ff0780819170fee7e756d26e0562e442983"
 
 "aproba@^1.0.3 || ^2.0.0":
   version "2.0.0"
@@ -3615,7 +3614,7 @@ eth-rpc-errors@^4.0.2:
     "@ethersproject/web" "5.7.1"
     "@ethersproject/wordlists" "5.7.0"
 
-"ethers6@npm:ethers":
+"ethers@npm:ethers":
   version "6.6.4"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-6.6.4.tgz#f03a86effcd55e82aed96a2fb9a56a9febd3e3d5"
   integrity sha512-r3myN2hEnydmu23iiIj5kjWnCh5JNzlqrE/z+Kw5UqH173F+JOWzU6qkFB4HVC50epgxzKSL2Hq1oNXA877vwQ==

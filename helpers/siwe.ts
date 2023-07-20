@@ -78,13 +78,10 @@ export const useSignIn = () => {
     await fetchNonce()
 
     // Get user confirmation
-    console.log('address.value', address.value)
     const message = await siweMessage(address.value)
-    console.log('message', message)
     const signature = await signMessage({
       message: message.prepareMessage()
     })
-    console.log('signature', signature)
 
     // Verify session
     session.value = await $fetch(`${API}/auth/verify`, {
