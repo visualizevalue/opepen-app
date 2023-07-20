@@ -47,7 +47,7 @@ defineExpose({
     }
     &:before {
       height: calc(100% - var(--size-8));
-      top: var(--size-8);
+      top: var(--size-6);
       background: var(--gray-z-3);
     }
     &:after {
