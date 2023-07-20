@@ -4,15 +4,13 @@
       <Logo />
     </NuxtLink>
 
-    <!-- <Button to="/create" @click="onCreateClick">
-      <Icon type="plus" />
-      <span>Create</span>
-    </Button> -->
-
     <Button :to="setUrl">
       <Icon type="grid" />
       <span>Sets</span>
     </Button>
+
+    <CreateLink />
+
     <Connect />
   </nav>
 </template>
@@ -80,6 +78,16 @@ const onCreateClick = () => {
       position: relative;
       min-height: var(--100vh);
       padding: calc(var(--navbar-height) + var(--size-4)) var(--size-4) var(--size-5);
+    }
+
+    :deep(> .button:not(:last-child)) {
+      > span {
+        display: none;
+
+        @media (--md) {
+          display: block;
+        }
+      }
     }
   }
 </style>
