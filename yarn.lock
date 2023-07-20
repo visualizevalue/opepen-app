@@ -5150,6 +5150,11 @@ openapi-typescript@^6.2.8:
     undici "^5.22.1"
     yargs-parser "^21.1.1"
 
+opepen-standard@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/opepen-standard/-/opepen-standard-1.0.1.tgz#f0f281aa19fba5dd366c424db88feb53a66a1678"
+  integrity sha512-LwOjM1ziCVnLwz4U819RTmDSh+GGqnXScJJFX39u3ws9M6G1U2Vf3Is72luZmlQnSZlx82LqPhypRpMQnons+A==
+
 p-limit@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.3.0.tgz#3dd33c647a214fdfffd835933eb086da0dc21db1"

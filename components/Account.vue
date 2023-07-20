@@ -1,13 +1,13 @@
 <template>
-  <span class="small upper" :class="{ avatar }">
+  <span class="small upper" :class="{ avatar: !hideAvatar }">
     <img v-if="!hideAvatar && avatar" :src="avatar" />
+    <DefaultOpepenAvatar v-else-if="!hideAvatar" />
     <span v-if="ens">{{ ens }}</span>
     <span v-else>{{ display }}</span>
   </span>
 </template>
 
 <script setup>
-// import { useEnsName, useEnsAvatar } from '~/helpers/use-wagmi'
 import { useEnsName, useEnsAvatar } from '~/helpers/use-wagmi'
 import shortAddress from '~~/helpers/short-address'
 
@@ -32,7 +32,7 @@ span {
   align-items: center;
   gap: var(--size-2);
 
-  img {
+  :deep(img) {
     width: var(--size-5);
     height: var(--size-5);
     border-radius: 50%;

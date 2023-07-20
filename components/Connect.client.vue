@@ -1,5 +1,8 @@
 <template>
   <Button v-if="! isConnected" @click="open = true" id="main-connect">
+    <span class="avatar">
+      <DefaultOpepenAvatar />
+    </span>
     <slot>Check-In</slot>
   </Button>
   <Button :to="`/holders/${'address', address}`" v-else>
@@ -38,6 +41,8 @@ watch(isConnected, async () => {
 
   :deep(img) {
     border-top-left-radius: var(--size-0);
+    width: var(--size-5);
+    height: var(--size-5);
   }
 }
 </style>
