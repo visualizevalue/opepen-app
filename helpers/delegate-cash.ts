@@ -1,4 +1,4 @@
-import { providers } from 'ethers'
+import { providers } from 'ethers5'
 import { DelegateCash } from 'delegatecash'
 
 export async function fetchAddresses (rpc: string, account?: string): Promise<string[]> {

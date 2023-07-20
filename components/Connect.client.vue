@@ -16,13 +16,19 @@
 </template>
 
 <script setup>
+import { useSignIn } from '~/helpers/siwe'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
+const { loading, signIn } = useSignIn()
 
 const open = ref(false)
-watch(isConnected, () => {
+watch(isConnected, async () => {
   open.value = false
+
+  if (isConnected.value) {
+    signIn()
+  }
 })
 </script>
 

@@ -36,7 +36,7 @@ export function useSets() {
   const config = useRuntimeConfig()
 
   const fetchSets = async () => {
-    sets.value = await $fetch(`${config.opepenApi}/opepen/sets`)
+    sets.value = await $fetch(`${config.public.opepenApi}/opepen/sets`)
     loaded.value = true
   }
 
