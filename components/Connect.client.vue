@@ -20,7 +20,7 @@ import { useSignIn } from '~/helpers/siwe'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
-const { loading, signIn } = useSignIn()
+const { signIn } = useSignIn()
 
 const open = ref(false)
 watch(isConnected, async () => {

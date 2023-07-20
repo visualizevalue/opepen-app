@@ -12,9 +12,9 @@ type Session = {
   version: string;
 }
 
-const loading = ref(false)
-const nonce = ref('')
-const session: Ref<Session|null> = ref(null)
+export const loading = ref(false)
+export const nonce = ref('')
+export const session: Ref<Session|null> = ref(null)
 
 export const loadSiwe = async () => {
   return import('siwe')

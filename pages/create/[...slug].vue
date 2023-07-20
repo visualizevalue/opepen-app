@@ -32,7 +32,7 @@ const [ uuid, ...invalid ] = route.params.slug
 if (invalid.length) router.replace(`/create/${uuid}`)
 
 const url = `${config.public.opepenAiApi}/journeys`
-const { data: journey, execute } = await useFetch(`${url}/${uuid}`, { immediate: false })
+const { data: journey, execute } = await useFetch(`${url}/${uuid}`, { immediate: false, credentials: 'include' })
 const steps = ref(null)
 
 if (uuid) {
@@ -44,7 +44,11 @@ if (uuid) {
 
 const submit = async input => {
   if (! journey.value) {
-    journey.value = await post(url, input)
+    try {
+      journey.value = await post(url, input)
+    } catch (e) {
+      return
+    }
     router.replace(`/create/${journey.value.uuid}`)
   } else {
     steps.value.newStep(input)
