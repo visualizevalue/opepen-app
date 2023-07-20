@@ -3,16 +3,23 @@
 </template>
 
 <script setup>
+import { useAccount } from '~/helpers/use-wagmi'
 import { createIcon } from 'opepen-standard'
 
-const canvas = createIcon({ // All options are optional
-    seed: 'randstring', // seed used to generate icon data, default: random
-    // color: '#dfe', // optional
-    // bgcolor: '#aaa', // optional
-    size: 32, // width/height of the icon in blocks, default: 32
-})
+const { address } = useAccount()
 
-const img = canvas.toDataURL()
+const canvas = ref(null)
+const img = computed(() => canvas.value.toDataURL())
+
+const setCanvas = () => {
+  canvas.value = createIcon({
+    seed: address.value,
+    size: 32,
+  })
+}
+
+onMounted(() => setCanvas())
+watch(address, () => setCanvas())
 </script>
 
 <style lang="postcss" scoped>
