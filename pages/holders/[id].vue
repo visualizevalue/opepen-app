@@ -1,7 +1,7 @@
 <template>
   <div class="holder">
     <PageHeader class="centered">
-      <DefaultOpepenAvatar class="avatar" :size="64" />
+      <DefaultOpepenAvatar class="avatar" :size="64" :address="account.address" />
       <h1>{{ account.display }}</h1>
     </PageHeader>
 
