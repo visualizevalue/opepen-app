@@ -13,7 +13,7 @@ const img = computed(() => canvas.value.toDataURL())
 
 const setCanvas = () => {
   canvas.value = createIcon({
-    seed: address.value,
+    seed: address.value || Math.random().toString(),
     size: 32,
   })
 }
