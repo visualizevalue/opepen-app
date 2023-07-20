@@ -101,7 +101,6 @@ const detach = idx => images.value.splice(idx, 1)
 
 
     h1 {
-      font-weight: var(--font-weight-medium);
       color: var(--gray-z-5);
     }
   }

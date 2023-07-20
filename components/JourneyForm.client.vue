@@ -6,7 +6,7 @@
   >
 
     <div class="row">
-      <div class="group base-input">
+      <div class="group base-input" title="coming soon">
         <label>
           <span>Base</span>
           <Button type="button">
@@ -30,10 +30,12 @@
 
     <div v-if="! expanded" class="create-pack">
       <span>OR</span>
-      <Button to="/create/submit">
+      <!-- /create/submit -->
+      <Button to="/create">
         <Icon type="upload" />
         <span>Upload Pack</span>
       </Button>
+      <small class="muted">(coming soon)</small>
     </div>
   </form>
 </template>
@@ -137,6 +139,10 @@ watch([props], () => {
       width: var(--size-9);
       height: var(--size-9);
 
+      label {
+        pointer-events: none;
+      }
+
       button {
         width: var(--size-9);
         height: var(--size-9);
@@ -191,6 +197,10 @@ watch([props], () => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    user-select: none;
+
+    pointer-events: none;
+    opacity: 0.5;
 
     > span {
       position: relative;
@@ -224,6 +234,10 @@ watch([props], () => {
         width: 3rem;
         background-color: var(--background);
       }
+    }
+
+    > small {
+      margin-top: var(--size-3);
     }
 
   }
