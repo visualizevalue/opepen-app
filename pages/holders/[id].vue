@@ -1,6 +1,7 @@
 <template>
   <div class="holder">
     <PageHeader class="centered">
+      <DefaultOpepenAvatar class="avatar" :size="64" />
       <h1>{{ account.display }}</h1>
     </PageHeader>
 
@@ -42,6 +43,12 @@ useMetaData({
   width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
+
+  .avatar {
+    margin: 0 auto var(--size-5);
+    width: var(--size-8);
+    height: var(--size-8);
+  }
 
   .opepens {
     display: flex;
