@@ -23,7 +23,7 @@
         <nav class="top">
           <!-- <button><Icon type="arrow-up-left" :stroke-width="2.5" /></button> -->
           <button @click="detach"><Icon type="x" :stroke-width="2.5" /></button>
-          <NuxtLink :to="`/opepens/${image.uuid}`" class="button"><Icon type="maximize" :stroke-width="3" class="wide" /></NuxtLink>
+          <NuxtLink :to="`/opepen/${image.uuid}`" class="button"><Icon type="maximize" :stroke-width="3" class="wide" /></NuxtLink>
         </nav>
         <nav class="centered">
           <!-- <button><Icon type="check" stroke-width="2" /></button> -->
@@ -89,7 +89,10 @@ const reseed = async () => {
 const detach = async () => {
   if (! confirm(`Do you really want to delete this image?`)) return
 
-  $fetch(`${config.public.opepenAiApi}/ai-images/${aiImage.value.uuid}`, { method: 'DELETE' })
+  $fetch(`${config.public.opepenAiApi}/ai-images/${aiImage.value.uuid}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
   emit('detach', aiImage.value)
 }
 const download = async () => await downloadImage(versionedUri.value, { name: props.version ? `${aiImage.value.uuid}@${props.version}` : aiImage.value.uuid })
