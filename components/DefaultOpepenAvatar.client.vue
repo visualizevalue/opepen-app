@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-import { useAccount } from '~/helpers/use-wagmi'
 import { createIcon } from 'opepen-standard'
 
 const { size, address } = defineProps({
