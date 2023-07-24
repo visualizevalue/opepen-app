@@ -11,6 +11,7 @@
         <SetOptInFlow
           :set="set"
           :subscribed="subscription?.opepen_ids || []"
+          :max-reveals="subscription?.max_reveals"
           :open="optInOpen"
           @close="optInOpen = false"
           :click-outside="false"

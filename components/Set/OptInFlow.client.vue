@@ -23,10 +23,23 @@
           <div v-else class="opepens">
             <div v-for="(opepens, g) in grouped" class="group">
               <div v-if="opepens.length">
-                <h1>Editions of {{ g }}:</h1>
+                <header>
+                  <h1>Editions of {{ g }}:</h1>
 
-                <button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</button>
-                <button v-else @click="() => selectAll(g)" class="sm">Select All</button>
+                  <Button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</Button>
+                  <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
+                </header>
+
+                <label v-if="selectedInGroup(g).length > 1" class="setting">
+                  <span>Max Reveal:</span>
+                  <input
+                    type="number"
+                    min="1"
+                    :max="selectedInGroup(g).length"
+                    v-model="maxRevealSetting[g]"
+                    :placeholder="selectedInGroup(g).length"
+                  >
+                </label>
               </div>
 
               <label
@@ -40,12 +53,27 @@
           </div>
         </div>
       </section>
+      <!-- <section class="max-reveal">
+        <h1>Max Reveal Setting:</h1>
+        <div v-for="(opepens, g) in grouped" class="group">
+          <div v-if="selectedInGroup(g).length > 1">
+            <h1>Editions of {{ g }}:</h1>
+
+            asdfadsf
+          </div>
+        </div>
+      </section> -->
       <footer v-if="isConnected">
         <div v-if="selected.length" class="left">
-          <span>Submitting</span>
+          <span>Submitting {{ selected.length }} Opepen</span>
           <template v-for="(_, g) in grouped">
             <div v-if="selectedInGroup(g).length" class="group">
-              <span>{{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span></span>
+              <span>
+                {{maxRevealSetting[g] || selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span>
+                <!-- <span v-if="maxRevealSetting[g] && maxRevealSetting[g] < selectedInGroup(g).length">
+                  <span class="muted"> (max {{ maxRevealSetting[g] }})</span>
+                </span> -->
+              </span>
             </div>
           </template>
         </div>
@@ -91,6 +119,17 @@ const props = defineProps({
   set: Object,
   clickOutside: Boolean,
   subscribed: Array,
+  maxReveals: {
+    type: Object,
+    default: () => ({
+      '1': null,
+      '4': null,
+      '5': null,
+      '10': null,
+      '20': null,
+      '40': null,
+    })
+  },
 })
 
 const emit = defineEmits(['close'])
@@ -156,6 +195,28 @@ const hasCompleteGroupSelection = group => {
   return selectedInGroup(group).length === grouped.value[group].length
 }
 
+const maxRevealSetting = ref({ ...props.maxReveals })
+watch(() => props.maxReveals, () => {
+  maxRevealSetting.value = {...props.maxReveals}
+})
+
+const message = computed(() => {
+  return `I want to submit my Opepen for possible artwork reveal in the following set:
+
+OPT-IN: Set ${pad(props.set.id, 3)}
+
+SET NAME: ${props.set.name}
+
+MAX REVEALS:
+${Object.keys(maxRevealSetting.value)
+.filter(g => selectedInGroup(g).length)
+.map(g => `- Edition of ${g}: ${maxRevealSetting.value[g] || selectedInGroup(g).length} Reveals`)
+.join('\n')
+}
+
+OPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
+})
+
 const signing = ref(false)
 const signed = ref(false)
 const sign = async () => {
@@ -168,10 +229,8 @@ const sign = async () => {
     const set = props.set
     signing.value = true
 
-    const message = `I want to submit my Opepen for possible artwork reveal in the following set:\n\nOPT-IN: Set ${pad(set.id, 3)}\n\nSET NAME: ${set.name}\n\nOPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
-
     const signature = await signMessage({
-      message,
+      message: message.value,
     })
 
     await $fetch(`${config.public.opepenApi}/opepen/sets/${set.id}/subscribe`, {
@@ -179,7 +238,8 @@ const sign = async () => {
       body: JSON.stringify({
         address: address.value,
         opepen: selected.value,
-        message,
+        max_reveals: maxRevealSetting.value,
+        message: message.value,
         signature,
         delegated_by: delegatedAddresses.value.join(',')
       })
@@ -208,7 +268,7 @@ const sign = async () => {
   }
 }
 
-header {
+.opt-in-flow > header {
   padding: var(--size-4);
   border-bottom: var(--border-dark);
 
@@ -255,25 +315,58 @@ section {
 }
 
 .opepens {
-  > div {
+  > .group {
     > div {
       text-transform: uppercase;
       font-weight: var(--font-weight-bold);
       font-size: var(--font-sm);
-      padding: var(--size-1) var(--size-4);
+      padding: var(--size-2) var(--size-4);
       letter-spacing: var(--letter-spacing-md);
       position: sticky;
       top: var(--header-height);
       z-index: 2;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      > * {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      > label {
+        border-top: var(--border);
+        margin: var(--size-2) 0 0;
+        padding: var(--size-2) 0 0;
+        color: var(--gray-z-5);
+        font-size: var(--font-xs);
+
+        span {
+          white-space: nowrap;
+        }
+
+        input {
+          font-size: var(--font-xs);
+          padding-top: var(--size-1);
+          padding-bottom: var(--size-1);
+          min-height: 0;
+          height: calc(var(--size-6) + var(--size-1));
+          margin-left: auto;
+          width: auto;
+
+          &:--highlight {
+            color: var(--color);
+          }
+        }
+      }
 
       background-color: var(--gray-z-2);
 
       .button {
         padding: var(--size-0) var(--size-2);
+        font-size: var(--font-xs);
+        padding-top: var(--size-1);
+        padding-bottom: var(--size-1);
+        min-height: 0;
+        height: calc(var(--size-6) + var(--size-1));
       }
     }
 
@@ -331,6 +424,7 @@ footer {
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     line-height: 0.75;
+    font-size: var(--font-xs);
 
     span:first-child {
       width: 100%;
