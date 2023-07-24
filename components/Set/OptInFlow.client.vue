@@ -100,6 +100,7 @@ import { useAccount } from '~/helpers/use-wagmi'
 import pad from '~/helpers/pad'
 import { fetchAddresses } from '~/helpers/delegate-cash'
 import { getEditionName } from '~/helpers/editions'
+import { useOpepen } from '~/helpers/use-opepen'
 
 const props = defineProps({
   open: Boolean,
@@ -124,39 +125,15 @@ const emit = defineEmits(['close'])
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
 
-const opepen = ref([])
-const opepenLoading = ref(false)
-
 const delegatedAddresses = ref(await fetchAddresses(config.public.rpc, address.value))
 watch(address, async () => {
   delegatedAddresses.value = await fetchAddresses(config.public.rpc, address.value)
 })
 
-const fetchOpepen = async () => {
-  opepenLoading.value = true
-  const addresses = [ address.value, ...delegatedAddresses.value ]
-  const responses = await Promise.all(addresses.map(a =>
-    $fetch(`${config.public.opepenApi}/accounts/${a}/opepen`)
-  ))
-  opepen.value = responses.reduce((opepen, response) => {
-    return opepen.concat(response.data)
-  }, [])
-  opepenLoading.value = false
-}
-watch([isConnected, delegatedAddresses], () => fetchOpepen())
-onMounted(() => fetchOpepen())
-
-const grouped = computed(() => {
-  const items = opepen.value || []
-
-  return items
-    .filter(o => ! o.revealed_at)
-    .reduce((groups, o) => {
-      groups[o.data.edition].push(o)
-
-      return groups
-    }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
-})
+const {
+  opepen, opepenByEdition: grouped, opepenLoading, fetchOpepen
+} = await useOpepen([address.value, ...delegatedAddresses.value])
+watch([isConnected, delegatedAddresses], () => fetchOpepen([address.value, ...delegatedAddresses.value]))
 
 const selected = ref(props.subscribed ? [...props.subscribed] : [])
 watch(() => props.subscribed, () => {
@@ -190,10 +167,23 @@ const hasCompleteGroupSelection = group => {
   return selectedInGroup(group).length === grouped.value[group].length
 }
 
-const maxRevealSetting = ref({ ...props.maxReveals })
+const maxRevealSetting = reactive({ ...props.maxReveals })
 watch(() => props.maxReveals, () => {
-  maxRevealSetting.value = {...props.maxReveals}
+  maxRevealSetting['1'] = props.maxReveals['1']
+  maxRevealSetting['4'] = props.maxReveals['4']
+  maxRevealSetting['5'] = props.maxReveals['5']
+  maxRevealSetting['10'] = props.maxReveals['10']
+  maxRevealSetting['20'] = props.maxReveals['20']
+  maxRevealSetting['40'] = props.maxReveals['40']
 })
+const maxRevealValues = computed(() => ({
+  '1':  maxRevealSetting['1']  ? maxRevealSetting['1']  : selectedInGroup('1')?.length  || null,
+  '4':  maxRevealSetting['4']  ? maxRevealSetting['4']  : selectedInGroup('4')?.length  || null,
+  '5':  maxRevealSetting['5']  ? maxRevealSetting['5']  : selectedInGroup('5')?.length  || null,
+  '10': maxRevealSetting['10'] ? maxRevealSetting['10'] : selectedInGroup('10')?.length || null,
+  '20': maxRevealSetting['20'] ? maxRevealSetting['20'] : selectedInGroup('20')?.length || null,
+  '40': maxRevealSetting['40'] ? maxRevealSetting['40'] : selectedInGroup('40')?.length || null,
+}))
 
 const message = computed(() => {
   return `I want to submit my Opepen for possible artwork reveal in the following set:
@@ -203,10 +193,11 @@ OPT-IN: Set ${pad(props.set.id, 3)}
 SET NAME: ${props.set.name}
 
 MAX REVEALS:
-${Object.keys(maxRevealSetting.value)
-.filter(g => selectedInGroup(g).length)
-.map(g => `- Edition of ${g}: ${maxRevealSetting.value[g] || selectedInGroup(g).length} Reveals`)
-.join('\n')
+${Object.keys(maxRevealValues.value)
+  .filter(g => selectedInGroup(g).length)
+  .map(g => [g, maxRevealValues.value[g]])
+  .map(([g, max]) => `- Edition of ${g}: ${max} Reveal${max > 1 ? 's' : ''}`)
+  .join('\n')
 }
 
 OPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
@@ -233,7 +224,7 @@ const sign = async () => {
       body: JSON.stringify({
         address: address.value,
         opepen: selected.value,
-        max_reveals: maxRevealSetting.value,
+        max_reveals: maxRevealValues.value,
         message: message.value,
         signature,
         delegated_by: delegatedAddresses.value.join(',')
