@@ -37,6 +37,7 @@
                     min="1"
                     :max="selectedInGroup(g).length"
                     v-model="maxRevealSetting[g]"
+                    @input="() => validateMaxReveal(g)"
                     :placeholder="selectedInGroup(g).length"
                   >
                 </label>
@@ -184,6 +185,11 @@ const maxRevealValues = computed(() => ({
   '20': maxRevealSetting['20'] ? maxRevealSetting['20'] : selectedInGroup('20')?.length || null,
   '40': maxRevealSetting['40'] ? maxRevealSetting['40'] : selectedInGroup('40')?.length || null,
 }))
+const validateMaxReveal = g => {
+  if (maxRevealSetting[g] > selectedInGroup(g).length) {
+    maxRevealSetting[g] = selectedInGroup(g).length
+  }
+}
 
 const message = computed(() => {
   return `I want to submit my Opepen for possible artwork reveal in the following set:
