@@ -53,16 +53,6 @@
           </div>
         </div>
       </section>
-      <!-- <section class="max-reveal">
-        <h1>Max Reveal Setting:</h1>
-        <div v-for="(opepens, g) in grouped" class="group">
-          <div v-if="selectedInGroup(g).length > 1">
-            <h1>Editions of {{ g }}:</h1>
-
-            asdfadsf
-          </div>
-        </div>
-      </section> -->
       <footer v-if="isConnected">
         <div v-if="selected.length" class="left">
           <span>Submitting {{ selected.length }} Opepen</span>
@@ -70,9 +60,6 @@
             <div v-if="selectedInGroup(g).length" class="group">
               <span>
                 {{maxRevealSetting[g] || selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span>
-                <!-- <span v-if="maxRevealSetting[g] && maxRevealSetting[g] < selectedInGroup(g).length">
-                  <span class="muted"> (max {{ maxRevealSetting[g] }})</span>
-                </span> -->
               </span>
             </div>
           </template>
@@ -175,6 +162,14 @@ const selected = ref(props.subscribed ? [...props.subscribed] : [])
 watch(() => props.subscribed, () => {
   selected.value = [...props.subscribed] || []
 })
+const selectedPerGroup = computed(() => Object.keys(grouped.value)
+  .map(g => [g, selected.value.filter(id => grouped.value[g].map(g => g.token_id).includes(id))])
+  .reduce((groups, [g, ids]) => {
+    groups[g] = ids
+    return groups
+  }, {})
+)
+
 const selectAll = (group) => {
   grouped.value[group].forEach(o => {
     if (! selected.value.includes(o.token_id)) {
@@ -189,7 +184,7 @@ const deselectAll = (group) => {
   })
 }
 const selectedInGroup = group => {
-  return grouped.value[group].filter(o => selected.value.includes(o.token_id))
+  return selectedPerGroup.value[group]
 }
 const hasCompleteGroupSelection = group => {
   return selectedInGroup(group).length === grouped.value[group].length
