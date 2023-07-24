@@ -39,6 +39,9 @@
                     v-model="maxRevealSetting[g]"
                     @input="() => validateMaxReveal(g)"
                     :placeholder="selectedInGroup(g).length"
+                    :style="{
+                      minWidth: hasCompleteGroupSelection(g) ? '7rem' : '6rem'
+                    }"
                   >
                 </label>
               </div>
@@ -188,6 +191,9 @@ const maxRevealValues = computed(() => ({
 const validateMaxReveal = g => {
   if (maxRevealSetting[g] > selectedInGroup(g).length) {
     maxRevealSetting[g] = selectedInGroup(g).length
+  }
+  if (maxRevealSetting[g] < 1) {
+    maxRevealSetting[g] = 1
   }
 }
 
@@ -342,6 +348,7 @@ section {
           min-height: 0;
           height: calc(var(--size-6) + var(--size-1));
           margin-left: auto;
+          min-width: 6rem;
           width: auto;
 
           &:--highlight {
