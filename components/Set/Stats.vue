@@ -8,7 +8,7 @@
     <span class="check"></span>
 
     <span class="th">One</span>
-    <span>{{ props.set?.submission_stats.holders['1'] }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders['1']) }}</span>
     <span>{{ formatNumber(edition1Count) }}</span>
     <span>{{ formatNumber(edition1Demand) }}%</span>
     <span class="check" :class="{
@@ -17,7 +17,7 @@
     }"><Check /></span>
 
     <span class="th">Four</span>
-    <span>{{ props.set?.submission_stats.holders['4'] }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders['4']) }}</span>
     <span>{{ formatNumber(edition4Count) }}</span>
     <span>{{ formatNumber(edition4Demand) }}%</span>
     <span class="check" :class="{
@@ -26,7 +26,7 @@
     }"><Check /></span>
 
     <span class="th">Five</span>
-    <span>{{ props.set?.submission_stats.holders['5'] }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders['5']) }}</span>
     <span>{{ formatNumber(edition5Count) }}</span>
     <span>{{ formatNumber(edition5Demand) }}%</span>
     <span class="check" :class="{
@@ -35,7 +35,7 @@
     }"><Check /></span>
 
     <span class="th">Ten</span>
-    <span>{{ props.set?.submission_stats.holders['10'] }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders['10']) }}</span>
     <span>{{ formatNumber(edition10Count) }}</span>
     <span>{{ formatNumber(edition10Demand) }}%</span>
     <span class="check" :class="{
@@ -44,7 +44,7 @@
     }"><Check /></span>
 
     <span class="th">Twenty</span>
-    <span>{{ props.set?.submission_stats.holders['20'] }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders['20']) }}</span>
     <span>{{ formatNumber(edition20Count) }}</span>
     <span>{{ formatNumber(edition20Demand) }}%</span>
     <span class="check" :class="{
@@ -53,7 +53,7 @@
     }"><Check /></span>
 
     <span class="th">Forty</span>
-    <span>{{ props.set?.submission_stats.holders['40'] }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders['40']) }}</span>
     <span>{{ formatNumber(edition40Count) }}</span>
     <span>{{ formatNumber(edition40Demand) }}%</span>
     <span class="check" :class="{
@@ -62,7 +62,9 @@
     }"><Check /></span>
 
     <span class="th">Overall</span>
-    <span>{{ props.set?.submission_stats.holders.total }}</span>
+    <span>{{ formatNumber(set?.submission_stats.holders.total) }}
+      <small class="muted" v-if="set?.submission_stats.totalHolders">(of {{ formatNumber(set?.submission_stats.totalHolders) }})</small>
+    </span>
     <span class="th">{{ formatNumber(totalCount) }} <small class="muted">(of {{ formatNumber(eligibleOpepenCount) }})</small></span>
     <span class="th">
       {{ formatNumber(avgDemand) }}%
