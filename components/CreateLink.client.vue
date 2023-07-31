@@ -9,4 +9,14 @@
 import { useAccount } from '~/helpers/use-wagmi'
 
 const { isConnected } = useAccount()
+
+const onCreateClick = () => {
+  setTimeout(() => {
+    nextTick(() => {
+      const el = document.querySelector('.prompt-input textarea')
+
+      el?.focus()
+    })
+  }, 50)
+}
 </script>

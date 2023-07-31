@@ -27,16 +27,6 @@ const isScrolled = computed(() => y.value > 5)
 const { currentSet, fetchSets } = useSets()
 const setUrl = computed(() => `/sets/${currentSet.value ? pad(currentSet.value.id) : '003'}`)
 onMounted(() => fetchSets())
-
-const onCreateClick = () => {
-  setTimeout(() => {
-    nextTick(() => {
-      const el = document.querySelector('.prompt-input textarea')
-
-      el?.focus()
-    })
-  }, 50)
-}
 </script>
 
 <style lang="postcss" scoped>

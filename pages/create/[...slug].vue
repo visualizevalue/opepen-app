@@ -21,11 +21,13 @@
 
 <script setup>
 import { post } from '~/api'
+import { useSignIn } from '~/helpers/siwe'
 import { useMetaData } from '~/helpers/head'
 
 const config = useRuntimeConfig()
 const route = useRoute()
 const router = useRouter()
+const { signIn } = useSignIn()
 
 // Validate route
 const [ uuid, ...invalid ] = route.params.slug
@@ -47,6 +49,8 @@ const submit = async input => {
     try {
       journey.value = await post(url, input)
     } catch (e) {
+      // Make sure we're signed in
+      await signIn()
       return
     }
     router.replace(`/create/${journey.value.uuid}`)

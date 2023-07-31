@@ -5,21 +5,23 @@
 <script setup>
 import { createIcon } from 'opepen-standard'
 
-const { size, address } = defineProps({
+const props = defineProps({
   size: {
     type: Number,
     default: 32,
   },
   address: String,
 })
+const size = computed(() => props.size)
+const address = computed(() => props.address)
 
 const canvas = ref(null)
 const img = computed(() => canvas.value.toDataURL())
 
 const setCanvas = () => {
   canvas.value = createIcon({
-    seed: address?.toLowerCase() || Math.random().toString(),
-    size,
+    seed: address.value?.toLowerCase() || Math.random().toString(),
+    size: size.value,
   })
 }
 
