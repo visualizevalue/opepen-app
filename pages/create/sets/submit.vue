@@ -11,3 +11,11 @@
     </PageHeader>
   </div>
 </template>
+
+<script setup>
+import { useMetaData } from '~/helpers/head'
+
+useMetaData({
+  title: 'Create set submission',
+})
+</script>

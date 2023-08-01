@@ -164,7 +164,7 @@ form {
     border-top-left-radius: var(--size-1);
 
     > .label {
-      margin: var(--size-2) 0 0;
+      margin: var(--size-1) 0 0;
     }
 
     > div {
