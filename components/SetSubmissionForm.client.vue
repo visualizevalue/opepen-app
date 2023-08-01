@@ -30,15 +30,15 @@
       </div>
       <div>
         <div><Image :image="image10" /></div>
-        <input type="text" v-model="name10" placeholder="1/10 Nam" />
+        <input type="text" v-model="name10" placeholder="1/10 Name" />
       </div>
       <div>
         <div><Image :image="image20" /></div>
-        <input type="text" v-model="name20" placeholder="1/20 Nam" />
+        <input type="text" v-model="name20" placeholder="1/20 Name" />
       </div>
       <div>
         <div><Image :image="image40" /></div>
-        <input type="text" v-model="name40" placeholder="1/40 Nam" />
+        <input type="text" v-model="name40" placeholder="1/40 Name" />
       </div>
     </div>
 
@@ -157,7 +157,7 @@ form {
   .names {
     display: grid;
     gap: var(--size-4);
-    padding: var(--size-3) var(--size-4);
+    padding: var(--size-3) var(--size-4) var(--size-4);
     background: var(--gray-z-1);
     border: var(--border-dark);
     border-radius: var(--size-5);
