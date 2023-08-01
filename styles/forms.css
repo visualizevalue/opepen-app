@@ -73,3 +73,11 @@ textarea {
     }
   }
 }
+
+.label {
+  font-size: var(--font-sm);
+  color: var(--gray-z-5);
+  letter-spacing: var(--letter-spacing-lg);
+  margin-bottom: var(--size-1);
+  display: block;
+}

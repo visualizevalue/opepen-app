@@ -30,12 +30,10 @@
 
     <div v-if="! expanded" class="create-pack">
       <span>OR</span>
-      <!-- /create/submit -->
-      <Button to="/create">
+      <Button to="/create/sets/submit">
         <Icon type="upload" />
         <span>Upload Pack</span>
       </Button>
-      <small class="muted">(coming soon)</small>
     </div>
   </form>
 </template>
@@ -198,9 +196,6 @@ watch([props], () => {
     justify-content: center;
     align-items: center;
     user-select: none;
-
-    pointer-events: none;
-    opacity: 0.5;
 
     > span {
       position: relative;
