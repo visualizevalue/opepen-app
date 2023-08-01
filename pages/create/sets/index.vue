@@ -13,9 +13,9 @@
       </Button>
     </PageHeader>
 
-    <article>
+    <div class="submissions">
       <MySetSubmissions />
-    </article>
+    </div>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ header {
   align-items: center;
 }
 
-article {
+.submissions {
   max-width: var(--content-width);
   margin: 0 auto;
 }
