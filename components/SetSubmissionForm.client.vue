@@ -15,7 +15,7 @@
     </div>
 
     <div class="names">
-      <span class="label">Image Names</span>
+      <span class="label">Edition Names</span>
       <div>
         <div><Image :image="image1" /></div>
         <input type="text" v-model="name1"  :placeholder="image1 ?  '1/1 Name' :  'Upload 1/1 Media'" :disabled="! image1" />
@@ -133,7 +133,7 @@ form {
   gap: var(--size-7);
   margin: var(--size-7) 0;
 
-  @media (--md) {
+  @media (--lg) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
     .name,
