@@ -3,6 +3,7 @@
     <PaginatedContent
       v-if="session"
       :url="url"
+      :refresh-key="address"
       v-slot="{ items }"
     >
       <div v-if="! items?.length" class="empty">
@@ -32,10 +33,12 @@
 </template>
 
 <script setup>
+import { useAccount } from '~/helpers/use-wagmi'
 import { useSignIn } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
 const { session } = useSignIn()
+const { address } = useAccount()
 
 const url = computed(() => `${config.public.opepenApi}/accounts/${session.value?.address}/set-submissions`)
 </script>

@@ -29,12 +29,14 @@ const props = defineProps({
     type: Function,
     default: d => d.data,
   },
+  refreshKey: [Number, String],
 })
 
 const {
   metaAccessor,
   itemsAccessor,
 } = props
+const refreshKey = computed(() => props.refreshKey)
 const url = computed(() => props.url)
 const query = computed(() => props.query || '')
 const page = ref(0)
@@ -78,7 +80,7 @@ const reset = () => {
 
   loadMore()
 }
-watch([query, url], () => reset())
+watch([query, url, refreshKey], () => reset())
 
 // Scroll marker autoloading
 function onMarkerVisible ([{ isIntersecting }]) {

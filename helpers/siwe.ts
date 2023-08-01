@@ -16,6 +16,8 @@ export const loading = ref(false)
 export const nonce = ref('')
 export const session: Ref<Session|null> = ref(null)
 
+let accountWatcher: any
+
 export const loadSiwe = async () => {
   return import('siwe')
 }
@@ -91,6 +93,14 @@ export const useSignIn = () => {
     })
 
     loading.value = false
+  }
+
+  if (! accountWatcher) {
+    accountWatcher = watch(address, (_, prevAccount) => {
+      if (prevAccount) {
+        signIn()
+      }
+    })
   }
 
   return {
