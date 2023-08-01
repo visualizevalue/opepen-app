@@ -34,8 +34,13 @@ export const useAccount = () => {
 export const useEnsName = (address) => {
   const name = ref('')
 
-  fetchEnsName({ address }).then(ens => {
-    name.value = ens
+  if (address.value) {
+    fetchEnsName({ address: address.value }).then(ens => {
+      name.value = ens
+    })
+  }
+  watch(address, async () => {
+    name.value = await fetchEnsName({ address: address.value })
   })
 
   return name
@@ -45,9 +50,10 @@ export const useEnsAvatar = (name) => {
   const avatar = ref('')
 
   if (name.value) {
-    fetchEnsAvatar({ name }).then(url => avatar.value = url)
+    fetchEnsAvatar({ name: name.value }).then(url => avatar.value = url)
   }
   watch(name, async () => {
+    if (! name.value) return
     avatar.value = await fetchEnsAvatar({ name: name.value })
   })
 

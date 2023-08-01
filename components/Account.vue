@@ -16,7 +16,8 @@ const props = defineProps({
   hideAvatar: Boolean,
 })
 
-const ens = useEnsName(props.address)
+const address = computed(() => props.address)
+const ens = useEnsName(address)
 const avatar = useEnsAvatar(ens)
 
 const display = computed(() => {
