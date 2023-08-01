@@ -1,5 +1,5 @@
 <template>
-  <span class="small upper" :class="{ avatar: !hideAvatar }">
+  <span :class="{ avatar: !hideAvatar }">
     <img v-if="!hideAvatar && avatar" :src="avatar" />
     <DefaultOpepenAvatar v-else-if="!hideAvatar" :address="address" />
     <span v-if="ens">{{ ens }}</span>
