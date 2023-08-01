@@ -1,14 +1,6 @@
 <template>
   <div>
-    <PageHeader>
-      <h1 class="breadcrumb">
-        <span>Manage Submissions</span>
-      </h1>
-    </PageHeader>
-
-    <article>
-      <AdminSetSubmissions />
-    </article>
+    <AdminSetSubmissions />
   </div>
 </template>
 

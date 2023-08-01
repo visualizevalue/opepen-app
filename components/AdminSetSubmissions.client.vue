@@ -1,9 +1,16 @@
 <template>
-  <section>
+  <section v-if="isConnected">
+    <PageHeader>
+      <h1 class="breadcrumb">
+        <span>Manage Submissions</span>
+      </h1>
+    </PageHeader>
+
     <PaginatedContent
       v-if="session"
       :url="url"
-      v-slot="{ items }"
+      :refresh-key="address"
+      v-slot="{ items, loading }"
     >
       <article
         v-for="set in items"
@@ -27,6 +34,8 @@
           <NuxtLink :to="`/create/sets/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
         </div>
       </article>
+
+      <Loading v-if="loading" />
     </PaginatedContent>
   </section>
 </template>
@@ -34,9 +43,11 @@
 <script setup>
 import { useSignIn } from '~/helpers/siwe'
 import { formatDate } from '~/helpers/dates'
+import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
 const { session } = useSignIn()
+const { address, isConnected } = useAccount()
 
 const url = computed(() => `${config.public.opepenApi}/set-submissions`)
 </script>
