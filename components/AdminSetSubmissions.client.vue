@@ -54,7 +54,12 @@ const url = computed(() => `${config.public.opepenApi}/set-submissions`)
 
 <style lang="postcss" scoped>
 section {
-  margin: var(--size-7) 0;
+  max-width: var(--content-width);
+  margin: var(--size-7) auto;
+
+  > header {
+    margin-bottom: var(--size-7);
+  }
 
   > div {
     display: grid;
