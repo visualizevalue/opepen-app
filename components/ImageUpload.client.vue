@@ -14,7 +14,7 @@
       <input
         type="file"
         name="image"
-        accept="image/png, image/jpeg, image/svg+xml"
+        accept="image/png, image/jpeg, image/gif, image/svg+xml"
         @change.prevent="addFile"
       >
     </label>
