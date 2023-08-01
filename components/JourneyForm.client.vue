@@ -28,12 +28,19 @@
       </div>
     </div>
 
-    <div v-if="! expanded" class="create-pack">
+    <div v-if="! expanded" class="create-set">
       <span>OR</span>
-      <Button to="/create/sets/submit">
-        <Icon type="upload" />
-        <span>Upload Pack</span>
-      </Button>
+      <div class="actions">
+        <Button to="/create/sets/submit">
+          <Icon type="upload" />
+          <span>Upload Set</span>
+        </Button>
+
+        <Button to="/create/sets" class="secondary">
+          <Icon type="grid" />
+          <span>Manage Sets</span>
+        </Button>
+      </div>
     </div>
   </form>
 </template>
@@ -190,7 +197,7 @@ watch([props], () => {
     }
   }
 
-  .create-pack {
+  .create-set {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -233,6 +240,12 @@ watch([props], () => {
 
     > small {
       margin-top: var(--size-3);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: var(--size-4);
     }
 
   }

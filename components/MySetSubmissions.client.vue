@@ -5,6 +5,14 @@
       :url="url"
       v-slot="{ items }"
     >
+      <div v-if="! items?.length" class="empty">
+        <p class="muted">No set submissions</p>
+        <Button to="/create/sets/submit">
+          <Icon type="plus" />
+          <span>Create set</span>
+        </Button>
+      </div>
+
       <article
         v-for="set in items"
         :key="set.uuid"
@@ -86,6 +94,20 @@ article {
 
   &:--highlight {
     background: var(--gray-z-4);
+  }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-5);
+  width: 100%;
+  padding: var(--size-8) 0;
+
+  @media (--md) {
+    grid-column: span 2;
   }
 }
 </style>

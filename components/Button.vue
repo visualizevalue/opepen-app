@@ -44,6 +44,19 @@ button {
     padding: calc(var(--size-1) + var(--size-2)) var(--size-4);
     height: calc(var(--size-7) + var(--size-1));
   }
+
+  &.secondary {
+    background-color: var(--gray-z-1);
+    border-color: var(--gray-z-2);
+    color: var(--gray-z-6);
+
+    &:--highlight,
+    &.active {
+      background: var(--gray-z-3);
+      border-color: var(--gray-z-3);
+      color: var(--color);
+    }
+  }
 }
 </style>
 

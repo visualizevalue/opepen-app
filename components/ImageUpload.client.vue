@@ -54,7 +54,13 @@ const store = async () => {
     emit('stored', image.value)
   } catch (e) {
     console.error(e)
-    alert(`Something went wrong...`)
+    let message = `Something went wrong...`
+
+    if (Array.isArray(e.data) && e.data[0]?.message) {
+      message = e.data[0]?.message
+    }
+
+    alert(message)
   }
 
   preview.value = null

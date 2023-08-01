@@ -2,7 +2,7 @@
   <form @submit.stop.prevent="store">
     <label class="name">
       <span class="label">Name</span>
-      <input type="text" v-model="name" placeholder="Set Name" />
+      <input type="text" v-model="name" placeholder="Set Name" required />
     </label>
 
     <div class="images">
@@ -18,27 +18,27 @@
       <span class="label">Edition Names</span>
       <div>
         <div><Image :image="image1" /></div>
-        <input type="text" v-model="name1"  :placeholder="image1 ?  '1/1 Name' :  'Upload 1/1 Media'" :disabled="! image1" />
+        <input type="text" v-model="name1"  placeholder="1/1 Name" />
       </div>
       <div>
         <div><Image :image="image4" /></div>
-        <input type="text" v-model="name4"  :placeholder="image4 ?  '1/4 Name' :  'Upload 1/4 Media'" :disabled="! image4" />
+        <input type="text" v-model="name4"  placeholder="1/4 Name" />
       </div>
       <div>
         <div><Image :image="image5" /></div>
-        <input type="text" v-model="name5"  :placeholder="image5 ?  '1/5 Name' :  'Upload 1/5 Media'" :disabled="! image5" />
+        <input type="text" v-model="name5"  placeholder="1/5 Name" />
       </div>
       <div>
         <div><Image :image="image10" /></div>
-        <input type="text" v-model="name10" :placeholder="image10 ? '1/10 Name' : 'Upload 1/10 Media'" :disabled="! image10" />
+        <input type="text" v-model="name10" placeholder="1/10 Nam" />
       </div>
       <div>
         <div><Image :image="image20" /></div>
-        <input type="text" v-model="name20" :placeholder="image20 ? '1/20 Name' : 'Upload 1/20 Media'" :disabled="! image20" />
+        <input type="text" v-model="name20" placeholder="1/20 Nam" />
       </div>
       <div>
         <div><Image :image="image40" /></div>
-        <input type="text" v-model="name40" :placeholder="image40 ? '1/40 Name' : 'Upload 1/40 Media'" :disabled="! image40" />
+        <input type="text" v-model="name40" placeholder="1/40 Nam" />
       </div>
     </div>
 
