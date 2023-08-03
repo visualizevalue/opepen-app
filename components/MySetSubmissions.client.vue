@@ -71,6 +71,7 @@ article {
   .preview {
     width: var(--size-9);
     height: var(--size-9);
+    flex-shrink: 0;
 
     .image {
       margin: 0;
