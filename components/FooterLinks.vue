@@ -7,6 +7,12 @@
       <li>
         <a href="https://x.com/opepenedition" target="_blank" title="X / Twitter"><span class="unicode">𝕏</span></a>
       </li>
+      <li>
+        <a href="https://visualizevalue.com/collections/opepen" target="_blank" title="Merch"><Icon type="shopping-bag" /></a>
+      </li>
+      <li>
+        <a href="https://visualizevalue.com" target="_blank" title="Visualize Value"><IconsVV /></a>
+      </li>
     </ul>
   </aside>
 </template>
@@ -34,7 +40,7 @@ aside {
 
   a {
     padding: var(--size-2);
-    color: var(--gray-z-6);
+    color: var(--gray-z-5);
     transition: color var(--speed);
 
     &:--highlight {
@@ -49,6 +55,10 @@ aside {
 
   .unicode {
     font-size: 1.2rem;
+  }
+
+  svg {
+    width: var(--size-5);
   }
 }
 </style>
