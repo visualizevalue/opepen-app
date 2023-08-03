@@ -1,4 +1,4 @@
-# Oepepen App
+# Opepen App
 
 This is the frontend (web app) of the Opepen.art site.
 
