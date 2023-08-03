@@ -17,7 +17,7 @@
         :key="set.uuid"
       >
         <div class="preview">
-          <Image :image="set.edition1Image" />
+          <Image :image="set.edition1Image" version="sm" />
         </div>
 
         <div class="details">
