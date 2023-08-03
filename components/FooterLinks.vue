@@ -1,0 +1,54 @@
+<template>
+  <aside>
+    <ul>
+      <li>
+        <a href="https://github.com/visualizevalue-dev/opepens-metadata-api" target="_blank" title="Github"><Icon type="github" /></a>
+      </li>
+      <li>
+        <a href="https://x.com/opepenedition" target="_blank" title="X / Twitter"><span class="unicode">𝕏</span></a>
+      </li>
+    </ul>
+  </aside>
+</template>
+
+<style lang="postcss" scoped>
+aside {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: var(--semi);
+  backdrop-filter: var(--blur);
+  border-top: var(--border-dark);
+  border-right: var(--border-dark);
+  border-top-right-radius: var(--size-2);
+  padding: 0 var(--size-2);
+  z-index: 99;
+
+  ul,
+  li,
+  a {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  a {
+    padding: var(--size-2);
+    color: var(--gray-z-6);
+    transition: color var(--speed);
+
+    &:--highlight {
+      color: var(--color);
+    }
+  }
+
+  .vue-feather {
+    width: var(--size-4);
+    margin-top: var(--size-0);
+  }
+
+  .unicode {
+    font-size: 1.2rem;
+  }
+}
+</style>

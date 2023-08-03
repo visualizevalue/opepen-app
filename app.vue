@@ -4,6 +4,8 @@
 
     <NuxtPage />
 
+    <FooterLinks />
+
     <ToggleDarkMode />
   </main>
 </template>
