@@ -2,6 +2,9 @@
   <aside>
     <ul>
       <li>
+        <a href="https://opensea.io/collection/opepen-edition" target="_blank" title="OpenSea" class="opensea"><IconsOpenSeaShip /></a>
+      </li>
+      <li>
         <a href="https://github.com/visualizevalue-dev/opepens-metadata-api" target="_blank" title="Github"><Icon type="github" /></a>
       </li>
       <li>
@@ -58,7 +61,17 @@ aside {
   }
 
   svg {
-    width: var(--size-5);
+    width: 100%;
+    max-width: var(--size-5);
+    max-height: var(--size-5);
+  }
+
+  .opensea {
+    margin: 0 -0.25em 0 0;
+
+    svg {
+      max-width: 1.4rem;
+    }
   }
 }
 </style>
