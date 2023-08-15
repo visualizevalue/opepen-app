@@ -4,7 +4,7 @@
     <span>Edition</span>
     <span class="th">Holders</span>
     <span class="th">Opt-Ins</span>
-    <span class="th">Demand <small class="muted">(min {{ formatNumber(minDemand) }}%)</small></span>
+    <span class="th">Demand <small class="muted nowrap">(min {{ formatNumber(minDemand) }}%)</small></span>
     <span class="check"></span>
 
     <span class="th">One</span>
