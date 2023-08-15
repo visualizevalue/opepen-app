@@ -37,11 +37,12 @@ const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/${rou
 if (! opepen) router.replace('/')
 
 const download = async () => {
-  const isStatic = ['png', 'jpg', 'jpeg'].includes(image.value?.type)
-  const uri = imageURI(image.value)
+  const image = opepen.value?.image
+  const isStatic = ['png', 'jpg', 'jpeg'].includes(image?.type)
+  const uri = imageURI(image)
 
   return isStatic
-    ? downloadImage(uri, { name: name.value })
+    ? downloadImage(uri, { name: `Opepen ${opepen.value.token_id}` })
     : open(uri, '_blank')
 }
 
