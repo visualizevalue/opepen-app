@@ -15,15 +15,24 @@
     >
       <Image :image="image" version="lg" class="appear" />
 
-      <div class="text">
-        <h1>{{ name }}</h1>
-        <p>{{ tagline }}</p>
-      </div>
+      <footer>
+        <div class="text">
+          <h1>{{ name }}</h1>
+          <p>{{ tagline }}</p>
+        </div>
+        <Button @click="download">
+          <Icon type="download" stroke-width="2" />
+          Download
+        </Button>
+      </footer>
     </Modal>
   </div>
 </template>
 
 <script setup>
+import { imageURI } from '~/helpers/images'
+import downloadImage from '~/helpers/download-image'
+
 const {
   set,
   edition,
@@ -47,6 +56,15 @@ const tagline = computed(() => taglines[edition])
 
 // Modal
 const zoomed = ref(false)
+
+const download = async () => {
+  const isStatic = ['png', 'jpg', 'jpeg'].includes(image.value?.type)
+  const uri = imageURI(image.value)
+
+  return isStatic
+    ? downloadImage(uri, { name: name.value })
+    : open(uri, '_blank')
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -122,8 +140,12 @@ const zoomed = ref(false)
       border-bottom: var(--border-dark);
     }
 
-    .text {
+    > footer {
       padding: var(--size-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--size-4);
 
       p {
         font-size: var(--font-sm);

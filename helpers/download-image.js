@@ -12,7 +12,7 @@ const downloadImage = async (url, {
   name = url,
   mime = 'image/png',
   quality = 0.8,
-}) => {
+} = {}) => {
   // Load the image
   const img = await loadImage(url)
 

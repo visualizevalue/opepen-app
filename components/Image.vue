@@ -37,7 +37,7 @@ const loadOriginal = () => {
   console.log('error')
   uri.value = imageURI(props.image)
 }
-watch(props, () => loadImage([{ isIntersecting: true }]))
+watch(() => props.image?.uuid, () => loadImage([{ isIntersecting: true }]))
 
 // Image loaded event
 const imageLoaded = () => loaded.value = true
