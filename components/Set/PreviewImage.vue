@@ -32,6 +32,7 @@
 <script setup>
 import { imageURI } from '~/helpers/images'
 import downloadImage from '~/helpers/download-image'
+import { EDITION_TAGLINES } from '~/helpers/editions'
 
 const {
   set,
@@ -44,15 +45,7 @@ const {
 const image = computed(() => set[`edition${edition}Image`])
 const name = computed(() => set[`edition${edition}Name`])
 
-const taglines = {
-  '1': 'One of One',
-  '4': 'Four Editions',
-  '5': 'Five Editions',
-  '10': 'Ten Editions',
-  '20': 'Twenty Editions',
-  '40': 'Forty Editions',
-}
-const tagline = computed(() => taglines[edition])
+const tagline = computed(() => EDITION_TAGLINES[edition])
 
 // Modal
 const zoomed = ref(false)

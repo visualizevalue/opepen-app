@@ -1,24 +1,32 @@
 <template>
-  <PageHeader>
-    <h1 class="breadcrumb">
-      <NuxtLink :to="`/holders/${opepen.owner}`">
-        <Icon type="arrow-left" />
-        <span>{{ opepen.ownerAccount.display }}</span>
-      </NuxtLink>
-    </h1>
-  </PageHeader>
+  <article class="opepen-page">
+    <PageHeader>
+      <h1 class="breadcrumb">
+        <NuxtLink :to="`/holders/${opepen.owner}`">
+          <!-- <Icon type="arrow-left" /> -->
+          <span>{{ opepen.ownerAccount.display }}</span>
+        </NuxtLink>
+        <span class="separator">/</span>
+        <span>Opepen #{{opepen.token_id}}</span>
+      </h1>
+    </PageHeader>
 
-  <article>
     <div class="image-wrapper">
       <OpepenImage :token="opepen" version="lg" />
-      <div class="actions">
-        <a :href="`https://opensea.io/assets/ethereum/0x6339e5e072086621540d0362c4e3cea0d643e114/${opepen.token_id}`" target="_blank">
-          <IconsOpenSea />
-        </a>
-
-        <Button @click="download"><Icon type="download" /> <span>Download</span></Button>
-      </div>
     </div>
+
+    <div class="actions">
+      <a :href="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`" target="_blank">
+        <IconsOpenSea />
+      </a>
+      <a :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`" target="_blank">
+        <IconsEtherscan />
+      </a>
+
+      <Button @click="download"><Icon type="download" /> <span>Download</span></Button>
+    </div>
+
+    <OpepenAttributes :token="opepen" :set="opepen.set" />
   </article>
 </template>
 
@@ -30,62 +38,107 @@ import downloadImage from '~/helpers/download-image'
 const route = useRoute()
 const router = useRouter()
 const config = useRuntimeConfig()
+const contract = config.public.opepenContract
 
 if (parseInt(route.params.id) > 16_000) router.replace('/')
 
 const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/${route.params.id}`)
-if (! opepen) router.replace('/')
+if (! opepen.value) router.replace('/')
 
+const image = computed(() => imageURI(opepen.value.image))
 const download = async () => {
-  const image = opepen.value?.image
-  const isStatic = ['png', 'jpg', 'jpeg'].includes(image?.type)
-  const uri = imageURI(image)
+  const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.value.image?.type)
 
   return isStatic
-    ? downloadImage(uri, { name: `Opepen ${opepen.value.token_id}` })
-    : open(uri, '_blank')
+    ? downloadImage(image.value, { name: `Opepen ${opepen.value.token_id}` })
+    : open(image.value, '_blank')
 }
 
 useMetaData({
   title: `Opepen #${route.params.id}`,
-  // og: imageURI(imageData.value, upscaled.value ? 'lg' : undefined)
+  og: image.value,
+  meta: [
+    {
+      name: 'eth:nft:collection',
+      content: `Opepen Edition`
+    },
+    {
+      name: 'eth:nft:status',
+      content: `closed`
+    },
+    {
+      name: 'eth:nft:creator_address',
+      content: `0xc8f8e2f59dd95ff67c3d39109eca2e2a017d4c8a`
+    },
+    {
+      name: 'eth:nft:contract_address',
+      content: contract,
+    },
+    {
+      name: 'eth:nft:schema',
+      content: `ERC721`
+    },
+    {
+      name: 'eth:nft:chain',
+      content: `ethereum`
+    },
+    {
+      name: 'eth:nft:media_url',
+      content: image.value,
+    },
+    {
+      name: 'eth:nft:mint_count',
+      content: '16_000'
+    },
+  ]
 })
 </script>
 
 <style lang="postcss" scoped>
-  article {
+  article.opepen-page {
+    --width-md: min(60vh, 80vw);
+
     display: grid;
-    gap: var(--size-4);
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-    margin: var(--size-2) 0;
+    gap: var(--size-4);
+    margin: var(--size-2) auto;
 
-    /* @media (--md) {
-      grid-template-columns: 60% 40%;
-    } */
+    @media (--md) {
+      max-width: var(--width-md);
+    }
 
     .image-wrapper {
       width: 100%;
-      max-width: min(60vh, 80vw);
-      max-height: min(60vh, 80vw);
 
-      .actions {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      @media (--md) {
+        max-width: var(--width-md);
+        max-height: var(--width-md);
+      }
 
-        a {
-          color: var(--gray-z-5);
-          transition: all var(--speed);
+    }
 
-          svg {
-            width: var(--size-5);
-          }
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--size-4);
 
-          &:--highlight {
-            color: var(--color);
-          }
+      a {
+        color: var(--gray-z-5);
+        transition: all var(--speed);
+
+        svg {
+          width: var(--size-5);
         }
+
+        &:--highlight {
+          color: var(--color);
+        }
+      }
+
+      > *:last-child {
+        margin-left: auto;
       }
     }
   }

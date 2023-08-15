@@ -5,8 +5,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  span,
-  a {
+  > span,
+  > a {
     color: var(--gray-z-6);
 
     &:last-child {
@@ -14,7 +14,7 @@
     }
   }
 
-  a {
+  > a {
     transition: all var(--speed);
     display: flex;
     align-items: center;

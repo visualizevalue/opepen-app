@@ -44,9 +44,5 @@ div.opepen-detail {
       gap: var(--size-4);
     }
   }
-
-  .image-wrapper {
-    margin: var(--size-4) auto;
-  }
 }
 </style>

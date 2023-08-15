@@ -75,4 +75,7 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+.image-wrapper {
+  margin: var(--size-4) 0;
+}
 </style>

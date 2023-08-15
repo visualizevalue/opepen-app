@@ -2,20 +2,26 @@ type HeadConfig = {
   title: string;
   description?: string;
   og?: string;
+  append?: string;
+  meta?: { name: string, content: string }[];
 }
 
 export const makeHead = ({
   title,
+  append = '',
   description = '',
   og = '',
+  meta = [],
 }: HeadConfig) => {
+  const titleCompleted = `${title}${append}`
   return {
-    title,
+    title: titleCompleted,
     meta: [
       { name: 'description', content: description },
-      { name: 'og:title', content: title },
+      { name: 'og:title', content: titleCompleted },
       { name: 'og:description', content: description },
       { name: 'og:image', content: og },
+      ...meta,
     ]
   }
 }
