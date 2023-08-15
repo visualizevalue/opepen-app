@@ -5,20 +5,27 @@
       <h1>{{ account.display }}</h1>
     </PageHeader>
 
-    <section v-if="opepens?.data?.length" class="opepens">
-      <div
-        v-for="token in opepens.data"
-        :key="token.token_id"
-      >
-        <OpepenCard
-          :token="token"
-          :set="token.data?.edition || 40"
-        />
+    <!-- TODO: Improve performance for long lists! -->
+    <PaginatedContent
+      :url="tokensUrl"
+      query="limit=24"
+      v-slot="{ items }"
+    >
+      <div class="opepens">
+        <div
+          v-for="token in items"
+          :key="token.token_id"
+        >
+          <OpepenCard
+            :token="token"
+            :set="token.data?.edition || 40"
+          />
+        </div>
       </div>
-    </section>
-    <section v-else>
-      <p class="centered muted">No Opepen found for this account.</p>
-    </section>
+      <section v-if="! items.length">
+        <p class="centered muted">No Opepen found for this account.</p>
+      </section>
+    </PaginatedContent>
   </div>
 </template>
 
@@ -28,8 +35,8 @@ import { useMetaData } from '~/helpers/head'
 const config = useRuntimeConfig()
 const route = useRoute()
 const url = `${config.public.opepenApi}/accounts/${route.params.id}`
+const tokensUrl = `${url}/opepen`
 const { data: account } = await useFetch(url)
-const { data: opepens } = await useFetch(`${url}/opepen`)
 
 useMetaData({
   title: `${ account.value?.display } | Opepen`,

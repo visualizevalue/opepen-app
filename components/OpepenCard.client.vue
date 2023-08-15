@@ -1,8 +1,7 @@
 <template>
 <article class="opepen-card" :style="wrapperStyle">
   <div @click="onClick">
-    <Image v-if="token.image" :image="token.image" version="sm" />
-    <img v-else :src="`https://opepen.nyc3.cdn.digitaloceanspaces.com/images/rare/${set}.svg`" :alt="`Rare 1/${set} Opepen Preview ${id}`">
+    <OpepenImage :token="token" />
 
     <div class="text">
       <h1>Opepen {{ id }}</h1>
@@ -10,6 +9,8 @@
         <p>Edition of {{ set }}</p>
       </slot>
     </div>
+
+    <NuxtLink :to="`/opepen/${token.token_id}`"><span>View Opepen #{{ token.token_id }}</span></NuxtLink>
   </div>
 </article>
 </template>
@@ -55,8 +56,6 @@ const wiggle = async () => {
 }
 const onClick = async () => {
   wiggle()
-  await delay(150)
-  window.open(`https://opensea.io/assets/ethereum/0x6339e5e072086621540d0362c4e3cea0d643e114/${id}`, '_blank')
 }
 </script>
 
@@ -126,6 +125,15 @@ const onClick = async () => {
         overflow: hidden;
         text-overflow: ellipsis;
       }
+    }
+
+    a {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.00001;
     }
   }
 }
