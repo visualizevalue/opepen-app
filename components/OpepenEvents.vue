@@ -4,6 +4,7 @@
     v-slot="{ items }"
     class="events"
   >
+    <h2>Provenance</h2>
     <div class="event header">
       <span>Type</span>
       <span>From</span>
@@ -19,9 +20,14 @@
         <span v-if="event.from === ZeroAddress">Mint</span>
         <span v-else>Transfer</span>
       </span>
-      <NuxtLink :to="`/holders/${event.from}`">{{ event.fromAccount.display }}</NuxtLink>
-      <NuxtLink :to="`/holders/${event.to}`">{{ event.toAccount.display }}</NuxtLink>
+      <NuxtLink :to="`/holders/${event.from}`">
+        <span class="visible-sm">From: </span>{{ event.fromAccount.display }}
+      </NuxtLink>
+      <NuxtLink :to="`/holders/${event.to}`">
+        <span class="visible-sm">To: </span>{{ event.toAccount.display }}
+      </NuxtLink>
       <NuxtLink :to="`https://etherscan.io/tx/${event.transaction_hash}`">
+        <span class="visible-sm">Date: </span>
         <span>{{ formatDate(event.timestamp) }}</span>
         <Icon type="external-link" />
       </NuxtLink>
@@ -70,8 +76,10 @@ const url = `${config.public.opepenApi}/opepen/${token.token_id}/events`
     gap: var(--size-2);
 
     &:last-child {
-      text-align: right;
-      justify-content: flex-end;
+      @media (--md) {
+        text-align: right;
+        justify-content: flex-end;
+      }
     }
 
     :deep(.vue-feather) {
@@ -103,6 +111,11 @@ const url = `${config.public.opepenApi}/opepen/${token.token_id}/events`
     background: transparent;
     padding-bottom: 0;
     border: none;
+    display: none;
+
+    @media (--md) {
+      display: grid;
+    }
   }
 }
 </style>
