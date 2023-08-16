@@ -90,6 +90,10 @@ function onMarkerVisible ([{ isIntersecting }]) {
   loadMore()
 }
 
+defineExpose({
+  items,
+})
+
 // Load initial data
 await loadMore()
 </script>

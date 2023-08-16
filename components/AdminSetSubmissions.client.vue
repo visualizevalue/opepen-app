@@ -4,16 +4,28 @@
       <h1 class="breadcrumb">
         <span>Manage Submissions</span>
       </h1>
+
+      <div class="actions">
+        <select v-model="status" class="input sm">
+          <option value="all">All</option>
+          <option value="complete">Complete</option>
+          <option value="starred">Starred</option>
+          <option value="deleted">Deleted</option>
+          <option value="published">Published</option>
+        </select>
+      </div>
     </PageHeader>
 
     <PaginatedContent
       v-if="session"
+      ref="list"
       :url="url"
+      :query="query"
       :refresh-key="address"
-      v-slot="{ items, loading }"
+      v-slot="{ items }"
     >
       <article
-        v-for="set in items"
+        v-for="(set, index) in items"
         :key="set.uuid"
       >
         <div class="preview">
@@ -32,10 +44,19 @@
           <h1>{{ set.name }}</h1>
           <p>{{ set.description }}</p>
           <NuxtLink :to="`/create/sets/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
+
+          <div class="actions">
+            <button @click.stop="() => star(set, index)">
+              <Icon
+                type="star"
+                :fill="set.starred_at ? 'var(--yellow)' : 'transparent'"
+                :stroke="set.starred_at ? 'var(--yellow)' : 'currentColor'"
+              />
+            </button>
+            <button @click.stop="() => destroy(set, index)"><Icon type="trash" /></button>
+          </div>
         </div>
       </article>
-
-      <Loading v-if="loading" />
     </PaginatedContent>
   </section>
 </template>
@@ -50,6 +71,42 @@ const { session } = useSignIn()
 const { address, isConnected } = useAccount()
 
 const url = computed(() => `${config.public.opepenApi}/set-submissions`)
+
+const router = useRouter()
+const route = useRoute()
+const status = ref(route.query.status || 'complete')
+watch(status, () => {
+  if (route.query.status !== status.value) {
+    router.replace({ query: { ...route.query, status: status.value }})
+  }
+})
+
+const query = computed(() => {
+  const q = new URLSearchParams({
+    status: status.value,
+  })
+
+  return q.toString()
+})
+
+// Actions
+const list = ref(null)
+const star = async (set, index) => {
+  const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${set.uuid}/star`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+
+  list.value.items[index] = saved
+}
+const destroy = async (set, index) => {
+  await $fetch(`${config.public.opepenApi}/set-submissions/${set.uuid}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+
+  list.value.items.splice(index, 1)
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -59,6 +116,14 @@ section {
 
   > header {
     margin-bottom: var(--size-7);
+    display: flex;
+    gap: var(--size-4);
+
+    @media (--md) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   > div {
@@ -118,6 +183,16 @@ article {
     span {
       opacity: 0.0001;
     }
+  }
+
+  .actions {
+    position: absolute;
+    top: var(--size-2);
+    right: var(--size-2);
+    z-index: 2;
+
+    display: flex;
+    gap: var(--size-3);
   }
 
   &:--highlight {
