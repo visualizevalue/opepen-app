@@ -27,6 +27,8 @@
     </div>
 
     <OpepenAttributes :token="opepen" :set="opepen.set" />
+
+    <OpepenEvents :token="opepen" />
   </article>
 </template>
 
@@ -106,6 +108,7 @@ useMetaData({
 
     @media (--md) {
       max-width: var(--width-md);
+      gap: var(--size-7);
     }
 
     .image-wrapper {
