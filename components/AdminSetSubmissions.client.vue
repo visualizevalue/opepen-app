@@ -27,9 +27,15 @@
       <article
         v-for="(set, index) in items"
         :key="set.uuid"
+        class="submission"
       >
         <div class="preview">
           <Image :image="set.edition1Image" version="sm" />
+          <Image :image="set.edition4Image" version="sm" />
+          <Image :image="set.edition5Image" version="sm" />
+          <Image :image="set.edition10Image" version="sm" />
+          <Image :image="set.edition20Image" version="sm" />
+          <Image :image="set.edition40Image" version="sm" />
         </div>
 
         <div class="details">
@@ -132,7 +138,7 @@ section {
   }
 }
 
-article {
+article.submission {
   width: 100%;
   padding: var(--size-4);
   background: var(--gray-z-1);
@@ -158,13 +164,25 @@ article {
   }
 
   .preview {
-    width: var(--size-9);
-    height: var(--size-9);
+    width: 6rem;
+    height: 6rem;
     flex-shrink: 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: var(--size-2);
+    grid-auto-flow: dense;
+
+    > :first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
 
     .image {
       margin: 0;
       height: 100%;
+      border-radius: var(--size-0);
     }
   }
 
