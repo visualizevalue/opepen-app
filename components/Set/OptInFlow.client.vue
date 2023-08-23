@@ -30,7 +30,7 @@
                   <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
                 </header>
 
-                <label v-if="selectedInGroup(g).length > 1" class="setting">
+                <label v-if="selectedInGroup(g).length > 1 && g !== '1'" class="setting">
                   <span>Max Reveal:</span>
                   <input
                     type="number"
