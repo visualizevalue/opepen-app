@@ -35,10 +35,10 @@
                   <input
                     type="number"
                     min="1"
-                    :max="selectedInGroup(g).length"
+                    :max="maxInGroup(g)"
                     v-model="maxRevealSetting[g]"
                     @input="() => validateMaxReveal(g)"
-                    :placeholder="selectedInGroup(g).length"
+                    :placeholder="maxInGroup(g)"
                     :style="{
                       minWidth: hasCompleteGroupSelection(g) ? '7rem' : '6rem'
                     }"
@@ -166,6 +166,11 @@ const deselectAll = (group) => {
 }
 const selectedInGroup = group => {
   return selectedPerGroup.value[group]
+}
+const maxInGroup = group => {
+  const count = selectedInGroup(group).length
+  const edition = parseInt(group)
+  return count > edition ? edition : count
 }
 const hasCompleteGroupSelection = group => {
   return selectedInGroup(group).length === grouped.value[group].length
