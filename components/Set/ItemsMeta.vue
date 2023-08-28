@@ -45,8 +45,14 @@ defineProps({
       font-size: var(--font-sm);
 
       h1 {
-        text-transform: uppercase;
         color: var(--gray-z-6);
+      }
+
+      h1,
+      p {
+        text-transform: uppercase;
+        line-height: 1.25;
+        margin-bottom: var(--size-3);
       }
 
       @media (--md) {

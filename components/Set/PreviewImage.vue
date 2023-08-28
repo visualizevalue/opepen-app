@@ -63,6 +63,7 @@ const download = async () => {
 <style lang="postcss" scoped>
 .preview {
   position: relative;
+  overflow: hidden;
 
   > .image {
     cursor: pointer;
@@ -104,6 +105,12 @@ const download = async () => {
 
     p {
       color: var(--gray-z-6);
+    }
+
+    > * {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
