@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import { useSets } from '~/helpers/sets'
 import { useSignIn } from '~/helpers/siwe'
 
 const { submission } = defineProps({
@@ -36,7 +37,9 @@ const { session, signIn } = useSignIn()
 const router = useRouter()
 
 const open = ref(false)
-const setId = ref(submission.set_id)
+const { currentSet } = useSets()
+
+const setId = ref(submission.set_id || currentSet.value?.id + 1)
 const hours = ref(72)
 const publishing = ref(false)
 
