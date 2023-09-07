@@ -10,8 +10,8 @@
           <option value="all">All</option>
           <option value="complete">Complete</option>
           <option value="starred">Starred</option>
-          <option value="deleted">Deleted</option>
           <option value="published">Published</option>
+          <option value="deleted">Deleted</option>
         </select>
       </div>
     </PageHeader>
@@ -49,7 +49,7 @@
           </div>
           <h1>{{ set.name }}</h1>
           <p>{{ set.description }}</p>
-          <NuxtLink :to="`/create/sets/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
+          <NuxtLink :to="`/create/sets/admin/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
 
           <div class="actions">
             <button @click.stop="() => star(set, index)">

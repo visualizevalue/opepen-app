@@ -2,7 +2,7 @@
   <div>
     <PageHeader>
       <h1 class="breadcrumb">
-        <NuxtLink to="/create/sets">Sets</NuxtLink>
+        <NuxtLink to="./">Sets</NuxtLink>
         <span class="separator">/</span>
         <span v-if="data?.name">Update "{{ data.name }}" submission</span>
         <span v-else>Update submission</span>

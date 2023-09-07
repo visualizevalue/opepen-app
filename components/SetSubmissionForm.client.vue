@@ -1,5 +1,13 @@
 <template>
   <form @submit.stop.prevent="store">
+    <Alert v-if="isPublishedToSet" class="span-2 inline">
+      <p>Note: This submission is published to <NuxtLink :to="`/sets/${data.set_id}`">set {{ pad(data.set_id, 3) }}</NuxtLink>. Changes here won't be immediately published, and manually reviewed by the VV team.</p>
+
+      <div class="actions">
+        <Button :to="`/sets/${data.set_id}`">View Set</Button>
+      </div>
+    </Alert>
+
     <label class="name">
       <span class="label">Name</span>
       <input type="text" v-model="name" placeholder="Set Name" required />
@@ -47,17 +55,45 @@
       <Input v-model="description" placeholder="Description" />
     </label>
 
+    <label class="artist">
+      <span class="label">Artist</span>
+      <input type="text" v-model="artist" placeholder="Your artist name" />
+    </label>
+
+    <label class="type">
+      <span class="label">Edition Type</span>
+      <select v-model="type" class="input">
+        <option value="print" default>Prints</option>
+        <option value="dynamic">Dynamic</option>
+      </select>
+      <aside class="note" v-if="isDynamic">
+        The VV team will reach out to gather the dynamic images before launching your set.
+      </aside>
+    </label>
+
     <div class="actions">
-      <Button type="submit">Save</Button>
+      <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
+      <Button type="submit" :disabled="saving">
+        <span v-if="saving">Saving...</span>
+        <span v-else>Save</span>
+      </Button>
+
+      <PublishSetSubmissionForm v-if="isAdmin" :submission="data" />
     </div>
   </form>
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
+import { useAccount, useEnsName } from '~/helpers/use-wagmi'
 import { useSignIn } from '~/helpers/siwe'
+import { formatTime } from '~/helpers/dates'
+import pad from '~/helpers/pad'
 
 const config = useRuntimeConfig()
 const router = useRouter()
+const route = useRoute()
+const isAdmin = computed(() => route.path.includes('admin'))
 
 const { data } = defineProps({
   data: {
@@ -68,6 +104,8 @@ const { data } = defineProps({
 const emit = defineEmits(['updated'])
 
 const { session, signIn } = useSignIn()
+const { address } = useAccount()
+const ens = useEnsName(address)
 watch(session, async (_, previous) => {
   if (previous === null) return
 
@@ -90,9 +128,23 @@ const name10 = ref(data.edition10Name || '')
 const name20 = ref(data.edition20Name || '')
 const name40 = ref(data.edition40Name || '')
 const description = ref(data.description || '')
+const artist = ref(data.artist)
+const type = ref(data.is_dynamic ? 'dynamic' : 'print')
+const isDynamic = computed(() => type.value === 'dynamic')
+const isPublishedToSet = computed(() => !!data.set_id)
+watch(ens, () => {
+  if (data.creator !== address.value.toLowerCase()) return
 
+  artist.value = data.artist || ens.value || ''
+})
+
+const saving = ref(false)
+const lastSaved = ref(null)
+const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
 const store = async () => {
   if (! session.value) await signIn()
+
+  saving.value = true
 
   const url = data?.uuid
     ? `${config.public.opepenApi}/set-submissions/${data.uuid}`
@@ -104,6 +156,8 @@ const store = async () => {
     body: JSON.stringify({
       name: name.value,
       description: description.value,
+      artist: artist.value,
+      is_dynamic: isDynamic.value,
       edition_1_image_id: image1.value?.uuid,
       edition_4_image_id: image4.value?.uuid,
       edition_5_image_id: image5.value?.uuid,
@@ -118,6 +172,9 @@ const store = async () => {
       edition_40_name: name40.value,
     })
   })
+
+  saving.value = false
+  lastSaved.value = DateTime.now()
 
   emit('updated', set)
 
@@ -138,7 +195,8 @@ form {
 
     .name,
     .description,
-    .actions {
+    .actions,
+    .span-2 {
       grid-column: span 2;
     }
   }
@@ -188,8 +246,10 @@ form {
   .actions {
     display: flex;
     justify-content: flex-end;
+    align-items: baseline;
+    gap: var(--size-4);
 
-    button {
+    :deep(button) {
       min-height: var(--size-8);
     }
   }
