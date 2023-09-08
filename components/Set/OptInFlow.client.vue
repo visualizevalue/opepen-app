@@ -139,9 +139,14 @@ const {
 } = await useOpepen([address.value, ...delegatedAddresses.value])
 watch([isConnected, delegatedAddresses], () => fetchOpepen([address.value, ...delegatedAddresses.value]))
 
-const selected = ref(props.subscribed ? [...props.subscribed] : [])
+const validSubscribed = computed(() => [...props.subscribed]
+  // All opt ins that are still owned by the owner
+  .filter(i => opepen.value.map(o => o.token_id).includes(i))
+)
+
+const selected = ref(validSubscribed.value?.length ? [...validSubscribed.value] : [])
 watch(() => props.subscribed, () => {
-  selected.value = [...props.subscribed] || []
+  selected.value = [...validSubscribed.value] || []
 })
 const selectedPerGroup = computed(() => Object.keys(grouped.value)
   .map(g => [g, selected.value.filter(id => grouped.value[g].map(g => g.token_id).includes(id))])

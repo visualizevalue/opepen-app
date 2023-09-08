@@ -8,7 +8,7 @@ export const useOpepen = async addresses => {
 
     opepenLoading.value = true
     const responses = await Promise.all(addresses.map(a =>
-      $fetch(`${config.public.opepenApi}/accounts/${a}/opepen`)
+      $fetch(`${config.public.opepenApi}/accounts/${a}/opepen?limit=16000`)
     ))
     opepen.value = responses.reduce((opepen, response) => {
       return opepen.concat(response.data)
