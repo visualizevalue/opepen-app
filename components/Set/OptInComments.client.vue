@@ -16,7 +16,9 @@
         :key="entry.id"
         class="comment"
       >
-        <ApiAccount :account="entry.account" class="account" />
+        <NuxtLink :to="`/holders/${entry.account.address}`">
+          <ApiAccount :account="entry.account" class="account" />
+        </NuxtLink>
         <div>{{ entry.comment }}</div>
       </article>
     </PaginatedContent>
