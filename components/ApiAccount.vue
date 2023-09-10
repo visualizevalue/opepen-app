@@ -1,7 +1,6 @@
 <template>
   <span :class="{ avatar: !hideAvatar }">
-    <img v-if="!hideAvatar && avatar" :src="avatar" />
-    <DefaultOpepenAvatar v-else-if="!hideAvatar" :address="address" />
+    <DefaultOpepenAvatar v-if="!hideAvatar" :address="address" />
     <span>{{ display }}</span>
   </span>
 </template>

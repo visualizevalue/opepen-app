@@ -12,6 +12,7 @@
           :set="set"
           :subscribed="subscription?.opepen_ids || []"
           :max-reveals="subscription?.max_reveals"
+          :stored-comment="subscription?.comment"
           :open="optInOpen"
           @close="optInOpen = false"
           :click-outside="false"

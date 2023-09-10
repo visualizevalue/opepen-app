@@ -115,6 +115,7 @@ const props = defineProps({
   set: Object,
   clickOutside: Boolean,
   subscribed: Array,
+  storedComment: String,
   maxReveals: {
     type: Object,
     default: () => ({
@@ -211,7 +212,8 @@ const validateMaxReveal = g => {
   }
 }
 
-const comment = ref('')
+const comment = ref(props.storedComment || '')
+watch(() => props.storedComment, () => comment.value = props.storedComment)
 
 const message = computed(() => {
   return `I want to submit my Opepen for possible artwork reveal in the following set:
