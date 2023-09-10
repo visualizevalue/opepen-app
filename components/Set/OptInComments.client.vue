@@ -1,18 +1,18 @@
 <template>
 
   <section v-if="set.name" class="opt-in-comments">
-    <header>
-      <h1>Community Comments</h1>
-    </header>
-
     <PaginatedContent
       :url="url"
       :query="query"
       v-slot="{ items }"
       class="comments"
     >
+      <header v-if="items.length">
+        <h1>Community Comments</h1>
+      </header>
+
       <article
-        v-for="(entry, index) in items"
+        v-for="entry in items"
         :key="entry.id"
         class="comment"
       >
@@ -45,7 +45,10 @@ const query = computed(() => {
     padding-bottom: var(--size-5);
 
     header {
-      margin-bottom: var(--size-5);
+      @media (--md) {
+        grid-column: span 2;
+        margin-bottom: var(--size-5);
+      }
 
       h1 {
         color: var(--gray-z-6);
@@ -55,6 +58,8 @@ const query = computed(() => {
 
     .comments {
       display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
       gap: var(--size-4);
 
       @media (--md) {
@@ -69,7 +74,7 @@ const query = computed(() => {
         width: 100%;
 
         .account {
-          font-size: var(--size-sm);
+          font-size: var(--font-sm);
           color: var(--gray-z-5);
           margin-bottom: var(--size-2);
         }
