@@ -55,6 +55,10 @@
               </label>
             </div>
           </div>
+
+          <div v-if="opepen.length" class="comment">
+            <Input v-model="comment" placeholder="Add an optional Opt-In comment!" />
+          </div>
         </div>
       </section>
       <footer v-if="isConnected">
@@ -145,7 +149,7 @@ const validSubscribed = computed(() => [...props.subscribed]
 )
 
 const selected = ref(validSubscribed.value?.length ? [...validSubscribed.value] : [])
-watch(() => props.subscribed, () => {
+watch(validSubscribed, () => {
   selected.value = [...validSubscribed.value] || []
 })
 const selectedPerGroup = computed(() => Object.keys(grouped.value)
@@ -207,12 +211,17 @@ const validateMaxReveal = g => {
   }
 }
 
+const comment = ref('')
+
 const message = computed(() => {
   return `I want to submit my Opepen for possible artwork reveal in the following set:
 
 OPT-IN: Set ${pad(props.set.id, 3)}
 
-SET NAME: ${props.set.name}
+SET NAME: ${props.set.name}${
+
+  comment.value && (`\n\nCOMMENT: ` + comment.value)
+}
 
 MAX REVEALS:
 ${Object.keys(maxRevealValues.value)
@@ -248,6 +257,7 @@ const sign = async () => {
         opepen: selected.value,
         max_reveals: maxRevealValues.value,
         message: message.value,
+        comment: comment.value,
         signature,
         delegated_by: delegatedAddresses.value.join(',')
       })
@@ -405,6 +415,11 @@ section {
       }
     }
   }
+}
+
+.comment {
+  padding: var(--size-5);
+  border-top: var(--border);
 }
 
 footer {

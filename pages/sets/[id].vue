@@ -8,6 +8,7 @@
     <SetStatsMeta :set="set" />
     <SetOptIn :set="set" @update="refresh" />
     <SetOpepen :set="set" />
+    <SetOptInComments :set="set" />
   </div>
 </template>
 
@@ -49,7 +50,9 @@ useMetaData({
                 "opt-in"
                 "details"
                 "details-meta"
-                "opepen";
+                "opepen"
+                "comments";
+
 
     @media (--md) {
       display: grid;
@@ -64,7 +67,8 @@ useMetaData({
                   "items-meta details-meta"
                   "about about"
                   "opt-in opt-in"
-                  "opepen opepen";
+                  "opepen opepen"
+                  "comments comments";
     }
 
     .pagination { grid-area: pagination; }
@@ -74,6 +78,8 @@ useMetaData({
     .details-meta { grid-area: details-meta; }
     .set-opepen { grid-area: opepen; }
     .about { grid-area: about; }
+    .opt-in-comments { grid-area: comments; }
+    .opt-in + .opt-in-comments { grid-area: opepen; }
   }
 
   .items,

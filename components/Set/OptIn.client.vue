@@ -26,6 +26,7 @@
       <template v-if="subscription.opepen_ids.length">
         <p>You submitted {{ subscription.opepen_ids.length }} Opepen for potential reveal:</p>
         <p class="muted">{{ subscription.opepen_ids.map(id => `#${id}`).join(', ') }}.</p>
+        <p v-if="subscription.comment" class="comment">Comment: <span>{{ subscription.comment }}</span></p>
       </template>
       <template v-else>
         <p>You opted out all opepen submissions.</p>
@@ -139,6 +140,14 @@ const startOptIn = () => {
     .selection {
       font-size: var(--font-sm);
       padding: var(--size-3) var(--size-2) var(--size-3) var(--size-4);
+
+      .comment {
+        margin: var(--size-4) 0 0;
+
+        span {
+          word-wrap: pre;
+        }
+      }
     }
   }
 </style>
