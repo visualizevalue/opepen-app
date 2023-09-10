@@ -5,22 +5,21 @@
       <h1>Community Comments</h1>
     </header>
 
-    <div class="comments">
-      <PaginatedContent
-        :url="url"
-        :query="query"
-        v-slot="{ items }"
+    <PaginatedContent
+      :url="url"
+      :query="query"
+      v-slot="{ items }"
+      class="comments"
+    >
+      <article
+        v-for="(entry, index) in items"
+        :key="entry.id"
+        class="comment"
       >
-        <article
-          v-for="(entry, index) in items"
-          :key="entry.id"
-          class="comment"
-        >
-          <ApiAccount :account="entry.account" class="account" />
-          <div>{{ entry.comment }}</div>
-        </article>
-      </PaginatedContent>
-    </div>
+        <ApiAccount :account="entry.account" class="account" />
+        <div>{{ entry.comment }}</div>
+      </article>
+    </PaginatedContent>
   </section>
 
 </template>
