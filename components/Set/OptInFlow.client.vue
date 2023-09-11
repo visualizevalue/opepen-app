@@ -142,8 +142,8 @@ watch(address, async () => {
 
 const {
   opepen, opepenByEdition: grouped, opepenLoading, fetchOpepen
-} = await useOpepen(['0xf56345338cb4cddaf915ebef3bfde63e70fe3053', address.value, ...delegatedAddresses.value])
-watch([isConnected, delegatedAddresses], () => fetchOpepen(['0xf56345338cb4cddaf915ebef3bfde63e70fe3053', address.value, ...delegatedAddresses.value]))
+} = await useOpepen([address.value, ...delegatedAddresses.value])
+watch([isConnected, delegatedAddresses], () => fetchOpepen([address.value, ...delegatedAddresses.value]))
 
 const validSubscribed = computed(() => [...props.subscribed]
   // All opt ins that are still owned by the owner
