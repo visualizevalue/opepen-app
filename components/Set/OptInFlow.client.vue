@@ -36,7 +36,8 @@
                     type="number"
                     min="1"
                     :max="maxInGroup(g)"
-                    v-model="maxRevealSetting[g]"
+                    :value="maxRevealSetting[g] || maxInGroup(g)"
+                    @update="maxRevealSetting[g] = $event.target.value"
                     @input="() => validateMaxReveal(g)"
                     :placeholder="maxInGroup(g)"
                     :style="{
@@ -141,8 +142,8 @@ watch(address, async () => {
 
 const {
   opepen, opepenByEdition: grouped, opepenLoading, fetchOpepen
-} = await useOpepen([address.value, ...delegatedAddresses.value])
-watch([isConnected, delegatedAddresses], () => fetchOpepen([address.value, ...delegatedAddresses.value]))
+} = await useOpepen(['0xf56345338cb4cddaf915ebef3bfde63e70fe3053', address.value, ...delegatedAddresses.value])
+watch([isConnected, delegatedAddresses], () => fetchOpepen(['0xf56345338cb4cddaf915ebef3bfde63e70fe3053', address.value, ...delegatedAddresses.value]))
 
 const validSubscribed = computed(() => [...props.subscribed]
   // All opt ins that are still owned by the owner
@@ -196,12 +197,12 @@ watch(() => props.maxReveals, () => {
   maxRevealSetting['40'] = props.maxReveals['40']
 })
 const maxRevealValues = computed(() => ({
-  '1':  maxRevealSetting['1']  ? maxRevealSetting['1']  : selectedInGroup('1')?.length  || null,
-  '4':  maxRevealSetting['4']  ? maxRevealSetting['4']  : selectedInGroup('4')?.length  || null,
-  '5':  maxRevealSetting['5']  ? maxRevealSetting['5']  : selectedInGroup('5')?.length  || null,
-  '10': maxRevealSetting['10'] ? maxRevealSetting['10'] : selectedInGroup('10')?.length || null,
-  '20': maxRevealSetting['20'] ? maxRevealSetting['20'] : selectedInGroup('20')?.length || null,
-  '40': maxRevealSetting['40'] ? maxRevealSetting['40'] : selectedInGroup('40')?.length || null,
+  '1':  maxRevealSetting['1']  ? maxRevealSetting['1']  : maxInGroup('1'),
+  '4':  maxRevealSetting['4']  ? maxRevealSetting['4']  : maxInGroup('4'),
+  '5':  maxRevealSetting['5']  ? maxRevealSetting['5']  : maxInGroup('5'),
+  '10': maxRevealSetting['10'] ? maxRevealSetting['10'] : maxInGroup('10'),
+  '20': maxRevealSetting['20'] ? maxRevealSetting['20'] : maxInGroup('20'),
+  '40': maxRevealSetting['40'] ? maxRevealSetting['40'] : maxInGroup('40'),
 }))
 const validateMaxReveal = g => {
   if (maxRevealSetting[g] > selectedInGroup(g).length) {
@@ -227,7 +228,7 @@ SET NAME: ${props.set.name}${
 
 MAX REVEALS:
 ${Object.keys(maxRevealValues.value)
-  .filter(g => selectedInGroup(g).length)
+  .filter(g => maxRevealValues.value[g])
   .map(g => [g, maxRevealValues.value[g]])
   .map(([g, max]) => `- Edition of ${g}: ${max} Reveal${max > 1 ? 's' : ''}`)
   .join('\n')
