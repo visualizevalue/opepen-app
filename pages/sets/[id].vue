@@ -1,6 +1,9 @@
 <template>
   <div class="set">
-    <SetPagination :set="set" />
+    <header>
+      <SetPagination :set="set" />
+      <SetReplacementNote :set="set" :replaced-submission="set.replacedSubmission" class="note" />
+    </header>
     <SetPreviewImages :set="set" class="items" />
     <SetAbout :set="set" />
     <SetStats :set="set" class="stats" />
@@ -43,7 +46,7 @@ useMetaData({
     margin: 0 auto;
     grid-template-columns: 100%;
     grid-template-areas:
-                "pagination"
+                "header"
                 "items"
                 "items-meta"
                 "about"
@@ -62,7 +65,7 @@ useMetaData({
       grid-auto-rows: min-content;
       grid-auto-flow: dense;
       grid-template-areas:
-                  "pagination pagination"
+                  "header header"
                   "items details"
                   "items-meta details-meta"
                   "about about"
@@ -71,15 +74,28 @@ useMetaData({
                   "comments comments";
     }
 
-    .pagination { grid-area: pagination; }
-    .items { grid-area: items; }
-    .opt-in { grid-area: opt-in; }
-    .items-meta { grid-area: items-meta; }
-    .details-meta { grid-area: details-meta; }
-    .set-opepen { grid-area: opepen; }
-    .about { grid-area: about; }
-    .opt-in-comments { grid-area: comments; }
-    .opt-in + .opt-in-comments { grid-area: opepen; }
+    :deep() {
+      > header {
+        grid-area: header;
+        display: grid;
+        gap: var(--size-4);
+
+        @media (--md) {
+          gap: var(--size-7);
+        }
+      }
+      > .items { grid-area: items; }
+      > .stats { grid-area: details; }
+      > .opt-in { grid-area: opt-in; }
+      >.items-meta { grid-area: items-meta; }
+      > .details-meta,
+      > .stats-meta { grid-area: details-meta; }
+      > .set-opepen { grid-area: opepen; }
+      > .about { grid-area: about; }
+      > .opt-in-comments { grid-area: comments; }
+      > .opt-in + .opt-in-comments { grid-area: opepen; }
+    }
+
   }
 
   .items,

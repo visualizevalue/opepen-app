@@ -42,14 +42,14 @@ const query = computed(() => {
     padding-bottom: var(--size-5);
 
     header {
-      @media (--md) {
-        grid-column: span 2;
-        margin-bottom: var(--size-5);
-      }
-
       h1 {
         color: var(--gray-z-6);
         font-size: var(--font-sm);
+      }
+
+      @media (--md) {
+        grid-column: span 2;
+        margin-bottom: var(--size-5);
       }
     }
 
@@ -60,7 +60,13 @@ const query = computed(() => {
       gap: var(--size-4);
 
       @media (--md) {
-        grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (--md) {
+      :deep(.loader) {
+        grid-column: span 2;
       }
     }
   }
