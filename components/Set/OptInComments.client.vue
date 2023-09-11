@@ -11,16 +11,11 @@
         <h1>Community Comments</h1>
       </header>
 
-      <article
+      <Comment
         v-for="entry in items"
         :key="entry.id"
-        class="comment"
-      >
-        <NuxtLink :to="`/holders/${entry.account.address}`">
-          <ApiAccount :account="entry.account" class="account" />
-        </NuxtLink>
-        <div>{{ entry.comment }}</div>
-      </article>
+        :post="entry"
+      />
     </PaginatedContent>
   </section>
 
@@ -66,20 +61,6 @@ const query = computed(() => {
 
       @media (--md) {
         grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
-      }
-
-      .comment {
-        border: var(--border);
-        border-radius: var(--size-4);
-        border-top-left-radius: var(--size-1);
-        padding: var(--size-3) var(--size-4);
-        width: 100%;
-
-        .account {
-          font-size: var(--font-sm);
-          color: var(--gray-z-5);
-          margin-bottom: var(--size-2);
-        }
       }
     }
   }

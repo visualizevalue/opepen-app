@@ -40,9 +40,20 @@ button {
     cursor: normal;
   }
 
+  &.small {
+    font-size: var(--font-sm);
+    padding: var(--size-2) var(--size-3);
+  }
+
   @media (--md) {
     padding: calc(var(--size-1) + var(--size-2)) var(--size-4);
     height: calc(var(--size-7) + var(--size-1));
+
+    &.small {
+      font-size: var(--font-sm);
+      padding: var(--size-2) var(--size-3);
+      height: calc(var(--size-6) + var(--size-1));
+    }
   }
 
   &.secondary {
