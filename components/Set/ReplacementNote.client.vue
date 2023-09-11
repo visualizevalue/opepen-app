@@ -18,7 +18,7 @@
       <div class="text">
         <h1>Set replaced</h1>
         <p>
-          The set below was replaced with the "{{ replacedSubmission.name }}" submission by {{ replacedSubmission.artist }} because the minimum demand threshold was not met.
+          The set below replaced the "{{ replacedSubmission.name }}" submission by {{ replacedSubmission.artist }} because its minimum demand threshold was not met.
         </p>
       </div>
     </template>
