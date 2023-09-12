@@ -2,8 +2,8 @@
   <article
     class="comment"
   >
-  <NuxtLink :to="`/holders/${post.account.address}`">
-    <ApiAccount :account="post.account" class="account" />
+    <NuxtLink :to="`/holders/${post.account.address}`">
+      <ApiAccount :account="post.account" class="account" />
     </NuxtLink>
     <div v-if="collapse">
       {{ text }}
@@ -39,6 +39,8 @@ const toggle = () => collapsed.value = !collapsed.value
     border-top-left-radius: var(--size-1);
     padding: var(--size-3) var(--size-4);
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 
     .account {
       font-size: var(--font-sm);
@@ -48,6 +50,12 @@ const toggle = () => collapsed.value = !collapsed.value
 
     button {
       margin: var(--size-3) 0 0;
+    }
+
+    > div {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 </style>
