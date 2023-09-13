@@ -14,7 +14,7 @@
     </article>
     <article>
       <h1>Editions</h1>
-      <p>{{ TYPES[set.type] }}</p>
+      <p>{{ TYPES[set.edition_type] }}</p>
     </article>
   </aside>
 </template>
