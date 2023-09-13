@@ -1,6 +1,6 @@
 <template>
   <div class="preview">
-    <Image @click="zoomed = true" :image="image" version="sm" class="appear" />
+    <Image @click="zoomed = true" :image="image" version="sm" class="appear" :class="{ square: ! set.rounded_preview }" />
 
     <div class="meta">
       <h1>{{ name }}</h1>
