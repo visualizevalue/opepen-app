@@ -63,8 +63,9 @@
     <label class="type">
       <span class="label">Edition Type</span>
       <select v-model="type" class="input">
-        <option value="print" default>Prints</option>
-        <option value="dynamic">Dynamic</option>
+        <option value="PRINT" default>Prints</option>
+        <option value="NUMBERED_PRINT" default>Numbered Prints</option>
+        <option value="DYNAMIC">Dynamic</option>
       </select>
       <aside class="note" v-if="isDynamic">
         The VV team will reach out to gather the dynamic images before launching your set.
@@ -129,8 +130,8 @@ const name20 = ref(data.edition20Name || '')
 const name40 = ref(data.edition40Name || '')
 const description = ref(data.description || '')
 const artist = ref(data.artist)
-const type = ref(data.is_dynamic ? 'dynamic' : 'print')
-const isDynamic = computed(() => type.value === 'dynamic')
+const type = ref(data.edition_type)
+const isDynamic = computed(() => type.value !== 'PRINT')
 const isPublishedToSet = computed(() => !!data.set_id)
 watch(ens, () => {
   if (data.creator !== address.value.toLowerCase()) return
@@ -157,7 +158,7 @@ const store = async () => {
       name: name.value,
       description: description.value,
       artist: artist.value,
-      is_dynamic: isDynamic.value,
+      edition_type: type.value,
       edition_1_image_id: image1.value?.uuid,
       edition_4_image_id: image4.value?.uuid,
       edition_5_image_id: image5.value?.uuid,
