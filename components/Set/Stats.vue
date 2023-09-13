@@ -4,7 +4,7 @@
     <span>Edition</span>
     <span class="th">Holders</span>
     <span class="th">Opt-Ins</span>
-    <span class="th">Demand <small class="muted nowrap">(min {{ formatNumber(minDemand) }}%)</small></span>
+    <span class="th">Demand</span>
     <span class="check"></span>
 
     <span class="th">One</span>
@@ -68,7 +68,7 @@
     <span class="th">{{ formatNumber(totalCount) }} <small class="muted">(of {{ formatNumber(eligibleOpepenCount) }})</small></span>
     <span class="th">
       {{ formatNumber(avgDemand) }}%
-      <!-- <small>(<abbr title="average" class="muted">avg.</abbr>)</small> -->
+      <small class="muted nowrap">(min {{ formatNumber(minDemand) }}%)</small>
     </span>
     <span class="check th" :class="{
       active: overAllActive,
@@ -109,34 +109,20 @@ const avgDemand = computed(() => parseInt((edition1Demand.value +
                                  edition40Demand.value) / 6)
 )
 
-const edition1Active = computed(() => minDemand.value && edition1Demand.value >= minDemand.value)
-const edition1CloseToActive = computed(() => minDemand.value && edition1Demand.value >= minDemand.value / 2)
-const edition4Active = computed(() => minDemand.value && edition4Demand.value >= minDemand.value)
-const edition4CloseToActive = computed(() => minDemand.value && edition4Demand.value >= minDemand.value / 2)
-const edition5Active = computed(() => minDemand.value && edition5Demand.value >= minDemand.value)
-const edition5CloseToActive = computed(() => minDemand.value && edition5Demand.value >= minDemand.value / 2)
-const edition10Active = computed(() => minDemand.value && edition10Demand.value >= minDemand.value)
-const edition10CloseToActive = computed(() => minDemand.value && edition10Demand.value >= minDemand.value / 2)
-const edition20Active = computed(() => minDemand.value && edition20Demand.value >= minDemand.value)
-const edition20CloseToActive = computed(() => minDemand.value && edition20Demand.value >= minDemand.value / 2)
-const edition40Active = computed(() => minDemand.value && edition40Demand.value >= minDemand.value)
-const edition40CloseToActive = computed(() => minDemand.value && edition40Demand.value >= minDemand.value / 2)
-const overAllActive = computed(() =>
-  edition1Active.value &&
-  edition4Active.value &&
-  edition5Active.value &&
-  edition10Active.value &&
-  edition20Active.value &&
-  edition40Active.value
-)
-const overAllCloseToActive = computed(() =>
-  edition1CloseToActive.value &&
-  edition4CloseToActive.value &&
-  edition5CloseToActive.value &&
-  edition10CloseToActive.value &&
-  edition20CloseToActive.value &&
-  edition40CloseToActive.value
-)
+const edition1Active = computed(() => minDemand.value && edition1Demand.value > 100)
+const edition1CloseToActive = computed(() => minDemand.value && edition1Demand.value == 100)
+const edition4Active = computed(() => minDemand.value && edition4Demand.value > 100)
+const edition4CloseToActive = computed(() => minDemand.value && edition4Demand.value == 100)
+const edition5Active = computed(() => minDemand.value && edition5Demand.value > 100)
+const edition5CloseToActive = computed(() => minDemand.value && edition5Demand.value == 100)
+const edition10Active = computed(() => minDemand.value && edition10Demand.value > 100)
+const edition10CloseToActive = computed(() => minDemand.value && edition10Demand.value == 100)
+const edition20Active = computed(() => minDemand.value && edition20Demand.value > 100)
+const edition20CloseToActive = computed(() => minDemand.value && edition20Demand.value == 100)
+const edition40Active = computed(() => minDemand.value && edition40Demand.value > 100)
+const edition40CloseToActive = computed(() => minDemand.value && edition40Demand.value == 100)
+const overAllActive = computed(() => avgDemand.value >= minDemand.value)
+const overAllCloseToActive = computed(() => avgDemand.value > minDemand.value / 2)
 </script>
 
 <style lang="postcss" scoped>
