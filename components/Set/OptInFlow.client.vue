@@ -37,8 +37,10 @@
                     min="1"
                     :max="maxInGroup(g)"
                     :value="maxRevealSetting[g] || maxInGroup(g)"
-                    @update="maxRevealSetting[g] = $event.target.value"
-                    @input="() => validateMaxReveal(g)"
+                    @input="$event => {
+                      maxRevealSetting[g] = parseInt($event.target.value);
+                      validateMaxReveal(g)
+                    }"
                     :placeholder="maxInGroup(g)"
                     :style="{
                       minWidth: hasCompleteGroupSelection(g) ? '7rem' : '6rem'
@@ -68,7 +70,7 @@
           <template v-for="(_, g) in grouped">
             <div v-if="selectedInGroup(g).length" class="group">
               <span>
-                {{maxRevealSetting[g] || selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span>
+                {{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span>
               </span>
             </div>
           </template>
@@ -205,8 +207,8 @@ const maxRevealValues = computed(() => ({
   '40': maxRevealSetting['40'] ? maxRevealSetting['40'] : maxInGroup('40'),
 }))
 const validateMaxReveal = g => {
-  if (maxRevealSetting[g] > selectedInGroup(g).length) {
-    maxRevealSetting[g] = selectedInGroup(g).length
+  if (maxRevealSetting[g] > parseInt(g)) {
+    maxRevealSetting[g] = parseInt(g)
   }
   if (maxRevealSetting[g] < 1) {
     maxRevealSetting[g] = 1
