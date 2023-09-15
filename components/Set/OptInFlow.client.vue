@@ -112,6 +112,7 @@ import pad from '~/helpers/pad'
 import { fetchAddresses } from '~/helpers/delegate-cash'
 import { getEditionName } from '~/helpers/editions'
 import { useOpepen } from '~/helpers/use-opepen'
+import { id, ripemd160 } from 'ethers'
 
 const props = defineProps({
   open: Boolean,
@@ -231,7 +232,9 @@ ${Object.keys(maxRevealValues.value)
   .map(g => [g, maxRevealValues.value[g]])
   .map(([g, max]) => `- Edition of ${g}: ${max} Reveal${max > 1 ? 's' : ''}`)
   .join('\n')
-}${
+}
+
+OPEPEN PROOF: ${ ripemd160(id(selected.value.map(id => `#${id}`).join(', '))) }${
 
 comment.value && (`\n\nCOMMENT: ` + comment.value)
 }`
