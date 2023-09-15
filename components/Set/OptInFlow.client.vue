@@ -219,14 +219,11 @@ const comment = ref(props.storedComment || '')
 watch(() => props.storedComment, () => comment.value = props.storedComment)
 
 const message = computed(() => {
-  return `I want to submit my Opepen for possible artwork reveal in the following set:
+  return `I want to submit ${selected.value.length} Opepen for possible artwork reveal in the following set:
 
 OPT-IN: Set ${pad(props.set.id, 3)}
 
-SET NAME: ${props.set.name}${
-
-  comment.value && (`\n\nCOMMENT: ` + comment.value)
-}
+SET NAME: ${props.set.name}
 
 MAX REVEALS:
 ${Object.keys(maxRevealValues.value)
@@ -234,9 +231,10 @@ ${Object.keys(maxRevealValues.value)
   .map(g => [g, maxRevealValues.value[g]])
   .map(([g, max]) => `- Edition of ${g}: ${max} Reveal${max > 1 ? 's' : ''}`)
   .join('\n')
-}
+}${
 
-OPEPEN: ${selected.value.map(id => `#${id}`).join(', ')}`
+comment.value && (`\n\nCOMMENT: ` + comment.value)
+}`
 })
 
 const signing = ref(false)
