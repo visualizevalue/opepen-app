@@ -13,6 +13,7 @@ aside {
   border-top-left-radius: var(--size-0);
   font-size: var(--font-sm);
   color: var(--gray-z-5);
+  line-height: var(--line-height-md);
 
   &.inline {
     display: flex;
