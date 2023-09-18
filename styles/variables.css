@@ -24,6 +24,9 @@
   --green: #94E337;
   --yellow: #F2A840;
 
+  --blue-light: #BFDBFE;
+  --blue-dark: #172554;
+
   --error: var(--red);
   --success: var(--green);
 
@@ -94,6 +97,9 @@
   --gray-z-9: var(--gray-900);
   --color: var(--white);
   --semi: var(--semi-dark);
+
+  --blue-1: var(--blue-light);
+  --blue-9: var(--blue-dark);
 }
 
 /* LIGHT */
@@ -111,6 +117,9 @@
   --gray-z-9: var(--gray-100);
   --color: var(--black);
   --semi: var(--semi-light);
+
+  --blue-1: var(--blue-dark);
+  --blue-9: var(--blue-light);
 }
 
 /* SCALING */

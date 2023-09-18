@@ -1,11 +1,15 @@
 <template>
-  <NuxtLink v-if="to" :to="to" class="button" :exact="exact"><slot /></NuxtLink>
+  <NuxtLink v-if="to" :to="to" class="button" :exact="exact" :target="target"><slot /></NuxtLink>
   <button v-else class="button"><slot /></button>
 </template>
 
 <script setup>
 const { to, exact, gridAligned } = defineProps({
   to: String,
+  target: {
+    type: String,
+    default: '_self',
+  },
   exact: Boolean,
 })
 </script>

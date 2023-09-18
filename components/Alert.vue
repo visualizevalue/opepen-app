@@ -24,5 +24,10 @@ aside {
   :deep(.button) {
     white-space: nowrap;
   }
+
+  &.info {
+    background-color: var(--blue-9);
+    color: var(--blue-1);
+  }
 }
 </style>
