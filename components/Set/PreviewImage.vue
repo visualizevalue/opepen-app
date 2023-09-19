@@ -1,6 +1,6 @@
 <template>
-  <div class="preview">
-    <Image @click="zoomed = true" :image="image" version="sm" class="appear" />
+  <div class="preview" :class="{ square: ! set.rounded_preview }">
+    <Image @click="zoomed = true" :image="image" version="sm" class="appear" :class="{ square: ! set.rounded_preview }" />
 
     <div class="meta">
       <h1>{{ name }}</h1>
@@ -94,8 +94,7 @@ const download = async () => {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
-    border-radius: var(--size-5);
-    border-top-left-radius: var(--size-1);
+    border-radius: var(--size-1);
     border: var(--border);
 
     h1 {
@@ -111,6 +110,13 @@ const download = async () => {
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+  }
+
+  &:not(.square) {
+    .meta {
+      border-radius: var(--size-5);
+      border-top-left-radius: var(--size-1);
     }
   }
 

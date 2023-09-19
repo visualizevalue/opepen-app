@@ -93,7 +93,8 @@ const expanded = ref(false)
   .image {
     margin: 0;
     height: 100%;
-    border-radius: var(--size-0);
+    border-radius: var(--size-2);
+    border-top-left-radius: var(--size-0);
   }
 }
 

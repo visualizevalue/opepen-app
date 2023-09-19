@@ -14,13 +14,19 @@
     </article>
     <article>
       <h1>Editions</h1>
-      <p>{{ set.is_dynamic ? 'Dynamic' : 'Prints' }}</p>
+      <p>{{ TYPES[set.edition_type] }}</p>
     </article>
   </aside>
 </template>
 
 <script setup>
 import pad from '~/helpers/pad'
+
+const TYPES = {
+  PRINT: 'Prints',
+  NUMBERED_PRINT: 'Numbered Prints',
+  DYNAMIC: 'Dynamic'
+}
 
 defineProps({
   set: Object,

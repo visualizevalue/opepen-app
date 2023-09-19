@@ -48,13 +48,20 @@ article.image {
   overflow: hidden;
   background-color: var(--gray-z-3);
   border: 1px solid var(--gray-z-4);
-  border-radius: var(--size-5);
-  border-top-left-radius: var(--size-1);
 
   position: relative;
   height: 0;
   padding-bottom: 100%;
   padding-bottom: calc(100% - 2px);
+
+  &:not(.square) {
+    border-radius: var(--size-5);
+    border-top-left-radius: var(--size-1);
+  }
+
+  &.square {
+    border-radius: var(--size-1);
+  }
 
   .inner {
     position: absolute;
