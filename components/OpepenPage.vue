@@ -78,7 +78,7 @@ useMetaData({
     },
     {
       name: 'eth:nft:schema',
-      content: `ERC721`
+      content: `erc721`
     },
     {
       name: 'eth:nft:chain',
