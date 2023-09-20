@@ -65,7 +65,7 @@ useMetaData({
       content: `Opepen Edition`
     },
     {
-      property: 'eth:nft:status',
+      property: 'eth:nft:mint_status',
       content: `closed`
     },
     {
