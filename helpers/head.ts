@@ -18,9 +18,9 @@ export const makeHead = ({
     title: titleCompleted,
     meta: [
       { name: 'description', content: description },
-      { name: 'og:title', content: titleCompleted },
-      { name: 'og:description', content: description },
-      { name: 'og:image', content: og },
+      { property: 'og:title', content: titleCompleted },
+      { property: 'og:description', content: description },
+      { property: 'og:image', content: og },
       ...meta,
     ]
   }

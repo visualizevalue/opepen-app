@@ -52,7 +52,7 @@ const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.value.image?.type)
 
   return isStatic
-    ? downloadImage(image.value, { name: `Opepen ${opepen.value.token_id}` })
+    ? downloadImage(image.value, { property: `Opepen ${opepen.value.token_id}` })
     : open(image.value, '_blank')
 }
 
@@ -61,36 +61,36 @@ useMetaData({
   og: image.value,
   meta: [
     {
-      name: 'eth:nft:collection',
+      property: 'eth:nft:collection',
       content: `Opepen Edition`
     },
     {
-      name: 'eth:nft:status',
+      property: 'eth:nft:status',
       content: `closed`
     },
     {
-      name: 'eth:nft:creator_address',
+      property: 'eth:nft:creator_address',
       content: `0xc8f8e2f59dd95ff67c3d39109eca2e2a017d4c8a`
     },
     {
-      name: 'eth:nft:contract_address',
+      property: 'eth:nft:contract_address',
       content: contract,
     },
     {
-      name: 'eth:nft:schema',
+      property: 'eth:nft:schema',
       content: `erc721`
     },
     {
-      name: 'eth:nft:chain',
+      property: 'eth:nft:chain',
       content: `ethereum`
     },
     {
-      name: 'eth:nft:media_url',
+      property: 'eth:nft:media_url',
       content: image.value,
     },
     {
-      name: 'eth:nft:mint_count',
-      content: '16_000'
+      property: 'eth:nft:mint_count',
+      content: 16000
     },
   ]
 })
