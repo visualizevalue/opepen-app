@@ -24,7 +24,7 @@ onMounted(setHeight)
 
 useMetaData({
   title: 'Home',
-  description: 'OpepenAI lets you browse and create AI interpretations of the iconic Opepen Edition',
+  description: 'This is not a PFP project.',
 })
 </script>
 

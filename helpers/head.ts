@@ -10,7 +10,7 @@ export const makeHead = ({
   title,
   append = '',
   description = '',
-  og = '',
+  og = 'https://opepen.art/og/rare.png',
   meta = [],
 }: HeadConfig) => {
   const titleCompleted = `${title}${append}`
@@ -18,9 +18,9 @@ export const makeHead = ({
     title: titleCompleted,
     meta: [
       { name: 'description', content: description },
-      { name: 'og:title', content: titleCompleted },
-      { name: 'og:description', content: description },
-      { name: 'og:image', content: og },
+      { property: 'og:title', content: titleCompleted },
+      { property: 'og:description', content: description },
+      { property: 'og:image', content: og },
       ...meta,
     ]
   }

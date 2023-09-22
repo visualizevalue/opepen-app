@@ -15,7 +15,9 @@ const loaded = ref(false)
 const currentSet: any = computed(() => {
   const now = DateTime.now()
 
-  const set = sets.value.find((s: OpepenSet) => DateTime.fromISO(s.reveals_at) > now)
+  const set = sets.value
+    .sort((a, b) => a.reveals_at < b.reveals_at ? 1 : -1)
+    .find((s: OpepenSet) => DateTime.fromISO(s.reveals_at) > now)
 
   if (! set) return sets.value[sets.value.length - 1]
 
