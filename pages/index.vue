@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>The <span class="nowrap">Opepen Meta</span></h1>
+    <OpepenTitle title="The Opepen Meta" class="title" />
 
     <!-- <aside v-if="viewPreviews" class="previews">
       <SetPreview :id="1" />
@@ -21,20 +21,9 @@
 </script>
 
 <style lang="postcss" scoped>
-  h1 {
-    text-align: center;
+  .title {
     color: var(--gray-z-8);
-    font-size: var(--font-display);
-    font-family: var(--font-family-display);
-    text-transform: none;
-    letter-spacing: var(--letter-spacing-sm);
-    font-weight: var(--font-weight-bold);
-    margin: 8vh 0 15vh;
-    line-height: 1em;
-
-    .nowrap {
-      white-space: nowrap;
-    }
+    margin: 8vh auto 15vh;
   }
 
   aside,
