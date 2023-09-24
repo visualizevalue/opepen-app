@@ -92,7 +92,7 @@ article.image {
 
   &.loaded {
     img {
-      transform: scale(1.025);
+      transform: scale(1);
       opacity: 1;
     }
   }
