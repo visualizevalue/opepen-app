@@ -5,7 +5,7 @@
       <Icon type="info" />
       <h1>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">Block {{ set.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">Opepen Metadata Reveal Script</NuxtLink>.</h1>
     </header>
-    <header v-else>
+    <header v-else-if="!revealing">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" />.</div>
       <ClientOnly>
         <SetOptInFlow
@@ -48,9 +48,10 @@ const { address, isConnected } = useAccount()
 
 const revealDate = ref(DateTime.fromISO(props.set?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
-const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const revealed = computed(() => revealing.value && props.set?.reveal_block_number)
 const onComplete = () => {
-  revealed.value = true
+  revealing.value = true
 }
 
 const url = computed(() => `${config.public.opepenApi}/accounts/${address.value}/sets/${props.set.id}`)
