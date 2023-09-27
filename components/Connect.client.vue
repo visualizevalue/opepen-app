@@ -7,6 +7,8 @@
   </Button>
   <Button :to="`/holders/${'address', address}`" v-else>
     <Account :address="address" class="'con', isConnectednected" />
+    <span class="separator"></span>
+    <NuxtLink to="/settings"><Icon type="settings" /></NuxtLink>
   </Button>
 
   <Modal

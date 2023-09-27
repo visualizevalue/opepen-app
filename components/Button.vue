@@ -26,6 +26,7 @@ button {
   border-radius: var(--size-4);
   border-top-left-radius: var(--size-1);
   border: var(--border);
+  position: relative;
 
   &:--highlight,
   &.active {
@@ -71,6 +72,15 @@ button {
       border-color: var(--gray-z-3);
       color: var(--color);
     }
+  }
+
+  :deep(.separator) {
+    width: 1px;
+    background-color: var(--gray-z-4);
+    height: 360%;
+    margin: 0 var(--size-2);
+    /* margin-top: calc(-1 * var(--size-0) + var(--size-2));
+    margin-bottom: calc(-1 * var(--size-0) + var(--size-2)); */
   }
 }
 </style>

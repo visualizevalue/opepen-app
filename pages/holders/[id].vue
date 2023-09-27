@@ -11,7 +11,7 @@
       query="limit=24"
       v-slot="{ items }"
     >
-      <div class="opepens">
+      <div v-if="items.length" class="opepens">
         <div
           v-for="token in items"
           :key="token.token_id"
@@ -22,7 +22,7 @@
           />
         </div>
       </div>
-      <section v-if="! items.length">
+      <section v-else>
         <p class="centered muted">No Opepen found for this account.</p>
       </section>
     </PaginatedContent>

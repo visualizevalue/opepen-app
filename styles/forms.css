@@ -101,6 +101,13 @@ textarea {
   display: block;
 }
 
+label.checkbox {
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: var(--size-3);
+  align-items: center;
+}
+
 .note {
   font-size: var(--font-sm);
   margin: var(--size-4) 0;
