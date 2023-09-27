@@ -42,17 +42,19 @@ const ens = useEnsName(address)
 if (! session.value) router.replace('/')
 
 const url = `${config.public.opepenApi}/accounts/settings`
-const { data: settings, status } = await useFetch(url, { credentials: 'include' })
+const { data: settings, status, execute } = await useFetch(url, { credentials: 'include' })
 
 const name = ref(settings.value?.name || ens.value)
 const email = ref(settings.value?.email)
 const notificationNewSet = ref(settings.value?.notification_new_set)
 
-watch([status, settings, ens], () => {
-  name.value = settings.value?.name || ens.value
-  email.value = settings.value?.email
-  notificationNewSet.value = settings.value?.notification_new_set
-})
+const updateData = (data = {}) => {
+  name.value = data.name || ens.value
+  email.value = data.email
+  notificationNewSet.value = data.notification_new_set
+}
+
+watch([status, settings, ens], () => updateData(settings.value))
 
 const saving = ref(false)
 const lastSaved = ref(null)
@@ -61,7 +63,7 @@ const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value)
 const save = async () => {
   saving.value = true
   try {
-    await $fetch(url, {
+    const data = await $fetch(url, {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
@@ -70,6 +72,7 @@ const save = async () => {
         notification_new_set: notificationNewSet.value,
       })
     })
+    updateData(data)
 
     lastSaved.value = DateTime.now()
   } catch (e) {
