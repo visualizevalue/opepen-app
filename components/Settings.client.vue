@@ -30,10 +30,13 @@ import { useSignIn } from '~/helpers/siwe'
 import { formatTime } from '~/helpers/dates'
 
 const config = useRuntimeConfig()
+const router = useRouter()
 
 const { session } = useSignIn()
 const { address } = useAccount()
 const ens = useEnsName(address)
+
+if (! session.value) router.replace('/')
 
 const url = `${config.public.opepenApi}/accounts/settings`
 const { data: settings, status } = await useFetch(url, { credentials: 'include' })
@@ -51,7 +54,6 @@ watch([status, settings, ens], () => {
 const saving = ref(false)
 const lastSaved = ref(null)
 const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
-
 
 const save = async () => {
   saving.value = true

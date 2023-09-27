@@ -1,6 +1,6 @@
 <template>
   <Transition name="fade">
-    <Alert v-if="session && ! hasSavedEmail && ! forceClose">
+    <Alert v-if="session && settingsLoaded && ! hasSavedEmail && ! forceClose">
       <button class="close" @click="dismiss">
         <Icon type="x" />
       </button>
@@ -31,6 +31,7 @@ const { session } = useSignIn()
 const url = `${config.public.opepenApi}/accounts/settings`
 const { data: settings, status, refresh } = await useFetch(url, { credentials: 'include' })
 
+const settingsLoaded = computed(() => !! settings.value)
 const hasSavedEmail = computed(() => !! settings.value?.email)
 const email = ref(settings.value?.email)
 
