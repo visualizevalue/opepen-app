@@ -49,9 +49,9 @@ const email = ref(settings.value?.email)
 const notificationNewSet = ref(settings.value?.notification_new_set)
 
 const updateData = (data = {}) => {
-  name.value = data.name || ens.value
-  email.value = data.email
-  notificationNewSet.value = data.notification_new_set
+  name.value = data?.name || ens.value
+  email.value = data?.email
+  notificationNewSet.value = data?.notification_new_set
 }
 
 watch([status, settings, ens], () => updateData(settings.value))
