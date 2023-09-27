@@ -14,6 +14,7 @@ aside {
   font-size: var(--font-sm);
   color: var(--gray-z-5);
   line-height: var(--line-height-md);
+  position: relative;
 
   &.inline {
     display: flex;

@@ -2,6 +2,7 @@
   <div class="set">
     <header>
       <SetPagination :set="set" />
+      <EmailNotificationAlert />
       <SetReplacementNote :set="set" :replaced-submission="set.replacedSubmission" class="note" />
     </header>
     <SetPreviewImages :set="set" class="items" />
