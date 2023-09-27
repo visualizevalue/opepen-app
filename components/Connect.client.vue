@@ -49,4 +49,9 @@ watch(isConnected, async () => {
     height: var(--size-5);
   }
 }
+
+.button {
+  /* TODO: Remove when button group rework done */
+  overflow: 0;
+}
 </style>

@@ -74,13 +74,12 @@ button {
     }
   }
 
+  /* TODO: Rework into button group... */
   :deep(.separator) {
     width: 1px;
     background-color: var(--gray-z-4);
     height: 360%;
     margin: 0 var(--size-2);
-    /* margin-top: calc(-1 * var(--size-0) + var(--size-2));
-    margin-bottom: calc(-1 * var(--size-0) + var(--size-2)); */
   }
 }
 </style>
