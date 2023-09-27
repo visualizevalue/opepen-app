@@ -107,6 +107,10 @@ label.checkbox {
   gap: var(--size-3);
   align-items: center;
 }
+input[type="checkbox"] {
+  height: auto;
+  min-height: 0 !important;
+}
 
 .note {
   font-size: var(--font-sm);
