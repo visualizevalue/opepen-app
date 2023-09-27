@@ -16,6 +16,7 @@
       </label>
 
       <footer class="actions">
+        <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
         <Button type="submit">Save</Button>
       </footer>
     </form>
@@ -23,8 +24,10 @@
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
 import { useSignIn } from '~/helpers/siwe'
+import { formatTime } from '~/helpers/dates'
 
 const config = useRuntimeConfig()
 
@@ -45,16 +48,30 @@ watch([status, settings, ens], () => {
   notificationNewSet.value = settings.value?.notification_new_set
 })
 
+const saving = ref(false)
+const lastSaved = ref(null)
+const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
+
+
 const save = async () => {
-  await $fetch(url, {
-    method: 'POST',
-    credentials: 'include',
-    body: JSON.stringify({
-      name: name.value,
-      email: email.value,
-      notification_new_set: notificationNewSet.value,
+  saving.value = true
+  try {
+    await $fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({
+        name: name.value,
+        email: email.value,
+        notification_new_set: notificationNewSet.value,
+      })
     })
-  })
+
+    lastSaved.value = DateTime.now()
+  } catch (e) {
+    // ...
+  }
+
+  saving.value = false
 }
 </script>
 
@@ -67,6 +84,8 @@ const save = async () => {
   footer {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: var(--size-4);
   }
 
   h1 {
