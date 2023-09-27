@@ -52,6 +52,6 @@ watch(isConnected, async () => {
 
 .button {
   /* TODO: Remove when button group rework done */
-  overflow: 0;
+  overflow: hidden;
 }
 </style>
