@@ -17,7 +17,10 @@
 
       <footer class="actions">
         <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
-        <Button type="submit">Save</Button>
+        <Button type="submit" :disabled="saving">
+          <span v-if="saving">Saving...</span>
+          <span v-else>Save</span>
+        </Button>
       </footer>
     </form>
   </article>

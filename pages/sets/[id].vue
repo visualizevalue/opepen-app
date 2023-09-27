@@ -78,7 +78,8 @@ useMetaData({
     :deep() {
       > header {
         grid-area: header;
-        display: grid;
+        display: flex;
+        flex-direction: column;
         gap: var(--size-4);
 
         @media (--md) {

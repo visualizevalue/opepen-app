@@ -10,7 +10,7 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity var(--speed) ease;
+  transition: all var(--speed) ease;
   max-height: 100%;
 }
 

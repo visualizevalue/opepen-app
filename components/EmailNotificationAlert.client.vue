@@ -96,4 +96,16 @@ const dismiss = () => {
   input {
     color: var(--gray-z-9);
   }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    max-height: 9rem;
+  }
+
+  .fade-leave-to {
+    margin-top: calc(-1 * var(--size-7));
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 </style>
