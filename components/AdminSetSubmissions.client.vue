@@ -44,7 +44,7 @@
               <Account :address="set.creator" />,
             </span>
             <span>
-              {{ formatDate(set.created_at) }}
+              {{ formatDateTime(set.created_at) }}
             </span>
           </div>
           <h1>{{ set.name }}</h1>
@@ -69,7 +69,7 @@
 
 <script setup>
 import { useSignIn } from '~/helpers/siwe'
-import { formatDate } from '~/helpers/dates'
+import { formatDateTime } from '~/helpers/dates'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
