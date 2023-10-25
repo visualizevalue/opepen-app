@@ -27,12 +27,12 @@
         <input type="text" :value="data.artist" disabled />
       </label>
       <label>
-        <span class="label">Date</span>
-        <input type="text" :value="date" disabled />
-      </label>
-      <label>
         <span class="label">Note</span>
         <Input type="text" v-model="note" placeholder="Personal note (optional)" />
+      </label>
+      <label>
+        <span class="label">Date</span>
+        <input type="text" :value="date" disabled />
       </label>
     </section>
 
@@ -77,13 +77,12 @@ const lastSigned = ref(null)
 const lastSignedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
 const message = computed(() => {
   const elements = [
-    `Set: ${pad(data.set_id)}`,
-    `Name: ${data.name}`,
+    `Set: ${data.name} (${pad(data.set_id)})`,
     `Artist: ${data.artist}`,
-    `Date: ${date}`,
   ]
 
   if (note.value) elements.push(`Note: ${note.value}`)
+  elements.push(`Date: ${date}`)
 
   return elements.join(`\n\n`)
 })
