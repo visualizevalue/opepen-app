@@ -145,13 +145,12 @@ const isSigned = ref(!!data.artist_signature)
 const isPublishedToSet = computed(() => !!data.set_id)
 const toSign = computed(() =>
   isCreator.value &&
-  data.set_id && (
-    isPublishedToSet.value && !isSigned.value ||
-    (isSigned.value && data.artist_message?.name !== data.name)
-  )
+  data.set_id &&
+  isPublishedToSet.value &&
+  !isSigned.value
 )
 const markSigned = (set) => {
-  isSigned.value = !!data.artist_signature
+  isSigned.value = !!set.artist_signature
   emit('updated', set)
 }
 watch(ens, () => {
