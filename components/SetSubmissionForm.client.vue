@@ -4,7 +4,7 @@
       <p>Artist Signature: Thank you so much for your contribution to Opepen. Please sign this set.</p>
 
       <div class="actions">
-        <SignSet :data="data" @signed="set => $emit('updated', set)" />
+        <SignSet :data="data" @signed="markSigned" />
       </div>
     </Alert>
     <Alert v-else-if="isPublishedToSet" class="span-2 inline">
@@ -141,14 +141,19 @@ const description = ref(data.description || '')
 const artist = ref(data.artist)
 const type = ref(data.edition_type)
 const isDynamic = computed(() => type.value !== 'PRINT')
-const isSigned = computed(() => !!data.artist_signature)
+const isSigned = ref(!!data.artist_signature)
 const isPublishedToSet = computed(() => !!data.set_id)
 const toSign = computed(() =>
-  (isCreator.value && data.set_id) && (
+  isCreator.value &&
+  data.set_id && (
     isPublishedToSet.value && !isSigned.value ||
     (isSigned.value && data.artist_message?.name !== data.name)
   )
 )
+const markSigned = (set) => {
+  isSigned.value = !!data.artist_signature
+  emit('updated', set)
+}
 watch(ens, () => {
   if (data.creator !== address.value.toLowerCase()) return
 
