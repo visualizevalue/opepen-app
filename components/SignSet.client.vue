@@ -14,6 +14,7 @@
     modal-classes="wide"
   >
     <section>
+      <Alert class="inline">Signing will initiate a transaction (0 Eth) to visualizevalue.eth containing the below data as plain text in its body.</Alert>
       <label>
         <span class="label">Set</span>
         <input type="text" :value="pad(data.set_id)" disabled />
@@ -30,10 +31,6 @@
         <span class="label">Note</span>
         <Input type="text" v-model="note" placeholder="Personal note (optional)" />
       </label>
-      <label>
-        <span class="label">Date</span>
-        <input type="text" :value="date" disabled />
-      </label>
     </section>
 
     <footer>
@@ -48,10 +45,9 @@
 </template>
 
 <script setup>
-import { signMessage } from '@wagmi/core'
+import { sendTransaction } from '@wagmi/core'
 import { DateTime } from 'luxon'
-import { useAccount } from '~/helpers/use-wagmi'
-import { formatTime, formatDate } from '~/helpers/dates'
+import { stringToHex } from 'viem'
 import pad from '~/helpers/pad'
 import { useSignIn } from '~/helpers/siwe'
 
@@ -66,23 +62,20 @@ const { data } = defineProps({
 const emit = defineEmits(['signed'])
 
 const { session, signIn } = useSignIn()
-const { address } = useAccount()
 
 const open = ref(false)
 const note = ref(data.artist_message?.note || '')
-const date = formatDate(DateTime.utc().toISO())
 
 const signing = ref(false)
 const lastSigned = ref(null)
-const lastSignedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
 const message = computed(() => {
   const elements = [
-    `Set: ${data.name} (${pad(data.set_id)})`,
+    `Set: ${pad(data.set_id)}`,
+    `Name: ${data.name}`,
     `Artist: ${data.artist}`,
   ]
 
   if (note.value) elements.push(`Note: ${note.value}`)
-  elements.push(`Date: ${date}`)
 
   return elements.join(`\n\n`)
 })
@@ -92,8 +85,10 @@ const sign = async () => {
   signing.value = true
 
   try {
-    const signature = await signMessage({
-      message: message.value,
+    const { hash } = await sendTransaction({
+      to: 'visualizevalue.eth',
+      value: 0,
+      data: stringToHex(message.value),
     })
 
     const url = `${config.public.opepenApi}/set-submissions/${data.uuid}/sign`
@@ -102,14 +97,13 @@ const sign = async () => {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
-        message: {
+        signature: {
           set: data.set_id,
           name: data.name,
           artist: data.artist,
-          date: date,
           note: note.value,
+          tx: hash,
         },
-        signature,
       })
     })
 
