@@ -5,7 +5,7 @@
       <span :title="set.name">{{ set.name || 'Unrevealed' }}</span>
     </h1>
 
-    <p v-if="description" v-html="set.description"></p>
+    <p v-if="set.description" v-html="set.description"></p>
 
     <div>
       <CreatorSignature :set="set" />
