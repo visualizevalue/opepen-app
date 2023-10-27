@@ -1,8 +1,17 @@
 @font-face {
-  font-family: 'Carbon';
+  font-family: "Carbon";
   font-style:  normal;
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/carbon.woff2?v=1.0") format("woff2"),
     url("/fonts/carbon.woff?v=1.0") format("woff");
+}
+
+@font-face {
+  font-family: "OpepenBlockSolid";
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/OpepenBlockSolid_02.woff2") format("woff2"),
+    url("/fonts/OpepenBlockSolid_02.woff") format("woff");
 }

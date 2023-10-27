@@ -46,6 +46,9 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+header h1 {
+  font-family: var(--font-family-opepen);
+}
 .holder {
   width: 100%;
   max-width: var(--content-width);
