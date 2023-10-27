@@ -6,8 +6,7 @@
       <IconOpepen />
     </header>
     <section v-if="revealed">
-      <Icon type="info" />
-      <h1>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">Block {{ set.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">Opepen Metadata Reveal Script</NuxtLink>.</h1>
+      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">Block {{ set.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">Opepen Metadata Reveal Script</NuxtLink>.</p>
     </section>
     <section v-if="subscription" class="selection">
       <template v-if="opepenCount">
@@ -186,8 +185,8 @@ const startOptIn = () => {
         }
       }
 
-      + .selection {
-        border-top: var(--border);
+      + section {
+        padding-top: 0 !important;
       }
     }
 
