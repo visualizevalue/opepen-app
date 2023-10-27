@@ -1,6 +1,6 @@
 <template>
 
-  <section v-if="set.name" class="opt-in">
+  <section v-if="set" class="opt-in">
     <header>
       <h1>Your Opt-Ins</h1>
       <IconOpepen />
@@ -20,7 +20,7 @@
         <p>You opted out all opepen submissions.</p>
       </template>
     </section>
-    <section v-if="!revealed && !revealing">
+    <section v-if="!revealed && !revealing && set.reveals_at">
       <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" />.</div>
       <ClientOnly>
         <SetOptInFlow
@@ -35,7 +35,7 @@
       </ClientOnly>
     </section>
 
-    <footer v-if="!revealed && !revealing">
+    <footer v-if="!revealed && !revealing && published">
       <Button @click="startOptIn">
         <Icon type="feather" />
         <span class="nowrap"><span v-if="subscription?.opepen_ids?.length">Change</span> Opt-In</span>

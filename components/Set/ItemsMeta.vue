@@ -1,11 +1,11 @@
 <template>
-  <section v-if="set.name" class="items-meta">
+  <section v-if="set" class="items-meta">
     <h1>
       <small>Set {{ pad(set.id) }}</small>
-      <span :title="set.name">{{ set.name }}</span>
+      <span :title="set.name">{{ set.name || 'Unrevealed' }}</span>
     </h1>
 
-    <p v-html="set.description"></p>
+    <p v-if="description" v-html="set.description"></p>
 
     <div>
       <CreatorSignature :set="set" />
@@ -14,7 +14,8 @@
     <ul class="overview">
       <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span>{{ TYPES[set.edition_type] }} Editions</span>
+        <span v-if="published">{{ TYPES[set.edition_type] }} Editions</span>
+        <span v-else>Unknown Editions</span>
       </li>
       <li>
         <IconOpepen />
@@ -26,7 +27,8 @@
       </li>
       <li v-else>
         <IconCheck />
-        <span>Opt-In until {{ consensusDate }}</span>
+        <span v-if="published">Opt-In until {{ consensusDate }}</span>
+        <span v-else>Opt-In not opepen yet</span>
       </li>
       <li>
         <Icon type="code" stroke-width="2.25" />
@@ -60,6 +62,7 @@ const props = defineProps({
   set: Object,
 })
 
+const published = computed(() => !!props.set.name)
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && props.set?.reveal_block_number)
