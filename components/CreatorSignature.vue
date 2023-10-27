@@ -8,6 +8,7 @@
     </Button>
     <Button
       :to="`https://etherscan.io/tx/${set.artist_signature.tx}`"
+      target="_blank"
       class="signature"
     >
       <Icon type="feather" />
