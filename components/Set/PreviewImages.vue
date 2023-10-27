@@ -27,5 +27,9 @@ const { set } = defineProps({ set: Object })
     grid-column: span 2;
     grid-row: span 2;
   }
+
+  @media (--md) {
+    gap: var(--size-5);
+  }
 }
 </style>
