@@ -47,7 +47,7 @@ span {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--size-1);
+    gap: 0;
 
     small {
       color: var(--gray-z-6);
