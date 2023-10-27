@@ -1,5 +1,5 @@
 <template>
-  <article v-if="set.creator">
+  <article v-if="set.creator && set.artist_signature">
     <Button :to="`/holders/${set.creator}`">
       <ApiAccount
         :account="set.creatorAccount"
@@ -7,7 +7,6 @@
       />
     </Button>
     <Button
-      v-if="set.artist_signature"
       :to="`https://etherscan.io/tx/${set.artist_signature.tx}`"
       class="signature"
     >
