@@ -54,6 +54,7 @@ const props = defineProps({ set: Object })
 const emit = defineEmits(['update'])
 const { address, isConnected } = useAccount()
 
+const published = computed(() => !!props.set.name)
 const revealDate = ref(DateTime.fromISO(props.set?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
