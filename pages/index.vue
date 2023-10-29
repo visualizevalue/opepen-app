@@ -31,16 +31,13 @@
 <style lang="postcss" scoped>
   .schematics {
     width: 100%;
-    max-width: max(24rem, 40vh);
+    max-width: min(24rem, 40vh);
     margin: calc(-1 * var(--navbar-height)) auto 0;
-    margin: 0 auto 0;
     position: relative;
     z-index: -1;
 
     svg {
-      margin-bottom: -24%;
-      margin-bottom: -16%;
-      margin-bottom: -10%;
+      margin-bottom: -20%;
       width: 100%;
     }
 
