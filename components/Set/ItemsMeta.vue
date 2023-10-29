@@ -91,7 +91,7 @@ const consensusDate = computed(() => props.set?.reveals_at && formatDate(props.s
       span {
         font-family: var(--font-family-opepen);
         font-size: var(--font-title);
-        line-height: 1;
+        line-height: var(--line-height-md);
         letter-spacing: 0.05em;
 
         @media (--md) {

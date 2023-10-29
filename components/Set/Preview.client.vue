@@ -53,7 +53,6 @@ const { data: set } = await useFetch(url)
     border-top-left-radius: var(--size-1);
     background-color: var(--gray-z-1);
 
-    font-family: var(--font-display);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
 
