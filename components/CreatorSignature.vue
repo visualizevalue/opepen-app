@@ -1,5 +1,5 @@
 <template>
-  <article v-if="set.creator && set.artist_signature">
+  <article v-if="set.creator">
     <Button :to="`/holders/${set.creator}`">
       <ApiAccount
         :account="set.creatorAccount"
@@ -7,6 +7,7 @@
       />
     </Button>
     <Button
+      v-if="set.artist_signature"
       :to="`https://etherscan.io/tx/${set.artist_signature.tx}`"
       target="_blank"
       class="signature"
@@ -45,10 +46,13 @@ article {
 
     &:first-child {
       padding-left: 0;
+    }
+
+    &:first-child:not(:last-child) {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
-    &:last-child {
+    &.signature {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       margin-left: -1px;
