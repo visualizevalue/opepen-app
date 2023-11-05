@@ -1,7 +1,7 @@
 <template>
   <div class="holder">
     <PageHeader class="centered">
-      <DefaultOpepenAvatar class="avatar" :size="64" :address="account.address" />
+      <Avatar :account="account" :size="64" class="avatar" />
       <h1>{{ account.display }}</h1>
     </PageHeader>
 
@@ -56,8 +56,9 @@ header h1 {
 
   .avatar {
     margin: 0 auto var(--size-5);
-    width: var(--size-8);
-    height: var(--size-8);
+    width: var(--size-9);
+    height: var(--size-9);
+    border-top-left-radius: var(--size-2);
   }
 
   .opepens {

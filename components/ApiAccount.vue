@@ -1,6 +1,8 @@
 <template>
   <span :class="{ avatar: !hideAvatar }">
-    <DefaultOpepenAvatar v-if="!hideAvatar" :address="address" :class="{ lg: !hideAddress }" />
+    <template v-if="!hideAvatar">
+      <Avatar :account="account" class="lg" />
+    </template>
     <span>
       <span>{{ display }}</span>
       <small v-if="! hideAddress" :title="account.address">{{ shortAddress(account.address) }}</small>
@@ -10,6 +12,7 @@
 
 <script setup>
 import shortAddress from '~/helpers/short-address'
+import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
   account: Object,

@@ -28,7 +28,7 @@ const props = defineProps({
   name: String,
   image: Object,
 })
-const emit = defineEmits(['stored'])
+const emit = defineEmits(['stored', 'reset'])
 
 const loading = ref(false)
 const dragging = ref(false)
@@ -76,6 +76,7 @@ const addFile = (event) => {
 
 const reset = () => {
   image.value = null
+  emit('reset')
 }
 </script>
 
