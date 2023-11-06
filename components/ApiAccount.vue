@@ -12,7 +12,6 @@
 
 <script setup>
 import shortAddress from '~/helpers/short-address'
-import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
   account: Object,
@@ -23,7 +22,6 @@ const props = defineProps({
   }
 })
 
-const address = computed(() => props.account.address)
 const display = computed(() => props.account.display)
 </script>
 

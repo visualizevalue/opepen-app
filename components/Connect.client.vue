@@ -5,10 +5,10 @@
     </span>
     <slot>Check-In</slot>
   </Button>
-  <div>
+  <div v-else>
     <ButtonGroup>
       <Button :to="`/holders/${'address', address}`">
-        <Account :address="address" class="'con', isConnectednected" />
+        <Account :address="address" />
       </Button>
       <Button to="/settings"><Icon type="settings" /></Button>
     </ButtonGroup>
@@ -28,7 +28,7 @@ import { useSignIn } from '~/helpers/siwe'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
-const { signIn, session } = useSignIn()
+const { signIn } = useSignIn()
 
 const open = ref(false)
 watch(isConnected, async () => {

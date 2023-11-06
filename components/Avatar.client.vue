@@ -1,6 +1,6 @@
 <template>
-  <img v-if="account.pfp" :src="pfpURI" :alt="`Avatar of ${account.display}`" />
-  <DefaultOpepenAvatar v-else :address="address" :size="size" />
+  <img v-if="account?.pfp" :src="pfpURI" :alt="`Avatar of ${account.display}`" />
+  <DefaultOpepenAvatar v-else-if="account?.address" :address="account.address" :size="size" />
 </template>
 
 <script setup>
