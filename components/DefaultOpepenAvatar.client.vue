@@ -28,3 +28,10 @@ const setCanvas = () => {
 onMounted(() => setCanvas())
 watch(address, () => setCanvas())
 </script>
+
+<style lang="postcss" scoped>
+  img {
+    border-radius: 50%;
+    border: var(--border);
+  }
+</style>
