@@ -420,6 +420,7 @@ body {
 
 hr {
   border-top-width: 1px;
+  border-color: var(--gray-z-2);
 }
 
 /**

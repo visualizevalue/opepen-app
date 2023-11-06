@@ -1,5 +1,5 @@
 :root {
-  font-family: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-main);
   text-transform: uppercase;
   font-size: 16px;
   line-height: var(--line-height-base);

@@ -1,9 +1,26 @@
 <template>
   <div class="holder">
-    <PageHeader class="centered">
-      <Avatar :account="account" :size="64" class="avatar" />
-      <h1>{{ account.display }}</h1>
-    </PageHeader>
+    <header>
+      <div>
+        <div class="cover" :style="{ backgroundImage: `url(${coverImageURL})` }"></div>
+        <Avatar :account="account" :size="64" class="avatar" />
+        <div class="text">
+          <h1>{{ account.display }}</h1>
+          <NuxtLink :to="`https://etherscan.io/address/${account.address}`" target="_blank" class="meta-separated">
+            <span v-if="account.ens">{{ account.ens }}</span>
+            <span>{{ shortAddress(account.address) }}</span>
+          </NuxtLink>
+        </div>
+      </div>
+    </header>
+
+    <section v-if="account.quote || account.bio" class="bio" :class="{ 'col-2': account.quote && account.bio }">
+      <blockquote v-if="account.quote">
+        <span>{{ account.quote }}</span>
+        <cite>{{ account.display }}</cite>
+      </blockquote>
+      <p v-if="account.bio">{{ account.bio }}</p>
+    </section>
 
     <!-- TODO: Improve performance for long lists! -->
     <PaginatedContent
@@ -22,21 +39,22 @@
           />
         </div>
       </div>
-      <section v-else>
-        <p class="centered muted">No Opepen found for this account.</p>
-      </section>
     </PaginatedContent>
   </div>
 </template>
 
 <script setup>
 import { useMetaData } from '~/helpers/head'
+import { imageURI } from '~/helpers/images'
+import shortAddress from '~/helpers/short-address'
 
 const config = useRuntimeConfig()
 const route = useRoute()
 const url = `${config.public.opepenApi}/accounts/${route.params.id}`
 const tokensUrl = `${url}/opepen`
 const { data: account } = await useFetch(url)
+
+const coverImageURL = imageURI(account.value?.coverImage, 'lg')
 
 useMetaData({
   title: `${ account.value?.display } | Opepen`,
@@ -46,43 +64,154 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
-header h1 {
-  font-family: var(--font-family-opepen);
-}
 .holder {
   width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-8);
+}
+
+header {
+  position: relative;
+  container-type: inline-size;
+  margin-bottom: var(--szie-5);
+  margin-top: 5cqh;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4);
+    padding: var(--size-4);
+
+    width: 100cqw;
+    max-height: 33.33cqw;
+  }
+
+  .cover {
+    background-color: var(--gray-z-2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center center;
+    border: var(--border);
+    border-radius: var(--size-5);
+    border-top-left-radius: var(--size-1);
+    overflow: hidden;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background: linear-gradient(to right, var(--background), var(--transparent-background));
+      opacity: 0.9;
+    }
+  }
 
   .avatar {
-    margin: 0 auto var(--size-5);
     width: var(--size-9);
     height: var(--size-9);
     border-top-left-radius: var(--size-2);
+    margin-top: -5cqh;
+
+    @media (--md) {
+      width: calc(var(--size-9) * 2);
+      height: calc(var(--size-9) * 2);
+    }
   }
 
-  .opepens {
+  .text {
     display: flex;
-    justify-content: center;
-    container-type: inline-size;
-    flex-wrap: wrap;
-    max-width: var(--content-width);
-    width: 100%;
-    margin: 5vh auto;
-    gap: var(--size-4);
+    flex-direction: column;
+    gap: var(--size-2);
+  }
 
-    > div {
-      width: 100%;
-      max-width: min(50vw, calc(50vh / 1.5));
+  h1 {
+    font-family: var(--font-family-opepen);
+    font-size: var(--font-title);
+    height: 1em;
+    margin-top: var(--size-2);
+  }
+
+  .meta-separated {
+    color: var(--gray-z-7);
+  }
+}
+
+.bio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-5);
+
+  @media (--md) {
+    > * {
+      max-width: 50%;
     }
 
-    > div {
-      @container (width > 20rem) {
-        max-width: min(50cqw, calc(50cqh / 1.5));
+    &.col-2 {
+      > * {
+        width: 50%;
       }
-      @container (width > 30rem) {
-        max-width: min(33.33cqw, calc(33.33cqh / 1.5));
+    }
+  }
+
+  blockquote,
+  p {
+    white-space: pre-line;
+  }
+
+  blockquote {
+    span {
+      font-family: var(--font-family-display);
+      font-style: italic;
+      font-size: var(--font-xl);
+      line-height: var(--line-height-md);
+    }
+
+    cite {
+      display: block;
+      font-size: var(--font-base);
+      color: var(--gray-z-5);
+      margin-top: var(--size-3);
+
+      &:before {
+        content: "- ";
       }
+    }
+  }
+}
+
+.opepens {
+  display: flex;
+  justify-content: center;
+  container-type: inline-size;
+  flex-wrap: wrap;
+  max-width: var(--content-width);
+  width: 100%;
+  margin: 5vh auto;
+  gap: var(--size-4);
+
+  > div {
+    width: 100%;
+    max-width: min(50vw, calc(50vh / 1.5));
+  }
+
+  > div {
+    @container (width > 20rem) {
+      max-width: min(50cqw, calc(50cqh / 1.5));
+    }
+    @container (width > 30rem) {
+      max-width: min(33.33cqw, calc(33.33cqh / 1.5));
     }
   }
 }
