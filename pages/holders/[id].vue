@@ -71,6 +71,10 @@ useMetaData({
   display: flex;
   flex-direction: column;
   gap: var(--size-8);
+
+  @media (--md) {
+    gap: var(--size-9);
+  }
 }
 
 header {
