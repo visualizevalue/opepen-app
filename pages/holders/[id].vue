@@ -86,7 +86,10 @@ header {
     padding: var(--size-4);
 
     width: 100cqw;
-    max-height: 33.33cqw;
+
+    @media (--md) {
+      max-height: 33.33cqw;
+    }
   }
 
   .cover {
@@ -149,11 +152,19 @@ header {
 
 .bio {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--size-5);
+  gap: var(--size-8);
+  padding: var(--size-4);
+
+  > * {
+    width: 100%;
+  }
 
   @media (--md) {
+    flex-direction: row;
+
     > * {
       max-width: 50%;
     }
