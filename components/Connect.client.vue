@@ -5,13 +5,14 @@
     </span>
     <slot>Check-In</slot>
   </Button>
-  <Button :to="`/holders/${'address', address}`" v-else>
-    <Account :address="address" class="'con', isConnectednected" />
-    <template v-if="session">
-      <span class="separator"></span>
-      <NuxtLink to="/settings"><Icon type="settings" /></NuxtLink>
-    </template>
-  </Button>
+  <div>
+    <ButtonGroup>
+      <Button :to="`/holders/${'address', address}`">
+        <Account :address="address" class="'con', isConnectednected" />
+      </Button>
+      <Button to="/settings"><Icon type="settings" /></Button>
+    </ButtonGroup>
+  </div>
 
   <Modal
     :open="open"
@@ -48,10 +49,5 @@ watch(isConnected, async () => {
     width: var(--size-5);
     height: var(--size-5);
   }
-}
-
-.button {
-  /* TODO: Remove when button group rework done */
-  overflow: hidden;
 }
 </style>
