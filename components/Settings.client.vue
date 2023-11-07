@@ -1,24 +1,15 @@
 <template>
   <article>
     <h1>User Settings</h1>
+    <hr>
     <form @submit.prevent="save" v-if="session">
       <ImageUpload @stored="pfp = $event" @reset="pfp = null" name="PFP" :image="pfp" class="pfp" />
       <ImageUpload @stored="cover = $event" @reset="cover = null" name="Cover Photo" :image="cover" class="cover" />
+
       <label class="name">
         <span class="label">Name</span>
         <input v-model="name" placeholder="Your display name" />
       </label>
-      <label class="email">
-        <span class="label">E-Mail</span>
-        <input v-model="email" placeholder="Your Email" type="email" />
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" v-model="notificationNewSet">
-        <span>New Set Notification</span>
-      </label>
-
-      <hr>
-
       <label class="tagline">
         <span class="label">Tagline</span>
         <input v-model="tagline" placeholder="You in 1-5 words" />
@@ -32,13 +23,33 @@
         <Input v-model="bio" placeholder="A short bio" />
       </label>
 
-      <footer class="actions">
-        <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
-        <Button type="submit" :disabled="saving">
-          <span v-if="saving">Saving...</span>
-          <span v-else>Save</span>
-        </Button>
-      </footer>
+      <SaveSettings :lastSaved="lastSaved" :saving="saving" />
+
+      <hr>
+
+      <div>
+        <span class="label">Social Links</span>
+        <SortableList :items="socials" @update="socials = $event" class="socials">
+          <template v-slot="{ item, index }">
+            <input type="text" :value="item.url" @input="socials[index].url = $event.target.value">
+          </template>
+        </SortableList>
+      </div>
+
+      <SaveSettings :lastSaved="lastSaved" :saving="saving" />
+
+      <hr>
+
+      <label class="email">
+        <span class="label">E-Mail</span>
+        <input v-model="email" placeholder="Your Email" type="email" />
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationNewSet">
+        <span>New Set Notification</span>
+      </label>
+
+      <SaveSettings :lastSaved="lastSaved" :saving="saving" />
     </form>
   </article>
 </template>
@@ -47,7 +58,7 @@
 import { DateTime } from 'luxon'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
 import { useSignIn } from '~/helpers/siwe'
-import { formatTime } from '~/helpers/dates'
+import { validateURI } from '~/helpers/urls'
 
 const config = useRuntimeConfig()
 const router = useRouter()
@@ -70,7 +81,23 @@ const notificationNewSet = ref(settings.value?.notification_new_set)
 const tagline = ref(settings.value?.tagline || '')
 const quote = ref(settings.value?.quote || '')
 const bio = ref(settings.value?.bio || '')
-const socials = ref(settings.value?.socials || [])
+
+const withEmptySocialsItem = list => {
+  if (list[list.length - 1].url !== '') {
+    list.push({ id: list.length, url: '' })
+  }
+
+  return list
+}
+const sortableSocials = list => {
+  const array = Array.isArray(list)
+    ? list.map((url, id) => ({ id, url }))
+    : [{ id: 0, url: '' }]
+
+  return withEmptySocialsItem(array)
+}
+const socials = ref(sortableSocials(settings.value?.socials))
+watch(() => JSON.stringify(socials.value), () => socials.value = withEmptySocialsItem(socials.value))
 
 const updateData = (data = {}) => {
   pfp.value = data?.pfp
@@ -82,14 +109,13 @@ const updateData = (data = {}) => {
   tagline.value = data?.tagline
   quote.value = data?.quote
   bio.value = data?.bio
-  socials.value = data?.socials
+  socials.value = sortableSocials(data?.socials)
 }
 
 watch([status, settings, ens], () => updateData(settings.value))
 
 const saving = ref(false)
 const lastSaved = ref(null)
-const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
 
 const save = async () => {
   saving.value = true
@@ -106,7 +132,7 @@ const save = async () => {
         tagline: tagline.value,
         quote: quote.value,
         bio: bio.value,
-        socials: socials.value,
+        socials: socials.value?.map(s => s.url).filter(s => validateURI(s)),
       })
     })
     updateData(data)
@@ -126,7 +152,7 @@ const save = async () => {
     gap: var(--size-5)
   }
 
-  footer {
+  .actions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -157,5 +183,17 @@ const save = async () => {
     :deep(label) {
       height: 33cqw;
     }
+
+    + .name {
+      margin-top: var(--size-6);
+    }
+  }
+
+  hr {
+    margin: var(--size-7) 0;
+  }
+
+  .socials {
+    margin-top: var(--size-2);
   }
 </style>
