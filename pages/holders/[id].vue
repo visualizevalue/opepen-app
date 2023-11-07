@@ -5,10 +5,13 @@
         <div class="cover" :style="{ backgroundImage: `url(${coverImageURL})` }"></div>
         <Avatar :account="account" :size="64" class="avatar" />
         <div class="text">
-          <h1>{{ account.display }}</h1>
+          <h1>
+            <span>{{ account.display }}</span>
+            <small v-if="account.tagline">{{ account.tagline }}</small>
+          </h1>
           <NuxtLink :to="`https://etherscan.io/address/${account.address}`" target="_blank" class="meta-separated">
             <span v-if="account.ens">{{ account.ens }}</span>
-            <span>{{ shortAddress(account.address) }}</span>
+            <span>{{ shortAddress(account.address, 6) }}</span>
           </NuxtLink>
           <SocialLinks :links="mainSocials" class="socials" />
         </div>
@@ -154,14 +157,25 @@ header {
   .text {
     display: flex;
     flex-direction: column;
-    gap: var(--size-2);
+    gap: var(--size-1);
   }
 
   h1 {
-    font-family: var(--font-family-opepen);
-    font-size: var(--font-title);
-    height: 1em;
     margin-top: var(--size-2);
+    display: flex;
+    align-items: baseline;
+    gap: var(--size-4);
+    flex-wrap: wrap;
+
+    span {
+      font-family: var(--font-family-opepen);
+      font-size: var(--font-title);
+      height: 1em;
+    }
+
+    small {
+      font-size: var(--font-base);
+    }
   }
 
   .meta-separated {
