@@ -173,7 +173,7 @@ header {
       position: absolute;
       top: var(--size-4);
       right: var(--size-4);
-      max-width: 50%;
+      max-width: 70%;
       justify-content: flex-end;
     }
   }
