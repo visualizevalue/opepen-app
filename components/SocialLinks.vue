@@ -60,7 +60,7 @@ ul {
   gap: var(--size-2);
 
   @media (--md) {
-    gap: var(--size-4);
+    gap: var(--size-3);
   }
 
   .text {

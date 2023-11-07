@@ -10,12 +10,10 @@
             <span v-if="account.ens">{{ account.ens }}</span>
             <span>{{ shortAddress(account.address) }}</span>
           </NuxtLink>
-          <SocialLinks :links="mainSocials" class="socials" />
+          <SocialLinks :links="account.socials" class="socials" />
         </div>
       </div>
     </header>
-
-    <SocialLinks :links="otherSocials" class="socials" />
 
     <section v-if="account.quote || account.bio" class="bio" :class="{ 'col-2': account.quote && account.bio }">
       <blockquote v-if="account.quote">
@@ -58,9 +56,6 @@ const tokensUrl = `${url}/opepen`
 const { data: account } = await useFetch(url)
 
 const coverImageURL = imageURI(account.value?.coverImage, 'lg')
-
-const mainSocials = computed(() => account.value?.socials?.length > 3 ? account.value?.socials.slice(0, 3) : account.value?.socials)
-const otherSocials = computed(() => account.value?.socials?.length > 3 ? account.value?.socials.slice(3) : [])
 
 useMetaData({
   title: `${ account.value?.display } | Opepen`,
@@ -164,6 +159,8 @@ header {
       position: absolute;
       top: var(--size-4);
       right: var(--size-4);
+      max-width: 50%;
+      justify-content: flex-end;
     }
   }
 }
