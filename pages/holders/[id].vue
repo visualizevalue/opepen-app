@@ -211,6 +211,15 @@ header {
   }
 
   blockquote {
+    position: relative;
+
+    &:before {
+      content: '"';
+      position: absolute;
+      left: -0.7em;
+    }
+
+    &:before,
     span {
       font-family: var(--font-family-display);
       font-style: italic;
