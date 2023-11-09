@@ -28,6 +28,11 @@
       <p v-if="account.bio">{{ account.bio }}</p>
     </section>
 
+    <section v-if="account.richContentLinks?.length">
+      <SectionTitle>Known For</SectionTitle>
+      <RichContentLinks :links="account.richContentLinks" />
+    </section>
+
     <!-- TODO: Improve performance for long lists! -->
     <PaginatedContent
       :url="tokensUrl"
