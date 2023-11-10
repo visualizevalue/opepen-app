@@ -35,7 +35,9 @@
 
     <section v-if="account.createdSets?.length">
       <SectionTitle>Artist For Set<template v-if="account.createdSets.length > 1">s</template></SectionTitle>
-      <SetPreview v-for="set in account.createdSets" :set="set" />
+      <div class="created-sets">
+        <SetPreview v-for="set in account.createdSets" :set="set" />
+      </div>
     </section>
 
     <!-- TODO: Improve performance for long lists! -->
@@ -286,6 +288,15 @@ header {
     @container (width > 30rem) {
       max-width: min(33.33cqw, calc(33.33cqh / 1.5));
     }
+  }
+}
+
+.created-sets {
+  display: grid;
+  gap: var(--size-4);
+
+  > * {
+    width: 100%;
   }
 }
 </style>

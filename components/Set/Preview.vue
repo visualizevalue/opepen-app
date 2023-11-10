@@ -13,7 +13,7 @@
         <small>Set {{ pad(set.id, 3) }}</small>
         <span>{{ set.name }}</span>
       </h1>
-      <p>{{ set.description }}</p>
+      <p v-html="set.description"></p>
       <ul class="overview">
         <li>
           <Icon type="layers" stroke-width="2.25" />
@@ -82,6 +82,7 @@ const consensusDate = computed(() => set?.reveals_at && formatDate(set?.reveals_
       > span {
         text-transform: none;
         font-family: var(--font-family-opepen);
+        letter-spacing: 0.06em;
         font-size: var(--font-xl);
       }
 
