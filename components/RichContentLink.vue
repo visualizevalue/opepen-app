@@ -75,6 +75,7 @@ article {
     justify-content: flex-end;
     align-items: flex-start;
     min-height: var(--height);
+    height: 100%;
     padding: var(--size-4);
     background-size: cover;
     background-position: center center;
