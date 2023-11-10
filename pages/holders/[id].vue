@@ -28,7 +28,7 @@
       <p v-if="account.bio">{{ account.bio }}</p>
     </section>
 
-    <section v-if="account.richContentLinks?.length">
+    <section v-if="account.richContentLinks?.length" class="known-for">
       <SectionTitle>Known For</SectionTitle>
       <RichContentLinks :links="account.richContentLinks" />
     </section>
@@ -46,15 +46,18 @@
       query="limit=24"
       v-slot="{ items }"
     >
-      <div v-if="items.length" class="opepens">
-        <div
-          v-for="token in items"
-          :key="token.token_id"
-        >
-          <OpepenCard
-            :token="token"
-            :set="token.data?.edition || 40"
-          />
+      <div v-if="items.length">
+        <SectionTitle>Owned Opepen</SectionTitle>
+        <div class="opepens">
+          <div
+            v-for="token in items"
+            :key="token.token_id"
+          >
+            <OpepenCard
+              :token="token"
+              :set="token.data?.edition || 40"
+            />
+          </div>
         </div>
       </div>
     </PaginatedContent>
@@ -263,6 +266,12 @@ header {
         content: "- ";
       }
     }
+  }
+}
+
+.known-for {
+  h1 {
+    margin-bottom: var(--size-2);
   }
 }
 

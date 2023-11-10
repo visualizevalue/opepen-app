@@ -7,7 +7,7 @@ h1 {
   display: flex;
   align-items: center;
   font-size: var(--font-lg);
-  margin: var(--size-4) 0;
+  margin: var(--size-6) 0;
 
   .icon {
     color: var(--gray-z-6);
