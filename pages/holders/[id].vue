@@ -119,9 +119,10 @@ header {
   > div {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     gap: var(--size-4);
     padding: var(--size-4);
-
+    min-height: 23cqw;
     width: 100cqw;
 
     @media (--md) {
