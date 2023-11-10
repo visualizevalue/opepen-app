@@ -86,14 +86,14 @@ article {
     &:before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
       z-index: 1;
       background: linear-gradient(to top, var(--black) 10%, var(--transparent-black) 150%);
       opacity: 0.9;
-      border-radius: var(--size-4);
+      border-radius: calc(var(--size-4) - 0.1rem);
       border-top-left-radius: var(--size-1);
     }
 
