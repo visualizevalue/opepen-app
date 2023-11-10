@@ -33,10 +33,10 @@ const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
     width: 100vw;
     overflow: auto;
     left: calc(-1 * var(--padding-x));
-    padding: var(--size-4) var(--padding-x);
     -webkit-overflow-scrolling: auto;
 
     > div {
+      padding: var(--size-4) var(--padding-x);
       display: flex;
       gap: var(--size-4);
       width: max-content;
