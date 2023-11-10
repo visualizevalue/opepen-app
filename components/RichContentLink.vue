@@ -7,7 +7,13 @@
       <div class="text">
         <div>
           <h1>{{ link.title }}</h1>
-          <p v-if="link.description">{{ link.description }}</p>
+          <p v-if="link.description">
+            {{ description }}
+            <button v-if="false" @click.stop.prevent="shortenDescription = !shortenDescription">
+              <Icon v-if="shortenDescription" type="chevron-right" />
+              <Icon v-else type="chevron-up" />
+            </button>
+          </p>
         </div>
         <div>
           <Button :to="link.url" class="small">View</Button>
@@ -25,6 +31,11 @@ const { link } = defineProps({
 })
 
 const coverURL = computed(() => imageURI(link.cover, 'lg'))
+const shortenDescription = ref(link.description?.length >= 100)
+const description = computed(() => shortenDescription.value
+  ? link.description.substring(0, 80) + '...'
+  : link.description
+)
 </script>
 
 <style lang="postcss" scoped>
@@ -137,6 +148,18 @@ article {
       text-overflow: ellipsis; */
       font-size: var(--font-sm);
       line-height: 1em;
+
+      button {
+        display: inline;
+      }
+
+      .icon {
+        width: 1em;
+        height: 1em;
+        position: relative;
+        top: 0.2em;
+        color: var(--gray-500);
+      }
     }
   }
 
@@ -146,6 +169,11 @@ article {
     min-width: 0;
     border-radius: var(--size-1);
     padding-bottom: calc(var(--size-9) - 2px);
+  }
+
+  button {
+    position: relative;
+    z-index: 4;
   }
 }
 </style>
