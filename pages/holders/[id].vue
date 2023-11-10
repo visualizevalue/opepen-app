@@ -33,6 +33,11 @@
       <RichContentLinks :links="account.richContentLinks" />
     </section>
 
+    <section v-if="account.createdSets?.length">
+      <SectionTitle>Artist For Set<template v-if="account.createdSets.length > 1">s</template></SectionTitle>
+      <SetPreview v-for="set in account.createdSets" :set="set" />
+    </section>
+
     <!-- TODO: Improve performance for long lists! -->
     <PaginatedContent
       :url="tokensUrl"

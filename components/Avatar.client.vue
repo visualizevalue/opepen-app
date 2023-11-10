@@ -22,5 +22,6 @@ const pfpURI = computed(() => props.account?.pfp && imageURI(props.account.pfp, 
   :deep(img) {
     border-radius: 50%;
     border: var(--border);
+    background-color: var(--gray-z-1);
   }
 </style>

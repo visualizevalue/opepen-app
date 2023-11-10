@@ -51,12 +51,7 @@ import { DateTime } from 'luxon'
 import pad from '~/helpers/pad'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
-
-const TYPES = {
-  PRINT: 'Print',
-  NUMBERED_PRINT: 'Numbered Print',
-  DYNAMIC: 'Dynamic'
-}
+import { TYPES } from '~/helpers/sets'
 
 const props = defineProps({
   set: Object,

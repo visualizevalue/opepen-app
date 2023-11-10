@@ -13,12 +13,26 @@
         <small>Set {{ pad(set.id, 3) }}</small>
         <span>{{ set.name }}</span>
       </h1>
-      <div>
-        Revealing in <CountDown :until="SET_TIMESTAMPS[set.id]" class="inline" minimal />.
-      </div>
+      <p>{{ set.description }}</p>
+      <ul class="overview">
+        <li>
+          <Icon type="layers" stroke-width="2.25" />
+          <span>{{ TYPES[set.edition_type] }} Editions</span>
+        </li>
+        <li v-if="revealed || revealing">
+          <IconCheck />
+          <span>Consensus met on {{ consensusDate }}</span>
+        </li>
+        <li v-else>
+          <IconCheck />
+          <span v-if="published">Opt-In until {{ consensusDate }}</span>
+          <span v-else>Opt-In not opepen yet</span>
+        </li>
+      </ul>
+
       <div class="actions">
         <Button :to="`/sets/${pad(set.id, 3)}`">
-          <Icon type="feather" />
+          <Icon type="chevron-right" />
           <span>View Set</span>
         </Button>
       </div>
@@ -27,24 +41,25 @@
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
+import { formatDate } from '~/helpers/dates'
 import pad from '~/helpers/pad'
-import { SET_TIMESTAMPS } from '~/helpers/sets'
+import { TYPES } from '~/helpers/sets'
 
-const { id } = defineProps({
-  id: Number,
+const { set } = defineProps({
+  set: Object,
 })
 
-const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/opepen/sets/${id}`
-const { data: set } = await useFetch(url)
+const revealsAt = ref(DateTime.fromISO(set?.reveals_at).toUnixInteger())
+const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const revealed = computed(() => revealing.value && set?.reveal_block_number)
+const consensusDate = computed(() => set?.reveals_at && formatDate(set?.reveals_at))
 </script>
 
 <style lang="postcss" scoped>
   .set-preview {
     display: grid;
-    grid-template-columns: 40% auto;
     gap: var(--size-4);
-    row-gap: var(--size-7);
     max-width: var(--content-width);
     margin: 0 auto;
     padding: var(--size-2);
@@ -56,11 +71,18 @@ const { data: set } = await useFetch(url)
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
 
+    @media (--md) {
+      grid-template-columns: 40% auto;
+      row-gap: var(--size-7);
+    }
+
     h1 {
       margin-bottom: var(--size-2);
 
       > span {
         text-transform: none;
+        font-family: var(--font-family-opepen);
+        font-size: var(--font-xl);
       }
 
       small,
@@ -72,8 +94,37 @@ const { data: set } = await useFetch(url)
 
       small {
         line-height: 1;
+        margin-bottom: var(--size-4);
       }
     }
+
+    ul {
+      margin: auto 0;
+      padding: var(--size-5) 0;
+
+      li {
+        margin-bottom: var(--size-3);
+      }
+
+      li,
+      li > a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: var(--size-2);
+        transition: all var(--speed);
+        line-height: 1;
+
+        > svg, i, .vue-feathers {
+          width: var(--size-4);
+          height: var(--size-4);
+          margin: 0;
+          color: var(--gray-z-5);
+          transition: all var(--speed);
+        }
+      }
+    }
+
 
     header {
       display: flex;

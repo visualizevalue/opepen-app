@@ -10,11 +10,6 @@
       <!-- <small>“Every block of stone has a statue inside it and it is the task of the sculptor to discover it.” <span class="muted">- Michelangelo</span></small> -->
     </h1>
 
-    <!-- <aside v-if="viewPreviews" class="previews">
-      <SetPreview :id="1" />
-      <SetPreview :id="2" />
-    </aside> -->
-
     <section>
       <FeaturedGallery />
     </section>
