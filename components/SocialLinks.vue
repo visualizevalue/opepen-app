@@ -17,8 +17,8 @@ const { links } = defineProps({
 })
 
 const ICONS = {
-  'x.com': 'x',
-  'twitter.com': 'x',
+  'x.com': 'x.com',
+  'twitter.com': 'x.com',
   'superrare.com': 'superrare',
   'warpcast.com': 'farcaster',
 }

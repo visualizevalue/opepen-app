@@ -1,6 +1,6 @@
 <template>
   <article>
-    <NuxtLink :to="link.url" :title="link.title"><span>Open</span></NuxtLink>
+    <NuxtLink :to="link.url" :title="link.title" target="_blank"><span>Open</span></NuxtLink>
     <div :style="{ backgroundImage: `url(${coverURL})` }">
       <Image :image="link.logo" v-if="link.logo" class="logo" />
 

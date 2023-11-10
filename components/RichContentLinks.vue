@@ -2,16 +2,20 @@
   <div v-if="links" class="links">
     <div>
       <div>
-        <RichContentLink v-for="link of links" :link="link" />
+        <RichContentLink v-for="link of shownLinks" :link="link" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { validateURI } from '~/helpers/urls'
+
 const { links } = defineProps({
   links: Array,
 })
+
+const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
 </script>
 
 <style lang="postcss" scoped>

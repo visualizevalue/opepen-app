@@ -1,5 +1,5 @@
 export const validateURI = (url: string) => {
-  if (! url.length) return false
+  if (! url || ! url.length) return false
 
   let validated = url.trim()
 

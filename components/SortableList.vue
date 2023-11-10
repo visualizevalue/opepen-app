@@ -1,6 +1,6 @@
 <template>
   <div ref="el" class="list">
-    <div v-for="(item, index) in list" :key="item.id" class="item">
+    <div v-for="(item, index) in list" :key="item.id || item._id" class="item">
       <SortHandle />
 
       <slot :item="item" :index="index" />
@@ -54,6 +54,7 @@ useSortable(el, list, {
   :deep(.handle) {
     position: absolute;
     left: calc(-1 * (var(--size-2) + var(--size-0)));
+    z-index: 2;
   }
 }
 </style>
