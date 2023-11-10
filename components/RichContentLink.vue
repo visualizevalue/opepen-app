@@ -93,6 +93,8 @@ article {
       z-index: 1;
       background: linear-gradient(to top, var(--black) 10%, var(--transparent-black) 150%);
       opacity: 0.9;
+      border-radius: var(--size-4);
+      border-top-left-radius: var(--size-1);
     }
 
     .text {
