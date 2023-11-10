@@ -34,6 +34,12 @@ const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
     overflow: auto;
     left: calc(-1 * var(--padding-x));
     -webkit-overflow-scrolling: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     > div {
       padding: var(--size-4) var(--padding-x);
