@@ -10,7 +10,7 @@
           <p v-if="link.description">{{ link.description }}</p>
         </div>
         <div>
-          <Button :to="link.url" class="small">Read more</Button>
+          <Button :to="link.url" class="small">View</Button>
         </div>
       </div>
     </div>
