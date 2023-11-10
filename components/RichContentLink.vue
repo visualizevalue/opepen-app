@@ -91,7 +91,7 @@ article {
       right: 0;
       bottom: 0;
       z-index: 1;
-      background: linear-gradient(to top, var(--background) 10%, var(--transparent-background) 150%);
+      background: linear-gradient(to top, var(--black) 10%, var(--transparent-black) 150%);
       opacity: 0.9;
     }
 
@@ -99,6 +99,7 @@ article {
       display: grid;
       width: 100%;
       gap: var(--size-4);
+      color: var(--white) !important;
 
       > div {
         width: 100%;
