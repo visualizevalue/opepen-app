@@ -1,8 +1,11 @@
 <template>
   <div class="holder">
-    <header>
+    <header
+      :style="{
+        backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%), url(${coverImageURL})`
+      }"
+    >
       <div>
-        <div class="cover" :style="{ backgroundImage: `url(${coverImageURL})` }"></div>
         <Avatar :account="account" :size="64" class="avatar" />
         <div class="text">
           <h1>
@@ -115,6 +118,12 @@ header {
   position: relative;
   container-type: inline-size;
   margin-top: 5cqh;
+  background-color: var(--gray-z-2);
+  background-size: cover;
+  background-position: center center;
+  border: var(--border);
+  border-radius: var(--size-5);
+  border-top-left-radius: var(--size-1);
 
   > div {
     display: flex;
@@ -127,34 +136,6 @@ header {
 
     @media (--md) {
       max-height: 33.33cqw;
-    }
-  }
-
-  .cover {
-    background-color: var(--gray-z-2);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    background-size: cover;
-    background-position: center center;
-    border: var(--border);
-    border-radius: var(--size-5);
-    border-top-left-radius: var(--size-1);
-    overflow: hidden;
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -1;
-      background: linear-gradient(to right, var(--background), var(--transparent-background));
-      opacity: 0.9;
     }
   }
 

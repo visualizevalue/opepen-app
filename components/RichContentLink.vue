@@ -1,23 +1,27 @@
 <template>
-  <article>
+  <article
+    :style="
+      {
+        backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%), url(${coverURL})`
+      }
+    "
+    class="content-link"
+  >
     <NuxtLink :to="link.url" :title="link.title" target="_blank"><span>Open</span></NuxtLink>
-    <div :style="{ backgroundImage: `url(${coverURL})` }">
-      <Image :image="link.logo" v-if="link.logo" class="logo" />
-
-      <div class="text">
-        <div>
-          <h1>{{ link.title }}</h1>
-          <p v-if="link.description">
-            {{ description }}
-            <button v-if="false" @click.stop.prevent="shortenDescription = !shortenDescription">
-              <Icon v-if="shortenDescription" type="chevron-right" />
-              <Icon v-else type="chevron-up" />
-            </button>
-          </p>
-        </div>
-        <div>
-          <Button :to="link.url" class="small">View</Button>
-        </div>
+    <Image :image="link.logo" v-if="link.logo" class="logo" />
+    <div class="text">
+      <div>
+        <h1>{{ link.title }}</h1>
+        <p v-if="link.description">
+          {{ description }}
+          <button v-if="false" @click.stop.prevent="shortenDescription = !shortenDescription">
+            <Icon v-if="shortenDescription" type="chevron-right" />
+            <Icon v-else type="chevron-up" />
+          </button>
+        </p>
+      </div>
+      <div>
+        <Button :to="link.url" class="small">View</Button>
       </div>
     </div>
   </article>
@@ -39,7 +43,7 @@ const description = computed(() => shortenDescription.value
 </script>
 
 <style lang="postcss" scoped>
-article {
+article.content-link {
   container-type: inline-size;
   position: relative;
   width: 100%;
@@ -51,6 +55,14 @@ article {
   border: var(--border);
   overflow: hidden;
   background: var(--gray-z-1);
+  background-size: cover;
+  background-position: center center;
+  min-height: 15rem;
+  padding: var(--size-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--size-4);
 
   &:--highlight {
     transform: translateY(-0.5rem);
@@ -62,8 +74,6 @@ article {
   @media (--md) {
     min-width: 28rem;
   }
-
-  --height: min(67cqw, 15rem);
 
   > a {
     position: absolute;
@@ -78,102 +88,62 @@ article {
     }
   }
 
-  > div {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-4);
-    justify-content: flex-end;
-    align-items: flex-start;
-    min-height: var(--height);
-    height: 100%;
-    padding: var(--size-4);
-    background-size: cover;
-    background-position: center center;
-    z-index: 2;
+  .logo {
+    width: var(--size-9);
+    height: var(--size-9);
+    padding-bottom: 0;
+    border-radius: var(--size-1);
+  }
 
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      right: 0px;
-      bottom: 0px;
-      z-index: 1;
-      background: linear-gradient(to top, var(--black) 10%, var(--transparent-black) 150%);
-      opacity: 0.9;
+  .text {
+    width: 100%;
+    display: flex;
+    gap: var(--size-4);
+    color: var(--white) !important;
+
+    > div {
+      /* width: 100%; */
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-2);
     }
 
-    .text {
-      display: grid;
-      width: 100%;
-      gap: var(--size-4);
-      color: var(--white) !important;
+    @media (--md) {
+      justify-content: space-between;
+      align-items: flex-end;
 
       > div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: var(--size-2);
-
-      }
-
-      @media (--md) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        justify-content: space-between;
-        align-items: flex-end;
-
-        > div {
-          &:last-child {
-            align-items: flex-end;
-          }
+        &:last-child {
+          align-items: flex-end;
         }
-      }
-    }
-
-    > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    h1 {
-      font-size: var(--font-lg);
-      line-height: 1em;
-    }
-
-    p {
-      /* white-space: nowrap;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis; */
-      font-size: var(--font-sm);
-      line-height: 1em;
-
-      button {
-        display: inline;
-      }
-
-      .icon {
-        width: 1em;
-        height: 1em;
-        position: relative;
-        top: 0.2em;
-        color: var(--gray-500);
       }
     }
   }
 
-  .logo {
-    width: var(--size-9);
-    height: var(--size-9);
-    min-width: 0;
-    border-radius: var(--size-1);
-    padding-bottom: calc(var(--size-9) - 2px);
+  h1 {
+    font-size: var(--font-lg);
+    line-height: 1em;
+  }
+
+  p {
+    font-size: var(--font-sm);
+    line-height: 1em;
+
+    button {
+      display: inline;
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      position: relative;
+      top: 0.2em;
+      color: var(--gray-500);
+    }
   }
 
   button {
     position: relative;
-    z-index: 4;
   }
 }
 </style>
