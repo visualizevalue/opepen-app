@@ -17,7 +17,7 @@
 
     <div class="actions">
       <a :href="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`" target="_blank">
-        <IconsOpenSea />
+        <Icon type="opensea" />
       </a>
       <a :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`" target="_blank">
         <IconsEtherscan />
