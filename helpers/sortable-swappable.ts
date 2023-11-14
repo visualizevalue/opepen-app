@@ -1,6 +1,6 @@
 import { defaultDocument, tryOnMounted, tryOnScopeDispose, unrefElement } from '@vueuse/core'
 import type { ConfigurableDocument } from '@vueuse/core'
-import Sortable, { Swap } from 'sortablejs'
+import Sortable, { Swap } from 'sortablejs/modular/sortable.core.esm.js'
 import { isRef, nextTick } from 'vue-demi'
 
 export interface UseSortableReturn {
