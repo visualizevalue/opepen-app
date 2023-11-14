@@ -1,7 +1,11 @@
 <template>
 <PageHeader class="header">
   <h1>Assemble a Team</h1>
-  <Button @click="download" class="small"><Icon type="download" /> Download</Button>
+  <div>
+    <Button @click="clear" class="small"><Icon type="trash" /> Clear</Button>
+    <Button @click="randomFill" class="small"><Icon type="shuffle" /> Fill</Button>
+    <Button @click="download" class="small"><Icon type="download" /> Download</Button>
+  </div>
 </PageHeader>
 
 <article class="team">
@@ -26,6 +30,7 @@
 
 <script setup>
 import { useSortable } from '~/helpers/sortable-swappable'
+import { useFetchOpepen } from '~/helpers/opepen'
 
 const grid = ref(null)
 const rendered = ref(null)
@@ -74,6 +79,37 @@ useSortable(grid, items, {
     })
   },
 })
+
+const { fetchOpepen } = useFetchOpepen()
+const randomFill = async () => {
+  try {
+    const array = [...items.value]
+    const { data } = await fetchOpepen({ query: 'sort=random&limit=20' })
+
+    let placedIndex = 0
+    array.forEach((item, index) => {
+      if (item.disabled || item.opepen) return
+
+      array[index].opepen = data[placedIndex]
+      placedIndex ++
+    })
+
+    items.value = array
+    drawKey.value ++
+  } catch (e) {
+    //
+  }
+}
+
+const clear = () => {
+  const array = [...items.value]
+
+  array.forEach((_, idx) => {
+    array[idx].opepen = null
+  })
+
+  items.value = array
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -81,13 +117,19 @@ useSortable(grid, items, {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  > div {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--size-2);
+  }
 }
 
 article.team {
   position: relative;
   container-type: inline-size;
   width: 100%;
-  max-width: var(--content-width);
+  max-width: min(var(--content-width), calc(var(--100vh) - var(--navbar-height) - 6rem));
   margin: var(--size-5) auto;
   overflow: hidden;
   border-radius: var(--size-2);
