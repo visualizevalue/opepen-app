@@ -7,10 +7,10 @@
 <article class="team">
   <div class="grid" ref="grid">
     <TeamOpepen
-      v-for="(item) in items" :opepen="item.opepen" :disabled="item.disabled"
+      v-for="(item, index) in items" :opepen="item.opepen" :disabled="item.disabled"
       :key="item._id"
       :_id="item._id"
-      @click="openModal(item._id)"
+      @click="openModal(index)"
     />
   </div>
   <Icon type="opepen" class="opepen-check" />

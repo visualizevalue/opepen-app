@@ -54,9 +54,10 @@ const draw = (
     if (item.opepen?.image) {
       const img = new Image()
       img.crossOrigin = 'anonymous'
+      img.onload = () => {
+        ctx.drawImage(img, x, y, gridSize, gridSize)
+      }
       img.src = imageURI(item.opepen.image, 'sm')
-      ctx.drawImage(img, x, y, gridSize, gridSize)
-      img.onload = () => draw()
     } else {
       ctx.drawImage(xIcon.value, x + gridSize/2 - gridSize/8, y + gridSize/2 - gridSize/8, gridSize/4, gridSize/4)
     }
