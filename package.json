@@ -28,6 +28,7 @@
     "ethers5": "npm:ethers@^5.7.2",
     "events": "^3.3.0",
     "feather-icons": "4",
+    "html2canvas": "^1.4.1",
     "luxon": "^3.3.0",
     "opepen-standard": "^1.0.1",
     "siwe": "^2.1.4",
