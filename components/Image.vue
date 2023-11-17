@@ -1,7 +1,7 @@
 <template>
-  <article class="image" :class="{ loaded }" v-intersection-observer="loadImage">
+  <article class="image" :class="{ loaded: loaded || isSVG }" v-intersection-observer="loadImage">
     <div class="inner image">
-      <iframe v-if="uri && image.type === 'svg'" :src="uri" frameborder="0" sandbox="allow-scripts"></iframe>
+      <iframe v-if="uri && isSVG" :src="uri" frameborder="0" sandbox="allow-scripts"></iframe>
       <img
         v-else-if="uri"
         ref="imageEl"
@@ -24,6 +24,7 @@ const props = defineProps({
 
 const uri = ref('')
 const loaded = ref(false)
+const isSVG = computed(() => props.image?.type === 'svg')
 
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
