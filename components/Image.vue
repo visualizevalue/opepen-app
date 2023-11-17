@@ -1,8 +1,9 @@
 <template>
   <article class="image" :class="{ loaded }" v-intersection-observer="loadImage">
     <div class="inner image">
+      <iframe v-if="uri && image.type === 'svg'" :src="uri" frameborder="0" sandbox="allow-scripts"></iframe>
       <img
-        v-if="uri"
+        v-else-if="uri"
         ref="imageEl"
         :src="uri"
         @error="loadOriginal"
@@ -76,10 +77,15 @@ article.image {
   }
 
   .image {
-    img {
+    img,
+    iframe {
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
     }
   }
 
