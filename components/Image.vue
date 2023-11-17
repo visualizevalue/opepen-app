@@ -1,7 +1,7 @@
 <template>
   <article class="image" :class="{ loaded: loaded || isSVG }" v-intersection-observer="loadImage">
     <div class="inner image">
-      <iframe v-if="uri && isSVG" :src="uri" frameborder="0" sandbox="allow-scripts"></iframe>
+      <iframe v-if="hasEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <img
         v-else-if="uri"
         ref="imageEl"
@@ -9,7 +9,7 @@
         @error="loadOriginal"
         @load="imageLoaded"
       >
-      <OpepenSchematics v-else class="schematics" />
+      <OpepenSchematics v-else-if="! props.image" class="schematics" />
     </div>
   </article>
 </template>
@@ -21,11 +21,14 @@ import { imageURI } from '~/helpers/images'
 const props = defineProps({
   image: Object,
   version: String,
+  embed: String,
 })
 
 const uri = ref('')
 const loaded = ref(false)
 const isSVG = computed(() => props.image?.type === 'svg')
+const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value))
+const embedURI = computed(() => props.embed || uri.value)
 
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return

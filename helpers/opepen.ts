@@ -18,3 +18,7 @@ export const useFetchOpepen = () => {
     fetchOpepen
   }
 }
+
+export const useOpepenMetadata = async (id: string|number) => {
+  return $fetch(`https://metadata.opepen.art/${id}/metadata.json`)
+}

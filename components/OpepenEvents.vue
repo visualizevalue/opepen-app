@@ -32,10 +32,6 @@
         <Icon type="external-link" />
       </NuxtLink>
     </div>
-    <pre
-    >
-      {{ event }}
-    </pre>
   </PaginatedContent>
 </template>
 

@@ -12,7 +12,7 @@
     </PageHeader>
 
     <div class="image-wrapper">
-      <OpepenImage :token="opepen" version="lg" />
+      <OpepenImage :token="opepen" :embed="animationURI" version="lg" />
     </div>
 
     <div class="actions">
@@ -36,6 +36,7 @@
 import { useMetaData } from '~/helpers/head'
 import { imageURI } from '~/helpers/images'
 import downloadImage from '~/helpers/download-image'
+import { useOpepenMetadata } from '~/helpers/opepen'
 
 const route = useRoute()
 const router = useRouter()
@@ -46,6 +47,19 @@ if (parseInt(route.params.id) > 16_000) router.replace('/')
 
 const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/${route.params.id}`)
 if (! opepen.value) router.replace('/')
+
+const metadata = await useOpepenMetadata(route.params.id)
+const animationURI = computed(() => {
+  let uri = metadata.animation_url
+
+  if (! uri) return false
+
+  if (uri.startsWith('ipfs://')) {
+    uri = uri.replace('ipfs://', 'https://ipfs.vv.xyz/ipfs/')
+  }
+
+  return uri
+})
 
 const image = computed(() => imageURI(opepen.value.image))
 const download = async () => {
