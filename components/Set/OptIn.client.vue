@@ -21,7 +21,8 @@
       </template>
     </section>
     <section v-if="!revealed && !revealing && set.reveals_at">
-      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" />.</div>
+      <CountDown @complete="onComplete" :until="revealsAt" class="nowrap" />
+      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes on {{ revealDate }}.</div>
       <ClientOnly>
         <SetOptInFlow
           :set="set"
@@ -203,6 +204,11 @@ const startOptIn = () => {
           word-wrap: pre;
         }
       }
+    }
+
+    .countdown:not(.inline) {
+      font-size: var(--font-xl);
+      margin: var(--size-4) 0 var(--size-6);
     }
   }
 </style>
