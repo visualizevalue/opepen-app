@@ -2,7 +2,7 @@
   <section v-if="set" class="items-meta">
     <h1>
       <small>Set {{ pad(set.id) }}</small>
-      <span :title="set.name">{{ set.name || 'Unrevealed' }}</span>
+      <span :title="set.name">{{ name }}</span>
     </h1>
 
     <p v-if="set.description" v-html="set.description"></p>
@@ -51,11 +51,14 @@ import { DateTime } from 'luxon'
 import pad from '~/helpers/pad'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
-import { TYPES } from '~/helpers/sets'
+import { TYPES, useSets } from '~/helpers/sets'
 
 const props = defineProps({
   set: Object,
 })
+
+const { currentSet } = useSets()
+const name = computed(() => props.set.name || (props.set.id < currentSet.value?.id ? 'Reserved' : 'Unrevealed'))
 
 const published = computed(() => !!props.set.name)
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
