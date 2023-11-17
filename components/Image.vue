@@ -9,6 +9,7 @@
         @error="loadOriginal"
         @load="imageLoaded"
       >
+      <OpepenSchematics v-else class="schematics" />
     </div>
   </article>
 </template>
@@ -95,6 +96,10 @@ article.image {
     width: 100%;
     opacity: 0;
     transition: all var(--speed);
+  }
+
+  .schematics {
+    opacity: 0.15;
   }
 
   &.loaded {
