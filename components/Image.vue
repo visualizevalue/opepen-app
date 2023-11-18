@@ -85,12 +85,14 @@ article.image {
     img,
     iframe {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
       width: 100%;
       height: 100%;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
     }
   }
 

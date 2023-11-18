@@ -17,6 +17,14 @@
         <span v-if="published">{{ TYPES[set.edition_type] }} Editions</span>
         <span v-else>Unknown Editions</span>
       </li>
+      <li v-if="set.dynamicPreviewImage">
+        <Icon type="image" stroke-width="2.25" />
+        <a href="#" @click.stop.prevent="openDynamicPreview = true">Preview Dynamic Colorway</a>
+
+        <Modal :open="openDynamicPreview" @close="openDynamicPreview = false" modal-classes="wide">
+          <img :src="imageURI(set.dynamicPreviewImage, 'lg')" />
+        </Modal>
+      </li>
       <li>
         <IconOpepen />
         <span>{{ formatNumber(set?.submission_stats.opepens.total) }} Opt-Ins</span>
@@ -52,6 +60,7 @@ import pad from '~/helpers/pad'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
 import { TYPES, useSets } from '~/helpers/sets'
+import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
   set: Object,
@@ -69,6 +78,8 @@ const consensusDate = computed(() => props.set?.reveals_at && formatDate(props.s
 const onComplete = () => {
   revealing.value = true
 }
+
+const openDynamicPreview = ref(false)
 </script>
 
 <style lang="postcss" scoped>
