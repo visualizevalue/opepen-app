@@ -145,7 +145,6 @@ const isSigned = ref(!!data.artist_signature)
 const isPublishedToSet = computed(() => !!data.set_id)
 const toSign = computed(() =>
   isCreator.value &&
-  data.set_id &&
   isPublishedToSet.value &&
   !isSigned.value
 )

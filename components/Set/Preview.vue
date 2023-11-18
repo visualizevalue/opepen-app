@@ -24,8 +24,8 @@
           <span>Consensus met on {{ consensusDate }}</span>
         </li>
         <li v-else>
-          <IconCheck />
-          <span v-if="published">Opt-In until {{ consensusDate }}</span>
+          <IconCheck class="check" :class="{ published }" />
+          <span v-if="published">Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)</span>
           <span v-else>Opt-In not opepen yet</span>
         </li>
       </ul>
@@ -54,6 +54,11 @@ const revealsAt = ref(DateTime.fromISO(set?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && set?.reveal_block_number)
 const consensusDate = computed(() => set?.reveals_at && formatDate(set?.reveals_at))
+const published = computed(() => revealsAt.value > 0)
+const onComplete = () => {
+  // FIXME: Refactor repetition
+  revealing.value = true
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -122,6 +127,10 @@ const consensusDate = computed(() => set?.reveals_at && formatDate(set?.reveals_
           margin: 0;
           color: var(--gray-z-5);
           transition: all var(--speed);
+        }
+
+        > .check.published {
+          color: var(--success);
         }
       }
     }
