@@ -1,5 +1,5 @@
 <template>
-  <Button :disabled="publishing" @click="open = true">
+  <Button :disabled="publishing" @click="open = true" type="button">
     <span v-if="publishing">Publishing...</span>
     <span v-else>Publish</span>
   </Button>

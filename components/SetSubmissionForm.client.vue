@@ -86,6 +86,7 @@
         <span v-else>Save</span>
       </Button>
 
+      <NotifySetPublicationForm v-if="isAdmin && data.set_id" :submission="data" />
       <PublishSetSubmissionForm v-if="isAdmin" :submission="data" />
     </div>
   </form>
