@@ -50,7 +50,7 @@ if (! opepen.value) router.replace('/')
 
 const metadata = await useOpepenMetadata(route.params.id)
 const animationURI = computed(() => {
-  let uri = metadata.animation_url
+  let uri = metadata?.animation_url
 
   if (! uri) return false
 
