@@ -14,21 +14,9 @@ const account = reactive({
   status: null,
   profile: null,
 })
+const address = computed(() => account.address)
 let unwatchAccount;
-
-export const useProfile = (address) => {
-  const config = useRuntimeConfig()
-  const profile = ref(null)
-
-  const fetchProfile = async (a) => {
-    if (a === profile.address) return
-    profile.value = await $fetch(`${config.public.opepenApi}/accounts/${a}`)
-  }
-  onMounted(() => fetchProfile(address.value))
-  watch(address, () => fetchProfile(address.value))
-
-  return profile
-}
+let unwatchAccountApi;
 
 export const useAccount = () => {
   const config = useRuntimeConfig()
@@ -45,11 +33,28 @@ export const useAccount = () => {
     })
   }
 
-  watch(() => account.address, async () => {
-    account.profile = await $fetch(`${config.public.opepenApi}/accounts/${account.address}`)
-  })
+  if (! unwatchAccountApi) {
+    unwatchAccountApi = watch(address, async () => {
+      account.profile = await $fetch(`${config.public.opepenApi}/accounts/${account.address}`)
+    })
+  }
+
 
   return toRefs(account)
+}
+
+export const useProfile = (address) => {
+  const config = useRuntimeConfig()
+  const profile = ref(null)
+
+  const fetchProfile = async (a) => {
+    if (a === profile.address) return
+    profile.value = await $fetch(`${config.public.opepenApi}/accounts/${a}`)
+  }
+  onMounted(() => fetchProfile(address.value))
+  watch(address, () => fetchProfile(address.value))
+
+  return profile
 }
 
 export const useEnsName = (address) => {

@@ -20,16 +20,21 @@
 <script setup>
 import { delay } from '~/helpers/time'
 import { useSignIn } from '~/helpers/siwe'
+import { useAccount } from '~/helpers/use-wagmi'
 
 const CLOSE_KEY = 'opepen:set_email_notification_alert_close'
 const forceClose = ref(localStorage.getItem(CLOSE_KEY) === 'true')
 
 const config = useRuntimeConfig()
 
+const { isConnected } = useAccount()
 const { session } = useSignIn()
 
 const url = `${config.public.opepenApi}/accounts/settings`
-const { data: settings, status, refresh } = await useFetch(url, { credentials: 'include' })
+const { data: settings, status, refresh, execute } = await useFetch(url, { credentials: 'include', immediate: false })
+
+onMounted(() => { if (isConnected.value) execute() })
+watch(isConnected, () => refresh())
 
 const settingsLoaded = computed(() => !! settings.value)
 const hasSavedEmail = computed(() => !! settings.value?.email)
