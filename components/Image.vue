@@ -22,12 +22,13 @@ const props = defineProps({
   image: Object,
   version: String,
   embed: String,
+  autoEmbed: Boolean,
 })
 
 const uri = ref('')
 const loaded = ref(false)
 const isSVG = computed(() => props.image?.type === 'svg')
-const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value))
+const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && props.autoEmbed))
 const embedURI = computed(() => props.embed || uri.value)
 
 const loadImage = ([{ isIntersecting }]) => {
