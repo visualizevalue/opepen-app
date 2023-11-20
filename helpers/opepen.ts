@@ -21,7 +21,7 @@ export const useFetchOpepen = () => {
 
 export const useOpepenMetadata = async (id: string|number) => {
   try {
-    return $fetch(`https://metadata.opepen.art/${id}/metadata.json`, { mode: 'cors' })
+    return await $fetch(`https://metadata.opepen.art/${id}/metadata.json`, { mode: 'no-cors' })
   } catch (e) {
     console.error(e)
     return null
