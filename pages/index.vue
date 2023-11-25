@@ -6,7 +6,7 @@
 
     <h1 class="title">
       <span>An Open Canvas</span>
-      <small>Art that makes artists</small>
+      <small>these artists may or may not be notable</small>
       <!-- <small>“Every block of stone has a statue inside it and it is the task of the sculptor to discover it.” <span class="muted">- Michelangelo</span></small> -->
     </h1>
 
