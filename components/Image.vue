@@ -1,11 +1,11 @@
 <template>
   <article class="image" :class="{ loaded: loaded || isSVG }" v-intersection-observer="loadImage">
     <div class="inner image">
-      <iframe v-if="hasEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
+      <iframe v-if="hasEmbed && !hasImageEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <img
-        v-else-if="uri"
+        v-else-if="uri || hasImageEmbed"
         ref="imageEl"
-        :src="uri"
+        :src="hasImageEmbed ? embed : uri"
         @error="loadOriginal"
         @load="imageLoaded"
       >
@@ -29,6 +29,7 @@ const uri = ref('')
 const loaded = ref(false)
 const isSVG = computed(() => props.image?.type === 'svg')
 const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && props.autoEmbed))
+const hasImageEmbed = computed(() => props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
 
 const loadImage = ([{ isIntersecting }]) => {
