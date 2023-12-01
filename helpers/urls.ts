@@ -1,3 +1,5 @@
+export const normalizeURI = (url: string) => url.replace('ipfs://', 'https://ipfs.vv.xyz/ipfs/')
+
 export const validateURI = (url: string) => {
   if (! url || ! url.length) return false
 

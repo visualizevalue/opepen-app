@@ -37,6 +37,7 @@ import { useMetaData } from '~/helpers/head'
 import { imageURI } from '~/helpers/images'
 import downloadImage from '~/helpers/download-image'
 import { useOpepenMetadata } from '~/helpers/opepen'
+import { normalizeURI } from '~/helpers/urls'
 
 const route = useRoute()
 const router = useRouter()
@@ -50,20 +51,18 @@ if (! opepen.value) router.replace('/')
 
 const metadata = await useOpepenMetadata(route.params.id)
 const animationURI = computed(() => {
-  let uri = metadata?.animation_url
+  if (! metadata?.animation_url) return
 
-  if (! uri) return false
-
-  if (uri.startsWith('ipfs://')) {
-    uri = uri.replace('ipfs://', 'https://ipfs.vv.xyz/ipfs/')
-  }
-
-  return uri
+  return normalizeURI(metadata.animation_url)
 })
 
 const image = computed(() => imageURI(opepen.value.image))
 const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.value.image?.type)
+
+  if (metadata?.download_url) {
+    return open(normalizeURI(metadata.download_url), '_blank')
+  }
 
   return isStatic
     ? downloadImage(image.value, { property: `Opepen ${opepen.value.token_id}` })
