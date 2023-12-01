@@ -30,7 +30,7 @@ const loaded = ref(false)
 const isSVG = computed(() => props.image?.type === 'svg')
 const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && props.autoEmbed))
 // FIXME: Refactor this...
-const hasImageEmbed = computed(() => props.embed?.endsWith('.gif'))
+const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
 
 const loadImage = ([{ isIntersecting }]) => {
