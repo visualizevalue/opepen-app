@@ -7,7 +7,7 @@ import {
   InjectedConnector,
 } from '@wagmi/core'
 import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
-// import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
@@ -34,12 +34,12 @@ export default defineNuxtPlugin(() => {
     connectors: [
       new InjectedConnector({ chains }),
       new MetaMaskConnector({ chains }),
-      // new WalletConnectConnector({
-      //   chains,
-      //   options: {
-      //     projectId: config.public.walletConnectProjectId,
-      //   },
-      // }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          projectId: config.public.walletConnectProjectId,
+        },
+      }),
     ],
     publicClient,
     webSocketPublicClient,
