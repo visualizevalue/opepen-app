@@ -16,13 +16,15 @@
       <small v-if="isConnecting && pendingConnector?.id === ic.id" class="tiny upper">connecting</small>
     </button>
 
+    <!-- @click="connectWallet(wc)" -->
     <button
-      @click="connectWallet(wc)"
       class="base"
+      disabled
     >
       <img src="/wc.svg" alt="WalletConnect" />
-      {{ wc.name }}
-      {{ isConnecting && pendingConnector?.id === wc.id ? ' (connecting)' : '' }}
+      Wallet Connect <br>(Disabled due to Ledger Exploit)
+      <!-- {{ wc.name }} -->
+      <!-- {{ isConnecting && pendingConnector?.id === wc.id ? ' (connecting)' : '' }} -->
     </button>
 
     <aside v-if="error" class="small">
@@ -34,7 +36,7 @@
 <script setup>
 import { connect, InjectedConnector } from '@wagmi/core'
 import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
-import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+// import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
@@ -43,15 +45,15 @@ const { isConnecting } = useAccount()
 
 const ic = new InjectedConnector()
 const mm = new MetaMaskConnector()
-const wc = new WalletConnectConnector({
-  options: {
-    projectId: config.public.walletConnectProjectId,
-    qrcode: true,
-    rpc: {
-      1: config.public.rpc,
-    },
-  },
-})
+// const wc = new WalletConnectConnector({
+//   options: {
+//     projectId: config.public.walletConnectProjectId,
+//     qrcode: true,
+//     rpc: {
+//       1: config.public.rpc,
+//     },
+//   },
+// })
 
 const pendingConnector = ref(null)
 const error = ref(null)
