@@ -1,0 +1,70 @@
+<template>
+  <ButtonGroup v-if="set.creator">
+    <Button :to="`/holders/${set.creator}`">
+      <ApiAccount
+        :account="set.creatorAccount"
+        :hide-address="false"
+      />
+    </Button>
+    <Button
+      v-if="set.artist_signature"
+      :to="`https://etherscan.io/tx/${set.artist_signature.tx}`"
+      target="_blank"
+      class="signature"
+    >
+      <Icon type="feather" />
+      <span>
+        <span>Set Signature</span>
+        <small>{{ set.artist_signature.tx }}</small>
+      </span>
+    </Button>
+  </ButtonGroup>
+</template>
+
+<script setup>
+const { set } = defineProps({
+  set: Object,
+})
+</script>
+
+<style lang="postcss" scoped>
+.button {
+  height: calc(var(--size-8) - var(--size-1)*1.5);
+
+  :deep(.avatar img) {
+    height: calc(var(--size-7) + var(--size-2));
+    width: calc(var(--size-7) + var(--size-2));
+  }
+
+  &:first-child {
+    padding-left: 0;
+  }
+}
+
+.signature {
+  justify-content: flex-start;
+  max-width: 12rem;
+
+  i {
+    margin-right: var(--size-1);
+  }
+
+  span {
+    width: 100%;
+
+    &:has(small) {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    span, small {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+</style>

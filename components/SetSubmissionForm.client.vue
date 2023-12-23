@@ -1,6 +1,13 @@
 <template>
   <form @submit.stop.prevent="store">
-    <Alert v-if="isPublishedToSet" class="span-2 inline">
+    <Alert v-if="toSign" class="span-2 inline">
+      <p>Artist Signature: Thank you so much for your contribution to Opepen. Please sign this set.</p>
+
+      <div class="actions">
+        <SignSet :data="data" @signed="markSigned" />
+      </div>
+    </Alert>
+    <Alert v-else-if="isPublishedToSet" class="span-2 inline">
       <p>Note: This submission is published to <NuxtLink :to="`/sets/${data.set_id}`">set {{ pad(data.set_id, 3) }}</NuxtLink>. Changes here won't be immediately published, and manually reviewed by the VV team.</p>
 
       <div class="actions">
@@ -79,6 +86,7 @@
         <span v-else>Save</span>
       </Button>
 
+      <NotifySetPublicationForm v-if="isAdmin && data.set_id" :submission="data" />
       <PublishSetSubmissionForm v-if="isAdmin" :submission="data" />
     </div>
   </form>
@@ -94,7 +102,6 @@ import pad from '~/helpers/pad'
 const config = useRuntimeConfig()
 const router = useRouter()
 const route = useRoute()
-const isAdmin = computed(() => route.path.includes('admin'))
 
 const { data } = defineProps({
   data: {
@@ -115,6 +122,9 @@ watch(session, async (_, previous) => {
   }
 })
 
+const isAdmin = computed(() => route.path.includes('admin'))
+const isCreator = computed(() => address.value?.toLowerCase() === data.creator)
+
 const name = ref(data.name || '')
 const image1 = ref(data.edition1Image || null)
 const image4 = ref(data.edition4Image || null)
@@ -132,7 +142,17 @@ const description = ref(data.description || '')
 const artist = ref(data.artist)
 const type = ref(data.edition_type)
 const isDynamic = computed(() => type.value !== 'PRINT')
+const isSigned = ref(!!data.artist_signature)
 const isPublishedToSet = computed(() => !!data.set_id)
+const toSign = computed(() =>
+  isCreator.value &&
+  isPublishedToSet.value &&
+  !isSigned.value
+)
+const markSigned = (set) => {
+  isSigned.value = !!set.artist_signature
+  emit('updated', set)
+}
 watch(ens, () => {
   if (data.creator !== address.value.toLowerCase()) return
 
@@ -244,7 +264,7 @@ form {
     }
   }
 
-  .actions {
+  > .actions {
     display: flex;
     justify-content: flex-end;
     align-items: baseline;

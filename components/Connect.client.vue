@@ -5,9 +5,14 @@
     </span>
     <slot>Check-In</slot>
   </Button>
-  <Button :to="`/holders/${'address', address}`" v-else>
-    <Account :address="address" class="'con', isConnectednected" />
-  </Button>
+  <div v-else>
+    <ButtonGroup>
+      <Button :to="`/holders/${'address', address}`">
+        <Account :address="address" />
+      </Button>
+      <Button to="/settings"><Icon type="settings" /></Button>
+    </ButtonGroup>
+  </div>
 
   <Modal
     :open="open"

@@ -1,14 +1,12 @@
 <template>
   <span :class="{ avatar: !hideAvatar }">
-    <img v-if="!hideAvatar && avatar" :src="avatar" />
-    <DefaultOpepenAvatar v-else-if="!hideAvatar" :address="address" />
-    <span v-if="ens">{{ ens }}</span>
-    <span v-else>{{ display }}</span>
+    <Avatar v-if="! hideAvatar" :account="account" />
+    <span>{{ account?.display || shortAddress(address) }}</span>
   </span>
 </template>
 
 <script setup>
-import { useEnsName, useEnsAvatar } from '~/helpers/use-wagmi'
+import { useProfile } from '~/helpers/use-wagmi'
 import shortAddress from '~~/helpers/short-address'
 
 const props = defineProps({
@@ -17,14 +15,7 @@ const props = defineProps({
 })
 
 const address = computed(() => props.address)
-const ens = useEnsName(address)
-const avatar = useEnsAvatar(ens)
-
-const display = computed(() => {
-  if (ens.value) return ens.value
-
-  return shortAddress(props.address)
-})
+const account = useProfile(address)
 </script>
 
 <style lang="postcss" scoped>

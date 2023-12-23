@@ -33,6 +33,7 @@ const attributes = computed(() => {
     {
       trait_type: 'Artist',
       value: set.artist,
+      link: `/holders/${set.creator}`
     },
     {
       trait_type: 'Release',

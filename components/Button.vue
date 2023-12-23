@@ -23,9 +23,10 @@ button {
   padding: calc(var(--size-0) + var(--size-2)) var(--size-4);
   transition: background var(--speed), color var(--speed);
   user-select: none;
-  border-radius: var(--size-4);
+  border-radius: var(--size-5);
   border-top-left-radius: var(--size-1);
   border: var(--border);
+  position: relative;
 
   &:--highlight,
   &.active {
@@ -93,9 +94,11 @@ button {
 
   .vue-feather,
   .icon {
+    overflow: visible;
     color: var(--gray-z-5);
     width: var(--size-4);
     height: var(--size-4);
+    transition: all var(--speed);
 
     &:first-child {
       margin-left: calc(-1 * var(--size-1));
@@ -119,6 +122,12 @@ button {
 
   &.muted {
     color: var(--gray-z-6);
+  }
+
+  > span {
+    > small {
+      color: var(--gray-z-6);
+    }
   }
 }
 </style>

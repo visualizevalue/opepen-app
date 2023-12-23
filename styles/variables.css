@@ -18,6 +18,10 @@
   --semi-light: rgba(255, 255, 255, 0.8);
   --semi-dark: rgba(0, 0, 0, 0.8);
   --semi-shade: rgba(0, 0, 0, 0.33);
+  --opaque-white: rgba(255, 255, 255, 0.9);
+  --opaque-black: rgba(0, 0, 0, 0.9);
+  --transparent-white: rgba(255, 255, 255, 0);
+  --transparent-black: rgba(0, 0, 0, 0);
 
   /* COLORS */
   --red: #EF4444;
@@ -44,11 +48,15 @@
   --size-9: 4.5rem;
 
   /* FONTS */
+  --font-family-main: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-opepen: 'OpepenBlockSolid', 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-sm: var(--size-3);
   --font-xs: calc(var(--size-2) + var(--size-1));
+  --font-lg: min(calc(var(--size-3) + 1vw * 2), var(--size-5));
+  --font-xl: min(calc(var(--size-4) + 1vw * 2), var(--size-6));
   --font-title: min(calc(var(--size-4) + 1vw * 2), var(--size-7));
-  --font-display: min(calc(var(--size-6) + 1vw * 2), var(--size-9));
+  --font-display: min(calc(var(--size-7) + 1vw * 2), var(--size-9));
   --font-weight-medium: 500;
   --font-weight-bold: 700;
   --letter-spacing-sm: -0.025em;
@@ -69,6 +77,7 @@
   --page-height: calc(var(--100vh) - var(--navbar-height));
   --content-width-wide: 90rem;
   --content-width: 60rem;
+  --content-width-sm: 35rem;
 
   /* BORDERS */
   --border: 1px solid var(--gray-z-4);
@@ -85,6 +94,7 @@
 /* DARK */
 :root {
   --background: var(--black);
+  --transparent-background: var(--transparent-black);
   --gray-z-0: var(--gray-000);
   --gray-z-1: var(--gray-100);
   --gray-z-2: var(--gray-200);
@@ -105,6 +115,7 @@
 /* LIGHT */
 .lightmode {
   --background: var(--white);
+  --transparent-background: var(--transparent-white);
   --gray-z-0: var(--gray-999);
   --gray-z-1: var(--gray-900);
   --gray-z-2: var(--gray-800);

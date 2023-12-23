@@ -1,13 +1,15 @@
 <template>
-  <article class="image" :class="{ loaded }" v-intersection-observer="loadImage">
+  <article class="image" :class="{ loaded: loaded || isSVG }" v-intersection-observer="loadImage">
     <div class="inner image">
+      <iframe v-if="hasEmbed && !hasImageEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <img
-        v-if="uri"
+        v-else-if="uri || hasImageEmbed"
         ref="imageEl"
-        :src="uri"
+        :src="hasImageEmbed ? embed : uri"
         @error="loadOriginal"
         @load="imageLoaded"
       >
+      <OpepenSchematics v-else-if="! props.image" class="schematics" />
     </div>
   </article>
 </template>
@@ -19,10 +21,17 @@ import { imageURI } from '~/helpers/images'
 const props = defineProps({
   image: Object,
   version: String,
+  embed: String,
+  autoEmbed: Boolean,
 })
 
 const uri = ref('')
 const loaded = ref(false)
+const isSVG = computed(() => props.image?.type === 'svg')
+const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && props.autoEmbed))
+// FIXME: Refactor this...
+const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
+const embedURI = computed(() => props.embed || uri.value)
 
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
@@ -76,10 +85,17 @@ article.image {
   }
 
   .image {
-    img {
+    img,
+    iframe {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      width: 100%;
+      height: 100%;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
     }
   }
 
@@ -90,9 +106,13 @@ article.image {
     transition: all var(--speed);
   }
 
+  .schematics {
+    opacity: 0.15;
+  }
+
   &.loaded {
     img {
-      transform: scale(1.025);
+      transform: scale(1);
       opacity: 1;
     }
   }

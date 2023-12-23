@@ -10,6 +10,12 @@ type OpepenSet = {
   reveals_at: string
 }
 
+export const TYPES = {
+  PRINT: 'Print',
+  NUMBERED_PRINT: 'Numbered Print',
+  DYNAMIC: 'Dynamic'
+}
+
 const sets: Ref<OpepenSet[]> = ref([])
 const loaded = ref(false)
 const currentSet: any = computed(() => {

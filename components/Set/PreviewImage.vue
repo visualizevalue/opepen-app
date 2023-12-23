@@ -1,6 +1,13 @@
 <template>
   <div class="preview" :class="{ square: ! set.rounded_preview }">
-    <Image @click="zoomed = true" :image="image" version="sm" class="appear" :class="{ square: ! set.rounded_preview }" />
+    <Image
+      @click="zoomed = true"
+      :image="image"
+      version="sm"
+      class="appear"
+      :class="{ square: ! set.rounded_preview }"
+      auto-embed
+    />
 
     <div class="meta">
       <h1>{{ name }}</h1>

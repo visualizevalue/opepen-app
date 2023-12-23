@@ -65,6 +65,8 @@ export const useSignIn = () => {
   const signIn = async () => {
     loading.value = true
 
+    if (! address.value) return
+
     // Check if we have a valid session
     try {
       await fetchMe()

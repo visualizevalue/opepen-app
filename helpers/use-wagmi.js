@@ -12,10 +12,15 @@ const account = reactive({
   isDisconnected: false,
   isReconnecting: false,
   status: null,
+  profile: null,
 })
+const address = computed(() => account.address)
 let unwatchAccount;
+let unwatchAccountApi;
 
 export const useAccount = () => {
+  const config = useRuntimeConfig()
+
   if (! unwatchAccount) {
     unwatchAccount = watchAccount(updatedAccount => {
       account.address = updatedAccount.address
@@ -28,7 +33,28 @@ export const useAccount = () => {
     })
   }
 
+  if (! unwatchAccountApi) {
+    unwatchAccountApi = watch(address, async () => {
+      account.profile = await $fetch(`${config.public.opepenApi}/accounts/${account.address}`)
+    })
+  }
+
+
   return toRefs(account)
+}
+
+export const useProfile = (address) => {
+  const config = useRuntimeConfig()
+  const profile = ref(null)
+
+  const fetchProfile = async (a) => {
+    if (a === profile.address) return
+    profile.value = await $fetch(`${config.public.opepenApi}/accounts/${a}`)
+  }
+  onMounted(() => fetchProfile(address.value))
+  watch(address, () => fetchProfile(address.value))
+
+  return profile
 }
 
 export const useEnsName = (address) => {

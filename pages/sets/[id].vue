@@ -2,15 +2,20 @@
   <div class="set">
     <header>
       <SetPagination :set="set" />
+      <EmailNotificationAlert />
       <SetReplacementNote :set="set" :replaced-submission="set.replacedSubmission" class="note" />
     </header>
+
     <SetPreviewImages :set="set" class="items" />
-    <SetAbout :set="set" />
-    <SetStats :set="set" class="stats" />
     <SetItemsMeta :set="set" />
-    <SetStatsMeta :set="set" />
+
+    <!-- <SetAbout :set="set" /> -->
+    <SetStats :set="set" class="stats" />
     <SetOptIn :set="set" @update="refresh" />
+    <SetStatsMeta :set="set" />
+
     <SetOpepen :set="set" />
+
     <SetOptInComments :set="set" />
   </div>
 </template>
@@ -49,10 +54,10 @@ useMetaData({
                 "header"
                 "items"
                 "items-meta"
-                "about"
-                "opt-in"
+                /* "about" */
                 "details"
                 "details-meta"
+                "opt-in"
                 "opepen"
                 "comments";
 
@@ -60,16 +65,16 @@ useMetaData({
     @media (--md) {
       display: grid;
       gap: var(--size-7);
-      row-gap: var(--size-8);
+      row-gap: var(--size-9);
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-auto-rows: min-content;
       grid-auto-flow: dense;
       grid-template-areas:
                   "header header"
-                  "items details"
-                  "items-meta details-meta"
-                  "about about"
-                  "opt-in opt-in"
+                  "items items-meta"
+                  /* "about about" */
+                  "details opt-in"
+                  "details-meta details-meta"
                   "opepen opepen"
                   "comments comments";
     }
@@ -77,7 +82,8 @@ useMetaData({
     :deep() {
       > header {
         grid-area: header;
-        display: grid;
+        display: flex;
+        flex-direction: column;
         gap: var(--size-4);
 
         @media (--md) {

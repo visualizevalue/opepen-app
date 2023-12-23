@@ -15,6 +15,6 @@ type Image = {
 export const imageURI = (image: Image, version?: keyof ImageVersions) => {
   if (! image) return null
 
-  const name = version ? `${image.uuid}@${version}` : image.uuid
+  const name = (version && image.versions[version]) ? `${image.uuid}@${version}` : image.uuid
   return `${image.cdn}/${image.path}/${name}.${image.type}`
 }

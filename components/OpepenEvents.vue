@@ -28,20 +28,16 @@
       </NuxtLink>
       <NuxtLink :to="`https://etherscan.io/tx/${event.transaction_hash}`">
         <span class="visible-sm">Date: </span>
-        <span>{{ formatDate(event.timestamp) }}</span>
+        <span>{{ formatDateTime(event.timestamp) }}</span>
         <Icon type="external-link" />
       </NuxtLink>
     </div>
-    <pre
-    >
-      {{ event }}
-    </pre>
   </PaginatedContent>
 </template>
 
 <script setup>
 import { ZeroAddress } from 'ethers';
-import { formatDate } from '~/helpers/dates'
+import { formatDateTime } from '~/helpers/dates'
 
 const { token } = defineProps({
   token: Object,

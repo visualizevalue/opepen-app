@@ -1,12 +1,28 @@
 <template>
 
-  <section v-if="set.name" class="opt-in">
-    <header v-if="revealed">
-      <Icon type="info" />
-      <h1>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">Block {{ set.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">Opepen Metadata Reveal Script</NuxtLink>.</h1>
+  <section v-if="set" class="opt-in">
+    <header>
+      <h1>Your Opt-Ins</h1>
+      <IconOpepen />
     </header>
-    <header v-else>
-      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes in <CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" />.</div>
+    <section v-if="revealed">
+      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">Block {{ set.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">Opepen Metadata Reveal Script</NuxtLink>.</p>
+    </section>
+    <section v-if="subscription" class="selection">
+      <template v-if="opepenCount">
+        <p>You submitted {{ opepenCount }} Opepen for potential reveal:</p>
+        <p class="muted">
+          {{ opepenIds }}<span v-if="opepenCount <= shownCount">.</span><span v-else>... (and {{ opepenCount - shownCount }} more).</span>
+        </p>
+        <p v-if="subscription.comment" class="comment">Comment: <span>{{ subscription.comment }}</span></p>
+      </template>
+      <template v-else>
+        <p>You opted out all opepen submissions.</p>
+      </template>
+    </section>
+    <section v-if="!revealed && !revealing && set.reveals_at">
+      <CountDown @complete="onComplete" :until="revealsAt" class="nowrap" />
+      <div>Opt-In window <span class="hidden-sm">for "{{ set.name }}"&nbsp;</span>closes on {{ revealDate }}.</div>
       <ClientOnly>
         <SetOptInFlow
           :set="set"
@@ -18,21 +34,14 @@
           :click-outside="false"
         />
       </ClientOnly>
+    </section>
+
+    <footer v-if="!revealed && !revealing && published">
       <Button @click="startOptIn">
         <Icon type="feather" />
         <span class="nowrap"><span v-if="subscription?.opepen_ids?.length">Change</span> Opt-In</span>
       </Button>
-    </header>
-    <div v-if="subscription" class="selection">
-      <template v-if="subscription.opepen_ids.length">
-        <p>You submitted {{ subscription.opepen_ids.length }} Opepen for potential reveal:</p>
-        <p class="muted">{{ subscription.opepen_ids.map(id => `#${id}`).join(', ') }}.</p>
-        <p v-if="subscription.comment" class="comment">Comment: <span>{{ subscription.comment }}</span></p>
-      </template>
-      <template v-else>
-        <p>You opted out all opepen submissions.</p>
-      </template>
-    </div>
+    </footer>
   </section>
 
 </template>
@@ -46,11 +55,13 @@ const props = defineProps({ set: Object })
 const emit = defineEmits(['update'])
 const { address, isConnected } = useAccount()
 
+const published = computed(() => !!props.set.name)
 const revealDate = ref(DateTime.fromISO(props.set?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
-const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const revealed = computed(() => revealing.value && props.set?.reveal_block_number)
 const onComplete = () => {
-  revealed.value = true
+  revealing.value = true
 }
 
 const url = computed(() => `${config.public.opepenApi}/accounts/${address.value}/sets/${props.set.id}`)
@@ -58,6 +69,13 @@ const subscription = ref(null)
 const fetchSubscription = async () => {
   subscription.value = await $fetch(url.value)
 }
+const shownCount = 20
+const opepenCount = computed(() => subscription.value?.opepen_ids?.length)
+const opepenIds = computed(() => subscription.value
+  ?.opepen_ids?.slice(0, shownCount)
+  ?.map(id => `#${id}`)
+  .join(', ')
+)
 
 if (isConnected.value) {
   try {
@@ -100,17 +118,57 @@ const startOptIn = () => {
     border-radius: var(--size-5);
     border-top-left-radius: var(--size-1);
     background-color: var(--gray-z-0);
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
 
-    header,
-    .selection {
+    > header,
+    > section,
+    > .selection,
+    > footer {
       padding: var(--size-2) var(--size-2) var(--size-2) var(--size-4);
     }
 
-    header {
+    > header {
       display: flex;
       align-items: center;
-      padding: var(--size-2) var(--size-2) var(--size-2) var(--size-4);
+      justify-content: space-between;
+      padding: var(--size-2) var(--size-4);
+      border-bottom: var(--border);
 
+      @media (--md) {
+        height: 12.5%;
+      }
+
+      > h1 {
+        font-size: var(--font-sm);
+      }
+
+      svg {
+        width: var(--size-4);
+        height: var(--size-4);
+        margin: 0;
+        color: var(--gray-z-6);
+      }
+    }
+
+    > footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: var(--border);
+      margin-top: auto;
+
+      > .button:last-child {
+        margin-left: auto;
+      }
+
+      @media (--md) {
+        height: 12.5%;
+      }
+    }
+
+    > section {
       > .vue-feather {
         flex-shrink: 0;
         margin-right: var(--size-4);
@@ -129,16 +187,13 @@ const startOptIn = () => {
         }
       }
 
-      + .selection {
-        border-top: var(--border);
-      }
-
-      > .button:last-child {
-        margin-left: auto;
+      + section {
+        padding-top: 0 !important;
       }
     }
 
-    .selection {
+    > section,
+    > .selection {
       font-size: var(--font-sm);
       padding: var(--size-3) var(--size-2) var(--size-3) var(--size-4);
 
@@ -149,6 +204,11 @@ const startOptIn = () => {
           word-wrap: pre;
         }
       }
+    }
+
+    .countdown:not(.inline) {
+      font-size: var(--font-xl);
+      margin: var(--size-4) 0 var(--size-6);
     }
   }
 </style>
