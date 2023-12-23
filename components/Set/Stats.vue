@@ -1,11 +1,11 @@
 <template>
 
   <section class="stats">
-    <span>Edition</span>
+    <span class="th">Edition</span>
     <span class="th">Holders</span>
     <span class="th">Opt-Ins</span>
-    <span class="th">Demand <small class="muted nowrap">(min {{ formatNumber(minDemand) }}%)</small></span>
-    <span class="check"></span>
+    <span class="th">Demand</span>
+    <span class="check th"></span>
 
     <span class="th">One</span>
     <span>{{ formatNumber(set?.submission_stats.holders['1']) }}</span>
@@ -62,13 +62,13 @@
     }"><Check /></span>
 
     <span class="th">Overall</span>
-    <span>{{ formatNumber(set?.submission_stats.holders.total) }}
+    <span class="th">{{ formatNumber(set?.submission_stats.holders.total) }}
       <small class="muted" v-if="set?.submission_stats.totalHolders">(of {{ formatNumber(set?.submission_stats.totalHolders) }})</small>
     </span>
     <span class="th">{{ formatNumber(totalCount) }} <small class="muted">(of {{ formatNumber(eligibleOpepenCount) }})</small></span>
     <span class="th">
       {{ formatNumber(avgDemand) }}%
-      <!-- <small>(<abbr title="average" class="muted">avg.</abbr>)</small> -->
+      <small class="muted nowrap">(min {{ formatNumber(minDemand) }}%)</small>
     </span>
     <span class="check th" :class="{
       active: overAllActive,
@@ -121,22 +121,8 @@ const edition20Active = computed(() => minDemand.value && edition20Demand.value 
 const edition20CloseToActive = computed(() => minDemand.value && edition20Demand.value >= minDemand.value / 2)
 const edition40Active = computed(() => minDemand.value && edition40Demand.value >= minDemand.value)
 const edition40CloseToActive = computed(() => minDemand.value && edition40Demand.value >= minDemand.value / 2)
-const overAllActive = computed(() =>
-  edition1Active.value &&
-  edition4Active.value &&
-  edition5Active.value &&
-  edition10Active.value &&
-  edition20Active.value &&
-  edition40Active.value
-)
-const overAllCloseToActive = computed(() =>
-  edition1CloseToActive.value &&
-  edition4CloseToActive.value &&
-  edition5CloseToActive.value &&
-  edition10CloseToActive.value &&
-  edition20CloseToActive.value &&
-  edition40CloseToActive.value
-)
+const overAllActive = computed(() => avgDemand.value >= minDemand.value)
+const overAllCloseToActive = computed(() => avgDemand.value > minDemand.value / 2)
 </script>
 
 <style lang="postcss" scoped>

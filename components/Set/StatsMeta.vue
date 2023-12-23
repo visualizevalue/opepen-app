@@ -1,6 +1,6 @@
 <template>
   <aside v-if="set.name" class="stats-meta">
-    <p>Opepen holders decide if a set is released: <span><span class="nowrap">If demand is</span> less than {{ formatNumber(set.min_subscription_percentage) }}% within one of the brackets, <span class="nowrap">the set</span> will be replaced.</span></p>
+    <p>Opepen holders decide if a set is released: <span><span class="nowrap">If demand is</span> less than {{ formatNumber(set.min_subscription_percentage) }}%, <span class="nowrap">the set</span> will be replaced.</span></p>
   </aside>
 </template>
 
