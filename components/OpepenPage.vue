@@ -64,12 +64,8 @@ const download = async () => {
     return open(normalizeURI(metadata.download_url), '_blank')
   }
 
-  try {
-    // Force update the image
-    await fetch(`${config.public.opepenApi}/opepen/${route.params.id}/image`, { method: 'POST' })
-  } catch (e) {
-    console.warn(`Error force updating image`, e)
-  }
+  // Force update the image (in the background)
+  fetch(`${config.public.opepenApi}/opepen/${route.params.id}/image`, { method: 'POST' })
 
   return isStatic
     ? downloadImage(image.value, { property: `Opepen ${opepen.value.token_id}` })
