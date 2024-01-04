@@ -26,7 +26,7 @@ export const downloadCanvas = async (
   let URLObj = window.URL || window.webkitURL
   let a = document.createElement('a')
   a.href = URLObj.createObjectURL(image)
-  a.download = `${name}.png`
+  a.download = name.endsWith('.png') ? name : `${name}.png`
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
