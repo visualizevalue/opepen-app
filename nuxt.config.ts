@@ -63,4 +63,11 @@ export default defineNuxtConfig({
       'autoprefixer': {},
     },
   },
+  vite: {
+    server: {
+      hmr: {
+        overlay: false,
+      }
+    }
+  }
 })

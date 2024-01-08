@@ -18,11 +18,20 @@ export const TYPES = {
 
 const sets: Ref<OpepenSet[]> = ref([])
 const loaded = ref(false)
+const activeSets: any = computed(() => {
+  const now = DateTime.now()
+
+  return sets.value?.filter(set => set.reveals_at && DateTime.fromISO(set.reveals_at) > now)
+})
+const completeSets: any = computed(() => {
+  const now = DateTime.now()
+
+  return sets.value?.filter(set => set.reveals_at && DateTime.fromISO(set.reveals_at) < now)
+})
 const currentSet: any = computed(() => {
   const now = DateTime.now()
 
-  const set = [...sets.value]
-    .reverse()
+  const set = activeSets.value
     .find((s: OpepenSet) => DateTime.fromISO(s.reveals_at) > now)
 
   if (! set) return sets.value[sets.value.length - 1]
@@ -51,6 +60,8 @@ export function useSets() {
   return {
     sets,
     loaded,
+    activeSets,
+    completeSets,
     currentSet,
     prevSet,
     nextSet,

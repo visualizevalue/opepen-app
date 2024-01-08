@@ -4,7 +4,7 @@
       <Logo />
     </NuxtLink>
 
-    <Button :to="setUrl">
+    <Button to="/sets">
       <Icon type="grid" />
       <span>Sets</span>
     </Button>

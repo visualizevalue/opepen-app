@@ -1,5 +1,5 @@
 <template>
-  <article v-if="set" class="set-preview">
+  <article v-if="set" class="set-preview" :class="{ minimal }">
     <section class="items">
       <Image :image="set?.edition1Image" version="sm" class="appear" />
       <Image :image="set?.edition4Image" version="sm" class="appear" />
@@ -8,7 +8,7 @@
       <Image :image="set?.edition20Image" version="sm" class="appear" />
       <Image :image="set?.edition40Image" version="sm" class="appear" />
     </section>
-    <header>
+    <header v-if="! minimal">
       <h1>
         <small>Set {{ pad(set.id, 3) }}</small>
         <span>{{ set.name }}</span>
@@ -37,6 +37,10 @@
         </Button>
       </div>
     </header>
+    <Button v-else :to="`/sets/${pad(set.id, 3)}`" :title="set.name">
+      <Icon type="chevron-right" />
+      <span>View Set</span>
+    </Button>
   </article>
 </template>
 
@@ -46,8 +50,9 @@ import { formatDate } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 import { TYPES } from '~/helpers/sets'
 
-const { set } = defineProps({
+const { set, minimal } = defineProps({
   set: Object,
+  minimal: Boolean,
 })
 
 const revealsAt = ref(DateTime.fromISO(set?.reveals_at).toUnixInteger())
@@ -79,6 +84,23 @@ const onComplete = () => {
     @media (--md) {
       grid-template-columns: 40% auto;
       row-gap: var(--size-7);
+
+      &.minimal {
+        grid-template-columns: auto;
+        position: relative;
+
+        > a {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0.0001;
+          cursor: pointer;
+          height: 100%;
+          width: 100%;
+        }
+      }
     }
 
     h1 {

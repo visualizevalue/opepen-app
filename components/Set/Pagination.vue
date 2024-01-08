@@ -13,6 +13,8 @@
     </NuxtLink>
 
     <span>
+      <NuxtLink to="/sets">Sets</NuxtLink>
+      <span class="separator">/</span>
       <span v-if="set.edition1Image" class="icon">
         <Image :image="set.edition1Image" version="sm" />
       </span>
@@ -59,6 +61,11 @@ const previous = computed(() => prevSet(set.id))
   letter-spacing: var(--letter-spacing-md);
   user-select: none;
 
+  .separator {
+    color: var(--gray-z-5);
+    user-select: none;
+  }
+
   > * {
     display: flex;
     align-items: center;
@@ -103,7 +110,8 @@ const previous = computed(() => prevSet(set.id))
     }
   }
 
-  > a {
+  > a,
+  > span > a {
     color: var(--gray-z-5);
 
     &:--highlight:not([disabled="true"]) {
