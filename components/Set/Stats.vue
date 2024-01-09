@@ -80,8 +80,10 @@
 
 <script setup>
 import { formatNumber } from '~/helpers/format'
+import { useSets } from '~/helpers/sets'
 
 const props = defineProps({ set: Object })
+const { setsByPublishDate } = useSets()
 
 // COUNTS
 const edition1Count = computed(() => props.set?.submission_stats.opepens['1'])
@@ -91,7 +93,12 @@ const edition10Count = computed(() => props.set?.submission_stats.opepens['10'])
 const edition20Count = computed(() => props.set?.submission_stats.opepens['20'])
 const edition40Count = computed(() => props.set?.submission_stats.opepens['40'])
 const totalCount = computed(() => props.set?.submission_stats.opepens.total)
-const eligibleOpepenCount = computed(() => 16_000 - 80 * (props.set.id - 1))
+const eligibleOpepenCount = computed(() => {
+  const publishedIndex = setsByPublishDate.value.findIndex(set => props.set.id === set.id)
+  const usedSets = publishedIndex > -1 ? publishedIndex : props.set.id - 1
+
+  return 16_000 - 80 * usedSets
+})
 
 // OVERSUBSCRIBED
 const minDemand = computed(() => props.set.min_subscription_percentage)

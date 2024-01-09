@@ -18,17 +18,21 @@ export const TYPES = {
 
 const sets: Ref<OpepenSet[]> = ref([])
 const loaded = ref(false)
-const activeSets: any = computed(() => {
+const publishedSets: ComputedRef<OpepenSet[]> = computed(() => sets.value?.filter(set => !! set.reveals_at))
+const setsByPublishDate: ComputedRef<OpepenSet[]> = computed(() => publishedSets.value?.sort(
+  (set1, set2) => set1.reveals_at >= set2.reveals_at ? 1 : -1)
+)
+const activeSets: ComputedRef<OpepenSet[]> = computed(() => {
   const now = DateTime.now()
 
-  return sets.value?.filter(set => set.reveals_at && DateTime.fromISO(set.reveals_at) > now)
+  return publishedSets.value?.filter(set => DateTime.fromISO(set.reveals_at) > now)
 })
-const completeSets: any = computed(() => {
+const completeSets: ComputedRef<OpepenSet[]> = computed(() => {
   const now = DateTime.now()
 
-  return sets.value?.filter(set => set.reveals_at && DateTime.fromISO(set.reveals_at) < now)
+  return publishedSets.value?.filter(set => DateTime.fromISO(set.reveals_at) < now)
 })
-const currentSet: any = computed(() => {
+const currentSet: ComputedRef<OpepenSet> = computed(() => {
   const now = DateTime.now()
 
   const set = activeSets.value
@@ -60,6 +64,8 @@ export function useSets() {
   return {
     sets,
     loaded,
+    publishedSets,
+    setsByPublishDate,
     activeSets,
     completeSets,
     currentSet,
