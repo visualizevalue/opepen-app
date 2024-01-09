@@ -81,25 +81,28 @@ const onComplete = () => {
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
 
+    &.minimal {
+      position: relative;
+
+      > a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.0001;
+        cursor: pointer;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
     @media (--md) {
       grid-template-columns: 40% auto;
       row-gap: var(--size-7);
 
       &.minimal {
         grid-template-columns: auto;
-        position: relative;
-
-        > a {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          opacity: 0.0001;
-          cursor: pointer;
-          height: 100%;
-          width: 100%;
-        }
       }
     }
 

@@ -32,19 +32,19 @@ section {
   }
 
   &.grid {
+    display: grid;
+    gap: var(--size-5);
+
+    article {
+      width: 100%;
+    }
 
     @media (--md) {
-      display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--size-5);
 
       h1 {
         grid-column: 1 / -1;
         margin-bottom: 0;
-      }
-
-      article {
-        width: 100%;
       }
     }
 
