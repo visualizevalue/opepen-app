@@ -7,7 +7,12 @@ export const SET_TIMESTAMPS = {
 }
 
 type OpepenSet = {
+  id: number
   reveals_at: string
+}
+
+type KeyedSets = {
+  [key: string]: OpepenSet
 }
 
 export const TYPES = {
@@ -18,6 +23,10 @@ export const TYPES = {
 
 const sets: Ref<OpepenSet[]> = ref([])
 const loaded = ref(false)
+const setsById: ComputedRef<KeyedSets> = computed(() => sets.value?.reduce((obj: KeyedSets, set) => {
+  obj[set.id] = set
+  return obj
+}, {}))
 const publishedSets: ComputedRef<OpepenSet[]> = computed(() => sets.value?.filter(set => !! set.reveals_at))
 const setsByPublishDate: ComputedRef<OpepenSet[]> = computed(() => publishedSets.value?.sort(
   (set1, set2) => set1.reveals_at >= set2.reveals_at ? 1 : -1)
@@ -45,13 +54,15 @@ const currentSet: ComputedRef<OpepenSet> = computed(() => {
 const prevSet = (id: number) => {
   if (id === 1) return null
 
-  return sets.value[id - 2]
+  return setsById.value[id - 1]
 }
 const nextSet = (id: number) => {
   if (id >= 200) return null
 
-  return sets.value[id]
+  return setsById.value[id + 1]
 }
+
+export const RESERVED_UNTIL = 31
 
 export function useSets() {
   const config = useRuntimeConfig()
@@ -63,6 +74,7 @@ export function useSets() {
 
   return {
     sets,
+    setsById,
     loaded,
     publishedSets,
     setsByPublishDate,

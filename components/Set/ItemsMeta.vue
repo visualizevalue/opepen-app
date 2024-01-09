@@ -59,15 +59,14 @@ import { DateTime } from 'luxon'
 import pad from '~/helpers/pad'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
-import { TYPES, useSets } from '~/helpers/sets'
+import { TYPES, RESERVED_UNTIL } from '~/helpers/sets'
 import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
   set: Object,
 })
 
-const { currentSet } = useSets()
-const name = computed(() => props.set.name || (props.set.id < currentSet.value?.id ? 'Reserved' : 'Unrevealed'))
+const name = computed(() => props.set.name || (props.set.id < RESERVED_UNTIL ? 'Reserved' : 'Unrevealed'))
 
 const published = computed(() => !!props.set.name)
 const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
