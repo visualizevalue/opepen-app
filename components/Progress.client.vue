@@ -1,5 +1,5 @@
 <template>
-<div class="progress">
+<div v-if="percent" class="progress">
   <div :style="{ width: `${percent}%` }"></div>
   <div :style="{ left: `${percent}%`}"><slot/></div>
 </div>
