@@ -5,9 +5,14 @@
       <SetPreview v-for="set in activeSets" :set="set" :key="set.id" />
     </section>
 
-    <section class="grid">
+    <section>
       <SectionTitle>All Sets</SectionTitle>
-      <SetPreview v-for="set in completeSets" :set="set" :key="set.id" minimal />
+      <Progress :percent="parseInt(completeSets.length / 200 * 100)">
+        {{ completeSets.length }} / 200
+      </Progress>
+      <div class="grid">
+        <SetPreview v-for="set in completeSets" :set="set" :key="set.id" minimal />
+      </div>
     </section>
   </div>
 </template>
@@ -31,7 +36,11 @@ section {
     margin: var(--size-5) 0;
   }
 
-  &.grid {
+  .progress {
+    margin: var(--size-7) 0 var(--size-8);
+  }
+
+  .grid {
     display: grid;
     gap: var(--size-5);
 
@@ -41,11 +50,6 @@ section {
 
     @media (--md) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-
-      h1 {
-        grid-column: 1 / -1;
-        margin-bottom: 0;
-      }
     }
 
     @media (--lg) {
