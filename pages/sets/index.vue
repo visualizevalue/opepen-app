@@ -30,6 +30,10 @@ section {
 
   &:first-child {
     margin-top: var(--size-5);
+
+    .set-preview:not(:last-child) {
+      margin-bottom: var(--size-5);
+    }
   }
 
   h1 {
