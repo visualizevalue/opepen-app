@@ -28,7 +28,7 @@ const { set } = defineProps({
 
 const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/opepen/sets/${set.id}/opepen`
-const { data: opepen, pending } = await useLazyFetch(url)
+const { data: opepen, pending } = await useLazyFetch(url, { key: 'revealed-opepen' })
 
 const revealsAt = ref(DateTime.fromISO(set.reveals_at).toUnixInteger())
 const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())

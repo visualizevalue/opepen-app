@@ -7,13 +7,19 @@
     </header>
     <section v-if="revealed">
       <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">Block {{ set.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">Opepen Metadata Reveal Script</NuxtLink>.</p>
+
+      <template v-if="subscription">
+        <p>You revealed {{ ownedRevealed.length }} Opepen<span v-if="ownedRevealed.length"> 🎉</span><span v-else>.</span></p>
+        <ul v-if="ownedRevealed.length">
+          <li v-for="o in ownedRevealed" :key="o.token_id"><NuxtLink :to="`/opepen/${o.token_id}`">#{{ o.token_id }}</NuxtLink></li>
+        </ul>
+      </template>
     </section>
     <section v-if="subscription" class="selection">
       <template v-if="opepenCount">
-        <p>You submitted {{ opepenCount }} Opepen for potential reveal:</p>
-        <p class="muted">
+        <p>You submitted {{ opepenCount }} Opepen for potential reveal: <br><span class="muted">
           {{ opepenIds }}<span v-if="opepenCount <= shownCount">.</span><span v-else>... (and {{ opepenCount - shownCount }} more).</span>
-        </p>
+        </span></p>
         <p v-if="subscription.comment" class="comment">Comment: <span>{{ subscription.comment }}</span></p>
       </template>
       <template v-else>
@@ -110,6 +116,19 @@ const startOptIn = () => {
 
   optInOpen.value = true
 }
+
+// Revealed
+const opepenUrl = `${config.public.opepenApi}/opepen/sets/${props.set.id}/opepen`
+const { data: revealedOpepen } = await useLazyFetch(opepenUrl, { key: 'revealed-opepen' })
+const ownedRevealed = computed(() => {
+  const optedIn = subscription.value?.opepen_ids || []
+
+  if (Array.isArray(revealedOpepen.value) && optedIn.length) {
+    return revealedOpepen.value.filter(o =>  optedIn.includes(o.token_id))
+  }
+
+  return []
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -187,9 +206,19 @@ const startOptIn = () => {
         }
       }
 
+      > p:not(:first-child) {
+        margin-top: 1em;
+      }
+
+      > ul {
+        list-style: disc;
+        padding-left: 2em;
+      }
+
       + section {
         padding-top: 0 !important;
       }
+
     }
 
     > section,
