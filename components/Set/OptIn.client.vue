@@ -11,7 +11,14 @@
       <template v-if="subscription">
         <p>You revealed {{ ownedRevealed.length }} Opepen<span v-if="ownedRevealed.length"> 🎉</span><span v-else>.</span></p>
         <ul v-if="ownedRevealed.length">
-          <li v-for="o in ownedRevealed" :key="o.token_id"><NuxtLink :to="`/opepen/${o.token_id}`">#{{ o.token_id }}</NuxtLink></li>
+          <li v-for="o in ownedRevealed" :key="o.token_id">
+            <NuxtLink :to="`/opepen/${o.token_id}`">
+              <!--span class="icon">
+                <Image :image="o.image" version="sm" />
+              </span-->
+              #{{ o.token_id }} <span class="muted">(1/{{ o.data.edition }})</span>
+            </NuxtLink>
+          </li>
         </ul>
       </template>
     </section>
@@ -213,6 +220,18 @@ const ownedRevealed = computed(() => {
       > ul {
         list-style: disc;
         padding-left: 2em;
+
+        > li {
+          .icon {
+            width: 1.2em;
+            height: 1.2em;
+            display: inline-block;
+
+            :deep(> .image) {
+              border-radius: 1px;
+            }
+          }
+        }
       }
 
       + section {
