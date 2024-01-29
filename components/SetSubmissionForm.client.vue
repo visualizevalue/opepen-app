@@ -95,7 +95,7 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
-import { useSignIn } from '~/helpers/siwe'
+import { useSignIn, isAdmin } from '~/helpers/siwe'
 import { formatTime } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 
@@ -122,7 +122,6 @@ watch(session, async (_, previous) => {
   }
 })
 
-const isAdmin = computed(() => route.path.includes('admin'))
 const isCreator = computed(() => address.value?.toLowerCase() === data.creator)
 
 const name = ref(data.name || '')

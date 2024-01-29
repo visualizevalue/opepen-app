@@ -40,6 +40,11 @@
           <Icon type="grid" />
           <span>Manage Sets</span>
         </Button>
+
+        <Button v-if="isAdmin" to="/create/sets/admin" class="secondary">
+          <Icon type="key" />
+          <span>Administrate Sets</span>
+        </Button>
       </div>
     </div>
   </form>
@@ -47,6 +52,7 @@
 
 <script setup>
 import { useElementBounding, useToggle } from '@vueuse/core'
+import { isAdmin } from '~/helpers/siwe'
 
 const props = defineProps({
   journey: Object,
