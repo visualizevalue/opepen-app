@@ -2,6 +2,7 @@
   <article class="image" :class="{ loaded: loaded || isSVG }" v-intersection-observer="loadImage">
     <div class="inner image">
       <iframe v-if="hasEmbed && !hasImageEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
+      <video v-else-if="isVideo" :src="uri" autoplay playsinline></video>
       <img
         v-else-if="uri || hasImageEmbed"
         ref="imageEl"
@@ -28,6 +29,7 @@ const props = defineProps({
 
 const uri = ref('')
 const loaded = ref(false)
+const isVideo = computed(() => ['mp4', 'webm'].includes(props.image?.type))
 const isSVG = computed(() => props.image?.type === 'svg')
 const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && props.autoEmbed))
 // FIXME: Refactor this...
@@ -86,6 +88,7 @@ article.image {
   }
 
   .image {
+    video,
     img,
     iframe {
       position: absolute;

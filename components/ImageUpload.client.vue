@@ -14,7 +14,7 @@
       <input
         type="file"
         name="image"
-        accept="image/png, image/jpeg, image/gif, image/svg+xml, image/webp"
+        accept="image/png, image/jpeg, image/gif, image/svg+xml, image/webp, video/mp4, video/webm"
         @change.prevent="addFile"
       >
     </label>
@@ -54,7 +54,7 @@ const store = async () => {
     emit('stored', image.value)
   } catch (e) {
     console.error(e)
-    let message = `Something went wrong...`
+    let message = e.message || `Something went wrong...`
 
     if (Array.isArray(e.data) && e.data[0]?.message) {
       message = e.data[0]?.message
