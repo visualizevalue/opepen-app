@@ -1,5 +1,5 @@
 <template>
-  <div class="preview" :class="{ square: ! set.rounded_preview }">
+  <div class="preview">
     <Image
       @click="zoomed = true"
       :image="image"
@@ -7,12 +7,12 @@
       class="appear"
       :class="{ square: ! set.rounded_preview }"
       auto-embed
-    />
-
-    <div class="meta">
-      <h1>{{ name }}</h1>
-      <p>{{ tagline }}</p>
-    </div>
+    >
+      <div class="meta">
+        <h1>{{ name }}</h1>
+        <p>{{ tagline }}</p>
+      </div>
+    </Image>
 
     <Modal
       :open="zoomed"
@@ -101,8 +101,6 @@ const download = async () => {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
-    border-radius: var(--size-1);
-    border: var(--border);
 
     h1 {
       margin-bottom: var(--size-1);
@@ -120,17 +118,10 @@ const download = async () => {
     }
   }
 
-  &:not(.square) {
-    .meta {
-      border-radius: var(--size-5);
-      border-top-left-radius: var(--size-1);
-    }
-  }
-
   &:--highlight {
     .meta {
       opacity: 1;
-      bottom: -1px;
+      bottom: 0;
       background-color: var(--semi);
     }
 
