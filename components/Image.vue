@@ -2,7 +2,7 @@
   <article class="image" :class="{ loaded: loaded || isSVG }" v-intersection-observer="loadImage">
     <div class="inner image">
       <iframe v-if="hasEmbed && !hasImageEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
-      <video v-else-if="isVideo" :src="uri" autoplay playsinline></video>
+      <video v-else-if="isVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
       <img
         v-else-if="uri || hasImageEmbed"
         ref="imageEl"
