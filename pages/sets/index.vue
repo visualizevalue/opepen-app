@@ -18,9 +18,23 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
 import { useSets } from '~/helpers/sets'
 
 const { activeSets, completeSets } = useSets()
+
+useMetaData({
+  title: 'Opepen Sets',
+  og: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets.png',
+  meta: [
+    { property: 'fc:frame', content: 'vNext' },
+    { property: 'fc:frame:image', content: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets@frame.png' },
+    { property: 'fc:frame:button:1', content: 'View Website' },
+    { property: 'fc:frame:button:1:action', content: 'redirect' },
+    { property: 'fc:frame:button:2', content: 'Browse Sets' },
+    { property: 'fc:frame:post_url', content: 'https://api.opepen.art/v1/frames/sets' },
+  ]
+})
 </script>
 
 <style lang="postcss" scoped>
