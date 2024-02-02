@@ -70,9 +70,9 @@
     <label class="type">
       <span class="label">Edition Type</span>
       <select v-model="type" class="input">
-        <option value="PRINT" default>Prints</option>
-        <option value="NUMBERED_PRINT" default>Numbered Prints</option>
         <option value="DYNAMIC">Dynamic</option>
+        <option value="PRINT" default>Prints</option>
+        <option value="NUMBERED_PRINT" disabled="disabled">Numbered Prints</option>
       </select>
       <aside class="note" v-if="isDynamic">
         The VV team will reach out to gather the dynamic images before launching your set.
