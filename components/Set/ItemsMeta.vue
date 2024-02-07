@@ -27,7 +27,7 @@
       </li>
       <li>
         <IconOpepen />
-        <span>{{ formatNumber(set?.submission_stats.opepens.total) }} Opt-Ins</span>
+        <span>{{ formatNumber(set?.submission_stats?.opepens.total) }} Opt-Ins</span>
       </li>
       <li v-if="revealed || revealing">
         <IconCheck />
