@@ -47,6 +47,7 @@ header {
   h1 {
     small, span {
       display: block;
+      text-align: center;
     }
 
     small {
