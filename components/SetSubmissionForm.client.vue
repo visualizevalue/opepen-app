@@ -163,6 +163,7 @@ const lastSaved = ref(null)
 const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
 const store = async () => {
   if (! session.value) await signIn()
+  if (! session.value) return
 
   saving.value = true
 

@@ -73,7 +73,11 @@ export const useSignIn = () => {
   const signIn = async () => {
     loading.value = true
 
-    if (! address.value) return
+    if (! address.value) {
+      alert(`Please sign in with your Ethereum account`)
+
+      return false
+    }
 
     // Check if we have a valid session
     try {
