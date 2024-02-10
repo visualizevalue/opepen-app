@@ -13,7 +13,7 @@
         <small>Set {{ pad(set.id, 3) }}</small>
         <span>{{ set.name }}</span>
       </h1>
-      <p v-html="set.description"></p>
+      <p v-html="shortenedCleanText(set.description, 161)"></p>
       <ul class="overview">
         <li>
           <Icon type="layers" stroke-width="2.25" />
@@ -49,6 +49,7 @@ import { DateTime } from 'luxon'
 import { formatDate } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 import { TYPES } from '~/helpers/sets'
+import { shortenedCleanText } from '~/helpers/strings'
 
 const { set, minimal } = defineProps({
   set: Object,

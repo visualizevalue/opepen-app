@@ -23,7 +23,7 @@
 <script setup>
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'
-import { cleanText } from '~/helpers/strings'
+import { shortenedCleanText } from '~/helpers/strings'
 
 const config = useRuntimeConfig()
 
@@ -35,7 +35,7 @@ const { data: set, refresh } = await useFetch(url)
 
 useMetaData({
   title: `Set ${pad(set.value.id, 3)}: ${set.value.name || 'Locked'} | Opepen`,
-  description: cleanText(set.value.description) || `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
+  description: shortenedCleanText(set.value.description) || `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
   og: `${config.public.opepenApi}/frames/image/sets/${set.value.id}`,
 })
 </script>
