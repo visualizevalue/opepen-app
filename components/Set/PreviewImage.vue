@@ -104,6 +104,7 @@ const download = async () => {
 
     h1 {
       margin-bottom: var(--size-1);
+      text-transform: none;
       font-size: 1rem;
     }
 
@@ -150,6 +151,10 @@ const download = async () => {
       align-items: center;
       justify-content: space-between;
       gap: var(--size-4);
+
+      h1 {
+        text-transform: none;
+      }
 
       p {
         font-size: var(--font-sm);
