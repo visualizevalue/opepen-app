@@ -36,7 +36,7 @@ const { data: set, refresh } = await useFetch(url)
 useMetaData({
   title: `Set ${pad(set.value.id, 3)}: ${set.value.name || 'Locked'} | Opepen`,
   description: shortenedCleanText(set.value.description) || `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
-  og: `${config.public.opepenApi}/frames/image/sets/${set.value.id}/image.png?${new URLSearchParams(route.query)}`,
+  og: `${config.public.opepenApi}/frames/image/sets/${set.value.id}?${new URLSearchParams(route.query)}`,
 })
 </script>
 
