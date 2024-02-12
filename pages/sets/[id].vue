@@ -37,6 +37,14 @@ useMetaData({
   title: `Set ${pad(set.value.id, 3)}: ${set.value.name || 'Locked'} | Opepen`,
   description: shortenedCleanText(set.value.description) || `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
   og: `${config.public.opepenApi}/frames/image/sets/${set.value.id}?${new URLSearchParams(route.query)}`,
+  meta: [
+    { property: 'fc:frame', content: 'vNext' },
+    { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${set.value.id}/detail/image` },
+    { property: 'fc:frame:image:aspect_ratio', content: `1:1` },
+    { property: 'fc:frame:button:1', content: 'Opt In' },
+    { property: 'fc:frame:button:2', content: 'View 1/1 →' },
+    { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${set.value.id}/detail` },
+  ],
 })
 </script>
 
