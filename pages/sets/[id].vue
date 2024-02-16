@@ -34,8 +34,14 @@ const setId = parseInt(route.params.id)
 const url = `${config.public.opepenApi}/opepen/sets/${setId}`
 const { data: set, refresh } = await useFetch(url)
 
-const revealsAt = computed(() => DateTime.fromISO(set.value.reveals_at).toUnixInteger())
-const revealed = computed(() => revealsAt.value <= DateTime.now().toUnixInteger())
+const revealsAt = set.value.reveals_at && DateTime.fromISO(set.value.reveals_at).toUnixInteger()
+const revealed = revealsAt && (revealsAt <= DateTime.now().toUnixInteger())
+const mainButton = revealed || !set.value.name
+  ? [
+    { property: 'fc:frame:button:1', content: `Set #${pad(set.value.id, 3)} on Opepen.art` },
+    { property: 'fc:frame:button:1:action', content: `https://opepen.art/sets/${set.value.id}` },
+  ]
+  : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
 
 useMetaData({
   title: `Set ${pad(set.value.id, 3)}: ${set.value.name || 'Locked'} | Opepen`,
@@ -45,10 +51,7 @@ useMetaData({
     { property: 'fc:frame', content: 'vNext' },
     { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${set.value.id}/detail/image` },
     { property: 'fc:frame:image:aspect_ratio', content: `1:1` },
-    revealed.value
-      ? { text: `Set #${pad(set.value.id, 3)} on Opepen.art`, action: 'link', target: `https://opepen.art/sets/${set.value.id}` }
-      : 'Opt In',
-    { property: 'fc:frame:button:1', content: 'Opt In' },
+    ...mainButton,
     { property: 'fc:frame:button:2', content: 'View 1/1 →' },
     { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${set.value.id}/detail` },
   ],
