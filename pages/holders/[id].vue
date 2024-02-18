@@ -87,7 +87,7 @@ const otherSocials = computed(() => splitSocials.value ? account.value?.socials.
 useMetaData({
   title: `${ account.value?.display } | Opepen`,
   description: `Opepen owned by ${account.value?.display}.`,
-  og: 'https://opepen.art/og/rare.png',
+  og: `https://api.opepen.art/v1/frames/accounts/${account.value.address}/image`,
 })
 </script>
 
