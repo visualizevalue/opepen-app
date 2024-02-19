@@ -39,7 +39,8 @@ const revealed = revealsAt && (revealsAt <= DateTime.now().toUnixInteger())
 const mainButton = revealed || !set.value.name
   ? [
     { property: 'fc:frame:button:1', content: `Set #${pad(set.value.id, 3)} on Opepen.art` },
-    { property: 'fc:frame:button:1:action', content: `https://opepen.art/sets/${set.value.id}` },
+    { property: 'fc:frame:button:1:action', content: `link` },
+    { property: 'fc:frame:button:1:target', content: `https://opepen.art/sets/${set.value.id}` },
   ]
   : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
 
