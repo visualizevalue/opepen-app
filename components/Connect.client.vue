@@ -21,6 +21,15 @@
   >
     <ChooseWallet />
   </Modal>
+
+  <Modal
+    :open="signingIn"
+    title="Signing In"
+    :click-outside="false"
+    :x-close="false"
+  >
+    <p>Requesting "Sign In With Ethereum" confirmation...</p>
+  </Modal>
 </template>
 
 <script setup>
@@ -28,7 +37,7 @@ import { useSignIn } from '~/helpers/siwe'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
-const { signIn } = useSignIn()
+const { signIn, signingIn } = useSignIn()
 
 const open = ref(false)
 watch(isConnected, async () => {

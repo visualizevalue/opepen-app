@@ -3,7 +3,7 @@
     <PaginatedContent
       v-if="session"
       :url="url"
-      :refresh-key="address"
+      :refresh-key="`${address}.${nonce}`"
       v-slot="{ items }"
     >
       <div v-if="! items?.length" class="empty">
@@ -37,8 +37,14 @@ import { useAccount } from '~/helpers/use-wagmi'
 import { useSignIn } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
-const { session } = useSignIn()
+const { session, signIn, nonce } = useSignIn()
 const { address } = useAccount()
+
+onMounted(async () => {
+  if (! session.value) {
+    await signIn()
+  }
+})
 
 const url = computed(() => `${config.public.opepenApi}/accounts/${session.value?.address}/set-submissions`)
 </script>

@@ -114,13 +114,6 @@ const emit = defineEmits(['updated'])
 const { session, signIn } = useSignIn()
 const { address } = useAccount()
 const ens = useEnsName(address)
-watch(session, async (_, previous) => {
-  if (previous === null) return
-
-  if (! session.value) {
-    await signIn()
-  }
-})
 
 const isCreator = computed(() => address.value?.toLowerCase() === data.creator)
 

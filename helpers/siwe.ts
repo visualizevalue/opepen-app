@@ -20,6 +20,7 @@ export const ADMIN_ADDRESSES = [
 ]
 
 export const loading = ref(false)
+export const signingIn = ref(false)
 export const nonce = ref('')
 export const session: Ref<Session|null> = ref(null)
 export const isAdmin = computed(() => ADMIN_ADDRESSES.includes(session.value?.address.toLowerCase() || ''))
@@ -61,13 +62,19 @@ export const useSignIn = () => {
   }
 
   const fetchNonce = async () => {
-    const data: { nonce: string } = await $fetch(`${API}/auth/nonce`, {
-      credentials: 'include'
-    })
+    try {
+      const data: { nonce: string } = await $fetch(`${API}/auth/nonce`, {
+        credentials: 'include'
+      })
 
-    nonce.value = data.nonce
+      nonce.value = data.nonce
 
-    return data.nonce
+      return data.nonce
+    } catch (e) {
+      nonce.value = ''
+
+      return nonce.value
+    }
   }
 
   const signIn = async () => {
@@ -86,30 +93,36 @@ export const useSignIn = () => {
         loading.value = false
 
         // We're already signed in
-        return
+        return true
       }
     } catch (e) {}
 
-    // Fetch current nonce
-    await fetchNonce()
+    try {
+      signingIn.value = true
 
-    // Get user confirmation
-    const message = await siweMessage(address.value)
-    const signature = await signMessage({
-      message: message.prepareMessage()
-    })
+      // Fetch current nonce
+      await fetchNonce()
 
-    // Verify session
-    session.value = await $fetch(`${API}/auth/verify`, {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify({ message, signature })
-    })
+      // Get user confirmation
+      const message = await siweMessage(address.value)
+      const signature = await signMessage({
+        message: message.prepareMessage()
+      })
 
+      // Verify session
+      session.value = await $fetch(`${API}/auth/verify`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({ message, signature })
+      })
+    } catch (e) {}
+
+    signingIn.value = false
     loading.value = false
   }
 
   if (! accountWatcher) {
+    // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
     accountWatcher = watch(address, (_, prevAccount) => {
       if (prevAccount) {
         signIn()
@@ -122,6 +135,7 @@ export const useSignIn = () => {
     fetchNonce,
     fetchMe,
     loading,
+    signingIn,
     nonce,
     session,
   }
