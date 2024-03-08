@@ -1,1 +1,1 @@
-export const formatNumber = (i: number) => i.toLocaleString('en-US')
+export const formatNumber = (i: number) => i?.toLocaleString('en-US')
