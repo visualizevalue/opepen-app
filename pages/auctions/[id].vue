@@ -63,7 +63,6 @@ const until = computed(() => {
   const earliestEnd = earliestDate.plus({ days: 1 })
 
   const diff = earliestEnd.diff(latestDate).as('minutes')
-  console.log(diff)
 
   return diff < 10 ? latestDate.plus({ minutes: 10 }).toUnixInteger() : earliestEnd.toUnixInteger()
 })
@@ -88,24 +87,31 @@ const sortBids = (a, b) => {
   const bidCountA = getBidCount(a)
   const bidCountB = getBidCount(b)
 
-  if (bidCountA > bidCountB) {
-    if (bidCountA > highestBidAmount.value) {
-      highestBidAmount.value = bidCountA
-    }
-    return -1
-  } else {
-    if (bidCountB > highestBidAmount.value) {
-      highestBidAmount.value = bidCountB
-    }
-    return 1
+  if (bidCountA > highestBidAmount.value) {
+    highestBidAmount.value = bidCountA
   }
+  if (bidCountB > highestBidAmount.value) {
+    highestBidAmount.value = bidCountA
+  }
+
+  if (bidCountA == bidCountB) return a.created_at < b.createdAt ? -1 : 1
+  if (bidCountA > bidCountB) return -1
+  return 1
 }
 const loadBids = async () => {
   const response = await $fetch(`${url}?${query.value}`)
 
-  earliestBid.value = response.data[0]
-  latestBid.value = response.data[response.data.length - 1]
-  bids.value = response.data.sort(sortBids)
+  latestBid.value = response.data[0]
+  earliestBid.value = response.data[response.data.length - 1]
+  const sorted = response.data.sort(sortBids)
+
+  // const counts = {}
+  // sorted.forEach(bid => {
+  //   const count = getBidCount(bid)
+  //   if (counts[count])
+  // })
+
+  bids.value = sorted
 }
 onMounted(() => loadBids())
 watch(refreshKey, () => loadBids())
