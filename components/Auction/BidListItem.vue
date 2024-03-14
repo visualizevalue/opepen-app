@@ -1,6 +1,6 @@
 <template>
   <div v-if="bid" class="bid">
-    <ApiAccount :account="bid.signerAccount" :hide-address="false" />
+    <Account :address="bid.signerAccount.address" :hide-address="false" />
     <!-- <span>check</span> -->
     <span>{{ opepenCount }} <span class="muted">×</span> <span class="muted">40-Editions</span></span>
   </div>

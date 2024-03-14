@@ -51,6 +51,7 @@ const query = computed(() => {
 })
 const getBidCount = bid => parseInt(JSON.parse(bid.object).Opepen.split(' ')[0])
 const itemSorter = (a, b) => getBidCount(a) > getBidCount(b) ? -1 : 1
+// const itemFilter = (bid, index) => index < 10
 
 useMetaData({
   title: `${auction.value.title} | Opepen Auctions`,
