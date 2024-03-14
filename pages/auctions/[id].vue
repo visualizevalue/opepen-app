@@ -167,6 +167,10 @@ figure {
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    img {
+      border-bottom: var(--border-dark);
+    }
   }
 }
 
