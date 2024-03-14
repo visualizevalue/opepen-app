@@ -49,7 +49,7 @@ const bids = ref([])
 const earliestBid = ref(null)
 const latestBid = ref(null)
 const until = computed(() => {
-  if (! earliestBid.value || ! latestBid.value) return null
+  if (! earliestBid.value || ! latestBid.value) return DateTime.now().plus({ days: 1 }).toUnixInteger()
 
   const earliestDate = DateTime.fromISO(earliestBid.value?.created_at)
   const latestDate = DateTime.fromISO(latestBid.value?.created_at)
