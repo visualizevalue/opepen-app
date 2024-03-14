@@ -13,7 +13,7 @@
         <input v-if="opepenCount" type="number" v-model="bidCount" min="1" :max="opepenCount" :disabled="! opepenCount" required />
       </label>
       <footer>
-        <Button v-if="min < opepenCount" :disabled="signing || ! opepenCount" @click="sign">
+        <Button v-if="opepenCount" :disabled="signing || ! opepenCount" @click="sign">
           <span v-if="signing">Confirming</span>
           <span v-else>
             Sign Bid
