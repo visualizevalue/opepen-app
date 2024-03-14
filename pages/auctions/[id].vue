@@ -14,7 +14,7 @@
     <section class="bids">
       <header>
         <h1>Bids</h1>
-        <SignNewBid :auction="auction" @signed="refreshKey++" />
+        <SignNewBid :auction="auction" @signed="refreshKey++" :min="highestBid + 1" />
       </header>
 
       <ClientOnly>
@@ -50,8 +50,23 @@ const query = computed(() => {
   return q.toString()
 })
 const getBidCount = bid => parseInt(JSON.parse(bid.object).Opepen.split(' ')[0])
-const itemSorter = (a, b) => getBidCount(a) > getBidCount(b) ? -1 : 1
-// const itemFilter = (bid, index) => index < 10
+const highestBid = ref(0)
+const itemSorter = (a, b) => {
+  const bidCountA = getBidCount(a)
+  const bidCountB = getBidCount(b)
+
+  if (bidCountA > bidCountB) {
+    if (bidCountA > highestBid.value) {
+      highestBid.value = bidCountA
+    }
+    return -1
+  } else {
+    if (bidCountB > highestBid.value) {
+      highestBid.value = bidCountB
+    }
+    return 1
+  }
+}
 
 useMetaData({
   title: `${auction.value.title} | Opepen Auctions`,

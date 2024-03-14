@@ -27,7 +27,6 @@ span {
   :deep(img) {
     width: var(--size-5);
     height: var(--size-5);
-    border-radius: 50%;
     align-self: center;
   }
 }
