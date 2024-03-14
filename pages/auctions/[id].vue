@@ -1,36 +1,41 @@
 <template>
-  <div class="auction-detail">
-    <figure>
-      <img :src="auction.image" :alt="auction.title">
+  <div class="auction-wrapper">
+    <div class="auction-detail">
+      <figure>
+        <img :src="auction.image" :alt="auction.title" @click="detail = true">
+        <Modal :open="detail" @close="detail = false" modal-classes="extra-wide">
+          <img :src="auction.image" :alt="auction.title">
+        </Modal>
 
-      <div>
-        <h1>{{ auction.title }}</h1>
+        <div>
+          <h1>{{ auction.title }}</h1>
 
-        <div class="checks">
-          <a :href="auction.url" title="View Token" target="_blank">
-            <Check :style="{ color: auction.chain === 'btc' ? `#FF9900` : `currentcolor` }" />
-          </a>
+          <div class="checks">
+            <a :href="auction.url" title="View Token" target="_blank">
+              <Check :style="{ color: auction.chain === 'btc' ? `#FF9900` : `currentcolor` }" />
+            </a>
+          </div>
         </div>
-      </div>
-    </figure>
+      </figure>
 
-    <section class="info">
-      <p><strong>Handshake Auction:</strong> Sign your intent to exchange unrevealed Opepen 40-Editions for this Visualize Value 1/1.</p>
-      <p><strong>Background:</strong> We’re building up a treasury to compensate artists that contribute to the Opepen Protocol.</p>
-    </section>
-
-    <ClientOnly>
-      <section class="bids">
-        <header>
-          <h1>Bids (<CountDown v-if="until" :until="until" class="inline">
-            <template #complete>auction closed</template>
-          </CountDown><span v-else>24h</span>)</h1>
-          <SignNewBid v-if="ongoing" :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
-        </header>
-
-        <AuctionBidListItem v-for="bid in bids" :key="bid.id" :bid="bid" />
+      <section class="info">
+        <p><strong>Handshake Auction:</strong> Sign your intent to exchange unrevealed Opepen 40-Editions for this Visualize Value 1/1.</p>
+        <p><strong>Background:</strong> We’re building up a treasury to compensate artists that contribute to the Opepen Protocol.</p>
       </section>
-    </ClientOnly>
+
+      <ClientOnly>
+        <section class="bids">
+          <header>
+            <h1>Bids (<CountDown v-if="until" :until="until" class="inline">
+              <template #complete>auction closed</template>
+            </CountDown><span v-else>24h</span>)</h1>
+            <SignNewBid v-if="ongoing" :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
+          </header>
+
+          <AuctionBidListItem v-for="bid in bids" :key="bid.id" :bid="bid" />
+        </section>
+      </ClientOnly>
+    </div>
   </div>
 </template>
 
@@ -43,6 +48,8 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const { auctionsById } = useAuctions()
 const auction = computed(() => auctionsById.value[route.params.id])
+
+const detail = ref(false)
 
 const bids = ref([])
 const earliestBid = ref(null)
@@ -112,16 +119,26 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+.auction-wrapper {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  display: grid;
+}
+
 .auction-detail {
   display: grid;
   gap: var(--size-5);
+  padding: var(--size-5);
   grid-template-areas:
     'figure'
     'info'
     'bids';
 
   @media (--md) {
-    padding: 0 var(--size-5);
+    border-top: var(--border-dark);
+    height: 100%;
+    padding: 0;
     grid-template-columns: 40% 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas:
@@ -138,11 +155,11 @@ figure {
 
   @media (--md) {
     border-right: var(--border-dark);
-    padding: calc(var(--navbar-height) + var(--size-4)) var(--size-4) var(--size-5);
+    padding: var(--size-5);
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
   }
 
   img {
@@ -186,7 +203,7 @@ figure {
   width: 100%;
 
   @media (--md) {
-    padding: calc(var(--navbar-height) + var(--size-4)) var(--size-4) var(--size-5);
+    padding: var(--size-5);
   }
 
   p {
@@ -205,7 +222,8 @@ figure {
   margin-bottom: var(--size-8);
 
   @media (--md) {
-    padding: var(--size-5) var(--size-4);
+    padding: var(--size-5);
+    margin: 0;
   }
 
   header {

@@ -140,6 +140,11 @@ defineEmits(['close'])
       max-width: min(calc(100vw - 2*var(--size-4)), 40rem);
     }
   }
+  &.extra-wide {
+    section {
+      max-width: min(calc(100vw - 2*var(--size-4)), calc(100vh - 2*var(--size-8)));
+    }
+  }
 
   :deep(.actions) {
     margin: var(--size-7) 0 calc(-1 * var(--size-6));
