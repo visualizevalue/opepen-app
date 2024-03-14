@@ -85,6 +85,7 @@
   --border-light: 1px solid var(--gray-z-6);
 
   --shadow: 0 0.1em 0.3em 0 var(--semi-shade);
+  --shadow-lg: 0 0.2em 0.5em 0 var(--semi-shade);
   --border-shadow: 0 0 0 1px var(--gray-z-4);
 
   /* BACKGROUNDS */

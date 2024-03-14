@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot :items="items" :meta="meta" :loading="loading" />
+    <slot :items="sortedItems" :meta="meta" :loading="loading" />
 
     <slot name="loading">
       <Loading v-if="loading" />
@@ -29,6 +29,10 @@ const props = defineProps({
     type: Function,
     default: d => d.data,
   },
+  itemSorter: {
+    type: Function,
+    default: null,
+  },
   refreshKey: [Number, String],
 })
 
@@ -42,6 +46,7 @@ const query = computed(() => props.query || '')
 const page = ref(0)
 const loading = ref(false)
 const items = ref([])
+const sortedItems = computed(() => props.itemSorter ? items.value.sort(props.itemSorter) : items.value)
 const meta = ref({})
 
 const hasMore = computed(() => page.value < meta.value?.last_page)

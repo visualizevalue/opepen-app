@@ -138,9 +138,9 @@ const emit = defineEmits(['close'])
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
 
-const delegatedAddresses = ref(await fetchAddresses(config.public.rpc, address.value))
+const delegatedAddresses = ref(await fetchAddresses(address.value))
 watch(address, async () => {
-  delegatedAddresses.value = await fetchAddresses(config.public.rpc, address.value)
+  delegatedAddresses.value = await fetchAddresses(address.value)
 })
 
 const {

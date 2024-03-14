@@ -5,7 +5,7 @@
     </template>
     <span>
       <span>{{ display }}</span>
-      <small v-if="! hideAddress" :title="account.address">{{ shortAddress(account.address) }}</small>
+      <small v-if="! hideAddress && display !== short" :title="account.address">{{ short }}</small>
     </span>
   </span>
 </template>
@@ -23,6 +23,7 @@ const props = defineProps({
 })
 
 const display = computed(() => props.account.display)
+const short = computed(() => shortAddress(props.account.address))
 </script>
 
 <style lang="postcss" scoped>
