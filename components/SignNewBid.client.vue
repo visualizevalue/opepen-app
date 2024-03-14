@@ -62,7 +62,7 @@ const fetchOpepen = async () => {
   opepenCount.value = responses.reduce((count, curr) => count + curr.meta.total, 0)
 }
 
-onMounted(address, () => fetchOpepen())
+onMounted(() => fetchOpepen())
 watch(address, () => fetchOpepen())
 
 const signing = ref(false)
