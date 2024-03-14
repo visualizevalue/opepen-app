@@ -7,7 +7,7 @@
     </figure>
 
     <section class="info">
-      <p><strong>Handshake Auction #1:</strong> Sign your intent to send exchange unrevealed Opepen 40-Editions for the above Visualize Value 1/1.</p>
+      <p><strong>Handshake Auction #1:</strong> Sign your intent to exchange unrevealed Opepen 40-Editions for the above Visualize Value 1/1.</p>
       <p><strong>Background:</strong> We’re building up a treasury to compensate artists that contribute to the Opepen Protocol.</p>
     </section>
 
