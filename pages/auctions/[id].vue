@@ -22,16 +22,18 @@
       <p><strong>Background:</strong> We’re building up a treasury to compensate artists that contribute to the Opepen Protocol.</p>
     </section>
 
-    <section class="bids">
-      <header>
-        <h1>Bids (<CountDown v-if="until" :until="until" class="inline">
-          <template #complete>auction closed</template>
-        </CountDown><span v-else>24h</span>)</h1>
-        <SignNewBid v-if="ongoing" :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
-      </header>
+    <ClientOnly>
+      <section class="bids">
+        <header>
+          <h1>Bids (<CountDown v-if="until" :until="until" class="inline">
+            <template #complete>auction closed</template>
+          </CountDown><span v-else>24h</span>)</h1>
+          <SignNewBid v-if="ongoing" :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
+        </header>
 
-      <AuctionBidListItem v-for="bid in bids" :key="bid.id" :bid="bid" />
-    </section>
+        <AuctionBidListItem v-for="bid in bids" :key="bid.id" :bid="bid" />
+      </section>
+    </ClientOnly>
   </div>
 </template>
 
