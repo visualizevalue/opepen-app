@@ -25,6 +25,7 @@ const opepenCount = computed(() => parseInt(opepen.value.split(' ')[0]))
   /* grid-template-columns: 50% 35% 1fr; */
   gap: var(--size-3);
   border-bottom: var(--border-dark);
+  border-color: var(--gray-z-1);
 
   > span:last-child {
     text-align: right;

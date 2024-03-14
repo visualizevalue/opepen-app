@@ -28,7 +28,7 @@ const auctions: Ref<Auction[]> = ref([
     chain: 'btc',
     image: 'https://visualizevalue.nyc3.cdn.digitaloceanspaces.com/visuals/btc-check.png',
     title: 'VV Inscriptions - #19510',
-    description: 'Handshake bid on this VV 1/1 with your unrevealed Opepen 40 Editions',
+    description: 'Handshake bid on this VV Edition with your unrevealed Opepen 40 Editions',
     schemaId: '4',
   },
 ])

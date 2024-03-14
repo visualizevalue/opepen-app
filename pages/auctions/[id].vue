@@ -6,17 +6,17 @@
         <Modal :open="detail" @close="detail = false" modal-classes="extra-wide">
           <img :src="auction.image" :alt="auction.title">
         </Modal>
-
-        <div>
-          <h1>{{ auction.title }}</h1>
-
-          <div class="checks">
-            <a :href="auction.url" title="View Token" target="_blank">
-              <Check :style="{ color: auction.chain === 'btc' ? `#FF9900` : `currentcolor` }" />
-            </a>
-          </div>
-        </div>
       </figure>
+
+      <header>
+        <h1>{{ auction.title }}</h1>
+
+        <div class="checks">
+          <a :href="auction.url" title="View Token" target="_blank">
+            <Check :style="{ color: auction.chain === 'btc' ? `#FF9900` : `currentcolor` }" />
+          </a>
+        </div>
+      </header>
 
       <section class="info">
         <p><strong>Handshake Auction:</strong> Sign your intent to exchange unrevealed Opepen 40-Editions for this Visualize Value 1/1.</p>
@@ -132,6 +132,7 @@ useMetaData({
   padding: var(--size-5);
   grid-template-areas:
     'figure'
+    'header'
     'info'
     'bids';
 
@@ -140,8 +141,9 @@ useMetaData({
     height: 100%;
     padding: 0;
     grid-template-columns: 50% 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
+      'figure header'
       'figure info'
       'figure bids';
     gap: 0;
@@ -159,41 +161,40 @@ figure {
     width: 100%;
   }
 
-  > div {
-    padding: var(--size-7) 0 0;
-    display: flex;
-    justify-content: space-between;
-
-    h1 {
-      font-size: var(--font-xl);
-      margin: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .checks {
-      display: flex;
-      margin-top: -0.35em;
-    }
-
-    svg,
-    :deep(svg) {
-      width: var(--size-7);
-    }
-  }
-
   @media (--md) {
     border-right: var(--border-dark);
     padding: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+  }
+}
 
-    > div {
-      padding: var(--size-7) var(--size-5);
-      border-top: var(--border-dark);
-    }
+.auction-detail > header {
+  padding: var(--size-7) 0 0;
+  display: flex;
+  justify-content: space-between;
+
+  h1 {
+    font-size: var(--font-xl);
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .checks {
+    display: flex;
+    margin-top: -0.35em;
+  }
+
+  svg,
+  :deep(svg) {
+    width: var(--size-7);
+  }
+
+  @media (--md) {
+    padding: var(--size-5);
+    border-bottom: var(--border-dark);
   }
 }
 
@@ -230,8 +231,11 @@ figure {
   margin-bottom: var(--size-8);
 
   @media (--md) {
-    padding: var(--size-5);
     margin: 0;
+
+    > * {
+      padding: var(--size-5);
+    }
   }
 
   header {
@@ -239,6 +243,12 @@ figure {
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--size-5);
+
+    @media (--md) {
+      margin-bottom: 0;
+      border-bottom: var(--border-dark);
+    }
   }
+
 }
 </style>
