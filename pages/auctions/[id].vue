@@ -162,8 +162,7 @@ figure {
   grid-area: figure;
 
   img {
-    /* box-shadow: var(--shadow-lg); */
-    /* border: 1px solid var(--gray-300); */
+    border: var(--border-dark);
     width: 100%;
   }
 
@@ -175,13 +174,14 @@ figure {
     flex-direction: column;
 
     img {
+      border: none;
       border-bottom: var(--border-dark);
     }
   }
 }
 
 .auction-detail > header {
-  padding: var(--size-7) 0 0;
+  padding: var(--size-3) 0 0;
   display: flex;
   justify-content: space-between;
 

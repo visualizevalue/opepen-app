@@ -4,14 +4,13 @@
 
   <Modal :open="open" @close="open = false">
     <form @submit.stop.prevent="sign">
-      <p v-if="min > opepenCount">You don't own enough unrevealed Opepen 40 Editions to join this auction.</p>
-      <label v-else>
+      <label>
         <span>
           How many opepen do you want to bid?
           <span class="muted"><br>You own {{ opepenCount }} unrevealed Opepen 40 Editions
           <span v-if="delegatedAddresses.length"> across {{delegatedAddresses.length + 1}} delegated accounts</span>.</span>
         </span>
-        <input v-if="opepenCount" type="number" v-model="bidCount" :min="min" :max="opepenCount" :disabled="! opepenCount" required />
+        <input v-if="opepenCount" type="number" v-model="bidCount" min="1" :max="opepenCount" :disabled="! opepenCount" required />
       </label>
       <footer>
         <Button v-if="min < opepenCount" :disabled="signing || ! opepenCount" @click="sign">
@@ -41,12 +40,15 @@ const emit = defineEmits(['signed'])
 
 const { address } = useAccount()
 const open = ref(false)
-const bidCount = ref(props.min)
-watch(() => props.min, () => bidCount.value = props.min)
 
 const delegatedAddresses = ref([])
 const opepen = ref([])
 const opepenCount = ref(0)
+
+const bidCount = ref(props.min > opepenCount.value ? props.min : opepenCount.value)
+watch(() => props.min, () => bidCount.value = props.min)
+watch(opepenCount, () => bidCount.value = opepenCount.value)
+
 const fetchOpepen = async () => {
   if (! address.value) return
 
