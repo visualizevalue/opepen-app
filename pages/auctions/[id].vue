@@ -94,7 +94,7 @@ const sortBids = (a, b) => {
     highestBidAmount.value = bidCountA
   }
 
-  if (bidCountA == bidCountB) return a.created_at < b.createdAt ? -1 : 1
+  if (bidCountA == bidCountB) return a.created_at < b.createdAt ? 1 : -1
   if (bidCountA > bidCountB) return -1
   return 1
 }
@@ -145,6 +145,8 @@ useMetaData({
   @media (--md) {
     border-top: var(--border-dark);
     height: 100%;
+    height: calc(100dvh - var(--navbar-height));
+    overflow: hidden;
     padding: 0;
     grid-template-columns: 50% 1fr;
     grid-template-rows: auto auto 1fr;
@@ -240,23 +242,31 @@ figure {
   width: 100%;
   margin-bottom: var(--size-8);
 
-  @media (--md) {
-    margin: 0;
-
-    > * {
-      padding: var(--size-5);
-    }
-  }
-
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--size-5);
+  }
 
-    @media (--md) {
+  @media (--md) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: auto;
+    position: relative;
+    height: 100%;
+    margin: 0;
+
+    > * {
+      padding: var(--size-5);
+    }
+
+    header {
       margin-bottom: 0;
       border-bottom: var(--border-dark);
+      position: sticky;
+      top: 0;
+      background-color: var(--semi);
+      backdrop-filter: var(--blur);
     }
   }
 
