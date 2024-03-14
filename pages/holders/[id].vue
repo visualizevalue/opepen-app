@@ -157,6 +157,7 @@ header {
     height: var(--size-9);
     border-top-left-radius: var(--size-2);
     margin-top: -5cqh;
+    border-color: var(--gray-300);
 
     @media (--md) {
       width: calc(var(--size-9) * 2);
@@ -176,6 +177,7 @@ header {
     align-items: baseline;
     gap: var(--size-4);
     flex-wrap: wrap;
+    color: var(--white);
 
     span {
       font-family: var(--font-family-opepen);
@@ -189,7 +191,7 @@ header {
   }
 
   .meta-separated {
-    color: var(--gray-z-7);
+    color: var(--gray-700);
   }
 
   .socials {
