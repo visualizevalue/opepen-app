@@ -2,7 +2,7 @@ import { type SignTypedDataArgs } from '@wagmi/core'
 
 export const ACTION = 'bid'
 
-export const bidDefinition = (name: string, object: { Auction: string, Opepen: string }): SignTypedDataArgs => {
+export const bidDefinition = (name: string, object: { Auction: string, Opepen: string }) => {
   const domain = {
     name,
     version: '1',
