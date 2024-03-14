@@ -3,7 +3,12 @@
     <figure>
       <img :src="auction.image" :alt="auction.title">
 
-      <h1>{{ auction.title }}</h1>
+      <div>
+        <h1>{{ auction.title }}</h1>
+        <a :href="auction.url" title="View Token" target="_blank">
+          <Check />
+        </a>
+      </div>
     </figure>
 
     <section class="info">
@@ -92,10 +97,24 @@ figure {
     border: 1px solid var(--gray-300);
   }
 
-  h1 {
-    font-size: var(--font-xl);
+  > div {
     margin: var(--size-7) 0 0;
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      font-size: var(--font-xl);
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    svg,
+    :deep(svg) {
+      width: var(--size-7);
+    }
   }
+
 }
 
 .info {
