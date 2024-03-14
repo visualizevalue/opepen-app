@@ -72,6 +72,7 @@ section {
 
 .auction {
   display: flex;
+  flex-direction: column;
   gap: var(--size-4);
   padding: var(--size-4);
   border: var(--border-dark);
@@ -80,8 +81,14 @@ section {
   background: var(--gray-z-1);
   margin-bottom: var(--size-5);
 
+  @media (--md) {
+    flex-direction: row;
+  }
+
   img {
-    max-width: 15rem;
+    @media (--md) {
+      max-width: 15rem;
+    }
   }
 
   .text {
