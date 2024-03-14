@@ -10,9 +10,9 @@
           <a :href="auction.url" title="View Token" target="_blank">
             <Check />
           </a>
-          <a v-if="auction.btcUrl" :href="auction.btcUrl" title="View Artwork on Bitcoin" target="_blank">
+          <!-- <a v-if="auction.btcUrl" :href="auction.btcUrl" title="View Artwork on Bitcoin" target="_blank">
             <Check style="color: #FF9900;" />
-          </a>
+          </a> -->
         </div>
       </div>
     </figure>
@@ -24,8 +24,10 @@
 
     <section class="bids">
       <header>
-        <h1>Bids (<CountDown :until="until" class="inline" />)</h1>
-        <SignNewBid :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
+        <h1>Bids (<CountDown v-if="until" :until="until" class="inline">
+          <template #complete>auction closed</template>
+        </CountDown><span v-else>24h</span>)</h1>
+        <SignNewBid v-if="ongoing" :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
       </header>
 
       <AuctionBidListItem v-for="bid in bids" :key="bid.id" :bid="bid" />
@@ -47,11 +49,22 @@ const bids = ref([])
 const earliestBid = ref(null)
 const latestBid = ref(null)
 const until = computed(() => {
-  const earliestDate = DateTime.fromISO(earliestBid.value?.created_at)
-  const latestDate = DateTime.fromISO(earliestBid.value?.created_at)
+  if (! earliestBid.value || ! latestBid.value) return null
 
-  return earliestDate.plus({ day: 1 }).toUnixInteger()
+  const earliestDate = DateTime.fromISO(earliestBid.value?.created_at)
+  const latestDate = DateTime.fromISO(latestBid.value?.created_at)
+
+  const earliestEnd = earliestDate.plus({ days: 1 })
+
+  const diff = earliestEnd.diff(latestDate).as('minutes')
+  console.log(diff)
+
+  return diff < 10 ? latestDate.plus({ minutes: 10 }).toUnixInteger() : earliestEnd.toUnixInteger()
 })
+
+const ongoing = ref(until.value > DateTime.now().toUnixInteger())
+watch(until, () => ongoing.value = until.value > DateTime.now().toUnixInteger())
+
 const highestBidAmount = ref(0)
 
 const refreshKey = ref(0)
