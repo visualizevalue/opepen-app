@@ -77,7 +77,7 @@ const refreshKey = ref(0)
 const url = `${config.public.signatureApi}/signatures`
 const query = computed(() => {
   const q = new URLSearchParams({
-    'filters[schema]': `2`,
+    'filters[schema]': auction.value.schemaId,
     'limit': '1000',
     // 'filters[object->Auction]': `vv-rare/status`, // TODO: check how we can make this work on the API
   })
@@ -153,23 +153,14 @@ figure {
   align-self: center;
   grid-area: figure;
 
-  @media (--md) {
-    border-right: var(--border-dark);
-    padding: var(--size-5);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-  }
-
   img {
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--gray-300);
+    /* box-shadow: var(--shadow-lg); */
+    /* border: 1px solid var(--gray-300); */
     width: 100%;
   }
 
   > div {
-    margin: var(--size-7) 0 0;
+    padding: var(--size-7) 0 0;
     display: flex;
     justify-content: space-between;
 
@@ -191,12 +182,24 @@ figure {
     }
   }
 
+  @media (--md) {
+    border-right: var(--border-dark);
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+
+    > div {
+      padding: var(--size-7) var(--size-5);
+      border-top: var(--border-dark);
+    }
+  }
 }
 
 .info {
   grid-area: info;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: var(--size-4);
   padding: 0 0 var(--size-4);
   border-bottom: var(--border-dark);
@@ -204,6 +207,11 @@ figure {
 
   @media (--md) {
     padding: var(--size-5);
+  }
+
+  @media (--lg) {
+    gap: var(--size-7);
+    grid-template-columns: 1fr 1fr;
   }
 
   p {

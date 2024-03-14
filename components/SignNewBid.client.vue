@@ -72,7 +72,7 @@ const sign = async () => {
 
   try {
     const object = { Auction: `vv-rare/${props.auction.id}`, Opepen: `${bidCount.value} × 40-Editions` }
-    const definition = bidDefinition(object)
+    const definition = bidDefinition(`Opepen Auction: ${props.auction.title}`, object)
     const signature = await signTypedData(definition)
     requesting.value = false
 
