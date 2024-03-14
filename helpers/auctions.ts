@@ -1,6 +1,7 @@
 type Auction = {
   id: string
   url: string
+  btcUrl?: string
   description: string
   image: string
   title: string
@@ -15,6 +16,7 @@ const auctions: Ref<Auction[]> = ref([
   {
     id: 'status',
     url: 'https://foundation.app/@visualizevalue/vvrare/45',
+    btcUrl: 'https://ordiscan.com',
     image: 'https://visualizevalue.nyc3.cdn.digitaloceanspaces.com/visuals/status.png',
     title: 'Status: Eternal',
     description: 'Handshake bid on this VV 1/1 with your unrevealed Opepen 40 Editions',
