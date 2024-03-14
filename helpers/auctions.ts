@@ -5,7 +5,6 @@ type Auction = {
   description: string
   image: string
   title: string
-  completes_at: string
 }
 
 type KeyedAuctions = {
@@ -20,8 +19,15 @@ const auctions: Ref<Auction[]> = ref([
     image: 'https://visualizevalue.nyc3.cdn.digitaloceanspaces.com/visuals/status.png',
     title: 'Status',
     description: 'Handshake bid on this VV 1/1 with your unrevealed Opepen 40 Editions',
-    completes_at: '2024-03-15',
-  }
+  },
+  {
+    id: 'btc-check',
+    url: 'https://ordinals.com/inscription/18fb527b0c9630357867f52c0f7259944f319cc4a159195dfe7b7de182e3c324i0',
+    chain: 'btc',
+    image: 'https://djoq6wdtoz1c6.cloudfront.net/content/7a80778090857cc831d1cc42816add13b7d57b28cd6e5170552d13549c7effb4i0',
+    title: 'VV Inscriptions - #19510',
+    description: 'Handshake bid on this VV 1/1 with your unrevealed Opepen 40 Editions',
+  },
 ])
 const auctionsById: ComputedRef<KeyedAuctions> = computed(() => auctions.value?.reduce((obj: KeyedAuctions, auction) => {
   obj[auction.id] = auction

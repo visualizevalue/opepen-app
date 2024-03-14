@@ -78,6 +78,7 @@ section {
   border-radius: var(--size-4);
   border-top-left-radius: var(--size-2);
   background: var(--gray-z-1);
+  margin-bottom: var(--size-5);
 
   img {
     max-width: 15rem;

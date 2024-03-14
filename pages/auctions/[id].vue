@@ -8,17 +8,14 @@
 
         <div class="checks">
           <a :href="auction.url" title="View Token" target="_blank">
-            <Check />
+            <Check :style="{ color: auction.chain === 'btc' ? `#FF9900` : `currentcolor` }" />
           </a>
-          <!-- <a v-if="auction.btcUrl" :href="auction.btcUrl" title="View Artwork on Bitcoin" target="_blank">
-            <Check style="color: #FF9900;" />
-          </a> -->
         </div>
       </div>
     </figure>
 
     <section class="info">
-      <p><strong>Handshake Auction #1:</strong> Sign your intent to exchange unrevealed Opepen 40-Editions for the above Visualize Value 1/1.</p>
+      <p><strong>Handshake Auction:</strong> Sign your intent to exchange unrevealed Opepen 40-Editions for this Visualize Value 1/1.</p>
       <p><strong>Background:</strong> We’re building up a treasury to compensate artists that contribute to the Opepen Protocol.</p>
     </section>
 
@@ -116,20 +113,42 @@ useMetaData({
 
 <style lang="postcss" scoped>
 .auction-detail {
-  max-width: var(--content-width-sm);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: var(--size-5);
+  grid-template-areas:
+    'figure'
+    'info'
+    'bids';
+
+  @media (--md) {
+    padding: 0 var(--size-5);
+    grid-template-columns: 40% 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'figure info'
+      'figure bids';
+    gap: 0;
+  }
 }
 
 figure {
-  max-width: var(--content-width-sm);
+  width: 100%;
   align-self: center;
+  grid-area: figure;
+
+  @media (--md) {
+    border-right: var(--border-dark);
+    padding: calc(var(--navbar-height) + var(--size-4)) var(--size-4) var(--size-5);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   img {
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--gray-300);
+    width: 100%;
   }
 
   > div {
@@ -158,11 +177,17 @@ figure {
 }
 
 .info {
+  grid-area: info;
   display: flex;
   flex-direction: column;
   gap: var(--size-4);
   padding: 0 0 var(--size-4);
   border-bottom: var(--border-dark);
+  width: 100%;
+
+  @media (--md) {
+    padding: calc(var(--navbar-height) + var(--size-4)) var(--size-4) var(--size-5);
+  }
 
   p {
     color: var(--gray-z-5);
@@ -175,7 +200,13 @@ figure {
 }
 
 .bids {
+  grid-area: bids;
+  width: 100%;
   margin-bottom: var(--size-8);
+
+  @media (--md) {
+    padding: var(--size-5) var(--size-4);
+  }
 
   header {
     display: flex;
