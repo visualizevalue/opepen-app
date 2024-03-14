@@ -139,7 +139,7 @@ useMetaData({
     border-top: var(--border-dark);
     height: 100%;
     padding: 0;
-    grid-template-columns: 40% 1fr;
+    grid-template-columns: 50% 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas:
       'figure info'
