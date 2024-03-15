@@ -9,6 +9,10 @@
         <div class="text">
           <h1>{{ auction.title }}</h1>
           <p>{{ auction.description }}</p>
+          <div class="bid">
+            <p>Winning bid:</p>
+            <AuctionBidListItem :bid="auction.highestBid" />
+          </div>
 
           <footer>
             <Button :to="`/auctions/${auction.slug}`"><span>View Auction</span></Button>
@@ -83,25 +87,34 @@ section {
 
   @media (--md) {
     flex-direction: row;
-  }
+    padding-right: var(--size-8);
 
-  img {
-    @media (--md) {
+    img {
       max-width: 15rem;
     }
   }
+
 
   .text {
     display: flex;
     flex-direction: column;
     gap: var(--size-2);
+    width: 100%;
 
     h1 {
       margin: 0;
     }
 
     p {
-      color: var(--gray-z-5);
+      color: var(--gray-z-6);
+    }
+
+    > .bid {
+      display: grid;
+
+      > p {
+        color: var(--gray-z-6);
+      }
     }
 
     footer {
