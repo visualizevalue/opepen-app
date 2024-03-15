@@ -26,7 +26,7 @@
       <ClientOnly>
         <section class="bids">
           <header>
-            <h1>Bids (<CountDown v-if="until" :until="until" class="inline" @complete="ongoing = false">
+            <h1>Bids (<CountDown v-if="until" :until="until" class="inline" @complete="onComplete">
               <template #complete>auction closed</template>
             </CountDown><span v-else>24h</span>)</h1>
             <SignNewBid v-if="ongoing" :auction="auction" @signed="loadAuction" :min="highestBidAmount + 1" />
@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+import { useIntervalFn } from '@vueuse/core'
 import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 
@@ -54,6 +55,7 @@ const loadAuction = async () => {
   loading.value = false
 }
 await loadAuction()
+const { pauses: stopUpdateAuctionInterval } = useIntervalFn(() => loadAuction(), 30_000)
 
 const imageDetailOpen = ref(false)
 
@@ -77,6 +79,10 @@ const until = computed(() => {
 })
 const ongoing = ref(until.value > DateTime.now().toUnixInteger())
 watch(until, () => ongoing.value = until.value > DateTime.now().toUnixInteger())
+const onComplete = () => {
+  ongoing.value = false
+  stopUpdateAuctionInterval()
+}
 
 useMetaData({
   title: `${auction.value.title} | Opepen Auctions`,
