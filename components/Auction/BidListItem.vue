@@ -1,6 +1,8 @@
 <template>
   <div v-if="bid" class="bid">
-    <ApiAccount :account="bid.account" :hide-address="false" />
+    <NuxtLink :to="`/holders/${bid.account.address}`">
+      <ApiAccount :account="bid.account" :hide-address="false" />
+    </NuxtLink>
     <span>{{ bid.bidCount }} <span class="muted">×</span> <span class="muted">40-Editions</span></span>
   </div>
 </template>
