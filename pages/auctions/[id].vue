@@ -126,10 +126,8 @@ useMetaData({
 
 <style lang="postcss" scoped>
 .auction-wrapper {
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 0;
   display: grid;
+  padding: var(--navbar-height) 0 0 ;
 }
 
 .auction-detail {

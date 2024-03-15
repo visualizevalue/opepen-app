@@ -43,6 +43,7 @@ onMounted(() => fetchSets())
     height: var(--navbar-height);
     padding: var(--size-4);
     display: flex;
+    align-items: center;
     gap: var(--size-3);
     background-color: var(--semi);
     z-index: 40;
