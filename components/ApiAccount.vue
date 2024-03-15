@@ -31,6 +31,7 @@ span {
   display: inline-flex;
   align-items: center;
   gap: var(--size-2);
+  line-height: 1em;
 
   :deep(img) {
     width: var(--size-5);

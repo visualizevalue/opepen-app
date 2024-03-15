@@ -2,8 +2,8 @@
   <div class="auction-wrapper">
     <div class="auction-detail">
       <figure>
-        <img :src="auction.image" :alt="auction.title" @click="detail = true">
-        <Modal :open="detail" @close="detail = false" modal-classes="extra-wide">
+        <img :src="auction.image" :alt="auction.title" @click="imageDetailOpen = true">
+        <Modal :open="imageDetailOpen" @close="imageDetailOpen = false" modal-classes="extra-wide">
           <img :src="auction.image" :alt="auction.title">
         </Modal>
       </figure>
@@ -26,10 +26,10 @@
       <ClientOnly>
         <section class="bids">
           <header>
-            <h1>Bids (<CountDown v-if="until" :until="until" class="inline">
+            <h1>Bids (<CountDown v-if="until" :until="until" class="inline" @complete="ongoing = false">
               <template #complete>auction closed</template>
             </CountDown><span v-else>24h</span>)</h1>
-            <SignNewBid v-if="ongoing" :auction="auction" @signed="refreshKey++" :min="highestBidAmount + 1" />
+            <SignNewBid v-if="ongoing" :auction="auction" @signed="loadAuction" :min="highestBidAmount + 1" />
           </header>
 
           <AuctionBidListItem v-for="bid in bids" :key="bid.id" :bid="bid" />
@@ -42,23 +42,32 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
-import { useAuctions } from '~/helpers/auctions'
 
 const config = useRuntimeConfig()
 const route = useRoute()
-const { auctionsById } = useAuctions()
-const auction = computed(() => auctionsById.value[route.params.id])
 
-const detail = ref(false)
+const auction = ref(null)
+const loading = ref(false)
+const loadAuction = async () => {
+  loading.value = true
+  auction.value = await $fetch(config.public.opepenApi + `/auctions/${route.params.id}`)
+  loading.value = false
+}
+await loadAuction()
 
-const bids = ref([])
-const earliestBid = ref(null)
-const latestBid = ref(null)
+const imageDetailOpen = ref(false)
+
+const bids = computed(() => auction.value?.bids)
+const earliestBid = computed(() => auction.value?.earliestBid)
+const latestBid = computed(() => auction.value?.latestBid)
+const highestBid = computed(() => auction.value?.highestBid)
+const highestBidAmount = computed(() => highestBid.value?.bidCount)
+
 const until = computed(() => {
   if (! earliestBid.value || ! latestBid.value) return DateTime.now().plus({ days: 1 }).toUnixInteger()
 
   const earliestDate = DateTime.fromISO(earliestBid.value?.created_at)
-  const latestDate = DateTime.fromISO(latestBid.value?.created_at)
+  const latestDate = DateTime.fromISO(highestBid.value?.createdAt)
 
   const earliestEnd = earliestDate.plus({ days: 1 })
 
@@ -66,57 +75,8 @@ const until = computed(() => {
 
   return diff < 10 ? latestDate.plus({ minutes: 10 }).toUnixInteger() : earliestEnd.toUnixInteger()
 })
-
 const ongoing = ref(until.value > DateTime.now().toUnixInteger())
 watch(until, () => ongoing.value = until.value > DateTime.now().toUnixInteger())
-
-const highestBidAmount = ref(0)
-
-const refreshKey = ref(0)
-const url = `${config.public.signatureApi}/signatures`
-const query = computed(() => {
-  const q = new URLSearchParams({
-    'filters[schema]': auction.value.schemaId,
-    'limit': '1000',
-    // 'filters[object->Auction]': `vv-rare/status`, // TODO: check how we can make this work on the API
-  })
-
-  return q.toString()
-})
-const sortBids = (a, b) => {
-  const bidCountA = getBidCount(a)
-  const bidCountB = getBidCount(b)
-
-  if (bidCountA > highestBidAmount.value) {
-    highestBidAmount.value = bidCountA
-  }
-  if (bidCountB > highestBidAmount.value) {
-    highestBidAmount.value = bidCountA
-  }
-
-  if (bidCountA == bidCountB) return a.created_at < b.createdAt ? 1 : -1
-  if (bidCountA > bidCountB) return -1
-  return 1
-}
-const loadBids = async () => {
-  const response = await $fetch(`${url}?${query.value}`)
-
-  latestBid.value = response.data[0]
-  earliestBid.value = response.data[response.data.length - 1]
-  const sorted = response.data.sort(sortBids)
-
-  // const counts = {}
-  // sorted.forEach(bid => {
-  //   const count = getBidCount(bid)
-  //   if (counts[count])
-  // })
-
-  bids.value = sorted
-}
-onMounted(() => loadBids())
-watch(refreshKey, () => loadBids())
-
-const getBidCount = bid => parseInt(JSON.parse(bid.object).Opepen.split(' ')[0])
 
 useMetaData({
   title: `${auction.value.title} | Opepen Auctions`,

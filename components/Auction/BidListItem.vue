@@ -1,8 +1,7 @@
 <template>
   <div v-if="bid" class="bid">
-    <Account :address="bid.signerAccount.address" :hide-address="false" />
-    <!-- <span>check</span> -->
-    <span>{{ opepenCount }} <span class="muted">×</span> <span class="muted">40-Editions</span></span>
+    <ApiAccount :account="bid.account" :hide-address="false" />
+    <span>{{ bid.bidCount }} <span class="muted">×</span> <span class="muted">40-Editions</span></span>
   </div>
 </template>
 
@@ -10,16 +9,12 @@
 const props = defineProps({
   bid: Object,
 })
-
-const object = computed(() => props.bid && JSON.parse(props.bid.object))
-const auction = computed(() => object.value ? object.value.Auction : `Unknown`)
-const opepen = computed(() => object.value ? object.value.Opepen : `Unknown`)
-const opepenCount = computed(() => parseInt(opepen.value.split(' ')[0]))
 </script>
 
 <style lang="postcss">
 .bid {
   display: grid;
+  align-items: center;
   padding: var(--size-4) 0;
   grid-template-columns: 50% 1fr;
   /* grid-template-columns: 50% 35% 1fr; */

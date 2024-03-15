@@ -11,7 +11,7 @@
           <p>{{ auction.description }}</p>
 
           <footer>
-            <Button :to="`/auctions/${auction.id}`"><span>View Auction</span></Button>
+            <Button :to="`/auctions/${auction.slug}`"><span>View Auction</span></Button>
           </footer>
         </div>
       </div>
@@ -21,9 +21,9 @@
 
 <script setup>
 import { useMetaData } from '~/helpers/head'
-import { useAuctions } from '~/helpers/auctions'
 
-const { auctions } = useAuctions()
+const config = useRuntimeConfig()
+const { data: auctions } = await useFetch(config.public.opepenApi + '/auctions')
 
 useMetaData({
   title: 'Opepen Auctions',
