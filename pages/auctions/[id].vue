@@ -43,6 +43,7 @@
 import { useIntervalFn } from '@vueuse/core'
 import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
+import { delay } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 const route = useRoute()
@@ -77,11 +78,18 @@ const until = computed(() => {
 
   return diff < 10 ? latestDate.plus({ minutes: 10 }).toUnixInteger() : earliestEnd.toUnixInteger()
 })
-const ongoing = ref(until.value > DateTime.now().toUnixInteger())
-watch(until, () => ongoing.value = until.value > DateTime.now().toUnixInteger())
-const onComplete = () => {
-  ongoing.value = false
-  stopUpdateAuctionInterval()
+const computeOngoing = () => until.value > DateTime.now().toUnixInteger()
+const ongoing = ref(computeOngoing())
+watch(until, () => ongoing.value = computeOngoing())
+const onComplete = async () => {
+  await loadAuction()
+  await delay(100)
+
+  ongoing.value = computeOngoing()
+
+  if (! ongoing.value) {
+    stopUpdateAuctionInterval()
+  }
 }
 
 useMetaData({
