@@ -84,7 +84,7 @@ const sign = async () => {
       body: JSON.stringify({
         subjects: [address.value],
         action: ACTION,
-        object,
+        object: JSON.stringify(object),
         signer: address.value,
         signature: signature,
         schema: {
