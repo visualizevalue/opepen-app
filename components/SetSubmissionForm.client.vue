@@ -74,11 +74,14 @@
         <option value="PRINT" default>Prints</option>
         <option value="NUMBERED_PRINT" disabled="disabled">Numbered Prints</option>
       </select>
-      <!-- TODO: Implement dynamic uploads -->
-      <aside class="note" v-if="isDynamic">
-        The VV team will reach out to gather the dynamic images before launching your set.
-      </aside>
     </label>
+
+    <DyanamicImagesForm
+      v-if="isDynamic"
+      :set-submission-id="data.uuid"
+      :dynamic-set-images="data.dynamicSetImages"
+      class="span-2"
+    />
 
     <div class="actions">
       <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
@@ -102,13 +105,12 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
-import { useSignIn, isAdmin } from '~/helpers/siwe'
+import { useSignIn } from '~/helpers/siwe'
 import { formatTime } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 
 const config = useRuntimeConfig()
 const router = useRouter()
-const route = useRoute()
 
 const { data } = defineProps({
   data: {
@@ -139,7 +141,7 @@ const name20 = ref(data.edition20Name || '')
 const name40 = ref(data.edition40Name || '')
 const description = ref(data.description || '')
 const artist = ref(data.artist)
-const type = ref(data.edition_type)
+const type = ref(data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
 const dataComplete = computed(() => {
   return name.value &&

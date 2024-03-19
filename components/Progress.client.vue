@@ -23,6 +23,7 @@ defineProps({
     width: var(--size-0);
     background-color: var(--success);
     border-radius: var(--size-0);
+    transition: width var(--speed);
   }
 
   > div:last-child {

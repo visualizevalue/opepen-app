@@ -10,7 +10,7 @@
         <div class="explore-link">
           <Button to="/sets/explore">
             <Icon type="chevron-right" />
-            <span>Explore</span>
+            <span>Explore All</span>
           </Button>
         </div>
       </template>
@@ -97,11 +97,15 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to top, var(--background), var(--transparent-background));;
+  background: linear-gradient(to top, var(--background), var(--transparent-background));
   position: absolute;
   bottom: 0;
   z-index: 10;
   width: 100%;
-  padding: calc(var(--size-9)*2) var(--size-4) var(--size-6);
+  padding: 20rem var(--size-4) 4rem;
+
+  .button {
+    padding: var(--size-5);
+  }
 }
 </style>
