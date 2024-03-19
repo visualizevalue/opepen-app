@@ -104,7 +104,7 @@ const addFiles = (event) => {
   previews.value = Array.from(event.target.files)
 
   if (props.maxFiles) {
-    previews.value = previews.value.slice(0, props.maxFiles - 1)
+    previews.value = previews.value.slice(0, props.maxFiles)
   }
 
   storeFiles()
