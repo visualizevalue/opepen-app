@@ -3,7 +3,7 @@
     class="multi-image-upload"
   >
     <p class="label">{{ name }}</p>
-    <Button @click="reset" class="small clear"><Icon type="trash" /><span>Clear</span></Button>
+    <Button type="button" @click="reset" class="small clear"><Icon type="trash" /><span>Clear</span></Button>
 
     <label
       class="upload"
