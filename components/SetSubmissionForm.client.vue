@@ -82,15 +82,19 @@
 
     <div class="actions">
       <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
+
+      <DeleteSetSubmissionForm v-if="! published" :submission="data" />
+
       <Button type="submit" :disabled="saving" v-if="! published">
+        <Icon type="save" />
         <span v-if="saving">Saving...</span>
         <span v-else>Save</span>
       </Button>
       <Button v-else :to="`/sets/${data.uuid}`">View Submission</Button>
 
-      <SignSet v-if="toSign" :data="data" @signed="markSigned" />
+      <SignSet v-if="toSign" :data="data" @signed="markSigned" key="sign" />
 
-      <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" />
+      <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" :save="store" key="publish" />
     </div>
   </form>
 </template>
@@ -282,7 +286,7 @@ form {
   > .actions {
     display: flex;
     justify-content: flex-end;
-    align-items: baseline;
+    align-items: center;
     gap: var(--size-4);
 
     :deep(.button) {

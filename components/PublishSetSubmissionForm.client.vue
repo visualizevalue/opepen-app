@@ -1,5 +1,6 @@
 <template>
   <Button :disabled="publishing" @click="open = true" type="button">
+    <Icon type="send" />
     <span v-if="publishing">Publishing...</span>
     <span v-else>Publish</span>
   </Button>
@@ -10,7 +11,10 @@
       <p>Before it's publicly visible, it will be reviewed by the Opepen team.</p>
       <div class="actions">
         <Button type="button" :disabled="publishing" @click.stop.prevent="open = false">Cancel</Button>
-        <Button type="submit" :disabled="publishing">Publish</Button>
+        <Button type="submit" :disabled="publishing">
+          <Icon type="send" />
+          <span>Publish</span>
+        </Button>
       </div>
     </form>
   </Modal>
@@ -20,8 +24,12 @@
 import { useSets } from '~/helpers/sets'
 import { useSignIn } from '~/helpers/siwe'
 
-const { submission } = defineProps({
-  submission: Object
+const { submission, save } = defineProps({
+  submission: Object,
+  save: {
+    type: Function,
+    default: () => null,
+  }
 })
 const emit = defineEmits(['published'])
 
@@ -36,6 +44,8 @@ const publishing = ref(false)
 
 const publish = async () => {
   if (! session.value) await signIn()
+
+  await save()
 
   publishing.value = true
 

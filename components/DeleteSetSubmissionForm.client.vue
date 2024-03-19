@@ -1,5 +1,6 @@
 <template>
   <Button :disabled="deleting" @click="open = true" type="button">
+    <Icon type="trash" />
     <span v-if="deleting">Deleteing...</span>
     <span v-else>Delete</span>
   </Button>
@@ -9,7 +10,10 @@
       <p>Are you sure you want to delete the set?</p>
       <div class="actions">
         <Button type="button" :disabled="deleting" @click.stop.prevent="open = false">Cancel</Button>
-        <Button type="submit" :disabled="deleting">Delete</Button>
+        <Button type="submit" :disabled="deleting">
+          <Icon type="trash" />
+          <span>Delete</span>
+        </Button>
       </div>
     </form>
   </Modal>
@@ -30,6 +34,7 @@ const router = useRouter()
 
 const open = ref(false)
 const { currentSet } = useSets()
+const deleting = ref(false)
 
 const destroy = async () => {
   if (! session.value) await signIn()

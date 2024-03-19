@@ -3,6 +3,7 @@
     type="button"
     @click="open = true"
   >
+    <Icon type="feather" />
     <span v-if="signing">Signing...</span>
     <span v-else>Sign Set</span>
   </Button>
@@ -32,6 +33,7 @@
     <footer>
       <div class="actions">
         <Button @click="sign">
+          <Icon type="feather" />
           <span v-if="signing">Signing...</span>
           <span v-else>Sign Set</span>
         </Button>
