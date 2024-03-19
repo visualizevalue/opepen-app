@@ -12,13 +12,14 @@
       <Icon type="image" :stroke-width="2" />
       <span>{{ name }}</span>
       <input
+        v-if="! disabled"
         type="file"
         name="image"
         accept="image/png, image/jpeg, image/gif, image/svg+xml, image/webp, video/mp4, video/webm"
         @change.prevent="addFile"
       >
     </label>
-    <button v-if="image" @click="reset" class="reset"><Icon type="x" :stroke-width="3" /></button>
+    <button v-if="image && ! disabled" @click="reset" class="reset"><Icon type="x" :stroke-width="3" /></button>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ const config = useRuntimeConfig()
 const props = defineProps({
   name: String,
   image: Object,
+  disabled: Boolean,
 })
 const emit = defineEmits(['stored', 'reset'])
 

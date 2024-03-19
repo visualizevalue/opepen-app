@@ -1,33 +1,34 @@
 <template>
-  <section v-if="set" class="items-meta">
+  <section v-if="data" class="items-meta">
     <h1>
-      <small>Set {{ pad(set.id) }}</small>
-      <span :title="set.name">{{ name }}</span>
+      <small v-if="data.set_id">Set {{ pad(data.set_id) }}</small>
+      <small v-else>Set Submission <template v-if="! data.published_at">(Private Preview)</template></small>
+      <span :title="name">{{ name }}</span>
     </h1>
 
-    <p v-if="set.description" v-html="set.description"></p>
+    <p v-if="data.description" v-html="data.description"></p>
 
     <div>
-      <CreatorSignature :set="set" />
+      <CreatorSignature :data="data" />
     </div>
 
     <ul class="overview">
       <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span v-if="published">{{ TYPES[set.edition_type] }} Editions</span>
+        <span v-if="published">{{ TYPES[data.edition_type] }} Editions</span>
         <span v-else>Unknown Editions</span>
       </li>
-      <li v-if="set.dynamicPreviewImage">
+      <li v-if="data.dynamicPreviewImage">
         <Icon type="image" stroke-width="2.25" />
         <a href="#" @click.stop.prevent="openDynamicPreview = true">Preview Dynamic Colorway</a>
 
         <Modal :open="openDynamicPreview" @close="openDynamicPreview = false" modal-classes="wide">
-          <img :src="imageURI(set.dynamicPreviewImage, 'lg')" />
+          <img :src="imageURI(data.dynamicPreviewImage, 'lg')" />
         </Modal>
       </li>
       <li>
         <IconOpepen />
-        <span>{{ formatNumber(set?.submission_stats?.opepens.total) }} Opt-Ins</span>
+        <span>{{ formatNumber(data?.submission_stats?.opepens.total) }} Opt-Ins</span>
       </li>
       <li v-if="revealed || revealing">
         <IconCheck />
@@ -35,19 +36,24 @@
       </li>
       <li v-else>
         <IconCheck :class="{ published }" />
-        <span v-if="published">Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)</span>
-        <span v-else>Opt-In not opepen yet</span>
+        <span v-if="published">
+          <template v-if="consensusDate">
+            Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)
+          </template>
+          <template v-else>Opt-In Open</template>
+        </span>
+        <span v-else>Opt-In not open yet</span>
       </li>
-      <li>
+      <li v-if="data.reveal_strategy">
         <Icon type="code" stroke-width="2.25" />
         <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">
-          <span>Reveal mechanism {{ set.reveal_strategy }}</span>
+          <span>Reveal mechanism {{ data.reveal_strategy }}</span>
         </NuxtLink>
       </li>
-      <li v-if="set.reveal_block_number">
+      <li v-if="data.reveal_block_number">
         <Icon type="box" stroke-width="2.25" />
-        <NuxtLink :to="`https://etherscan.io/block/${set.reveal_block_number}`">
-          <span>Block {{ set.reveal_block_number }}</span>
+        <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">
+          <span>Block {{ data.reveal_block_number }}</span>
         </NuxtLink>
       </li>
     </ul>
@@ -63,16 +69,16 @@ import { TYPES, RESERVED_UNTIL } from '~/helpers/sets'
 import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
-  set: Object,
+  data: Object,
 })
 
-const name = computed(() => props.set.name || (props.set.id < RESERVED_UNTIL ? 'Reserved' : 'Unrevealed'))
+const name = computed(() => props.data.name || (props.data.set_id < RESERVED_UNTIL ? 'Reserved' : 'Unrevealed'))
 
-const published = computed(() => !!props.set.name)
-const revealsAt = ref(DateTime.fromISO(props.set?.reveals_at).toUnixInteger())
+const published = computed(() => !!props.data.published_at)
+const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
-const revealed = computed(() => revealing.value && props.set?.reveal_block_number)
-const consensusDate = computed(() => props.set?.reveals_at && formatDate(props.set?.reveals_at))
+const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
+const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.set?.reveals_at))
 
 const onComplete = () => {
   revealing.value = true

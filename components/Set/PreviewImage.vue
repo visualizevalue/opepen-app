@@ -5,7 +5,7 @@
       :image="image"
       version="sm"
       class="appear"
-      :class="{ square: ! set.rounded_preview }"
+      :class="{ square: ! data.rounded_preview }"
       auto-embed
     >
       <div class="meta">
@@ -42,15 +42,15 @@ import downloadImage from '~/helpers/download-image'
 import { EDITION_TAGLINES } from '~/helpers/editions'
 
 const {
-  set,
+  data,
   edition,
 } = defineProps({
-  set: Object,
+  data: Object,
   edition: Number
 })
 
-const image = computed(() => set[`edition${edition}Image`])
-const name = computed(() => set[`edition${edition}Name`])
+const image = computed(() => data[`edition${edition}Image`])
+const name = computed(() => data[`edition${edition}Name`])
 
 const tagline = computed(() => EDITION_TAGLINES[edition])
 

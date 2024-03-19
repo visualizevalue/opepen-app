@@ -8,7 +8,9 @@ export const SET_TIMESTAMPS = {
 
 type OpepenSet = {
   id: number
-  reveals_at: string
+  submission: {
+    reveals_at: string
+  }
 }
 
 type KeyedSets = {
@@ -27,25 +29,25 @@ const setsById: ComputedRef<KeyedSets> = computed(() => sets.value?.reduce((obj:
   obj[set.id] = set
   return obj
 }, {}))
-const publishedSets: ComputedRef<OpepenSet[]> = computed(() => sets.value?.filter(set => !! set.reveals_at))
+const publishedSets: ComputedRef<OpepenSet[]> = computed(() => sets.value?.filter(set => !! set.submission.reveals_at))
 const setsByPublishDate: ComputedRef<OpepenSet[]> = computed(() => publishedSets.value?.sort(
-  (set1, set2) => set1.reveals_at >= set2.reveals_at ? 1 : -1)
+  (set1, set2) => set1.submission.reveals_at >= set2.submission.reveals_at ? 1 : -1)
 )
 const activeSets: ComputedRef<OpepenSet[]> = computed(() => {
   const now = DateTime.now()
 
-  return publishedSets.value?.filter(set => DateTime.fromISO(set.reveals_at) > now)
+  return publishedSets.value?.filter(set => DateTime.fromISO(set.submission.reveals_at) > now)
 })
 const completeSets: ComputedRef<OpepenSet[]> = computed(() => {
   const now = DateTime.now()
 
-  return publishedSets.value?.filter(set => DateTime.fromISO(set.reveals_at) < now)
+  return publishedSets.value?.filter(set => DateTime.fromISO(set.submission.reveals_at) < now)
 })
 const currentSet: ComputedRef<OpepenSet> = computed(() => {
   const now = DateTime.now()
 
   const set = activeSets.value
-    .find((s: OpepenSet) => DateTime.fromISO(s.reveals_at) > now)
+    .find((s: OpepenSet) => DateTime.fromISO(s.submission.reveals_at) > now)
 
   if (! set) return sets.value[sets.value.length - 1]
 

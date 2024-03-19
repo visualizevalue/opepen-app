@@ -1,5 +1,5 @@
 <template>
-  <Button v-if="isConnected" to="/create" @click="onCreateClick" class="create">
+  <Button v-if="isConnected" to="/create/sets" @click="onCreateClick" class="create">
     <Icon type="plus" />
     <span>Create</span>
   </Button>

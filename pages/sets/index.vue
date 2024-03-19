@@ -2,7 +2,7 @@
   <div>
     <section v-if="activeSets.length">
       <SectionTitle>Active Sets</SectionTitle>
-      <SetPreview v-for="set in activeSets" :set="set" :key="set.id" />
+      <SetPreview v-for="set in activeSets" :data="set.submission" :key="set.id" />
     </section>
 
     <section>
@@ -11,7 +11,7 @@
         {{ completeSets.length }} / 200
       </Progress>
       <div class="grid">
-        <SetPreview v-for="set in completeSets" :set="set" :key="set.id" minimal />
+        <SetPreview v-for="set in completeSets" :data="set.submission" :key="set.id" minimal />
       </div>
     </section>
   </div>

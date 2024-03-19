@@ -16,10 +16,6 @@
     <section>
       <Alert class="inline">Signing will initiate a transaction (0 Eth) to visualizevalue.eth containing the below data as plain text in its body.</Alert>
       <label>
-        <span class="label">Set</span>
-        <input type="text" :value="pad(data.set_id)" disabled />
-      </label>
-      <label>
         <span class="label">Name</span>
         <input type="text" :value="data.name" disabled />
       </label>
@@ -48,7 +44,6 @@
 import { sendTransaction } from '@wagmi/core'
 import { DateTime } from 'luxon'
 import { stringToHex } from 'viem'
-import pad from '~/helpers/pad'
 import { useSignIn } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
@@ -70,7 +65,6 @@ const signing = ref(false)
 const lastSigned = ref(null)
 const message = computed(() => {
   const elements = [
-    `Set: ${pad(data.set_id)}`,
     `Name: ${data.name}`,
     `Artist: ${data.artist}`,
   ]
@@ -98,7 +92,6 @@ const sign = async () => {
       credentials: 'include',
       body: JSON.stringify({
         signature: {
-          set: data.set_id,
           name: data.name,
           artist: data.artist,
           note: note.value,

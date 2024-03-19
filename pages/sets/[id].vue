@@ -1,27 +1,29 @@
 <template>
   <div class="set">
     <header>
-      <SetPagination :set="set" />
+      <SetPagination v-if="isSet" :set="set" />
       <EmailNotificationAlert />
-      <SetReplacementNote :set="set" :replaced-submission="set.replacedSubmission" class="note" />
+      <SetReplacementNote v-if="submission?.set_id" :set="set" :replaced-submission="set.replacedSubmission" class="note" />
     </header>
 
-    <SetPreviewImages :set="set" class="items" />
-    <SetItemsMeta :set="set" />
+    <SetPreviewImages :data="submission" class="items" />
+    <SetItemsMeta :data="submission" />
 
     <!-- <SetAbout :set="set" /> -->
-    <SetStats :set="set" class="stats" />
-    <SetOptIn :set="set" @update="refresh" />
-    <SetStatsMeta :set="set" />
+    <SetStats :data="submission" class="stats" />
+    <SetOptIn :data="submission" @update="() => refresh()" />
+    <SetStatsMeta :data="submission" />
 
-    <SetOpepen :set="set" />
+    <SetOpepen v-if="submission.set_id" :data="submission" />
 
-    <SetOptInComments :set="set" />
+    <!-- TODO: Reenable comments -->
+    <!-- <SetOptInComments :data="data" /> -->
   </div>
 </template>
 
 <script setup>
 import { DateTime } from 'luxon'
+import { isSetId } from '~/helpers/urls'
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'
 import { shortenedCleanText } from '~/helpers/strings'
@@ -29,32 +31,37 @@ import { shortenedCleanText } from '~/helpers/strings'
 const config = useRuntimeConfig()
 
 const route = useRoute()
-const setId = parseInt(route.params.id)
+const isSet = isSetId(route.params.id)
 
-const url = `${config.public.opepenApi}/opepen/sets/${setId}`
-const { data: set, refresh } = await useFetch(url)
+const url = isSet
+  ? `${config.public.opepenApi}/opepen/sets/${route.params.id}`
+  : `${config.public.opepenApi}/set-submissions/${route.params.id}`
 
-const revealsAt = set.value.reveals_at && DateTime.fromISO(set.value.reveals_at).toUnixInteger()
+const { data, refresh } = await useFetch(url)
+const set = computed(() => isSet ? data.value : data.value.set)
+const submission = computed(() => isSet ? data.value.submission : data.value)
+
+const revealsAt = submission.value.reveals_at && DateTime.fromISO(submission.value.reveals_at).toUnixInteger()
 const revealed = revealsAt && (revealsAt <= DateTime.now().toUnixInteger())
-const mainButton = revealed || !set.value.name
+const mainButton = revealed || !submission.value.name
   ? [
-    { property: 'fc:frame:button:1', content: `Set #${pad(set.value.id, 3)} on Opepen.art` },
+    { property: 'fc:frame:button:1', content: `Set #${pad(submission.value.id, 3)} on Opepen.art` },
     { property: 'fc:frame:button:1:action', content: `link` },
-    { property: 'fc:frame:button:1:target', content: `https://opepen.art/sets/${set.value.id}` },
+    { property: 'fc:frame:button:1:target', content: `https://opepen.art/sets/${submission.value.id}` },
   ]
   : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
 
 useMetaData({
-  title: `Set ${pad(set.value.id, 3)}: ${set.value.name || 'Locked'} | Opepen`,
-  description: shortenedCleanText(set.value.description) || `Opepen Set ${pad(set.value.id, 3)} is one of 200 official Opepen sets.`,
-  og: `${config.public.opepenApi}/frames/image/sets/${set.value.id}?${new URLSearchParams(route.query)}`,
+  title: `Set ${pad(submission.value.id, 3)}: ${submission.value.name || 'Locked'} | Opepen`,
+  description: shortenedCleanText(submission.value.description) || `Opepen Set ${pad(submission.value.id, 3)} is one of 200 official Opepen sets.`,
+  og: `${config.public.opepenApi}/frames/image/sets/${submission.value.id}?${new URLSearchParams(route.query)}`,
   meta: [
     { property: 'fc:frame', content: 'vNext' },
-    { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${set.value.id}/detail/image` },
+    { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail/image` },
     { property: 'fc:frame:image:aspect_ratio', content: `1:1` },
     ...mainButton,
     { property: 'fc:frame:button:2', content: 'View 1/1 →' },
-    { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${set.value.id}/detail` },
+    { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail` },
   ],
 })
 </script>

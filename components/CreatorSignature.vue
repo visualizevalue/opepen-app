@@ -1,29 +1,29 @@
 <template>
-  <ButtonGroup v-if="set.creator">
-    <Button :to="`/holders/${set.creator}`">
+  <ButtonGroup v-if="data.creator">
+    <Button :to="`/holders/${data.creator}`">
       <ApiAccount
-        :account="set.creatorAccount"
+        :account="data.creatorAccount"
         :hide-address="false"
       />
     </Button>
     <Button
-      v-if="set.artist_signature"
-      :to="`https://etherscan.io/tx/${set.artist_signature.tx}`"
+      v-if="data.artist_signature"
+      :to="`https://etherscan.io/tx/${data.artist_signature.tx}`"
       target="_blank"
       class="signature"
     >
       <Icon type="feather" />
       <span>
         <span>Set Signature</span>
-        <small>{{ set.artist_signature.tx }}</small>
+        <small>{{ data.artist_signature.tx }}</small>
       </span>
     </Button>
   </ButtonGroup>
 </template>
 
 <script setup>
-const { set } = defineProps({
-  set: Object,
+const { data } = defineProps({
+  data: Object,
 })
 </script>
 

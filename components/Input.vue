@@ -10,6 +10,7 @@
       @input="onInput"
       @keydown.enter="$emit('enter', $event)"
       rows="1"
+      :disabled="disabled"
     ></textarea>
 
     <slot name="after" />
@@ -19,7 +20,7 @@
 <script setup>
 import { useElementBounding } from '@vueuse/core'
 
-const props = defineProps(['modelValue', 'placeholder'])
+const props = defineProps(['modelValue', 'placeholder', 'disabled'])
 const emit = defineEmits(['update:modelValue', 'enter'])
 
 const textarea = ref(null)

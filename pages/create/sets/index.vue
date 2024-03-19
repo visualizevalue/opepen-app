@@ -2,7 +2,8 @@
   <div>
     <PageHeader>
       <h1 class="breadcrumb">
-        <NuxtLink to="/create">Create</NuxtLink>
+        <!-- <NuxtLink to="/create">Create</NuxtLink> -->
+        <span>Create</span>
         <span class="separator">/</span>
         <span>My Submissions</span>
       </h1>

@@ -1,18 +1,18 @@
 <template>
 
   <section class="items">
-    <SetPreviewImage :set="set" :edition="1" />
-    <SetPreviewImage :set="set" :edition="4" />
-    <SetPreviewImage :set="set" :edition="5" />
-    <SetPreviewImage :set="set" :edition="10" />
-    <SetPreviewImage :set="set" :edition="20" />
-    <SetPreviewImage :set="set" :edition="40" />
+    <SetPreviewImage :data="data" :edition="1" />
+    <SetPreviewImage :data="data" :edition="4" />
+    <SetPreviewImage :data="data" :edition="5" />
+    <SetPreviewImage :data="data" :edition="10" />
+    <SetPreviewImage :data="data" :edition="20" />
+    <SetPreviewImage :data="data" :edition="40" />
   </section>
 
 </template>
 
 <script setup>
-const { set } = defineProps({ set: Object })
+const { data } = defineProps({ data: Object })
 </script>
 
 <style lang="postcss" scoped>

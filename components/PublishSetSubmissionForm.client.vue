@@ -6,17 +6,10 @@
 
   <Modal :open="open" title="Publish Set" @close="open = false">
     <form @submit.stop.prevent="publish">
-      <label>
-        <span class="label">Set ID</span>
-        <input type="number" min="1" max="200" v-model="setId" placeholder="Set ID" required />
-      </label>
-
-      <label>
-        <span class="label">Opt In Duration (Hours)</span>
-        <input type="number" min="0" max="144" v-model="hours" placeholder="72" />
-      </label>
-
+      <p>Are you sure you want to publish the set?</p>
+      <p>Before it's publicly visible, it will be reviewed by the Opepen team.</p>
       <div class="actions">
+        <Button type="button" :disabled="publishing" @click.stop.prevent="open = false">Cancel</Button>
         <Button type="submit" :disabled="publishing">Publish</Button>
       </div>
     </form>
@@ -39,8 +32,6 @@ const router = useRouter()
 const open = ref(false)
 const { currentSet } = useSets()
 
-const setId = ref(submission.set_id || currentSet.value?.id + 1)
-const hours = ref(72)
 const publishing = ref(false)
 
 const publish = async () => {
@@ -53,17 +44,13 @@ const publish = async () => {
   const set = await $fetch(url, {
     method: 'POST',
     credentials: 'include',
-    body: JSON.stringify({
-      set_id: setId.value,
-      hours: hours.value,
-    })
   })
 
   publishing.value = false
 
   emit('published')
 
-  router.replace(`/sets/${setId.value}`)
+  router.replace(`/sets/${submission.uuid}`)
 }
 </script>
 
@@ -78,6 +65,7 @@ form {
     padding: var(--size-4) 0 0;
     display: flex;
     justify-content: flex-end;
+    gap: var(--size-4) !important;
 
     :deep(button) {
       width: auto !important;

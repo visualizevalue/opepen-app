@@ -28,7 +28,7 @@ const {
   set: [Number, String],
   rotate: {
     type: Boolean,
-    default: true,
+    default: false,
   }
 })
 

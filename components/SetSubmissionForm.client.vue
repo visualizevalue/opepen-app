@@ -1,14 +1,14 @@
 <template>
   <form @submit.stop.prevent="store">
-    <Alert v-if="toSign" class="span-2 inline">
-      <p>Artist Signature: Thank you so much for your contribution to Opepen. Please sign this set.</p>
+    <Alert v-if="toSign && published" class="span-2 inline">
+      <p>Artist Signature: You can sign your set via an onchain transaction.</p>
 
       <div class="actions">
         <SignSet :data="data" @signed="markSigned" />
       </div>
     </Alert>
     <Alert v-else-if="isPublishedToSet" class="span-2 inline">
-      <p>Note: This submission is published to <NuxtLink :to="`/sets/${data.set_id}`">set {{ pad(data.set_id, 3) }}</NuxtLink>. Changes here won't be immediately published, and manually reviewed by the VV team.</p>
+      <p>Note: This submission is published to <NuxtLink :to="`/sets/${data.set_id}`">set {{ pad(data.set_id, 3) }}</NuxtLink>. If you want to change antything about the set, please reach out to the VV team.</p>
 
       <div class="actions">
         <Button :to="`/sets/${data.set_id}`">View Set</Button>
@@ -17,63 +17,64 @@
 
     <label class="name">
       <span class="label">Name</span>
-      <input type="text" v-model="name" placeholder="Set Name" required />
+      <input type="text" v-model="name" placeholder="Set Name" :disabled="published" required />
     </label>
 
     <div class="images">
-      <ImageUpload @stored="image1 = $event" name="1/1 Media" :image="image1" />
-      <ImageUpload @stored="image4 = $event" name="1/4 Media" :image="image4" />
-      <ImageUpload @stored="image5 = $event" name="1/5 Media" :image="image5" />
-      <ImageUpload @stored="image10 = $event" name="1/10 Media" :image="image10" />
-      <ImageUpload @stored="image20 = $event" name="1/20 Media" :image="image20" />
-      <ImageUpload @stored="image40 = $event" name="1/40 Media" :image="image40" />
+      <ImageUpload @stored="image1 = $event" name="1/1 Media" :image="image1" :disabled="published" />
+      <ImageUpload @stored="image4 = $event" name="1/4 Media" :image="image4" :disabled="published" />
+      <ImageUpload @stored="image5 = $event" name="1/5 Media" :image="image5" :disabled="published" />
+      <ImageUpload @stored="image10 = $event" name="1/10 Media" :image="image10" :disabled="published" />
+      <ImageUpload @stored="image20 = $event" name="1/20 Media" :image="image20" :disabled="published" />
+      <ImageUpload @stored="image40 = $event" name="1/40 Media" :image="image40" :disabled="published" />
     </div>
 
     <div class="names">
       <span class="label">Edition Names</span>
       <div>
         <div><Image :image="image1" /></div>
-        <input type="text" v-model="name1"  placeholder="1/1 Name" />
+        <input type="text" v-model="name1"  :disabled="published" placeholder="1/1 Name" />
       </div>
       <div>
         <div><Image :image="image4" /></div>
-        <input type="text" v-model="name4"  placeholder="1/4 Name" />
+        <input type="text" v-model="name4"  :disabled="published" placeholder="1/4 Name" />
       </div>
       <div>
         <div><Image :image="image5" /></div>
-        <input type="text" v-model="name5"  placeholder="1/5 Name" />
+        <input type="text" v-model="name5"  :disabled="published" placeholder="1/5 Name" />
       </div>
       <div>
         <div><Image :image="image10" /></div>
-        <input type="text" v-model="name10" placeholder="1/10 Name" />
+        <input type="text" v-model="name10" :disabled="published" placeholder="1/10 Name" />
       </div>
       <div>
         <div><Image :image="image20" /></div>
-        <input type="text" v-model="name20" placeholder="1/20 Name" />
+        <input type="text" v-model="name20" :disabled="published" placeholder="1/20 Name" />
       </div>
       <div>
         <div><Image :image="image40" /></div>
-        <input type="text" v-model="name40" placeholder="1/40 Name" />
+        <input type="text" v-model="name40" :disabled="published" placeholder="1/40 Name" />
       </div>
     </div>
 
     <label class="description">
       <span class="label">Description</span>
-      <Input v-model="description" placeholder="Description" />
+      <Input v-model="description" :disabled="published" placeholder="Description" />
     </label>
 
     <label class="artist">
       <span class="label">Artist</span>
-      <input type="text" v-model="artist" placeholder="Your artist name" />
+      <input type="text" v-model="artist" :disabled="published" placeholder="Your artist name" />
     </label>
 
     <label class="type">
       <span class="label">Edition Type</span>
-      <select v-model="type" class="input">
+      <select v-model="type" class="input" :disabled="published">
         <option value="DYNAMIC">Dynamic</option>
         <option value="PRINT" default>Prints</option>
         <option value="NUMBERED_PRINT" disabled="disabled">Numbered Prints</option>
       </select>
+      <!-- TODO: Implement dynamic uploads -->
       <aside class="note" v-if="isDynamic">
         The VV team will reach out to gather the dynamic images before launching your set.
       </aside>
@@ -81,13 +82,15 @@
 
     <div class="actions">
       <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
-      <Button type="submit" :disabled="saving">
+      <Button type="submit" :disabled="saving" v-if="! published">
         <span v-if="saving">Saving...</span>
         <span v-else>Save</span>
       </Button>
+      <Button v-else :to="`/sets/${data.uuid}`">View Submission</Button>
 
-      <NotifySetPublicationForm v-if="isAdmin && data.set_id" :submission="data" />
-      <PublishSetSubmissionForm v-if="isAdmin" :submission="data" />
+      <SignSet v-if="toSign" :data="data" @signed="markSigned" />
+
+      <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" />
     </div>
   </form>
 </template>
@@ -134,12 +137,31 @@ const description = ref(data.description || '')
 const artist = ref(data.artist)
 const type = ref(data.edition_type)
 const isDynamic = computed(() => type.value !== 'PRINT')
+const dataComplete = computed(() => {
+  return name.value &&
+    image1.value &&
+    image4.value &&
+    image5.value &&
+    image10.value &&
+    image20.value &&
+    image40.value &&
+    name1.value &&
+    name4.value &&
+    name5.value &&
+    name10.value &&
+    name20.value &&
+    name40.value &&
+    description.value &&
+    artist.value &&
+    type.value
+})
 const isSigned = ref(!!data.artist_signature)
+const published = computed(() => !! data.published_at)
 const isPublishedToSet = computed(() => !!data.set_id)
 const toSign = computed(() =>
   isCreator.value &&
-  isPublishedToSet.value &&
-  !isSigned.value
+  !isSigned.value &&
+  dataComplete.value
 )
 const markSigned = (set) => {
   isSigned.value = !!set.artist_signature
@@ -263,7 +285,7 @@ form {
     align-items: baseline;
     gap: var(--size-4);
 
-    :deep(button) {
+    :deep(.button) {
       min-height: var(--size-8);
     }
   }

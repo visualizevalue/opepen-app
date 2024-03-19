@@ -1,23 +1,24 @@
 <template>
-  <article v-if="set" class="set-preview" :class="{ minimal }">
+  <article v-if="data" class="set-preview" :class="{ minimal }">
     <section class="items">
-      <Image :image="set?.edition1Image" version="sm" class="appear" />
-      <Image :image="set?.edition4Image" version="sm" class="appear" />
-      <Image :image="set?.edition5Image" version="sm" class="appear" />
-      <Image :image="set?.edition10Image" version="sm" class="appear" />
-      <Image :image="set?.edition20Image" version="sm" class="appear" />
-      <Image :image="set?.edition40Image" version="sm" class="appear" />
+      <Image :image="data?.edition1Image" version="sm" class="appear" />
+      <Image :image="data?.edition4Image" version="sm" class="appear" />
+      <Image :image="data?.edition5Image" version="sm" class="appear" />
+      <Image :image="data?.edition10Image" version="sm" class="appear" />
+      <Image :image="data?.edition20Image" version="sm" class="appear" />
+      <Image :image="data?.edition40Image" version="sm" class="appear" />
     </section>
     <header v-if="! minimal">
       <h1>
-        <small>Set {{ pad(set.id, 3) }}</small>
-        <span>{{ set.name }}</span>
+        <small v-if="data.set_id">Set {{ pad(data.set_id, 3) }}</small>
+        <small v-else>Set Submission</small>
+        <span>{{ data.name }}</span>
       </h1>
-      <p v-html="shortenedCleanText(set.description, 161)"></p>
+      <p v-html="shortenedCleanText(data.description, 161)"></p>
       <ul class="overview">
         <li>
           <Icon type="layers" stroke-width="2.25" />
-          <span>{{ TYPES[set.edition_type] }} Editions</span>
+          <span>{{ TYPES[data.edition_type] }} Editions</span>
         </li>
         <li v-if="revealed || revealing">
           <IconCheck />
@@ -25,19 +26,22 @@
         </li>
         <li v-else>
           <IconCheck class="check" :class="{ published }" />
-          <span v-if="published">Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)</span>
-          <span v-else>Opt-In not opepen yet</span>
+          <span v-if="published">
+            <template v-if="consensusDate">Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)</template>
+            <template v-else>Opt-In open</template>
+          </span>
+          <span v-else>Opt-In not open yet</span>
         </li>
       </ul>
 
       <div class="actions">
-        <Button :to="`/sets/${pad(set.id, 3)}`">
+        <Button :to="`/sets/${id}`">
           <Icon type="chevron-right" />
           <span>View Set</span>
         </Button>
       </div>
     </header>
-    <Button v-else :to="`/sets/${pad(set.id, 3)}`" :title="set.name">
+    <Button v-else :to="`/sets/${id}`" :title="data.name">
       <Icon type="chevron-right" />
       <span>View Set</span>
     </Button>
@@ -51,16 +55,17 @@ import pad from '~/helpers/pad'
 import { TYPES } from '~/helpers/sets'
 import { shortenedCleanText } from '~/helpers/strings'
 
-const { set, minimal } = defineProps({
-  set: Object,
+const { data, minimal } = defineProps({
+  data: Object,
   minimal: Boolean,
 })
 
-const revealsAt = ref(DateTime.fromISO(set?.reveals_at).toUnixInteger())
+const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
+const revealsAt = ref(DateTime.fromISO(data?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
-const revealed = computed(() => revealing.value && set?.reveal_block_number)
-const consensusDate = computed(() => set?.reveals_at && formatDate(set?.reveals_at))
-const published = computed(() => revealsAt.value > 0)
+const revealed = computed(() => revealing.value && data?.reveal_block_number)
+const consensusDate = computed(() => data?.reveals_at && formatDate(data?.reveals_at))
+const published = computed(() => !! data.published_at)
 const onComplete = () => {
   // FIXME: Refactor repetition
   revealing.value = true

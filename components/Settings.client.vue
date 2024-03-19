@@ -27,6 +27,37 @@
 
       <hr>
 
+      <label class="email">
+        <span class="label">E-Mail (not shared on profile)</span>
+        <input v-model="email" placeholder="Your Email" type="email" />
+      </label>
+
+      <p class="label">Notifications</p>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationNewSet">
+        <span>New Set Revealed</span>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationNewSubmission">
+        <span>New Set Submission Published</span>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationNewCuratedSubmission">
+        <span>New Curated Submission Published</span>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationRevealStarted">
+        <span>Consensus met</span>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationRevealPaused">
+        <span>Consensus paused</span>
+      </label>
+
+      <SaveSettings :lastSaved="lastSaved" :saving="saving" />
+
+      <hr>
+
       <div>
         <span class="label">Social Links</span>
         <SortableList :items="socials" @update="socials = $event" class="socials">
@@ -79,19 +110,6 @@
           <span v-else>Save</span>
         </Button>
       </div>
-
-      <hr>
-
-      <label class="email">
-        <span class="label">E-Mail (not shared on profile)</span>
-        <input v-model="email" placeholder="Your Email" type="email" />
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" v-model="notificationNewSet">
-        <span>New Set Notification</span>
-      </label>
-
-      <SaveSettings :lastSaved="lastSaved" :saving="saving" />
     </form>
   </article>
 </template>
@@ -120,6 +138,10 @@ const cover = ref(settings.value?.coverImage || null)
 const name = ref(settings.value?.name || ens.value)
 const email = ref(settings.value?.email)
 const notificationNewSet = ref(settings.value?.notification_new_set)
+const notificationNewSubmission = ref(settings.value?.notification_new_submission)
+const notificationNewCuratedSubmission = ref(settings.value?.notification_new_curated_submission)
+const notificationRevealStarted = ref(settings.value?.notification_reveal_started)
+const notificationRevealPaused = ref(settings.value?.notification_reveal_paused)
 
 const tagline = ref(settings.value?.tagline || '')
 const quote = ref(settings.value?.quote || '')
@@ -196,6 +218,10 @@ const updateData = (data = {}) => {
   name.value = data?.name || ens.value
   email.value = data?.email
   notificationNewSet.value = data?.notification_new_set
+  notificationNewSubmission.value = data?.notification_new_submission
+  notificationNewCuratedSubmission.value = data?.notification_new_curated_submission
+  notificationRevealStarted.value = data?.notification_reveal_started
+  notificationRevealPaused.value = data?.notification_reveal_paused
 
   tagline.value = data?.tagline
   quote.value = data?.quote
@@ -219,6 +245,10 @@ const save = async () => {
         name: name.value,
         email: email.value,
         notification_new_set: notificationNewSet.value,
+        notification_new_submission: notificationNewSubmission.value,
+        notification_new_curated_submission: notificationNewCuratedSubmission.value,
+        notification_reveal_started: notificationRevealStarted.value,
+        notification_reveal_paused: notificationRevealPaused.value,
         pfp_image_id: pfp.value?.uuid || null,
         cover_image_id: cover.value?.uuid || null,
         tagline: tagline.value,
@@ -343,5 +373,9 @@ const save = async () => {
       }
 
     }
+  }
+
+  p.label {
+    margin: 0;
   }
 </style>

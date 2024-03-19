@@ -39,7 +39,7 @@
     <section v-if="account.createdSets?.length">
       <SectionTitle>Artist For Set<template v-if="account.createdSets.length > 1">s</template></SectionTitle>
       <div class="created-sets">
-        <SetPreview v-for="set in account.createdSets" :set="set" />
+        <SetPreview v-for="set in account.createdSets" :data="set" />
       </div>
     </section>
 

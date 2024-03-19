@@ -46,3 +46,15 @@ export const getUserNameFromSubpath = (url: string) => {
   const subpath = getFirstSubpath(url)
   return subpath?.startsWith('@') ? subpath : `@${subpath}`
 }
+
+export const isUUID = (value: string|number) => {
+  const s = `${value}`
+  const n = parseInt(s)
+
+  return s.length > 3 && n.toString() !== s
+}
+
+export const isSetId = (value: string|number) => {
+  const n = parseInt(`${value}`)
+  return ! isUUID(value) && n < 16_000
+}

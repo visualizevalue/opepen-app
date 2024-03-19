@@ -1,7 +1,7 @@
 <template>
   <div class="opepen-detail">
     <OpepenPage v-if="isOpepenToken" />
-    <AiImagePage v-else />
+    <!-- <AiImagePage v-else /> -->
   </div>
 </template>
 

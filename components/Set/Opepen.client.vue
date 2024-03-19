@@ -22,16 +22,16 @@
 <script setup>
 import { DateTime } from 'luxon'
 
-const { set } = defineProps({
-  set: Object,
+const { data } = defineProps({
+  data: Object,
 })
 
 const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/opepen/sets/${set.id}/opepen`
+const url = `${config.public.opepenApi}/opepen/sets/${data.set_id}/opepen`
 const { data: opepen, pending } = await useLazyFetch(url, { key: 'revealed-opepen' })
 
-const revealsAt = ref(DateTime.fromISO(set.reveals_at).toUnixInteger())
-const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
+const revealsAt = ref(DateTime.fromISO(data.reveals_at).toUnixInteger())
+const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && data.set_id)
 </script>
 
 <style lang="postcss" scoped>

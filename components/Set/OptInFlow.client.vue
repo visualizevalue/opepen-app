@@ -4,8 +4,8 @@
     <div class="opt-in-flow" :class="{ signing }">
       <header>
         <h1>
-          <template v-if="subscribed?.length && !selected.length">Opt-Out of Set "{{ set.name }}"</template>
-          <template v-else>Opt-In to Set "{{ set.name }}"</template>
+          <template v-if="subscribed?.length && !selected.length">Opt-Out of Set "{{ data.name }}"</template>
+          <template v-else>Opt-In to Set "{{ data.name }}"</template>
         </h1>
       </header>
       <section>
@@ -58,10 +58,6 @@
               </label>
             </div>
           </div>
-
-          <div v-if="opepen.length" class="comment">
-            <Input v-model="comment" placeholder="Add an optional Opt-In comment!" />
-          </div>
         </div>
       </section>
       <footer v-if="isConnected">
@@ -90,10 +86,10 @@
   <Modal v-if="signed" :open="true" title="Success" @close="() => signed = false">
     <div class="success-modal">
       <template v-if="!selected.length">
-        <p>You removed all your Opepen submissions from <span class="nowrap">set #{{ pad(set.id, 3) }}!</span></p>
+        <p>You removed all your Opepen submissions from "{{ data.name }}"!</p>
       </template>
       <template v-else>
-        <p>You submitted {{ selected.length }} Opepen to be included in <span class="nowrap">set #{{ pad(set.id, 3) }}!</span></p>
+        <p>You submitted {{ selected.length }} Opepen to be included in "{{ data.name }}"!</p>
         <p>If your Opepen {{ selected.length > 1 ? 'are' : 'is' }} selected as part of this set, your metadata will update after the opt-in window closes.</p>
       </template>
 
@@ -116,7 +112,7 @@ import { id, ripemd160 } from 'ethers'
 
 const props = defineProps({
   open: Boolean,
-  set: Object,
+  data: Object,
   clickOutside: Boolean,
   subscribed: Array,
   storedComment: String,
@@ -216,15 +212,10 @@ const validateMaxReveal = g => {
   }
 }
 
-const comment = ref(props.storedComment || '')
-watch(() => props.storedComment, () => comment.value = props.storedComment)
-
 const message = computed(() => {
   return `I want to submit ${selected.value.length} Opepen for possible artwork reveal in the following set:
 
-OPT-IN: Set ${pad(props.set.id, 3)}
-
-SET NAME: ${props.set.name}
+SET NAME: ${props.data.name}
 
 MAX REVEALS:
 ${Object.keys(maxRevealValues.value)
@@ -234,10 +225,7 @@ ${Object.keys(maxRevealValues.value)
   .join('\n')
 }
 
-OPEPEN PROOF: ${ ripemd160(id(selected.value.map(id => `#${id}`).join(', '))) }${
-
-comment.value && (`\n\nCOMMENT: ` + comment.value)
-}`
+OPEPEN PROOF: ${ ripemd160(id(selected.value.map(id => `#${id}`).join(', '))) }`
 })
 
 const signing = ref(false)
@@ -249,21 +237,20 @@ const sign = async () => {
   }
 
   try {
-    const set = props.set
     signing.value = true
 
     const signature = await signMessage({
       message: message.value,
     })
 
-    await $fetch(`${config.public.opepenApi}/opepen/sets/${set.id}/subscribe`, {
+    await $fetch(`${config.public.opepenApi}/set-submissions/${props.data.uuid}/subscribe`, {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify({
         address: address.value,
         opepen: selected.value,
         max_reveals: maxRevealValues.value,
         message: message.value,
-        comment: comment.value,
         signature,
         delegated_by: delegatedAddresses.value.join(',')
       })
@@ -421,11 +408,6 @@ section {
       }
     }
   }
-}
-
-.comment {
-  padding: var(--size-5);
-  border-top: var(--border);
 }
 
 footer {
