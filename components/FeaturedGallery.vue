@@ -19,7 +19,7 @@ const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/opepen/images/featured`
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .featured {
   --image-width: 9rem;
   --gap: var(--size-4);

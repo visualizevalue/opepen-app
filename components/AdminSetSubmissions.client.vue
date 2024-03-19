@@ -8,9 +8,10 @@
       <div class="actions">
         <select v-model="status" class="input sm">
           <option value="all">All</option>
-          <option value="complete">Complete</option>
+          <option value="unapproved">To Approve</option>
+          <option value="published">Approved</option>
           <option value="starred">Starred</option>
-          <option value="published">Published</option>
+          <option value="revealed">Revealed</option>
           <option value="deleted">Deleted</option>
         </select>
       </div>
@@ -25,41 +26,47 @@
       v-slot="{ items }"
     >
       <article
-        v-for="(set, index) in items"
-        :key="set.uuid"
+        v-for="(submission, index) in items"
+        :key="submission.uuid"
         class="submission"
       >
         <div class="preview">
-          <Image :image="set.edition1Image" version="sm" />
-          <Image :image="set.edition4Image" version="sm" />
-          <Image :image="set.edition5Image" version="sm" />
-          <Image :image="set.edition10Image" version="sm" />
-          <Image :image="set.edition20Image" version="sm" />
-          <Image :image="set.edition40Image" version="sm" />
+          <Image :image="submission.edition1Image" version="sm" />
+          <Image :image="submission.edition4Image" version="sm" />
+          <Image :image="submission.edition5Image" version="sm" />
+          <Image :image="submission.edition10Image" version="sm" />
+          <Image :image="submission.edition20Image" version="sm" />
+          <Image :image="submission.edition40Image" version="sm" />
         </div>
 
         <div class="details">
           <div class="meta">
             <span>
-              <Account :address="set.creator" />,
+              <Account :address="submission.creator" />,
             </span>
             <span>
-              {{ formatDateTime(set.created_at) }}
+              {{ formatDateTime(submission.created_at) }}
             </span>
           </div>
-          <h1>{{ set.name }}</h1>
-          <p>{{ set.description }}</p>
-          <NuxtLink :to="`/create/sets/admin/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
+          <h1>{{ submission.name }}</h1>
+          <p>{{ submission.description }}</p>
+          <NuxtLink :to="`/create/sets/admin/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
 
-          <div class="actions">
-            <button @click.stop="() => star(set, index)">
+          <div class="actions" v-if="! submission.deleted_at && submission.published_at">
+            <button @click.stop="() => approve(submission, index)">
               <Icon
-                type="star"
-                :fill="set.starred_at ? 'var(--yellow)' : 'transparent'"
-                :stroke="set.starred_at ? 'var(--yellow)' : 'currentColor'"
+                type="check"
+                :stroke="submission.approved_at ? 'var(--green)' : 'currentColor'"
               />
             </button>
-            <button @click.stop="() => destroy(set, index)"><Icon type="trash" /></button>
+            <button @click.stop="() => star(submission, index)">
+              <Icon
+                type="star"
+                :fill="submission.starred_at ? 'var(--yellow)' : 'transparent'"
+                :stroke="submission.starred_at ? 'var(--yellow)' : 'currentColor'"
+              />
+            </button>
+            <button v-if="! submission.set_id" @click.stop="() => destroy(submission, index)"><Icon type="trash" /></button>
           </div>
         </div>
       </article>
@@ -80,7 +87,7 @@ const url = computed(() => `${config.public.opepenApi}/set-submissions`)
 
 const router = useRouter()
 const route = useRoute()
-const status = ref(route.query.status || 'complete')
+const status = ref(route.query.status || 'unapproved')
 watch(status, () => {
   if (route.query.status !== status.value) {
     router.replace({ query: { ...route.query, status: status.value }})
@@ -97,21 +104,30 @@ const query = computed(() => {
 
 // Actions
 const list = ref(null)
-const star = async (set, index) => {
-  const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${set.uuid}/star`, {
+const star = async (submission, index) => {
+  const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/star`, {
     method: 'POST',
     credentials: 'include',
   })
 
   list.value.items[index] = saved
 }
-const destroy = async (set, index) => {
-  await $fetch(`${config.public.opepenApi}/set-submissions/${set.uuid}`, {
+const destroy = async (submission, index) => {
+  await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}`, {
     method: 'DELETE',
     credentials: 'include',
   })
 
   list.value.items.splice(index, 1)
+}
+const approve = async (submission, index) => {
+  const action = submission.approved_at ? `unapprove` : `approve`
+  const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/${action}`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+
+  list.value.items[index] = saved
 }
 </script>
 

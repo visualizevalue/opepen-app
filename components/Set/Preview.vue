@@ -1,5 +1,5 @@
 <template>
-  <article v-if="data" class="set-preview" :class="{ minimal }">
+  <article v-if="data" class="set-preview" :class="{ minimal }" :style="style">
     <section class="items">
       <Image :image="data?.edition1Image" version="sm" class="appear" />
       <Image :image="data?.edition4Image" version="sm" class="appear" />
@@ -55,9 +55,13 @@ import pad from '~/helpers/pad'
 import { TYPES } from '~/helpers/sets'
 import { shortenedCleanText } from '~/helpers/strings'
 
-const { data, minimal } = defineProps({
+const { data, minimal, style } = defineProps({
   data: Object,
   minimal: Boolean,
+  style: {
+    type: Object,
+    default: () => ({})
+  }
 })
 
 const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)

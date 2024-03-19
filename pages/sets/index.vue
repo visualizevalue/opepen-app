@@ -1,9 +1,20 @@
 <template>
   <div>
-    <section v-if="activeSets.length">
-      <SectionTitle>Active Sets</SectionTitle>
-      <SetPreview v-for="set in activeSets" :data="set.submission" :key="set.id" />
-    </section>
+    <FeaturedSetSubmissionsCarousel />
+
+    <ExploreSetSubmissions
+      :limit="6"
+      :auto-load="false"
+    >
+      <template #after>
+        <div class="explore-link">
+          <Button to="/sets/explore">
+            <Icon type="chevron-right" />
+            <span>Explore</span>
+          </Button>
+        </div>
+      </template>
+    </ExploreSetSubmissions>
 
     <section>
       <SectionTitle>All Sets</SectionTitle>
@@ -21,7 +32,7 @@
 import { useMetaData } from '~/helpers/head'
 import { useSets } from '~/helpers/sets'
 
-const { activeSets, completeSets } = useSets()
+const { completeSets } = useSets()
 
 useMetaData({
   title: 'Opepen Sets',
@@ -38,8 +49,14 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
-section {
+section:not(.featured),
+:deep(section.featured > h1) {
   max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section {
   margin: var(--size-8) auto 0;
 
   &:first-child {
@@ -74,5 +91,17 @@ section {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+}
+
+.explore-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, var(--background), var(--transparent-background));;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  padding: calc(var(--size-9)*2) var(--size-4) var(--size-6);
 }
 </style>

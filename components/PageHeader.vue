@@ -19,6 +19,11 @@
       font-weight: var(--font-weight-bold);
       letter-spacing: var(--letter-spacing-md);
     }
+
+    :deep(.actions) {
+      display: flex;
+      gap: var(--size-4);
+    }
   }
 
   header.centered {
@@ -39,9 +44,7 @@
     }
 
     :deep(.actions) {
-      display: flex;
       justify-content: center;
-      margin: var(--size-4) 0;
     }
   }
 </style>

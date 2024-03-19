@@ -1,6 +1,10 @@
 <template>
-  <div>
+  <component v-if="filteredItems.length" :is="tag">
+    <slot name="before"></slot>
+
     <slot :items="filteredItems" :meta="meta" :loading="loading" />
+
+    <slot name="after"></slot>
 
     <slot name="loading">
       <Loading v-if="loading" />
@@ -11,7 +15,7 @@
       ref="scrollMarker"
       v-intersection-observer="onMarkerVisible"
     ></aside>
-  </div>
+  </component>
 </template>
 
 <script setup>
@@ -38,6 +42,14 @@ const props = defineProps({
     default: null,
   },
   refreshKey: [Number, String],
+  autoLoad: {
+    type: Boolean,
+    default: true,
+  },
+  tag: {
+    type: String,
+    default: 'div',
+  }
 })
 
 const {
@@ -96,6 +108,7 @@ watch([query, url, refreshKey], () => reset())
 function onMarkerVisible ([{ isIntersecting }]) {
   if (! isIntersecting) return
   if (! hasMore.value) return
+  if (! props.autoLoad) return
 
   loadMore()
 }

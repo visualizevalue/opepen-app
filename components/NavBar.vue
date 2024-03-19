@@ -73,7 +73,7 @@ onMounted(() => fetchSets())
     :deep(+ div) {
       position: relative;
       min-height: var(--100vh);
-      padding: calc(var(--navbar-height) + var(--size-4)) var(--size-4) var(--size-5);
+      padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x) var(--size-5);
     }
 
     :deep(> .button:not(:last-child)) {

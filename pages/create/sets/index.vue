@@ -8,10 +8,14 @@
         <span>My Submissions</span>
       </h1>
 
-      <Button to="/create/sets/submit">
-        <Icon type="plus" />
-        <span>New Set</span>
-      </Button>
+      <div class="actions">
+        <AdminLink class="secondary" />
+
+        <Button to="/create/sets/submit">
+          <Icon type="plus" />
+          <span>New Set</span>
+        </Button>
+      </div>
     </PageHeader>
 
     <div class="submissions">

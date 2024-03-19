@@ -78,6 +78,7 @@
   --content-width-wide: 90rem;
   --content-width: 60rem;
   --content-width-sm: 35rem;
+  --container-padding-x: var(--size-4);
 
   /* BORDERS */
   --border: 1px solid var(--gray-z-4);
