@@ -1,5 +1,10 @@
 import { DateTime, Duration } from 'luxon'
 
+export const BLOCKS_PER_DAY = 6200
+export const BLOCKS_PER_WEEK = BLOCKS_PER_DAY * 7
+export const BLOCKS_PER_2_WEEKS = BLOCKS_PER_WEEK * 2
+export const DEFAULT_TIME_TO_REVEAL = 172800
+
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
 
 export const daysInSeconds = (days: number): number => days * 60 * 60 * 24
@@ -19,14 +24,9 @@ export const asUTCDate = (date: Date|null) => date
 
 export const timeRemainingFromSeconds = (seconds: number) => {
   if (! seconds) return false
+  if (seconds == DEFAULT_TIME_TO_REVEAL) return false
 
   const d = Duration.fromObject({ seconds: seconds }).shiftTo('hours', 'minutes', 'seconds')
 
   return `${d.hours}h ${d.minutes}m ${d.seconds}s`
 }
-
-export const BLOCKS_PER_DAY = 6200
-export const BLOCKS_PER_WEEK = BLOCKS_PER_DAY * 7
-export const BLOCKS_PER_2_WEEKS = BLOCKS_PER_WEEK * 2
-
-export const DEFAULT_TIME_TO_REVEAL = 172800
