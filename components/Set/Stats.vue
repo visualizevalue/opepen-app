@@ -83,7 +83,7 @@ import { formatNumber } from '~/helpers/format'
 import { useSets } from '~/helpers/sets'
 
 const props = defineProps({ data: Object })
-const { setsByPublishDate } = useSets()
+const { publishedSets } = useSets()
 
 // COUNTS
 const edition1Count = computed(() => props.data?.submission_stats.opepens['1'])
@@ -94,10 +94,7 @@ const edition20Count = computed(() => props.data?.submission_stats.opepens['20']
 const edition40Count = computed(() => props.data?.submission_stats.opepens['40'])
 const totalCount = computed(() => props.data?.submission_stats.opepens.total)
 const eligibleOpepenCount = computed(() => {
-  const publishedIndex = setsByPublishDate.value.findIndex(set => props.data.id === set.id)
-  const usedSets = publishedIndex > -1 ? publishedIndex : props.data.id - 1
-
-  return 16_000 - 80 * usedSets
+  return 16_000 - 80 * publishedSets.value.length
 })
 
 // OVERSUBSCRIBED
