@@ -64,6 +64,13 @@
         </div>
       </div>
     </PaginatedContent>
+
+    <AdminMenu>
+      <Button :to="`/settings/${account.address}`">
+        <Icon type="settings" />
+        <span>Settings</span>
+      </Button>
+    </AdminMenu>
   </div>
 </template>
 

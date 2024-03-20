@@ -29,6 +29,11 @@
         <span v-if="submission.starred_at">Starred</span>
         <span v-else>Star</span>
       </Button>
+      <Button @click="() => setAction(submission, submission.approved_at ? 'unapprove' : 'approve').then(() => refresh())">
+        <Icon type="check" :stroke="submission.approved_at ? 'var(--green)' : 'currentcolor'" />
+        <span v-if="submission.approved_at">Approved</span>
+        <span v-else>Approve</span>
+      </Button>
     </AdminMenu>
   </div>
 </template>
