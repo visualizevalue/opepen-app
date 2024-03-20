@@ -8,9 +8,7 @@
 
     <p v-if="data.description" v-html="data.description"></p>
 
-    <div>
-      <CreatorSignature :data="data" />
-    </div>
+    <Creators :data="data" />
 
     <ul class="overview">
       <li>

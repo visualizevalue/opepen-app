@@ -28,19 +28,6 @@ const { data } = defineProps({
 </script>
 
 <style lang="postcss" scoped>
-.button {
-  height: calc(var(--size-8) - var(--size-1)*1.5);
-
-  :deep(.avatar img) {
-    height: calc(var(--size-7) + var(--size-2));
-    width: calc(var(--size-7) + var(--size-2));
-  }
-
-  &:first-child {
-    padding-left: 0;
-  }
-}
-
 .signature {
   justify-content: flex-start;
   max-width: 12rem;
