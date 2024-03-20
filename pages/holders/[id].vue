@@ -280,7 +280,7 @@ header {
 }
 
 .opepens {
-  display: flex;
+  display: grid;
   justify-content: center;
   container-type: inline-size;
   flex-wrap: wrap;
@@ -288,20 +288,7 @@ header {
   width: 100%;
   margin: 5vh auto;
   gap: var(--size-4);
-
-  > div {
-    width: 100%;
-    max-width: min(50vw, calc(50vh / 1.5));
-  }
-
-  > div {
-    @container (width > 20rem) {
-      max-width: min(50cqw, calc(50cqh / 1.5));
-    }
-    @container (width > 30rem) {
-      max-width: min(33.33cqw, calc(33.33cqh / 1.5));
-    }
-  }
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
 }
 
 .created-sets {
