@@ -58,9 +58,9 @@
 
       <hr>
 
-      <ConnectTwitterSettings />
+      <!-- <ConnectTwitterSettings />
 
-      <hr>
+      <hr> -->
 
       <div>
         <span class="label">Social Links</span>

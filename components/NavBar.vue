@@ -4,10 +4,10 @@
       <Logo />
     </NuxtLink>
 
-    <Button to="/auctions">
+    <!-- <Button to="/auctions">
       <Icon type="columns" />
       <span>Auctions</span>
-    </Button>
+    </Button> -->
 
     <Button to="/sets">
       <Icon type="grid" />
