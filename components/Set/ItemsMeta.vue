@@ -40,6 +40,9 @@
           <template v-if="consensusDate">
             Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)
           </template>
+          <template v-else-if="timeRemaining">
+            Opt-In paused with {{ timeRemaining }} remaining
+          </template>
           <template v-else>Opt-In Open</template>
         </span>
         <span v-else>Opt-In not open yet</span>
@@ -61,12 +64,13 @@
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
+import { DateTime, Duration } from 'luxon'
 import pad from '~/helpers/pad'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
 import { TYPES, RESERVED_UNTIL } from '~/helpers/sets'
 import { imageURI } from '~/helpers/images'
+import { timeRemainingFromSeconds } from '~/helpers/time'
 
 const props = defineProps({
   data: Object,
@@ -76,6 +80,7 @@ const name = computed(() => props.data.name || (props.data.set_id < RESERVED_UNT
 
 const published = computed(() => !!props.data.published_at)
 const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
+const timeRemaining = computed(() => timeRemainingFromSeconds(props.data.remaining_reveal_time))
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
 const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.data?.reveals_at))
