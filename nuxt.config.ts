@@ -35,6 +35,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       opepenApi: '',
+      opepenOauthApi: '',
       signatureApi: 'https://api.signature.vv.xyz/v1',
       opepenContract: '0x6339e5e072086621540d0362c4e3cea0d643e114',
       rpc: 'http://127.0.0.1:8545',

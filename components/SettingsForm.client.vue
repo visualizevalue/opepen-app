@@ -58,6 +58,10 @@
 
       <hr>
 
+      <ConnectTwitterSettings />
+
+      <hr>
+
       <div>
         <span class="label">Social Links</span>
         <SortableList :items="socials" @update="socials = $event" class="socials">
