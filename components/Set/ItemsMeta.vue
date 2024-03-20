@@ -78,7 +78,7 @@ const published = computed(() => !!props.data.published_at)
 const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
-const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.set?.reveals_at))
+const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.data?.reveals_at))
 
 const onComplete = () => {
   revealing.value = true
