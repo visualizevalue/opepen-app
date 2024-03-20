@@ -34,6 +34,10 @@
 
       <p class="label">Notifications</p>
       <label class="checkbox">
+        <input type="checkbox" v-model="notificationGeneral">
+        <span>General Information</span>
+      </label>
+      <label class="checkbox">
         <input type="checkbox" v-model="notificationNewSet">
         <span>New Set Revealed</span>
       </label>
@@ -146,6 +150,7 @@ const pfp = ref(settings.value?.pfp || null)
 const cover = ref(settings.value?.coverImage || null)
 const name = ref(settings.value?.name || ens.value)
 const email = ref(settings.value?.email)
+const notificationGeneral = ref(settings.value?.notification_general)
 const notificationNewSet = ref(settings.value?.notification_new_set)
 const notificationNewSubmission = ref(settings.value?.notification_new_submission)
 const notificationNewCuratedSubmission = ref(settings.value?.notification_new_curated_submission)
@@ -226,6 +231,7 @@ const updateData = (data = {}) => {
   cover.value = data?.coverImage
   name.value = data?.name || ens.value
   email.value = data?.email
+  notificationGeneral.value = data?.notification_general
   notificationNewSet.value = data?.notification_new_set
   notificationNewSubmission.value = data?.notification_new_submission
   notificationNewCuratedSubmission.value = data?.notification_new_curated_submission
@@ -253,6 +259,7 @@ const save = async () => {
       body: JSON.stringify({
         name: name.value,
         email: email.value,
+        notification_general: notificationGeneral.value,
         notification_new_set: notificationNewSet.value,
         notification_new_submission: notificationNewSubmission.value,
         notification_new_curated_submission: notificationNewCuratedSubmission.value,
