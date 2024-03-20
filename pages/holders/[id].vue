@@ -91,22 +91,23 @@ const splitSocials = computed(() => account.value?.socials?.length > 5)
 const mainSocials = computed(() => splitSocials.value ? account.value?.socials.slice(0, 3) : account.value?.socials)
 const otherSocials = computed(() => splitSocials.value ? account.value?.socials.slice(3) : [])
 
-const frameButtons = [
-  { property: 'fc:frame:button:1', content: `View on on Opepen.art` },
-  { property: 'fc:frame:button:1:action', content: `link` },
-  { property: 'fc:frame:button:1:target', content: `https://opepen.art/holders/${account.value.address}` },
-  { property: 'fc:frame:button:2', content: 'Browse Opepen →' },
-]
+// const frameButtons = [
+//   { property: 'fc:frame:button:1', content: `View on on Opepen.art` },
+//   { property: 'fc:frame:button:1:action', content: `link` },
+//   { property: 'fc:frame:button:1:target', content: `https://opepen.art/holders/${account.value.address}` },
+//   { property: 'fc:frame:button:2', content: 'Browse Opepen →' },
+// ]
 
 useMetaData({
   title: `${ account.value?.display } | Opepen`,
   description: `Opepen owned by ${account.value?.display}.`,
   og: `https://api.opepen.art/v1/frames/accounts/${account.value.address}/image`,
   meta: [
-    { property: 'fc:frame', content: 'vNext' },
-    { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/accounts/${account.value.address}/image` },
-    { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/accounts/${account.value.address}` },
-    ...frameButtons,
+    // TODO: Fix and reenable these frames
+    // { property: 'fc:frame', content: 'vNext' },
+    // { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/accounts/${account.value.address}/image` },
+    // { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/accounts/${account.value.address}` },
+    // ...frameButtons,
   ],
 })
 </script>

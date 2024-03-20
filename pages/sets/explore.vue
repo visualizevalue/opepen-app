@@ -26,6 +26,7 @@ useMetaData({
   title: 'Explore Opepen Submissions',
   og: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets.png',
   meta: [
+    // TODO: Fix and reenable these frames
     // { property: 'fc:frame', content: 'vNext' },
     // { property: 'fc:frame:image', content: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets@frame.png' },
     // { property: 'fc:frame:button:1', content: 'View Website' },

@@ -69,16 +69,19 @@ const mainButton = revealed || !submission.value.name
   : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
 
 useMetaData({
-  title: `Set ${pad(submission.value.id, 3)}: ${submission.value.name || 'Locked'} | Opepen`,
-  description: shortenedCleanText(submission.value.description) || `Opepen Set ${pad(submission.value.id, 3)} is one of 200 official Opepen sets.`,
-  og: `${config.public.opepenApi}/frames/image/sets/${submission.value.id}?${new URLSearchParams(route.query)}`,
+  title: isSet
+    ? `Set ${pad(set.value.id, 3)}: ${submission.value.name || 'Locked'} | Opepen`
+    : `Set Submission: ${submission.value.name} | Opepen`,
+  description: shortenedCleanText(submission.value.description) || (isSet && `Opepen Set ${pad(submission.value.set_id, 3)} is one of 200 official Opepen sets.`),
+  og: `${config.public.opepenApi}/frames/image/sets/${submission.value.uuid}?${new URLSearchParams(route.query)}`,
   meta: [
-    { property: 'fc:frame', content: 'vNext' },
-    { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail/image` },
-    { property: 'fc:frame:image:aspect_ratio', content: `1:1` },
-    ...mainButton,
-    { property: 'fc:frame:button:2', content: 'View 1/1 →' },
-    { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail` },
+    // TODO: Fix and reenable these frames
+    // { property: 'fc:frame', content: 'vNext' },
+    // { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail/image` },
+    // { property: 'fc:frame:image:aspect_ratio', content: `1:1` },
+    // ...mainButton,
+    // { property: 'fc:frame:button:2', content: 'View 1/1 →' },
+    // { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail` },
   ],
 })
 </script>
