@@ -57,7 +57,7 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useAccount } from '~/helpers/use-wagmi'
-import { timeRemainingFromSeconds } from '~/helpers/time'
+import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL } from '~/helpers/time'
 import OptInOwnedRevealed from './OptInOwnedRevealed.vue'
 
 const config = useRuntimeConfig()
@@ -68,7 +68,7 @@ const { address, isConnected } = useAccount()
 const published = computed(() => !!props.data.published_at)
 const revealDate = ref(DateTime.fromISO(props.data?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
-const timeRemaining = computed(() => timeRemainingFromSeconds(props.data.remaining_reveal_time))
+const timeRemaining = computed(() => props.data.remaining_reveal_time < DEFAULT_TIME_TO_REVEAL && timeRemainingFromSeconds(props.data.remaining_reveal_time))
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
 const onComplete = () => {
