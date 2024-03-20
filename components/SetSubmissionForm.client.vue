@@ -17,59 +17,59 @@
 
     <label class="name">
       <span class="label">Name</span>
-      <input type="text" v-model="name" placeholder="Set Name" :disabled="published" required />
+      <input type="text" v-model="name" placeholder="Set Name" :disabled="disabled" required />
     </label>
 
     <div class="images">
-      <ImageUpload @stored="image1 = $event" name="1/1 Media" :image="image1" :disabled="published" />
-      <ImageUpload @stored="image4 = $event" name="1/4 Media" :image="image4" :disabled="published" />
-      <ImageUpload @stored="image5 = $event" name="1/5 Media" :image="image5" :disabled="published" />
-      <ImageUpload @stored="image10 = $event" name="1/10 Media" :image="image10" :disabled="published" />
-      <ImageUpload @stored="image20 = $event" name="1/20 Media" :image="image20" :disabled="published" />
-      <ImageUpload @stored="image40 = $event" name="1/40 Media" :image="image40" :disabled="published" />
+      <ImageUpload @stored="image1 = $event" name="1/1 Media" :image="image1" :disabled="disabled" />
+      <ImageUpload @stored="image4 = $event" name="1/4 Media" :image="image4" :disabled="disabled" />
+      <ImageUpload @stored="image5 = $event" name="1/5 Media" :image="image5" :disabled="disabled" />
+      <ImageUpload @stored="image10 = $event" name="1/10 Media" :image="image10" :disabled="disabled" />
+      <ImageUpload @stored="image20 = $event" name="1/20 Media" :image="image20" :disabled="disabled" />
+      <ImageUpload @stored="image40 = $event" name="1/40 Media" :image="image40" :disabled="disabled" />
     </div>
 
     <div class="names">
       <span class="label">Edition Names</span>
       <div>
         <div><Image :image="image1" /></div>
-        <input type="text" v-model="name1"  :disabled="published" placeholder="1/1 Name" />
+        <input type="text" v-model="name1"  :disabled="disabled" placeholder="1/1 Name" />
       </div>
       <div>
         <div><Image :image="image4" /></div>
-        <input type="text" v-model="name4"  :disabled="published" placeholder="1/4 Name" />
+        <input type="text" v-model="name4"  :disabled="disabled" placeholder="1/4 Name" />
       </div>
       <div>
         <div><Image :image="image5" /></div>
-        <input type="text" v-model="name5"  :disabled="published" placeholder="1/5 Name" />
+        <input type="text" v-model="name5"  :disabled="disabled" placeholder="1/5 Name" />
       </div>
       <div>
         <div><Image :image="image10" /></div>
-        <input type="text" v-model="name10" :disabled="published" placeholder="1/10 Name" />
+        <input type="text" v-model="name10" :disabled="disabled" placeholder="1/10 Name" />
       </div>
       <div>
         <div><Image :image="image20" /></div>
-        <input type="text" v-model="name20" :disabled="published" placeholder="1/20 Name" />
+        <input type="text" v-model="name20" :disabled="disabled" placeholder="1/20 Name" />
       </div>
       <div>
         <div><Image :image="image40" /></div>
-        <input type="text" v-model="name40" :disabled="published" placeholder="1/40 Name" />
+        <input type="text" v-model="name40" :disabled="disabled" placeholder="1/40 Name" />
       </div>
     </div>
 
     <label class="description">
       <span class="label">Description</span>
-      <Input v-model="description" :disabled="published" placeholder="Description" />
+      <Input v-model="description" :disabled="disabled" placeholder="Description" />
     </label>
 
     <label class="artist">
       <span class="label">Artist</span>
-      <input type="text" v-model="artist" :disabled="published" placeholder="Your artist name" />
+      <input type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
     </label>
 
     <label class="type">
       <span class="label">Edition Type</span>
-      <select v-model="type" class="input" :disabled="published">
+      <select v-model="type" class="input" :disabled="disabled">
         <option value="DYNAMIC">Dynamic</option>
         <option value="PRINT" default>Prints</option>
         <option value="NUMBERED_PRINT" disabled="disabled">Numbered Prints</option>
@@ -80,15 +80,16 @@
       v-if="isDynamic"
       :set-submission-id="data.uuid"
       :dynamic-set-images="data.dynamicSetImages"
+      :disabled="disabled"
       class="span-2"
     />
 
     <div class="actions">
       <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
 
-      <DeleteSetSubmissionForm v-if="! published" :submission="data" />
+      <DeleteSetSubmissionForm v-if="! disabled" :submission="data" />
 
-      <Button type="submit" :disabled="saving" v-if="! published">
+      <Button type="submit" :disabled="saving" v-if="! disabled">
         <Icon type="save" />
         <span v-if="saving">Saving...</span>
         <span v-else>Save</span>
@@ -105,7 +106,7 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
-import { useSignIn } from '~/helpers/siwe'
+import { useSignIn, isAdmin } from '~/helpers/siwe'
 import { formatTime } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 
@@ -169,6 +170,7 @@ const toSign = computed(() =>
   !isSigned.value &&
   dataComplete.value
 )
+const disabled = computed(() => published.value && ! isAdmin.value)
 const markSigned = (set) => {
   isSigned.value = !!set.artist_signature
   emit('updated', set)

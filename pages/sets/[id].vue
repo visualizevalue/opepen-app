@@ -18,6 +18,18 @@
 
     <!-- TODO: Reenable comments -->
     <!-- <SetOptInComments :data="data" /> -->
+
+    <AdminMenu v-slot="{ setAction }">
+      <Button :to="`/create/sets/${submission.uuid}`">
+        <Icon type="edit" />
+        <span>Edit</span>
+      </Button>
+      <Button @click="() => setAction(submission, 'star').then(() => refresh())">
+        <Icon type="star" :fill="submission.starred_at ? 'var(--yellow)' : 'transparent'" :stroke="submission.starred_at ? 'var(--yellow)' : 'currentcolor'" />
+        <span v-if="submission.starred_at">Starred</span>
+        <span v-else>Star</span>
+      </Button>
+    </AdminMenu>
   </div>
 </template>
 

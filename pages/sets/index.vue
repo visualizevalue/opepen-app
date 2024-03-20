@@ -17,7 +17,7 @@
     </ExploreSetSubmissions>
 
     <section>
-      <SectionTitle>All Sets</SectionTitle>
+      <SectionTitle>Permanent Collection</SectionTitle>
       <Progress :percent="parseInt(completeSets.length / 200 * 100)">
         {{ completeSets.length }} / 200
       </Progress>
