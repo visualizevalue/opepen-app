@@ -62,9 +62,9 @@
 
       <hr>
 
-      <!-- <ConnectTwitterSettings />
+      <ConnectTwitterSettings :user="settings.x_user" />
 
-      <hr> -->
+      <hr>
 
       <div>
         <span class="label">Social Links</span>
