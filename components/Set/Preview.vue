@@ -33,7 +33,12 @@
             <IconCheck class="check" :class="{ published }" />
             <span v-if="published">
               <template v-if="consensusDate">Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)</template>
-              <template v-else>Opt-In open</template>
+              <template v-else>
+                Opt-In open
+                <span v-if="isPaused">
+                  (paused at {{ timeRemainingFromSeconds(data.remaining_reveal_time) }})
+                </span>
+              </template>
             </span>
             <span v-else>Opt-In not open yet</span>
           </li>
@@ -60,7 +65,7 @@ import { formatDate } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 import { TYPES } from '~/helpers/sets'
 import { shortenedCleanText } from '~/helpers/strings'
-import { DEFAULT_TIME_TO_REVEAL } from '~/helpers/time'
+import { DEFAULT_TIME_TO_REVEAL, timeRemainingFromSeconds } from '~/helpers/time'
 
 const { data, minimal, style } = defineProps({
   data: Object,
@@ -74,8 +79,9 @@ const { data, minimal, style } = defineProps({
 const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
 const revealsAt = ref(DateTime.fromISO(data?.reveals_at).toUnixInteger())
 const timeLeft = computed(() => data.remaining_reveal_time || (revealsAt.value - DateTime.now().toUnixInteger()))
-const progress = computed(() => parseInt((DEFAULT_TIME_TO_REVEAL - timeLeft.value) / DEFAULT_TIME_TO_REVEAL * 100))
-const showProgress = computed(() => !data.set_id && (data.reveals_at || data.remainin_reveal_time < DEFAULT_TIME_TO_REVEAL))
+const progress = computed(() => Math.max(1, parseInt((DEFAULT_TIME_TO_REVEAL - timeLeft.value) / DEFAULT_TIME_TO_REVEAL * 100)))
+const isPaused = computed(() => data.remaining_reveal_time && data.remaining_reveal_time < DEFAULT_TIME_TO_REVEAL)
+const showProgress = computed(() => !data.set_id && (data.reveals_at || isPaused.value))
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && data?.reveal_block_number)
 const consensusDate = computed(() => data?.reveals_at && formatDate(data?.reveals_at))
