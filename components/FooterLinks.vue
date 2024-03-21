@@ -7,9 +7,9 @@
       <li>
         <a href="https://opensea.io/collection/opepen-edition" target="_blank" title="OpenSea" class="opensea"><Icon type="opensea" /></a>
       </li>
-      <li>
+      <!-- <li>
         <a href="https://visualizevalue.com/collections/opepen" target="_blank" title="Merch"><Icon type="shopping-bag" /></a>
-      </li>
+      </li> -->
       <li>
         <a href="https://visualizevalue.com" target="_blank" title="Visualize Value"><Icon type="vv" /></a>
       </li>

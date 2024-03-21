@@ -47,6 +47,7 @@ section.featured {
   .elements {
     --padding-x: calc((100vw - var(--container-padding-x)*2 - var(--content-width)) / 2);
 
+    overflow: hidden;
     position: relative;
     display: flex;
     flex-wrap: nowrap;
