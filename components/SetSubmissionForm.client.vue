@@ -99,6 +99,7 @@
       <SignSet v-if="toSign" :data="data" @signed="markSigned" key="sign" />
 
       <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" :save="store" key="publish" />
+      <UnpublishSetSubmissionForm :submission="data" key="unpublish" @unpublished="$emit('updated', $event)" />
     </div>
   </form>
 </template>
@@ -111,9 +112,8 @@ import { formatTime } from '~/helpers/dates'
 import pad from '~/helpers/pad'
 
 const config = useRuntimeConfig()
-const router = useRouter()
 
-const { data } = defineProps({
+const props = defineProps({
   data: {
     type: Object,
     default: () => ({})
@@ -125,24 +125,24 @@ const { session, signIn } = useSignIn()
 const { address } = useAccount()
 const ens = useEnsName(address)
 
-const isCreator = computed(() => address.value?.toLowerCase() === data.creator)
+const isCreator = computed(() => address.value?.toLowerCase() === props.data.creator)
 
-const name = ref(data.name || '')
-const image1 = ref(data.edition1Image || null)
-const image4 = ref(data.edition4Image || null)
-const image5 = ref(data.edition5Image || null)
-const image10 = ref(data.edition10Image || null)
-const image20 = ref(data.edition20Image || null)
-const image40 = ref(data.edition40Image || null)
-const name1 = ref(data.edition1Name || '')
-const name4 = ref(data.edition4Name || '')
-const name5 = ref(data.edition5Name || '')
-const name10 = ref(data.edition10Name || '')
-const name20 = ref(data.edition20Name || '')
-const name40 = ref(data.edition40Name || '')
-const description = ref(data.description || '')
-const artist = ref(data.artist)
-const type = ref(data.edition_type || 'PRINT')
+const name = ref(props.data.name || '')
+const image1 = ref(props.data.edition1Image || null)
+const image4 = ref(props.data.edition4Image || null)
+const image5 = ref(props.data.edition5Image || null)
+const image10 = ref(props.data.edition10Image || null)
+const image20 = ref(props.data.edition20Image || null)
+const image40 = ref(props.data.edition40Image || null)
+const name1 = ref(props.data.edition1Name || '')
+const name4 = ref(props.data.edition4Name || '')
+const name5 = ref(props.data.edition5Name || '')
+const name10 = ref(props.data.edition10Name || '')
+const name20 = ref(props.data.edition20Name || '')
+const name40 = ref(props.data.edition40Name || '')
+const description = ref(props.data.description || '')
+const artist = ref(props.data.artist)
+const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
 const dataComplete = computed(() => {
   return name.value &&
@@ -162,9 +162,9 @@ const dataComplete = computed(() => {
     artist.value &&
     type.value
 })
-const isSigned = ref(!!data.artist_signature)
-const published = computed(() => !! data.published_at)
-const isPublishedToSet = computed(() => !!data.set_id)
+const isSigned = ref(!!props.data.artist_signature)
+const published = computed(() => !! props.data.published_at)
+const isPublishedToSet = computed(() => !!props.data.set_id)
 const toSign = computed(() =>
   isCreator.value &&
   !isSigned.value &&
@@ -176,9 +176,9 @@ const markSigned = (set) => {
   emit('updated', set)
 }
 watch(ens, () => {
-  if (data.creator !== address.value.toLowerCase()) return
+  if (props.data.creator !== address.value.toLowerCase()) return
 
-  artist.value = data.artist || ens.value || ''
+  artist.value = props.data.artist || ens.value || ''
 })
 
 const saving = ref(false)
@@ -190,8 +190,8 @@ const store = async () => {
 
   saving.value = true
 
-  const url = data?.uuid
-    ? `${config.public.opepenApi}/set-submissions/${data.uuid}`
+  const url = props.data?.uuid
+    ? `${config.public.opepenApi}/set-submissions/${props.data.uuid}`
     : `${config.public.opepenApi}/set-submissions`
 
   const set = await $fetch(url, {
@@ -222,8 +222,8 @@ const store = async () => {
 
   emit('updated', set)
 
-  if (! data?.uuid && set?.uuid) {
-    router.replace(`/create/sets/${set.uuid}`)
+  if (! props.data?.uuid && set?.uuid) {
+    await navigateTo(`/create/sets/${set.uuid}`)
   }
 }
 </script>

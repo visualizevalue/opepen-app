@@ -21,7 +21,6 @@
 </template>
 
 <script setup>
-import { useSets } from '~/helpers/sets'
 import { useSignIn } from '~/helpers/siwe'
 
 const { submission, save } = defineProps({
@@ -38,8 +37,6 @@ const { session, signIn } = useSignIn()
 const router = useRouter()
 
 const open = ref(false)
-const { currentSet } = useSets()
-
 const publishing = ref(false)
 
 const publish = async () => {
@@ -51,7 +48,7 @@ const publish = async () => {
 
   const url = `${config.public.opepenApi}/set-submissions/${submission.uuid}/publish`
 
-  const set = await $fetch(url, {
+  await $fetch(url, {
     method: 'POST',
     credentials: 'include',
   })

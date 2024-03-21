@@ -1,5 +1,5 @@
 <template>
-  <div class="set">
+  <div v-if="data" class="set">
     <header>
       <SetPagination v-if="isSet" :set="set" />
       <EmailNotificationAlert />
@@ -9,15 +9,17 @@
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
-    <!-- <SetAbout :set="set" /> -->
-    <SetStats :data="submission" class="stats" />
-    <SetOptIn :data="submission" @update="() => refresh()" />
-    <SetStatsMeta :data="submission" />
+    <template v-if="submission.approved_at">
+      <!-- <SetAbout :set="set" /> -->
+      <SetStats :data="submission" class="stats" />
+      <SetOptIn :data="submission" @update="() => refresh()" />
+      <SetStatsMeta :data="submission" />
 
-    <SetOpepen v-if="submission.set_id" :data="submission" />
+      <SetOpepen v-if="submission.set_id" :data="submission" />
 
-    <!-- TODO: Reenable comments -->
-    <!-- <SetOptInComments :data="data" /> -->
+      <!-- TODO: Reenable comments -->
+      <!-- <SetOptInComments :data="data" /> -->
+    </template>
 
     <AdminMenu v-slot="{ setAction }">
       <Button :to="`/create/sets/${submission.uuid}`">
@@ -33,6 +35,10 @@
         <Icon type="check" :stroke="submission.approved_at ? 'var(--green)' : 'currentcolor'" />
         <span v-if="submission.approved_at">Approved</span>
         <span v-else>Approve</span>
+      </Button>
+      <Button v-if="! submission.set_id && submission.published_at" @click="() => setAction(submission, 'unpublish').then(() => navigateTo(`/create/sets/${submission.uuid}`))">
+        <Icon type="globe" stroke="var(--green)" />
+        <span>Published</span>
       </Button>
     </AdminMenu>
   </div>
@@ -55,18 +61,21 @@ const url = isSet
   : `${config.public.opepenApi}/set-submissions/${route.params.id}`
 
 const { data, refresh } = await useFetch(url)
+
+if (! data.value) await navigateTo('/')
+
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
 
-const revealsAt = submission.value.reveals_at && DateTime.fromISO(submission.value.reveals_at).toUnixInteger()
-const revealed = revealsAt && (revealsAt <= DateTime.now().toUnixInteger())
-const mainButton = revealed || !submission.value.name
-  ? [
-    { property: 'fc:frame:button:1', content: `Set #${pad(submission.value.id, 3)} on Opepen.art` },
-    { property: 'fc:frame:button:1:action', content: `link` },
-    { property: 'fc:frame:button:1:target', content: `https://opepen.art/sets/${submission.value.id}` },
-  ]
-  : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
+// const revealsAt = submission.value?.reveals_at && DateTime.fromISO(submission.value.reveals_at).toUnixInteger()
+// const revealed = revealsAt && (revealsAt <= DateTime.now().toUnixInteger())
+// const mainButton = revealed || !submission.value?.name
+//   ? [
+//     { property: 'fc:frame:button:1', content: `Set #${pad(submission.value?.id, 3)} on Opepen.art` },
+//     { property: 'fc:frame:button:1:action', content: `link` },
+//     { property: 'fc:frame:button:1:target', content: `https://opepen.art/sets/${submission.value.id}` },
+//   ]
+//   : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
 
 useMetaData({
   title: isSet
