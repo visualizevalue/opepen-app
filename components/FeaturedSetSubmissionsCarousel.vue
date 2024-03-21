@@ -32,7 +32,7 @@ const config = useRuntimeConfig()
 
 const submissionsUrl = `${config.public.opepenApi}/set-submissions`
 const submissionsQuery = new URLSearchParams({
-  status: 'starred',
+  status: 'curated',
   limit: 5,
 }).toString()
 
