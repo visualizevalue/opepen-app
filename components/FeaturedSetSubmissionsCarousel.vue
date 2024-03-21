@@ -20,7 +20,7 @@
         />
 
         <button v-if="activeFeature > 0" @click="activeFeature -= 1" class="left"><Icon type="chevron-left" /></button>
-        <button v-if="activeFeature < 4" @click="activeFeature += 1" class="right"><Icon type="chevron-right" /></button>
+        <button v-if="activeFeature < items.length - 1" @click="activeFeature += 1" class="right"><Icon type="chevron-right" /></button>
       </div>
 
     </template>
