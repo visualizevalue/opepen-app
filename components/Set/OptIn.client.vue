@@ -242,6 +242,7 @@ const startOptIn = () => {
     }
 
     .countdown:not(.inline) {
+      display: block;
       font-size: var(--font-xl);
       margin: var(--size-4) 0 var(--size-6);
     }
