@@ -74,7 +74,7 @@ const { data, minimal, style } = defineProps({
 const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
 const revealsAt = ref(DateTime.fromISO(data?.reveals_at).toUnixInteger())
 const timeLeft = computed(() => data.remaining_reveal_time || (revealsAt.value - DateTime.now().toUnixInteger()))
-const progress = computed(() => parseInt(timeLeft.value / DEFAULT_TIME_TO_REVEAL * 100))
+const progress = computed(() => parseInt((DEFAULT_TIME_TO_REVEAL - timeLeft.value) / DEFAULT_TIME_TO_REVEAL * 100))
 const showProgress = computed(() => !data.set_id && (data.reveals_at || data.remainin_reveal_time < DEFAULT_TIME_TO_REVEAL))
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && data?.reveal_block_number)

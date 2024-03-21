@@ -21,6 +21,7 @@
       :auto-load="true"
       title="Explore Submissions"
       status=""
+      sort="random"
     />
   </div>
 </template>

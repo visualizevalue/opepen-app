@@ -29,10 +29,14 @@
 </template>
 
 <script setup>
-const { limit, autoLoad, status } = defineProps({
+const { limit, autoLoad, status, sort } = defineProps({
   limit: {
     type: Number,
     default: 24,
+  },
+  sort: {
+    type: String,
+    default: '-createdAt',
   },
   autoLoad: {
     type: Boolean,
@@ -51,6 +55,7 @@ const submissionsUrl = `${config.public.opepenApi}/set-submissions`
 const submissionsQuery = new URLSearchParams({
   status,
   limit,
+  sort,
 }).toString()
 </script>
 
