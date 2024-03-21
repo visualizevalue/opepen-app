@@ -11,12 +11,14 @@
 
     <template #default="{ items }">
       <div class="grid">
-        <SetPreview
-          v-for="submission in items"
-          :key="submission.id"
-          :data="submission"
-          minimal
-        />
+        <slot :items="items">
+          <SetPreview
+            v-for="submission in items"
+            :key="submission.id"
+            :data="submission"
+            minimal
+          />
+        </slot>
       </div>
     </template>
 
@@ -27,7 +29,7 @@
 </template>
 
 <script setup>
-const { limit, autoLoad } = defineProps({
+const { limit, autoLoad, status } = defineProps({
   limit: {
     type: Number,
     default: 24,
@@ -39,14 +41,15 @@ const { limit, autoLoad } = defineProps({
   title: {
     type: String,
     default: 'Submissions'
-  }
+  },
+  status: String,
 })
 
 const config = useRuntimeConfig()
 
 const submissionsUrl = `${config.public.opepenApi}/set-submissions`
 const submissionsQuery = new URLSearchParams({
-  status: 'unstarred',
+  status,
   limit,
 }).toString()
 </script>
@@ -58,18 +61,15 @@ section {
   .grid {
     display: grid;
     gap: var(--size-5);
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 
     article {
       width: 100%;
     }
+  }
 
-    @media (--md) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (--lg) {
-      grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-    }
+  &.wide .grid {
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   }
 }
 </style>

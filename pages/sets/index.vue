@@ -3,6 +3,22 @@
     <FeaturedSetSubmissionsCarousel />
 
     <ExploreSetSubmissions
+      title="Active"
+      status="prereveal"
+      :limit="6"
+      :auto-load="false"
+      class="wide"
+    >
+      <template #default="{ items }">
+        <SetPreview
+          v-for="submission in items"
+          :key="submission.id"
+          :data="submission"
+        />
+      </template>
+    </ExploreSetSubmissions>
+
+    <ExploreSetSubmissions
       :limit="6"
       :auto-load="false"
     >

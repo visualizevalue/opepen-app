@@ -1,21 +1,27 @@
 <template>
   <div>
-    <!-- <FeaturedSetSubmissionsCarousel /> -->
+    <ExploreSetSubmissions
+      title="Active Countdown"
+      status="prereveal"
+      :limit="6"
+      :auto-load="false"
+      class="wide"
+    >
+      <template #default="{ items }">
+        <SetPreview
+          v-for="submission in items"
+          :key="submission.id"
+          :data="submission"
+        />
+      </template>
+    </ExploreSetSubmissions>
 
     <ExploreSetSubmissions
       :limit="24"
       :auto-load="true"
       title="Explore Submissions"
-    >
-      <template #after>
-        <div class="explore-link">
-          <Button>
-            <Icon type="chevron-right" />
-            <span>Explore</span>
-          </Button>
-        </div>
-      </template>
-    </ExploreSetSubmissions>
+      status=""
+    />
   </div>
 </template>
 
@@ -38,6 +44,10 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+section {
+  margin-bottom: var(--size-8);
+}
+
 :deep(section > h1) {
   /* max-width: var(--content-width);
   margin-left: auto;

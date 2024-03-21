@@ -7,7 +7,7 @@
     class="featured"
   >
     <template #before>
-      <SectionTitle>Curated Submissions</SectionTitle>
+      <SectionTitle>Curated</SectionTitle>
     </template>
 
     <template #default="{ items }">

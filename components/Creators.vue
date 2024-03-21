@@ -1,18 +1,33 @@
 <template>
   <div class="creators">
-    <CreatorSignature :data="data" />
-    <Button v-if="data.coCreator1Account" :to="`/holders/${data.coCreator1Account.address}`">
-      <ApiAccount
-        :account="data.coCreator1Account"
-        :hide-address="false"
-      />
+    <CreatorSignature v-if="showSignature" :data="data" />
+    <Button v-else :to="`/holders/${data.creatorAccount.address}`">
+      <ApiAccount :account="data.creatorAccount" :hide-address="false" />
+    </Button>
+
+    <Button v-for="creator in coCreators" :to="`/holders/${creator.address}`">
+      <ApiAccount :account="creator" :hide-address="false" />
     </Button>
   </div>
 </template>
 
 <script setup>
-const { data } = defineProps({
+const { data, showSignature } = defineProps({
   data: Object,
+  showSignature: {
+    type: Boolean,
+    default: true,
+  }
+})
+
+const coCreators = computed(() => {
+  return [
+    data.coCreator1Account,
+    data.coCreator2Account,
+    data.coCreator3Account,
+    data.coCreator4Account,
+    data.coCreator5Account,
+  ].filter(c => !!c)
 })
 </script>
 
@@ -26,6 +41,7 @@ const { data } = defineProps({
 
   > * {
     width: auto;
+    min-width: 0;
   }
 
   > .button,
