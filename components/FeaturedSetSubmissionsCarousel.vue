@@ -47,13 +47,17 @@ section.featured {
   .elements {
     --padding-x: calc((100vw - var(--container-padding-x)*2 - var(--content-width)) / 2);
 
-    overflow: hidden;
-    position: relative;
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column;
     gap: var(--size-4);
 
-    padding-left: var(--padding-x);
+    @media (--md) {
+      flex-direction: row;
+      overflow: hidden;
+      position: relative;
+      flex-wrap: nowrap;
+      padding-left: var(--padding-x);
+    }
 
     :deep(> article) {
       flex-shrink: 0;
@@ -86,16 +90,16 @@ section.featured {
       }
 
       &.left {
-        left: calc(-1 * var(--size-2));
+        left: var(--size-2);
 
-        @media (--md) {
+        @media (--xl) {
           left: calc(var(--padding-x) - var(--size-4)*5);
         }
       }
       &.right {
-        right: calc(-1 * var(--size-2));
+        right: var(--size-2);
 
-        @media (--md) {
+        @media (--xl) {
           right: calc(var(--padding-x) - var(--size-4)*5);
         }
       }
