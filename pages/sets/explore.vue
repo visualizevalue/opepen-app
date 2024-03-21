@@ -3,7 +3,7 @@
     <ExploreSetSubmissions
       title="Active Countdown"
       status="prereveal"
-      :limit="6"
+      :limit="200"
       :auto-load="false"
       class="wide"
     >
