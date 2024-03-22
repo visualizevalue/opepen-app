@@ -312,14 +312,14 @@ const save = async () => {
 
   .pfp,
   .pfp :deep(.image) {
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
   }
 
   .cover {
     :deep(label) {
-      height: 33cqw;
+      height: 33cqw !important;
     }
 
     + .name {
