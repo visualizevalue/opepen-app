@@ -1,7 +1,6 @@
 <template>
   <div class="preview">
     <Image
-      @click="zoomed = true"
       :image="image"
       version="sm"
       class="appear"
@@ -12,6 +11,7 @@
         <h1>{{ name }}</h1>
         <p>{{ tagline }}</p>
       </div>
+      <button @click="zoomed = true" class="hidden-action"><span>Show details</span></button>
     </Image>
 
     <Modal
