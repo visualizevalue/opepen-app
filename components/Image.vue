@@ -24,7 +24,10 @@ const props = defineProps({
   image: Object,
   version: String,
   embed: String,
-  autoEmbed: Boolean,
+  autoEmbed: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const uri = ref('')

@@ -20,7 +20,7 @@
       @close="() => zoomed = false"
       modal-classes="preview-modal wide"
     >
-      <Image :image="image" version="lg" class="appear" />
+      <Image :image="image" version="lg" class="appear" auto-embed />
 
       <footer>
         <div class="text">
@@ -141,7 +141,6 @@ const download = async () => {
     > .image {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      border: 0;
       border-bottom: var(--border-dark);
     }
 
