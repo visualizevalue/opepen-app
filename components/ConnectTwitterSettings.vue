@@ -1,12 +1,12 @@
 <template>
   <p class="label">Connect Twitter/X (read/write)</p>
 
-  <Button :to="`https://x.com/${user.username}`" v-if="user">
-    Connected to <span class="nowrap">@{{ user.username }}</span>
-  </Button>
-  <Button v-else @click="connectX" type="button">
+  <Button @click="connectX" type="button">
     <Icon type="x.com" />
-    <span>Connect With Opepen</span>
+    <span v-if="user">
+      Connected to <span class="nowrap">@{{ user.username }}</span>
+    </span>
+    <span v-else>Connect With Opepen</span>
   </Button>
 </template>
 
