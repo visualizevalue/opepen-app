@@ -9,7 +9,7 @@
     <section v-if="revealing && ! revealed">
       <p>Pending reveal. Waiting for <NuxtLink v-if="data.reveal_block_number" :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink><span v-else>Reveal Block</span> to confirm.</p>
       <p>Current Block: {{ currentBlock }}<template
-        v-if="blockConfirmations >= 0"> ({{ blockConfirmations }} confirmation<template v-if="blockConfirmations < 1n || blockConfirmations > 1n">s</template>)</template><template
+        v-if="data.reveal_block_number && blockConfirmations >= 0"> ({{ blockConfirmations }} confirmation<template v-if="blockConfirmations < 1n || blockConfirmations > 1n">s</template>)</template><template
         v-else-if="blockConfirmations"> ({{ blockConfirmations * -1n }} block<template v-if="blockConfirmations < -1n || blockConfirmations > -1n">s</template> to go)</template>.
       </p>
     </section>
