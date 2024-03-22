@@ -28,7 +28,8 @@ const images = computed(() => {
   for (const edition of EDITIONS) {
     let index = 1
     while (index <= edition) {
-      array.push(data.dynamicSetImages[`image${edition}_${index}`])
+      const image = data.dynamicSetImages[`image${edition}_${index}`]
+      if (image) array.push(image)
       index ++
     }
   }
