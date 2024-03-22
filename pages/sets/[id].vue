@@ -16,6 +16,7 @@
       <SetStatsMeta :data="submission" />
 
       <SetOpepen v-if="submission.set_id" :data="submission" />
+      <SetDynamicImagesPreview v-else :data="submission" />
 
       <!-- TODO: Reenable comments -->
       <!-- <SetOptInComments :data="data" /> -->
@@ -26,26 +27,26 @@
         <Icon type="edit" />
         <span>Edit</span>
       </Button>
-      <Button @click="() => setAction(submission, 'star').then(() => refresh())">
-        <Icon type="star" :fill="submission.starred_at ? 'var(--yellow)' : 'transparent'" :stroke="submission.starred_at ? 'var(--yellow)' : 'currentcolor'" />
-        <span v-if="submission.starred_at">Starred</span>
-        <span v-else>Star</span>
+      <Button v-if="! submission.set_id && submission.published_at" @click="() => setAction(submission, 'unpublish').then(() => navigateTo(`/create/sets/${submission.uuid}`))">
+        <Icon type="globe" stroke="var(--green)" />
+        <span>Published</span>
       </Button>
       <Button @click="() => setAction(submission, submission.approved_at ? 'unapprove' : 'approve').then(() => refresh())">
         <Icon type="check" :stroke="submission.approved_at ? 'var(--green)' : 'currentcolor'" />
         <span v-if="submission.approved_at">Approved</span>
         <span v-else>Approve</span>
       </Button>
-      <Button v-if="! submission.set_id && submission.published_at" @click="() => setAction(submission, 'unpublish').then(() => navigateTo(`/create/sets/${submission.uuid}`))">
-        <Icon type="globe" stroke="var(--green)" />
-        <span>Published</span>
+      <Button @click="() => setAction(submission, 'star').then(() => refresh())">
+        <Icon type="star" :fill="submission.starred_at ? 'var(--yellow)' : 'transparent'" :stroke="submission.starred_at ? 'var(--yellow)' : 'currentcolor'" />
+        <span v-if="submission.starred_at">Starred</span>
+        <span v-else>Star</span>
       </Button>
     </AdminMenu>
   </div>
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
+// import { DateTime } from 'luxon'
 import { isSetId } from '~/helpers/urls'
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'

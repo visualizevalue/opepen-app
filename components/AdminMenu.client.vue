@@ -1,6 +1,6 @@
 <template>
   <aside v-if="isAdmin">
-    <p class="label">Admin Options</p>
+    <p class="label nowrap">Admin Tools</p>
     <slot :set-action="setAction" />
   </aside>
 </template>
