@@ -26,7 +26,7 @@
       <Button @click="download"><Icon type="download" /> <span>Download</span></Button>
     </div>
 
-    <OpepenAttributes :token="opepen" :set="opepen.set" />
+    <OpepenAttributes :token="opepen" :set="opepen.set?.submission || opepen.set" />
 
     <OpepenEvents :token="opepen" />
   </article>

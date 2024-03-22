@@ -6,8 +6,15 @@
       <h1 v-else>Opt-In Not Open Yet</h1>
       <IconOpepen />
     </header>
-    <section v-if="revealed">
-      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/datas">Opepen Metadata Reveal Script</NuxtLink>.</p>
+    <section v-if="revealing && ! revealed">
+      <p>Pending reveal. Waiting for <NuxtLink v-if="data.reveal_block_number" :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink><span v-else>Reveal Block</span> to confirm.</p>
+      <p>Current Block: {{ currentBlock }}<template
+        v-if="blockConfirmations >= 0"> ({{ blockConfirmations }} confirmation<template v-if="blockConfirmations < 1n || blockConfirmations > 1n">s</template>)</template><template
+        v-else-if="blockConfirmations"> ({{ blockConfirmations * -1n }} block<template v-if="blockConfirmations < -1n || blockConfirmations > -1n">s</template> to go)</template>.
+      </p>
+    </section>
+    <section v-else-if="revealed">
+      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepen-api/tree/main/app/Services/Metadata/Reveal">Opepen Metadata Reveal Script</NuxtLink>.</p>
 
       <OptInOwnedRevealed v-if="subscription && data.set_id" :data="data" :subscription="subscription" />
     </section>
@@ -56,8 +63,8 @@
 
 <script setup>
 import { DateTime } from 'luxon'
-import { useAccount } from '~/helpers/use-wagmi'
-import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL } from '~/helpers/time'
+import { useAccount, useBlockHeight } from '~/helpers/use-wagmi'
+import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL, delay } from '~/helpers/time'
 import OptInOwnedRevealed from './OptInOwnedRevealed.vue'
 
 const config = useRuntimeConfig()
@@ -69,10 +76,29 @@ const published = computed(() => !!props.data.published_at)
 const revealDate = ref(DateTime.fromISO(props.data?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
 const timeRemaining = computed(() => props.data.remaining_reveal_time < DEFAULT_TIME_TO_REVEAL && timeRemainingFromSeconds(props.data.remaining_reveal_time))
-const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
-const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
+const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger() && props.data.remaining_reveal_time)
+const currentBlock = useBlockHeight()
+const blockConfirmations = computed(() =>
+  currentBlock.value &&
+  props.data.reveal_block_number &&
+  currentBlock.value - BigInt(props.data.reveal_block_number)
+)
+const revealed = computed(() =>
+  revealing.value &&
+  props.data?.reveal_block_number &&
+  currentBlock.value &&
+  props.data?.set_id &&
+  BigInt(props.data?.reveal_block_number) < (BigInt(currentBlock.value) - 5n)
+)
+const pollReveal = async () => {
+  while (! props.data.reveal_block_number || ! props.data.set_id) {
+    await delay(6_000)
+    emit('update')
+  }
+}
 const onComplete = () => {
   revealing.value = true
+  pollReveal()
 }
 
 const url = computed(() => `${config.public.opepenApi}/accounts/${address.value}/set-submissions/${props.data.uuid}/subscription`)

@@ -2,6 +2,7 @@ import {
   fetchEnsAvatar,
   fetchEnsName,
   watchAccount,
+  watchBlockNumber,
 } from '@wagmi/core'
 
 const account = reactive({
@@ -84,4 +85,17 @@ export const useEnsAvatar = (name) => {
   })
 
   return avatar
+}
+
+const blockHeight = ref(null)
+let unwatchBlockHeight
+export const useBlockHeight = () => {
+  unwatchBlockHeight = watchBlockNumber(
+    { chainId: 1, listen: true },
+    (blockNumber) => {
+      blockHeight.value = blockNumber
+    }
+  )
+
+  return blockHeight
 }
