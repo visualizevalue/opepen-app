@@ -37,8 +37,8 @@ const attributes = computed(() => {
     },
     {
       trait_type: 'Release',
-      value: pad(set.id, 3),
-      link: `/sets/${set.id}`,
+      value: pad(set.set_id, 3),
+      link: `/sets/${set.set_id}`,
     },
     {
       trait_type: 'Set',
