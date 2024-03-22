@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { useSignIn } from '~/helpers/siwe'
+import { useSignIn, isAdmin } from '~/helpers/siwe'
 import { formatDateTime } from '~/helpers/dates'
 import { useAccount } from '~/helpers/use-wagmi'
 
@@ -92,6 +92,10 @@ watch(status, () => {
   if (route.query.status !== status.value) {
     router.replace({ query: { ...route.query, status: status.value }})
   }
+})
+
+watch(session, () => {
+  if (! isAdmin.value) navigateTo('/create/sets')
 })
 
 const query = computed(() => {
