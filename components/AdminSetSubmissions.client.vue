@@ -53,7 +53,10 @@
           <NuxtLink :to="`/create/sets/admin/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
 
           <div class="actions" v-if="! submission.deleted_at && submission.published_at">
-            <button @click.stop="() => approve(submission, index)">
+            <button v-if="! submission.approved_at" @click.stop="() => approve(submission, index, false)">
+              <Icon type="bell-off" />
+            </button>
+            <button @click.stop="() => approve(submission, index, true)">
               <Icon
                 type="check"
                 :stroke="submission.approved_at ? 'var(--green)' : 'currentColor'"
@@ -124,11 +127,12 @@ const destroy = async (submission, index) => {
 
   list.value.items.splice(index, 1)
 }
-const approve = async (submission, index) => {
+const approve = async (submission, index, notify = true) => {
   const action = submission.approved_at ? `unapprove` : `approve`
   const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/${action}`, {
     method: 'POST',
     credentials: 'include',
+    body: JSON.stringify({ notify })
   })
 
   list.value.items[index] = saved
