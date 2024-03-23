@@ -53,7 +53,12 @@
                 v-for="o in opepens"
               >
                 <input type="checkbox" :value="o.token_id" v-model="selected">
-                <span>Opepen #{{ o.token_id }}</span>
+                <span>
+                  Opepen #{{ o.token_id }}
+                  <span v-if="o.submission?.name" class="submission">
+                    ({{ o.submission?.name }})
+                  </span>
+                </span>
                 <span class="edition">(Edition of {{ o.data.edition }})</span>
               </label>
             </div>
@@ -104,7 +109,6 @@
 <script setup>
 import { signMessage } from '@wagmi/core'
 import { useAccount } from '~/helpers/use-wagmi'
-import pad from '~/helpers/pad'
 import { fetchAddresses } from '~/helpers/delegate-cash'
 import { getEditionName } from '~/helpers/editions'
 import { useOpepen } from '~/helpers/use-opepen'
@@ -261,6 +265,8 @@ const sign = async () => {
     // ...
   }
 
+  await fetchOpepen([address.value, ...delegatedAddresses.value])
+
   signing.value = false
   emit('close')
 }
@@ -397,6 +403,7 @@ section {
         height: var(--size-4);
       }
 
+      .submission,
       .edition {
         color: var(--gray-z-6);
         font-size: var(--font-sm);
