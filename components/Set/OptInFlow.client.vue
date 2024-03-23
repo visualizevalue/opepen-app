@@ -55,8 +55,9 @@
                 <input type="checkbox" :value="o.token_id" v-model="selected">
                 <span>
                   Opepen #{{ o.token_id }}
-                  <span v-if="o.submission?.name" class="submission">
-                    ({{ o.submission?.name }})
+                  <span class="submission">
+                    <template v-if="o.submission?.name !== data.name">{{ o.submission?.name }}</template>
+                    <template v-if="selected.includes(o.token_id) && (o.submission?.name !== data.name)"> → {{ data.name }}</template>
                   </span>
                 </span>
                 <span class="edition">(Edition of {{ o.data.edition }})</span>
