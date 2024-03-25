@@ -79,7 +79,7 @@
         </div>
         <Button @click="$emit('close')">Cancel</Button>
         <Button :disabled="signing" @click="sign">
-          <span v-if="signing">Confirming</span>
+          <span v-if="signing">Confirming...</span>
           <span v-else>
             <template v-if="subscribed?.length && !selected.length">Opt-Out</template>
             <template v-else>Confirm</template>
