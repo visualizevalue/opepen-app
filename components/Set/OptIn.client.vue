@@ -74,7 +74,10 @@ const { address, isConnected } = useAccount()
 
 const published = computed(() => !!props.data.published_at)
 const revealDate = ref(DateTime.fromISO(props.data?.reveals_at).toFormat('LLL dd, yyyy'))
-const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
+const revealsAt = ref(props.data?.reveals_at
+  ? DateTime.fromISO(props.data?.reveals_at).toUnixInteger()
+  : DateTime.now().plus({ seconds: props.data?.remaining_reveal_time }).toUnixInteger()
+)
 const timeRemaining = computed(() => props.data.remaining_reveal_time < DEFAULT_TIME_TO_REVEAL && timeRemainingFromSeconds(props.data.remaining_reveal_time))
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger() && props.data.remaining_reveal_time)
 const currentBlock = useBlockHeight()
