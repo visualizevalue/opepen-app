@@ -1,12 +1,12 @@
 <template>
 
   <section class="items">
-    <SetPreviewImage :data="data" :edition="1" />
-    <SetPreviewImage :data="data" :edition="4" />
-    <SetPreviewImage :data="data" :edition="5" />
-    <SetPreviewImage :data="data" :edition="10" />
-    <SetPreviewImage :data="data" :edition="20" />
-    <SetPreviewImage :data="data" :edition="40" />
+    <SetPreviewImage :data="data" :edition="1" version="" />
+    <SetPreviewImage :data="data" :edition="4" version="" />
+    <SetPreviewImage :data="data" :edition="5" version="" />
+    <SetPreviewImage :data="data" :edition="10" version="" />
+    <SetPreviewImage :data="data" :edition="20" version="" />
+    <SetPreviewImage :data="data" :edition="40" version="" />
   </section>
 
 </template>

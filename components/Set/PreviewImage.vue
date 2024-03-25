@@ -2,7 +2,7 @@
   <div class="preview">
     <Image
       :image="image"
-      version="sm"
+      :version="version"
       class="appear"
       :class="{ square: ! data.rounded_preview }"
       auto-embed
@@ -44,9 +44,14 @@ import { EDITION_TAGLINES } from '~/helpers/editions'
 const {
   data,
   edition,
+  version,
 } = defineProps({
   data: Object,
-  edition: Number
+  edition: Number,
+  version: {
+    type: String,
+    default: 'sm',
+  },
 })
 
 const image = computed(() => data[`edition${edition}Image`])
