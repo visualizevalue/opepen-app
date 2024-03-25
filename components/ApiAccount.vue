@@ -1,8 +1,6 @@
 <template>
-  <span :class="{ avatar: !hideAvatar }">
-    <template v-if="!hideAvatar">
-      <Avatar :account="account" class="lg" />
-    </template>
+  <span>
+    <Avatar v-if="!hideAvatar" :account="account" class="lg" />
     <span>
       <span>{{ display }}</span>
       <small v-if="! hideAddress && display !== short" :title="account.address">{{ short }}</small>
@@ -33,7 +31,7 @@ span {
   gap: var(--size-2);
   line-height: 1em;
 
-  :deep(img) {
+  :deep(.avatar) {
     width: var(--size-5);
     height: var(--size-5);
     border-radius: 50%;

@@ -1,11 +1,11 @@
 <template>
-  <img v-if="account?.pfp" :src="pfpURI" :alt="`Avatar of ${account.display}`" />
-  <DefaultOpepenAvatar v-else-if="account?.address" :address="account.address" :size="size" />
+  <div class="avatar">
+    <Image v-if="account?.pfp" :image="account.pfp" />
+    <DefaultOpepenAvatar v-else-if="account?.address" :address="account.address" :size="size" />
+  </div>
 </template>
 
 <script setup>
-import { imageURI } from '~/helpers/images'
-
 const props = defineProps({
   account: Object,
   size: {
@@ -13,16 +13,19 @@ const props = defineProps({
     default: 32,
   },
 })
-
-const pfpURI = computed(() => props.account?.pfp && imageURI(props.account.pfp, 'sm'))
 </script>
 
 <style lang="postcss" scoped>
-  img,
-  :deep(img) {
-    border-radius: 50%;
-    border-top-left-radius: 10%;
-    border: var(--border);
-    background-color: var(--gray-z-1);
+  .avatar {
+    display: relative;
+
+    :deep(> img),
+    :deep(> .image) {
+      border-radius: 50% !important;
+      border-top-left-radius: 10% !important;
+      border: var(--border);
+      background-color: var(--gray-z-1);
+    }
   }
+
 </style>

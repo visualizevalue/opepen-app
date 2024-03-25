@@ -1,8 +1,6 @@
 <template>
   <Button v-if="! isConnected" @click="open = true" id="main-connect">
-    <span class="avatar">
-      <DefaultOpepenAvatar />
-    </span>
+    <DefaultOpepenAvatar class="avatar" />
     <slot>Check-In</slot>
   </Button>
   <div v-else>
@@ -50,13 +48,15 @@ watch(isConnected, async () => {
 </script>
 
 <style lang="postcss" scoped>
-.avatar {
-  margin-left: calc(-1 * var(--size-2));
+:deep(.avatar) {
+  margin-left: calc(-2 * var(--size-2));
+  width: var(--size-7);
+  height: var(--size-7);
+  border-top-left-radius: var(--size-1);
 
-  :deep(img) {
-    border-top-left-radius: var(--size-0);
-    width: var(--size-5);
-    height: var(--size-5);
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

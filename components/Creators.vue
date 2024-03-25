@@ -52,7 +52,7 @@ const coCreators = computed(() => {
   :deep(.button) {
     height: calc(var(--size-8) - var(--size-1)*1.5);
 
-    .avatar img {
+    .avatar {
       height: calc(var(--size-7) + var(--size-2));
       width: calc(var(--size-7) + var(--size-2));
     }

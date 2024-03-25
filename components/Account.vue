@@ -1,5 +1,5 @@
 <template>
-  <span :class="{ avatar: !hideAvatar }">
+  <span>
     <Avatar v-if="! hideAvatar" :account="account" />
     <span>{{ account?.display || shortAddress(address) }}</span>
   </span>
