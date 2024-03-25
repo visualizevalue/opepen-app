@@ -87,9 +87,19 @@ const { data: account } = await useFetch(url)
 
 const coverImageURL = imageURI(account.value?.coverImage, 'lg')
 
-const splitSocials = computed(() => account.value?.socials?.length > 5)
-const mainSocials = computed(() => splitSocials.value ? account.value?.socials.slice(0, 3) : account.value?.socials)
-const otherSocials = computed(() => splitSocials.value ? account.value?.socials.slice(3) : [])
+const socials = computed(() => {
+  let socials = account.value?.socials || []
+
+  if (account.value?.twitterHandle) {
+    socials = [`https://x.com/${account.value.twitterHandle}`, ...socials]
+      .filter((s, index) => !s.startsWith('https://twitter.com') && !(index > 0 && s.startsWith('https://x.com')))
+  }
+
+  return socials
+})
+const splitSocials = computed(() => socials.value?.length > 5)
+const mainSocials = computed(() => splitSocials.value ? socials.value.slice(0, 3) : socials.value)
+const otherSocials = computed(() => splitSocials.value ? socials.value.slice(3) : [])
 
 // const frameButtons = [
 //   { property: 'fc:frame:button:1', content: `View on on Opepen.art` },
