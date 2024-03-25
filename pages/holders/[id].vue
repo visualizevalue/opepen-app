@@ -92,7 +92,7 @@ const socials = computed(() => {
 
   if (account.value?.twitterHandle) {
     socials = [`https://x.com/${account.value.twitterHandle}`, ...socials]
-      .filter((s, index) => !s.startsWith('https://twitter.com') && !(index > 0 && s.startsWith('https://x.com')))
+      .filter((s, index) => !(index > 0 && (s.indexOf('twitter.com') > -1 || s.indexOf('x.com') > -1)))
   }
 
   return socials
