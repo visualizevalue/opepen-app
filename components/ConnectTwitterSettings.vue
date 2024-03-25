@@ -1,5 +1,5 @@
 <template>
-  <p class="label">Connect Twitter/X (read/write)</p>
+  <p class="label">Connect Twitter/X</p>
 
   <Button @click="connectX" type="button">
     <Icon type="x.com" />
@@ -18,7 +18,7 @@ const props = defineProps({
 })
 
 const connectX = async () => {
-  const { url } = await $fetch(`${config.public.opepenOauthApi}/connect/twitter`, { credentials: 'include' })
+  const { url } = await $fetch(`${config.public.opepenOauthApi}/connect/twitter?scope=read`, { credentials: 'include' })
 
   location.replace(url)
 }
