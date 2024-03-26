@@ -56,6 +56,10 @@ onMounted(() => fetchSets())
       border-color: var(--gray-z-2);
     }
 
+    :deep(> *) {
+      height: var(--size-7);
+    }
+
     > :first-child {
       margin-right: auto;
       display: flex;

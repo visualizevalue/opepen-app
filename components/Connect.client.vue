@@ -49,7 +49,7 @@ watch(isConnected, async () => {
 
 <style lang="postcss" scoped>
 :deep(.avatar) {
-  margin-left: calc(-2 * var(--size-2));
+  margin-left: calc(-2 * var(--size-2) - 1px);
   width: var(--size-7);
   height: var(--size-7);
   border-top-left-radius: var(--size-1);
