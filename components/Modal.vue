@@ -49,7 +49,7 @@ defineEmits(['close'])
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 50;
+  z-index: 500;
   top: 0;
   left: 0;
   right: 0;
