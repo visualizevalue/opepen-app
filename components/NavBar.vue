@@ -1,6 +1,6 @@
 <template>
   <nav :class="{ 'scrolled': isScrolled }">
-    <NuxtLink to="/">
+    <NuxtLink to="/" title="Opepen Home Page">
       <Logo />
     </NuxtLink>
 

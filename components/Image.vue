@@ -6,6 +6,7 @@
       <img
         v-else-if="uri || hasImageEmbed"
         ref="imageEl"
+        :alt="`Opepen image ${image.creator ? `by ${image.creator}` : `#${image.uuid}`}`"
         :src="hasImageEmbed ? embed : uri"
         @error="loadOriginal"
         @load="imageLoaded"

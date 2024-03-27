@@ -8,7 +8,7 @@ import { createIcon } from 'opepen-standard'
 const props = defineProps({
   size: {
     type: Number,
-    default: 32,
+    default: 60,
   },
   address: String,
 })
