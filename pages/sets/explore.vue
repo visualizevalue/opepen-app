@@ -21,7 +21,7 @@
       :auto-load="true"
       title="Explore Submissions"
       status=""
-      sort="random"
+      sort="-approvedAt"
     />
   </div>
 </template>
