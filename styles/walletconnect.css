@@ -1,3 +1,7 @@
+wcm-modal {
+  --wcm-z-index: 800;
+}
+
 #walletconnect-wrapper {
   .walletconnect-modal__base,
   .walletconnect-modal__base * {
