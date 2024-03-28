@@ -67,7 +67,6 @@ article.image {
   position: relative;
   height: 0;
   padding-bottom: 100%;
-  padding-bottom: calc(100% - 2px);
 
   &:not(.square) {
     border-radius: var(--size-5);
