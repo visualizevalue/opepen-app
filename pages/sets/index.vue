@@ -21,6 +21,7 @@
     <ExploreSetSubmissions
       :limit="6"
       :auto-load="false"
+      sort="-approvedAt"
     >
       <template #after>
         <div class="explore-link">
