@@ -91,6 +91,7 @@ const onClick = async () => {
       border-top-right-radius: var(--size-4);
       border-top-left-radius: var(--size-0);
       border-bottom: var(--border);
+      padding-bottom: 100% !important;
     }
 
     img {
