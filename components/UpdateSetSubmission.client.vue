@@ -10,6 +10,8 @@
 
       <SetSubmissionForm v-if="data" @updated="data = $event" :data="data" />
     </PageHeader>
+
+    <AdminMenuSetSubmissions :submission="data" @refresh="execute" />
   </div>
 </template>
 
