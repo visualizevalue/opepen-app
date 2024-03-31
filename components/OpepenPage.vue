@@ -36,7 +36,6 @@
 import { useMetaData } from '~/helpers/head'
 import { imageURI } from '~/helpers/images'
 import downloadImage from '~/helpers/download-image'
-import { useOpepenMetadata } from '~/helpers/opepen'
 import { normalizeURI } from '~/helpers/urls'
 
 const route = useRoute()
@@ -49,19 +48,19 @@ if (parseInt(route.params.id) > 16_000) router.replace('/')
 const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/${route.params.id}`)
 if (! opepen.value) router.replace('/')
 
-const metadata = await useOpepenMetadata(route.params.id)
+const metadata = computed(() => opepen.value.metadata)
 const animationURI = computed(() => {
-  if (! metadata?.animation_url) return
+  if (! metadata.value?.animation_url) return
 
-  return normalizeURI(metadata.animation_url)
+  return normalizeURI(metadata.value.animation_url)
 })
 
 const image = computed(() => imageURI(opepen.value.image))
 const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.value.image?.type)
 
-  if (metadata?.download_url) {
-    return open(normalizeURI(metadata.download_url), '_blank')
+  if (metadata.value?.download_url) {
+    return open(normalizeURI(metadata.value.download_url), '_blank')
   }
 
   // Force update the image (in the background)

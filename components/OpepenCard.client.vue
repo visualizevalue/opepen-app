@@ -4,7 +4,7 @@
     <OpepenImage :token="token" />
 
     <div class="text">
-      <h1>Opepen {{ id }}</h1>
+      <h1>{{ token.name }}</h1>
       <slot name="subline">
         <p>Edition of {{ set }}</p>
       </slot>
@@ -31,8 +31,6 @@ const {
     default: false,
   }
 })
-
-const id = token.token_id
 
 // ==============================================================
 // Style & Interaction
