@@ -7,7 +7,7 @@ export const formatDate = (date) => {
 }
 
 export const formatDateTime = (date) => {
-  return DateTime.fromISO(date).toLocaleString({ month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })
+  return DateTime.fromISO(date).toLocaleString({ year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })
 }
 
 export const formatTime = (date) => {
