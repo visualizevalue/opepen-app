@@ -144,6 +144,7 @@ const download = async () => {
     padding: 0 !important;
 
     > .image {
+      border: 0;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       border-bottom: var(--border-dark);
