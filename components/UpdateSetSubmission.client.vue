@@ -7,9 +7,9 @@
         <span v-if="data?.name">Update "{{ data.name }}" submission</span>
         <span v-else>Update submission</span>
       </h1>
-
-      <SetSubmissionForm v-if="data" @updated="data = $event" :data="data" />
     </PageHeader>
+
+    <SetSubmissionForm v-if="data" @updated="data = $event" :data="data" />
 
     <AdminMenuSetSubmissions :submission="data" @refresh="execute" />
   </div>

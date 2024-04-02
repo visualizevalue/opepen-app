@@ -232,7 +232,8 @@ const store = async () => {
 form {
   display: grid;
   gap: var(--size-7);
-  margin: var(--size-7) 0;
+  margin: var(--size-7) auto;
+  max-width: var(--content-width);
 
   @media (--lg) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
