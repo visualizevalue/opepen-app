@@ -58,5 +58,10 @@ watch(isConnected, async () => {
     width: 100%;
     height: 100%;
   }
+
+  @media (--md) {
+    height: calc(var(--size-7) + var(--size-1));
+    width: calc(var(--size-7) + var(--size-1));
+  }
 }
 </style>

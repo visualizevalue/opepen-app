@@ -58,6 +58,10 @@ onMounted(() => fetchSets())
 
     :deep(> *) {
       height: var(--size-7);
+
+      @media (--sm) {
+        height: calc(var(--size-7) + var(--size-1));
+      }
     }
 
     > :first-child {
