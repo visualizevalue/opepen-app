@@ -6,7 +6,9 @@
     tag="section"
   >
     <template #before>
-      <SectionTitle>{{ title }}</SectionTitle>
+      <slot name="before">
+        <SectionTitle>{{ title }}</SectionTitle>
+      </slot>
     </template>
 
     <template #default="{ items }">
@@ -22,6 +24,12 @@
       </div>
     </template>
 
+    <template #loading="{ loading }">
+      <slot name="loading" :loading="loading">
+        <Loading v-if="loading" />
+      </slot>
+    </template>
+
     <template #after>
       <slot name="after" />
     </template>
@@ -29,7 +37,7 @@
 </template>
 
 <script setup>
-const { limit, autoLoad, status, sort } = defineProps({
+const props = defineProps({
   limit: {
     type: Number,
     default: 24,
@@ -52,11 +60,13 @@ const { limit, autoLoad, status, sort } = defineProps({
 const config = useRuntimeConfig()
 
 const submissionsUrl = `${config.public.opepenApi}/set-submissions`
-const submissionsQuery = new URLSearchParams({
-  status,
-  limit,
-  sort,
-}).toString()
+const submissionsQuery = computed(() => {
+  return new URLSearchParams({
+    status: props.status,
+    limit: props.limit,
+    sort: props.sort,
+  }).toString()
+})
 </script>
 
 <style lang="postcss" scoped>

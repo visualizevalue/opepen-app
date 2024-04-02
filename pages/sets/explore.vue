@@ -19,15 +19,41 @@
     <ExploreSetSubmissions
       :limit="24"
       :auto-load="true"
-      title="Explore Submissions"
-      status=""
-      sort="-approvedAt"
-    />
+      status="live"
+      :sort="sort"
+    >
+      <template #before>
+        <PageHeader class="full">
+          <SectionTitle>Explore Submissions</SectionTitle>
+
+          <div class="actions">
+
+            <label>
+              <span class="label">Sort</span>
+              <select v-model="sort" class="input sm">
+                <option value="-demand">Demand</option>
+                <option value="-createdAt">Newest</option>
+                <option value="createdAt">Oldest</option>
+              </select>
+            </label>
+          </div>
+        </PageHeader>
+      </template>
+
+      <template #loading="{ loading }">
+        <div v-if="loading" class="loading-space">
+          <Loading />
+        </div>
+      </template>
+
+    </ExploreSetSubmissions>
   </div>
 </template>
 
 <script setup>
 import { useMetaData } from '~/helpers/head'
+
+const sort = ref('-demand')
 
 useMetaData({
   title: 'Explore Opepen Submissions',
@@ -49,10 +75,24 @@ section {
   margin-bottom: var(--size-8);
 }
 
-:deep(section > h1) {
-  /* max-width: var(--content-width);
-  margin-left: auto;
-  margin-right: auto; */
-  margin-top: 0;
+header {
+  padding: 0 0 var(--size-5);
+
+  @media (--md) {
+    padding: 0;
+  }
+}
+
+label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-4);
+}
+
+.loading-space {
+  padding: 10vh 2rem 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -10,8 +10,11 @@
 <style lang="postcss" scoped>
   header {
     width: 100%;
-    max-width: var(--content-width);
-    margin: 0 auto;
+
+    &:not(.full) {
+      max-width: var(--content-width);
+      margin: 0 auto;
+    }
 
     :deep(h1) {
       text-transform: uppercase;
@@ -23,6 +26,12 @@
     :deep(.actions) {
       display: flex;
       gap: var(--size-4);
+    }
+
+    @media (--md) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 

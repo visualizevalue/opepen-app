@@ -5,6 +5,7 @@
     <ExploreSetSubmissions
       title="Active"
       status="prereveal"
+      sort="-approvedAt"
       :limit="200"
       :auto-load="false"
       class="wide"
