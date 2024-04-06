@@ -1,6 +1,6 @@
 <template>
   <ButtonGroup v-if="data.creator">
-    <Button :to="`/holders/${data.creator}`">
+    <Button :to="`/${id(data.creatorAccount)}`">
       <ApiAccount
         :account="data.creatorAccount"
         :hide-address="false"
@@ -22,6 +22,8 @@
 </template>
 
 <script setup>
+import { id } from '~/helpers/accounts'
+
 const { data } = defineProps({
   data: Object,
 })

@@ -4,9 +4,11 @@ import {
   watchAccount,
   watchBlockNumber,
 } from '@wagmi/core'
+import { id as computeId } from '~/helpers/accounts'
 
 const account = reactive({
   address: '',
+  ens: null,
   connector: null,
   isConnected: false,
   isConnecting: false,
@@ -15,7 +17,8 @@ const account = reactive({
   status: null,
   profile: null,
 })
-const address = computed(() => account.address)
+export const address = computed(() => account.address)
+export const id = computed(() => computeId(account.profile))
 let unwatchAccount;
 let unwatchAccountApi;
 
@@ -59,18 +62,16 @@ export const useProfile = (address) => {
 }
 
 export const useEnsName = (address) => {
-  const name = ref('')
-
   if (address.value) {
     fetchEnsName({ address: address.value }).then(ens => {
-      name.value = ens
+      account.ens.value = ens
     })
   }
   watch(address, async () => {
-    name.value = await fetchEnsName({ address: address.value })
+    account.ens.value = await fetchEnsName({ address: address.value })
   })
 
-  return name
+  return toRef(account.ens)
 }
 
 export const useEnsAvatar = (name) => {

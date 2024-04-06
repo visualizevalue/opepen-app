@@ -1,17 +1,19 @@
 <template>
   <div class="creators">
     <CreatorSignature v-if="showSignature" :data="data" />
-    <Button v-else :to="`/holders/${data.creatorAccount.address}`">
+    <Button v-else :to="`/${id(data.creatorAccount)}`">
       <ApiAccount :account="data.creatorAccount" :hide-address="false" />
     </Button>
 
-    <Button v-for="creator in coCreators" :to="`/holders/${creator.address}`">
+    <Button v-for="creator in coCreators" :to="`/${id(creator)}`">
       <ApiAccount :account="creator" :hide-address="false" />
     </Button>
   </div>
 </template>
 
 <script setup>
+import { id } from '~/helpers/accounts'
+
 const { data, showSignature } = defineProps({
   data: Object,
   showSignature: {

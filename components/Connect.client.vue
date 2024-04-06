@@ -5,7 +5,7 @@
   </Button>
   <div v-else>
     <ButtonGroup>
-      <Button :to="`/holders/${'address', address}`">
+      <Button :to="`/holders/${ id }`">
         <Account :address="address" />
       </Button>
       <Button to="/settings"><Icon type="settings" /></Button>
@@ -32,7 +32,7 @@
 
 <script setup>
 import { useSignIn } from '~/helpers/siwe'
-import { useAccount } from '~/helpers/use-wagmi'
+import { useAccount, id } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
 const { signIn, signingIn } = useSignIn()
