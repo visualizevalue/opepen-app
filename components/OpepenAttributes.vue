@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+import { id } from '~/helpers/accounts'
 import { EDITION_NAMES } from '~/helpers/editions'
 import pad from '~/helpers/pad'
 
@@ -33,7 +34,7 @@ const attributes = computed(() => {
     {
       trait_type: 'Artist',
       value: set.artist,
-      link: `/holders/${set.creator}`
+      link: `/${id(set.creatorAccount)}`
     },
     {
       trait_type: 'Release',

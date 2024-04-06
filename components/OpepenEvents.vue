@@ -20,10 +20,10 @@
         <span v-if="event.from === ZeroAddress">Mint</span>
         <span v-else>Transfer</span>
       </span>
-      <NuxtLink :to="`/holders/${event.from}`">
+      <NuxtLink :to="`/${id(event.fromAccount)}`">
         <span class="visible-sm">From: </span>{{ event.fromAccount.display }}
       </NuxtLink>
-      <NuxtLink :to="`/holders/${event.to}`">
+      <NuxtLink :to="`/${id(event.toAccount)}`">
         <span class="visible-sm">To: </span>{{ event.toAccount.display }}
       </NuxtLink>
       <NuxtLink :to="`https://etherscan.io/tx/${event.transaction_hash}`">
@@ -38,6 +38,7 @@
 <script setup>
 import { ZeroAddress } from 'ethers';
 import { formatDateTime } from '~/helpers/dates'
+import { id } from '~/helpers/accounts'
 
 const { token } = defineProps({
   token: Object,
