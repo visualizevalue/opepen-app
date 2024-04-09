@@ -44,7 +44,7 @@ const attributes = computed(() => {
     {
       trait_type: 'Set',
       value: set.name,
-      link: `/sets/${set.id}`,
+      link: `/sets/${pad(set.set_id, 3)}`,
     },
     {
       trait_type: 'Opepen',
