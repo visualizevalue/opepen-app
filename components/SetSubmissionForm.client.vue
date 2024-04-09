@@ -77,7 +77,7 @@
     </label>
 
     <DyanamicImagesForm
-      v-if="isDynamic"
+      v-if="isDynamic && data.uuid"
       :set-submission-id="data.uuid"
       :dynamic-set-images="data.dynamicSetImages"
       :disabled="disabled"
