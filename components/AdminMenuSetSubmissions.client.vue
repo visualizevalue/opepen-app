@@ -5,6 +5,13 @@
       <Icon type="globe" stroke="var(--green)" />
       <span>Published</span>
     </Button>
+    <Button
+      v-if="! submission.approved_at"
+      @click="() => setAction(submission, 'approve', { notify: false }).then(() => $emit('refresh'))"
+    >
+      <Icon type="bell-off" />
+      <span>Silent Approve</span>
+    </Button>
     <Button @click="() => setAction(submission, submission.approved_at ? 'unapprove' : 'approve').then(() => $emit('refresh'))">
       <Icon type="check" :stroke="submission.approved_at ? 'var(--green)' : 'currentcolor'" />
       <span v-if="submission.approved_at">Approved</span>

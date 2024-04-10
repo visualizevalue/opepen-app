@@ -145,7 +145,7 @@ section {
   margin: var(--size-7) auto;
 
   > header {
-    margin-bottom: var(--size-7);
+    margin-bottom: var(--size-7) !important;
     display: flex;
     gap: var(--size-4);
 

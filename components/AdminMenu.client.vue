@@ -10,12 +10,13 @@ import { isAdmin } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
 
-const setAction = async (submission, action) => {
+const setAction = async (submission, action, data = {}) => {
   if (!confirm(`Really execute ${action}?`)) return
 
   const updated = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/${action}`, {
     method: 'POST',
     credentials: 'include',
+    body: JSON.stringify(data)
   })
 
   return updated
