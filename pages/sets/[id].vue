@@ -71,7 +71,7 @@ useMetaData({
     ? `Set ${pad(set.value.id, 3)}: ${submission.value.name || 'Locked'} | Opepen`
     : `Set Submission: ${submission.value.name} | Opepen`,
   description: shortenedCleanText(submission.value.description) || (isSet && `Opepen Set ${pad(submission.value.set_id, 3)} is one of 200 official Opepen sets.`),
-  og: `${config.public.opepenApi}/frames/image/sets/${submission.value.uuid}?${new URLSearchParams(route.query)}`,
+  og: `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
   meta: [
     // TODO: Fix and reenable these frames
     // { property: 'fc:frame', content: 'vNext' },

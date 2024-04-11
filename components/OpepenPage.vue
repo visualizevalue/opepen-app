@@ -73,7 +73,7 @@ const download = async () => {
 
 useMetaData({
   title: `Opepen #${route.params.id}`,
-  og: image.value,
+  og: `${config.public.opepenApi}/render/opepen/${route.params.id}/og`,
   meta: [
     {
       property: 'eth:nft:collection',

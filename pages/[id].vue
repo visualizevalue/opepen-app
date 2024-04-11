@@ -111,7 +111,7 @@ const otherSocials = computed(() => splitSocials.value ? socials.value.slice(3) 
 useMetaData({
   title: `${ account.value?.display } | Opepen`,
   description: `Opepen owned by ${account.value?.display}.`,
-  og: `https://api.opepen.art/v1/frames/accounts/${account.value.address}/image`,
+  og: `${config.public.opepenApi}/render/accounts/${account.value.address}/image`,
   meta: [
     // TODO: Fix and reenable these frames
     // { property: 'fc:frame', content: 'vNext' },
