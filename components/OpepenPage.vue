@@ -23,7 +23,10 @@
         <IconsEtherscan />
       </a>
 
-      <Button @click="download"><Icon type="download" /> <span>Download</span></Button>
+      <div>
+        <Button @click="download"><Icon type="download" /> <span>Download</span></Button>
+        <Button @click="downloadStatsCard"><Icon type="download" /> <span>Card</span></Button>
+      </div>
     </div>
 
     <OpepenAttributes :token="opepen" :set="opepen.set?.submission || opepen.set" />
@@ -69,6 +72,9 @@ const download = async () => {
   return isStatic
     ? downloadImage(image.value, { property: `Opepen ${opepen.value.token_id}` })
     : open(image.value, '_blank')
+}
+const downloadStatsCard = async () => {
+  return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.value.token_id}/og`, { property: `Opepen Card ${opepen.value.token_id}` })
 }
 
 useMetaData({
@@ -136,7 +142,8 @@ useMetaData({
 
     }
 
-    .actions {
+    .actions,
+    .actions > div {
       display: flex;
       align-items: center;
       justify-content: space-between;
