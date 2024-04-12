@@ -98,11 +98,13 @@ const { completeSets } = useSets()
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    text-align: center;
 
     @media (--lg) {
       padding: var(--size-9);
       max-width: 50rem;
       margin: 0 auto;
+      text-align: left;
     }
 
     h1 {
@@ -144,6 +146,7 @@ const { completeSets } = useSets()
       font-size: calc(var(--font-lg) * 0.9);
       font-family: 'Space Mono';
       text-transform: none;
+      text-align: left;
     }
 
     .actions {
