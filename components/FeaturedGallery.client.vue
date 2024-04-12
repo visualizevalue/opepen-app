@@ -1,65 +1,56 @@
 <template>
-  <PaginatedContent
-    v-if="width > 800"
-    :url="url"
-    v-slot="{ items }"
-    class="gallery"
-    :query="`limit=12`"
-    :auto-load="false"
-  >
-    <div
-      v-for="image in items"
-      :key="image.uuid"
-    >
-      <Image
-        :image="image"
-        version="sm"
-        class="appear up"
-      />
-    </div>
-  </PaginatedContent>
+  <aside>
+    <TransitionGroup name="fade">
+      <div
+        v-for="opepen of onDisplay"
+        :key="opepen.token_id"
+      >
+        <OpepenCard
+          :token="opepen"
+          :set="opepen.data.edition"
+          rotate
+          class="appear up"
+        />
+      </div>
+    </TransitionGroup>
+  </aside>
 </template>
 
 <script setup>
-import { useWindowSize, useWindowScroll } from '@vueuse/core'
+import { useIntervalFn } from '@vueuse/core'
 
 const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/opepen/images/featured`
+const url = `${config.public.opepenApi}/opepen?sort=random&limit=24&includes[]=image&filter[set_id]=!null`
+const { data: opepen } = await useFetch(url)
 
-const { width, height } = useWindowSize()
-const { x, y } = useWindowScroll()
+const onDisplay = ref([])
+
+useIntervalFn(() => {
+  onDisplay.value = onDisplay.value.concat(opepen.value.data.splice(0, 1))
+}, 5000)
 </script>
 
 <style lang="postcss" scoped>
-.gallery {
-  --image-width: 9rem;
-  --gap: var(--size-4);
-
-  padding: var(--size-9);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--image-width), 1fr));
-  grid-auto-flow: dense;
-  grid-auto-rows: max-content;
-  gap: var(--gap);
-  pointer-events: none;
-  position: fixed;
+aside {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
+  padding: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  > *:nth-child(4n) {
-    grid-column: span 2;
-    grid-row: span 2;
+  > div {
+    width: 60%;
+    margin: auto;
+    position: absolute;
   }
 
-  > * {
-    opacity: 0.1;
-  }
-
-  @media (--lg) {
-    --gap: var(--size-8);
+  .opepen-card {
+    position: relative;
   }
 }
 </style>

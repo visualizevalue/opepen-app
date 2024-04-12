@@ -5,6 +5,7 @@
         <div class="schematics">
           <OpepenSchematics />
         </div>
+        <FeaturedGallery />
       </div>
 
       <div>
@@ -47,7 +48,7 @@ const { completeSets } = useSets()
     padding: var(--navbar-height) 0 0;
 
     .inner {
-      border-top: var(--border-dark);
+      border-top: var(--border);
 
       @media (--md) {
         display: grid;
@@ -65,7 +66,7 @@ const { completeSets } = useSets()
       width: 50vw;
       height: calc(100dvh - var(--navbar-height));
       padding-bottom: calc(var(--size-7) + var(--navbar-height));
-      border-right: var(--border-dark);
+      border-right: var(--border);
       position: sticky;
       top: var(--navbar-height);
     }
@@ -150,13 +151,13 @@ const { completeSets } = useSets()
     }
 
     .actions {
-      margin: var(--size-9) 0;
+      margin: var(--size-8) 0;
       display: flex;
       gap: var(--size-4);
       align-items: center;
 
       @media (--md) {
-        margin: var(--size-9) 0 0;
+        margin: var(--size-8) 0 0;
       }
     }
   }

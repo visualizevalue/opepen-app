@@ -35,7 +35,7 @@ const {
 // ==============================================================
 // Style & Interaction
 // ==============================================================
-const rotation = ref(rotate ? getRandomArbitrary(-12, 12) : 0)
+const rotation = ref(rotate ? getRandomArbitrary(-24, 24) : 0)
 const scale = ref(1)
 const wrapperStyle = computed(() => ({
   transform: `rotate(${rotation.value}deg) scale(${scale.value})`,
