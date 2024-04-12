@@ -121,7 +121,6 @@ const onComplete = () => {
       margin-bottom: var(--size-2);
 
       > span {
-        text-transform: none;
         font-family: var(--font-family-opepen);
         letter-spacing: 0.06em;
         font-size: var(--font-xl);

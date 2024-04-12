@@ -50,11 +50,11 @@
       transform="translate(0, 0.02)"
     >
       <!-- 8 -->
-      <use href="#arrow" transform="translate(8, 0.5)" />
+      <!-- <use href="#arrow" transform="translate(8, 0.5)" />
       <use href="#arrow" transform="translate(0, 0.5) rotate(180)" />
       <line x2="3.8" y1="0.5" y2="0.5" stroke-width="0.018" />
       <line x1="4.2" x2="8" y1="0.5" y2="0.5" stroke-width="0.018" />
-      <text class="text" x="4" y="0.5">8</text>
+      <text class="text" x="4" y="0.5">8</text> -->
 
       <!-- 4 -->
       <use href="#arrow" transform="translate(6, 6.5)" />

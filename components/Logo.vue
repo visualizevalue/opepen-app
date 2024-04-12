@@ -1,7 +1,7 @@
 <template>
   <span>
     <IconsOpepenAiMedium />
-    <OpepenAiTextLogo />
+    <span class="text">Opepen</span>
     <slot />
   </span>
 </template>
@@ -26,12 +26,15 @@
     > :last-child {
       color: var(--gray-z-9);
       position: relative;
-      top: 0.1em;
 
       @media (--max-sm) {
         height: var(--size-4);
         width: auto;
       }
     }
+  }
+
+  .text {
+    font-size: 2rem;
   }
 </style>

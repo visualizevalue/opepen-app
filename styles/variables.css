@@ -50,7 +50,8 @@
   /* FONTS */
   --font-family-main: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
-  --font-family-opepen: 'OpepenBlockSolid', 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
+  /* --font-family-opepen: 'OpepenBlockSolid', 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif; */
+  --font-family-opepen: var(--font-family-main);
   --font-sm: var(--size-3);
   --font-xs: calc(var(--size-2) + var(--size-1));
   --font-lg: min(calc(var(--size-3) + 1vw * 2), var(--size-5));

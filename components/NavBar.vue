@@ -73,10 +73,10 @@ onMounted(() => fetchSets())
       display: flex;
       align-items: center;
 
-      :deep(svg:last-child) {
+      :deep(.text) {
         display: none;
 
-        @media (--sm) {
+        @media (--md) {
           display: initial;
         }
       }
