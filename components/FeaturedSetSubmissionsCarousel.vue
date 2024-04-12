@@ -7,7 +7,7 @@
     class="featured"
   >
     <template #before>
-      <SectionTitle>Curated</SectionTitle>
+      <SectionTitle><slot name="title">Curated</slot></SectionTitle>
     </template>
 
     <template #default="{ items }">
@@ -44,6 +44,12 @@ const itemStyles = computed(() => ({
 </script>
 
 <style lang="postcss" scoped>
+section.featured > h1 {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 section.featured {
   .elements {
     --padding-x: calc((100vw - var(--container-padding-x)*2 - var(--content-width)) / 2);

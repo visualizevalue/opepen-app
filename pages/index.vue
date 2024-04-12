@@ -4,23 +4,46 @@
       <OpepenSchematics />
     </div>
 
-    <h1 class="title">
-      <span>An Open Canvas</span>
-      <small>art that makes artists</small>
-      <!-- <small>“Every block of stone has a statue inside it and it is the task of the sculptor to discover it.” <span class="muted">- Michelangelo</span></small> -->
-    </h1>
+    <section class="intro">
+      <h1>
+        <span ref="heading">An Open Canvas</span>
+        <small>art that makes artists</small>
+        <!-- <small>“Every block of stone has a statue inside it and it is the task of the sculptor to discover it.” <span class="muted">- Michelangelo</span></small> -->
+      </h1>
+      <div :style="{ width: width ? `${width}px` : 'auto' }">
+        <p>Culture is the sum of shared values, traditions, and expressions. It offers a lens through which we interpret our experiences and shape our collective identity. In the digital age, culture and memes have transcended traditional boundaries.</p>
+        <p>Opepen is an early manifestation of a digital museum - an open art protocol inviting participation from all over the world. Hundreds of artists contribute their interpretations of the Opepen shape.</p>
+        <p>Holders of a collection of 16.000 cryptographic tokens have to form consensus on which of the submitted artworks get included in the "Permanent Collection". The "Permanent Collection" consists of 200 sets - {{ completeSets.length }} of which have already been decided on.</p>
 
-    <section>
-      <FeaturedGallery />
+        <div class="actions">
+          <Button to="/sets">
+            <span>Permanent Collection</span>
+            <Icon type="chevron-right" />
+          </Button>
+          <Button to="/sets/explore">
+            <span>Set Submissions</span>
+            <Icon type="chevron-right" />
+          </Button>
+        </div>
+      </div>
     </section>
+
+    <FeaturedSetSubmissionsCarousel>
+      <template #title>Curated Submissions</template>
+    </FeaturedSetSubmissionsCarousel>
+
+    <PermanentCollectionOverview />
   </div>
 </template>
 
 <script setup>
-// import { SET_TIMESTAMPS } from '~/helpers/sets'
-// import { nowInSeconds } from '~/helpers/time'
+import { useElementSize } from '@vueuse/core'
+import { useSets } from '~/helpers/sets'
 
-// const viewPreviews = SET_TIMESTAMPS['1'] < nowInSeconds() || true
+const heading = ref(null)
+const { width } = useElementSize(heading)
+
+const { completeSets } = useSets()
 </script>
 
 <style lang="postcss" scoped>
@@ -49,58 +72,65 @@
     }
   }
 
-  .title {
-    color: var(--gray-z-8);
-    margin: 8vh auto 15vh;
-    text-align: center;
+  .intro {
+    margin: 8vh auto var(--size-9);
 
-    > span,
-    > small {
-      line-height: var(--line-height-md);
-      margin-left: auto;
-      margin-right: auto;
-    }
+    h1 {
+      color: var(--gray-z-8);
+      margin: 0 0 var(--size-8);
+      text-align: center;
 
-    > span {
-      font-family: var(--font-family-opepen);
-      font-size: var(--font-display);
-      letter-spacing: 0.05em;
-    }
+      > span,
+      > small {
+        line-height: var(--line-height-md);
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-block;
+      }
 
-    > small {
-      display: block;
-      font-size: var(--font-lg);
-      margin-top: 0.5em;
-      max-width: 30rem;
+      > span {
+        font-family: var(--font-family-opepen);
+        font-size: var(--font-display);
+        letter-spacing: 0.05em;
+      }
 
-      .muted {
-        color: var(--gray-z-6);
+      > small {
+        display: block;
+        font-size: var(--font-lg);
+        margin-top: 0.5em;
+        max-width: 30rem;
+
+        .muted {
+          color: var(--gray-z-6);
+        }
       }
     }
+
+    h1 + div {
+      margin: 0 auto;
+      text-align: justify;
+    }
+
+    p {
+      margin: 0 auto var(--size-4);
+      line-height: var(--line-height-md);
+      font-size: var(--font-lg);
+      max-width: 34rem;
+      max-width: min(calc(var(--size-7)*21 + 1vw * 2), calc(var(--size-9)*20))
+    }
+
+    .actions {
+      margin: var(--size-9) 0;
+      display: flex;
+      gap: var(--size-4);
+      justify-content: center;
+      align-items: center;
+    }
   }
 
-  aside,
-  section {
-    width: 100%;
+  .permanent-collection,
+  .gallery {
     max-width: var(--content-width);
-    margin: var(--size-5) auto;
-  }
-
-  aside {
-    display: grid;
-    grid-template-columns: 100%;
-    gap: var(--size-4);
-    margin: calc(-1 * max(8vh, var(--size-5))) auto max(8vh, var(--size-5));
-    margin: 0 auto max(8vh, var(--size-5));
-
-    > * {
-      width: 100%;
-    }
-
-    @media (--md) {
-      gap: var(--size-8);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin: max(8vh, var(--size-8)) auto;
-    }
+    margin: var(--size-9) auto;
   }
 </style>

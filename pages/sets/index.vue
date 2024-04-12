@@ -1,56 +1,11 @@
 <template>
   <div>
-    <FeaturedSetSubmissionsCarousel />
-
-    <ExploreSetSubmissions
-      title="Active"
-      status="prereveal"
-      sort="-approvedAt"
-      :limit="200"
-      :auto-load="false"
-      class="wide"
-    >
-      <template #default="{ items }">
-        <SetPreview
-          v-for="submission in items"
-          :key="submission.id"
-          :data="submission"
-        />
-      </template>
-    </ExploreSetSubmissions>
-
-    <ExploreSetSubmissions
-      :limit="6"
-      :auto-load="false"
-      sort="-demand"
-    >
-      <template #after>
-        <div class="explore-link">
-          <Button to="/sets/explore">
-            <Icon type="chevron-right" />
-            <span>Explore All</span>
-          </Button>
-        </div>
-      </template>
-    </ExploreSetSubmissions>
-
-    <section>
-      <SectionTitle>Permanent Collection</SectionTitle>
-      <Progress :percent="parseInt(completeSets.length / 200 * 100)">
-        {{ completeSets.length }} / 200
-      </Progress>
-      <div class="grid">
-        <SetPreview v-for="set in completeSets" :data="set.submission" :key="set.id" minimal />
-      </div>
-    </section>
+    <PermanentCollectionOverview />
   </div>
 </template>
 
 <script setup>
 import { useMetaData } from '~/helpers/head'
-import { useSets } from '~/helpers/sets'
-
-const { completeSets } = useSets()
 
 useMetaData({
   title: 'Opepen Sets',
@@ -88,27 +43,6 @@ section {
 
   h1 {
     margin: var(--size-5) 0;
-  }
-
-  .progress {
-    margin: var(--size-7) 0 var(--size-8);
-  }
-
-  .grid {
-    display: grid;
-    gap: var(--size-5);
-
-    article {
-      width: 100%;
-    }
-
-    @media (--md) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (--lg) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
 }
 

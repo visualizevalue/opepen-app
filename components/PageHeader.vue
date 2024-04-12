@@ -18,7 +18,6 @@
 
     :deep(h1) {
       text-transform: uppercase;
-      font-size: var(--size-4);
       font-weight: var(--font-weight-bold);
       letter-spacing: var(--letter-spacing-md);
     }

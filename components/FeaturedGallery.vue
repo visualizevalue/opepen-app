@@ -2,7 +2,7 @@
   <PaginatedContent
     :url="url"
     v-slot="{ items }"
-    class="featured"
+    class="gallery"
   >
     <Image
       v-for="image in items"
@@ -20,7 +20,7 @@ const url = `${config.public.opepenApi}/opepen/images/featured`
 </script>
 
 <style lang="postcss" scoped>
-.featured {
+.gallery {
   --image-width: 9rem;
   --gap: var(--size-4);
 

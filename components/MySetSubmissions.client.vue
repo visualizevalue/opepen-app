@@ -1,5 +1,10 @@
 <template>
   <section>
+    <div v-if="! session" class="empty">
+      <p class="muted">Please Sign in with your Ethereum account to submit art.</p>
+
+      <Connect>Sign in with Ethereum</Connect>
+    </div>
     <PaginatedContent
       v-if="session"
       :url="url"

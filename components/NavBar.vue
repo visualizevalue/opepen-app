@@ -13,6 +13,10 @@
       <Icon type="grid" />
       <span>Sets</span>
     </Button>
+    <Button to="/sets/explore">
+      <Icon type="table" />
+      <span>Submissions</span>
+    </Button>
 
     <CreateLink />
 

@@ -1,7 +1,10 @@
 <template>
   <Button v-if="! isConnected" @click="open = true" id="main-connect">
-    <DefaultOpepenAvatar class="avatar" />
-    <slot>Check-In</slot>
+    <slot>
+      <DefaultOpepenAvatar class="avatar" />
+
+      <span>Check-In</span>
+    </slot>
   </Button>
   <div v-else>
     <ButtonGroup>
