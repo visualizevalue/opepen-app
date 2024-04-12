@@ -26,6 +26,8 @@ const { data: opepen } = await useFetch(url)
 const onDisplay = ref([])
 
 useIntervalFn(() => {
+  if (! opepen.value.data.length) return
+
   onDisplay.value = onDisplay.value.concat(opepen.value.data.splice(0, 1))
 }, 5000)
 </script>
