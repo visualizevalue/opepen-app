@@ -1,5 +1,5 @@
 <template>
-  <aside v-if="width > 720">
+  <aside v-if="width >= 720">
     <TransitionGroup name="fade">
       <div
         v-for="opepen of onDisplay"
@@ -49,6 +49,7 @@ aside {
 
   > div {
     width: 60%;
+    max-width: 32rem;
     margin: auto;
     position: absolute;
   }
