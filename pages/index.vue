@@ -147,11 +147,14 @@ const { completeSets } = useSets()
     }
 
     .actions {
-      margin: var(--size-9) 0 0;
+      margin: var(--size-9) 0;
       display: flex;
       gap: var(--size-4);
-      /* justify-content: center; */
       align-items: center;
+
+      @media (--md) {
+        margin: var(--size-9) 0 0;
+      }
     }
   }
 </style>
