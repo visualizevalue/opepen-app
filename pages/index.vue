@@ -64,7 +64,7 @@ const { completeSets } = useSets()
     @media (--md) {
       width: 50vw;
       height: calc(100dvh - var(--navbar-height));
-      padding-bottom: var(--size-6);
+      padding-bottom: calc(var(--size-7) + var(--navbar-height));
       border-right: var(--border-dark);
       position: sticky;
       top: var(--navbar-height);
@@ -101,6 +101,8 @@ const { completeSets } = useSets()
 
     @media (--lg) {
       padding: var(--size-9);
+      max-width: 50rem;
+      margin: 0 auto;
     }
 
     h1 {
@@ -140,8 +142,6 @@ const { completeSets } = useSets()
       margin: 0 auto var(--size-4);
       line-height: var(--line-height-md);
       font-size: calc(var(--font-lg) * 0.9);
-      max-width: 34rem;
-      max-width: min(calc(var(--size-7)*21 + 1vw * 2), calc(var(--size-9)*20));
       font-family: 'Space Mono';
       text-transform: none;
     }
