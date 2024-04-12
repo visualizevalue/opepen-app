@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- <FeaturedSetSubmissionsCarousel /> -->
+
     <ExploreSetSubmissions
       title="Active Countdown"
       status="prereveal"

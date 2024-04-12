@@ -219,6 +219,7 @@ figure {
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--size-5);
+    z-index: 1;
   }
 
   @media (--md) {
