@@ -20,7 +20,7 @@ const props = defineProps({
     display: relative;
 
     :deep(> img),
-    :deep(> .image) {
+    :deep(> .image > .image) {
       border-radius: 50% !important;
       border-top-left-radius: 10% !important;
       border: var(--border);

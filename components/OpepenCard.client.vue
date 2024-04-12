@@ -83,7 +83,7 @@ const onClick = async () => {
     display: grid;
     grid-template-rows: 4fr 1fr;
 
-    .image {
+    :deep(.image > .image) {
       border: none !important;
       border-radius: 0;
       border-top-right-radius: var(--size-4);
