@@ -1,5 +1,5 @@
 <template>
-  <aside>
+  <aside v-if="width > 720">
     <TransitionGroup name="fade">
       <div
         v-for="opepen of onDisplay"
@@ -17,7 +17,9 @@
 </template>
 
 <script setup>
-import { useIntervalFn } from '@vueuse/core'
+import { useIntervalFn, useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize()
 
 const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/opepen?sort=random&limit=24&includes[]=image&filter[set_id]=!null`
