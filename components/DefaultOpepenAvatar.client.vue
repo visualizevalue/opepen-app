@@ -33,5 +33,6 @@ watch(address, () => setCanvas())
   img {
     border-radius: 50%;
     border: var(--border);
+    width: 100%;
   }
 </style>
