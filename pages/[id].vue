@@ -6,7 +6,7 @@
       }"
     >
       <div>
-        <Avatar :account="account" :size="64" class="avatar" />
+        <Avatar :account="account" :size="256" class="avatar" />
         <div class="text">
           <h1>
             <span>{{ account.display }}</span>
