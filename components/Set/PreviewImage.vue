@@ -20,7 +20,7 @@
       @close="() => zoomed = false"
       modal-classes="preview-modal wide"
     >
-      <Image :image="image" version="lg" class="appear" auto-embed />
+      <Image :image="image" :version="isStatic ? 'lg' : version" class="appear" auto-embed />
 
       <footer>
         <div class="text">
@@ -62,11 +62,12 @@ const tagline = computed(() => EDITION_TAGLINES[edition])
 // Modal
 const zoomed = ref(false)
 
+const isStatic = computed(() => ['png', 'jpg', 'jpeg'].includes(image.value?.type))
+
 const download = async () => {
-  const isStatic = ['png', 'jpg', 'jpeg'].includes(image.value?.type)
   const uri = imageURI(image.value)
 
-  return isStatic
+  return isStatic.value
     ? downloadImage(uri, { name: name.value })
     : open(uri, '_blank')
 }
