@@ -58,7 +58,7 @@ const url = computed(() => `${config.public.opepenApi}/accounts/${session.value?
 section {
   margin: var(--size-7) 0;
 
-  > div {
+  :deep(> div) {
     display: grid;
     gap: var(--size-5);
 

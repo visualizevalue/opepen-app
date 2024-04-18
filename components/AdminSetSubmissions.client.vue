@@ -156,7 +156,7 @@ section {
     }
   }
 
-  > div {
+  :deep(> div) {
     display: grid;
     gap: var(--size-5);
   }
