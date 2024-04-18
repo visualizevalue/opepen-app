@@ -16,7 +16,6 @@
             <!-- <small>“Every block of stone has a statue inside it and it is the task of the sculptor to discover it.” <span class="muted">- Michelangelo</span></small> -->
           </h1>
           <div :style="{ width: width ? `${width}px` : 'auto' }" class="space-mono">
-            <p>Culture is the sum of shared values, traditions, and expressions. It offers a lens through which we interpret our experiences and shape our collective identity. In the digital age, culture and memes have transcended traditional boundaries.</p>
             <p>Opepen is an early manifestation of a digital museum - an open art protocol inviting participation from all over the world. Hundreds of artists contribute their interpretations of the Opepen shape.</p>
             <p>Holders of a collection of 16.000 cryptographic tokens have to form consensus on which of the submitted artworks get included in the "Permanent Collection". The "Permanent Collection" consists of 200 sets - {{ completeSets.length }} of which have already been decided on.</p>
 
