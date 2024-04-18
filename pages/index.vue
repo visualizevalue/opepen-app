@@ -21,11 +21,11 @@
             <p>Holders of a collection of 16.000 cryptographic tokens have to form consensus on which of the submitted artworks get included in the "Permanent Collection". The "Permanent Collection" consists of 200 sets - {{ completeSets.length }} of which have already been decided on.</p>
 
             <div class="actions">
-              <Button to="/sets">
+              <Button to="/sets" class="large">
                 <span>Permanent Collection</span>
                 <Icon type="chevron-right" />
               </Button>
-              <Button to="/sets/explore">
+              <Button to="/sets/explore" class="large">
                 <span>Set Submissions</span>
                 <Icon type="chevron-right" />
               </Button>
@@ -151,13 +151,24 @@ const { completeSets } = useSets()
     }
 
     .actions {
-      margin: var(--size-8) 0;
-      display: flex;
-      gap: var(--size-4);
+      margin: var(--size-8) 0 var(--size-9);
       align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-4);
+
+      > * {
+        width: 100%;
+      }
 
       @media (--md) {
+        flex-direction: row;
+        gap: var(--size-4);
         margin: var(--size-8) 0 0;
+
+        > * {
+          width: auto;
+        }
       }
     }
   }

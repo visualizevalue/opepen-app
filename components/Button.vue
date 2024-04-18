@@ -50,6 +50,11 @@ button {
     padding: var(--size-2) var(--size-3);
   }
 
+  &.large {
+    font-size: var(--font-md);
+    padding: var(--size-4) var(--size-5);
+  }
+
   @media (--md) {
     padding: calc(var(--size-1) + var(--size-2)) var(--size-4);
     height: calc(var(--size-7) + var(--size-1));
@@ -58,6 +63,10 @@ button {
       font-size: var(--font-sm);
       padding: var(--size-2) var(--size-3);
       height: calc(var(--size-6) + var(--size-1));
+    }
+
+    &.large {
+      padding: var(--size-5) var(--size-6);
     }
   }
 
