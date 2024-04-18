@@ -1,5 +1,5 @@
 <template>
-  <component v-if="filteredItems.length || loading" :is="tag">
+  <component v-if="filteredItems.length || loading" :is="tag" :class="class">
     <slot name="before"></slot>
 
     <slot :items="filteredItems" :meta="meta" :loading="loading" />
@@ -11,11 +11,13 @@
     </slot>
 
     <aside
-      v-if="hasMore && !loading"
+      v-if="hasMore && autoLoad && !loading"
       ref="scrollMarker"
       v-intersection-observer="onMarkerVisible"
     ></aside>
   </component>
+
+  <slot name="after-block" :meta="meta" :items="filteredItems"></slot>
 </template>
 
 <script setup>
@@ -49,7 +51,8 @@ const props = defineProps({
   tag: {
     type: String,
     default: 'div',
-  }
+  },
+  class: String,
 })
 
 const {

@@ -1,14 +1,16 @@
 <template>
   <section v-if="data" class="items-meta">
-    <h1>
-      <small v-if="data.set_id">Set {{ pad(data.set_id) }}</small>
-      <small v-else>Set Submission <template v-if="! data.approved_at">(Private Preview)</template></small>
-      <span :title="name">{{ name }}</span>
-    </h1>
+    <div class="intro">
+      <h1>
+        <small v-if="data.set_id">Set {{ pad(data.set_id) }}</small>
+        <small v-else>Set Submission <template v-if="! data.approved_at">(Private Preview)</template></small>
+        <span :title="name">{{ name }}</span>
+      </h1>
 
-    <p v-if="data.description"><ExpandableText :text="data.description" /></p>
+      <p v-if="data.description"><ExpandableText :text="data.description" /></p>
 
-    <Creators :data="data" />
+      <Creators :data="data" />
+    </div>
 
     <ul class="overview">
       <li>
@@ -58,11 +60,13 @@
         </NuxtLink>
       </li>
     </ul>
+
+    <OptInTimeline :submission-id="data.uuid" />
   </section>
 </template>
 
 <script setup>
-import { DateTime, Duration } from 'luxon'
+import { DateTime } from 'luxon'
 import pad from '~/helpers/pad'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
@@ -95,39 +99,45 @@ const openDynamicPreview = ref(false)
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: var(--size-3);
+    gap: var(--size-7);
 
-    > h1 {
-      small, span {
-        display: block;
-      }
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--size-2);
 
-      small {
-        color: var(--gray-z-6);
-        text-transform: uppercase;
-        margin-bottom: var(--size-2);
-        font-size: var(--font-md);
-      }
+      > h1 {
+        small, span {
+          display: block;
+        }
 
-      span {
-        font-family: var(--font-family-opepen);
-        font-size: var(--font-title);
-        line-height: var(--line-height-md);
-        letter-spacing: 0.05em;
+        small {
+          color: var(--gray-z-6);
+          text-transform: uppercase;
+          margin-bottom: var(--size-2);
+          font-size: var(--font-md);
+        }
 
-        @media (--md) {
-          font-size: var(--font-display);
+        span {
+          font-family: var(--font-family-opepen);
+          font-size: var(--font-title);
+          line-height: 0.8;
+          margin-left: -0.05em;
+
+          @media (--md) {
+            font-size: var(--font-display);
+          }
         }
       }
-    }
 
-    > p {
-      color: var(--gray-z-6);
-      font-size: var(--font-md);
-      line-height: var(--line-height-md);
-      margin: var(--size-1) 0;
+      > p {
+        color: var(--gray-z-6);
+        font-size: var(--font-md);
+        line-height: var(--line-height-md);
+        margin: var(--size-1) 0;
+      }
     }
-
 
     .overview {
       display: grid;

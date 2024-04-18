@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Avatar v-if="!hideAvatar" :account="account" class="lg" />
+    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" />
     <span>
       <span>{{ display }}</span>
       <small v-if="! hideAddress && display !== short" :title="account.address">{{ short }}</small>
@@ -17,7 +17,11 @@ const props = defineProps({
   hideAddress: {
     type: Boolean,
     default: true,
-  }
+  },
+  avatarSize: {
+    type: String,
+    default: 'lg',
+  },
 })
 
 const display = computed(() => props.account.display)
