@@ -119,6 +119,8 @@ defineEmits(['close'])
 
       :deep(.scroll) {
         max-height: calc(0.8 * var(--100vh));
+        border-radius: var(--size-5);
+        border-top-left-radius: var(--size-1);
         height: 100%;
       }
     }
