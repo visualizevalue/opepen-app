@@ -20,7 +20,7 @@
         </NuxtLink>
         <span v-if="entry.opepen_count">{{ entry.opepen_count }}</span>
         <span v-else></span>
-        <span v-if="entry.is_opt_in">Opt-Ins</span>
+        <span v-if="entry.is_opt_in">Opt-In<span v-if="entry.opepen_count > 1">s</span></span>
         <span v-else>Opt-Out</span>
         <span>{{ timeAgo(entry.created_at) }}</span>
       </div>
