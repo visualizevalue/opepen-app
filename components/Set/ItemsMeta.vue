@@ -6,7 +6,7 @@
       <span :title="name">{{ name }}</span>
     </h1>
 
-    <p v-if="data.description" v-html="data.description"></p>
+    <p v-if="data.description"><ExpandableText :text="data.description" /></p>
 
     <Creators :data="data" />
 

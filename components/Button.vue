@@ -55,6 +55,11 @@ button {
     padding: var(--size-4) var(--size-5);
   }
 
+  &.inline {
+    display: inline-flex;
+    margin: 0 1em;
+  }
+
   @media (--md) {
     padding: calc(var(--size-1) + var(--size-2)) var(--size-4);
     height: calc(var(--size-7) + var(--size-1));
