@@ -51,6 +51,8 @@
       </ClientOnly>
     </section>
 
+    <SetCuratorStats :submission="data" :subscription="subscription" class="curator-stats" />
+
     <footer v-if="!revealed && !revealing && published">
       <Button @click="startOptIn">
         <Icon type="feather" />
@@ -197,7 +199,6 @@ const startOptIn = () => {
       align-items: center;
       justify-content: space-between;
       border-top: var(--border);
-      margin-top: auto;
 
       > .button:last-child {
         margin-left: auto;
@@ -209,6 +210,10 @@ const startOptIn = () => {
     }
 
     > section {
+      &:last-of-type {
+        margin-bottom: auto
+      }
+
       > .vue-feather {
         flex-shrink: 0;
         margin-right: var(--size-4);
@@ -275,5 +280,10 @@ const startOptIn = () => {
       font-size: var(--font-xl);
       margin: var(--size-4) 0 var(--size-6);
     }
+  }
+
+  .curator-stats {
+    margin-top: auto;
+    margin-bottom: 0 !important;
   }
 </style>

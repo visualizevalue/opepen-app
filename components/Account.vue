@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-if="address">
     <Avatar v-if="! hideAvatar" :account="account" />
     <span>{{ account?.display || shortAddress(address) }}</span>
   </span>
@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 const address = computed(() => props.address)
-const account = useProfile(address)
+const account = await useProfile(address)
 </script>
 
 <style lang="postcss" scoped>
@@ -24,7 +24,8 @@ span {
   align-items: center;
   gap: var(--size-2);
 
-  :deep(img) {
+  :deep(img),
+  :deep(.avatar) {
     width: var(--size-5);
     height: var(--size-5);
     align-self: center;

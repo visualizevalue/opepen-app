@@ -47,13 +47,20 @@ export const useAccount = () => {
   return toRefs(account)
 }
 
-export const useProfile = (address) => {
+const ProfileCache = new Map()
+
+export const useProfile = async (address) => {
   const config = useRuntimeConfig()
   const profile = ref(null)
 
   const fetchProfile = async (a) => {
     if (a === profile.address) return
-    profile.value = await $fetch(`${config.public.opepenApi}/accounts/${a}`)
+
+    profile.value = ProfileCache.has(address.value)
+      ? ProfileCache.get(address.value)
+      : await $fetch(`${config.public.opepenApi}/accounts/${a}`)
+
+    ProfileCache.set(address.value, profile.value)
   }
   onMounted(() => fetchProfile(address.value))
   watch(address, () => fetchProfile(address.value))

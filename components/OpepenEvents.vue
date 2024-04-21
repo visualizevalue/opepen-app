@@ -50,12 +50,6 @@ const url = `${config.public.opepenApi}/opepen/${token.token_id}/events`
 </script>
 
 <style lang="postcss" scoped>
-.events {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  gap: var(--size-2);
-}
 
 .event {
   background: var(--gray-z-1);
@@ -65,6 +59,7 @@ const url = `${config.public.opepenApi}/opepen/${token.token_id}/events`
   border: var(--border);
   border-radius: var(--size-2);
   border-top-left-radius: var(--size-1);
+  margin: var(--size-2) 0;
 
   > * {
     color: var(--gray-z-7);

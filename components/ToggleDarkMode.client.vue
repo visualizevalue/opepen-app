@@ -7,8 +7,8 @@
 
 <script setup>
 import { useToggle } from '@vueuse/core'
+import { isDark } from '~/helpers/colors'
 
-const isDark = ref(localStorage.getItem('color-scheme') !== 'light')
 const toggleDark = useToggle(isDark)
 
 watch(isDark, () => {
