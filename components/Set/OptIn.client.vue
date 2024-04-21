@@ -2,7 +2,7 @@
 
   <section v-if="data" class="opt-in">
     <header>
-      <h1 v-if="published">Your Opt-Ins</h1>
+      <h1 v-if="published">Opt-Ins</h1>
       <h1 v-else>Opt-In Not Open Yet</h1>
       <IconOpepen />
     </header>
@@ -20,7 +20,7 @@
     </section>
     <section v-if="subscription" class="selection">
       <template v-if="opepenCount">
-        <p>You submitted {{ opepenCount }} Opepen for potential reveal: <br><span class="muted">
+        <p>You submitted {{ opepenCount }} Opepen for potential reveal: <span class="muted">
           {{ opepenIds }}<span v-if="opepenCount <= shownCount">.</span><span v-else>... (and {{ opepenCount - shownCount }} more).</span>
         </span></p>
         <p v-if="subscription.comment" class="comment">Comment: <span>{{ subscription.comment }}</span></p>

@@ -82,18 +82,24 @@ section {
     border-top: var(--border);
     border-bottom: var(--border);
     padding: var(--size-2) var(--size-4);
-    color: var(--gray-z-6);
+    color: var(--gray-z-9);
+
+    span {
+      color: var(--gray-z-5);
+    }
   }
 
   > main {
     display: grid;
-    grid-template-columns: 50% 1fr;
+    grid-template-columns: 45% 1fr;
     gap: var(--size-5);
     padding: var(--size-4);
     align-items: center;
+    justify-content: center;
 
     > div {
-      max-width: 8rem;
+      max-width: 7rem;
+      display: flex;
     }
   }
 }
