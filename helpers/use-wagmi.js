@@ -1,6 +1,7 @@
 import {
   fetchEnsAvatar,
   fetchEnsName,
+  getAccount,
   watchAccount,
   watchBlockNumber,
 } from '@wagmi/core'
@@ -17,6 +18,15 @@ const account = reactive({
   status: null,
   profile: null,
 })
+const setAccount = a => {
+  account.address = a.address
+  account.connector = a.connector
+  account.isConnected = a.isConnected
+  account.isConnecting = a.isConnecting
+  account.isDisconnected = a.isDisconnected
+  account.isReconnecting = a.isReconnecting
+  account.status = a.status
+}
 export const address = computed(() => account.address)
 export const id = computed(() => computeId(account.profile))
 let unwatchAccount;
@@ -26,15 +36,11 @@ export const useAccount = () => {
   const config = useRuntimeConfig()
 
   if (! unwatchAccount) {
-    unwatchAccount = watchAccount(updatedAccount => {
-      account.address = updatedAccount.address
-      account.connector = updatedAccount.connector
-      account.isConnected = updatedAccount.isConnected
-      account.isConnecting = updatedAccount.isConnecting
-      account.isDisconnected = updatedAccount.isDisconnected
-      account.isReconnecting = updatedAccount.isReconnecting
-      account.status = updatedAccount.status
-    })
+    // try to get our initial account
+    setAccount(getAccount())
+
+    // set up the watcher
+    unwatchAccount = watchAccount(setAccount)
   }
 
   if (! unwatchAccountApi) {

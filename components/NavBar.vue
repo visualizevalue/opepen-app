@@ -26,8 +26,6 @@
 
 <script setup>
 import { useWindowScroll } from '@vueuse/core'
-import pad from '~/helpers/pad'
-import { useSets } from '~/helpers/sets'
 
 const { y } = useWindowScroll()
 
