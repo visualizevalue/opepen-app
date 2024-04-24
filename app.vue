@@ -1,18 +1,13 @@
 <template>
-  <main>
-    <NavBar />
-
+  <NuxtLayout>
     <NuxtPage />
-
-    <FooterLinks />
-
-    <ToggleDarkMode />
-  </main>
+  </NuxtLayout>
 </template>
 
 <script setup>
 import { useWindowSize } from '@vueuse/core'
-import { useMetaData } from './helpers/head';
+import { useSets } from '~/helpers/sets'
+import { useMetaData } from '~/helpers/head'
 
 /**
  * Make 100vh CSS variable available (iOS is weird with native vh)
@@ -21,6 +16,9 @@ const { height } = useWindowSize()
 const setHeight = () => document.documentElement.style.setProperty('--100vh', `${height.value}px`)
 watch(height, setHeight)
 onMounted(setHeight)
+
+const { fetchSets } = useSets()
+await fetchSets()
 
 useMetaData({
   title: 'Home',

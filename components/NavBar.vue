@@ -32,10 +32,6 @@ import { useSets } from '~/helpers/sets'
 const { y } = useWindowScroll()
 
 const isScrolled = computed(() => y.value > 5)
-
-const { currentSet, fetchSets } = useSets()
-const setUrl = computed(() => `/sets/${currentSet.value ? pad(currentSet.value.id) : '003'}`)
-onMounted(() => fetchSets())
 </script>
 
 <style lang="postcss" scoped>
@@ -57,7 +53,7 @@ onMounted(() => fetchSets())
     transition: all var(--speed-fast);
 
     &.scrolled {
-      border-color: var(--gray-z-2);
+      border-color: var(--gray-z-4);
     }
 
     :deep(> *) {

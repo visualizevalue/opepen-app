@@ -50,7 +50,9 @@ const { submissionId, paginated, limit, autoLoad } = defineProps({
 })
 
 const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/set-submissions/${submissionId}/history`
+const url = submissionId
+  ? `${config.public.opepenApi}/set-submissions/${submissionId}/history`
+  : `${config.public.opepenApi}/set-submissions/history`
 const query = computed(() => {
   const q = new URLSearchParams({
     limit,

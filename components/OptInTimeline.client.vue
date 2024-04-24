@@ -30,8 +30,15 @@
 </template>
 
 <script setup>
-const { submissionId } = defineProps({
+const {
+  submissionId,
+  expandable,
+} = defineProps({
   submissionId: String,
+  expandable: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const expanded = ref(false)

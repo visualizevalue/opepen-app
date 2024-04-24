@@ -15,7 +15,7 @@
 <script setup>
 import { normalizeURI } from '~/helpers/urls'
 
-const { token, version } = defineProps({
+const { token, version, embed } = defineProps({
   token: Object,
   embed: String,
   version: {

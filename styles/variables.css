@@ -35,7 +35,7 @@
   --success: var(--green);
 
   /* SIZES */
-  --100vh: 100vh;
+  --100vh: 100dvh;
   --size-0: 0.125rem;
   --size-1: 0.25rem;
   --size-2: 0.5rem;
@@ -50,6 +50,7 @@
   /* FONTS */
   --font-family-main: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-body: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
   /* --font-family-opepen: 'OpepenBlockSolid', 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif; */
   --font-family-opepen: var(--font-family-main);
   --font-sm: var(--size-3);
@@ -66,7 +67,7 @@
   --line-height-sm: 105%;
   --line-height-base: var(--size-6);
   --line-height-md: 120%;
-  --line-height-lg: 190%;
+  --line-height-lg: 160%;
 
   /* ANIMATION */
   --speed-fast: 0.15s;
