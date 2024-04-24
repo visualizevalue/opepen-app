@@ -71,12 +71,12 @@ const { pause, resume } = useIntervalFn(() => {
   }
 
   try {
-    console.debug('scrollTo', window.scrollY + (up.value ? -0.5 : 0.5))
-    window.scrollTo(0, window.scrollY + (up.value ? -0.5 : 0.5))
+    console.debug('scrollTo', window.scrollY + (up.value ? -1 : 1))
+    window.scrollTo(0, window.scrollY + (up.value ? -1 : 1))
   } catch (e) {
     console.debug(e)
   }
-}, 16, { immediate: false })
+}, 24, { immediate: false })
 onMounted(() => resume())
 
 definePageMeta({
