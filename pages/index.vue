@@ -61,6 +61,7 @@ const { width } = useWindowSize()
 
 const up = ref(false)
 const { pause, resume } = useIntervalFn(() => {
+  console.debug('intervalFn')
   if (width.value < 1056) return
 
   const maxY = document.scrollingElement.scrollHeight - document.documentElement.clientHeight
@@ -70,9 +71,8 @@ const { pause, resume } = useIntervalFn(() => {
     up.value = false
   }
 
-  window.scrollTo({
-    top: window.scrollY + (up.value ? -0.5 : 0.5),
-  })
+  console.debug('scrollTo')
+  window.scrollTo(0, window.scrollY + (up.value ? -0.5 : 0.5))
 }, 16, { immediate: false })
 onMounted(() => resume())
 
