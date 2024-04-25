@@ -9,7 +9,11 @@
       <span>Auctions</span>
     </Button> -->
 
-    <Button to="/sets" class="right">
+    <Button to="/artists" class="right">
+      <Icon type="users" />
+      <span>Community</span>
+    </Button>
+    <Button to="/sets">
       <Icon type="grid" />
       <span>Sets</span>
     </Button>
@@ -80,7 +84,7 @@ const isScrolled = computed(() => y.value > 5)
       :deep(.text) {
         display: none;
 
-        @media (--md) {
+        @media (--lg) {
           display: initial;
         }
       }
@@ -100,7 +104,7 @@ const isScrolled = computed(() => y.value > 5)
       > span {
         display: none;
 
-        @media (--md) {
+        @media (--lg) {
           display: block;
         }
       }
