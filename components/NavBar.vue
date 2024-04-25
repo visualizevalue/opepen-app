@@ -1,6 +1,6 @@
 <template>
   <nav :class="{ 'scrolled': isScrolled }">
-    <NuxtLink to="/" title="Opepen Home Page">
+    <NuxtLink to="/" title="Opepen Home Page" class="to-home">
       <Logo />
     </NuxtLink>
 
@@ -9,7 +9,7 @@
       <span>Auctions</span>
     </Button> -->
 
-    <Button to="/sets">
+    <Button to="/sets" class="right">
       <Icon type="grid" />
       <span>Sets</span>
     </Button>
@@ -43,14 +43,24 @@ const isScrolled = computed(() => y.value > 5)
     display: flex;
     align-items: center;
     gap: var(--size-3);
-    background-color: var(--semi);
     z-index: 40;
+    transition: all var(--speed-fast);
+    background-color: transparent;
     border-bottom: var(--border);
     border-color: transparent;
-    backdrop-filter: var(--blur);
-    transition: all var(--speed-fast);
 
-    &.scrolled {
+    &:not(.minimal) {
+      background-color: var(--semi);
+      backdrop-filter: var(--blur);
+    }
+
+    &.minimal {
+      > .to-home {
+        display: none;
+      }
+    }
+
+    &.scrolled:not(.minimal) {
       border-color: var(--gray-z-4);
     }
 
@@ -62,7 +72,7 @@ const isScrolled = computed(() => y.value > 5)
       }
     }
 
-    > :first-child {
+    > .to-home {
       margin-right: auto;
       display: flex;
       align-items: center;
@@ -74,6 +84,10 @@ const isScrolled = computed(() => y.value > 5)
           display: initial;
         }
       }
+    }
+
+    > .right {
+      margin-left: auto;
     }
 
     :deep(+ div) {

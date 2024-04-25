@@ -1,0 +1,9 @@
+<template>
+  <div>
+    <UsersOverview
+      title="Artists"
+      path="artists"
+      default-sort="-setsCount,-profileCompletion,-setSubmissionsCount,id"
+    />
+  </div>
+</template>

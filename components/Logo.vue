@@ -13,8 +13,8 @@
     gap: var(--size-3);
 
     > :first-child {
-      width: var(--size-7);
-      height: var(--size-7);
+      width: var(--font-title);
+      height: var(--font-title);
       color: var(--gray-z-7);
 
       @media (--max-sm) {

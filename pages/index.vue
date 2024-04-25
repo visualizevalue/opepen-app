@@ -3,7 +3,7 @@
     <section class="about">
       <div class="intro">
         <h1>
-          <IconsOpepenAiMedium />
+          <IconsOpepenAiMedium class="logo" />
           <span>An Open Canvas</span>
         </h1>
 
@@ -50,9 +50,9 @@
 </template>
 
 <script setup>
+import { useIntervalFn, useWindowSize } from '@vueuse/core'
 import { useSets } from '~/helpers/sets'
 import pad from '~/helpers/pad'
-import { useIntervalFn, useWindowSize, useWindowScroll } from '@vueuse/core'
 
 const { completeSets } = useSets()
 
@@ -75,15 +75,25 @@ const { pause, resume } = useIntervalFn(() => {
 onMounted(() => resume())
 
 definePageMeta({
-  layout: 'empty'
+  layout: 'minimal'
 })
 </script>
 
 <style lang="postcss" scoped>
   .home {
-    padding: 0;
+    padding: var(--navbar-height) 0 0;
     max-width: 120rem;
     margin: 0 auto;
+
+    .logo {
+      position: absolute;
+      top: calc(-1 * var(--navbar-height) + var(--size-5));
+
+      @media (--lg) {
+        position: static;
+        top: 0;
+      }
+    }
 
     > * {
       padding: var(--size-7) var(--size-5);
