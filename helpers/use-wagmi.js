@@ -7,6 +7,8 @@ import {
 } from '@wagmi/core'
 import { id as computeId } from '~/helpers/accounts'
 
+const config = useRuntimeConfig()
+
 const account = reactive({
   address: '',
   ens: null,
@@ -18,7 +20,7 @@ const account = reactive({
   status: null,
   profile: null,
 })
-const setAccount = a => {
+const setAccount = async a => {
   account.address = a.address
   account.connector = a.connector
   account.isConnected = a.isConnected
@@ -26,15 +28,13 @@ const setAccount = a => {
   account.isDisconnected = a.isDisconnected
   account.isReconnecting = a.isReconnecting
   account.status = a.status
+  account.profile = await $fetch(`${config.public.opepenApi}/accounts/${account.address}`)
 }
 export const address = computed(() => account.address)
 export const id = computed(() => computeId(account.profile))
 let unwatchAccount;
-let unwatchAccountApi;
 
 export const useAccount = () => {
-  const config = useRuntimeConfig()
-
   if (! unwatchAccount) {
     // try to get our initial account
     setAccount(getAccount())
@@ -42,13 +42,6 @@ export const useAccount = () => {
     // set up the watcher
     unwatchAccount = watchAccount(setAccount)
   }
-
-  if (! unwatchAccountApi) {
-    unwatchAccountApi = watch(address, async () => {
-      account.profile = await $fetch(`${config.public.opepenApi}/accounts/${account.address}`)
-    })
-  }
-
 
   return toRefs(account)
 }
