@@ -6,10 +6,6 @@
 </template>
 
 <script setup>
-import { useAccount } from '~/helpers/use-wagmi'
-
-const { isConnected } = useAccount()
-
 const onCreateClick = () => {
   setTimeout(() => {
     nextTick(() => {
