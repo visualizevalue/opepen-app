@@ -1,6 +1,9 @@
 <template>
   <section class="users">
-    <SectionTitle>{{ title }}</SectionTitle>
+    <nav>
+      <StyledLink to="/artists">Artists</StyledLink>
+      <StyledLink to="/curators">Curators</StyledLink>
+    </nav>
 
     <PaginatedContent
       :url="url"
@@ -47,6 +50,13 @@ const query = computed(() => {
 .users {
   max-width: var(--content-width);
   margin: 0 auto;
+}
+
+nav {
+  font-size: var(--font-lg);
+  display: flex;
+  gap: var(--size-5);
+  padding: 0 0 var(--size-7);
 }
 
 :deep(.grid) {

@@ -28,6 +28,7 @@ a {
   width: auto;
   gap: var(--size-1);
   position: relative;
+  transition: all var(--speed);
 
   .icon {
     width: 1.125em;
@@ -38,17 +39,23 @@ a {
     content: '';
     position: absolute;
     display: block;
-    bottom: 0;
+    bottom: -0.15em;
     left: 0;
-    height: var(--size-0);
+    height: 0.15em;
     width: 100%;
     background: var(--gray-z-2);
     transition: all var(--speed);
   }
 
+  &:not(.router-link-active) {
+    color: var(--gray-z-6);
+  }
+
   &:--highlight {
+    color: var(--gray-z-9);
+
     &:after {
-      height: var(--size-1);
+      height: 0.3em;
     }
   }
 }
