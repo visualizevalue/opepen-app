@@ -51,22 +51,3 @@ watch(isConnected, async () => {
   }
 })
 </script>
-
-<style lang="postcss" scoped>
-:deep(.avatar) {
-  margin-left: calc(-2 * var(--size-2) - 1px);
-  width: var(--size-7) !important;
-  height: var(--size-7) !important;
-  border-top-left-radius: var(--size-1);
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
-  @media (--md) {
-    height: calc(var(--size-7) + var(--size-1)) !important;
-    width: calc(var(--size-7) + var(--size-1)) !important;
-  }
-}
-</style>
