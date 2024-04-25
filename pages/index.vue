@@ -64,7 +64,7 @@ const { pause, resume } = useIntervalFn(() => {
   if (width.value < 1056) return
 
   const maxY = document.scrollingElement.scrollHeight - document.documentElement.clientHeight
-  if (window.scrollY === maxY) {
+  if (window.scrollY >= maxY - 20) {
     up.value = true
   } else if (window.scrollY === 0) {
     up.value = false
