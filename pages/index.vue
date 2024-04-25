@@ -33,7 +33,11 @@
         <OptInTimelineList
           :limit="5"
           :auto-load="false"
-        />
+        >
+          <template #last="{ entry }">
+            <NuxtLink :to="`/sets/${entry.submission.uuid}`">{{ entry.submission.name }}</NuxtLink>
+          </template>
+        </OptInTimelineList>
       </div>
     </section>
 
