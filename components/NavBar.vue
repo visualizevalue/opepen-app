@@ -21,8 +21,10 @@
       <Icon type="table" />
       <span>Submissions</span>
     </Button>
-
-    <CreateLink />
+    <Button to="/create/sets">
+      <Icon type="plus" />
+      <span>Create</span>
+    </Button>
 
     <Connect />
   </nav>
