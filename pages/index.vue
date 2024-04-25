@@ -81,7 +81,7 @@ definePageMeta({
 
 <style lang="postcss" scoped>
   .home {
-    padding: var(--navbar-height) 0 0;
+    padding: 0;
     max-width: 120rem;
     margin: 0 auto;
 
