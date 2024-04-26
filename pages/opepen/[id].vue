@@ -39,7 +39,7 @@ if (parseInt(route.params.id) > 16_000) router.replace('/')
 
 const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/${route.params.id}`)
 
-
+const metadata = computed(() => opepen.metadata)
 const image = computed(() => imageURI(opepen.value.image))
 const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.value.image?.type)
