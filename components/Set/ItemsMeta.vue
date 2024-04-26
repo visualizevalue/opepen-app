@@ -1,18 +1,19 @@
 <template>
-  <section v-if="data" class="items-meta">
+  <section class="items-meta">
     <div class="intro">
       <h1>
-        <small v-if="data.set_id">Set {{ pad(data.set_id) }}</small>
+        <small v-if="!data">Set {{ pad($route.id) }}</small>
+        <small v-else-if="data.set_id">Set {{ pad(data.set_id) }}</small>
         <small v-else>Set Submission <template v-if="! data.approved_at">(Private Preview)</template></small>
         <span :title="name">{{ name }}</span>
       </h1>
 
-      <p v-if="data.description"><ExpandableText :text="data.description" /></p>
+      <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
 
-      <Creators :data="data" />
+      <Creators v-if="data" :data="data" />
     </div>
 
-    <ul class="overview">
+    <ul v-if="data" class="overview">
       <li>
         <Icon type="layers" stroke-width="2.25" />
         <span v-if="published">{{ TYPES[data.edition_type] }} Editions</span>
@@ -61,7 +62,7 @@
       </li>
     </ul>
 
-    <OptInTimeline :submission-id="data.uuid" />
+    <OptInTimeline v-if="data" :submission-id="data.uuid" />
   </section>
 </template>
 
@@ -78,8 +79,7 @@ const props = defineProps({
   data: Object,
 })
 
-const name = computed(() => props.data.name || (props.data.set_id < RESERVED_UNTIL ? 'Reserved' : 'Unrevealed'))
-
+const name = computed(() => props.data?.name || 'Unrevealed')
 const published = computed(() => !!props.data.published_at)
 const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
 const timeRemaining = computed(() => timeRemainingFromSeconds(props.data.remaining_reveal_time))

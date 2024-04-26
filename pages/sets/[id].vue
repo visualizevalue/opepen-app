@@ -9,7 +9,7 @@
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
-    <template v-if="submission.approved_at">
+    <template v-if="submission?.approved_at">
       <!-- <SetAbout :set="set" /> -->
       <SetStats :data="submission" class="stats" />
       <SetOptIn :data="submission" @update="() => refresh()" />
@@ -22,7 +22,7 @@
       <!-- <SetOptInComments :data="data" /> -->
     </template>
 
-    <AdminMenuSetSubmissions :submission="submission" @refresh="refresh">
+    <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh">
       <template #before>
         <Button  :to="`/create/sets/${submission.uuid}`">
           <Icon type="edit" />
@@ -68,10 +68,14 @@ const submission = computed(() => isSet ? data.value.submission : data.value)
 
 useMetaData({
   title: isSet
-    ? `Set ${pad(set.value.id, 3)}: ${submission.value.name || 'Locked'} | Opepen`
+    ? `Set ${pad(set.value.id, 3)}: ${submission.value?.name || 'Unrevealed'} | Opepen`
     : `Set Submission: ${submission.value.name} | Opepen`,
-  description: shortenedCleanText(submission.value.description) || (isSet && `Opepen Set ${pad(submission.value.set_id, 3)} is one of 200 official Opepen sets.`),
-  og: `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
+  description: submission.value?.description
+    ? shortenedCleanText(submission.value.description)
+    : `Opepen Set ${pad(route.params.id, 3)} is one of 200 official Opepen sets.`,
+  og: submission.value
+    ? `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`
+    : ``,
   meta: [
     // TODO: Fix and reenable these frames
     // { property: 'fc:frame', content: 'vNext' },

@@ -5,5 +5,5 @@ export const shortenedCleanText = (str: string, length: number = 80) => {
 
   const nextSpaceIndex = txt.indexOf(' ', length)
 
-  return txt.length > length ? txt.substring(0, nextSpaceIndex) + '...' : txt
+  return txt.length > length && nextSpaceIndex > 0 ? txt.substring(0, nextSpaceIndex) + '...' : txt
 }

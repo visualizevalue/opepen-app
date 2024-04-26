@@ -22,7 +22,7 @@ import { vIntersectionObserver } from '@vueuse/components'
 import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
-  image: Object,
+  image: [String, Object],
   version: String,
   embed: String,
   autoEmbed: {
@@ -44,6 +44,11 @@ const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
 
   if (! props.image) return
+
+  if (typeof props.image === 'string') {
+    uri.value = props.image
+    return
+  }
 
   const version = props.image.versions[props.version] ? props.version : ''
 

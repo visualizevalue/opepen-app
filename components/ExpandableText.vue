@@ -1,5 +1,5 @@
 <template>
-  <span :class="{ expanded }">{{ visibleText }}</span>
+  <span :class="{ expanded }" v-html="visibleText"></span>
   <Button v-if="wasShortened" @click="expanded = !expanded" class="small">
     <Icon :type="expanded ? 'chevron-up' : 'chevron-right'" />
     {{ expanded ? collapseText : expandText }}
@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { shortenedCleanText } from '~/helpers/strings'
+import { cleanText, shortenedCleanText } from '~/helpers/strings'
 
 const { length, text } = defineProps({
   length: {
@@ -26,10 +26,10 @@ const { length, text } = defineProps({
 })
 
 const shortened = computed(() => shortenedCleanText(text, 120))
-const wasShortened = computed(() => shortened.value !== text)
+const wasShortened = computed(() => shortened.value !== cleanText(text))
 const expanded = ref(false)
 
-const visibleText = computed(() => expanded.value ? text : shortened.value)
+const visibleText = computed(() => wasShortened.value && !expanded.value ? shortened.value : text)
 </script>
 
 <style lang="postcss" scoped>

@@ -5,7 +5,7 @@
 
       <template v-if="previous">
         <span class="icon">
-          <Image :image="previous.submission.edition1Image" version="sm" />
+          <Image :image="previous.submission?.edition1Image" version="sm" />
         </span>
       </template>
 
@@ -15,8 +15,8 @@
     <span>
       <NuxtLink to="/sets">Sets</NuxtLink>
       <span class="separator">/</span>
-      <span v-if="set.submission.edition1Image" class="icon">
-        <Image :image="set.submission.edition1Image" version="sm" />
+      <span v-if="set.submission?.edition1Image" class="icon">
+        <Image :image="set.submission?.edition1Image" version="sm" />
       </span>
       <span>
         <span>
@@ -28,7 +28,7 @@
     <NuxtLink :disabled="!nextSetId" :to="`/sets/${nextSetId}`">
       <template v-if="next">
         <span class="icon">
-          <Image :image="next.submission.edition1Image" version="sm" />
+          <Image :image="next.submission?.edition1Image" version="sm" />
         </span>
       </template>
 

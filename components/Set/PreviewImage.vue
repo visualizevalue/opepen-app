@@ -4,7 +4,7 @@
       :image="image"
       :version="version"
       class="appear"
-      :class="{ square: ! data.rounded_preview }"
+      :class="{ square: data && ! data.rounded_preview }"
       auto-embed
     >
       <div class="meta">
@@ -54,8 +54,8 @@ const {
   },
 })
 
-const image = computed(() => data[`edition${edition}Image`])
-const name = computed(() => data[`edition${edition}Name`])
+const image = computed(() => data ? data[`edition${edition}Image`] : `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`)
+const name = computed(() => data ? data[`edition${edition}Name`] : `Unrevealed`)
 
 const tagline = computed(() => EDITION_TAGLINES[edition])
 
