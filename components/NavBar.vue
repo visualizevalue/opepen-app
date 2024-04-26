@@ -13,15 +13,14 @@
       <Icon type="users" />
       <span>Nodes</span>
     </Button>
-    <ButtonGroup>
-      <Button to="/sets">
-        <Icon type="grid" />
-        <span>Sets</span>
-      </Button>
-      <Button to="/sets/explore">
-        <span>Submissions</span>
-      </Button>
-    </ButtonGroup>
+    <Button to="/sets">
+      <Icon type="grid" />
+      <span>Sets</span>
+    </Button>
+    <Button to="/sets/explore">
+      <Icon type="table" />
+      <span>Submissions</span>
+    </Button>
     <Button to="/create/sets">
       <Icon type="plus" />
       <span>Create</span>
@@ -95,10 +94,6 @@ const isScrolled = computed(() => y.value > 5)
 
     > .right {
       margin-left: auto;
-    }
-
-    > .button-group {
-      width: auto;
     }
 
     :deep(+ div) {
