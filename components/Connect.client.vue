@@ -9,7 +9,7 @@
     </Button>
     <div v-else>
       <ButtonGroup>
-        <Button :to="`/holders/${ id }`">
+        <Button :to="`/holders/${ id }`" id="main-connect">
           <Account :address="address" />
         </Button>
         <Button to="/settings"><Icon type="settings" /></Button>
