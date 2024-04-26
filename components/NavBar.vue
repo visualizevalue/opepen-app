@@ -11,7 +11,7 @@
 
     <Button to="/artists" class="right">
       <Icon type="users" />
-      <span>Community</span>
+      <span>Nodes</span>
     </Button>
     <Button to="/sets">
       <Icon type="grid" />
