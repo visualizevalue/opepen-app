@@ -85,7 +85,7 @@ definePageMeta({
 
 <style lang="postcss" scoped>
   .home {
-    padding: 0;
+    padding: var(--navbar-height) 0 0;
     max-width: 120rem;
     margin: 0 auto;
 
@@ -114,6 +114,7 @@ definePageMeta({
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: start;
+      padding: 0;
 
       > * {
         padding: var(--size-9) var(--size-8);
