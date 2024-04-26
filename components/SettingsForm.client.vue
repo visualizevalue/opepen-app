@@ -140,7 +140,7 @@ const { session } = useSignIn()
 const ens = useEnsName(address)
 
 onMounted(() => {
-  if (! session.value) return router.replace(route.params.id ? `/holders/${route.params.id}` : '/')
+  if (! session.value) return router.replace(route.params.id ? `/${route.params.id}` : '/')
 })
 
 const url = computed(() => `${config.public.opepenApi}/accounts/settings/${isAdmin.value ? address.value : ''}`)

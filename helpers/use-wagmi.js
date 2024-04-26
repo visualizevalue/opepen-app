@@ -70,11 +70,11 @@ export const useProfile = async (address) => {
 export const useEnsName = (address) => {
   if (address.value) {
     fetchEnsName({ address: address.value }).then(ens => {
-      account.ens.value = ens
+      account.ens = ens
     })
   }
   watch(address, async () => {
-    account.ens.value = await fetchEnsName({ address: address.value })
+    account.ens = await fetchEnsName({ address: address.value })
   })
 
   return toRef(account.ens)

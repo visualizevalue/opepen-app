@@ -9,7 +9,7 @@
     </Button>
     <div v-else>
       <ButtonGroup>
-        <Button :to="`/holders/${ id }`" id="main-connect">
+        <Button :to="`/${ id }`" id="main-connect">
           <Account :address="address" />
         </Button>
         <Button to="/settings"><Icon type="settings" /></Button>
@@ -46,8 +46,9 @@ const open = ref(false)
 watch(isConnected, async () => {
   open.value = false
 
-  if (isConnected.value) {
-    signIn()
-  }
+  if (isConnected.value) signIn()
+})
+onMounted(() => {
+  if (isConnected.value) signIn()
 })
 </script>
