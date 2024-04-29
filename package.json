@@ -6,15 +6,19 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icon-fill.svg"
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
     "@types/node": "^18.15.13",
+    "@vite-pwa/assets-generator": "^0.2.4",
+    "@vite-pwa/nuxt": "^0.6.0",
     "nuxt": "^3.11.2",
     "postcss-mixins": "^9.0.4",
     "postcss-nested": "^6.0.0",
-    "postcss-preset-env": "^7.8.2"
+    "postcss-preset-env": "^7.8.2",
+    "sharp": "^0.33.3"
   },
   "dependencies": {
     "@vueuse/components": "^9.13.0",

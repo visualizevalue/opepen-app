@@ -7,6 +7,11 @@ export default defineNuxtConfig({
       },
       meta: [
         {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0, viewport-fit=cover'
+        },
+        { name: 'theme-color', content: '#000000' },
+        {
           name: 'twitter:card',
           content: 'summary_large_image',
         },
@@ -21,17 +26,24 @@ export default defineNuxtConfig({
       ],
       link: [
         {
-          href: '/favicon.png',
-          rel: 'shortcut icon',
-          type: 'image/png',
+          rel: 'icon',
+          href: '/favicon.ico',
+          sizes: '48x48'
         },
         {
-          href: '/favicon.png',
-          rel: 'apple-touch-icon',
+          rel: 'icon',
+          href: '/icon.svg',
+          sizes: 'any',
+          type: 'image/svg+xml'
         },
-      ],
+        {
+          rel: 'apple-touch-icon',
+          href: '/apple-touch-icon-512x512.png'
+        },
+      ]
     }
   },
+
   runtimeConfig: {
     public: {
       opepenApi: '',
@@ -45,9 +57,11 @@ export default defineNuxtConfig({
       chainId: '1',
     },
   },
+
   css: [
     '~/styles/index.css',
   ],
+
   postcss: {
     plugins: {
       'postcss-nested': {},
@@ -64,11 +78,50 @@ export default defineNuxtConfig({
       'autoprefixer': {},
     },
   },
+
   vite: {
     server: {
       hmr: {
         overlay: false,
       }
     }
-  }
+  },
+
+  modules: ['@vite-pwa/nuxt'],
+
+  pwa: {
+    devOptions: {
+      enabled: true,
+    },
+    manifest: {
+      name: 'Opepen',
+      short_name: 'Opepen',
+      description: 'Opepen Web Application',
+      theme_color: '#000000',
+      icons: [
+        {
+          src: 'pwa-64x64.png',
+          sizes: '64x64',
+          type: 'image/png',
+        },
+        {
+          src: 'pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any'
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable'
+        }
+      ],
+    },
+  },
 })

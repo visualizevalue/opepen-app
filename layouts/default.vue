@@ -2,6 +2,8 @@
   <main>
     <NavBar />
 
+    <!-- <ContentStatus /> -->
+
     <slot />
 
     <!-- <FooterLinks /> -->
