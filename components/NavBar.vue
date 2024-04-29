@@ -87,10 +87,10 @@ const isScrolled = computed(() => y.value > 5)
     :deep(+ div) {
       position: relative;
       min-height: var(--100vh);
-      padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x);
+      padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x) calc(var(--navbar-height) + env(safe-area-inset-bottom));
 
       &.full {
-        padding: var(--navbar-height) 0;
+        padding: var(--navbar-height) 0 calc(var(--navbar-height) + env(safe-area-inset-bottom));
       }
     }
   }
@@ -181,8 +181,6 @@ const isScrolled = computed(() => y.value > 5)
       > a {
         pointer-events: all;
       }
-
-      /* padding-right: 15%; */
     }
   }
 </style>
