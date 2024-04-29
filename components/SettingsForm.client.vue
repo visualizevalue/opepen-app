@@ -1,7 +1,9 @@
 <template>
-  <article>
-    <h1>User Settings</h1>
-    <hr>
+  <div class="full">
+    <SectionNav>
+      <h1>User Settings</h1>
+    </SectionNav>
+
     <form @submit.prevent="save" v-if="session">
       <ImageUpload @stored="pfp = $event" @reset="pfp = null" name="PFP" :image="pfp" class="pfp" />
       <ImageUpload @stored="cover = $event" @reset="cover = null" name="Cover Photo" :image="cover" class="cover" />
@@ -119,13 +121,13 @@
         </Button>
       </div>
     </form>
-  </article>
+  </div>
 </template>
 
 <script setup>
 import { DateTime } from 'luxon'
 import { formatTime } from '~/helpers/dates'
-import { useEnsName } from '~/helpers/use-wagmi'
+import { useAccount, useEnsName } from '~/helpers/use-wagmi'
 import { useSignIn, isAdmin } from '~/helpers/siwe'
 import { validateURI } from '~/helpers/urls'
 
@@ -134,7 +136,9 @@ const router = useRouter()
 const route = useRoute()
 
 const props = defineProps({ address: String })
-const address = computed(() => props.address)
+
+const { address: myAddress } = useAccount()
+const address = computed(() => route.params?.id?.length ? route.params.id[0] : myAddress.value)
 
 const { session } = useSignIn()
 const ens = useEnsName(address)
@@ -285,9 +289,16 @@ const save = async () => {
 </script>
 
 <style lang="postcss" scoped>
-  article, article form {
+  div, div form {
     display: grid;
     gap: var(--size-5)
+  }
+
+  form {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--size-4) var(--container-padding-x) 0;
   }
 
   .actions {
@@ -317,7 +328,14 @@ const save = async () => {
     border-bottom-left-radius: 50% !important;
   }
 
+  .pfp {
+    max-width: 8rem;
+  }
+
   .cover {
+    display: block;
+    max-width: 24rem;
+
     :deep(label) {
       height: 33cqw !important;
     }

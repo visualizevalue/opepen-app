@@ -125,14 +125,17 @@ await loadMore()
 </script>
 
 <style lang="postcss" scoped>
-div {
+div,
+section {
   position: relative;
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
-  aside {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 25vh;
-  }
+aside {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25vh;
 }
 </style>

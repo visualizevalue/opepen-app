@@ -28,6 +28,12 @@
   }
 }
 
+.visible-md {
+  @media (--lg) {
+    display: none !important;
+  }
+}
+
 .meta-separated {
   > *:not(:last-child):after {
     content: '·';

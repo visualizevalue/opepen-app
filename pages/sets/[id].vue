@@ -1,6 +1,7 @@
 <template>
   <div v-if="data" class="set">
     <header>
+      <!-- TODO: add Section Nav -->
       <SetPagination v-if="isSet" :set="set" />
       <EmailNotificationAlert />
       <SetReplacementNote v-if="submission?.set_id" :set="set" :replaced-submission="set.replacedSubmission" class="note" />

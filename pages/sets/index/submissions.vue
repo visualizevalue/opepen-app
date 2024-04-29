@@ -29,7 +29,6 @@
           <SectionTitle>Explore</SectionTitle>
 
           <div class="actions">
-
             <label>
               <span class="label">Sort</span>
               <select v-model="sort" class="input sm">
@@ -47,7 +46,6 @@
           <Loading />
         </div>
       </template>
-
     </ExploreSetSubmissions>
   </div>
 </template>

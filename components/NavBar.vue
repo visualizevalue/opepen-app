@@ -35,6 +35,13 @@
       <span>Nodes</span>
     </NuxtLink>
 
+    <Authenticated #default="{ isConnected }">
+      <NuxtLink v-if="isConnected" to="/settings" title="Settings" class="visible-md">
+        <Icon type="settings" />
+        <span>Settings</span>
+      </NuxtLink>
+    </Authenticated>
+
     <!-- <Connect class="visible-sm" /> -->
   </nav>
 </template>
