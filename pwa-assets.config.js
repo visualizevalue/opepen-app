@@ -8,11 +8,11 @@ export default defineConfig({
     ...preset,
     maskable: {
       ...preset.maskable,
-      resizeOptions: { fit: 'contain', background: 'black' }
+      resizeOptions: { fit: 'contain', background: '#131313' }
     },
     apple: {
       ...preset.maskable,
-      resizeOptions: { fit: 'contain', background: 'black' }
+      resizeOptions: { fit: 'contain', background: '#131313' }
     },
   },
   images: ['public/icon.svg']
