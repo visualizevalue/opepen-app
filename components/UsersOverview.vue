@@ -1,10 +1,10 @@
 <template>
-  <section class="users">
-    <nav>
-      <StyledLink to="/artists">Artists</StyledLink>
-      <StyledLink to="/curators">Curators</StyledLink>
-    </nav>
+  <SectionNav>
+    <StyledLink to="/artists">Artists</StyledLink>
+    <StyledLink to="/curators">Curators</StyledLink>
+  </SectionNav>
 
+  <section class="users">
     <PaginatedContent
       :url="url"
       :query="query"
@@ -48,20 +48,18 @@ const query = computed(() => {
 
 <style lang="postcss" scoped>
 .users {
-  max-width: var(--content-width);
-  margin: 0 auto;
-}
-
-nav {
-  font-size: var(--font-lg);
-  display: flex;
+  padding: var(--size-5) var(--container-padding-x);
+  display: grid;
   gap: var(--size-5);
-  padding: 0 0 var(--size-7);
 }
 
 :deep(.grid) {
   display: grid;
   gap: var(--size-5);
+  width: 100%;
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
 
   article {
     width: 100%;

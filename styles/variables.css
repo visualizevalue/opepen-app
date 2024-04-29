@@ -15,8 +15,8 @@
   --white: #FFFFFF;
 
   /* SEMI */
-  --semi-light: rgba(255, 255, 255, 0.8);
-  --semi-dark: rgba(0, 0, 0, 0.8);
+  --semi-light: rgba(255, 255, 255, 0.85);
+  --semi-dark: rgba(0, 0, 0, 0.85);
   --semi-shade: rgba(0, 0, 0, 0.33);
   --opaque-white: rgba(255, 255, 255, 0.9);
   --opaque-black: rgba(0, 0, 0, 0.9);

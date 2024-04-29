@@ -24,7 +24,7 @@
 
 .visible-sm {
   @media (--md) {
-    display: none;
+    display: none !important;
   }
 }
 

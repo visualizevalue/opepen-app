@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="full">
     <UsersOverview
       title="Curators"
       path="curators"

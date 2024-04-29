@@ -73,6 +73,8 @@ const query = computed(() => {
   padding-bottom: var(--size-5);
 
   > div {
+    width: 100%;
+    overflow: hidden;
     display: grid;
     align-items: center;
     gap: var(--size-3);

@@ -1,32 +1,41 @@
 <template>
-  <nav :class="{ 'scrolled': isScrolled }">
-    <NuxtLink to="/" title="Opepen Home Page" class="to-home">
+  <nav class="main" :class="{ 'scrolled': isScrolled }">
+    <NuxtLink to="/" title="Opepen Home Page" class="home">
       <Logo />
     </NuxtLink>
 
-    <!-- <Button to="/auctions">
-      <Icon type="columns" />
-      <span>Auctions</span>
-    </Button> -->
-
-    <Button to="/artists" class="right">
-      <Icon type="users" />
-      <span>Nodes</span>
-    </Button>
-    <Button to="/sets">
-      <Icon type="grid" />
-      <span>Sets</span>
-    </Button>
-    <Button to="/sets/explore">
-      <Icon type="table" />
-      <span>Submissions</span>
-    </Button>
     <Button to="/create/sets">
       <Icon type="plus" />
       <span>Create</span>
     </Button>
 
     <Connect />
+  </nav>
+
+  <nav class="links">
+
+    <!-- <NuxtLink to="/" title="Home" class="visible-sm"> -->
+    <NuxtLink to="/" title="Home">
+      <Icon type="home" />
+      <span>Home</span>
+    </NuxtLink>
+
+    <!-- <NuxtLink to="/auctions" title="Auctions">
+      <Icon type="columns" />
+      <span>Auctions</span>
+    </NuxtLink> -->
+
+    <NuxtLink to="/sets/permanent-collection" title="Sets">
+      <Icon type="grid" />
+      <span>Sets</span>
+    </NuxtLink>
+
+    <NuxtLink to="/artists" title="Nodes">
+      <Icon type="users" />
+      <span>Nodes</span>
+    </NuxtLink>
+
+    <!-- <Connect class="visible-sm" /> -->
   </nav>
 </template>
 
@@ -41,7 +50,6 @@ const isScrolled = computed(() => y.value > 5)
 <style lang="postcss" scoped>
   nav {
     position: fixed;
-    top: 0;
     left: 0;
     width: 100vw;
     height: var(--navbar-height);
@@ -52,33 +60,46 @@ const isScrolled = computed(() => y.value > 5)
     z-index: 40;
     transition: all var(--speed-fast);
     background-color: transparent;
-    border-bottom: var(--border);
     border-color: transparent;
+    background-color: var(--semi);
+    backdrop-filter: var(--blur);
 
-    &:not(.minimal) {
-      background-color: var(--semi);
-      backdrop-filter: var(--blur);
-    }
-
-    &.minimal {
-      > .to-home {
-        display: none;
-      }
-    }
-
-    &.scrolled:not(.minimal) {
+    @media (--max-md) {
       border-color: var(--gray-z-4);
     }
 
     :deep(> *) {
       height: var(--size-7);
 
-      @media (--sm) {
+      @media (--md) {
         height: calc(var(--size-7) + var(--size-1));
       }
     }
 
-    > .to-home {
+    /* Default Page Padding */
+    :deep(+ div) {
+      position: relative;
+      min-height: var(--100vh);
+      padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x);
+
+      &.full {
+        padding: var(--navbar-height) 0;
+      }
+    }
+  }
+
+  nav.main {
+    top: 0;
+    border-bottom: var(--border);
+
+    &.scrolled {
+      border-color: var(--gray-z-4);
+      background-color: var(--semi);
+      backdrop-filter: var(--blur);
+    }
+
+
+    > .home {
       margin-right: auto;
       display: flex;
       align-items: center;
@@ -91,25 +112,65 @@ const isScrolled = computed(() => y.value > 5)
         }
       }
     }
+  }
 
-    > .right {
-      margin-left: auto;
+  nav.links {
+    bottom: 0;
+    border-top: var(--border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--size-8);
+
+    @media (--md) {
+      gap: var(--size-7);
     }
 
-    :deep(+ div) {
-      position: relative;
-      min-height: var(--100vh);
-      padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x) var(--size-5);
-    }
+    > a {
+      color: var(--gray-z-6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--size-3);
+      transition: all var(--speed);
 
-    :deep(> .button:not(:last-child)) {
+      > .icon {
+        color: var(--gray-z-7);
+        transition: all var(--speed);
+      }
+
       > span {
         display: none;
 
-        @media (--lg) {
-          display: block;
+        @media (--md) {
+          display: inline-block;
         }
       }
+
+      &:--highlight,
+      &.router-link-active {
+        color: var(--color);
+
+        > .icon {
+          color: var(--color);
+        }
+      }
+    }
+
+    @media (--lg) {
+      backdrop-filter: none;
+      background: transparent;
+      border: none;
+      bottom: auto;
+      top: 0;
+      z-index: 41;
+      pointer-events: none;
+
+      > a {
+        pointer-events: all;
+      }
+
+      /* padding-right: 15%; */
     }
   }
 </style>

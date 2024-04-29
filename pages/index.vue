@@ -2,11 +2,6 @@
   <div class="home">
     <section class="about">
       <div class="intro">
-        <h1>
-          <IconsOpepenAiMedium class="logo" />
-          <span>An Open Canvas</span>
-        </h1>
-
         <p>Opepen is an early manifestation of a digital museum - an open art protocol inviting participation from anyone.</p>
         <p>Collectors of 16.000 cryptographic tokens form consensus on the artwork for the Permanent Collection.</p>
 
@@ -77,10 +72,6 @@ const { pause, resume } = useIntervalFn(() => {
   window.scrollTo(0, window.scrollY + (up.value ? -1 : 1))
 }, 28, { immediate: false })
 onMounted(() => resume())
-
-definePageMeta({
-  layout: 'minimal'
-})
 </script>
 
 <style lang="postcss" scoped>
@@ -129,6 +120,7 @@ definePageMeta({
       }
 
       .about {
+        padding-top: calc(var(--navbar-height) + var(--size-9));
         position: sticky;
         top: 0;
         min-height: 100dvh;

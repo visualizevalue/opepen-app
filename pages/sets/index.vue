@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <PermanentCollectionOverview />
+  <div class="full">
+    <SectionNav>
+      <StyledLink to="/sets/permanent-collection">Permanent Collection</StyledLink>
+      <StyledLink to="/sets/submissions">Submissions</StyledLink>
+    </SectionNav>
+
+    <NuxtPage />
   </div>
 </template>
 
@@ -31,34 +36,6 @@ section:not(.featured),
 }
 
 section {
-  margin: var(--size-8) auto 0;
-
-  &:first-child {
-    margin-top: var(--size-5);
-
-    .set-preview:not(:last-child) {
-      margin-bottom: var(--size-5);
-    }
-  }
-
-  h1 {
-    margin: var(--size-5) 0;
-  }
-}
-
-.explore-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to top, var(--background), var(--transparent-background));
-  position: absolute;
-  bottom: 0;
-  z-index: 10;
-  width: 100%;
-  padding: 20rem var(--size-4) 4rem;
-
-  .button {
-    padding: var(--size-5);
-  }
+  margin: 0 auto;
 }
 </style>

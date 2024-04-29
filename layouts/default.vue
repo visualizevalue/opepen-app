@@ -4,8 +4,7 @@
 
     <slot />
 
-    <FooterLinks />
-
-    <ToggleDarkMode />
+    <!-- <FooterLinks /> -->
+    <!-- <ToggleDarkMode /> -->
   </main>
 </template>
