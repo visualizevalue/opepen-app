@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" />
+    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" :size="avatarSize === 'lg' ? 68 : 36" />
     <span>
       <span>{{ display }}</span>
       <small v-if="! hideAddress && display !== short" :title="account.address">{{ short }}</small>

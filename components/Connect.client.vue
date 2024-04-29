@@ -12,7 +12,7 @@
         <Button :to="`/${ id }`" id="main-connect">
           <Account :address="address" />
         </Button>
-        <Button to="/settings"><Icon type="settings" /></Button>
+        <Button to="/settings" title="User Settings"><Icon type="settings" /></Button>
       </ButtonGroup>
     </div>
 
