@@ -122,12 +122,12 @@ section.featured {
     }
 
     &:before {
-      left: calc(-1 * var(--container-padding-x));
+      left: 0;
       background: linear-gradient(to right, var(--background), var(--transparent-background));
     }
 
     &:after {
-      right: calc(-1 * var(--container-padding-x));
+      right: 0;
       background: linear-gradient(to left, var(--background), var(--transparent-background));
     }
   }

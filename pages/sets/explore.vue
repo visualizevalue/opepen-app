@@ -2,5 +2,5 @@
 </template>
 
 <script setup>
-await navigateTo(`/sets/permanent-collection`, { redirectCode: 301 })
+await navigateTo(`/sets/submissions`, { redirectCode: 301 })
 </script>
