@@ -64,6 +64,25 @@ section.featured {
       position: relative;
       flex-wrap: nowrap;
       padding-left: var(--padding-x);
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        height: 100%;
+        width: max(var(--padding-x), var(--size-4));
+      }
+
+      &:before {
+        left: 0;
+        background: linear-gradient(to right, var(--background), var(--transparent-background));
+      }
+
+      &:after {
+        right: 0;
+        background: linear-gradient(to left, var(--background), var(--transparent-background));
+      }
     }
 
     :deep(> article) {
@@ -110,25 +129,6 @@ section.featured {
           right: calc(var(--padding-x) - var(--size-4)*5);
         }
       }
-    }
-
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      z-index: 10;
-      height: 100%;
-      width: max(var(--padding-x), var(--size-4));
-    }
-
-    &:before {
-      left: 0;
-      background: linear-gradient(to right, var(--background), var(--transparent-background));
-    }
-
-    &:after {
-      right: 0;
-      background: linear-gradient(to left, var(--background), var(--transparent-background));
     }
   }
 }
