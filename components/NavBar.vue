@@ -35,11 +35,13 @@
       <span>Nodes</span>
     </NuxtLink>
 
-    <Authenticated #default="{ isConnected }">
-      <NuxtLink to="/settings" title="Settings" class="visible-md">
-        <Icon type="settings" />
-        <span>Settings</span>
-      </NuxtLink>
+    <Authenticated>
+      <template #default="{ isConnected }">
+        <NuxtLink v-if="isConnected" to="/settings" title="Settings" class="visible-md">
+          <Icon type="settings" />
+          <span>Settings</span>
+        </NuxtLink>
+      </template>
     </Authenticated>
   </nav>
 </template>
