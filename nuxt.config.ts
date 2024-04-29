@@ -6,10 +6,6 @@ export default defineNuxtConfig({
         lang: 'en',
       },
       meta: [
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0, viewport-fit=cover'
-        },
         { name: 'theme-color', content: '#000000' },
         {
           name: 'twitter:card',
@@ -19,10 +15,6 @@ export default defineNuxtConfig({
           name: 'twitter:site',
           content: '@opepenedition',
         },
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0'
-        }
       ],
       link: [
         {

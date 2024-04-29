@@ -122,6 +122,9 @@ const isScrolled = computed(() => y.value > 5)
   }
 
   nav.links {
+    height: calc(var(--navbar-height) + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--size-4) + env(safe-area-inset-bottom));
+
     bottom: 0;
     border-top: var(--border);
     display: flex;
@@ -172,6 +175,8 @@ const isScrolled = computed(() => y.value > 5)
       top: 0;
       z-index: 41;
       pointer-events: none;
+      height: var(--navbar-height);
+      padding-bottom: var(--size-4);
 
       > a {
         pointer-events: all;
