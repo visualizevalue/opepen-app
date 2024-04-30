@@ -110,7 +110,7 @@
 <script setup>
 import { signMessage } from '@wagmi/core'
 import { useAccount } from '~/helpers/use-wagmi'
-import { fetchAddresses } from '~/helpers/delegate-cash'
+import { useDelegation } from '~/helpers/delegate-cash'
 import { getEditionName } from '~/helpers/editions'
 import { useOpepen } from '~/helpers/use-opepen'
 import { id, ripemd160 } from 'ethers'
@@ -139,10 +139,7 @@ const emit = defineEmits(['close'])
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
 
-const delegatedAddresses = ref(await fetchAddresses(address.value))
-watch(address, async () => {
-  delegatedAddresses.value = await fetchAddresses(address.value)
-})
+const { addresses: delegatedAddresses } = await useDelegation(address)
 
 const {
   opepen, opepenByEdition: grouped, opepenLoading, fetchOpepen

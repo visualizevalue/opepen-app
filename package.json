@@ -21,6 +21,7 @@
     "sharp": "^0.33.3"
   },
   "dependencies": {
+    "@delegatexyz/sdk": "^0.5.2",
     "@vueuse/components": "^9.13.0",
     "@vueuse/core": "^9.13.0",
     "@vueuse/integrations": "^10.5.0",
@@ -28,7 +29,6 @@
     "apg-js": "git+https://github.com/runic-inc/apg-js#8bb92ff0780819170fee7e756d26e0562e442983",
     "buffer": "^6.0.3",
     "chart.js": "^4.4.2",
-    "delegatecash": "^0.4.1",
     "ethers": "npm:ethers",
     "ethers5": "npm:ethers@^5.7.2",
     "events": "^3.3.0",

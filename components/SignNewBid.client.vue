@@ -28,7 +28,7 @@
 <script setup>
 import { signTypedData } from '@wagmi/core'
 import { ACTION, bidDefinition } from '~/helpers/signatures'
-import { fetchAddresses } from '~/helpers/delegate-cash'
+import { useDelegation } from '~/helpers/delegate-cash'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
@@ -41,7 +41,7 @@ const emit = defineEmits(['signed'])
 const { address } = useAccount()
 const open = ref(false)
 
-const delegatedAddresses = ref([])
+const { addresses: delegatedAddresses } = await useDelegation(address)
 const opepen = ref([])
 const opepenCount = ref(0)
 
@@ -51,9 +51,6 @@ watch(opepenCount, () => bidCount.value = opepenCount.value)
 
 const fetchOpepen = async () => {
   if (! address.value) return
-
-  // Delegations
-  delegatedAddresses.value = await fetchAddresses(address.value)
 
   const url = addr => `${config.public.opepenApi}/accounts/${addr}/opepen?limit%3D1000&filter%5Bedition%5D=40&filter%5Bset_id%5D=null`
   const responses = await Promise.all([address.value, ...delegatedAddresses.value].map(addr => $fetch(url(addr))))
