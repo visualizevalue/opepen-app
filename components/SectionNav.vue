@@ -39,17 +39,35 @@ nav > div {
   white-space: nowrap;
 
   :deep(a) {
+    position: relative;
+    padding: 0 var(--size-2);
+
     &::after {
-      display: none;
+      content: '';
+      position: absolute;
+      background: transparent;
+      border-radius: var(--size-2);
+      width: 100%;
+      height: var(--size-1);
+      bottom: calc(-1 * var(--size-5) - var(--size-1)/2);
+      left: 0;
+      z-index: 40;
+    }
+
+    &.router-link-exact-active::after {
+      background: var(--gray-z-8);
     }
   }
 }
 </style>
 
 <style lang="postcss">
+.section-nav {
+  border-bottom: var(--border);
+}
+
 .full .section-nav {
   padding-left: var(--container-padding-x);
   padding-right: var(--container-padding-x);
-  border-bottom: var(--border);
 }
 </style>

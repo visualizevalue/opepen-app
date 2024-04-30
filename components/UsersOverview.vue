@@ -1,7 +1,7 @@
 <template>
   <SectionNav>
-    <StyledLink to="/artists">Artists</StyledLink>
-    <StyledLink to="/curators">Curators</StyledLink>
+    <NuxtLink to="/artists">Artists</NuxtLink>
+    <NuxtLink to="/curators">Curators</NuxtLink>
   </SectionNav>
 
   <section class="users">

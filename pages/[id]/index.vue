@@ -1,81 +1,91 @@
 <template>
-  <div class="holder">
-    <header
-      :style="{
-        backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%), url(${coverImageURL})`
-      }"
-    >
-      <div>
-        <Avatar :account="account" :size="256" class="avatar" />
-        <div class="text">
-          <h1>
-            <span>{{ account.display }}</span>
-            <small v-if="account.tagline">{{ account.tagline }}</small>
-          </h1>
-          <NuxtLink :to="`https://etherscan.io/address/${account.address}`" target="_blank" class="meta-separated">
-            <span v-if="account.ens">{{ account.ens }}</span>
-            <span>{{ shortAddress(account.address, 6) }}</span>
-          </NuxtLink>
-          <SocialLinks :links="mainSocials" class="socials" />
+  <section v-if="account.quote || account.bio" class="bio" :class="{ 'col-2': account.quote && account.bio }">
+    <blockquote v-if="account.quote">
+      <span>{{ account.quote }}</span>
+      <cite>{{ account.display }}</cite>
+    </blockquote>
+    <p v-if="account.bio">{{ account.bio }}</p>
+  </section>
+
+  <section v-if="account.richContentLinks?.length" class="known-for">
+    <SectionTitle>Known For</SectionTitle>
+    <RichContentLinks :links="account.richContentLinks" />
+  </section>
+
+  <section v-if="account.createdSets?.length">
+    <SectionTitle>Artist For Set<template v-if="account.createdSets.length > 1">s</template></SectionTitle>
+    <div class="created-sets">
+      <SetPreview v-for="set in account.createdSets" :data="set" />
+    </div>
+  </section>
+
+  <!-- TODO: Improve performance for long lists! -->
+  <PaginatedContent
+    :url="tokensUrl"
+    query="limit=24"
+    v-slot="{ items, meta }"
+  >
+    <div v-if="items.length">
+      <SectionTitle>Owned Opepen ({{ meta.total }})</SectionTitle>
+      <div class="opepens">
+        <div
+          v-for="token in items"
+          :key="token.token_id"
+        >
+          <OpepenCard
+            :token="token"
+            :set="token.data?.edition || 40"
+          />
         </div>
       </div>
-    </header>
-
-    <SocialLinks :links="otherSocials" class="socials" />
-
-    <SectionNav>
-      <NuxtLink :to="`/${id(account)}`">About</NuxtLink>
-      <NuxtLink :to="`/${id(account)}/activity`">Activity</NuxtLink>
-    </SectionNav>
-
-    <NuxtPage :account="account" />
-
-    <AdminMenu>
-      <Button :to="`/settings/${account.address}`">
-        <Icon type="settings" />
-        <span>Settings</span>
-      </Button>
-    </AdminMenu>
-  </div>
+    </div>
+  </PaginatedContent>
 </template>
 
 <script setup>
-import { imageURI } from '~/helpers/images'
-import { id } from '~/helpers/accounts'
-import shortAddress from '~/helpers/short-address'
+import { useMetaData } from '~/helpers/head'
+
+const props = defineProps({ account: Object })
+const account = computed(() => props.account)
 
 const config = useRuntimeConfig()
 const route = useRoute()
 const url = `${config.public.opepenApi}/accounts/${route.params.id}`
-const { data: account } = await useFetch(url)
+const tokensUrl = `${url}/opepen`
 
-const coverImageURL = imageURI(account.value?.coverImage, 'lg')
+// const frameButtons = [
+//   { property: 'fc:frame:button:1', content: `View on on Opepen.art` },
+//   { property: 'fc:frame:button:1:action', content: `link` },
+//   { property: 'fc:frame:button:1:target', content: `https://opepen.art/holders/${account.value.address}` },
+//   { property: 'fc:frame:button:2', content: 'Browse Opepen →' },
+// ]
 
-const socials = computed(() => {
-  let socials = account.value?.socials || []
-
-  if (account.value?.twitterHandle) {
-    socials = [`https://x.com/${account.value.twitterHandle}`, ...socials]
-      .filter((s, index) => !(index > 0 && (s.indexOf('twitter.com') > -1 || s.indexOf('x.com') > -1)))
-  }
-
-  return socials
+useMetaData({
+  title: `${ account.value?.display } | Opepen`,
+  description: `Opepen owned by ${account.value?.display}.`,
+  og: `${config.public.opepenApi}/render/accounts/${account.value.address}/image`,
+  meta: [
+    // TODO: Fix and reenable these frames
+    // { property: 'fc:frame', content: 'vNext' },
+    // { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/accounts/${account.value.address}/image` },
+    // { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/accounts/${account.value.address}` },
+    // ...frameButtons,
+  ],
 })
-const splitSocials = computed(() => socials.value?.length > 5)
-const mainSocials = computed(() => splitSocials.value ? socials.value.slice(0, 3) : socials.value)
-const otherSocials = computed(() => splitSocials.value ? socials.value.slice(3) : [])
 </script>
 
 <style lang="postcss" scoped>
 .holder {
-  --section-gap: var(--size-8);
-
   width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--section-gap);
+  gap: var(--size-8);
+
+  @media (--md) {
+    gap: var(--size-9);
+  }
 
   > .socials {
     margin-top: calc(-1 * var(--size-8) + var(--size-4));
@@ -162,10 +172,6 @@ header {
       max-width: 70%;
       justify-content: flex-end;
     }
-  }
-
-  + .section-nav {
-    margin-top: calc(var(--section-gap) * -1 + var(--size-4));
   }
 }
 

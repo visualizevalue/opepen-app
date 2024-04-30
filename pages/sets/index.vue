@@ -1,8 +1,8 @@
 <template>
   <div class="full">
     <SectionNav>
-      <StyledLink to="/sets/permanent-collection">Permanent Collection</StyledLink>
-      <StyledLink to="/sets/submissions">Submissions</StyledLink>
+      <NuxtLink to="/sets/permanent-collection">Permanent Collection</NuxtLink>
+      <NuxtLink to="/sets/submissions">Submissions</NuxtLink>
     </SectionNav>
 
     <NuxtPage />

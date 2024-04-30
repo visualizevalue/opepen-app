@@ -12,19 +12,19 @@
         v-for="entry in items"
         :key="entry.id"
       >
-        <NuxtLink :to="`/${id(entry.account)}`">
-          <ApiAccount
-            :account="entry.account"
-            avatar-size="sm"
-          />
-        </NuxtLink>
-        <span v-if="entry.opepen_count">{{ entry.opepen_count }}</span>
-        <span v-else></span>
-        <span v-if="entry.is_opt_in">Opt-In<span v-if="entry.opepen_count > 1">s</span></span>
-        <span v-else>Opt-Out</span>
-        <span>
-          <slot name="last" :entry="entry">{{ timeAgo(entry.created_at) }}</slot>
-        </span>
+        <slot :entry="entry">
+          <NuxtLink :to="`/${id(entry.account)}`">
+            <ApiAccount
+              :account="entry.account"
+              avatar-size="sm"
+            />
+          </NuxtLink>
+          <span v-if="entry.opepen_count">{{ entry.opepen_count }}</span>
+          <span v-else></span>
+          <span v-if="entry.is_opt_in">Opt-In<span v-if="entry.opepen_count > 1">s</span></span>
+          <span v-else>Opt-Out</span>
+          <span>{{ timeAgo(entry.created_at) }}</span>
+        </slot>
       </div>
     </template>
 
@@ -38,8 +38,9 @@
 import { timeAgo } from '~/helpers/dates'
 import { id } from '~/helpers/accounts'
 
-const { submissionId, paginated, limit, autoLoad } = defineProps({
+const { submissionId, paginated, account, limit, autoLoad } = defineProps({
   submissionId: String,
+  account: String,
   paginated: Boolean,
   autoLoad: {
     type: Boolean,
@@ -60,11 +61,15 @@ const query = computed(() => {
     limit,
   })
 
+  if (account) {
+    q.append('filter[address]', account)
+  }
+
   return q.toString()
 })
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .timeline {
   display: flex;
   flex-direction: column;
@@ -106,6 +111,12 @@ const query = computed(() => {
         color: var(--gray-z-9);
       }
     }
+  }
+
+  :deep(.loader) {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>
