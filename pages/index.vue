@@ -49,12 +49,7 @@
       </div>
     </section>
 
-    <div
-      ref="gallery"
-      class="gallery"
-      @mouseleave="resume"
-      @mouseenter="pause"
-    >
+    <div class="gallery">
       <h2>Explore Opepen</h2>
       <FeaturedGallery />
     </div>
@@ -62,30 +57,11 @@
 </template>
 
 <script setup>
-import { useIntervalFn, useWindowSize } from '@vueuse/core'
 import { id } from '~/helpers/accounts'
 import { useSets } from '~/helpers/sets'
 import pad from '~/helpers/pad'
 
 const { completeSets } = useSets()
-
-const gallery = ref()
-const { width } = useWindowSize()
-
-const up = ref(false)
-const { pause, resume } = useIntervalFn(() => {
-  if (width.value < 1056) return
-
-  const maxY = document.scrollingElement.scrollHeight - document.documentElement.clientHeight
-  if (window.scrollY >= maxY - 20) {
-    up.value = true
-  } else if (window.scrollY === 0) {
-    up.value = false
-  }
-
-  window.scrollTo(0, window.scrollY + (up.value ? -1 : 1))
-}, 28, { immediate: false })
-onMounted(() => resume())
 </script>
 
 <style lang="postcss" scoped>
