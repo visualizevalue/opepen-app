@@ -95,7 +95,6 @@ section.featured {
     :deep(> button) {
       transition: all var(--speed);
       position: absolute;
-      display: flex;
       justify-content: center;
       align-items: center;
       top: calc(50% - var(--size-8)/1.25);
@@ -106,6 +105,11 @@ section.featured {
       border-radius: var(--size-8);
       border: var(--border);
       box-shadow: var(--shadow-lg);
+      display: none;
+
+      @media (--md) {
+        display: flex;
+      }
 
       &:--highlight {
         background: var(--gray-z-4);
