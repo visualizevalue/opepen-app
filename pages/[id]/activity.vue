@@ -13,6 +13,12 @@
 
       <span>{{ timeAgo(entry.created_at) }}</span>
     </template>
+
+    <template #after="{ meta }">
+      <div v-if="meta?.total === 0" class="muted centered">
+        <span>No curation activity</span>
+      </div>
+    </template>
   </OptInTimelineList>
 </template>
 
