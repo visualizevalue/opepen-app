@@ -4,7 +4,7 @@
     :query="query"
     :refresh-key="submissionId"
     :auto-load="autoLoad"
-    class="timeline"
+    class="opt-in-timeline"
     tag="section"
   >
     <template v-slot:default="{ items }">
@@ -69,8 +69,8 @@ const query = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
-.timeline {
+<style lang="postcss">
+.opt-in-timeline {
   display: flex;
   flex-direction: column;
   gap: var(--size-2);

@@ -192,7 +192,7 @@ onMounted(() => resume())
       container-type: inline-size;
     }
 
-    :deep(.timeline) {
+    :deep(.opt-in-timeline) {
       &:after {
         content: '';
         position: absolute;
