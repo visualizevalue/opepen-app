@@ -29,7 +29,20 @@
           :limit="5"
           :auto-load="false"
         >
-          <template #last="{ entry }">
+          <template #default="{ entry }">
+            <NuxtLink :to="`/${id(entry.account)}`">
+              <ApiAccount
+                :account="entry.account"
+                avatar-size="sm"
+              />
+            </NuxtLink>
+
+            <span v-if="entry.opepen_count">{{ entry.opepen_count }}</span>
+            <span v-else></span>
+
+            <span v-if="entry.is_opt_in">Opt-In<span v-if="entry.opepen_count > 1">s</span></span>
+            <span v-else>Opt-Out</span>
+
             <NuxtLink :to="`/sets/${entry.submission.uuid}`">{{ entry.submission.name }}</NuxtLink>
           </template>
         </OptInTimelineList>
@@ -50,6 +63,7 @@
 
 <script setup>
 import { useIntervalFn, useWindowSize } from '@vueuse/core'
+import { id } from '~/helpers/accounts'
 import { useSets } from '~/helpers/sets'
 import pad from '~/helpers/pad'
 
