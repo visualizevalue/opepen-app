@@ -109,7 +109,11 @@ const onComplete = () => {
 const url = computed(() => `${config.public.opepenApi}/accounts/${address.value}/set-submissions/${props.data.uuid}/subscription`)
 const subscription = ref(null)
 const fetchSubscription = async () => {
-  subscription.value = await $fetch(url.value)
+  try {
+    subscription.value = await $fetch(url.value)
+  } catch (e) {
+    console.info(`No subscription found`)
+  }
 }
 const shownCount = 20
 const opepenCount = computed(() => subscription.value?.opepen_ids?.length)
@@ -120,11 +124,7 @@ const opepenIds = computed(() => subscription.value
 )
 
 if (isConnected.value) {
-  try {
-    await fetchSubscription()
-  } catch (e) {
-    // ...
-  }
+  await fetchSubscription()
 }
 
 const optInOpen = ref(false)
