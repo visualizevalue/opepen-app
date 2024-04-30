@@ -28,7 +28,7 @@ const setAction = async (submission, action, data = {}) => {
     position: fixed;
     z-index: 1000;
     left: var(--size-7);
-    bottom: 3rem;
+    bottom: calc(3rem + env(safe-area-inset-bottom));
 
     display: flex;
     gap: var(--size-4);
