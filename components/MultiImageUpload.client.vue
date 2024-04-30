@@ -18,7 +18,7 @@
         type="file"
         name="image"
         accept="image/png, image/jpeg, image/gif, image/svg+xml, image/webp, video/mp4, video/webm"
-        @change.prevent="addFiles"
+        @change.prevent="addFilesEvent"
         :disabled="loading"
         multiple
       >
@@ -56,7 +56,6 @@ const disabled = computed(() => props.disabled || (props.maxFiles && images.valu
 const loading = ref(false)
 const dragging = ref(false)
 const previews = ref([])
-const previewUrls = computed(() => previews.value.map(preview => URL.createObjectURL(preview)))
 const images = ref(props.images?.filter(i => !! i) || [])
 const errors = ref([])
 const currentUpload = ref(0)
@@ -100,8 +99,8 @@ const storeFile = async (obj) => {
   })
 }
 
-const addFiles = (event) => {
-  previews.value = Array.from(event.target.files)
+const addFiles = files => {
+  previews.value = Array.from(files)
 
   if (props.maxFiles) {
     previews.value = previews.value.slice(0, props.maxFiles)
@@ -109,6 +108,7 @@ const addFiles = (event) => {
 
   storeFiles()
 }
+const addFilesEvent = (event) => addFiles(event.target.files)
 
 const deleteFile = (idx) => {
   images.value.splice(idx, 1)
@@ -118,6 +118,12 @@ const reset = () => {
   images.value = []
   previews.value = []
 }
+
+defineExpose({
+  addFiles,
+  loading,
+  progress,
+})
 </script>
 
 <style lang="postcss" scoped>

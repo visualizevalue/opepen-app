@@ -14,8 +14,7 @@
 
   <nav class="links">
 
-    <!-- <NuxtLink to="/" title="Home" class="visible-sm"> -->
-    <NuxtLink to="/" title="Home">
+    <NuxtLink to="/home" title="Home">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
