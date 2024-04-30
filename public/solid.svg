@@ -1,0 +1,83 @@
+<svg viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="8" height="8" fill="hsl(0,0%,0%)">
+    <animate
+      attributeName="fill"
+      values="hsl(0,0%,0%); hsl(0,0%,100%); hsl(0,0%,0%)"
+      keyTimes="0;0.5;1"
+      dur="24h"
+      repeatCount="indefinite"
+    />
+  </rect>
+
+  <!-- Opepen -->
+  <g
+    fill="hsl(0,0%,100%)"
+  >
+    <animate
+      attributeName="fill"
+      values="hsl(0,0%,100%); hsl(0,0%,0%); hsl(0,0%,100%)"
+      keyTimes="0;0.5;1"
+      dur="24h"
+      repeatCount="indefinite"
+    />
+
+    <!-- Left Eye -->
+    <g transform="translate(2, 2)">
+      <use href="#left-eye" />
+    </g>
+
+    <!-- Right Eye -->
+    <g transform="translate(4, 2)">
+      <use href="#right-eye" />
+    </g>
+
+
+    <!-- Mouth -->
+    <g transform="translate(2, 4)">
+      <use href="#mouth-rounded" />
+    </g>
+
+    <!-- Torso -->
+    <g transform="translate(2, 7)">
+      <use href="#torso-rounded" />
+    </g>
+  </g>
+
+  <defs>
+      <!-- LEFT EYE -->
+      <g id="left-eye">
+        <path d="M 1 0
+          A 1 1, 0, 1, 1, 0 1
+          L 0 0 Z"
+        />
+      </g>
+
+      <!-- RIGHT EYE -->
+      <g id="right-eye">
+        <circle cx="1" cy="1" r="1" />
+      </g>
+
+      <!-- MOUTH -->
+      <g id="mouth-rounded">
+        <path d="M 1 2
+          A 1 1, 0, 0, 1, 0 1
+          L 0 0
+          L 4 0
+          L 4 1
+          A 1 1, 0, 0, 1, 3 2
+          Z"
+        />
+      </g>
+
+      <!-- TORSO -->
+      <g id="torso-rounded">
+        <path d="M 0 1
+          A 1 1, 0, 0, 1, 1 0
+          L 3 0
+          A 1 1, 0, 0, 1, 4 1
+          Z"
+        />
+      </g>
+  </defs>
+</svg>
