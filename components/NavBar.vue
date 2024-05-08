@@ -14,7 +14,7 @@
 
   <nav class="links">
 
-    <NuxtLink to="/" title="Home" @click="toTop">
+    <NuxtLink to="/home" title="Home" @click="toTop">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
