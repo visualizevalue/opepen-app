@@ -1,5 +1,5 @@
 <template>
-  <div class="create">
+  <form class="create" @submit.stop.prevent="submitPost">
     <Authenticated #default="{ isConnected, profile }">
       <template v-if="isConnected">
         <Avatar :account="profile" class="lg" :size="68" />
@@ -9,6 +9,8 @@
           @dragleave="dragging = false"
           @drop="drop"
           :class="{ dragging }"
+          name="Create Post"
+          placeholder="What's hopepening?!"
         />
 
         <Progress v-if="imageUpload?.loading" :percent="imageUpload.progress" />
@@ -49,10 +51,12 @@
         </div>
       </template>
     </Authenticated>
-  </div>
+  </form>
 </template>
 
 <script setup>
+import { useAccount } from '~/helpers/use-wagmi'
+
 const text = ref('')
 const imageUpload = ref()
 const images = ref([])
@@ -70,20 +74,52 @@ const drop = ($event) => {
 
 const imagesChanged = $event => {
   images.value = $event
-  // Save
 }
 
 const deleteFile = (idx) => {
   images.value.splice(idx, 1)
 }
+
+const { profile } = useAccount()
+const config = useRuntimeConfig()
+const emit = defineEmits(['created'])
+const saving = ref(false)
+const submitPost = async () => {
+  saving.value = true
+  try {
+    const newPost = await $fetch(`${config.public.opepenApi}/posts`, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({
+        body: text.value,
+        image_ids: images.value.map(i => i.uuid),
+      })
+    })
+
+    text.value = ''
+    images.value = []
+
+    emit('created', {
+      account: profile.value,
+      ...newPost
+    })
+  } catch (e) {
+    alert('Error saving')
+  }
+  saving.value = false
+}
 </script>
 
 <style lang="postcss" scoped>
 .create {
-  --spacer: var(--size-4);
   --spacer-left: calc(var(--spacer)*2 + var(--size-7));
   --bottom-bar-height: var(--size-8);
 
+  /* position: sticky;
+  z-index: 1;
+  top: var(--navbar-height);
+  background-color: var(--semi);
+  backdrop-filter: var(--blur); */
   position: relative;
   border-bottom: var(--border);
 
@@ -105,7 +141,7 @@ const deleteFile = (idx) => {
     border: var(--border);
     border-color: transparent;
     border-radius: 0;
-    background: var(--background);
+    background: transparent;
     padding-left: var(--spacer-left);
     padding-top: var(--size-5);
     padding-bottom: 8.75rem;

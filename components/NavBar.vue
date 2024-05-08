@@ -14,7 +14,7 @@
 
   <nav class="links">
 
-    <NuxtLink to="/home" title="Home">
+    <NuxtLink to="/home" title="Home" @click="toTop">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
@@ -51,6 +51,13 @@ import { useWindowScroll } from '@vueuse/core'
 const { y } = useWindowScroll()
 
 const isScrolled = computed(() => y.value > 5)
+
+const toTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
 </script>
 
 <style lang="postcss" scoped>

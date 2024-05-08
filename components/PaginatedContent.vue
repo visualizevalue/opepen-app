@@ -128,8 +128,12 @@ await loadMore()
 div,
 section {
   position: relative;
-  overflow-x: hidden;
-  max-width: 100%;
+
+  /* Fix scrolling parent watchers (e.g. for virtual scrollers) */
+  &:not(.no-scroller) {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
 }
 
 aside {

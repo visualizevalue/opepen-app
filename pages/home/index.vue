@@ -1,10 +1,15 @@
 <template>
   <main>
     <div class="inner">
-      <PostCreate />
+      <PostCreate @created="extra.push($event)" />
+      <PostTimeline :extra-items="extra" />
     </div>
   </main>
 </template>
+
+<script setup>
+const extra = ref([])
+</script>
 
 <style lang="postcss" scoped>
 main {
@@ -17,6 +22,7 @@ main {
   max-width: var(--content-width-sm);
   min-height: var(--100vh);
   padding-top: var(--navbar-height);
+  /* padding-top: 0; */
 
   @media (--content-sm) {
     border-left: var(--border);

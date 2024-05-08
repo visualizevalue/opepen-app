@@ -47,6 +47,8 @@
   --size-8: 3rem;
   --size-9: 4.5rem;
 
+  --spacer: var(--size-4);
+
   /* FONTS */
   --font-family-main: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;

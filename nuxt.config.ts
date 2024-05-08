@@ -87,7 +87,7 @@ export default defineNuxtConfig({
 
   pwa: {
     devOptions: {
-      enabled: true,
+      enabled: false,
     },
     manifest: {
       name: 'Opepen',

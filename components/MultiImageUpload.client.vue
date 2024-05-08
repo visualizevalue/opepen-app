@@ -52,11 +52,11 @@ const props = defineProps({
 })
 const emit = defineEmits(['stored', 'reset'])
 
+const images = ref(props.images?.filter(i => !! i) || [])
 const disabled = computed(() => props.disabled || (props.maxFiles && images.value.length >= props.maxFiles))
 const loading = ref(false)
 const dragging = ref(false)
 const previews = ref([])
-const images = ref(props.images?.filter(i => !! i) || [])
 const errors = ref([])
 const currentUpload = ref(0)
 const progress = computed(() => {
