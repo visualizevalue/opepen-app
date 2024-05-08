@@ -17,6 +17,11 @@
             :key="post.id"
             :post="post"
             :style="{ height: post.size + 'px' }"
+            :admin="isAdmin"
+            :user="address"
+            @approve="approve"
+            @unapprove="unapprove"
+            @destroy="destroy"
           />
 
         </template>
@@ -27,6 +32,10 @@
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
+import { isAdmin } from '~/helpers/siwe'
+import { address } from '~/helpers/use-wagmi'
+
 const props = defineProps({
   limit: {
     type: Number,
@@ -52,17 +61,37 @@ const query = computed(() => {
   }).toString()
 })
 
-// const CONTAINER_WIDTH = 558
-// const getSize = item => {
-//   if (item.images?.length === 1) return CONTAINER_WIDTH + 6
-//   if (item.images?.length === 2) return CONTAINER_WIDTH * 0.57
-//   if (item.images?.length === 3) return CONTAINER_WIDTH * 0.41
-//   if (item.images?.length === 4) return CONTAINER_WIDTH * 0.52
+const action = async (post, action, method = 'POST') => {
+  await $fetch(`${config.public.opepenApi}/posts/${post.uuid}/${action}`, {
+    method,
+    credentials: 'include',
+  })
+}
 
-//   return 150 // default
-// }
-const withExtras = items => props.extraItems.concat(items)
-// const addSizes = items => items.map(item => ({ ...item, size: getSize(item) }))
+const approve = async (post) => {
+  await action(post, 'approve')
+  post.approved_at = DateTime.now().toISO()
+}
+const unapprove = async (post) => {
+  await action(post, 'unapprove')
+  post.approved_at = null
+}
+const deleted = ref([])
+const destroy = async (post) => {
+  await action(post, '', 'DELETE')
+
+  deleted.value.push(post.id)
+}
+
+const withExtras = items => {
+  const posts = props.extraItems.concat(items)
+
+  if (deleted.value.length) {
+    return posts.filter(p => ! deleted.value.includes(p.id))
+  }
+
+  return posts
+}
 </script>
 
 <style lang="postcss" scoped>

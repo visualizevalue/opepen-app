@@ -30,7 +30,7 @@ const setAccount = async a => {
   account.status = a.status
   account.profile = await $fetch(`${config.public.opepenApi}/accounts/${account.address}`)
 }
-export const address = computed(() => account.address)
+export const address = computed(() => account.address?.toLowerCase())
 export const id = computed(() => computeId(account.profile))
 let unwatchAccount;
 

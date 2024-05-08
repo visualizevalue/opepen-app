@@ -14,21 +14,60 @@
           <Image v-for="image in post.images" :key="image.id" :image="image" />
         </div>
       </div>
+
+      <menu>
+        <li v-if="admin && !post.approved_at">
+          <button @click="$emit('approve', post)">
+            <Icon type="check" />
+          </button>
+        </li>
+        <li v-if="user === post.address || (admin && post.approved_at)">
+          <button @click="showMore = !showMore">
+            <Icon type="more-vertical" />
+          </button>
+        </li>
+      </menu>
+
+      <menu v-if="showMore" ref="moreMenu" class="more">
+        <li>
+          <button @click="$emit('destroy', post)">
+            <Icon type="trash" />
+            <span>Delete</span>
+          </button>
+        </li>
+        <li v-if="admin && post.approved_at">
+          <button @click="$emit('unapprove', post)">
+            <Icon type="check" />
+            <span>Unapprove</span>
+          </button>
+        </li>
+      </menu>
     </div>
   </article>
 </template>
 
 <script setup>
+import { onClickOutside } from '@vueuse/core'
 import { timeAgo } from '~/helpers/dates'
 
-const { post, style } = defineProps({
+const { post, style, admin } = defineProps({
   post: Object,
   style: Object,
+  admin: Boolean,
+  user: String,
 })
+
+const emit = defineEmits(['approve', 'unapprove', 'destroy'])
+
+const showMore = ref(false)
+const moreMenu = ref(null)
+onClickOutside(moreMenu, _ => showMore.value = false)
 </script>
 
 <style lang="postcss" scoped>
 article.post {
+  position: relative;
+  z-index: 1;
   height: 100%;
   padding: var(--spacer);
   border-bottom: var(--border);
@@ -60,7 +99,7 @@ article.post {
     display: flex;
     gap: var(--size-1);
     line-height: 1em;
-    margin-bottom: var(--size-1);
+    margin-bottom: var(--size-2);
     overflow: hidden;
 
     > * {
@@ -126,6 +165,56 @@ article.post {
     :deep(.image) {
       width: 100%;
       border-color: var(--gray-z-1);
+    }
+  }
+}
+
+menu {
+  position: absolute;
+  top: var(--spacer);
+  right: var(--spacer);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--size-3);
+  z-index: 1;
+
+  li {
+    margin: 0;
+    list-style: none;
+    width: 100%;
+
+    > button {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
+  &:not(.more) li > button {
+    width: var(--size-5);
+    height: var(--size-5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.more {
+    z-index: 200;
+    gap: 0;
+    flex-direction: column;
+    top: calc(var(--size-7) - var(--size-1));
+    right: var(--size-2);
+    background: var(--background);
+    border: var(--border);
+    border-radius: var(--size-2);
+    box-shadow: var(--shadow-lg);
+
+    > * {
+      padding: var(--size-2) var(--spacer);
+
+      &:not(:last-child) {
+        border-bottom: var(--border);
+      }
     }
   }
 }

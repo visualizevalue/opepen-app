@@ -30,12 +30,12 @@
 
     <NuxtPage :account="account" />
 
-    <AdminMenu>
+    <AdminMenuFloating>
       <Button :to="`/settings/${account.address}`">
         <Icon type="settings" />
         <span>Settings</span>
       </Button>
-    </AdminMenu>
+    </AdminMenuFloating>
   </div>
 </template>
 

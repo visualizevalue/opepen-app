@@ -1,5 +1,5 @@
 <template>
-  <AdminMenu v-slot="{ setAction }">
+  <AdminMenuFloating v-slot="{ setAction }">
     <slot name="before"></slot>
     <Button v-if="! submission.set_id && submission.published_at" @click="() => setAction(submission, 'unpublish').then(() => navigateTo(`/create/sets/${submission.uuid}`))">
       <Icon type="globe" stroke="var(--green)" />
@@ -22,7 +22,7 @@
       <span v-if="submission.starred_at">Starred</span>
       <span v-else>Star</span>
     </Button>
-  </AdminMenu>
+  </AdminMenuFloating>
 </template>
 
 <script setup>

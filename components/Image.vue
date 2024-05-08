@@ -85,7 +85,7 @@ article.image {
 
   .inner {
     border: 1px solid var(--gray-z-4);
-    background-color: var(--gray-z-3);
+    background-color: var(--gray-z-2);
     overflow: hidden;
   }
   &:not(.square) .inner {
@@ -107,6 +107,8 @@ article.image {
       bottom: 0;
       width: 100%;
       height: 100%;
+      object-fit: contain;
+      object-fit: cover;
     }
   }
 
