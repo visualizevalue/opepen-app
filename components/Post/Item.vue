@@ -16,11 +16,18 @@
       </div>
 
       <menu>
-        <li v-if="admin && !post.approved_at">
-          <button @click="$emit('approve', post)">
-            <Icon type="check" />
-          </button>
-        </li>
+        <template v-if="admin && !post.approved_at">
+          <li>
+            <button @click="$emit('approve', post)">
+              <Icon type="check" />
+            </button>
+          </li>
+          <li>
+            <button @click="$emit('destroy', post)">
+              <Icon type="trash" />
+            </button>
+          </li>
+        </template>
         <li v-if="user === post.address || (admin && post.approved_at)">
           <button @click="showMore = !showMore">
             <Icon type="more-vertical" />
