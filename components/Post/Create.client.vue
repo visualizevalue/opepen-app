@@ -13,7 +13,7 @@
           placeholder="What's hopepening?!"
         />
 
-        <Progress v-if="imageUpload?.loading" :percent="imageUpload.progress" />
+        <Progress v-if="imageUpload?.loading" :percent="Math.min(imageUpload.progress, 5)" />
 
         <div class="images" v-if="images.length">
           <Image
