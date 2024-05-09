@@ -39,7 +39,7 @@ import { address } from '~/helpers/use-wagmi'
 const props = defineProps({
   limit: {
     type: Number,
-    default: 100,
+    default: 24,
   },
   extraItems: {
     type: Array,
