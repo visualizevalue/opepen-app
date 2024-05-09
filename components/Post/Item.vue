@@ -23,7 +23,10 @@
           <Image v-for="image in post.images" :key="image.id" :image="image" :version="post.images.length > 1 ? 'sm' : 'lg'" />
         </div>
 
-        <PostComments v-if="! hideComments" :post="post" :user="user" />
+        <PostComments
+          v-if="! hideComments" :post="post" :user="user"
+          @destroy="$event => $emit('destroy', $event)"
+        />
       </div>
 
       <menu>

@@ -20,10 +20,11 @@
     >
       <template #default="{ items: comments }">
         <PostItem
-          v-for="comment in comments"
+          v-for="(comment, index) in comments"
           :key="comment.id"
           :post="comment"
           :user="user"
+          @destroy="() => comments.splice(index, 1) && $emit('destroy', comment)"
           hide-comments
         />
       </template>
@@ -36,6 +37,7 @@ const { post, user, } = defineProps({
   post: Object,
   user: String,
 })
+const emits = defineEmits(['destroy'])
 const config = useRuntimeConfig()
 const writeComment = ref(false)
 const loadComments = ref(false)
