@@ -1,7 +1,7 @@
 <template>
-  <form class="create" @submit.stop.prevent="submitPost">
-    <Authenticated #default="{ isConnected, profile }">
-      <template v-if="isConnected">
+  <Authenticated #default="{ isConnected, profile }">
+    <template v-if="isConnected">
+      <form class="create" @submit.stop.prevent="submitPost">
         <Avatar :account="profile" class="lg" :size="68" />
         <Input
           v-model="text"
@@ -40,8 +40,10 @@
             <span>Post</span>
           </Button>
         </div>
-      </template>
-      <template v-else>
+      </form>
+    </template>
+    <template v-else>
+      <div class="create">
         <div class="sign-in">
           <h1>Sign in</h1>
           <p>To participate, please sign in with your <span>Ethereum Account</span>.</p>
@@ -49,9 +51,9 @@
             <span>Connect Ethereum Account</span>
           </Connect>
         </div>
-      </template>
-    </Authenticated>
-  </form>
+      </div>
+    </template>
+  </Authenticated>
 </template>
 
 <script setup>
