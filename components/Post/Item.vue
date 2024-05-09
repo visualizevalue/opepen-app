@@ -13,6 +13,8 @@
         <div v-if="post.images?.length" class="images" :class="[`images-${post.images.length}`]">
           <Image v-for="image in post.images" :key="image.id" :image="image" />
         </div>
+
+        <PostComments v-if="! hideComments" :post="post" />
       </div>
 
       <menu>
@@ -62,6 +64,7 @@ const { post, style, admin } = defineProps({
   style: Object,
   admin: Boolean,
   user: String,
+  hideComments: Boolean,
 })
 
 const emit = defineEmits(['approve', 'unapprove', 'destroy'])

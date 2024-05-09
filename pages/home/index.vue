@@ -22,7 +22,7 @@ main {
   max-width: var(--content-width-sm);
   min-height: var(--100vh);
   padding-top: var(--navbar-height);
-  /* padding-top: 0; */
+  padding-bottom: var(--navbar-height);
 
   @media (--content-sm) {
     border-left: var(--border);

@@ -85,6 +85,8 @@ const config = useRuntimeConfig()
 const emit = defineEmits(['created'])
 const saving = ref(false)
 const submitPost = async () => {
+  if (saving.value) return
+
   saving.value = true
   try {
     const newPost = await $fetch(`${config.public.opepenApi}/posts`, {
