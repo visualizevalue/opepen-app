@@ -14,8 +14,8 @@
         <div v-if="post.body" class="text">
           <ExpandableText :text="post.body">
             <template #trigger="{toggle, expanded}">
+              <span>&nbsp;</span>
               <button v-if="! expanded" class="inline" @click="toggle">Read on</button>
-              <span v-else></span>
             </template>
           </ExpandableText>
         </div>
@@ -136,6 +136,8 @@ article.post {
   }
 
   .text {
+    white-space-collapse: preserve;
+
     :deep(> span) {
       font-family: var(--font-family-body);
       font-weight: var(--font-weight-medium);
@@ -144,7 +146,6 @@ article.post {
 
     :deep(button) {
       display: inline-flex;
-      margin-left: var(--size-2);
     }
   }
 
