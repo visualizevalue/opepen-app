@@ -9,7 +9,14 @@
           <span class="date">{{ timeAgo(post.created_at) }}</span>
         </span>
 
-        <div class="text"><ExpandableText :text="post.body" /></div>
+        <div v-if="post.body" class="text">
+          <ExpandableText :text="post.body">
+            <template #trigger="{toggle, expanded}">
+              <button v-if="! expanded" class="inline" @click="toggle">Read on</button>
+              <span v-else></span>
+            </template>
+          </ExpandableText>
+        </div>
         <div v-if="post.images?.length" class="images" :class="[`images-${post.images.length}`]">
           <Image v-for="image in post.images" :key="image.id" :image="image" />
         </div>
@@ -114,6 +121,19 @@ article.post {
 
     > * {
       white-space: nowrap;
+    }
+  }
+
+  .text {
+    :deep(> span) {
+      font-family: var(--font-family-body);
+      font-weight: var(--font-weight-medium);
+      text-transform: none;
+    }
+
+    :deep(button) {
+      display: inline-flex;
+      margin-left: var(--size-2);
     }
   }
 

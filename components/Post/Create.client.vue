@@ -137,6 +137,8 @@ const submitPost = async () => {
   .input,
   :deep(.input textarea) {
     z-index: 1;
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-medium);
   }
   :deep(.input textarea) {
     min-height: 9rem;

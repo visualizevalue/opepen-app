@@ -1,9 +1,16 @@
 <template>
   <span :class="{ expanded }" v-html="visibleText"></span>
-  <Button v-if="wasShortened" @click="expanded = !expanded" class="small">
-    <Icon :type="expanded ? 'chevron-up' : 'chevron-right'" />
-    {{ expanded ? collapseText : expandText }}
-  </Button>
+  <slot
+    name="trigger"
+    v-if="wasShortened"
+    :expanded="expanded"
+    :toggle="toggle"
+  >
+    <Button v-if="wasShortened" @click="toggle" class="small">
+      <Icon :type="expanded ? 'chevron-up' : 'chevron-right'" />
+      <span>{{ expanded ? collapseText : expandText }}</span>
+    </Button>
+  </slot>
 </template>
 
 <script setup>
@@ -28,6 +35,7 @@ const { length, text } = defineProps({
 const shortened = computed(() => shortenedCleanText(text, 120))
 const wasShortened = computed(() => shortened.value !== cleanText(text))
 const expanded = ref(false)
+const toggle = () => expanded.value = !expanded.value
 
 const visibleText = computed(() => wasShortened.value && !expanded.value ? shortened.value : text)
 </script>
