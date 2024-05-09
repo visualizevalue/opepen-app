@@ -35,7 +35,7 @@
             @stored="imagesChanged"
           />
 
-          <Button>
+          <Button :disabled="! text && ! images.length">
             <Icon type="send" />
             <span>Post</span>
           </Button>
