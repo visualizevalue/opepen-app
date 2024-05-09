@@ -20,7 +20,7 @@
           </ExpandableText>
         </div>
         <div v-if="post.images?.length" class="images" :class="[`images-${post.images.length}`]">
-          <Image v-for="image in post.images" :key="image.id" :image="image" />
+          <Image v-for="image in post.images" :key="image.id" :image="image" :version="post.images.length > 1 ? 'sm' : 'lg'" />
         </div>
 
         <PostComments v-if="! hideComments" :post="post" :user="user" />
