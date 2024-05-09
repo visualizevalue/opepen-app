@@ -1,10 +1,12 @@
 <template>
   <article :style="style" class="post">
     <div class="inner">
-      <Avatar :account="post.account" />
+      <NuxtLink :to="authorUrl" title="Go to author">
+        <Avatar :account="post.account" />
+      </NuxtLink>
       <div class="content">
         <span class="meta">
-          <span class="name">{{ post.account.display }}</span>
+          <NuxtLink :to="authorUrl" class="name">{{ post.account.display }}</NuxtLink>
           <span class="sep">·</span>
           <span class="date">{{ timeAgo(post.created_at) }}</span>
         </span>
@@ -64,6 +66,7 @@
 
 <script setup>
 import { onClickOutside } from '@vueuse/core'
+import { id } from '~/helpers/accounts'
 import { timeAgo } from '~/helpers/dates'
 
 const { post, style, admin } = defineProps({
@@ -75,6 +78,8 @@ const { post, style, admin } = defineProps({
 })
 
 const emit = defineEmits(['approve', 'unapprove', 'destroy'])
+
+const authorUrl = computed(() => `/${id(post.account)}`)
 
 const showMore = ref(false)
 const moreMenu = ref(null)
@@ -121,6 +126,12 @@ article.post {
 
     > * {
       white-space: nowrap;
+    }
+
+    > a {
+      &:--highlight {
+        color: var(--gray-z-8);
+      }
     }
   }
 
