@@ -20,7 +20,7 @@ watch(height, setHeight)
 onMounted(setHeight)
 
 const { fetchSets } = useSets()
-await fetchSets()
+onMounted(() => fetchSets())
 
 useMetaData({
   title: 'Home',
