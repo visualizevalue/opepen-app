@@ -23,6 +23,7 @@
           v-for="comment in comments"
           :key="comment.id"
           :post="comment"
+          :user="user"
           hide-comments
         />
       </template>
@@ -31,8 +32,9 @@
 </template>
 
 <script setup>
-const { post } = defineProps({
+const { post, user, } = defineProps({
   post: Object,
+  user: String,
 })
 const config = useRuntimeConfig()
 const writeComment = ref(false)

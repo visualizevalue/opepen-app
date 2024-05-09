@@ -14,7 +14,7 @@
           <Image v-for="image in post.images" :key="image.id" :image="image" />
         </div>
 
-        <PostComments v-if="! hideComments" :post="post" />
+        <PostComments v-if="! hideComments" :post="post" :user="user" />
       </div>
 
       <menu>
