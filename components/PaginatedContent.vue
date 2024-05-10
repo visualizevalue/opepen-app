@@ -87,7 +87,9 @@ const loadMore = async () => {
       queryParams = `page=${page.value}`
     }
 
-    const result = await $fetch(`${url.value}?${queryParams}`)
+    const result = await $fetch(`${url.value}?${queryParams}`, {
+      credentials: 'include'
+    })
 
     meta.value = metaAccessor(result)
     const newItems = itemsAccessor(result)
