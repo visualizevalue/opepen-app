@@ -3,6 +3,7 @@
     :url="url"
     :query="query"
     class="no-scroller"
+    :sync-initial="false"
   >
     <template #default="{ items }">
 

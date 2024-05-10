@@ -22,7 +22,6 @@
 
 <script setup>
 import { vIntersectionObserver } from '@vueuse/components'
-import { get } from '~/api'
 
 const props = defineProps({
   url: String,
@@ -45,6 +44,10 @@ const props = defineProps({
   },
   refreshKey: [Number, String],
   autoLoad: {
+    type: Boolean,
+    default: true,
+  },
+  syncInitial: {
     type: Boolean,
     default: true,
   },
@@ -84,7 +87,7 @@ const loadMore = async () => {
       queryParams = `page=${page.value}`
     }
 
-    const result = await get(`${url.value}?${queryParams}`)
+    const result = await $fetch(`${url.value}?${queryParams}`)
 
     meta.value = metaAccessor(result)
     const newItems = itemsAccessor(result)
@@ -121,7 +124,12 @@ defineExpose({
 })
 
 // Load initial data
-loadMore()
+// TODO: Refacor this component to use proper hydration!
+if (import.meta.server || props.syncInitial) {
+  await loadMore()
+} else {
+  loadMore()
+}
 </script>
 
 <style lang="postcss" scoped>

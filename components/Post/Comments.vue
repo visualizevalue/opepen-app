@@ -17,6 +17,7 @@
       :url="commentsUrl"
       :query="commentsQuery"
       :refresh-key="refreshKey"
+      :sync-initial="false"
     >
       <template #loading="{ loading }">
         <span v-if="loading" class="loading">Loading comments...</span>
