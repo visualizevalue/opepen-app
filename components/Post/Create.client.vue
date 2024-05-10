@@ -1,13 +1,20 @@
 <template>
   <Authenticated #default="{ isConnected, profile }">
     <template v-if="isConnected">
-      <form class="create" @submit.stop.prevent="submitPost">
+      <form
+        class="create"
+        :class="{
+          'has-images': images.length,
+        }"
+        @submit.stop.prevent="submitPost"
+      >
         <Avatar :account="profile" class="lg" :size="68" />
         <Input
           v-model="text"
           @dragover="dragging = true"
           @dragleave="dragging = false"
           @drop="drop"
+          :recompute-key="images.length > 0"
           :class="{ dragging }"
           name="Create Post"
           placeholder="What's hopepening?!"
@@ -150,10 +157,15 @@ const submitPost = async () => {
     background: transparent;
     padding-left: var(--spacer-left);
     padding-top: var(--size-5);
-    padding-bottom: 8.75rem;
+    padding-bottom: var(--size-5);
 
     &:--highlight {
       background: var(--gray-z-1);
+    }
+  }
+  &.has-images {
+    :deep(.input textarea) {
+      padding-bottom: 8.75rem;
     }
   }
   .input {

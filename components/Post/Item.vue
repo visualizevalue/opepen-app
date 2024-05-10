@@ -52,24 +52,22 @@
         </li>
       </menu>
 
-      <template v-if="showMore">
-        <Teleport to="body">
-          <menu ref="moreMenu" class="more" :style="{ top: `${top}px`, right: `${right - width}px` }">
-            <li>
-              <button @click="$emit('destroy', post)">
-                <Icon type="trash" />
-                <span>Delete</span>
-              </button>
-            </li>
-            <li v-if="admin && post.approved_at">
-              <button @click="$emit('unapprove', post)">
-                <Icon type="check" />
-                <span>Unapprove</span>
-              </button>
-            </li>
-          </menu>
-        </Teleport>
-      </template>
+      <Teleport to="body" v-if="showMore">
+        <menu ref="moreMenu" class="more" :style="{ top: `${top}px`, right: `${right - width}px` }">
+          <li>
+            <button @click="destroy">
+              <Icon type="trash" />
+              <span>Delete</span>
+            </button>
+          </li>
+          <li v-if="admin && post.approved_at">
+            <button @click="unapprove">
+              <Icon type="check" />
+              <span>Unapprove</span>
+            </button>
+          </li>
+        </menu>
+      </Teleport>
     </div>
   </article>
 </template>
@@ -97,6 +95,15 @@ onClickOutside(moreMenu, _ => showMore.value = false)
 
 const el = ref(null)
 const { top, right, width } = useElementBounding(el)
+
+const destroy = () => {
+  emit('destroy', post)
+  showMore.value = false
+}
+const unapprove = () => {
+  emit('unapprove', post)
+  showMore.value = false
+}
 </script>
 
 <style lang="postcss" scoped>
