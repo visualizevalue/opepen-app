@@ -121,7 +121,7 @@ defineExpose({
 })
 
 // Load initial data
-await loadMore()
+loadMore()
 </script>
 
 <style lang="postcss" scoped>

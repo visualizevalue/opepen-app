@@ -18,12 +18,17 @@
       :query="commentsQuery"
       :refresh-key="refreshKey"
     >
+      <template #loading="{ loading }">
+        <span v-if="loading" class="loading">Loading comments...</span>
+      </template>
+
       <template #default="{ items: comments }">
         <PostItem
           v-for="(comment, index) in comments"
           :key="comment.id"
           :post="comment"
           :user="user"
+          :admin="admin"
           @destroy="() => comments.splice(index, 1) && $emit('destroy', comment)"
           hide-comments
         />
@@ -35,6 +40,7 @@
 <script setup>
 const { post, user, } = defineProps({
   post: Object,
+  admin: Boolean,
   user: String,
 })
 const emits = defineEmits(['destroy'])
@@ -71,6 +77,11 @@ watch(refreshKey, () => {
     .icon {
       width: var(--size-4);
     }
+  }
+
+  .loading {
+    font-size: var(--font-sm);
+    color: var(--gray-z-6);
   }
 
   :deep(.post) {

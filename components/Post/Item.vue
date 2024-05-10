@@ -1,5 +1,5 @@
 <template>
-  <article :style="style" class="post">
+  <article :style="style" class="post" ref="el">
     <div class="inner">
       <NuxtLink :to="authorUrl" title="Go to author">
         <Avatar :account="post.account" />
@@ -24,7 +24,10 @@
         </div>
 
         <PostComments
-          v-if="! hideComments" :post="post" :user="user"
+          v-if="! hideComments"
+          :post="post"
+          :user="user"
+          :admin="admin"
           @destroy="$event => $emit('destroy', $event)"
         />
       </div>
@@ -49,26 +52,30 @@
         </li>
       </menu>
 
-      <menu v-if="showMore" ref="moreMenu" class="more">
-        <li>
-          <button @click="$emit('destroy', post)">
-            <Icon type="trash" />
-            <span>Delete</span>
-          </button>
-        </li>
-        <li v-if="admin && post.approved_at">
-          <button @click="$emit('unapprove', post)">
-            <Icon type="check" />
-            <span>Unapprove</span>
-          </button>
-        </li>
-      </menu>
+      <template v-if="showMore">
+        <Teleport to="body">
+          <menu ref="moreMenu" class="more" :style="{ top: `${top}px`, right: `${right - width}px` }">
+            <li>
+              <button @click="$emit('destroy', post)">
+                <Icon type="trash" />
+                <span>Delete</span>
+              </button>
+            </li>
+            <li v-if="admin && post.approved_at">
+              <button @click="$emit('unapprove', post)">
+                <Icon type="check" />
+                <span>Unapprove</span>
+              </button>
+            </li>
+          </menu>
+        </Teleport>
+      </template>
     </div>
   </article>
 </template>
 
 <script setup>
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useElementBounding } from '@vueuse/core'
 import { id } from '~/helpers/accounts'
 import { timeAgo } from '~/helpers/dates'
 
@@ -87,6 +94,9 @@ const authorUrl = computed(() => `/${id(post.account)}`)
 const showMore = ref(false)
 const moreMenu = ref(null)
 onClickOutside(moreMenu, _ => showMore.value = false)
+
+const el = ref(null)
+const { top, right, width } = useElementBounding(el)
 </script>
 
 <style lang="postcss" scoped>
@@ -244,11 +254,12 @@ menu {
   }
 
   &.more {
-    z-index: 200;
+    position: fixed;
+    z-index: 20;
     gap: 0;
     flex-direction: column;
-    top: calc(var(--size-7) - var(--size-1));
-    right: var(--size-2);
+    margin-top: calc(var(--size-7) - var(--size-1));
+    margin-right: var(--size-2);
     background: var(--background);
     border: var(--border);
     border-radius: var(--size-2);
