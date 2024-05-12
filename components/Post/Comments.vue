@@ -2,11 +2,13 @@
   <aside class="comments">
     <h1>
       <Icon type="message-circle" />
-      <button @click="loadComments = true"
+      <button
+        v-if="post.commentsCount > 0 || writeComment"
+        @click="loadComments = true"
       >{{ post.commentsCount }} Comment<template v-if="post.commentsCount !== 1">s</template></button>
       <template v-if="! writeComment">
         <span class="sep">·</span>
-        <button @click="writeComment = true; loadComments = true" class="small">Write new...</button>
+        <button @click="writeComment = true; loadComments = true" class="small">Write comment...</button>
       </template>
     </h1>
 
