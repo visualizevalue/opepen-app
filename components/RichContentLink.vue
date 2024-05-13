@@ -91,7 +91,7 @@ article.content-link {
   .logo {
     width: var(--size-9);
     height: var(--size-9);
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
     border-radius: var(--size-1);
   }
 
