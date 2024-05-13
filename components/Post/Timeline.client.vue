@@ -12,17 +12,31 @@
         :items="withExtras(items)"
         :min-item-size="75"
       >
-        <template #default="{ item: post }">
+        <template #default="{ item }">
 
           <PostItem
-            :key="post.id"
-            :post="post"
-            :style="{ height: post.size + 'px' }"
+            v-if="item.type === 'POST:INTERNAL'"
+            :key="`post-${item.post.id}`"
+            :post="item.post"
             :admin="isAdmin"
             :user="address"
             @approve="approve"
             @unapprove="unapprove"
             @destroy="destroy"
+          />
+          <PostCast
+            v-else-if="item.type === 'POST:FARCASTER'"
+            :key="`cast-${item.cast.id}`"
+            :post="item.cast"
+            :admin="isAdmin"
+            :user="address"
+            @approve="$event => approve($event, 'casts')"
+          />
+          <PostOptIn
+            v-else
+            :entry="item.subscriptionHistory"
+            :submission="item.submission"
+            :account="item.account"
           />
 
         </template>
@@ -54,7 +68,7 @@ const props = defineProps({
 
 const config = useRuntimeConfig()
 
-const url = `${config.public.opepenApi}/posts`
+const url = `${config.public.opepenApi}/timeline`
 const query = computed(() => {
   return new URLSearchParams({
     limit: props.limit,
@@ -62,15 +76,15 @@ const query = computed(() => {
   }).toString()
 })
 
-const action = async (post, action, method = 'POST') => {
-  await $fetch(`${config.public.opepenApi}/posts/${post.uuid}/${action}`, {
+const action = async (post, action, type = 'posts', method = 'POST') => {
+  await $fetch(`${config.public.opepenApi}/${type}/${post.uuid || post.hash}/${action}`, {
     method,
     credentials: 'include',
   })
 }
 
-const approve = async (post) => {
-  await action(post, 'approve')
+const approve = async (post, type) => {
+  await action(post, 'approve', type)
   post.approved_at = DateTime.now().toISO()
 }
 const unapprove = async (post) => {

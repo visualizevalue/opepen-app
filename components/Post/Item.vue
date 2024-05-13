@@ -122,6 +122,7 @@ article.post {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   .inner {
     width: 100%;
@@ -162,14 +163,18 @@ article.post {
 
   .text {
     white-space-collapse: preserve;
+    word-break: break-all;
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-medium);
+    text-transform: none;
 
-    :deep(> span) {
+    > span {
       font-family: var(--font-family-body);
       font-weight: var(--font-weight-medium);
       text-transform: none;
     }
 
-    :deep(button) {
+    button {
       display: inline-flex;
     }
   }
@@ -181,7 +186,7 @@ article.post {
 
     &.images-2,
     &.images-3 {
-      :deep(.image) {
+      .image {
         &:first-child .inner {
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
@@ -205,7 +210,7 @@ article.post {
     &.images-4 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
 
-      :deep(.image) {
+      .image {
         &:first-child .inner {
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
@@ -229,7 +234,7 @@ article.post {
       }
     }
 
-    :deep(.image) {
+    .image {
       width: 100%;
       border-color: var(--gray-z-1);
     }
