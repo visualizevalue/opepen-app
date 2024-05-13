@@ -139,6 +139,7 @@ const emit = defineEmits(['close'])
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
 
+// FIXME: filter to delegated tokenIDs for token specific delegations
 const { addresses: delegatedAddresses } = await useDelegation(address)
 
 const {
