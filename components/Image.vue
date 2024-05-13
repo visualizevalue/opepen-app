@@ -1,5 +1,12 @@
 <template>
-  <article class="image" :class="{ loaded: loaded || isSVG || isVideo }" v-intersection-observer="loadImage">
+  <article
+    class="image"
+    :class="{
+      loaded: loaded || isSVG || isVideo
+    }"
+    :style="{ paddingBottom: height }"
+    v-intersection-observer="loadImage"
+  >
     <div class="inner image">
       <iframe v-if="hasEmbed && !hasImageEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <video v-else-if="isVideo && !version" :src="uri" playsinline loop autoplay muted ref="video"></video>
@@ -39,6 +46,7 @@ const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && prop
 // FIXME: Refactor this...
 const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
+const height = computed(() => (1 / (props.image?.aspect_ratio || 1)) * 100 + '%')
 
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
@@ -107,8 +115,8 @@ article.image {
       bottom: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
       object-fit: cover;
+      object-fit: contain;
     }
   }
 
