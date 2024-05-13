@@ -11,11 +11,12 @@
           <span class="date">{{ timeAgo(entry.created_at) }}</span>
         </span>
 
-        <div
-          class="text"
-        >Opted {{ entry.is_opt_in ? 'in' : 'out' }} {{ entry.opepen_count }} Opepen to <StyledLink
-          :to="`/sets/${submission.uuid}`"
-        >{{ submission.name }}</StyledLink></div>
+        <div class="text">
+          <span
+          >Opted {{ entry.is_opt_in ? 'in' : 'out' }} {{ entry.opepen_count }} Opepen to <StyledLink
+            :to="`/sets/${submission.uuid}`"
+          >{{ submission.name }}</StyledLink></span>
+        </div>
       </div>
     </div>
   </article>

@@ -164,9 +164,6 @@ article.post {
   .text {
     white-space-collapse: preserve;
     word-break: break-all;
-    font-family: var(--font-family-body);
-    font-weight: var(--font-weight-medium);
-    text-transform: none;
 
     > span {
       font-family: var(--font-family-body);

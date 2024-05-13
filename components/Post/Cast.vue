@@ -12,14 +12,12 @@
         </span>
 
         <div v-if="post.data" class="text">
-          {{ text }}
-          <!-- <pre>{{ post.data.castAddBody }}</pre> -->
-          <!-- <ExpandableText :text="post.body">
+          <ExpandableText :text="text">
             <template #trigger="{toggle, expanded}">
               <span>&nbsp;</span>
               <button v-if="! expanded" class="inline" @click="toggle">Read on</button>
             </template>
-          </ExpandableText> -->
+          </ExpandableText>
         </div>
         <!-- <div v-if="embeds.length" class="images" :class="[`images-${embeds.length}`]">
           <Image v-for="embed in embeds" :key="embed" :image="embed" :auto-embed="false"/>
