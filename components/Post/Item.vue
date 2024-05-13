@@ -20,7 +20,12 @@
           </ExpandableText>
         </div>
         <div v-if="post.images?.length" class="images" :class="[`images-${post.images.length}`]">
-          <Image v-for="image in post.images" :key="image.id" :image="image" :version="post.images.length > 1 ? 'sm' : 'lg'" />
+          <Image
+            v-for="image in post.images"
+            :key="image.id"
+            :image="image"
+            :version="image.type === 'gif' ? '' : post.images.length > 1 ? 'sm' : 'lg'"
+          />
         </div>
 
         <PostComments
@@ -32,7 +37,7 @@
         />
       </div>
 
-      <menu>
+      <menu class="post-menu">
         <template v-if="admin && !post.approved_at">
           <li>
             <button @click="$emit('approve', post)">
@@ -53,7 +58,7 @@
       </menu>
 
       <Teleport to="body" v-if="showMore">
-        <menu ref="moreMenu" class="more" :style="{ top: `${top}px`, right: `${right - width}px` }">
+        <menu ref="moreMenu" class="post-menu post-more-menu" :style="{ top: `${top}px`, right: `${right - width}px` }">
           <li>
             <button @click="destroy">
               <Icon type="trash" />
@@ -106,7 +111,7 @@ const unapprove = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 article.post {
   position: relative;
   z-index: 1;
@@ -231,7 +236,7 @@ article.post {
   }
 }
 
-menu {
+.post-menu {
   position: absolute;
   top: var(--spacer);
   right: var(--spacer);
@@ -252,7 +257,7 @@ menu {
     }
   }
 
-  &:not(.more) li > button {
+  &:not(.post-more-menu) li > button {
     width: var(--size-5);
     height: var(--size-5);
     display: flex;
@@ -260,7 +265,7 @@ menu {
     justify-content: center;
   }
 
-  &.more {
+  &.post-more-menu {
     position: fixed;
     z-index: 20;
     gap: 0;
