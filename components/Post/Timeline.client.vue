@@ -32,8 +32,12 @@
             :user="address"
             @approve="$event => approve($event, 'casts')"
           />
+          <PostNewSubmission
+            v-else-if="item.type === 'SET_SUBMISSION:PUBLISH'"
+            :event="item"
+          />
           <PostOptIn
-            v-else
+            v-else-if="item.type === 'SET_SUBMISSION:OPT_IN'"
             :entry="item.subscriptionHistory"
             :submission="item.submission"
             :account="item.account"
