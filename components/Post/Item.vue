@@ -19,9 +19,9 @@
             </template>
           </ExpandableText>
         </div>
-        <div v-if="content.urls?.length" class="embeds" :class="[`embeds-${content.urls.length}`]">
+        <div v-if="urls?.length" class="embeds" :class="[`embeds-${urls.length}`]">
           <PostEmbed
-            v-for="url in content.urls"
+            v-for="url in urls"
             :key="url"
             :url="url"
             :class="{ minimal: post.images?.length }"
@@ -89,7 +89,7 @@
 import { onClickOutside, useElementBounding } from '@vueuse/core'
 import { id } from '~/helpers/accounts'
 import { timeAgo } from '~/helpers/dates'
-import { extractURLs } from '~/helpers/strings'
+import { enforceVVReferrer, extractURLs } from '~/helpers/strings'
 
 const { post, style, admin } = defineProps({
   post: Object,
@@ -103,6 +103,7 @@ const emit = defineEmits(['approve', 'unapprove', 'destroy'])
 
 const authorUrl = computed(() => `/${id(post.account)}`)
 const content = computed(() => extractURLs(post.body))
+const urls = computed(() => content.urls?.map(url => enforceVVReferrer(url)))
 
 const showMore = ref(false)
 const moreMenu = ref(null)

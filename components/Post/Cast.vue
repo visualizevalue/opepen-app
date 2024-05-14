@@ -43,6 +43,7 @@
 <script setup>
 import { id } from '~/helpers/accounts'
 import { timeAgo } from '~/helpers/dates'
+import { enforceVVReferrer } from '~/helpers/strings';
 
 const { post, style, admin } = defineProps({
   post: Object,
@@ -56,7 +57,7 @@ const emit = defineEmits(['approve', 'unapprove'])
 const authorUrl = computed(() => `/${id(post.account)}`)
 
 const castBody = post.data.castAddBody
-const embeds = castBody.embeds?.map(e => e.url)
+const embeds = castBody.embeds?.map(e => enforceVVReferrer(e.url))
 const mentions = castBody.mentions
 
 const text = computed(() => {
