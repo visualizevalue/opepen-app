@@ -1,30 +1,11 @@
 <template>
-  <OptInTimelineList :account="account.address" class="holder-activity">
-    <template #default="{ entry }">
-      <span v-if="entry.is_opt_in">Opt-In</span>
-      <span v-else>Opt-Out</span>
-
-      <span v-if="entry.opepen_count">{{ entry.opepen_count }}</span>
-      <span v-else></span>
-
-      <span>Opepen</span>
-
-      <NuxtLink :to="`/sets/${entry.submission.uuid}`">{{ entry.submission.name }}</NuxtLink>
-
-      <span>{{ timeAgo(entry.created_at) }}</span>
-    </template>
-
-    <template #after="{ meta }">
-      <div v-if="meta?.total === 0" class="muted centered">
-        <span>No curation activity</span>
-      </div>
-    </template>
-  </OptInTimelineList>
+  <div class="holder-activity">
+    <PostTimeline :query="{ 'filter[address]': account.address }" />
+  </div>
 </template>
 
 <script setup>
 import { useMetaData } from '~/helpers/head'
-import { timeAgo } from '~/helpers/dates'
 
 const props = defineProps({ account: Object })
 const account = computed(() => props.account)
@@ -47,11 +28,15 @@ useMetaData({
 
 <style lang="postcss">
 .holder-activity {
-  margin-top: -1rem;
+  margin-top: calc(-1 * var(--section-gap));
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--content-width-sm);
+  width: 100%;
 
-  > div {
-    grid-template-columns: 6rem 2rem 5rem 1fr 1fr !important;
-    padding: var(--size-2) 0;
+  @media (--md) {
+    border-left: var(--border);
+    border-right: var(--border);
   }
 }
 </style>

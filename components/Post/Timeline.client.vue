@@ -60,13 +60,17 @@ const props = defineProps({
     type: Number,
     default: 24,
   },
-  extraItems: {
-    type: Array,
-    default: () => [],
-  },
   sort: {
     type: String,
     default: '-createdAt',
+  },
+  query: {
+    type: Object,
+    default: () => ({}),
+  },
+  extraItems: {
+    type: Array,
+    default: () => [],
   },
 })
 
@@ -75,6 +79,7 @@ const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/timeline`
 const query = computed(() => {
   return new URLSearchParams({
+    ...props.query,
     limit: props.limit,
     sort: props.sort,
   }).toString()
