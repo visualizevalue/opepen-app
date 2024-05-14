@@ -12,12 +12,20 @@
         </span>
 
         <div v-if="post.body" class="text">
-          <ExpandableText :text="post.body">
+          <ExpandableText :text="content.text">
             <template #trigger="{toggle, expanded}">
               <span>&nbsp;</span>
               <button v-if="! expanded" class="inline" @click="toggle">Read on</button>
             </template>
           </ExpandableText>
+        </div>
+        <div v-if="content.urls?.length" class="embeds" :class="[`embeds-${content.urls.length}`]">
+          <PostEmbed
+            v-for="url in content.urls"
+            :key="url"
+            :url="url"
+            :class="{ minimal: post.images?.length }"
+          />
         </div>
         <div v-if="post.images?.length" class="images" :class="[`images-${post.images.length}`]">
           <Image
@@ -81,6 +89,7 @@
 import { onClickOutside, useElementBounding } from '@vueuse/core'
 import { id } from '~/helpers/accounts'
 import { timeAgo } from '~/helpers/dates'
+import { extractURLs } from '~/helpers/strings'
 
 const { post, style, admin } = defineProps({
   post: Object,
@@ -93,6 +102,7 @@ const { post, style, admin } = defineProps({
 const emit = defineEmits(['approve', 'unapprove', 'destroy'])
 
 const authorUrl = computed(() => `/${id(post.account)}`)
+const content = computed(() => extractURLs(post.body))
 
 const showMore = ref(false)
 const moreMenu = ref(null)
@@ -116,6 +126,7 @@ article.post {
   position: relative;
   z-index: 1;
   height: 100%;
+  width: 100%;
   padding: var(--spacer);
   border-bottom: var(--border);
   display: flex;
@@ -139,6 +150,7 @@ article.post {
 
   .content {
     grid-column: 2;
+    overflow: hidden;
   }
 
   .meta {
@@ -174,6 +186,12 @@ article.post {
     button {
       display: inline-flex;
     }
+  }
+
+  .embeds {
+    padding-top: var(--size-2);
+    display: grid;
+    gap: var(--spacer);
   }
 
   .images {

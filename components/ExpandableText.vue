@@ -1,5 +1,5 @@
 <template>
-  <span :class="{ expanded }">{{ visibleText }}</span>
+  <span :class="{ expanded }" v-html="visibleText"></span>
   <slot
     name="trigger"
     v-if="wasShortened"
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { cleanText, shortenedCleanText } from '~/helpers/strings'
+import { cleanText, shortenedCleanText, extractURLs } from '~/helpers/strings'
 
 const { length, text } = defineProps({
   length: {
@@ -33,7 +33,8 @@ const { length, text } = defineProps({
 })
 
 const cleaned = computed(() => cleanText(text))
-const shortened = computed(() => shortenedCleanText(text, 120))
+const urls = computed(() => extractURLs(cleaned.value).urls)
+const shortened = computed(() => shortenedCleanText(extractURLs(cleaned.value).text, 120))
 const wasShortened = computed(() => shortened.value !== cleaned.value)
 const expanded = ref(false)
 const toggle = () => expanded.value = !expanded.value

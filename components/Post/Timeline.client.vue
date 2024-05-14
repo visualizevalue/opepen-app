@@ -97,16 +97,16 @@ const unapprove = async (post) => {
 }
 const deleted = ref([])
 const destroy = async (post) => {
-  await action(post, '', 'DELETE')
+  await action(post, '', 'posts', 'DELETE')
 
-  deleted.value.push(post.id)
+  deleted.value.push(post.uuid)
 }
 
 const withExtras = items => {
   const posts = props.extraItems.concat(items)
 
   if (deleted.value.length) {
-    return posts.filter(p => ! deleted.value.includes(p.id))
+    return posts.filter(i => ! deleted.value.includes(i.post?.uuid))
   }
 
   return posts

@@ -12,7 +12,9 @@
 </template>
 
 <script setup>
-const { url } = defineProps({
+const {
+  url,
+} = defineProps({
   url: String,
 })
 
@@ -40,6 +42,12 @@ onMounted(async () => {
   border-top-left-radius: var(--size-1);
   overflow: hidden;
 
+  &.minimal {
+    :deep(.image) {
+      display: none;
+    }
+  }
+
   :deep(.image) {
     border: none;
     border-radius: 0 !important;
@@ -47,6 +55,7 @@ onMounted(async () => {
 
   .text {
     padding: var(--size-2) var(--spacer);
+    overflow: hidden;
 
     p {
       color: var(--gray-z-6);
