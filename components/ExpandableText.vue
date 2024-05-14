@@ -1,5 +1,5 @@
 <template>
-  <span :class="{ expanded }" v-html="visibleText"></span>
+  <span :class="{ expanded }">{{ visibleText }}</span>
   <slot
     name="trigger"
     v-if="wasShortened"
@@ -32,12 +32,13 @@ const { length, text } = defineProps({
   },
 })
 
+const cleaned = computed(() => cleanText(text))
 const shortened = computed(() => shortenedCleanText(text, 120))
-const wasShortened = computed(() => shortened.value !== cleanText(text))
+const wasShortened = computed(() => shortened.value !== cleaned.value)
 const expanded = ref(false)
 const toggle = () => expanded.value = !expanded.value
 
-const visibleText = computed(() => wasShortened.value && !expanded.value ? shortened.value : text)
+const visibleText = computed(() => wasShortened.value && !expanded.value ? shortened.value : cleaned.value)
 </script>
 
 <style lang="postcss" scoped>
