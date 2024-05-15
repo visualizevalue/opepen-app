@@ -4,7 +4,7 @@
     :class="{
       loaded: loaded || isSVG || isVideo
     }"
-    :style="{ paddingBottom: height }"
+    :style="{ padding: `0 0 ${height}` }"
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
