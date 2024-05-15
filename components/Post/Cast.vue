@@ -34,6 +34,11 @@
               <Icon type="check" />
             </button>
           </li>
+          <li>
+            <button @click="$emit('destroy', post)">
+              <Icon type="trash" />
+            </button>
+          </li>
         </template>
       </menu>
     </div>
@@ -52,7 +57,7 @@ const { post, style, admin } = defineProps({
   hideComments: Boolean,
 })
 
-const emit = defineEmits(['approve', 'unapprove'])
+const emit = defineEmits(['approve', 'unapprove', 'destroy'])
 
 const authorUrl = computed(() => `/${id(post.account)}`)
 

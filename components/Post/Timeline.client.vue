@@ -31,6 +31,7 @@
             :admin="isAdmin"
             :user="address"
             @approve="$event => approve($event, 'casts')"
+            @destroy="$event => destroy($event, 'casts')"
           />
           <PostNewSubmission
             v-else-if="item.type === 'SET_SUBMISSION:PUBLISH'"
@@ -101,17 +102,19 @@ const unapprove = async (post) => {
   post.approved_at = null
 }
 const deleted = ref([])
-const destroy = async (post) => {
-  await action(post, '', 'posts', 'DELETE')
+const destroy = async (post, type = 'posts') => {
+  await action(post, '', type, 'DELETE')
 
-  deleted.value.push(post.uuid)
+  deleted.value.push(post.uuid || post.hash)
 }
 
 const withExtras = items => {
-  const posts = props.extraItems.concat(items)
+  const posts = props.extraItems
+    .map(post => ({ id: post.body, type: 'POST:INTERNAL', post }))
+    .concat(items)
 
   if (deleted.value.length) {
-    return posts.filter(i => ! deleted.value.includes(i.post?.uuid))
+    return posts.filter(i => ! deleted.value.includes(i.post?.uuid || i.cast?.hash))
   }
 
   return posts
