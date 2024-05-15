@@ -16,7 +16,7 @@
 
     <NuxtLink to="/home" title="Home" @click="toTop">
       <Icon type="home" />
-      <span>Home</span>
+      <span>Feed</span>
     </NuxtLink>
 
     <!-- <NuxtLink to="/auctions" title="Auctions">
