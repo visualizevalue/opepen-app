@@ -48,12 +48,16 @@ const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && prop
 const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
 const imageEl = ref(null)
-const aspectRatio = computed(() =>
-  props.aspectRatio || // The passed aspect ratio
-  props.image?.aspect_ratio || // The image object aspect ratio
-  (imageEl.value?.naturalWidth / (imageEl.value?.naturalHeight || 1)) || // The natural image element ratio
-  1 // The default square ratio
-)
+const aspectRatio = ref(1)
+const computeAspectRatio = () => {
+  aspectRatio.value = (
+    props.aspectRatio || // The passed aspect ratio
+    props.image?.aspect_ratio || // The image object aspect ratio
+    (imageEl.value?.naturalWidth / (imageEl.value?.naturalHeight || 1)) || // The natural image element ratio
+    1 // The default square ratio
+  )
+}
+computeAspectRatio()
 const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 
 const loadImage = ([{ isIntersecting }]) => {
@@ -76,7 +80,10 @@ const loadOriginal = () => {
 watch(() => props.image?.uuid, () => loadImage([{ isIntersecting: true }]))
 
 // Image loaded event
-const imageLoaded = () => loaded.value = true
+const imageLoaded = () => {
+  loaded.value = true
+  computeAspectRatio()
+}
 </script>
 
 <style lang="postcss">
