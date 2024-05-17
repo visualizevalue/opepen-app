@@ -1,6 +1,11 @@
 <template>
   <Loading v-if="loading" />
   <Image v-else-if="isImage" :image="embed.image" />
+  <article v-else-if="isVideo || isHLS" class="image loaded">
+    <div class="inner image">
+      <video :src="videoUrl" playsinline loop autoplay muted ref="video"></video>
+    </div>
+  </article>
   <article v-else class="embed">
     <Image v-if="embed.image" :image="embed.image" />
     <div v-if="embed.title" class="text">
@@ -12,6 +17,8 @@
 </template>
 
 <script setup>
+import HLS from 'hls.js'
+
 const {
   url,
 } = defineProps({
@@ -21,7 +28,30 @@ const {
 const config = useRuntimeConfig()
 
 const embed = ref()
+const video = ref()
 const isImage = computed(() => embed.value.image && !embed.value.title)
+const isVideo = computed(() => [
+    '.ogv', '.webm', '.mp4'
+  ].findIndex(ending => url.endsWith(ending)) > -1
+)
+const isHLS = computed(() => url.endsWith('.m3u8'))
+const videoUrl = computed(() => {
+  if (isVideo.value || !isHLS.value) return url
+
+  if (video.value?.canPlayType('application/vnd.apple.mpegurl')) {
+    return url
+  }
+
+  if (HLS.isSupported() && video.value) {
+    const hls = new HLS()
+    hls.loadSource(url)
+    hls.attachMedia(video.value)
+    return video.value.src
+  }
+
+  return url
+})
+
 const loading = ref(false)
 const load = async () => {
   loading.value = true
