@@ -22,8 +22,8 @@
         <!-- <div v-if="embeds.length" class="images" :class="[`images-${embeds.length}`]">
           <Image v-for="embed in embeds" :key="embed" :image="embed" :auto-embed="false"/>
         </div> -->
-        <div v-if="embeds.length" class="images" :class="[`images-${embeds.length}`]">
-          <PostEmbed v-for="embed in embeds" :key="embed" :url="embed" />
+        <div v-if="embeds.length" class="embeds" :class="[`images-${embeds.length}`]">
+          <PostEmbed v-for="embed in embeds" :key="embed" :url="embed" :class="embeds.length > 1 ? `minimal` : ''" />
         </div>
       </div>
 
@@ -75,4 +75,17 @@ const text = computed(() => {
 </script>
 
 <style lang="postcss" scoped>
+.embeds {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  > * {
+    grid-column: 1 / -1;
+  }
+
+  > .image + .image,
+  > .image:has(+ .image) {
+    grid-column: span 1;
+  }
+}
 </style>

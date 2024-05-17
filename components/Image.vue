@@ -30,6 +30,7 @@ import { imageURI } from '~/helpers/images'
 
 const props = defineProps({
   image: [String, Object],
+  aspectRatio: Number,
   version: String,
   embed: String,
   autoEmbed: {
@@ -46,7 +47,14 @@ const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && prop
 // FIXME: Refactor this...
 const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
-const height = computed(() => (1 / (props.image?.aspect_ratio || 1)) * 100 + '%')
+const imageEl = ref(null)
+const aspectRatio = computed(() =>
+  props.aspectRatio || // The passed aspect ratio
+  props.image?.aspect_ratio || // The image object aspect ratio
+  (imageEl.value?.naturalWidth / (imageEl.value?.naturalHeight || 1)) || // The natural image element ratio
+  1 // The default square ratio
+)
+const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
