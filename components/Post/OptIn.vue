@@ -12,10 +12,11 @@
         </span>
 
         <div class="text">
-          <span
-          >Opted {{ entry.is_opt_in ? 'in' : 'out' }} {{ entry.opepen_count }} Opepen to <StyledLink
-            :to="`/sets/${submission.uuid}`"
-          >{{ submission.name }}</StyledLink></span>
+          <span>
+            <span v-if="entry.is_opt_in">Opted in {{ entry.opepen_count }} Opepen to </span>
+            <span v-else>Opted out of </span>
+            <StyledLink :to="`/sets/${submission.uuid}`">{{ submission.name }}</StyledLink>
+          </span>
         </div>
       </div>
     </div>
