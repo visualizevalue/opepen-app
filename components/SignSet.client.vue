@@ -85,6 +85,7 @@ const sign = async () => {
       to: 'visualizevalue.eth',
       value: 0,
       data: stringToHex(message.value),
+      chainId: 1,
     })
 
     const url = `${config.public.opepenApi}/set-submissions/${data.uuid}/sign`
