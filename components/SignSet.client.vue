@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { sendTransaction } from '@wagmi/core'
+import { sendTransaction, switchNetwork } from '@wagmi/core'
 import { DateTime } from 'luxon'
 import { stringToHex } from 'viem'
 import { useSignIn } from '~/helpers/siwe'
@@ -81,6 +81,9 @@ const sign = async () => {
   signing.value = true
 
   try {
+    if (wagmi.lastUsedChainId !== 1) {
+      await switchNetwork({ chainId: 1 })
+    }
     const { hash } = await sendTransaction({
       to: 'visualizevalue.eth',
       value: 0,
