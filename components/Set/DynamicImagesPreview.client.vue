@@ -6,7 +6,7 @@
         v-for="image in images"
         :key="image.uuid"
       >
-        <Image :image="image" :version="'sm'" :key="image.uuid">
+        <Image :image="image" :version="image.type === 'gif' ? '' : 'sm'" :key="image.uuid">
           <template #subline>
             <p>Edition</p>
           </template>
