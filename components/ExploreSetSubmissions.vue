@@ -4,6 +4,7 @@
     :query="submissionsQuery"
     :auto-load="autoLoad"
     tag="section"
+    :class="class"
   >
     <template #before>
       <slot name="before">
@@ -12,7 +13,7 @@
     </template>
 
     <template #default="{ items }">
-      <div class="grid">
+      <div class="grid" :class="`count-${items.length}`">
         <slot :items="items">
           <SetPreview
             v-for="submission in items"
@@ -55,6 +56,7 @@ const props = defineProps({
     default: 'Submissions'
   },
   status: String,
+  class: String,
 })
 
 const config = useRuntimeConfig()
@@ -77,6 +79,10 @@ section {
     display: grid;
     gap: var(--size-5);
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+
+    &.count-1 {
+      grid-template-columns: 1fr !important;
+    }
 
     article {
       width: 100%;

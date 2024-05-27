@@ -1,7 +1,5 @@
 <template>
   <div class="submissions">
-    <FeaturedSetSubmissionsCarousel />
-
     <ExploreSetSubmissions
       title="Active Countdown"
       status="prereveal"
@@ -17,6 +15,8 @@
         />
       </template>
     </ExploreSetSubmissions>
+
+    <FeaturedSetSubmissionsCarousel />
 
     <ExploreSetSubmissions
       :limit="24"
@@ -78,6 +78,8 @@ useMetaData({
     max-width: var(--content-width);
     margin: var(--size-7) auto;
   }
+
+  :deep(.wide)
 }
 
 
