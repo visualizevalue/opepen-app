@@ -18,7 +18,7 @@ export const imageURI = (image: Image, version?: keyof ImageVersions) => {
   const isAnimated = ['mp4', 'webm', 'gif'].includes(image?.type)
 
   const name = (version && image.versions[version]) ? `${image.uuid}@${version}` : image.uuid
-  const type = isAnimated && version ? `png` : image.type
+  const type = ((isAnimated || 'svg') && version) ? `png` : image.type
 
   return `${image.cdn}/${image.path}/${name}.${type}`
 }

@@ -43,7 +43,7 @@ const uri = ref('')
 const loaded = ref(false)
 const isVideo = computed(() => ['mp4', 'webm'].includes(props.image?.type))
 const isSVG = computed(() => props.image?.type === 'svg')
-const hasEmbed = computed(() => props.embed || (uri.value && isSVG.value && props.autoEmbed))
+const hasEmbed = computed(() => props.embed || (uri.value && (isSVG.value && !props.version) && props.autoEmbed))
 // FIXME: Refactor this...
 const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
