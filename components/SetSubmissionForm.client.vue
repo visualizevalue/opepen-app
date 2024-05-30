@@ -62,6 +62,11 @@
       <Input v-model="description" :disabled="disabled" placeholder="Description" />
     </label>
 
+    <label v-if="isAdmin" class="creator">
+      <span class="label">Creator Address (Ethereum Public Key)</span>
+      <Input v-model="creator" :disabled="disabled" :placeholder="data.creator" />
+    </label>
+
     <label class="artist">
       <span class="label">Artist</span>
       <input type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
@@ -142,6 +147,7 @@ const name20 = ref(props.data.edition20Name || '')
 const name40 = ref(props.data.edition40Name || '')
 const description = ref(props.data.description || '')
 const artist = ref(props.data.artist)
+const creator = ref(props.data.creator)
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
 const dataComplete = computed(() => {
@@ -214,6 +220,7 @@ const store = async () => {
       edition_10_name: name10.value,
       edition_20_name: name20.value,
       edition_40_name: name40.value,
+      creator: creator.value,
     })
   })
 
