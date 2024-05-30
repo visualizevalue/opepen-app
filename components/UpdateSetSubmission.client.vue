@@ -23,15 +23,15 @@ const route = useRoute()
 
 const { session } = useSignIn()
 
-const { data, execute } = await useFetch(`${config.public.opepenApi}/set-submissions/${route.params.id}`, {
-  credentials: 'include',
-  immediate: false
-})
-
 watch(session, () => {
   execute()
 })
 onMounted(() => {
   if (session.value) execute()
+})
+
+const { data, execute } = await useFetch(`${config.public.opepenApi}/set-submissions/${route.params.id}`, {
+  credentials: 'include',
+  immediate: false
 })
 </script>

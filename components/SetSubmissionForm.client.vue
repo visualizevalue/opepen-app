@@ -62,15 +62,30 @@
       <Input v-model="description" :disabled="disabled" placeholder="Description" />
     </label>
 
-    <label v-if="isAdmin" class="creator">
-      <span class="label">Creator Address (Ethereum Public Key)</span>
-      <Input v-model="creator" :disabled="disabled" :placeholder="data.creator" />
-    </label>
-
     <label class="artist">
       <span class="label">Artist</span>
       <input type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
     </label>
+
+    <div class="">
+      <label v-if="isAdmin" class="creator">
+        <span class="label">Creator Address (Ethereum Public Key)</span>
+        <Input v-model="creator" :disabled="disabled" :placeholder="data.creator" />
+      </label>
+
+      <span class="label">Co-Creators</span>
+      <SortableList :items="coCreators" @update="coCreators = $event" class="co-creators">
+        <template v-slot="{ item, index }">
+          <input
+            type="text"
+            :value="item.address"
+            @input="coCreators[index].address = $event.target.value"
+            placeholder="0x000...000"
+            :disabled="disabled"
+          >
+        </template>
+      </SortableList>
+    </div>
 
     <label class="type">
       <span class="label">Edition Type</span>
@@ -148,6 +163,31 @@ const name40 = ref(props.data.edition40Name || '')
 const description = ref(props.data.description || '')
 const artist = ref(props.data.artist)
 const creator = ref(props.data.creator)
+const withEmptyCoCreators = list => {
+  if (list.length === 5) return list
+
+  if (! list.length || list[list.length - 1].address !== '') {
+    list.push({ id: list.length, address: '' })
+  }
+
+  return list
+}
+const sortableCoCreators = list => {
+  const array = Array.isArray(list)
+    ? list.filter(address => !! address).map((address) => ({ id: address, address }))
+    : [{ id: 0, address: '' }]
+
+  return withEmptyCoCreators(array)
+}
+const coCreators = ref(sortableCoCreators([
+  props.data.co_creator_1,
+  props.data.co_creator_2,
+  props.data.co_creator_3,
+  props.data.co_creator_4,
+  props.data.co_creator_5,
+]))
+watch(() => JSON.stringify(coCreators.value), () => coCreators.value = withEmptyCoCreators(coCreators.value))
+
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
 const dataComplete = computed(() => {
@@ -221,6 +261,11 @@ const store = async () => {
       edition_20_name: name20.value,
       edition_40_name: name40.value,
       creator: creator.value,
+      co_creator_1: coCreators.value[0]?.address || undefined,
+      co_creator_2: coCreators.value[1]?.address || undefined,
+      co_creator_3: coCreators.value[2]?.address || undefined,
+      co_creator_4: coCreators.value[3]?.address || undefined,
+      co_creator_5: coCreators.value[4]?.address || undefined,
     })
   })
 
@@ -293,6 +338,11 @@ form {
         border-bottom-left-radius: 0;
       }
     }
+  }
+
+  .creator {
+    display: grid;
+    margin-bottom: var(--size-4);
   }
 
   > .actions {

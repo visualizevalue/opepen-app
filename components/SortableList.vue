@@ -14,6 +14,7 @@ import { useSortable } from '@vueuse/integrations/useSortable'
 const el = ref(null)
 const props = defineProps({
   items: Array,
+  max: Number,
 })
 const emit = defineEmits(['update'])
 
