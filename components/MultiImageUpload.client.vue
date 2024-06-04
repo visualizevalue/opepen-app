@@ -43,6 +43,8 @@
 </template>
 
 <script setup>
+import { useSignIn } from '~/helpers/siwe'
+
 const config = useRuntimeConfig()
 const props = defineProps({
   name: String,
@@ -51,6 +53,8 @@ const props = defineProps({
   disabled: Boolean,
 })
 const emit = defineEmits(['stored', 'reset'])
+
+const { ensureSignIn } = useSignIn()
 
 const images = ref(props.images?.filter(i => !! i) || [])
 const disabled = computed(() => props.disabled || (props.maxFiles && images.value.length >= props.maxFiles))
@@ -99,8 +103,14 @@ const storeFile = async (obj) => {
   })
 }
 
-const addFiles = files => {
+const addFiles = async files => {
   previews.value = Array.from(files)
+
+  try {
+    await ensureSignIn()
+  } catch (e) {
+    return
+  }
 
   if (props.maxFiles) {
     previews.value = previews.value.slice(0, props.maxFiles)

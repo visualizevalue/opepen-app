@@ -24,6 +24,8 @@
 </template>
 
 <script setup>
+import { useSignIn } from '~/helpers/siwe'
+
 const config = useRuntimeConfig()
 const props = defineProps({
   name: String,
@@ -38,8 +40,16 @@ const preview = ref(null)
 const previewURL = computed(() => URL.createObjectURL(preview.value))
 const image = ref(props.image)
 
+const { ensureSignIn } = useSignIn()
+
 const store = async () => {
   if (! preview.value) return
+
+  try {
+    await ensureSignIn()
+  } catch (e) {
+    return
+  }
 
   const formData = new FormData()
   formData.append('image', preview.value)

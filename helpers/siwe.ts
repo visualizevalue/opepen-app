@@ -123,6 +123,15 @@ export const useSignIn = () => {
     loading.value = false
   }
 
+  const ensureSignIn = async () => {
+    if (! isAuthenticated.value) {
+      await signIn()
+      if (! isAuthenticated.value) {
+        throw new Error(`Not Authenticated`)
+      }
+    }
+  }
+
   if (! accountWatcher) {
     // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
     accountWatcher = watch(address, (_, prevAccount) => {
@@ -134,6 +143,7 @@ export const useSignIn = () => {
 
   return {
     signIn,
+    ensureSignIn,
     fetchNonce,
     fetchMe,
     loading,
