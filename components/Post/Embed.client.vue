@@ -32,9 +32,9 @@ const video = ref()
 const isImage = computed(() => embed.value.image && !embed.value.title)
 const isVideo = computed(() => [
     '.ogv', '.webm', '.mp4'
-  ].findIndex(ending => url.endsWith(ending)) > -1
+  ].findIndex(ending => url?.endsWith(ending)) > -1
 )
-const isHLS = computed(() => url.endsWith('.m3u8'))
+const isHLS = computed(() => url?.endsWith('.m3u8'))
 const videoUrl = computed(() => {
   if (isVideo.value || !isHLS.value) return url
 
