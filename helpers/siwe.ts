@@ -1,5 +1,5 @@
 import { signMessage } from '@wagmi/core'
-import { useAccount } from './use-wagmi'
+import { address, useAccount } from './use-wagmi'
 
 type Session = {
   address: string;
@@ -23,6 +23,7 @@ export const loading = ref(false)
 export const signingIn = ref(false)
 export const nonce = ref('')
 export const session: Ref<Session|null> = ref(null)
+export const isAuthenticated = computed(() => address.value && session.value?.address?.toLowerCase() === address.value?.toLowerCase())
 export const isAdmin = computed(() => ADMIN_ADDRESSES.includes(session.value?.address.toLowerCase() || ''))
 
 let accountWatcher: any
@@ -81,6 +82,7 @@ export const useSignIn = () => {
     loading.value = true
 
     if (! address.value) {
+      // @ts-ignore
       document.querySelector('#main-connect')?.click()
 
       return false
@@ -89,7 +91,7 @@ export const useSignIn = () => {
     // Check if we have a valid session
     try {
       await fetchMe()
-      if (session.value && session.value.address.toLowerCase() === address.value.toLowerCase()) {
+      if (isAuthenticated.value) {
         loading.value = false
 
         // We're already signed in

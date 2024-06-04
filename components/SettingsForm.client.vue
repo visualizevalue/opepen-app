@@ -128,7 +128,7 @@
 import { DateTime } from 'luxon'
 import { formatTime } from '~/helpers/dates'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
-import { useSignIn, isAdmin } from '~/helpers/siwe'
+import { useSignIn, isAdmin, isAuthenticated } from '~/helpers/siwe'
 import { validateURI } from '~/helpers/urls'
 
 const config = useRuntimeConfig()
@@ -140,11 +140,17 @@ const props = defineProps({ address: String })
 const { address: myAddress } = useAccount()
 const address = computed(() => route.params?.id?.length ? route.params.id[0] : myAddress.value)
 
-const { session } = useSignIn()
+const { session, signIn } = useSignIn()
 const ens = useEnsName(address)
 
-onMounted(() => {
-  if (! session.value) return router.replace(route.params.id ? `/${route.params.id}` : '/')
+onMounted(async () => {
+  if (! isAuthenticated.value) {
+    await signIn()
+
+    if (! isAuthenticated.value) {
+      return router.replace(route.params.id ? `/${route.params.id}` : '/')
+    }
+  }
 })
 
 const url = computed(() => `${config.public.opepenApi}/accounts/settings/${isAdmin.value ? address.value : ''}`)

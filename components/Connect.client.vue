@@ -36,19 +36,17 @@
 </template>
 
 <script setup>
-import { useSignIn } from '~/helpers/siwe'
+import { useSignIn, isAuthenticated } from '~/helpers/siwe'
 import { useAccount, id } from '~/helpers/use-wagmi'
 
 const { address, isConnected } = useAccount()
-const { signIn, signingIn } = useSignIn()
+const { signingIn, fetchMe } = useSignIn()
 
 const open = ref(false)
 watch(isConnected, async () => {
   open.value = false
 
-  if (isConnected.value) signIn()
+  await fetchMe()
 })
-onMounted(() => {
-  if (isConnected.value) signIn()
-})
+onMounted(() => fetchMe())
 </script>

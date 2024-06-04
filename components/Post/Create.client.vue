@@ -64,7 +64,8 @@
 </template>
 
 <script setup>
-import { useAccount } from '~/helpers/use-wagmi'
+import { useAccount, address } from '~/helpers/use-wagmi'
+import { isAuthenticated, session, useSignIn } from '~/helpers/siwe'
 
 const text = ref('')
 const imageUpload = ref()
@@ -89,12 +90,21 @@ const deleteFile = (idx) => {
   images.value.splice(idx, 1)
 }
 
+const { signIn } = useSignIn()
 const { profile } = useAccount()
 const config = useRuntimeConfig()
 const emit = defineEmits(['created'])
 const saving = ref(false)
 const submitPost = async () => {
   if (saving.value) return
+
+  if (! isAuthenticated.value) {
+    await signIn()
+
+    if (! isAuthenticated.value) return
+
+    return submitPost()
+  }
 
   saving.value = true
   try {
