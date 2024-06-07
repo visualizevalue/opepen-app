@@ -24,7 +24,7 @@
       <span>Auctions</span>
     </NuxtLink> -->
 
-    <NuxtLink to="/sets/permanent-collection" title="Sets">
+    <NuxtLink to="/sets/submissions" title="Sets">
       <Icon type="grid" />
       <span>Sets</span>
     </NuxtLink>
