@@ -21,7 +21,7 @@
     <ExploreSetSubmissions
       :limit="24"
       :auto-load="true"
-      status="live"
+      :status="status"
       :sort="sort"
     >
       <template #before>
@@ -54,6 +54,7 @@
 import { useMetaData } from '~/helpers/head'
 
 const sort = ref('-demand')
+const status = computed(() => sort.value === '-demand' ? 'live' : 'public-unrevealed')
 
 useMetaData({
   title: 'Explore Opepen Submissions',
