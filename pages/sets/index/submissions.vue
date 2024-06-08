@@ -54,7 +54,7 @@
 import { useMetaData } from '~/helpers/head'
 
 const sort = ref('-demand')
-const status = computed(() => sort.value === '-demand' ? 'live' : 'public-unrevealed')
+const status = computed(() => sort.value === '-demand' ? 'demand' : 'public-unrevealed')
 
 useMetaData({
   title: 'Explore Opepen Submissions',
