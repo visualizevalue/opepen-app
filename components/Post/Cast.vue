@@ -22,8 +22,15 @@
         <!-- <div v-if="embeds.length" class="images" :class="[`images-${embeds.length}`]">
           <Image v-for="embed in embeds" :key="embed" :image="embed" :auto-embed="false"/>
         </div> -->
-        <div v-if="embeds.length" class="embeds" :class="[`images-${embeds.length}`]">
-          <PostEmbed v-for="embed in embeds" :key="embed" :url="embed" :class="embeds.length > 1 ? `minimal` : ''" />
+        <div v-if="urlEmbeds.length" class="embeds" :class="[`images-${urlEmbeds.length}`]">
+          <PostEmbed v-for="embed in urlEmbeds" :key="embed" :url="embed" :class="urlEmbeds.length > 1 ? `minimal` : ''" />
+        </div>
+
+        <div v-if="castEmbeds.length" class="cast-embeds">
+          <PostCastEmbed
+            v-for="{ castId } in castEmbeds"
+            :cast="castId"
+            :key="castId.hash" />
         </div>
       </div>
 
@@ -48,7 +55,7 @@
 <script setup>
 import { id } from '~/helpers/accounts'
 import { timeAgo } from '~/helpers/dates'
-import { enforceVVReferrer } from '~/helpers/strings';
+import { enforceVVReferrer } from '~/helpers/strings'
 
 const { post, style, admin } = defineProps({
   post: Object,
@@ -62,7 +69,13 @@ const emit = defineEmits(['approve', 'unapprove', 'destroy'])
 const authorUrl = computed(() => `/${id(post.account)}`)
 
 const castBody = post.data.castAddBody
-const embeds = castBody.embeds?.map(e => enforceVVReferrer(e.url))
+const urlEmbeds = castBody.embeds
+  ?.filter(e => typeof e.url === 'string')
+  ?.map(e => enforceVVReferrer(e.url))
+
+const castEmbeds = castBody.embeds
+  ?.filter(e => typeof e.castId?.hash === 'string')
+
 const mentions = castBody.mentions
 
 const text = computed(() => {
@@ -87,5 +100,9 @@ const text = computed(() => {
   > .image:has(+ .image) {
     grid-column: span 1;
   }
+}
+
+.cast-embeds {
+  margin: var(--spacer) 0 0;
 }
 </style>
