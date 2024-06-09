@@ -20,7 +20,7 @@
   font-style: normal;
   font-weight: 700;
   src: url('../fonts/space-mono-v13-latin-700.woff2') format('woff2');
-  unicode-range: U+00Bx,U+2070-209F;
+  unicode-range: U+00B2, U+00B3, U+2070-209F;
 }
 
 @font-face {
