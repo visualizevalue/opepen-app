@@ -50,7 +50,7 @@
   --spacer: var(--size-4);
 
   /* FONTS */
-  --font-family-main: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-main: Space Super, Carbonara, Space Mono, Inter, Helvetica Neue, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-body: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
   /* --font-family-opepen: 'OpepenBlockSolid', 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif; */

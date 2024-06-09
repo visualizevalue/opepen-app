@@ -15,7 +15,16 @@
 }
 
 @font-face {
-  font-family: "Carbon";
+  font-display: swap;
+  font-family: 'Space Super';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/space-mono-v13-latin-700.woff2') format('woff2');
+  unicode-range: U+00Bx,U+2070-209F;
+}
+
+@font-face {
+  font-family: "Carbonara";
   font-style:  normal;
   font-weight: 400;
   font-display: swap;
