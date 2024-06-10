@@ -99,12 +99,12 @@ const eligibleOpepenCount = computed(() => {
 
 // OVERSUBSCRIBED
 const minDemand = computed(() => props.data.min_subscription_percentage)
-const edition1Demand = computed(() => parseInt(props.data?.submission_stats.demand['1'] / 1 * 100))
-const edition4Demand = computed(() => parseInt(props.data?.submission_stats.demand['4'] / 4 * 100))
-const edition5Demand = computed(() => parseInt(props.data?.submission_stats.demand['5'] / 5 * 100))
-const edition10Demand = computed(() => parseInt(props.data?.submission_stats.demand['10'] / 10 * 100))
-const edition20Demand = computed(() => parseInt(props.data?.submission_stats.demand['20'] / 20 * 100))
-const edition40Demand = computed(() => parseInt(props.data?.submission_stats.demand['40'] / 40 * 100))
+const edition1Demand = computed(() => parseInt(props.data?.submission_stats.demand['1'] * 100 / 1))
+const edition4Demand = computed(() => parseInt(props.data?.submission_stats.demand['4'] * 100 / 4))
+const edition5Demand = computed(() => parseInt(props.data?.submission_stats.demand['5'] * 100 / 5))
+const edition10Demand = computed(() => parseInt(props.data?.submission_stats.demand['10'] * 100 / 10))
+const edition20Demand = computed(() => parseInt(props.data?.submission_stats.demand['20'] * 100 / 20))
+const edition40Demand = computed(() => parseInt(props.data?.submission_stats.demand['40'] * 100 / 40))
 const avgDemand = computed(() => parseInt((edition1Demand.value +
                                  edition4Demand.value * 4 +
                                  edition5Demand.value * 5 +
