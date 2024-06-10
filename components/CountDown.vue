@@ -45,8 +45,16 @@ export default {
       return this.timeUntil <= 0
     },
 
+    years () {
+      return Math.floor(this.timeUntil / 60 / 60 / 24 / 365)
+    },
+
+    accountedForYears () {
+      return this.years * 60 * 60 * 24 * 365
+    },
+
     days () {
-      return Math.floor(this.timeUntil / 60 / 60 / 24)
+      return Math.floor((this.timeUntil - this.accountedForYears) / 60 / 60 / 24)
     },
 
     accountedForDays () {
@@ -54,7 +62,7 @@ export default {
     },
 
     hours () {
-      return Math.floor((this.timeUntil - this.accountedForDays) / 60 / 60)
+      return Math.floor((this.timeUntil - this.accountedForYears - this.accountedForDays) / 60 / 60)
     },
 
     accountedForHours () {
@@ -62,7 +70,7 @@ export default {
     },
 
     minutes () {
-      return Math.floor((this.timeUntil - this.accountedForDays - this.accountedForHours) / 60)
+      return Math.floor((this.timeUntil - this.accountedForYears - this.accountedForDays - this.accountedForHours) / 60)
     },
 
     seconds () {
@@ -70,12 +78,14 @@ export default {
     },
 
     countdown () {
+      const yearsString = this.years + 'y'
       const daysString = this.days + 'd'
       const hoursString = this.hours + 'h'
       const minutesString = this.minutes + 'm'
       const secondsString = this.seconds + 's'
 
       return [
+        this.years && yearsString,
         this.days && daysString,
         this.hours && hoursString,
         minutesString,

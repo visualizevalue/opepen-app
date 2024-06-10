@@ -6,7 +6,12 @@
 
     <main>
       <header>
-        <h1>Consensus is temporary</h1>
+        <h1>
+          Consensus is temporary
+          <small>
+            <CountDown :until="until" />
+          </small>
+        </h1>
       </header>
       <Connect class="lg-connect">
         <template #default>
@@ -27,9 +32,27 @@
 </template>
 
 <script setup>
+import { useIntervalFn } from '@vueuse/core'
+import { DateTime } from 'luxon'
+import { getRandomInt } from '~/helpers/random'
+
 definePageMeta({
   layout: 'simple',
 })
+
+const until = ref(null)
+const randomTimer = () => {
+  const seconds = Math.random() < 0.1  // short
+    ? getRandomInt(80, 500)
+    : Math.random() < 0.3 // medium
+      ? getRandomInt(60 * 60 * 24 * 10, 60 * 60 * 24 * 40)
+      : getRandomInt(60 * 60 * 24 * 365 * 1, 60 * 60 * 24 * 365 * 80)
+
+  until.value = DateTime.now().plus({ seconds }).toUnixInteger()
+}
+randomTimer()
+
+useIntervalFn(() => randomTimer(), 9000)
 </script>
 
 <style lang="postcss" scoped>
@@ -56,6 +79,12 @@ definePageMeta({
       margin: 0 0 1em 0;
       line-height: 1;
       text-align: center;
+
+      small {
+        display: block;
+        margin-top: 0.1em;
+        color: var(--gray-z-5);
+      }
     }
   }
 
