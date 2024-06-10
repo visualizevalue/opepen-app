@@ -2,10 +2,10 @@
   <aside>
     <ul>
       <li>
-        <a href="https://zora.co/collect/eth:0x6339e5e072086621540d0362c4e3cea0d643e114" target="_blank" title="Zora" class="opensea"><Icon type="zora" /></a>
+        <a href="https://opensea.io/collection/opepen-edition" target="_blank" title="OpenSea" class="opensea"><Icon type="opensea" /></a>
       </li>
       <li>
-        <a href="https://opensea.io/collection/opepen-edition" target="_blank" title="OpenSea" class="opensea"><Icon type="opensea" /></a>
+        <a href="https://zora.co/collect/eth:0x6339e5e072086621540d0362c4e3cea0d643e114" target="_blank" title="Zora" class="opensea"><Icon type="zora" /></a>
       </li>
       <!-- <li>
         <a href="https://visualizevalue.com/collections/opepen" target="_blank" title="Merch"><Icon type="shopping-bag" /></a>
