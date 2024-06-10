@@ -20,9 +20,9 @@
         <template #connected>
           <Authenticated>
             <EmailForm>
-              <!-- <template #verified>
-                <p>Email Verified!</p>
-              </template> -->
+              <template #unverified>
+                <p class="info">Please check your email to verify!</p>
+              </template>
             </EmailForm>
           </Authenticated>
         </template>
@@ -101,6 +101,12 @@ useIntervalFn(() => randomTimer(), 9000)
         font-size: var(--font-xl);
         padding: var(--size-6);
       }
+    }
+
+    .info {
+      text-align: center;
+      color: var(--gray-z-5);
+      margin: var(--size-3) 0;
     }
   }
 </style>

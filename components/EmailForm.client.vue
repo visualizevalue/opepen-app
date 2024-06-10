@@ -2,28 +2,33 @@
   <div>
     <slot name="before"></slot>
 
-    <div v-if="hasVerifiedEmail">
-      <slot name="verified" />
-    </div>
-
-    <div v-else-if="hasSavedEmail">
-      <slot name="saved" />
-    </div>
-
     <div v-if="settingsLoaded">
       <slot>
         <form @submit.prevent="save">
           <input v-model="email" placeholder="Your Email" type="email" />
           <Button type="submit" :disabled="saving">
-            <template v-if="hasVerifiedEmail">
+            <span v-if="saving">Submitting...</span>
+            <template v-else-if="hasVerifiedEmail">
               <Icon type="check" />
               <span>Verified</span>
             </template>
-            <span v-else-if="saving">Saving...</span>
-            <span v-else>Save</span>
+            <span v-else-if="saved">Submitted</span>
+            <span v-else>Submit</span>
           </Button>
         </form>
       </slot>
+    </div>
+
+    <div v-if="hasVerifiedEmail">
+      <slot name="verified" />
+    </div>
+
+    <div v-if="hasSavedEmail && !hasVerifiedEmail">
+      <slot name="unverified" />
+    </div>
+
+    <div v-else-if="hasSavedEmail">
+      <slot name="saved" />
     </div>
 
     <Loading v-else />
@@ -58,9 +63,11 @@ watch([status, settings], () => {
 })
 
 const saving = ref(false)
+const saved = ref(false)
 
 const save = async () => {
   saving.value = true
+  saved.value = false
 
   await Promise.all([
     $fetch(url, {
@@ -77,6 +84,7 @@ const save = async () => {
   refresh()
 
   saving.value = false
+  saved.value = true
 }
 </script>
 
