@@ -18,6 +18,7 @@
         </form>
       </slot>
     </div>
+    <Loading v-else />
 
     <div v-if="hasVerifiedEmail">
       <slot name="verified" />
@@ -31,15 +32,13 @@
       <slot name="saved" />
     </div>
 
-    <Loading v-else />
-
   </div>
 </template>
 
 <script setup>
 import { delay } from '~/helpers/time'
 import { useSignIn, isAuthenticated } from '~/helpers/siwe'
-import { useAccount } from '~/helpers/use-wagmi'
+import { useAccount, address } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
 
@@ -57,7 +56,6 @@ const settingsLoaded = computed(() => !! settings.value)
 const hasSavedEmail = computed(() => !! settings.value?.email)
 const hasVerifiedEmail = computed(() => !! settings.value?.email_verified)
 const email = ref(settings.value?.email)
-
 watch([status, settings], () => {
   email.value = settings.value?.email
 })
@@ -86,6 +84,22 @@ const save = async () => {
   saved.value = true
   saving.value = false
 }
+
+// Automatically request a new email verification on connect
+const requested = ref(false)
+const requestVerifyEmail = async () => {
+  if (!saved.value && !requested.value && isConnected.value && settingsLoaded.value && hasSavedEmail.value && !hasVerifiedEmail.value) {
+    requested.value = true
+    await $fetch(`${config.public.opepenApi}/accounts/settings/${address.value}/send-verify-email`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+
+    saved.value = true
+  }
+}
+onMounted(() => requestVerifyEmail())
+watch([isAuthenticated, settingsLoaded], () => requestVerifyEmail())
 </script>
 
 <style lang="postcss" scoped>
