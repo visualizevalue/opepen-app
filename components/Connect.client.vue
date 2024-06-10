@@ -8,12 +8,14 @@
       </slot>
     </Button>
     <div v-else>
-      <ButtonGroup>
-        <Button :to="`/${ id }`" id="main-connect">
-          <Account :address="address" />
-        </Button>
-        <Button to="/settings" title="User Settings"><Icon type="settings" /></Button>
-      </ButtonGroup>
+      <slot name="connected">
+        <ButtonGroup>
+          <Button :to="`/${ id }`" id="main-connect">
+            <Account :address="address" />
+          </Button>
+          <Button v-if="showSettings" to="/settings" title="User Settings"><Icon type="settings" /></Button>
+        </ButtonGroup>
+      </slot>
     </div>
 
     <Modal
@@ -36,8 +38,15 @@
 </template>
 
 <script setup>
-import { useSignIn, isAuthenticated } from '~/helpers/siwe'
+import { useSignIn } from '~/helpers/siwe'
 import { useAccount, id } from '~/helpers/use-wagmi'
+
+defineProps({
+  showSettings: {
+    type: Boolean,
+    default: true,
+  },
+})
 
 const { address, isConnected } = useAccount()
 const { signingIn, fetchMe } = useSignIn()
