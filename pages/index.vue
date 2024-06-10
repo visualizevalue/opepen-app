@@ -91,7 +91,6 @@ useIntervalFn(() => randomTimer(), 9000)
     img {
       height: 8rem;
       margin: -2em auto 1.5rem;
-      opacity: 0.1;
 
       @media (--md) {
         margin: -8em auto 3rem;

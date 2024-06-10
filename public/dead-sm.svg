@@ -1,14 +1,14 @@
 <svg width="2318" height="1080" viewBox="0 0 2318 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M1409 537V980H909V537C909 398.929 1020.93 287 1159 287C1297.07 287 1409 398.929 1409 537Z" stroke="white" stroke-width="40"/>
+  <path d="M1409 537V980H909V537C909 398.929 1020.93 287 1159 287C1297.07 287 1409 398.929 1409 537Z" stroke="#262626" stroke-width="40"/>
   <path d="M2242 980.146H76" stroke="url(#paint0_linear_2400_5217)" stroke-width="40" stroke-linecap="round"/>
-  <path d="M1024 455H1091.5C1128.78 455 1159 485.221 1159 522.5V522.5C1159 559.779 1128.78 590 1091.5 590V590C1054.22 590 1024 559.779 1024 522.5V455Z" stroke="white" stroke-width="40"/>
-  <path d="M1159 522.5C1159 485.221 1189.22 455 1226.5 455V455C1263.78 455 1294 485.221 1294 522.5V522.5C1294 559.779 1263.78 590 1226.5 590V590C1189.22 590 1159 559.779 1159 522.5V522.5Z" stroke="white" stroke-width="40"/>
+  <path d="M1024 455H1091.5C1128.78 455 1159 485.221 1159 522.5V522.5C1159 559.779 1128.78 590 1091.5 590V590C1054.22 590 1024 559.779 1024 522.5V455Z" stroke="#262626" stroke-width="40"/>
+  <path d="M1159 522.5C1159 485.221 1189.22 455 1226.5 455V455C1263.78 455 1294 485.221 1294 522.5V522.5C1294 559.779 1263.78 590 1226.5 590V590C1189.22 590 1159 559.779 1159 522.5V522.5Z" stroke="#262626" stroke-width="40"/>
   <defs>
   <linearGradient id="paint0_linear_2400_5217" x1="76" y1="980.646" x2="2242" y2="980.646" gradientUnits="userSpaceOnUse">
-  <stop offset="0.021559" stop-color="white" stop-opacity="0"/>
-  <stop offset="0.23" stop-color="white"/>
-  <stop offset="0.825" stop-color="white"/>
-  <stop offset="0.985301" stop-color="white" stop-opacity="0"/>
+  <stop offset="0.021559" stop-color="#262626" stop-opacity="0"/>
+  <stop offset="0.23" stop-color="#262626"/>
+  <stop offset="0.825" stop-color="#262626"/>
+  <stop offset="0.985301" stop-color="#262626" stop-opacity="0"/>
   </linearGradient>
   </defs>
   </svg>
