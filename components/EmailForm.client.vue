@@ -33,7 +33,7 @@
 
 <script setup>
 import { delay } from '~/helpers/time'
-import { useSignIn } from '~/helpers/siwe'
+import { useSignIn, isAuthenticated } from '~/helpers/siwe'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
@@ -46,6 +46,7 @@ const { data: settings, status, refresh, execute } = await useFetch(url, { crede
 
 onMounted(() => { if (isConnected.value) execute() })
 watch(isConnected, () => refresh())
+watch(isAuthenticated, () => refresh())
 
 const settingsLoaded = computed(() => !! settings.value)
 const hasSavedEmail = computed(() => !! settings.value?.email)
