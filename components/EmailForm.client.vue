@@ -83,8 +83,8 @@ const save = async () => {
   ])
   refresh()
 
-  saving.value = false
   saved.value = true
+  saving.value = false
 }
 </script>
 
