@@ -89,12 +89,17 @@ useIntervalFn(() => randomTimer(), 9000)
     }
 
     img {
-      height: 8rem;
+      /* height: 8rem;
       margin: -2em auto 1.5rem;
 
       @media (--md) {
         margin: -8em auto 3rem;
-      }
+      } */
+
+      position: fixed;
+      height: 10rem;
+      right: -5rem;
+      bottom: -0.75rem;
     }
   }
 
