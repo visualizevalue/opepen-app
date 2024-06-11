@@ -37,13 +37,12 @@
 
 <script setup>
 import { delay } from '~/helpers/time'
-import { useSignIn, isAuthenticated } from '~/helpers/siwe'
+import { isAuthenticated } from '~/helpers/siwe'
 import { useAccount, address } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
 
 const { isConnected } = useAccount()
-const { session } = useSignIn()
 
 const url = `${config.public.opepenApi}/accounts/settings`
 const { data: settings, status, refresh, execute } = await useFetch(url, { credentials: 'include', immediate: false })
@@ -72,7 +71,7 @@ const save = async () => {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
-        name: settings.value.name,
+        ...settings.value,
         email: email.value,
         notification_new_set: true,
       })
