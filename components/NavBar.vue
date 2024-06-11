@@ -8,10 +8,11 @@
       <Icon type="plus" />
       <span>Create</span>
     </Button>
-    <Button to="/editor">
+
+    <!-- <Button to="/editor">
       <Icon type="code" />
       <span>Editor</span>
-    </Button>
+    </Button> -->
 
     <Connect />
   </nav>

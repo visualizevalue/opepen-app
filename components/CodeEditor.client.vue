@@ -1,10 +1,11 @@
 <template>
   <div class="code-editor">
     <CodeMirror
-      v-model:value="code"
+      :value="modelValue"
       :options="cmOptions"
-      placeholder="test placeholder"
-      @change="change"
+      height="100%"
+      :placeholder="placeholder"
+      @change="$emit('update:modelValue', $event)"
       original-style
     />
   </div>
@@ -16,16 +17,8 @@ import 'codemirror/addon/display/placeholder.js'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/theme/ayu-dark.css'
 
-const code = ref(`
-var i = 0;
-for (; i < 9; i++) {
-console.log(i);
-// more statements
-}`)
-
-const change = (value, cm) => {
-  console.log('change', value, 'cm', cm)
-}
+const props = defineProps(['modelValue', 'placeholder'])
+const emit = defineEmits(['update:modelValue'])
 
 const cmOptions = {
   mode: 'text/javascript',
@@ -33,12 +26,14 @@ const cmOptions = {
 }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .code-editor {
   text-transform: none;
+  height: 100%;
 
   :deep(.CodeMirror) {
-    background-color: var(--gray-z-0);
+    padding-top: var(--size-3);
+    height: 100%;
   }
 }
 </style>
