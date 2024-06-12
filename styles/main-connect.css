@@ -1,6 +1,7 @@
 #main-connect {
   white-space: nowrap;
   flex-shrink: 0;
+  font-size: var(--font-base);
 
   .avatar {
     margin-left: calc(-2 * var(--size-2) - 1px);

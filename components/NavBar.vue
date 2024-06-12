@@ -1,52 +1,25 @@
 <template>
   <nav class="main" :class="{ 'scrolled': isScrolled }">
     <NuxtLink to="/" title="Opepen Home Page" class="home">
-      <Logo />
+      OPEPEN.ART
     </NuxtLink>
 
-    <Button to="/create/sets">
-      <Icon type="plus" />
-      <span>Create</span>
-    </Button>
-
-    <!-- <Button to="/editor">
-      <Icon type="code" />
-      <span>Editor</span>
-    </Button> -->
-
-    <Connect />
+    <ClientOnly>
+      <Connect>
+        <template #default>Check In</template>
+        <template #connected="{ address, id }">
+          <NuxtLink :to="`/${id}`">
+            <Account :address="address" hide-avatar />
+          </NuxtLink>
+        </template>
+      </Connect>
+    </ClientOnly>
   </nav>
 
   <nav class="links">
-
-    <NuxtLink to="/home" title="Home" @click="toTop">
-      <Icon type="home" />
-      <span>Feed</span>
-    </NuxtLink>
-
-    <!-- <NuxtLink to="/auctions" title="Auctions">
-      <Icon type="columns" />
-      <span>Auctions</span>
-    </NuxtLink> -->
-
-    <NuxtLink to="/sets/submissions" title="Sets">
-      <Icon type="grid" />
-      <span>Sets</span>
-    </NuxtLink>
-
-    <NuxtLink to="/artists" title="Nodes">
-      <Icon type="users" />
-      <span>Nodes</span>
-    </NuxtLink>
-
-    <Authenticated>
-      <template #default="{ isConnected }">
-        <NuxtLink v-if="isConnected" to="/settings" title="Settings" class="visible-md">
-          <Icon type="settings" />
-          <span>Settings</span>
-        </NuxtLink>
-      </template>
-    </Authenticated>
+    <NuxtLink to="/curate">Curate</NuxtLink>
+    <NuxtLink to="/collect">Collect</NuxtLink>
+    <NuxtLink to="/create">Create</NuxtLink>
   </nav>
 </template>
 
@@ -56,13 +29,6 @@ import { useWindowScroll } from '@vueuse/core'
 const { y } = useWindowScroll()
 
 const isScrolled = computed(() => y.value > 5)
-
-const toTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  })
-}
 </script>
 
 <style lang="postcss" scoped>
@@ -88,6 +54,8 @@ const toTop = () => {
 
     :deep(> *) {
       height: var(--size-7);
+      display: flex;
+      align-items: center;
 
       @media (--md) {
         height: calc(var(--size-7) + var(--size-1));
@@ -99,6 +67,11 @@ const toTop = () => {
       position: relative;
       min-height: var(--100vh);
       padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x) calc(var(--navbar-height) + env(safe-area-inset-bottom));
+
+      @media (--md) {
+        padding-left: var(--size-6);
+        padding-right: var(--size-6);
+      }
 
       &.full {
         padding: var(--navbar-height) 0 calc(var(--navbar-height) + env(safe-area-inset-bottom));
@@ -130,6 +103,21 @@ const toTop = () => {
         }
       }
     }
+
+    a {
+      color: var(--gray-z-6);
+      transition: color var(--speed);
+
+      &:--highlight,
+      &.router-link-active {
+        color: var(--color);
+      }
+    }
+
+    @media (--md) {
+      padding-left: var(--size-6);
+      padding-right: var(--size-6);
+    }
   }
 
   nav.links {
@@ -139,12 +127,12 @@ const toTop = () => {
     bottom: 0;
     border-top: var(--border);
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    gap: var(--size-8);
 
     @media (--md) {
-      gap: var(--size-7);
+      gap: var(--size-8);
+      justify-content: center;
     }
 
     > a {
@@ -154,6 +142,9 @@ const toTop = () => {
       justify-content: center;
       gap: var(--size-3);
       transition: all var(--speed);
+      position: relative;
+      padding-left: 4vw;
+      padding-right: 4vw;
 
       > .icon {
         color: var(--gray-z-7);
@@ -163,8 +154,24 @@ const toTop = () => {
       > span {
         display: none;
 
-        @media (--md) {
+        @media (--sm) {
           display: inline-block;
+        }
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        height: var(--size-0);
+        border-radius: var(--size-0);
+        width: 100%;
+        background: transparent;
+        transition: background var(--speed);
+        top: calc(-1 * var(--size-3) - var(--size-1));
+
+        @media (--sm) {
+          top: auto;
+          bottom: calc(-1 * var(--size-3) - var(--size-0));
         }
       }
 
@@ -175,10 +182,19 @@ const toTop = () => {
         > .icon {
           color: var(--color);
         }
+
+        &:after {
+          background: var(--green);
+        }
+      }
+
+      @media (--lg) {
+        padding-left: 5vw;
+        padding-right: 5vw;
       }
     }
 
-    @media (--lg) {
+    @media (--md) {
       backdrop-filter: none;
       background: transparent;
       border: none;

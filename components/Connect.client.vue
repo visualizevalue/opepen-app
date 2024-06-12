@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Button v-if="! isConnected" @click="open = true" id="main-connect">
+    <button v-if="! isConnected" @click="open = true" id="main-connect">
       <slot>
         <DefaultOpepenAvatar class="avatar" />
 
         <span>Check-In</span>
       </slot>
-    </Button>
+    </button>
     <div v-else>
-      <slot name="connected">
+      <slot name="connected" :address="address" :id="id">
         <ButtonGroup>
           <Button :to="`/${ id }`" id="main-connect">
             <Account :address="address" />
