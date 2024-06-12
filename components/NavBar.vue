@@ -9,6 +9,11 @@
       <span>Create</span>
     </Button>
 
+    <!-- <Button to="/editor">
+      <Icon type="code" />
+      <span>Editor</span>
+    </Button> -->
+
     <Connect />
   </nav>
 
