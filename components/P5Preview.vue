@@ -5,6 +5,8 @@
         ref="frame"
         frameborder="0"
       ></iframe>
+        <!-- allow="accelerometer" -->
+      <!-- sandbox="allow-scripts" -->
     </div>
   </div>
 </template>

@@ -23,6 +23,9 @@ const emit = defineEmits(['update:modelValue'])
 const cmOptions = {
   mode: 'text/javascript',
   theme: 'ayu-dark',
+  indentUnit: 2,
+  tabSize: 2,
+  indentWithTab: false
 }
 </script>
 

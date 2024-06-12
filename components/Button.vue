@@ -114,8 +114,14 @@ button {
     height: var(--size-4);
     transition: all var(--speed);
 
-    &:first-child {
+    &:has(+ span) {
+      &:first-child {
+        margin-left: calc(-1 * var(--size-1));
+      }
+    }
+    &:not(:has(+ span)) {
       margin-left: calc(-1 * var(--size-1));
+      margin-right: calc(-1 * var(--size-1));
     }
   }
 
