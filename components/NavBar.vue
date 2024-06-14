@@ -105,7 +105,7 @@ const isScrolled = computed(() => y.value > 5)
     }
 
     a {
-      color: var(--gray-z-6);
+      color: var(--inactive);
       transition: color var(--speed);
 
       &:--highlight,
@@ -127,7 +127,7 @@ const isScrolled = computed(() => y.value > 5)
     bottom: 0;
     border-top: var(--border);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 
     @media (--md) {
@@ -136,7 +136,7 @@ const isScrolled = computed(() => y.value > 5)
     }
 
     > a {
-      color: var(--gray-z-6);
+      color: var(--inactive);
       display: flex;
       align-items: center;
       justify-content: center;

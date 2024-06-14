@@ -8,8 +8,8 @@
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
-      <iframe v-if="hasEmbed && !hasImageEmbed" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
-      <video v-else-if="isVideo && !version" :src="uri" playsinline loop autoplay muted ref="video"></video>
+      <iframe v-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
+      <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
       <img
         v-else-if="uri || hasImageEmbed"
         ref="imageEl"
@@ -38,6 +38,7 @@ const props = defineProps({
     default: true,
   },
 })
+const emit = defineEmits(['loaded'])
 
 const uri = ref('')
 const loaded = ref(false)
@@ -59,6 +60,12 @@ const computeAspectRatio = () => {
 }
 computeAspectRatio()
 const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
+const displayIframe = computed(() => hasEmbed.value && !hasImageEmbed.value)
+const displayVideo = computed(() => isVideo.value && !props.version)
+watch([uri, displayIframe, displayVideo], () => {
+  console.log('emit loaded', displayIframe.value || displayVideo.value)
+  if (displayIframe.value || displayVideo.value) emit('loaded')
+})
 
 const loadImage = ([{ isIntersecting }]) => {
   if (! isIntersecting) return
@@ -76,12 +83,14 @@ const loadImage = ([{ isIntersecting }]) => {
 }
 const loadOriginal = () => {
   uri.value = imageURI(props.image)
+  emit('loaded')
 }
 watch(() => props.image?.uuid, () => loadImage([{ isIntersecting: true }]))
 
 // Image loaded event
 const imageLoaded = () => {
   loaded.value = true
+  emit('loaded')
   computeAspectRatio()
 }
 </script>
@@ -155,7 +164,7 @@ article.image {
 
   &.appear {
     opacity: 0.5;
-    transition: all var(--speed-slow);
+    transition: all var(--speed-slower);
 
     img {
       opacity: 0.001;

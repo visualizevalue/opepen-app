@@ -12,7 +12,7 @@
 
 .hidden-sm {
   @media (--max-sm) {
-    display: none;
+    display: none !important;
   }
 }
 

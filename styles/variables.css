@@ -49,6 +49,8 @@
 
   --spacer: var(--size-4);
 
+  --sidenav-width: max(13rem, 20vw);
+
   /* FONTS */
   --font-family-main: Space Super, Carbonara, Space Mono, Inter, Helvetica Neue, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -74,7 +76,8 @@
   /* ANIMATION */
   --speed-fast: 0.15s;
   --speed:      0.3s;
-  --speed-slow: 1.5s;
+  --speed-slow: 0.75s;
+  --speed-slower: 1.5s;
 
   /* COMPONENTS */
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
@@ -113,6 +116,7 @@
   --gray-z-9: var(--gray-900);
   --color: var(--white);
   --semi: var(--semi-dark);
+  --inactive: var(--gray-z-5);
 
   --blue-1: var(--blue-light);
   --blue-9: var(--blue-dark);
