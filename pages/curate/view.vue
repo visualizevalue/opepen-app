@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>View</h1>
-
+  <div class="view has-tertiary">
     <TertiaryNav>
       <NuxtLink to="/curate/view/mine">
         <Icon type="infinity" />
@@ -17,3 +15,8 @@
   </div>
 </template>
 
+<style lang="postcss" scoped>
+.view {
+  height: 100%;
+}
+</style>

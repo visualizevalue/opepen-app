@@ -46,3 +46,12 @@ nav.tertiary {
     }
   }
 }
+
+.has-tertiary {
+  padding-top: calc(var(--navbar-height) - var(--size-2));
+  padding-right: calc(var(--size-7) + var(--size-2));
+
+  @media (--md) {
+    padding: 0;
+  }
+}
