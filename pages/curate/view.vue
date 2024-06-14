@@ -11,12 +11,16 @@
       </NuxtLink>
     </TertiaryNav>
 
-    <NuxtPage />
+    <NuxtPage class="view-page" />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .view {
   height: 100%;
+
+  :deep(> .view-page) {
+    padding: var(--size-5);
+  }
 }
 </style>
