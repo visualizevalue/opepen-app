@@ -6,6 +6,7 @@ nav.tertiary {
   width: 100%;
   background: var(--semi);
   backdrop-filter: var(--blur);
+  z-index: 100;
 
   > * {
     display: flex;

@@ -58,7 +58,7 @@ const { isSwiping, direction, lengthX } = useSwipe(container, {
   },
   async onSwipeEnd() {
     if (containerWidth.value && (Math.abs(lengthX.value) / containerWidth.value) >= 0.69) {
-      await vote(lengthX.value > 0)
+      await vote(positionX.value > 0)
     }
 
     positionX.value = 0

@@ -1,5 +1,5 @@
 <template>
   <div>
-    <CuratedGallery path="opepen/images/curated" />
+    <CuratedGallery path="opepen/images/curated/mine" />
   </div>
 </template>
