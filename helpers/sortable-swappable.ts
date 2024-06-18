@@ -84,7 +84,6 @@ export function moveArrayElement<T>(
   to: number,
 ): void {
   const _valueIsRef = isRef(list)
-  console.log('_valueIsRef', _valueIsRef)
   // When the list is a ref, make a shallow copy of it to avoid repeatedly triggering side effects when moving elements
   const array = _valueIsRef ? [...toValue(list)] : toValue(list)
 

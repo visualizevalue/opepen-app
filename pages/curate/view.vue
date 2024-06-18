@@ -20,7 +20,11 @@
   height: 100%;
 
   :deep(> .view-page) {
-    padding: var(--size-5);
+    padding: var(--size-2);
+
+    @media (--md) {
+      padding: var(--size-3);
+    }
   }
 }
 </style>

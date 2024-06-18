@@ -63,7 +63,6 @@ const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 const displayIframe = computed(() => hasEmbed.value && !hasImageEmbed.value)
 const displayVideo = computed(() => isVideo.value && !props.version)
 watch([uri, displayIframe, displayVideo], () => {
-  console.log('emit loaded', displayIframe.value || displayVideo.value)
   if (displayIframe.value || displayVideo.value) emit('loaded')
 })
 
