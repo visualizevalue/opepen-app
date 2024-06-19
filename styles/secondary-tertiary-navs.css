@@ -23,7 +23,8 @@ nav.tertiary {
     color: var(--inactive);
     transition: color var(--speed);
 
-    &.router-link-active,
+    &.router-link-active:not(.exact),
+    &.exact.router-link-exact-active,
     &:--highlight {
       color: var(--color);
     }
@@ -45,6 +46,14 @@ nav.tertiary {
       padding: var(--size-2) var(--size-6);
       gap: var(--size-5);
     }
+  }
+}
+
+.has-secondary {
+  padding-top: calc(var(--navbar-height) - var(--size-2));
+
+  @media (--md) {
+    padding: 0;
   }
 }
 

@@ -21,8 +21,10 @@
     bottom: calc(3rem + env(safe-area-inset-bottom));
     justify-content: center;
 
-    transform: rotate(-90deg);
-    transform-origin: center left;
+    &:not(.horizontal) {
+      transform: rotate(-90deg);
+      transform-origin: center left;
+    }
 
     p.label {
       margin: 0 !important;

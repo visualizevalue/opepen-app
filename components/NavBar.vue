@@ -41,7 +41,7 @@ const isScrolled = computed(() => y.value > 5)
     display: flex;
     align-items: center;
     gap: var(--size-3);
-    z-index: 40;
+    z-index: 110;
     transition: all var(--speed-fast);
     background-color: transparent;
     border-color: transparent;
@@ -200,7 +200,7 @@ const isScrolled = computed(() => y.value > 5)
       border: none;
       bottom: auto;
       top: 0;
-      z-index: 41;
+      z-index: 121;
       pointer-events: none;
       height: var(--navbar-height);
       padding-bottom: var(--size-4);

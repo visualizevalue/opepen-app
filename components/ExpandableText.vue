@@ -32,8 +32,8 @@ const { length, text } = defineProps({
   },
 })
 
-const cleaned = computed(() => cleanText(text))
 const urls = computed(() => extractURLs(cleaned.value).urls)
+const cleaned = computed(() => cleanText(text))
 const shortened = computed(() => shortenedCleanText(extractURLs(cleaned.value).text, 120))
 const wasShortened = computed(() => shortened.value !== cleaned.value)
 const expanded = ref(false)
