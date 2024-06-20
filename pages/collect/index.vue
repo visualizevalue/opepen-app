@@ -43,10 +43,10 @@
 
     <TertiaryNav>
       <SetOptInButton :data="submission" />
-      <button>
+      <NuxtLink to="/collect/buy/unrevealed">
         <Icon type="infinity-flower" />
         <span>Buy Unrevealed</span>
-      </button>
+      </NuxtLink>
     </TertiaryNav>
 
     <!-- <SetItemsMeta :data="submission" />

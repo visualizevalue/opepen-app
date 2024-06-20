@@ -5,13 +5,9 @@
         <Icon type="check" />
         <span>New Set</span>
       </NuxtLink>
-      <NuxtLink to="/collect/revealed">
+      <NuxtLink to="/collect/buy">
         <Icon type="opepen-eye" />
-        <span>Revealed</span>
-      </NuxtLink>
-      <NuxtLink to="/collect/unrevealed">
-        <Icon type="opepen" />
-        <span>Unrevealed</span>
+        <span>Buy Opepen</span>
       </NuxtLink>
     </SecondaryNav>
 

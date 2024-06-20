@@ -10,12 +10,18 @@
       </slot>
     </div>
 
+    <div v-if="token && token.price" class="listing">
+      <p>{{ price }} ETH</p>
+      <p>{{ token.data.order.source }}</p>
+    </div>
+
     <NuxtLink :to="`/opepen/${token.token_id}`"><span>View Opepen #{{ token.token_id }}</span></NuxtLink>
   </div>
 </article>
 </template>
 
 <script setup>
+import { formatEther } from 'viem'
 import { getRandomArbitrary } from '~/helpers/random'
 import { delay } from '~/helpers/time'
 
@@ -31,6 +37,8 @@ const {
     default: false,
   }
 })
+
+const price = computed(() => token.price && formatEther(BigInt(token.price)))
 
 // ==============================================================
 // Style & Interaction
@@ -61,8 +69,8 @@ const onClick = async () => {
 .opepen-card {
   position: relative;
   width: 100%;
-  height: 0;
-  padding-bottom: 125%;
+  /* height: 0;
+  padding-bottom: 125%; */
   transition: all var(--speed-fast);
   transform-origin: center;
 
@@ -70,11 +78,11 @@ const onClick = async () => {
   > div {
     container-type: inline-size;
     cursor: pointer;
-    position: absolute;
+    /* position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100%; */
     background: var(--gray-z-1);
     border: var(--border);
     border-radius: var(--size-4);
