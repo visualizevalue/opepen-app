@@ -77,8 +77,11 @@
             </div>
           </template>
         </div>
-        <Button @click="$emit('close')">Cancel</Button>
-        <Button :disabled="signing" @click="sign">
+        <Button @click="$emit('close')">
+          <span v-if="hasChange">Cancel</span>
+          <span v-else>Ok</span>
+        </Button>
+        <Button v-if="hasChange" :disabled="signing" @click="sign">
           <span v-if="signing">Confirming...</span>
           <span v-else>
             <template v-if="subscribed?.length && !selected.length">Opt-Out</template>
@@ -163,6 +166,7 @@ const selectedPerGroup = computed(() => Object.keys(grouped.value)
     return groups
   }, {})
 )
+const hasChange = computed(() => JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort()))
 
 const selectAll = (group) => {
   grouped.value[group].forEach(o => {

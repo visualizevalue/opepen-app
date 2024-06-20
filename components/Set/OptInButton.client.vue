@@ -1,65 +1,21 @@
 <template>
 
-  <section v-if="data" class="opt-in">
-    <header>
-      <h1 v-if="published">Opt-Ins</h1>
-      <h1 v-else>Opt-In Not Open Yet</h1>
-      <IconOpepen />
-    </header>
-    <section v-if="revealing && ! revealed">
-      <p>Pending reveal. Waiting for <NuxtLink v-if="data.reveal_block_number" :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink><span v-else>Reveal Block</span> to confirm.</p>
-      <p>Current Block: {{ currentBlock }}<template
-        v-if="data.reveal_block_number && blockConfirmations >= 0"> ({{ blockConfirmations }} confirmation<template v-if="blockConfirmations < 1n || blockConfirmations > 1n">s</template>)</template><template
-        v-else-if="blockConfirmations"> ({{ blockConfirmations * -1n }} block<template v-if="blockConfirmations < -1n || blockConfirmations > -1n">s</template> to go)</template>.
-      </p>
-    </section>
-    <section v-else-if="revealed">
-      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepen-api/tree/main/app/Services/Metadata/Reveal">Opepen Metadata Reveal Script</NuxtLink>.</p>
+  <button v-if="data" @click="startOptIn">
+    <Icon type="check" />
+    <span>
+      <span>Opt In</span>
+    </span>
 
-      <OptInOwnedRevealed v-if="subscription && data.set_id" :data="data" :subscription="subscription" />
-    </section>
-    <section v-if="subscription" class="selection">
-      <template v-if="opepenCount">
-        <p>You submitted {{ opepenCount }} Opepen for potential reveal: <span class="muted">
-          {{ opepenIds }}<span v-if="opepenCount <= shownCount">.</span><span v-else>... (and {{ opepenCount - shownCount }} more).</span>
-        </span></p>
-        <p v-if="subscription.comment" class="comment">Comment: <span>{{ subscription.comment }}</span></p>
-      </template>
-      <template v-else>
-        <p>You opted out all opepen submissions.</p>
-      </template>
-    </section>
-    <section v-if="!revealed && !revealing && data.reveals_at">
-      <CountDown @complete="onComplete" :until="revealsAt" class="nowrap" />
-      <div>Opt-In window <span class="hidden-sm">for "{{ data.name }}"&nbsp;</span>closes on {{ revealDate }}.</div>
-    </section>
-    <section v-else-if="timeRemaining" class="centered">
-      <span class="countdown">{{ timeRemaining }} remaining</span>
-      <div>Countdown will resume when consensus is met again.</div>
-    </section>
-    <section>
-      <ClientOnly>
-        <SetOptInFlow
-          :data="data"
-          :subscribed="subscription?.opepen_ids || []"
-          :max-reveals="subscription?.max_reveals"
-          :stored-comment="subscription?.comment"
-          :open="optInOpen"
-          @close="optInOpen = false"
-          :click-outside="false"
-        />
-      </ClientOnly>
-    </section>
-
-    <SetCuratorStats :submission="data" :subscription="subscription" class="curator-stats" />
-
-    <footer v-if="!revealed && !revealing && published">
-      <Button @click="startOptIn">
-        <Icon type="feather" />
-        <span class="nowrap"><span v-if="subscription?.opepen_ids?.length">Change</span> Opt-In</span>
-      </Button>
-    </footer>
-  </section>
+    <SetOptInFlow
+      :data="data"
+      :subscribed="subscription?.opepen_ids || []"
+      :max-reveals="subscription?.max_reveals"
+      :stored-comment="subscription?.comment"
+      :open="optInOpen"
+      @close="optInOpen = false"
+      :click-outside="false"
+    />
+  </button>
 
 </template>
 
@@ -145,6 +101,7 @@ watch(address, async () => {
 })
 
 const startOptIn = () => {
+  console.log('hi')
   if (! isConnected.value) {
     document.querySelector('#main-connect').click()
   }

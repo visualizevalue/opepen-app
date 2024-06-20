@@ -12,6 +12,8 @@ nav.tertiary {
     display: flex;
     gap: var(--size-2);
     padding: var(--size-4);
+    font-size: var(--size-base);
+    white-space: nowrap;
 
     .icon {
       width: var(--size-5);
@@ -46,6 +48,15 @@ nav.tertiary {
       padding: var(--size-2) var(--size-6);
       gap: var(--size-5);
     }
+  }
+}
+
+nav.secondary {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: auto;
+
+  @media (--md) {
+    overflow: inherit;
   }
 }
 

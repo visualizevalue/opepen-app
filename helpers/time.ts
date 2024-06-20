@@ -30,3 +30,17 @@ export const timeRemainingFromSeconds = (seconds: number) => {
 
   return `${d.hours}h ${d.minutes}m ${d.seconds}s`
 }
+
+const now = ref(nowInSeconds())
+let nowInterval: NodeJS.Timeout
+export const useNow = () => {
+  onMounted(() => {
+    if (! nowInterval) {
+      nowInterval = setInterval(() => {
+        now.value = nowInSeconds()
+      }, 1000)
+    }
+  })
+
+  return now
+}

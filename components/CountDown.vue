@@ -73,6 +73,10 @@ export default {
       return Math.floor((this.timeUntil - this.accountedForYears - this.accountedForDays - this.accountedForHours) / 60)
     },
 
+    totalSeconds () {
+      return this.timeUntil / 60
+    },
+
     seconds () {
       return this.timeUntil % 60
     },
@@ -89,7 +93,7 @@ export default {
         this.days && daysString,
         this.hours && hoursString,
         minutesString,
-        !this.minimal && secondsString,
+        (!this.minimal || this.totalSeconds < 600) && secondsString,
       ].filter(i => !!i).join(' ')
     }
   },

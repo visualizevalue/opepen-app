@@ -21,13 +21,28 @@
       </header>
 
       <SetPreviewImages :data="submission" class="items" />
+
+      <section class="demand">
+        <SetSimpleDemand :data="submission" />
+
+        <div class="timer muted">
+          <span v-if="submission.set && data.nextSetAt" class="nowrap">
+            <span>Next set in</span>
+            <CountDown :until="DateTime.fromISO(data.nextSetAt).toUnixInteger()" />
+          </span>
+          <span v-else-if="closed && submission.reveal_block_number && !submission.set">
+            Revealing...
+          </span>
+          <span v-else>
+            <CountDown :until="closesAt.toUnixInteger()" minimal />
+            <span>left</span>
+          </span>
+        </div>
+      </section>
     </div>
 
     <TertiaryNav>
-      <button>
-        <Icon type="check" />
-        <span>Opt In</span>
-      </button>
+      <SetOptInButton :data="submission" />
       <button>
         <Icon type="infinity-flower" />
         <span>Buy Unrevealed</span>
@@ -57,8 +72,11 @@
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 import { shortenedCleanText } from '~/helpers/strings'
+import { formatDate } from '~/helpers/dates'
+import { useNow } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 
@@ -69,6 +87,14 @@ const { data, refresh } = await useFetch(`${config.public.opepenApi}/set-submiss
 const submission = computed(() => data.value.submission)
 const description = computed(() => shortenedCleanText(submission.value.description, 50))
 const showDescription = ref(false)
+
+const now = useNow()
+const closesAt = computed(() => submission.value.reveals_at
+  ? DateTime.fromISO(submission.value.reveals_at)
+  : DateTime.fromISO(submission.value.starred_at).plus({ hours: 48 })
+)
+const closed = computed(() => DateTime.fromSeconds(now.value) > closesAt.value)
+
 
 useMetaData({
   title: `Collect Opepen`,
@@ -137,4 +163,26 @@ useMetaData({
       color: var(--gray-z-8);
     }
   }
+
+  .demand {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--size-0);
+
+    @media (--xs) {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .timer {
+      display: flex;
+
+      > span {
+        display: flex;
+        gap: 0.45em;
+      }
+    }
+  }
+
 </style>
