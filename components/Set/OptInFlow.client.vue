@@ -137,7 +137,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'update'])
 
 const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
@@ -272,6 +272,7 @@ const sign = async () => {
 
   signing.value = false
   emit('close')
+  emit('update')
 }
 </script>
 

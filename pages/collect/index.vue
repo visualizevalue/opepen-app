@@ -39,10 +39,12 @@
           </span>
         </div>
       </section>
+
+      <OptInTimeline v-if="submission" :submission-id="submission.uuid" :refresh-key="refreshKey" />
     </div>
 
     <TertiaryNav>
-      <SetOptInButton :data="submission" />
+      <SetOptInButton :data="submission" @update="update" />
       <NuxtLink to="/collect/buy/unrevealed">
         <Icon type="infinity-flower" />
         <span>Buy Unrevealed</span>
@@ -75,14 +77,18 @@
 import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 import { shortenedCleanText } from '~/helpers/strings'
-import { formatDate } from '~/helpers/dates'
 import { useNow } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 
 const route = useRoute()
+const router = useRouter()
 
 const { data, refresh } = await useFetch(`${config.public.opepenApi}/set-submissions/curated`)
+const refreshKey = ref(0)
+
+// Ensure OG works as expected
+if (! route.query.s) router.replace({ query: { s: data.value.submission.uuid, ...route.query }})
 
 const submission = computed(() => data.value.submission)
 const description = computed(() => shortenedCleanText(submission.value.description, 50))
@@ -95,9 +101,15 @@ const closesAt = computed(() => submission.value.reveals_at
 )
 const closed = computed(() => DateTime.fromSeconds(now.value) > closesAt.value)
 
+const update = async () => {
+  refreshKey.value += 1
+
+  await refresh()
+}
 
 useMetaData({
   title: `Collect Opepen`,
+  og: `${config.public.opepenApi}/render/sets/${route.query.s}/og?${new URLSearchParams(route.query)}`,
   meta: [
     // TODO: Add opt in frame
   ],

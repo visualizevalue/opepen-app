@@ -13,6 +13,7 @@
       :stored-comment="subscription?.comment"
       :open="optInOpen"
       @close="optInOpen = false"
+      @update="$emit('update')"
       :click-outside="false"
     />
   </button>
@@ -101,7 +102,6 @@ watch(address, async () => {
 })
 
 const startOptIn = () => {
-  console.log('hi')
   if (! isConnected.value) {
     document.querySelector('#main-connect').click()
   }

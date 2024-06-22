@@ -6,7 +6,7 @@
         <span>New Set</span>
       </NuxtLink>
       <NuxtLink to="/collect/buy">
-        <Icon type="opepen-eye" />
+        <Icon type="opepen" />
         <span>Buy Opepen</span>
       </NuxtLink>
     </SecondaryNav>

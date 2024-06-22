@@ -2,7 +2,7 @@
   <PaginatedContent
     :url="url"
     :query="query"
-    :refresh-key="submissionId"
+    :refresh-key="refreshKey || submissionId"
     :auto-load="autoLoad"
     class="opt-in-timeline"
     tag="section"
@@ -40,6 +40,7 @@ import { id } from '~/helpers/accounts'
 
 const { submissionId, paginated, account, limit, autoLoad } = defineProps({
   submissionId: String,
+  refreshKey: String,
   account: String,
   paginated: Boolean,
   autoLoad: {

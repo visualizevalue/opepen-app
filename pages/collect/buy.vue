@@ -2,11 +2,11 @@
   <div class="has-secondary">
     <TertiaryNav>
       <NuxtLink to="/collect/buy/unrevealed">
-        <Icon type="opepen" />
+        <Icon type="opepen-outline" />
         <span>Unrevealed</span>
       </NuxtLink>
       <NuxtLink to="/collect/buy/revealed">
-        <Icon type="opepen-eye" />
+        <Icon type="opepen" />
         <span>Revealed</span>
       </NuxtLink>
     </TertiaryNav>

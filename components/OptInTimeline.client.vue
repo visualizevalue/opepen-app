@@ -1,6 +1,7 @@
 <template>
   <div class="expandable-timeline">
     <OptInTimelineList
+      :refresh-key="refreshKey"
       :submission-id="submissionId"
       :limit="3"
       :auto-load="false"
@@ -34,6 +35,7 @@ const {
   submissionId,
   expandable,
 } = defineProps({
+  refreshKey: String,
   submissionId: String,
   expandable: {
     type: Boolean,
