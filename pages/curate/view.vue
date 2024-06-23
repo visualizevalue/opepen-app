@@ -9,6 +9,10 @@
         <Icon type="infinity-flower" />
         <span>All</span>
       </NuxtLink>
+      <NuxtLink to="/curate/view/leaderboard">
+        <Icon type="opepen" />
+        <span>Patrons</span>
+      </NuxtLink>
     </TertiaryNav>
 
     <NuxtPage class="view-page" />

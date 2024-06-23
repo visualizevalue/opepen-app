@@ -61,8 +61,6 @@
         </NuxtLink>
       </li>
     </ul>
-
-    <OptInTimeline v-if="data" :submission-id="data.uuid" />
   </section>
 </template>
 

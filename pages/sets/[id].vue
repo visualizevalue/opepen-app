@@ -7,21 +7,15 @@
       <SetReplacementNote v-if="submission?.set_id" :set="set" :replaced-submission="set.replacedSubmission" class="note" />
     </header>
 
-    <SetPreviewImages :data="submission" class="items" />
-    <SetItemsMeta :data="submission" />
+    <section class="meta">
+      <SetPreviewImages :data="submission" class="items" />
+      <SetItemsMeta :data="submission" />
+    </section>
 
-    <template v-if="submission?.approved_at">
-      <!-- <SetAbout :set="set" /> -->
-      <SetStats :data="submission" class="stats" />
-      <SetOptIn :data="submission" @update="() => refresh()" />
-      <SetStatsMeta :data="submission" />
-
-      <SetOpepen v-if="submission.set_id" :data="submission" />
+    <section class="opepen">
+      <SetOpepen v-if="submission?.set_id" :data="submission" />
       <SetDynamicImagesPreview v-else :data="submission" />
-
-      <!-- TODO: Reenable comments -->
-      <!-- <SetOptInComments :data="data" /> -->
-    </template>
+    </section>
 
     <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh">
       <template #before>
@@ -57,16 +51,6 @@ if (! data.value) await navigateTo('/')
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
 
-// const revealsAt = submission.value?.reveals_at && DateTime.fromISO(submission.value.reveals_at).toUnixInteger()
-// const revealed = revealsAt && (revealsAt <= DateTime.now().toUnixInteger())
-// const mainButton = revealed || !submission.value?.name
-//   ? [
-//     { property: 'fc:frame:button:1', content: `Set #${pad(submission.value?.id, 3)} on Opepen.art` },
-//     { property: 'fc:frame:button:1:action', content: `link` },
-//     { property: 'fc:frame:button:1:target', content: `https://opepen.art/sets/${submission.value.id}` },
-//   ]
-//   : [{ property: 'fc:frame:button:1', content: 'Opt In' }]
-
 useMetaData({
   title: isSet
     ? `Set ${pad(set.value.id, 3)}: ${submission.value?.name || 'Unrevealed'} | Opepen`
@@ -79,80 +63,48 @@ useMetaData({
     : ``,
   meta: [
     // TODO: Fix and reenable these frames
-    // { property: 'fc:frame', content: 'vNext' },
-    // { property: 'fc:frame:image', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail/image` },
-    // { property: 'fc:frame:image:aspect_ratio', content: `1:1` },
-    // ...mainButton,
-    // { property: 'fc:frame:button:2', content: 'View 1/1 →' },
-    // { property: 'fc:frame:post_url', content: `https://api.opepen.art/v1/frames/sets/${submission.value.id}/detail` },
   ],
 })
 </script>
 
 <style lang="postcss" scoped>
   .set {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: var(--size-4);
     row-gap: var(--size-7);
     max-width: var(--content-width);
     margin: 0 auto;
-    grid-template-columns: 100%;
-    grid-template-areas:
-                "header"
-                "items"
-                "items-meta"
-                /* "about" */
-                "details"
-                "details-meta"
-                "opt-in"
-                "opepen"
-                "comments";
-
 
     @media (--md) {
-      display: grid;
-      gap: var(--size-7);
-      row-gap: var(--size-9);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-auto-rows: min-content;
-      grid-auto-flow: dense;
-      grid-template-areas:
-                  "header header"
-                  "items items-meta"
-                  /* "about about" */
-                  "details opt-in"
-                  "details-meta details-meta"
-                  "opepen opepen"
-                  "comments comments";
+      gap: var(--size-8);
     }
 
-    :deep() {
-      > header {
-        grid-area: header;
-        display: flex;
-        flex-direction: column;
-        gap: var(--size-4);
+    > header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-4);
+      padding: var(--size-5) 0;
 
-        @media (--md) {
-          gap: var(--size-7);
-        }
+      @media (--md) {
+        gap: var(--size-7);
       }
-      > .items { grid-area: items; }
-      > .stats { grid-area: details; }
-      > .opt-in { grid-area: opt-in; }
-      >.items-meta { grid-area: items-meta; }
-      > .details-meta,
-      > .stats-meta { grid-area: details-meta; }
-      > .set-opepen { grid-area: opepen; }
-      > .about { grid-area: about; }
-      > .opt-in-comments { grid-area: comments; }
-      > .opt-in + .opt-in-comments { grid-area: opepen; }
+    }
+
+    > section.meta {
+      display: grid;
+      gap: var(--size-4);
+
+      @media (--md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--size-7);
+      }
     }
 
   }
 
-  .items,
-  .stats {
+  .items {
     display: grid;
     aspect-ratio: 1;
   }

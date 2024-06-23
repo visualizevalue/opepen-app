@@ -1,5 +1,7 @@
 <template>
   <section v-if="revealed" class="set-opepen">
+    <SectionTitle>Opepen</SectionTitle>
+
     <Loading v-if="pending" />
     <div v-else class="list">
       <div
@@ -36,21 +38,26 @@ const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && data.s
 
 <style lang="postcss" scoped>
   .list {
-    display: flex;
-    justify-content: center;
-    container-type: inline-size;
+    display: grid;
+
+    display: grid;
+    gap: var(--size-4);
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+
     flex-wrap: wrap;
     max-width: var(--content-width);
     width: 100%;
     margin: 0 auto;
-    gap: var(--size-4);
+
+    @media (--md) {
+      gap: var(--size-5);
+    }
 
     > div {
       width: 100%;
-      max-width: min(calc(50cqw - var(--size-4)), calc(50cqh / 1.5));
 
-      @container (width > 30rem) {
-        max-width: calc(25cqw - var(--size-4));
+      p {
+        justify-content: flex-start !important;
       }
     }
   }

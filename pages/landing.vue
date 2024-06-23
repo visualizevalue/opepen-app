@@ -20,7 +20,7 @@
       </div>
 
       <div class="stats">
-        <Stats />
+        <StatsOverview />
       </div>
 
       <div class="activity">

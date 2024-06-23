@@ -39,15 +39,18 @@
           </span>
         </div>
       </section>
-
-      <OptInTimeline v-if="submission" :submission-id="submission.uuid" :refresh-key="refreshKey" />
     </div>
 
     <TertiaryNav>
       <SetOptInButton :data="submission" @update="update" />
       <NuxtLink to="/collect/buy/unrevealed">
         <Icon type="infinity-flower" />
-        <span>Buy Unrevealed</span>
+        <span>
+          <span>Buy Unrevealed </span>
+          <Stats #default="{ stats }">
+            <span v-if="stats.markets.floor.unrevealed" class="hidden-sm">({{ formatEther(stats.markets.floor.unrevealed) }} ETH)</span>
+          </Stats>
+        </span>
       </NuxtLink>
     </TertiaryNav>
 
@@ -74,6 +77,7 @@
 </template>
 
 <script setup>
+import { formatEther } from 'viem'
 import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 import { shortenedCleanText } from '~/helpers/strings'
@@ -120,7 +124,7 @@ useMetaData({
   .submission {
     width: 100%;
     height: 100%;
-    padding: var(--size-7) var(--size-4) var(--size-8);
+    padding: var(--size-7) var(--size-4) calc(var(--navbar-height) + var(--size-8));
     max-width: var(--content-width-sm);
     margin: 0 auto;
 

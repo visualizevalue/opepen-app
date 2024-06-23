@@ -1,5 +1,5 @@
 <template>
-  <div v-if="! expanded" class="create-set">
+  <div class="create-set">
     <div class="actions">
       <Button to="/create/sets/submit">
         <Icon type="upload" />

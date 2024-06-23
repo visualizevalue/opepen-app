@@ -98,6 +98,10 @@
 
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
+
+  @media (--lg) {
+    --sidenav-width: max(20rem, 20vw);
+  }
 }
 
 /* DARK */

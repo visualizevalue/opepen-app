@@ -20,6 +20,7 @@ nav.tertiary {
     transform: rotate(-90deg);
     white-space: nowrap;
     padding: var(--size-3) var(--size-4);
+    max-width: none;
   }
 
   @media (--md) {
@@ -34,6 +35,7 @@ nav.tertiary {
       transform: none;
       flex-direction: row-reverse;
       padding: var(--size-2) var(--size-6);
+      max-width: 100%;
     }
   }
 }
