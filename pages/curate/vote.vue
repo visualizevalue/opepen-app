@@ -1,13 +1,22 @@
 <template>
   <div class="vote">
-    <CurateOpepen />
+    <CurateOpepen @voted="refreshKey ++" />
 
-    <TertiaryNav class="hidden-sm">
-      <p>183 curated</p>
-      <p>13,556 to curate</p>
-    </TertiaryNav>
+    <ClientOnly>
+      <TertiaryNav class="hidden-sm">
+        <template #default>
+          <CurationStats :refresh-key="refreshKey" />
+        </template>
+      </TertiaryNav>
+    </ClientOnly>
   </div>
 </template>
+
+<script setup>
+const stats = ref(null)
+
+const refreshKey = ref(0)
+</script>
 
 <style lang="postcss" scoped>
 .vote {

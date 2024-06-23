@@ -19,6 +19,7 @@
 import { useSwipe } from '@vueuse/core'
 
 const config = useRuntimeConfig()
+const emit = defineEmits(['voted'])
 
 const { data, pending, refresh } = await useFetch(`${config.public.opepenApi}/votes/votable`)
 
@@ -40,6 +41,8 @@ const vote = async (approve) => {
 
   imgLoaded.value = false
   await refresh()
+
+  emit('voted')
 
   voting.value = false
 }

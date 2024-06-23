@@ -49,9 +49,9 @@
 
 <script setup>
 import { formatNumber } from '~/helpers/format'
+import { useStats } from '~/helpers/stats'
 
-const config = useRuntimeConfig()
-const { data: stats } = await useFetch(`${config.public.opepenApi}/stats`)
+const { data: stats } = await useStats()
 </script>
 
 <style lang="postcss" scoped>
