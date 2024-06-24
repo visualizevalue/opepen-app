@@ -17,17 +17,24 @@
 
 <script setup>
 import { useSwipe } from '@vueuse/core'
+import { isAuthenticated, useSignIn } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
 const emit = defineEmits(['voted'])
 
 const { data, pending, refresh } = await useFetch(`${config.public.opepenApi}/votes/votable`)
 
+const { signIn } = useSignIn()
+
 const imgLoaded = ref(false)
 const voting = ref(false)
 const loading = computed(() => pending.value || !imgLoaded.value)
 
 const vote = async (approve) => {
+  if (! isAuthenticated.value) {
+    return signIn()
+  }
+
   voting.value = true
 
   await $fetch(`${config.public.opepenApi}/votes`, {

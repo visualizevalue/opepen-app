@@ -1,17 +1,19 @@
 <template>
   <div class="full">
-    <SecondaryNav>
-      <NuxtLink to="/create/singles">
-        <Icon type="opepen" />
-        <span>Singles</span>
-      </NuxtLink>
-      <NuxtLink to="/create/sets">
-        <Icon type="opepen-grid" />
-        <span>Sets</span>
-      </NuxtLink>
-    </SecondaryNav>
+    <Authenticated>
+      <SecondaryNav>
+        <NuxtLink to="/create/singles">
+          <Icon type="opepen" />
+          <span>Singles</span>
+        </NuxtLink>
+        <NuxtLink to="/create/sets">
+          <Icon type="opepen-grid" />
+          <span>Sets</span>
+        </NuxtLink>
+      </SecondaryNav>
 
-    <NuxtPage class="create-page" />
+      <NuxtPage class="create-page" />
+    </Authenticated>
   </div>
 </template>
 
