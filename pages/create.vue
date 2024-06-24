@@ -1,21 +1,17 @@
 <template>
   <div class="full">
     <SecondaryNav>
-      <NuxtLink to="/curate/vote">
-        <Icon type="check" />
-        <span>Vote</span>
-      </NuxtLink>
-      <NuxtLink to="/curate/view">
-        <Icon type="opepen-eye" />
-        <span>View</span>
-      </NuxtLink>
-      <NuxtLink to="/curate/nodes">
+      <NuxtLink to="/create/singles">
         <Icon type="opepen" />
-        <span>Nodes</span>
+        <span>Singles</span>
+      </NuxtLink>
+      <NuxtLink to="/create/sets">
+        <Icon type="opepen-grid" />
+        <span>Sets</span>
       </NuxtLink>
     </SecondaryNav>
 
-    <NuxtPage />
+    <NuxtPage class="create-page" />
   </div>
 </template>
 
@@ -26,5 +22,12 @@
   @media (--md) {
     padding: calc(var(--navbar-height) + var(--size-5)) var(--sidenav-width) var(--size-5) !important;
   }
+
+  :deep(.create-page) {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
 }
+
 </style>

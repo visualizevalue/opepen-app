@@ -1,8 +1,6 @@
 <template>
-  <div class="submit">
-    <SectionTitle>
-      Create Set
-    </SectionTitle>
+  <div class="submit-single">
+    <SectionTitle>Create Single Opepen</SectionTitle>
 
     <Alert class="inline info">
       <p>Base your art on the Opepen Schematics.</p>
@@ -14,25 +12,17 @@
       >Opepen Schematics</Button>
     </Alert>
 
-    <SetSubmissionForm />
+    <PostCreateSingle key="create-single" />
   </div>
 </template>
 
-<script setup>
-import { useMetaData } from '~/helpers/head'
-
-useMetaData({
-  title: 'Create set submission',
-})
-</script>
-
 <style lang="postcss" scoped>
-aside {
-  margin: var(--size-6) 0 0;
+.submit-single {
+  max-width: var(--content-width-sm);
+  margin: 0 auto;
 }
 
-.submit {
-  max-width: var(--content-width);
-  margin: 0 auto;
+:deep(.info) {
+  margin-bottom: var(--size-7);
 }
 </style>

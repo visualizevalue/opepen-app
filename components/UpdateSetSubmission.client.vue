@@ -1,13 +1,9 @@
 <template>
   <div>
-    <PageHeader>
-      <h1 class="breadcrumb">
-        <NuxtLink to="./">Sets</NuxtLink>
-        <span class="separator">/</span>
-        <span v-if="data?.name">Update "{{ data.name }}" submission</span>
-        <span v-else>Update submission</span>
-      </h1>
-    </PageHeader>
+    <SectionTitle>
+      <span v-if="data?.name">Update "{{ data.name }}" submission</span>
+      <span v-else>Update submission</span>
+    </SectionTitle>
 
     <SetSubmissionForm v-if="data" @updated="data = $event" :data="data" />
 

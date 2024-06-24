@@ -6,7 +6,7 @@
 h1 {
   display: flex;
   align-items: center;
-  font-size: var(--font-lg);
+  font-size: var(--font-base);
   margin: var(--size-6) 0;
 
   .icon {
