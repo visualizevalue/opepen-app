@@ -1,6 +1,7 @@
 <template>
   <Loading v-if="! data" />
   <div v-else class="opepen-swipe" :class="{ loading }">
+    <Loading v-if="loading" txt="" />
     <button @click="() => vote(false)" :style="buttonLeftStyle"><Icon type="uncheck" /></button>
     <div
       ref="container"
@@ -120,6 +121,14 @@ const buttonRightStyle = computed(() => {
   gap: 0 var(--size-9);
   align-items: center;
   grid-template-columns: 1fr 1fr;
+
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -1rem;
+    margin-top: -1rem;
+  }
 
   > .swipe {
     grid-row: 1;

@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-await navigateTo('/curate/view')
+await navigateTo('/curate/vote')
 </script>

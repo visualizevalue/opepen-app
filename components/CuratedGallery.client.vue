@@ -1,10 +1,11 @@
 <template>
-  <PaginatedContent
-    :url="url"
-    tag="section"
-    class="no-scroller"
-  >
-    <template #default="{ items }">
+  <ClientOnly>
+    <PaginatedContent
+      :url="url"
+      tag="section"
+      class="no-scroller"
+      #default="{ items }"
+    >
       <div class="grid" ref="grid">
 
         <div v-if="gridWidth">
@@ -23,8 +24,8 @@
         </div>
 
       </div>
-    </template>
-  </PaginatedContent>
+    </PaginatedContent>
+  </ClientOnly>
 </template>
 
 <script setup>

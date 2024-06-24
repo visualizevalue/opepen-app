@@ -1,6 +1,6 @@
 <template>
 
-  <button v-if="data" @click="startOptIn">
+  <button v-if="data && optInAvailable" @click="startOptIn">
     <Icon type="check" />
     <span>
       <span>Opt In</span>
@@ -23,13 +23,20 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useAccount, useBlockHeight } from '~/helpers/use-wagmi'
-import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL, delay } from '~/helpers/time'
+import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL, delay, useNow } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 const props = defineProps({ data: Object })
 const emit = defineEmits(['update'])
 const { address, isConnected } = useAccount()
 
+const now = useNow()
+const optInAvailable = computed(() => {
+  const starred = DateTime.fromISO(props.data?.starred_at)
+  const currentTime = DateTime.fromSeconds(now.value)
+
+  return starred < currentTime && starred.plus({ hours: 48 }) > currentTime
+})
 const published = computed(() => !!props.data.published_at)
 const revealDate = ref(DateTime.fromISO(props.data?.reveals_at).toFormat('LLL dd, yyyy'))
 const revealsAt = ref(props.data?.reveals_at

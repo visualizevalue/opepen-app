@@ -5,7 +5,8 @@
 
       <header>
         <h1>
-          <span>{{ submission.name }}</span>
+          <span v-if="! submission.set">{{ submission.name }}</span>
+          <NuxtLink v-else :to="`/sets/${submission.set.id}`">{{ submission.name }} <span class="muted">(Set {{ pad(submission.set.id) }})</span></NuxtLink>
           <small @click="showDescription = true" :class="{ clickable: description !== submission.description }">
             {{ description }}
           </small>
@@ -26,14 +27,14 @@
         <SetSimpleDemand :data="submission" />
 
         <div class="timer muted">
-          <span v-if="submission.set && data.nextSetAt" class="nowrap">
+          <span v-if="closed && data.nextSetAt" class="nowrap">
             <span>Next set in</span>
             <CountDown :until="DateTime.fromISO(data.nextSetAt).toUnixInteger()" />
           </span>
           <span v-else-if="closed && submission.reveal_block_number && !submission.set">
             Revealing...
           </span>
-          <span v-else>
+          <span v-else-if="! closed">
             <CountDown :until="closesAt.toUnixInteger()" minimal />
             <span>left</span>
           </span>
@@ -82,6 +83,7 @@ import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 import { shortenedCleanText } from '~/helpers/strings'
 import { useNow } from '~/helpers/time'
+import pad from '~/helpers/pad'
 
 const config = useRuntimeConfig()
 

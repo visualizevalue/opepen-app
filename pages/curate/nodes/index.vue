@@ -9,6 +9,8 @@
           <ApiAccount :account="item" />
 
           <span>{{ item.votes_count }} votes</span>
+
+          <NuxtLink :to="`/${computeId(item)}`"><span>View {{ item.display }}</span></NuxtLink>
         </article>
       </div>
     </PaginatedContent>
@@ -16,6 +18,7 @@
 </template>
 
 <script setup>
+import { id as computeId } from '~/helpers/accounts'
 import { useMetaData } from '~/helpers/head'
 
 const config = useRuntimeConfig()
@@ -37,9 +40,23 @@ useMetaData({
     display: grid;
     gap: var(--size-2);
     grid-template-columns: 1fr 1fr;
+    position: relative;
 
     > span:nth-child(2) {
       text-align: right;
+    }
+
+    > a {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      > span {
+        opacity: 0;
+        pointer-events: none;
+      }
     }
   }
 }

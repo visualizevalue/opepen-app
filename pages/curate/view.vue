@@ -3,11 +3,11 @@
     <TertiaryNav>
       <NuxtLink to="/curate/view/mine">
         <Icon type="infinity" />
-        <span>Mine</span>
+        <span>Personal</span>
       </NuxtLink>
       <NuxtLink to="/curate/view/all">
         <Icon type="infinity-half-flower" />
-        <span>All</span>
+        <span>Community</span>
       </NuxtLink>
       <NuxtLink to="/curate/view/permanent">
         <Icon type="infinity-flower" />

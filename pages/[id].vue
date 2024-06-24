@@ -23,10 +23,10 @@
 
     <SocialLinks :links="otherSocials" class="socials" />
 
-    <SectionNav>
+    <!-- <SectionNav>
       <NuxtLink :to="`/${id(account)}`">About</NuxtLink>
       <NuxtLink :to="`/${id(account)}/activity`">Activity</NuxtLink>
-    </SectionNav>
+    </SectionNav> -->
 
     <NuxtPage :account="account" />
 
