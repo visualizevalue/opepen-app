@@ -1,21 +1,21 @@
 <template>
   <div class="view has-tertiary">
     <TertiaryNav>
-      <NuxtLink to="/curate/view/mine">
+      <NuxtLink to="/curate/nodes" class="exact">
         <Icon type="infinity" />
-        <span>Mine</span>
+        <span>Curators</span>
       </NuxtLink>
-      <NuxtLink to="/curate/view/all">
+      <NuxtLink to="/curate/nodes/patrons">
         <Icon type="infinity-half-flower" />
-        <span>All</span>
+        <span>Patrons</span>
       </NuxtLink>
-      <NuxtLink to="/curate/view/permanent">
+      <NuxtLink to="/curate/nodes/artists">
         <Icon type="infinity-flower" />
-        <span>Permanent</span>
+        <span>Artists</span>
       </NuxtLink>
     </TertiaryNav>
 
-    <NuxtPage class="view-page" />
+    <NuxtPage class="nodes-page" />
   </div>
 </template>
 
@@ -30,5 +30,14 @@
       padding: var(--size-3);
     }
   }
+
+  :deep(.nodes-page) {
+    padding: var(--size-7) var(--size-5);
+
+    @media (--md) {
+      padding: var(--size-7) 0;
+    }
+  }
 }
+
 </style>

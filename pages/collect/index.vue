@@ -48,7 +48,7 @@
         <span>
           <span>Buy Unrevealed </span>
           <Stats #default="{ stats }">
-            <span v-if="stats.markets.floor.unrevealed" class="hidden-sm">({{ formatEther(stats.markets.floor.unrevealed) }} ETH)</span>
+            <span v-if="stats?.markets.floor.unrevealed" class="hidden-sm">({{ formatEther(stats.markets.floor.unrevealed) }} ETH)</span>
           </Stats>
         </span>
       </NuxtLink>

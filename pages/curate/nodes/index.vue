@@ -1,6 +1,5 @@
 <template>
   <div>
-    <pre>{{ data }}</pre>
     <PaginatedContent
       :url="`${config.public.opepenApi}/votes/leaderboard`"
       #default="{ items }"
@@ -18,8 +17,6 @@
 
 <script setup>
 const config = useRuntimeConfig()
-
-const { data } = await useFetch()
 </script>
 
 <style lang="postcss" scoped>

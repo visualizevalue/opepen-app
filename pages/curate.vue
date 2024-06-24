@@ -9,6 +9,10 @@
         <Icon type="opepen-eye" />
         <span>View</span>
       </NuxtLink>
+      <NuxtLink to="/curate/nodes">
+        <Icon type="opepen" />
+        <span>Notes</span>
+      </NuxtLink>
     </SecondaryNav>
 
     <NuxtPage />

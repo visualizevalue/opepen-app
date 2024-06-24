@@ -166,7 +166,10 @@ const selectedPerGroup = computed(() => Object.keys(grouped.value)
     return groups
   }, {})
 )
-const hasChange = computed(() => JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort()))
+const hasChange = computed(() =>
+  opepen.value.length &&
+  JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort())
+)
 
 const selectAll = (group) => {
   grouped.value[group].forEach(o => {
