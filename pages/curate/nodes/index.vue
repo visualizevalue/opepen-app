@@ -16,7 +16,13 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
+
 const config = useRuntimeConfig()
+
+useMetaData({
+  title: 'Opepen Curators',
+})
 </script>
 
 <style lang="postcss" scoped>

@@ -19,7 +19,9 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
 import { id as computeId } from '~/helpers/accounts'
+
 const config = useRuntimeConfig()
 
 const url = `${config.public.opepenApi}/accounts/curators`
@@ -31,6 +33,10 @@ const query = computed(() => {
   })
 
   return q.toString()
+})
+
+useMetaData({
+  title: 'Opepen Owners',
 })
 </script>
 

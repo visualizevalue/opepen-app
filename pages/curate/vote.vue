@@ -13,6 +13,12 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
+
+useMetaData({
+  title: 'Curate Opepen',
+})
+
 const stats = ref(null)
 
 const refreshKey = ref(0)

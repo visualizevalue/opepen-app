@@ -16,6 +16,11 @@
 </template>
 
 <script setup>
+import { useMetaData } from '~/helpers/head'
+
+useMetaData({
+  title: 'Buy Opepen',
+})
 </script>
 
 <style lang="postcss" scoped>
