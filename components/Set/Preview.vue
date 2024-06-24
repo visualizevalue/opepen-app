@@ -29,19 +29,6 @@
             <IconCheck />
             <span>Consensus met on {{ consensusDate }}</span>
           </li>
-          <li v-else>
-            <IconCheck class="check" :class="{ published }" />
-            <span v-if="published">
-              <template v-if="consensusDate">Opt-In until {{ consensusDate }} (<CountDown @complete="onComplete" :until="revealsAt" class="inline nowrap" minimal />)</template>
-              <template v-else>
-                Opt-In open
-                <span v-if="isPaused">
-                  (paused at {{ timeRemainingFromSeconds(data.remaining_reveal_time) }})
-                </span>
-              </template>
-            </span>
-            <span v-else>Opt-In not open yet</span>
-          </li>
         </ul>
 
         <div class="actions">
