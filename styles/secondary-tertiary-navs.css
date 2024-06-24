@@ -10,6 +10,7 @@ nav.tertiary {
 
   > * {
     max-width: 100%;
+    width: fit-content;
     display: flex;
     gap: var(--size-2);
     padding: var(--size-4);

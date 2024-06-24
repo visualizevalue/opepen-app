@@ -219,22 +219,23 @@ button {
   opacity: 0.1;
   color: var(--gray-z-5);
 
+  &:last-child {
+    color: var(--success);
+  }
+
   &:--highlight {
-    color: var(--gray-z-5);
+    background: var(--gray-z-3);
+    color: var(--color) !important;
+
+    &:last-child {
+      color: var(--success) !important;
+    }
   }
 
   .icon {
     color: inherit !important;
     width: var(--size-6);
     height: var(--size-6);
-  }
-
-  &:last-child {
-    color: var(--success);
-
-    &:--highlight {
-      color: var(--success);
-    }
   }
 }
 </style>
