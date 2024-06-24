@@ -3,13 +3,19 @@
     v-if="address"
     :url="url"
     :query="query"
-    #default="{ items }"
   >
-    <div class="list">
-      <article v-for="post in items" :key="post.id">
-        <Image :image="post.images[0]" />
-      </article>
-    </div>
+    <template #after-block="{ items }">
+      <div v-if="! items.length">
+        <p class="muted">No single posts created</p>
+      </div>
+    </template>
+    <template #default="{ items }">
+      <div class="list">
+        <article v-for="post in items" :key="post.id">
+          <Image :image="post.images[0]" />
+        </article>
+      </div>
+    </template>
   </PaginatedContent>
 </template>
 
