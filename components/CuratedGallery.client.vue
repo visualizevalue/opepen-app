@@ -19,6 +19,7 @@
             <Image
               :key="image.uuid"
               :image="image"
+              version="sm"
             />
           </RecycleScroller>
         </div>
