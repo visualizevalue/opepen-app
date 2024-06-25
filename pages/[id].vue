@@ -16,7 +16,18 @@
             <span v-if="account.ens">{{ account.ens }}</span>
             <span>{{ shortAddress(account.address, 6) }}</span>
           </NuxtLink>
-          <SocialLinks :links="mainSocials" class="socials" />
+          <SocialLinks :links="mainSocials" class="socials">
+            <template #last>
+              <li>
+                <WithAccount #default="{ address }">
+                  <Button v-if="address?.toLowerCase() === account.address" to="/settings" title="Account Settings" class="small">
+                    <Icon type="settings" />
+                  </Button>
+                </WithAccount>
+              </li>
+            </template>
+          </SocialLinks>
+
         </div>
       </div>
     </header>

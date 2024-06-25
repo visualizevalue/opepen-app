@@ -6,33 +6,35 @@
       <Button @click="signIn">Sign in with Ethereum</Button>
     </div>
     <PaginatedContent
-      v-if="session"
+      v-else-if="session?.address"
       :url="url"
       :refresh-key="`${address}.${nonce}`"
-      v-slot="{ items }"
     >
-      <div v-if="! items?.length" class="empty">
-        <p class="muted">No set submissions</p>
-        <Button to="/create/sets/submit">
-          <Icon type="plus" />
-          <span>Create set</span>
-        </Button>
-      </div>
-
-      <article
-        v-for="set in items"
-        :key="set.uuid"
-      >
-        <div class="preview">
-          <Image :image="set.edition1Image" version="sm" />
+      <template #after-block="{ items }">
+        <div v-if="! items?.length" class="empty">
+          <p class="muted">No set submissions</p>
+          <Button to="/create/sets/submit">
+            <Icon type="plus" />
+            <span>Create set</span>
+          </Button>
         </div>
+      </template>
+      <template #default="{ items }">
+        <article
+          v-for="set in items"
+          :key="set.uuid"
+        >
+          <div class="preview">
+            <Image :image="set.edition1Image" version="sm" />
+          </div>
 
-        <div class="details">
-          <h1>{{ set.name }}</h1>
-          <p>{{ set.description }}</p>
-          <NuxtLink :to="`/create/sets/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
-        </div>
-      </article>
+          <div class="details">
+            <h1>{{ set.name }}</h1>
+            <p>{{ set.description }}</p>
+            <NuxtLink :to="`/create/sets/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
+          </div>
+        </article>
+      </template>
     </PaginatedContent>
   </section>
 </template>
@@ -56,7 +58,7 @@ const url = computed(() => `${config.public.opepenApi}/accounts/${session.value?
 
 <style lang="postcss" scoped>
 section {
-  margin: var(--size-7) 0;
+  margin: var(--size-5) 0;
 
   :deep(> div) {
     display: grid;
@@ -119,7 +121,6 @@ article {
   align-items: center;
   gap: var(--size-5);
   width: 100%;
-  padding: var(--size-8) 0;
 
   @media (--md) {
     grid-column: span 2;

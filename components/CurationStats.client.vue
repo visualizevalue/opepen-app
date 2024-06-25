@@ -1,7 +1,7 @@
 <template>
   <template v-if="stats">
     <p v-if="parseInt(stats.votes)">{{ formatNumber(stats.votes) }} curated</p>
-    <p>{{ formatNumber(stats.votable - stats.votes) }} to curate</p>
+    <p>{{ formatNumber(Math.max(stats.votable - stats.votes, 0)) }} to curate</p>
   </template>
 </template>
 

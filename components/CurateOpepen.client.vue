@@ -2,7 +2,7 @@
   <Loading v-if="! data" />
   <div v-else class="opepen-swipe" :class="{ loading }">
     <Loading v-if="loading" txt="" />
-    <button @click="() => vote(false)" :style="buttonLeftStyle"><Icon type="uncheck" /></button>
+    <button @click="() => voteAndAnimate(false)" :style="buttonLeftStyle"><Icon type="uncheck" /></button>
     <div
       ref="container"
       class="swipe"
@@ -11,13 +11,13 @@
     >
       <Image :image="data" :key="data.uuid" @loaded="imgLoaded = true" />
     </div>
-    <button @click="() => vote(true)" :style="buttonRightStyle"><Icon type="check" /></button>
+    <button @click="() => voteAndAnimate(true)" :style="buttonRightStyle"><Icon type="check" /></button>
   </div>
 
 </template>
 
 <script setup>
-import { useSwipe } from '@vueuse/core'
+import { onKeyStroke, useSwipe } from '@vueuse/core'
 import { isAuthenticated, useSignIn } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
@@ -55,6 +55,22 @@ const vote = async (approve) => {
   voting.value = false
 }
 
+const animate = ref(null)
+const voteAndAnimate = async (approve) => {
+  animate.value = approve ? 'RIGHT' : 'LEFT'
+  console.log('animage', animate.value)
+
+  setTimeout(() => {
+    animate.value = null
+  }, 500)
+
+  await vote(approve)
+}
+
+// Keyboard logic
+onKeyStroke('ArrowLeft', () => voteAndAnimate(false))
+onKeyStroke('ArrowRight', () => voteAndAnimate(true))
+
 // Swipe logic
 const container = ref(null)
 const containerWidth = computed(() => container.value?.offsetWidth)
@@ -62,7 +78,7 @@ const positionX = ref(0)
 const percentage = computed(() => positionX.value / containerWidth.value)
 const absPercentage = computed(() => Math.abs(percentage.value))
 const rotation = computed(() => percentage.value * 10)
-const { isSwiping, direction, lengthX } = useSwipe(container, {
+const { isSwiping, direction: swipeDirection, lengthX } = useSwipe(container, {
   passive: false,
   onSwipe () {
     positionX.value = -1 * lengthX.value
@@ -75,11 +91,22 @@ const { isSwiping, direction, lengthX } = useSwipe(container, {
     positionX.value = 0
   },
 })
+const direction = computed(() => animate.value || swipeDirection.value)
 
-const swipeStyle = computed(() => ({
-  transform: `translateX(${positionX.value}px) rotate(${rotation.value}deg)`,
-  opacity: (positionX === 0 ? 1 : 1 - absPercentage.value) + ' !important',
-}))
+const swipeStyle = computed(() => {
+  const x = animate.value
+    ? animate.value === 'RIGHT' ? containerWidth.value/3  : -1 * containerWidth.value/3
+    : positionX.value
+  const rot = animate.value
+    ? animate.value === 'RIGHT' ? 5 : -5
+    : rotation.value
+  const opacity = animate.value ? 0 : positionX === 0 ? 1 : 1 - absPercentage.value
+
+  return {
+    transform: `translateX(${x}px) rotate(${rot}deg)`,
+    opacity: opacity + ' !important',
+  }
+})
 const buttonStyle = computed(() => ({
   opacity: loading.value ? '0 !important' : 1 - absPercentage.value + ' !important',
   transform: `translateY(${absPercentage.value * 32}px)`
@@ -105,9 +132,6 @@ const buttonRightStyle = computed(() => {
       : buttonStyle.value.transform,
   }
 })
-// const positionX = computed(() => {
-//   return Math.abs(lengthX.value) * (direction.value === 'LEFT' ? -1 : 1)
-// })
 </script>
 
 <style lang="postcss" scoped>

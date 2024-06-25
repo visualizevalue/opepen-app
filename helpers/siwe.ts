@@ -97,6 +97,9 @@ export const useSignIn = () => {
         // We're already signed in
         return true
       }
+      if (address.value && ! isAuthenticated.value) {
+        await $fetch(`${API}/auth/clear`, { credentials: 'include' })
+      }
     } catch (e) {}
 
     try {
@@ -117,7 +120,9 @@ export const useSignIn = () => {
         credentials: 'include',
         body: JSON.stringify({ message, signature })
       })
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
 
     signingIn.value = false
     loading.value = false

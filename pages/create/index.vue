@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-await navigateTo('/create/singles/submit')
+await navigateTo('/create/singles')
 </script>

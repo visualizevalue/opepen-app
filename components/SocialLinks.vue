@@ -6,6 +6,8 @@
         <span class="text"><span class="muted" v-if="item.prefix">{{ item.prefix }}</span>{{ item.name }}</span>
       </Button>
     </li>
+
+    <slot name="last" />
   </ul>
 </template>
 

@@ -4,14 +4,17 @@
     :url="url"
     :query="query"
   >
-    <template #after-block="{ items }">
-      <div v-if="! items.length">
+  <template #after-block="{ items }">
+    <slot v-if="! items.length" name="empty" :items="items">
+      <div>
         <p class="muted">No single posts created</p>
       </div>
-    </template>
-    <template #default="{ items }">
-      <div class="list">
-        <article v-for="post in items" :key="post.id">
+    </slot>
+  </template>
+  <template #default="{ items }">
+    <slot name="before"></slot>
+    <div class="list">
+      <article v-for="post in items" :key="post.id">
           <Image :image="post.images[0]" />
         </article>
       </div>
