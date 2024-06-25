@@ -1,7 +1,7 @@
 <template>
   <AdminMenuFloating v-if="submission" v-slot="{ setAction }">
     <slot name="before"></slot>
-    <Button v-if="! submission.set_id && submission.published_at" @click="() => setAction(submission, 'unpublish').then(() => navigateTo(`/create/sets/${submission.uuid}`))">
+    <Button v-if="! submission.set_id && submission.published_at" @click="() => setAction(submission, 'unpublish').then(() => $emit('refresh'))">
       <Icon type="globe" stroke="var(--green)" />
       <span>Published</span>
     </Button>
