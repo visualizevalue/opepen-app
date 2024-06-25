@@ -50,7 +50,7 @@
           </div>
           <h1>{{ submission.name }}</h1>
           <p>{{ submission.description }}</p>
-          <NuxtLink :to="`/create/sets/admin/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
+          <NuxtLink :to="`/create/sets/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
 
           <div class="actions" v-if="! submission.deleted_at && submission.published_at">
             <button v-if="! submission.approved_at" @click.stop="() => approve(submission, index, false)">
