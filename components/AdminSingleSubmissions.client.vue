@@ -28,7 +28,7 @@
                 <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
               </button>
               <button @click="destroy(post)">
-                <Icon type="trash" :style="{ color: post.approved_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
+                <Icon type="trash" :style="{ color: post.deleted_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
               </button>
             </menu>
             <aside>
