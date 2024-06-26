@@ -2,8 +2,12 @@
   <Authenticated #default="{ isAdmin }">
     <div v-if="isAdmin" class="full">
       <SecondaryNav>
-        <NuxtLink to="/admin/sets">
+        <NuxtLink to="/admin" class="exact">
           <Icon type="check" />
+          <span>Stats</span>
+        </NuxtLink>
+        <NuxtLink to="/admin/sets">
+          <Icon type="opepen-grid" />
           <span>Sets</span>
         </NuxtLink>
         <NuxtLink to="/admin/singles">

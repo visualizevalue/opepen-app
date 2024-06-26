@@ -1,7 +1,19 @@
 <template>
-  <div></div>
+  <div class="overview">
+    <SectionTitle>Stats</SectionTitle>
+    <div>
+      <StatsOverview />
+    </div>
+  </div>
 </template>
 
 <script setup>
-await navigateTo('/admin/sets')
 </script>
+
+<style lang="postcss" scoped>
+.overview {
+  display: grid;
+  align-items: flex-start;
+  grid-auto-rows: min-content;
+}
+</style>
