@@ -57,6 +57,8 @@ const vote = async (approve) => {
 
 const animate = ref(null)
 const voteAndAnimate = async (approve) => {
+  if (animate.value !== null) return
+
   animate.value = approve ? 'RIGHT' : 'LEFT'
   console.log('animage', animate.value)
 
