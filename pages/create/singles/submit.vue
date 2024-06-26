@@ -18,8 +18,7 @@
 
 <style lang="postcss" scoped>
 .submit-single {
-  max-width: var(--content-width-sm);
-  margin: 0 auto;
+  max-width: var(--content-width-sm) !important;
 }
 
 :deep(.info) {

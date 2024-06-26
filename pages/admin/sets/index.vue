@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SinglesGallery path="opepen/images/curated" />
+    <AdminSetSubmissions />
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import { useMetaData } from '~/helpers/head'
 
 useMetaData({
-  title: 'Curated Opepen',
+  title: 'Administrate set submissions',
 })
 </script>

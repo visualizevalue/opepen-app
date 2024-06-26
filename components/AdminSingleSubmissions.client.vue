@@ -2,7 +2,7 @@
   <section v-if="isConnected">
     <PageHeader>
       <h1 class="breadcrumb">
-        <span>Manage Submissions</span>
+        <span>Manage Single Posts</span>
       </h1>
 
       <div class="actions">
@@ -10,8 +10,6 @@
           <option value="all">All</option>
           <option value="unapproved">To Approve</option>
           <option value="published">Approved</option>
-          <option value="starred">Starred</option>
-          <option value="revealed">Revealed</option>
           <option value="deleted">Deleted</option>
         </select>
       </div>
@@ -30,24 +28,7 @@
         :key="submission.uuid"
         class="submission"
       >
-        <div class="preview">
-          <Image :image="submission.edition1Image" version="sm" />
-          <Image :image="submission.edition4Image" version="sm" />
-          <Image :image="submission.edition5Image" version="sm" />
-          <Image :image="submission.edition10Image" version="sm" />
-          <Image :image="submission.edition20Image" version="sm" />
-          <Image :image="submission.edition40Image" version="sm" />
-        </div>
-
         <div class="details">
-          <div class="meta">
-            <span>
-              <Account :address="submission.creator" />,
-            </span>
-            <span>
-              {{ formatDateTime(submission.created_at) }}
-            </span>
-          </div>
           <h1>{{ submission.name }}</h1>
           <p>{{ submission.description }}</p>
           <NuxtLink :to="`/create/sets/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>

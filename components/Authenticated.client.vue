@@ -5,12 +5,13 @@
       :ens="ens"
       :is-connected="isConnected"
       :profile="profile"
+      :is-admin="isAdmin"
     />
   </WithAccount>
 </template>
 
 <script setup>
-import { useSignIn, isAuthenticated } from '~/helpers/siwe'
+import { useSignIn, isAuthenticated, isAdmin } from '~/helpers/siwe'
 
 const { signIn } = useSignIn()
 

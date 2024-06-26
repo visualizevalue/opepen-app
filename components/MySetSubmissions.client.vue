@@ -63,10 +63,7 @@ section {
   :deep(> div) {
     display: grid;
     gap: var(--size-5);
-
-    @media (--md) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
   }
 }
 

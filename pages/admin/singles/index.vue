@@ -8,6 +8,9 @@
 import { useMetaData } from '~/helpers/head'
 
 useMetaData({
-  title: 'Curated Opepen',
+  title: 'Administrate set submissions',
 })
 </script>
+
+<style lang="postcss" scoped>
+</style>

@@ -19,13 +19,15 @@
 
 <style lang="postcss" scoped>
 .full {
-  :deep(.create-page) {
+  :deep(.create-page > div) {
     width: 100%;
     max-width: var(--content-width);
     margin: 0 auto;
 
-    > div {
-      padding: var(--size-5);
+    padding: var(--size-5);
+
+    @media (--md) {
+      padding: 0;
     }
   }
 }
