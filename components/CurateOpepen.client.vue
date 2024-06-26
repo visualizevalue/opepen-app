@@ -19,6 +19,7 @@
 <script setup>
 import { onKeyStroke, useSwipe } from '@vueuse/core'
 import { isAuthenticated, useSignIn } from '~/helpers/siwe'
+import { delay } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 const emit = defineEmits(['voted'])
@@ -57,21 +58,27 @@ const vote = async (approve) => {
 
 const animate = ref(null)
 const voteAndAnimate = async (approve) => {
-  if (animate.value !== null) return
+  if (animate.value !== null || loading.value) return
 
   animate.value = approve ? 'RIGHT' : 'LEFT'
-  console.log('animage', animate.value)
 
-  setTimeout(() => {
-    animate.value = null
-  }, 500)
+  await Promise.all([
+    vote(approve),
+    delay(500),
+  ])
 
-  await vote(approve)
+  animate.value = null
 }
 
 // Keyboard logic
-onKeyStroke('ArrowLeft', () => voteAndAnimate(false))
-onKeyStroke('ArrowRight', () => voteAndAnimate(true))
+onKeyStroke('ArrowLeft', (e) => {
+  if (e.repeat) return
+  voteAndAnimate(false)
+})
+onKeyStroke('ArrowRight', (e) => {
+  if (e.repeat) return
+  voteAndAnimate(true)
+})
 
 // Swipe logic
 const container = ref(null)
