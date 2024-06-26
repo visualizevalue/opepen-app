@@ -1,6 +1,5 @@
 <template>
   <div class="overview">
-    <SectionTitle>Stats</SectionTitle>
     <div>
       <StatsOverview />
     </div>

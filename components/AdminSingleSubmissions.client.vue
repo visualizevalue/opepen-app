@@ -14,31 +14,33 @@
       </div>
     </PageHeader>
 
-    <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
-      <template #item="{ item: post, image }">
-        <div v-if="(!post.deleted_at) || status === 'deleted'" class="post">
-          <Image
-            :image="image"
-            version="sm"
-            :aspect-ratio="1"
-          />
-          <menu v-if="! post.deleted_at">
-            <button @click="post.approved_at ? unapprove(post) : approve(post)">
-              <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
-            </button>
-            <button @click="destroy(post)">
-              <Icon type="trash" :style="{ color: post.approved_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
-            </button>
-          </menu>
-          <aside>
-            <NuxtLink :to="`/${post.account.address}`">
-              <ApiAccount :account="post.account" />
-            </NuxtLink>
-          </aside>
-        </div>
-        <div v-else></div>
-      </template>
-    </SinglesGallery>
+    <div class="posts">
+      <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
+        <template #item="{ item: post, image }">
+          <div v-if="(!post.deleted_at) || status === 'deleted'" class="post">
+            <Image
+              :image="image"
+              version="sm"
+              :aspect-ratio="1"
+            />
+            <menu v-if="! post.deleted_at">
+              <button @click="post.approved_at ? unapprove(post) : approve(post)">
+                <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
+              </button>
+              <button @click="destroy(post)">
+                <Icon type="trash" :style="{ color: post.approved_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
+              </button>
+            </menu>
+            <aside>
+              <NuxtLink :to="`/${post.account.address}`">
+                <ApiAccount :account="post.account" />
+              </NuxtLink>
+            </aside>
+          </div>
+          <div v-else></div>
+        </template>
+      </SinglesGallery>
+    </div>
   </section>
 </template>
 
@@ -69,8 +71,6 @@ watch(session, () => {
 
 const query = computed(() => {
   const q = new URLSearchParams()
-
-  console.log('status', status.value)
 
   switch (status.value) {
     case 'unapproved':
@@ -128,6 +128,11 @@ section {
       align-items: center;
     }
   }
+}
+
+.posts {
+  margin-left: calc(-1 * var(--size-2));
+  margin-right: calc(-1 * var(--size-2));
 }
 
 .post {
