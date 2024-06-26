@@ -55,6 +55,18 @@
       </div>
     </div>
 
+    <div class="stat-group">
+      <h1>Emails</h1>
+      <div>
+        <p>{{ formatNumber(stats.emails.total) }}</p>
+        <small class="muted">Total Emails</small>
+      </div>
+      <div>
+        <p>{{ formatNumber(stats.emails.verified) }}</p>
+        <small class="muted">Verified Emails</small>
+      </div>
+    </div>
+
   </aside>
 </template>
 

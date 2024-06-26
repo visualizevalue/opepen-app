@@ -15,43 +15,7 @@
       </div>
     </PageHeader>
 
-    <PaginatedContent
-      v-if="session"
-      ref="list"
-      :url="url"
-      :query="query"
-      :refresh-key="address"
-      v-slot="{ items }"
-    >
-      <article
-        v-for="(submission, index) in items"
-        :key="submission.uuid"
-        class="submission"
-      >
-        <div class="details">
-          <h1>{{ submission.name }}</h1>
-          <p>{{ submission.description }}</p>
-          <NuxtLink :to="`/create/sets/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
-
-          <div class="actions" v-if="submission.published_at">
-            <button @click.stop="() => approve(submission, index)">
-              <Icon
-                type="check"
-                :style="{ color: submission.approved_at ? 'var(--green)' : 'currentColor' }"
-              />
-            </button>
-            <!-- <button @click.stop="() => star(submission, index)">
-              <Icon
-                type="star"
-                :fill="submission.starred_at ? 'var(--yellow)' : 'transparent'"
-                :stroke="submission.starred_at ? 'var(--yellow)' : 'currentColor'"
-              />
-            </button> -->
-            <button v-if="! submission.set_id" @click.stop="() => destroy(submission, index)"><Icon type="trash" /></button>
-          </div>
-        </div>
-      </article>
-    </PaginatedContent>
+    <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]" />
   </section>
 </template>
 
@@ -80,9 +44,21 @@ watch(session, () => {
 })
 
 const query = computed(() => {
-  const q = new URLSearchParams({
-    status: status.value,
-  })
+  const q = new URLSearchParams()
+
+  console.log('status', status.value)
+
+  switch (status.value) {
+    case 'unapproved':
+      q.append('filter[approved_at]', 'null')
+      break
+    case 'published':
+      q.append('filter[approved_at]', '!null')
+      break
+    case 'deleted':
+      q.append('filter[deleted_at]', '!null')
+      break
+  }
 
   return q.toString()
 })
@@ -118,6 +94,7 @@ const approve = async (submission, index) => {
 
 <style lang="postcss" scoped>
 section {
+  width: 100%;
   max-width: var(--content-width);
   margin: var(--size-7) auto;
 

@@ -20,7 +20,8 @@ const props = defineProps({
   id: String,
 })
 
-const src = computed(() => `http://localhost:3333/v1/generative/preview/${props.id}`)
+const config = useRuntimeConfig()
+const src = computed(() => `${config.public.opepenApi}/generative/preview/${props.id}`)
 
 const frame = ref(null)
 const reload = () => {
