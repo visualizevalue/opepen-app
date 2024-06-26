@@ -72,16 +72,18 @@ nav.secondary {
   }
 }
 
-.has-secondary {
+.has-secondary,
+.has-tertiary {
+  display: grid;
   padding-top: calc(var(--navbar-height) - var(--size-2));
+  height: 100%;
 
   @media (--md) {
-    padding: 0;
+    padding: var(--size-5) var(--sidenav-width) var(--size-5) !important;
   }
 }
 
 .has-tertiary {
-  padding-top: calc(var(--navbar-height) - var(--size-2));
   padding-right: calc(var(--size-7) + var(--size-2));
 
   @media (--md) {

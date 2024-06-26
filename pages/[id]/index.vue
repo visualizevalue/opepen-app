@@ -256,7 +256,6 @@ header {
   flex-wrap: wrap;
   max-width: var(--content-width);
   width: 100%;
-  margin: 5vh auto;
   gap: var(--size-4);
   grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
 }

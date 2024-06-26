@@ -1,5 +1,5 @@
 <template>
-  <div class="has-secondary">
+  <div class="has-tertiary">
     <TertiaryNav>
       <NuxtLink to="/collect/buy/unrevealed">
         <Icon type="opepen-outline" />
@@ -22,6 +22,3 @@ useMetaData({
   title: 'Buy Opepen',
 })
 </script>
-
-<style lang="postcss" scoped>
-</style>

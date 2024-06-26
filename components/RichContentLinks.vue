@@ -20,10 +20,15 @@ const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
 
 <style lang="postcss" scoped>
 .links {
-  --padding-x: var(--size-4);
+  --padding: var(--size-4);
+  --padding-x: var(--padding);
+
+  @media (--md) {
+    --padding: var(--size-6);
+  }
 
   @media (--content) {
-    --padding-x: calc((100vw - var(--content-width)) / 2 + var(--size-4));
+    --padding-x: calc((100vw - var(--content-width)) / 2 + var(--padding));
   }
 
   position: relative;

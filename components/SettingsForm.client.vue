@@ -305,6 +305,11 @@ const save = async () => {
     max-width: var(--content-width);
     margin: 0 auto;
     padding: var(--size-4) var(--container-padding-x) 0;
+
+    @media (--md) {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   .actions {

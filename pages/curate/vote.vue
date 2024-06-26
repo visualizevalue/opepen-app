@@ -1,9 +1,9 @@
 <template>
-  <div class="vote">
+  <div class="vote has-tertiary">
     <CurateOpepen @voted="refreshKey ++" />
 
     <ClientOnly>
-      <TertiaryNav class="hidden-sm">
+      <TertiaryNav class="hidden-md">
         <template #default>
           <CurationStats :refresh-key="refreshKey" />
         </template>
@@ -32,5 +32,9 @@ const refreshKey = ref(0)
   @media (--md) {
     padding-top: 0;
   }
+}
+
+.has-tertiary {
+  padding-right: 0;
 }
 </style>

@@ -74,6 +74,11 @@ const itemSize = computed(() => Math.floor(gridWidth.value / gridItems.value))
 section {
   .grid {
     width: 100%;
+    padding: var(--size-3);
+
+    @media (--md) {
+      padding: 0;
+    }
 
     :deep(.vue-recycle-scroller__item-view) {
       padding: var(--size-2);

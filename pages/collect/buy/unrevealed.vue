@@ -1,5 +1,5 @@
 <template>
-  <div class="has-secondary">
+  <div>
     <OpepenGallery
       query="filter%5Bprice%5D=!null&filter%5Brevealed_at%5D=null&sort=price"
     />

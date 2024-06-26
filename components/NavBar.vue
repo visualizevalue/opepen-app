@@ -68,13 +68,18 @@ const isScrolled = computed(() => y.value > 5)
       min-height: var(--100vh);
       padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x) calc(var(--navbar-height) + env(safe-area-inset-bottom));
 
+      &.full {
+        padding: var(--navbar-height) 0 calc(var(--navbar-height) + env(safe-area-inset-bottom));
+        display: grid;
+      }
+
       @media (--md) {
         padding-left: var(--size-6);
         padding-right: var(--size-6);
-      }
 
-      &.full {
-        padding: var(--navbar-height) 0 calc(var(--navbar-height) + env(safe-area-inset-bottom));
+        &.full {
+          padding-bottom: 0;
+        }
       }
     }
   }

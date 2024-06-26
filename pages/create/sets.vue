@@ -1,5 +1,5 @@
 <template>
-  <div class="has-tertiary">
+  <div>
     <div>
       <TertiaryNav>
         <NuxtLink to="/create/sets" class="exact">

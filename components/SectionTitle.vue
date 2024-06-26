@@ -9,6 +9,10 @@ h1 {
   font-size: var(--font-base);
   margin: var(--size-6) 0;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
   .icon {
     color: var(--gray-z-6);
     width: var(--size-5);

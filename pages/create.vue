@@ -12,23 +12,21 @@
         </NuxtLink>
       </SecondaryNav>
 
-      <NuxtPage class="create-page" />
+      <NuxtPage class="create-page has-tertiary" />
     </Authenticated>
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .full {
-  display: grid;
-
-  @media (--md) {
-    padding: calc(var(--navbar-height) + var(--size-5)) var(--sidenav-width) var(--size-5) !important;
-  }
-
   :deep(.create-page) {
     width: 100%;
     max-width: var(--content-width);
     margin: 0 auto;
+
+    > div {
+      padding: var(--size-5);
+    }
   }
 }
 

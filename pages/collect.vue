@@ -17,10 +17,5 @@
 
 <style lang="postcss" scoped>
 .full {
-  display: grid;
-
-  @media (--md) {
-    padding: calc(var(--navbar-height) + var(--size-5)) var(--sidenav-width) var(--size-5) !important;
-  }
 }
 </style>

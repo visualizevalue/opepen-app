@@ -153,7 +153,7 @@ const buttonRightStyle = computed(() => {
   overflow: hidden;
   display: grid;
   padding: var(--size-5) var(--size-5) var(--size-8);
-  gap: 0 var(--size-9);
+  gap: var(--size-3) var(--size-9);
   align-items: center;
   grid-template-columns: 1fr 1fr;
 

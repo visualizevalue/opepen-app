@@ -17,8 +17,8 @@
 }
 
 .hidden-md {
-  @media (--max-lg) {
-    display: none;
+  @media (--max-md) {
+    display: none !important;
   }
 }
 
