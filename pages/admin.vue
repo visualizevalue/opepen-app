@@ -6,13 +6,13 @@
           <Icon type="check" />
           <span>Stats</span>
         </NuxtLink>
-        <NuxtLink to="/admin/sets">
-          <Icon type="opepen-grid" />
-          <span>Sets</span>
-        </NuxtLink>
         <NuxtLink to="/admin/singles">
           <Icon type="opepen" />
           <span>Singles</span>
+        </NuxtLink>
+        <NuxtLink to="/admin/sets">
+          <Icon type="opepen-grid" />
+          <span>Sets</span>
         </NuxtLink>
       </SecondaryNav>
 

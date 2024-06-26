@@ -20,12 +20,15 @@
               key-field="uuid"
               v-slot="{ item }"
             >
-              <Image
-                :key="imageAccessor(item).uuid"
-                :image="imageAccessor(item)"
-                version="sm"
-                :aspect-ratio="1"
-              />
+              <div :key="imageAccessor(item).uuid">
+                <slot name="item" :item="item" :image="imageAccessor(item)">
+                  <Image
+                    :image="imageAccessor(item)"
+                    version="sm"
+                    :aspect-ratio="1"
+                  />
+                </slot>
+              </div>
             </RecycleScroller>
           </div>
 

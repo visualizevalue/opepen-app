@@ -7,7 +7,6 @@
 
       <div class="actions">
         <select v-model="status" class="input sm">
-          <option value="all">All</option>
           <option value="unapproved">To Approve</option>
           <option value="published">Approved</option>
           <option value="deleted">Deleted</option>
@@ -15,11 +14,36 @@
       </div>
     </PageHeader>
 
-    <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]" />
+    <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
+      <template #item="{ item: post, image }">
+        <div v-if="(!post.deleted_at) || status === 'deleted'" class="post">
+          <Image
+            :image="image"
+            version="sm"
+            :aspect-ratio="1"
+          />
+          <menu v-if="! post.deleted_at">
+            <button @click="post.approved_at ? unapprove(post) : approve(post)">
+              <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
+            </button>
+            <button @click="destroy(post)">
+              <Icon type="trash" :style="{ color: post.approved_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
+            </button>
+          </menu>
+          <aside>
+            <NuxtLink :to="`/${post.account.address}`">
+              <ApiAccount :account="post.account" />
+            </NuxtLink>
+          </aside>
+        </div>
+        <div v-else></div>
+      </template>
+    </SinglesGallery>
   </section>
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
 import { useSignIn, isAdmin } from '~/helpers/siwe'
 import { formatDateTime } from '~/helpers/dates'
 import { useAccount } from '~/helpers/use-wagmi'
@@ -51,9 +75,11 @@ const query = computed(() => {
   switch (status.value) {
     case 'unapproved':
       q.append('filter[approved_at]', 'null')
+      q.append('filter[deleted_at]', 'null')
       break
     case 'published':
       q.append('filter[approved_at]', '!null')
+      q.append('filter[deleted_at]', 'null')
       break
     case 'deleted':
       q.append('filter[deleted_at]', '!null')
@@ -64,31 +90,24 @@ const query = computed(() => {
 })
 
 // Actions
-const list = ref(null)
-// const star = async (submission, index) => {
-//   const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/star`, {
-//     method: 'POST',
-//     credentials: 'include',
-//   })
-
-//   list.value.items[index] = saved
-// }
-const destroy = async (submission, index) => {
-  await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}`, {
-    method: 'DELETE',
+const action = async (post, action, type = 'posts', method = 'POST') => {
+  await $fetch(`${config.public.opepenApi}/${type}/${post.uuid}/${action}`, {
+    method,
     credentials: 'include',
   })
-
-  list.value.items.splice(index, 1)
 }
-const approve = async (submission, index) => {
-  const action = submission.approved_at ? `unapprove` : `approve`
-  const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/${action}`, {
-    method: 'POST',
-    credentials: 'include',
-  })
-
-  list.value.items[index] = saved
+const approve = async (post, type) => {
+  await action(post, 'approve', type)
+  post.approved_at = DateTime.now().toISO()
+}
+const unapprove = async (post) => {
+  await action(post, 'unapprove')
+  post.approved_at = null
+}
+const deleted = ref([])
+const destroy = async (post, type = 'posts') => {
+  await action(post, '', type, 'DELETE')
+  post.deleted_at = DateTime.now().toISO()
 }
 </script>
 
@@ -109,104 +128,59 @@ section {
       align-items: center;
     }
   }
-
-  :deep(> div) {
-    display: grid;
-    gap: var(--size-5);
-  }
 }
 
-article.submission {
-  width: 100%;
-  padding: var(--size-4);
-  background: var(--gray-z-1);
-  border: var(--border);
-  border-radius: var(--size-5);
-  border-top-left-radius: var(--size-1);
+.post {
   position: relative;
-  display: flex;
-  gap: var(--size-5);
 
-  .meta {
-    color: var(--gray-z-5);
+  > menu {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    border-top-right-radius: calc(var(--size-5) - 1px);
+    border-bottom-left-radius: var(--size-2);
+    padding: var(--size-4);
     display: flex;
-    align-items: center;
-    gap: var(--size-2);
-    margin-bottom: var(--size-2);
+    justify-content: flex-end;
+    gap: var(--size-4);
+    margin: 0;
+    transition: all var(--speed);
 
-    > * {
+    button {
+      &:--highlight {
+        .icon {
+          color: var(--color) !important;
+        }
+      }
+    }
+  }
+
+  > aside {
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    right: 1px;
+    border-bottom-left-radius: calc(var(--size-5) - 1px);
+    border-bottom-right-radius: calc(var(--size-5) - 1px);
+    background: var(--semi);
+    display: flex;
+    padding: var(--size-2);
+    opacity: 0;
+    transition: all var(--speed);
+
+    a {
       display: flex;
       align-items: center;
-      font-size: var(--size-sm);
     }
-  }
-
-  .preview {
-    width: 6rem;
-    height: 6rem;
-    flex-shrink: 0;
-
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    gap: var(--size-2);
-    grid-auto-flow: dense;
-
-    > :first-child {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-
-    .image {
-      margin: 0;
-      height: 100%;
-      border-radius: var(--size-0);
-    }
-  }
-
-  p {
-    font-size: var(--font-sm);
-    color: var(--gray-z-5);
-  }
-
-  a {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    span {
-      opacity: 0.0001;
-    }
-  }
-
-  .actions {
-    position: absolute;
-    top: var(--size-3);
-    right: var(--size-3);
-    z-index: 2;
-
-    display: flex;
-    gap: var(--size-4);
   }
 
   &:--highlight {
-    background: var(--gray-z-4);
-  }
-}
-
-.empty {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--size-5);
-  width: 100%;
-  padding: var(--size-8) 0;
-
-  @media (--md) {
-    grid-column: span 2;
+    > aside {
+      opacity: 1;
+    }
+    > menu {
+      background: var(--semi);
+    }
   }
 }
 </style>

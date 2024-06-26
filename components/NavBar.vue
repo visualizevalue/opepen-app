@@ -8,9 +8,17 @@
       <Connect>
         <template #default>Check In</template>
         <template #connected="{ address, id }">
-          <NuxtLink :to="`/${id}`">
-            <Account :address="address" hide-avatar />
-          </NuxtLink>
+          <div class="account">
+            <NuxtLink :to="`/${id}`">
+              <Account :address="address" hide-avatar />
+            </NuxtLink>
+
+            <WithAccount #default="{ isAdmin }">
+              <span v-if="isAdmin">
+                <Button to="/admin" title="Admin"><Icon type="key"/></Button>
+              </span>
+            </WithAccount>
+          </div>
         </template>
       </Connect>
     </ClientOnly>
@@ -214,5 +222,11 @@ const isScrolled = computed(() => y.value > 5)
         pointer-events: all;
       }
     }
+  }
+
+  .account {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center
   }
 </style>
