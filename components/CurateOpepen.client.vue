@@ -24,7 +24,9 @@ import { delay } from '~/helpers/time'
 const config = useRuntimeConfig()
 const emit = defineEmits(['voted'])
 
-const { data, pending, refresh } = await useFetch(`${config.public.opepenApi}/votes/votable`)
+const { data, pending, refresh } = await useFetch(`${config.public.opepenApi}/votes/votable`, {
+  credentials: 'include',
+})
 
 const { signIn } = useSignIn()
 
