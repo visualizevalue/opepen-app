@@ -55,6 +55,10 @@ useMetaData({
     grid-template-columns: 4fr 2fr 2fr;
     position: relative;
 
+    > span {
+      white-space: nowrap;
+    }
+
     > span:nth-child(2),
     > span:nth-child(3) {
       text-align: right;

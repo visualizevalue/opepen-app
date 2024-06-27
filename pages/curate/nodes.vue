@@ -32,7 +32,7 @@
   }
 
   :deep(.nodes-page) {
-    padding: var(--size-7) var(--size-5);
+    padding: var(--size-5);
 
     @media (--md) {
       padding: var(--size-7) 0;
