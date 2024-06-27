@@ -18,24 +18,19 @@
       <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
         <template #item="{ item: post, image }">
           <div v-if="(!post.deleted_at) || status === 'deleted'" class="post">
-            <Image
+            <ImageDetailSm
               :image="image"
-              version="sm"
-              :aspect-ratio="1"
-            />
-            <menu v-if="! post.deleted_at">
-              <button @click="post.approved_at ? unapprove(post) : approve(post)">
-                <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
-              </button>
-              <button @click="destroy(post)">
-                <Icon type="trash" :style="{ color: post.deleted_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
-              </button>
-            </menu>
-            <aside>
-              <NuxtLink :to="`/${post.account.address}`">
-                <ApiAccount :account="post.account" />
-              </NuxtLink>
-            </aside>
+              :account="post.account"
+            >
+              <menu v-if="! post.deleted_at">
+                <button @click="post.approved_at ? unapprove(post) : approve(post)">
+                  <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
+                </button>
+                <button @click="destroy(post)">
+                  <Icon type="trash" :style="{ color: post.deleted_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
+                </button>
+              </menu>
+            </ImageDetailSm>
           </div>
           <div v-else></div>
         </template>
@@ -137,13 +132,12 @@ section {
 .post {
   position: relative;
 
-  > menu {
+  menu {
     position: absolute;
-    top: 1px;
-    right: 1px;
-    border-top-right-radius: calc(var(--size-5) - 1px);
-    border-bottom-left-radius: var(--size-2);
+    top: 0;
+    right: 0;
     padding: var(--size-4);
+    border-bottom-left-radius: var(--size-2);
     display: flex;
     justify-content: flex-end;
     gap: var(--size-4);
@@ -159,30 +153,8 @@ section {
     }
   }
 
-  > aside {
-    position: absolute;
-    bottom: 1px;
-    left: 1px;
-    right: 1px;
-    border-bottom-left-radius: calc(var(--size-5) - 1px);
-    border-bottom-right-radius: calc(var(--size-5) - 1px);
-    background: var(--semi);
-    display: flex;
-    padding: var(--size-2);
-    opacity: 0;
-    transition: all var(--speed);
-
-    a {
-      display: flex;
-      align-items: center;
-    }
-  }
-
   &:--highlight {
-    > aside {
-      opacity: 1;
-    }
-    > menu {
+    menu {
       background: var(--semi);
     }
   }

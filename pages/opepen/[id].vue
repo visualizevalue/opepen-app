@@ -75,10 +75,12 @@ useMetaData({
       margin: 0 auto;
 
       .opepen-detail {
+        border-top: 0;
         border-left: 0;
         border-right: 0;
 
         @media (min-width: 69.001rem) {
+          border-top: var(--border);
           border-left: var(--border);
           border-right: var(--border);
         }

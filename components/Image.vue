@@ -38,7 +38,7 @@ const props = defineProps({
     default: true,
   },
 })
-const emit = defineEmits(['loaded'])
+const emit = defineEmits(['click','loaded'])
 
 const uri = ref('')
 const loaded = ref(false)

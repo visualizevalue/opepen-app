@@ -24,6 +24,7 @@
               <div :key="imageAccessor(item).uuid">
                 <slot name="item" :item="item" :image="imageAccessor(item)">
                   <Image
+                    @click="$emit('click', item)"
                     :image="imageAccessor(item)"
                     version="sm"
                     :aspect-ratio="1"
@@ -52,6 +53,8 @@ const props = defineProps({
     default: item => item,
   },
 })
+
+const emit = defineEmits('click')
 
 const config = useRuntimeConfig()
 const url = computed(() => `${config.public.opepenApi}/${props.path}`)
