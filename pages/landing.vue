@@ -18,35 +18,6 @@
 
         <Progress :percent="parseInt(completeSets.length / 200 * 100)" />
       </div>
-
-      <div class="stats">
-        <StatsOverview />
-      </div>
-
-      <div class="activity">
-        <h2>Protocol Activity</h2>
-        <OptInTimelineList
-          :limit="5"
-          :auto-load="false"
-        >
-          <template #default="{ entry }">
-            <NuxtLink :to="`/${id(entry.account)}`">
-              <ApiAccount
-                :account="entry.account"
-                avatar-size="sm"
-              />
-            </NuxtLink>
-
-            <span v-if="entry.opepen_count">{{ entry.opepen_count }}</span>
-            <span v-else></span>
-
-            <span v-if="entry.is_opt_in">Opt-In<span v-if="entry.opepen_count > 1">s</span></span>
-            <span v-else>Opt-Out</span>
-
-            <NuxtLink :to="`/sets/${entry.submission.uuid}`">{{ entry.submission.name }}</NuxtLink>
-          </template>
-        </OptInTimelineList>
-      </div>
     </section>
 
     <div class="gallery">
