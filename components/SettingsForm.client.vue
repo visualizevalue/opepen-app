@@ -39,17 +39,13 @@
         <input type="checkbox" v-model="notificationGeneral">
         <span>General Information</span>
       </label>
-      <label class="checkbox">
-        <input type="checkbox" v-model="notificationNewSet">
-        <span>New Set Revealed</span>
-      </label>
-      <label class="checkbox">
+      <!-- <label class="checkbox">
         <input type="checkbox" v-model="notificationNewSubmission">
         <span>New Set Submission Published</span>
-      </label>
+      </label> -->
       <label class="checkbox">
         <input type="checkbox" v-model="notificationNewCuratedSubmission">
-        <span>New Curated Submission Published</span>
+        <span>New Set Available For Opt In</span>
       </label>
       <label class="checkbox">
         <input type="checkbox" v-model="notificationRevealStarted">
@@ -58,6 +54,10 @@
       <label class="checkbox">
         <input type="checkbox" v-model="notificationRevealPaused">
         <span>Consensus paused</span>
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="notificationNewSet">
+        <span>New Set Revealed</span>
       </label>
 
       <SaveSettings :lastSaved="lastSaved" :saving="saving" />
