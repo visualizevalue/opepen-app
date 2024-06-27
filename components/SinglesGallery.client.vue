@@ -6,8 +6,9 @@
       tag="section"
       class="no-scroller"
     >
-      <template #after-block="{ items }">
-        <slot v-if="! items.length" name="empty" :items="items" />
+      <template #before="{ items }">
+        <slot name="before" :items="items" />
+        <slot v-if="! items.length" name="empty" />
       </template>
       <template #default="{ items }">
         <div class="grid" ref="grid">
@@ -72,6 +73,8 @@ const itemSize = computed(() => Math.floor(gridWidth.value / gridItems.value))
 section {
   .grid {
     width: 100%;
+    width: calc(100% + 2*var(--size-2));
+    margin: calc(var(--size-2) * -1);
 
     :deep(.vue-recycle-scroller__item-view) {
       padding: var(--size-2);

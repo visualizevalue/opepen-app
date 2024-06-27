@@ -25,7 +25,7 @@ useMetaData({
 
 <style lang="postcss" scoped>
 .permanent-collection {
-  padding: 0 var(--container-padding-x);
+  padding: 0 var(--size-4);
 
   > div {
     max-width: var(--content-width);

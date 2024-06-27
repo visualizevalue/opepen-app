@@ -47,7 +47,6 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useSignIn, isAdmin } from '~/helpers/siwe'
-import { formatDateTime } from '~/helpers/dates'
 import { useAccount } from '~/helpers/use-wagmi'
 
 const config = useRuntimeConfig()
@@ -115,10 +114,15 @@ const destroy = async (post, type = 'posts') => {
 section {
   width: 100%;
   max-width: var(--content-width);
-  margin: var(--size-7) auto;
+  margin: 0 auto;
+  padding: var(--size-5);
+
+  @media (--md) {
+    padding: 0;
+  }
 
   > header {
-    margin-bottom: var(--size-7) !important;
+    margin-bottom: var(--size-4) !important;
     display: flex;
     gap: var(--size-4);
 
@@ -128,11 +132,6 @@ section {
       align-items: center;
     }
   }
-}
-
-.posts {
-  margin-left: calc(-1 * var(--size-2));
-  margin-right: calc(-1 * var(--size-2));
 }
 
 .post {

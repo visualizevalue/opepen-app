@@ -1,6 +1,6 @@
 <template>
   <component v-if="filteredItems.length || loading" :is="tag" :class="class">
-    <slot name="before"></slot>
+    <slot name="before" :items="filteredItems"></slot>
 
     <slot :items="filteredItems" :meta="meta" :loading="loading" />
 

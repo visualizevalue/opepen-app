@@ -1,19 +1,16 @@
 <template>
-  <div>
-    <slot name="before" />
-
-    <div class="posts">
-      <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
-        <template #empty>
-          <slot name="empty">
-            <div class="content">
-              <p class="muted">No single posts created</p>
-            </div>
-          </slot>
-        </template>
-      </SinglesGallery>
-    </div>
-  </div>
+  <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
+    <template #before="{ items }">
+      <slot name="before" :items="items" />
+    </template>
+    <template #empty>
+      <slot name="empty">
+        <div class="content">
+          <p class="muted">No single posts created</p>
+        </div>
+      </slot>
+    </template>
+  </SinglesGallery>
 </template>
 
 <script setup>
@@ -32,13 +29,4 @@ const query = computed(() => {
 </script>
 
 <style lang="postcss" scoped>
-.posts {
-  margin-top: calc(var(--size-2) * -1);
-  margin-left: calc(var(--size-2) * -1);
-  margin-right: calc(var(--size-2) * -1);
-
-  .content {
-    margin: var(--size-2);
-  }
-}
 </style>

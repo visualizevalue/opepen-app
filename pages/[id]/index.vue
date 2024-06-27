@@ -20,10 +20,10 @@
   </section>
 
   <SinglePostsGallery :address="account.address">
-    <template #empty><template></template></template>
     <template #before>
       <SectionTitle>Single Opepen Posts</SectionTitle>
     </template>
+    <template #empty><template></template></template>
   </SinglePostsGallery>
 
   <!-- TODO: Improve performance for long lists! -->

@@ -138,10 +138,10 @@ const approve = async (submission, index) => {
 <style lang="postcss" scoped>
 section {
   max-width: var(--content-width);
-  margin: var(--size-7) auto;
+  margin: 0 auto;
 
   > header {
-    margin-bottom: var(--size-7) !important;
+    margin-bottom: var(--size-4) !important;
     display: flex;
     gap: var(--size-4);
 
