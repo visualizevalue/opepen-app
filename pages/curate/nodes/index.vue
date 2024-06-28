@@ -8,7 +8,7 @@
         <article v-for="item of items">
           <ApiAccount :account="item" />
 
-          <span>{{ item.votes_count }} votes</span>
+          <span>{{ item.votes_count }} curations</span>
 
           <NuxtLink :to="`/${computeId(item)}`"><span>View {{ item.display }}</span></NuxtLink>
         </article>

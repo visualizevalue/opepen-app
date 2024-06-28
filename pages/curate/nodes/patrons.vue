@@ -9,7 +9,7 @@
         <article v-for="item of items">
           <ApiAccount :account="item" />
 
-          <span>{{ item.opepen_count }} opepen</span>
+          <span>{{ item.opepen_count }} tokens</span>
 
           <NuxtLink :to="`/${computeId(item)}`"><span>View {{ item.display }}</span></NuxtLink>
         </article>
