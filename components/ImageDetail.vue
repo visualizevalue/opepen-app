@@ -15,6 +15,7 @@
       <p v-if="submission" class="muted">
         <NuxtLink :to="`/sets/${submission.uuid}`">
           <span v-if="submission.set_id">Set {{pad(submission.set_id)}}: </span>{{ submission.name }}
+          <span>1/{{ extractedEdition }}</span>
         </NuxtLink>
       </p>
       <p v-if="post" class="muted">
@@ -47,6 +48,24 @@ const props = defineProps({
     type: Object,
     default: props => props.image.cachedPost,
   },
+})
+
+const extractedEdition = computed(() => {
+  if (! props.submission) return
+
+  const editions = [1, 4, 5, 10, 20, 40]
+  const options = [
+    props.submission.edition1Image,
+    props.submission.edition4Image,
+    props.submission.edition5Image,
+    props.submission.edition10Image,
+    props.submission.edition20Image,
+    props.submission.edition40Image,
+  ]
+
+  const index = options.findIndex(i => i.uuid === props.image.uuid)
+
+  return editions[index]
 })
 </script>
 

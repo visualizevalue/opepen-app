@@ -14,7 +14,7 @@
         <NuxtLink :to="`/opepen/${opepen.token_id}`">{{ opepen.name }}</NuxtLink>
       </p>
       <p v-else-if="submission" class="muted">
-        <NuxtLink :to="`/sets/${submission.uuid}`">{{ submission.name }}</NuxtLink>
+        <NuxtLink :to="`/sets/${submission.uuid}`"><span>{{ submission.name }}</span> <span> 1/{{ extractedEdition }}</span></NuxtLink>
       </p>
       <p v-else-if="post" class="muted">
         {{ post.body }}
@@ -47,6 +47,24 @@ const props = defineProps({
 })
 
 const emit = defineEmits('click')
+
+const extractedEdition = computed(() => {
+  if (! props.submission) return
+
+  const editions = [1, 4, 5, 10, 20, 40]
+  const options = [
+    props.submission.edition1Image,
+    props.submission.edition4Image,
+    props.submission.edition5Image,
+    props.submission.edition10Image,
+    props.submission.edition20Image,
+    props.submission.edition40Image,
+  ]
+
+  const index = options.findIndex(i => i.uuid === props.image.uuid)
+
+  return editions[index]
+})
 
 const showSub = computed(() => !! props.account)
 </script>
@@ -96,6 +114,11 @@ const showSub = computed(() => !! props.account)
 
     p.muted {
       font-size: var(--font-xs);
+
+      > a {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 
