@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="links?.length">
+  <ul v-if="links?.length || alwaysShow">
     <li v-for="item in parsedLinks">
       <Button :to="item.url" target="_blank" class="small">
         <Icon :type="item.icon" />
@@ -16,6 +16,7 @@ import { validateURI, getMainDomain, getFirstSubpath } from '~/helpers/urls'
 
 const { links } = defineProps({
   links: Array,
+  alwaysShow: Boolean,
 })
 
 const ICONS = {

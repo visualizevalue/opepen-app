@@ -16,7 +16,7 @@
             <span v-if="account.ens">{{ account.ens }}</span>
             <span>{{ shortAddress(account.address, 6) }}</span>
           </NuxtLink>
-          <SocialLinks :links="mainSocials" class="socials">
+          <SocialLinks :links="mainSocials" class="socials" always-show>
             <template #last>
               <li>
                 <WithAccount #default="{ address }">
