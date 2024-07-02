@@ -57,8 +57,13 @@ const curated = computed(() => {
 })
 
 if (curated.value) {
-  navigateTo('/collect')
+  await navigateTo('/collect')
 }
+watch(curated, () => {
+  if (curated.value) {
+    navigateTo('/collect')
+  }
+})
 
 useMetaData({
   title: isSet
