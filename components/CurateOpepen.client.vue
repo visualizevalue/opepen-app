@@ -9,7 +9,7 @@
       :class="{ animated: !isSwiping, [direction]: true, }"
       :style="swipeStyle"
     >
-      <Image :image="data" :key="data.uuid" @loaded="imgLoaded = true" />
+      <Image :image="data" :key="data.uuid" @loaded="imgLoaded = true" :version="containerWidth > 1000 ? 'xl' : 'lg'" />
     </div>
     <button @click="() => voteAndAnimate(true)" :style="buttonRightStyle"><Icon type="check" /></button>
   </div>
