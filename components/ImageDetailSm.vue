@@ -14,7 +14,7 @@
         <NuxtLink :to="`/opepen/${opepen.token_id}`">{{ opepen.name }}</NuxtLink>
       </p>
       <p v-else-if="submission" class="muted">
-        <NuxtLink :to="`/sets/${submission.uuid}`"><span>{{ submission.name }}</span> <span> 1/{{ extractedEdition }}</span></NuxtLink>
+        <NuxtLink :to="`/sets/${submission.uuid}`"><span>{{ submission.name }}</span> <span v-if="extractedEdition"> 1/{{ extractedEdition }}</span></NuxtLink>
       </p>
       <p v-else-if="post" class="muted">
         {{ post.body }}
