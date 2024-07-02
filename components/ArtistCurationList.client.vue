@@ -104,15 +104,24 @@ section {
         .progress {
           position: relative;
           grid-column: span 2;
-          height: var(--size-1);
+          height: calc(var(--size-0)*2);
           background: var(--success);
           background: linear-gradient(to right, var(--error), var(--success));
           border-radius: var(--size-4);
+          border: var(--border-dark);
 
           .indicator {
-            width: var(--size-5);
+            width: var(--size-6);
             position: absolute;
-            margin-left: calc(-1 * var(--size-5));
+            margin-left: calc(-1 * var(--size-6));
+            border: var(--border-dark);
+            width: var(--size-6) !important;
+            padding: var(--size-0);
+            border-radius: 50%;
+            background: var(--background);
+
+            .icon {
+            }
           }
         }
 

@@ -1,6 +1,6 @@
 <template>
   <i v-if="ICONS[type]" class="icon">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" v-html="ICONS[type]"></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" v-html="ICONS[type]" :stroke="stroke"></svg>
   </i>
   <FeatherIcon v-else :type="type" class="icon" />
 </template>
@@ -8,6 +8,7 @@
 <script setup>
 const props = defineProps({
   type: String,
+  stroke: String,
 })
 
 const ICONS = {
