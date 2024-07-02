@@ -127,7 +127,7 @@ useMetaData({
     width: 100%;
     height: 100%;
     padding: var(--size-7) var(--size-4) calc(var(--navbar-height) + var(--size-8));
-    max-width: var(--content-width-sm);
+    max-width: min(calc(100dvh - var(--navbar-height) * 2 - 10rem), 100%);
     margin: 0 auto;
 
     display: flex;
@@ -142,6 +142,7 @@ useMetaData({
       display: flex;
       color: var(--gray-z-6);
       justify-content: space-between;
+      gap: var(--size-5);
 
       > h1 {
         display: flex;
@@ -161,8 +162,13 @@ useMetaData({
         }
       }
 
-      > a:--highlight {
-        color: var(--color);
+      > a {
+        text-align: right;
+        width: max-content;
+
+        &:--highlight {
+          color: var(--color);
+        }
       }
     }
   }
