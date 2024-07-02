@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-// import { DateTime } from 'luxon'
+import { DateTime } from 'luxon'
 import { isSetId } from '~/helpers/urls'
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'
@@ -50,6 +50,15 @@ if (! data.value) await navigateTo('/')
 
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
+const curated = computed(() => {
+  if (!submission.value.starred_at) return false
+
+  return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: 48 })
+})
+
+if (curated.value) {
+  navigateTo('/collect')
+}
 
 useMetaData({
   title: isSet
