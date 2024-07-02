@@ -1,5 +1,5 @@
 <template>
-  <SinglePostsGallery v-if="session" :address="session?.address?.toLowerCase()" show-empty>
+  <SinglePostsGallery v-if="session" :address="session?.address?.toLowerCase()">
     <template #empty>
       <div class="empty">
         <p class="muted">No single posts created...</p>

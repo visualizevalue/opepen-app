@@ -1,5 +1,5 @@
 <template>
-  <component v-if="filteredItems.length || loading" :is="tag" :class="class">
+  <component v-if="filteredItems.length || loading || showEmpty" :is="tag" :class="class">
     <slot name="before" :items="filteredItems"></slot>
 
     <slot :items="filteredItems" :meta="meta" :loading="loading" />
@@ -56,6 +56,7 @@ const props = defineProps({
     default: 'div',
   },
   class: String,
+  showEmpty: Boolean,
 })
 
 const {

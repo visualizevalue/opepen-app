@@ -5,6 +5,7 @@
       :query="query"
       tag="section"
       class="no-scroller"
+      :show-empty="showEmpty"
     >
       <template #before="{ items }">
         <slot name="before" :items="items" />
@@ -52,6 +53,7 @@ const props = defineProps({
     type: Function,
     default: item => item,
   },
+  showEmpty: Boolean,
 })
 
 const emit = defineEmits('click')

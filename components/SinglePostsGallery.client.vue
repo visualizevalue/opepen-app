@@ -1,5 +1,5 @@
 <template>
-  <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]">
+  <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]" :show-empty="showEmpty">
     <template #before="{ items }">
       <slot name="before" :items="items" />
     </template>
@@ -15,7 +15,8 @@
 
 <script setup>
 const props = defineProps({
-  address: String
+  address: String,
+  showEmpty: Boolean,
 })
 
 const config = useRuntimeConfig()
