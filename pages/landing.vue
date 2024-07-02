@@ -5,9 +5,10 @@
         <p>Opepen is an early manifestation of a digital museum - an open art protocol inviting participation from anyone.</p>
         <p>Collectors of 16.000 cryptographic tokens form consensus on the artwork for the Permanent Collection.</p>
 
-        <StyledLink to="/sets/explore">View Submissions</StyledLink>
-        <StyledLink to="/sets">View Permanent Collection</StyledLink>
-        <StyledLink to="/create/sets">Submit a Set</StyledLink>
+        <StyledLink to="/curate/view/all">View Submissions</StyledLink>
+        <StyledLink to="/curate/view/permanent">View Permanent Collection</StyledLink>
+        <StyledLink to="/curate/vote">Curate Opepen</StyledLink>
+        <StyledLink to="/create/singles">Submit an Opepen</StyledLink>
       </div>
 
       <div class="permanent">
@@ -17,6 +18,10 @@
         </h2>
 
         <Progress :percent="parseInt(completeSets.length / 200 * 100)" />
+      </div>
+
+      <div class="stats">
+        <StatsOverview />
       </div>
     </section>
 
@@ -28,7 +33,6 @@
 </template>
 
 <script setup>
-import { id } from '~/helpers/accounts'
 import { useSets } from '~/helpers/sets'
 import pad from '~/helpers/pad'
 
