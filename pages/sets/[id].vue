@@ -51,6 +51,7 @@ if (! data.value) await navigateTo('/')
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
 const curated = computed(() => {
+  console.log(submission.value.starred_at)
   if (!submission.value.starred_at) return false
 
   return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: 48 })
@@ -59,10 +60,11 @@ const curated = computed(() => {
 if (curated.value) {
   await navigateTo('/collect')
 }
-watch(curated, () => {
-  if (curated.value) {
-    navigateTo('/collect')
-  }
+watch(curated, async () => {
+  if (curated.value) await navigateTo('/collect')
+})
+onMounted(async () => {
+  if (curated.value) await navigateTo('/collect')
 })
 
 useMetaData({
