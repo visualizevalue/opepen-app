@@ -57,11 +57,12 @@ const curated = computed(() => {
   return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: 48 })
 })
 
-if (curated.value) await navigateTo('/collect')
 watch(curated, async () => {
+  console.log('watch', curated.value)
   if (curated.value) await router.replace('/collect')
 })
 onMounted(async () => {
+  console.log('mount', curated.value)
   if (curated.value) await router.replace('/collect')
 })
 
