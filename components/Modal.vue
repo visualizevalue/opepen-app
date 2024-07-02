@@ -144,7 +144,7 @@ defineEmits(['close'])
   }
   &.extra-wide {
     section {
-      max-width: min(calc(100vw - 2*var(--size-4)), calc(100vh - 2*var(--size-8)));
+      max-width: min(calc(100vw - 2*var(--size-4)), calc(100vh - 4*var(--size-8)));
     }
   }
 

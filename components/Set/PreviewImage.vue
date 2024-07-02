@@ -18,7 +18,7 @@
       :open="zoomed"
       :click-outside="true"
       @close="() => zoomed = false"
-      modal-classes="preview-modal wide"
+      modal-classes="preview-modal extra-wide"
     >
       <Image :image="image" :version="isStatic ? 'lg' : version" class="appear" auto-embed />
 
