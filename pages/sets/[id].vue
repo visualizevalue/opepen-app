@@ -38,6 +38,7 @@ import { shortenedCleanText } from '~/helpers/strings'
 const config = useRuntimeConfig()
 
 const route = useRoute()
+const router = useRouter()
 const isSet = isSetId(route.params.id)
 
 const url = isSet
@@ -51,20 +52,17 @@ if (! data.value) await navigateTo('/')
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
 const curated = computed(() => {
-  console.log(submission.value.starred_at)
   if (!submission.value.starred_at) return false
 
   return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: 48 })
 })
 
-if (curated.value) {
-  await navigateTo('/collect')
-}
+if (curated.value) await navigateTo('/collect')
 watch(curated, async () => {
-  if (curated.value) await navigateTo('/collect')
+  if (curated.value) await router.replace('/collect')
 })
 onMounted(async () => {
-  if (curated.value) await navigateTo('/collect')
+  if (curated.value) await router.replace('/collect')
 })
 
 useMetaData({
