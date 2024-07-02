@@ -15,7 +15,7 @@
       <p v-if="submission" class="muted">
         <NuxtLink :to="`/sets/${submission.uuid}`">
           <span v-if="submission.set_id">Set {{pad(submission.set_id)}}: </span>{{ submission.name }}
-          <span>1/{{ extractedEdition }}</span>
+          <span v-if="extractedEdition">1/{{ extractedEdition }}</span>
         </NuxtLink>
       </p>
       <p v-if="post" class="muted">
