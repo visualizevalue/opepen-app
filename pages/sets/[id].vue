@@ -14,7 +14,7 @@
 
     <section class="opepen">
       <SetOpepen v-if="submission?.set_id" :data="submission" />
-      <SetDynamicImagesPreview v-else :data="submission" />
+      <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
     </section>
 
     <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh">
@@ -121,6 +121,10 @@ useMetaData({
       }
     }
 
+  }
+
+  .opepen {
+    margin: var(--size-8) 0;
   }
 
   .items {
