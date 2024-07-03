@@ -2,7 +2,7 @@
   <ClientOnly>
     <PaginatedContent
       :url="url"
-      :query="query"
+      :query="filterQuery"
       tag="section"
       class="no-scroller"
       :show-empty="true"
@@ -64,6 +64,13 @@ const emit = defineEmits('click')
 
 const config = useRuntimeConfig()
 const url = computed(() => `${config.public.opepenApi}/opepen/images/curated/my-art`)
+const filterQuery = computed(() => {
+  if (! props.address) return props.query
+
+  return props.query
+    ? `${props.query}&filterAddress=${props.address}`
+    : `filterAddress=${props.address}`
+})
 </script>
 
 <style lang="postcss" scoped>

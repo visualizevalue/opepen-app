@@ -3,8 +3,12 @@
     <div v-if="isAdmin" class="full">
       <SecondaryNav>
         <NuxtLink to="/admin" class="exact">
-          <Icon type="check" />
+          <Icon type="bar-chart" />
           <span>Stats</span>
+        </NuxtLink>
+        <NuxtLink to="/admin/curation">
+          <Icon type="check" />
+          <span>Curation</span>
         </NuxtLink>
         <NuxtLink to="/admin/singles">
           <Icon type="opepen" />
