@@ -63,7 +63,7 @@ const props = defineProps({
 const emit = defineEmits('click')
 
 const config = useRuntimeConfig()
-const url = computed(() => `${config.public.opepenApi}/opepen/images/curated/my-art`)
+const url = computed(() => `${config.public.opepenApi}/opepen/images/curated/art`)
 const filterQuery = computed(() => {
   if (! props.address) return props.query
 

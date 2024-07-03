@@ -10,7 +10,7 @@
 <script setup>
 const query = computed(() => {
   const q = new URLSearchParams({
-    sort: '-points,id',
+    sort: '-vote_score,-votes_count,id',
   })
 
   return q.toString()
