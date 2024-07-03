@@ -1,7 +1,19 @@
 <template>
   <div>
+    <Tabs
+      :active="filter"
+      :tabs="[
+        { key: 'all', txt: 'All' },
+        { key: 'sets', txt: 'Sets' },
+        { key: 'submissions', txt: 'Submissions' },
+        { key: 'singles', txt: 'Singles' },
+      ]"
+      @select="filter = $event"
+    />
+
     <SinglesGallery
       path="opepen/images/curated/mine"
+      :query="query"
       @click="activate"
     >
       <template #item="{ item }">
@@ -24,6 +36,16 @@ const activate = item => {
 const deactivate = () => {
   active.value = null
 }
+
+const route = useRoute()
+const filter = ref(route.query.filter || 'all')
+const query = computed(() => {
+  const q = new URLSearchParams({
+    filter: filter.value,
+  })
+
+  return q.toString()
+})
 
 useMetaData({
   title: 'My Opepen Curations',
