@@ -1,5 +1,13 @@
 <template>
-  <Loading v-if="! data" />
+  <div v-if="completedVoting" class="complete">
+    <p>
+      <Confetti ref="confettiComponent" />
+      <Icon type="opepen" style="color: var(--green);" />
+    </p>
+    <p>Curation complete...</p>
+    <p class="muted"><small>Check back later for more art</small></p>
+  </div>
+  <Loading v-else-if="! data" />
   <div v-else class="opepen-swipe" :class="{ loading }">
     <Loading v-if="loading" txt="" />
     <button @click="() => voteAndAnimate(false)" :style="buttonLeftStyle"><Icon type="uncheck" /></button>
@@ -17,16 +25,18 @@
 </template>
 
 <script setup>
-import { onKeyStroke, useSwipe } from '@vueuse/core'
+import { useIntervalFn, onKeyStroke, useSwipe } from '@vueuse/core'
+import { getRandomArbitrary } from '~/helpers/random';
 import { isAuthenticated, useSignIn } from '~/helpers/siwe'
 import { delay } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 const emit = defineEmits(['voted'])
 
-const { data, pending, refresh } = await useFetch(`${config.public.opepenApi}/votes/votable`, {
+const { data, pending, refresh, status } = await useFetch(`${config.public.opepenApi}/votes/votable`, {
   credentials: 'include',
 })
+const completedVoting = computed(() => status.value === 'success' && !data.value)
 
 const { signIn } = useSignIn()
 
@@ -143,6 +153,21 @@ const buttonRightStyle = computed(() => {
       : buttonStyle.value.transform,
   }
 })
+
+const confettiComponent = ref(null)
+useIntervalFn(() => {
+  if (! confettiComponent.value?.confetti) return
+
+  confettiComponent.value.confetti({
+    particleCount: 2,
+    spread: 80,
+    startVelocity: 5,
+    decay: 0.99,
+    gravity: 0.5,
+    colors: ['#94E337'],
+    scalar: getRandomArbitrary(0.2, 2).toFixed(2),
+  })
+}, 50)
 </script>
 
 <style lang="postcss" scoped>
@@ -271,6 +296,37 @@ button {
     color: inherit !important;
     width: var(--size-6);
     height: var(--size-6);
+  }
+}
+
+.complete {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p:first-child {
+    font-size: var(--font-lg);
+    margin-bottom: var(--size-4);
+
+    :deep(.icon) {
+      display: block;
+      width: var(--size-8);
+      height: var(--size-8);
+      box-shadow: 0 0 1rem 1rem var(--background);
+      background: var(--background);
+      border-radius: var(--size-7);
+      z-index: 3000;
+      position: relative;
+
+      svg {
+        position: absolute;
+        top: calc(-1 * var(--size-6)/2);
+        left: calc(-1 * var(--size-6)/2);
+        width: calc(var(--size-8) + var(--size-6));
+        height: calc(var(--size-8) + var(--size-6));
+      }
+    }
   }
 }
 </style>
