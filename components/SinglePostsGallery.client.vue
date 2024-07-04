@@ -19,7 +19,6 @@ const props = defineProps({
   showEmpty: Boolean,
 })
 
-const config = useRuntimeConfig()
 const query = computed(() => {
   const q = new URLSearchParams()
 

@@ -1,7 +1,7 @@
 <template>
   <template v-if="stats">
     <p v-if="parseInt(stats.votes)">{{ formatNumber(stats.votes) }} curated</p>
-    <p>{{ formatNumber(Math.max(stats.votable - stats.votes, 0)) }} to curate</p>
+    <p>{{ formatNumber(Math.max(stats.votable, 0)) }} to curate</p>
   </template>
 </template>
 
@@ -15,7 +15,7 @@ const props = defineProps({
 const config = useRuntimeConfig()
 const refreshKey = computed(() => props.refreshKey)
 
-const { data: stats, refresh } = await useFetch(`${config.public.opepenApi}/votes/stats`, {
+const { data: stats } = await useFetch(`${config.public.opepenApi}/votes/stats`, {
   credentials: 'include',
   watch: [ refreshKey ],
 })
