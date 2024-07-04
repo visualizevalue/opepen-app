@@ -9,6 +9,7 @@
         <select v-model="status" class="input sm">
           <option value="unapproved">To Approve</option>
           <option value="published">Approved</option>
+          <option value="shadowed">Shadowed</option>
           <option value="deleted">Deleted</option>
         </select>
       </div>
@@ -25,6 +26,9 @@
               <menu v-if="! post.deleted_at">
                 <button @click="post.approved_at ? unapprove(post) : approve(post)">
                   <Icon type="check" :style="{ color: post.approved_at ? 'var(--green)' : 'var(--gray-z-5)' }" />
+                </button>
+                <button @click="shadow(post)">
+                  <Icon type="slash" :style="{ color: post.shadowed_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
                 </button>
                 <button @click="destroy(post)">
                   <Icon type="trash" :style="{ color: post.deleted_at ? 'var(--red)' : 'var(--gray-z-5)' }" />
@@ -71,8 +75,12 @@ const query = computed(() => {
       q.append('filter[approved_at]', 'null')
       q.append('filter[deleted_at]', 'null')
       break
+    case 'shadowed':
+      q.append('filter[shadowed_at]', '!null')
+      break
     case 'published':
       q.append('filter[approved_at]', '!null')
+      q.append('filter[shadowed_at]', 'null')
       q.append('filter[deleted_at]', 'null')
       break
     case 'deleted':
@@ -97,6 +105,10 @@ const approve = async (post, type) => {
 const unapprove = async (post) => {
   await action(post, 'unapprove')
   post.approved_at = null
+}
+const shadow = async (post) => {
+  await action(post, 'shadow')
+  post.shadowed_at = DateTime.now().toISO()
 }
 const deleted = ref([])
 const destroy = async (post, type = 'posts') => {
