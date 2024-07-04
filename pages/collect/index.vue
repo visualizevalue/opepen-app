@@ -31,7 +31,7 @@
             <span>Next set in</span>
             <CountDown :until="DateTime.fromISO(data.nextSetAt).toUnixInteger()" />
           </span>
-          <SetRevealStatus v-else-if="closed && !submission.set" :data="submission" @update="refresh" />
+          <SetRevealStatus v-else-if="closed" :data="submission" @update="refresh" />
           <span v-else-if="! closed">
             <CountDown :until="closesAt.toUnixInteger()" minimal />
             <span>left</span>

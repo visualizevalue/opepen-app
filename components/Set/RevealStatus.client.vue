@@ -9,7 +9,7 @@
       </p>
     </template>
     <template v-else-if="revealed">
-      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink>.</p>
+      <Button :to="`/sets/${pad(data.set_id)}`">View Revealed</Button>
     </template>
   </div>
 
@@ -19,6 +19,7 @@
 import { DateTime } from 'luxon'
 import { useBlockHeight } from '~/helpers/use-wagmi'
 import { delay } from '~/helpers/time'
+import pad from '~/helpers/pad'
 
 const props = defineProps({ data: Object })
 const emit = defineEmits(['update'])
