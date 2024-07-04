@@ -41,10 +41,6 @@ const route = useRoute()
 const router = useRouter()
 const isSet = isSetId(route.params.id)
 
-if (route.params.id === `5f92c662-72af-437b-8a2c-3151b6397567`) {
-  await navigateTo('/collect')
-}
-
 const url = isSet
   ? `${config.public.opepenApi}/opepen/sets/${route.params.id}`
   : `${config.public.opepenApi}/set-submissions/${route.params.id}`
