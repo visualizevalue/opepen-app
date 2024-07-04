@@ -192,6 +192,11 @@ useMetaData({
     .timer {
       display: flex;
 
+      @media (--xs) {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
       > span {
         display: flex;
         gap: 0.45em;
