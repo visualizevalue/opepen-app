@@ -13,7 +13,7 @@
           :set="token.data?.edition || 40"
         >
           <template #subline>
-            <p>owned by <NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null">{{ token.ownerAccount?.display }}</NuxtLink></p>
+            <p><span>owned by </span><NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null"> {{ token.ownerAccount?.display }}</NuxtLink></p>
           </template>
         </OpepenCard>
       </div>
@@ -58,6 +58,7 @@ const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && data.s
 
       p {
         justify-content: flex-start !important;
+        gap: 0.5em;
       }
     }
   }
