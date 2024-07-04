@@ -12,6 +12,7 @@
           <option value="published">Approved</option>
           <option value="starred">Starred</option>
           <option value="revealed">Revealed</option>
+          <option value="shadowed">Shadowed</option>
           <option value="deleted">Deleted</option>
         </select>
       </div>
@@ -53,10 +54,16 @@
           <NuxtLink :to="`/create/sets/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
 
           <div class="actions" v-if="submission.published_at">
-            <button @click.stop="() => approve(submission, index)">
+            <button v-if="! submission.set_id" @click.stop="() => approve(submission, index)">
               <Icon
                 type="check"
                 :style="{ color: submission.approved_at ? 'var(--green)' : 'currentColor' }"
+              />
+            </button>
+            <button v-if="! submission.approved_at || (submission.approved_at && submission.shadowed_at)" @click.stop="() => shadow(submission, index)">
+              <Icon
+                type="slash"
+                :style="{ color: submission.shadowed_at ? 'var(--red)' : 'currentColor' }"
               />
             </button>
             <!-- <button @click.stop="() => star(submission, index)">
@@ -124,6 +131,14 @@ const destroy = async (submission, index) => {
 
   list.value.items.splice(index, 1)
 }
+const shadow = async (submission, index) => {
+  const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/shadow`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+
+  list.value.items[index] = saved
+}
 const approve = async (submission, index) => {
   const action = submission.approved_at ? `unapprove` : `approve`
   const saved = await $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/${action}`, {
@@ -137,6 +152,7 @@ const approve = async (submission, index) => {
 
 <style lang="postcss" scoped>
 section {
+  width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
 

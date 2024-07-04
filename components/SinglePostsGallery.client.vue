@@ -24,6 +24,7 @@ const query = computed(() => {
   const q = new URLSearchParams()
 
   q.append('filter[address]', props.address)
+  q.append('filter[deleted_at]', 'null')
 
   return q.toString()
 })
