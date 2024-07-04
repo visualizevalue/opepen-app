@@ -31,9 +31,7 @@
             <span>Next set in</span>
             <CountDown :until="DateTime.fromISO(data.nextSetAt).toUnixInteger()" />
           </span>
-          <span v-else-if="closed && submission.reveal_block_number && !submission.set">
-            Revealing...
-          </span>
+          <SetRevealStatus v-else-if="closed && !submission.set" :data="submission" @update="refresh" />
           <span v-else-if="! closed">
             <CountDown :until="closesAt.toUnixInteger()" minimal />
             <span>left</span>
@@ -43,7 +41,7 @@
     </div>
 
     <TertiaryNav>
-      <SetOptInButton :data="submission" @update="update" />
+      <SetOptInButton v-if="!closed" :data="submission" @update="refresh" />
       <NuxtLink to="/collect/buy/unrevealed">
         <Icon type="infinity-flower" />
         <span>
@@ -91,8 +89,6 @@ const route = useRoute()
 const router = useRouter()
 
 const { data, refresh } = await useFetch(`${config.public.opepenApi}/set-submissions/curated`)
-const refreshKey = ref(0)
-
 // Ensure OG works as expected
 if (! route.query.s) router.replace({ query: { s: data.value.submission.uuid, ...route.query }})
 
@@ -106,12 +102,6 @@ const closesAt = computed(() => submission.value.reveals_at
   : DateTime.fromISO(submission.value.starred_at).plus({ hours: 48 })
 )
 const closed = computed(() => DateTime.fromSeconds(now.value) > closesAt.value)
-
-const update = async () => {
-  refreshKey.value += 1
-
-  await refresh()
-}
 
 useMetaData({
   title: `Collect Opepen`,

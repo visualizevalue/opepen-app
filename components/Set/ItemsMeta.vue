@@ -37,7 +37,7 @@
       </li>
       <li v-if="data.reveal_strategy">
         <Icon type="code" stroke-width="2.25" />
-        <NuxtLink to="https://github.com/visualizevalue-dev/opepens-metadata-api/tree/main/drops/sets">
+        <NuxtLink to="https://github.com/visualizevalue/opepens-metadata-api/tree/main/drops/sets">
           <span>Reveal mechanism {{ data.reveal_strategy }}</span>
         </NuxtLink>
       </li>

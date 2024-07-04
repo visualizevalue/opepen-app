@@ -62,11 +62,9 @@ const curated = computed(() => {
 })
 
 watch(curated, async () => {
-  console.log('watch', curated.value)
   if (curated.value) await router.replace('/collect')
 })
 onMounted(async () => {
-  console.log('mount', curated.value)
   if (curated.value) await router.replace('/collect')
 })
 

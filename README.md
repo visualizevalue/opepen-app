@@ -4,8 +4,8 @@ This is the frontend (web app) of the Opepen.art site.
 
 The Opepen project consists of three code repositories:
 
-1. [A Metadata Service](https://github.com/visualizevalue-dev/opepens-metadata-api)
-2. [An API + database powering the site](https://github.com/visualizevalue-dev/opepen-api)
+1. [A Metadata Service](https://github.com/visualizevalue/opepens-metadata-api)
+2. [An API + database powering the site](https://github.com/visualizevalue/opepen-api)
 3. This web application interacting with the above
 
 Forks and pull requests are welcome!

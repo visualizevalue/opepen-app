@@ -14,7 +14,7 @@
       </p>
     </section>
     <section v-else-if="revealed">
-      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue-dev/opepen-api/tree/main/app/Services/Metadata/Reveal">Opepen Metadata Reveal Script</NuxtLink>.</p>
+      <p>Revealed on {{ revealDate }} at <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">Block {{ data.reveal_block_number }}</NuxtLink> using the <NuxtLink to="https://github.com/visualizevalue/opepen-api/tree/main/app/Services/Metadata/Reveal">Opepen Metadata Reveal Script</NuxtLink>.</p>
 
       <SetOptInOwnedRevealed v-if="subscription && data.set_id" :data="data" :subscription="subscription" />
     </section>

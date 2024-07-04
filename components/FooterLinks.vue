@@ -14,7 +14,7 @@
         <a href="https://visualizevalue.com" target="_blank" title="Visualize Value"><Icon type="vv" /></a>
       </li>
       <li>
-        <a href="https://github.com/visualizevalue-dev/opepen-api" target="_blank" title="Github"><Icon type="github" /></a>
+        <a href="https://github.com/visualizevalue/opepen-api" target="_blank" title="Github"><Icon type="github" /></a>
       </li>
       <li>
         <a href="https://x.com/opepenedition" target="_blank" title="X / Twitter"><Icon type="x.com" /></a>
