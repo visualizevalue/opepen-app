@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="has-tertiary">
     <div>
       <TertiaryNav>
         <NuxtLink to="/create/sets" class="exact">
@@ -19,15 +19,3 @@
 
 <script setup>
 </script>
-
-<style lang="postcss" scoped>
-.has-tertiary {
-  > div {
-    padding: 0 var(--size-5);
-
-    @media (--md) {
-      padding: 0;
-    }
-  }
-}
-</style>

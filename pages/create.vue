@@ -16,7 +16,7 @@
         </NuxtLink>
       </SecondaryNav>
 
-      <NuxtPage class="create-page has-tertiary" />
+      <NuxtPage class="create-page" />
     </Authenticated>
   </div>
 </template>

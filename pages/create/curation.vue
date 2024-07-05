@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="has-secondary">
     <div>
       <SectionTitle>My Curated Art</SectionTitle>
       <Authenticated #default="{ address }">

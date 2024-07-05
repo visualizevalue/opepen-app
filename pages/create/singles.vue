@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="has-tertiary">
     <TertiaryNav>
       <NuxtLink to="/create/singles" class="exact">
         <Icon type="opepen" />
