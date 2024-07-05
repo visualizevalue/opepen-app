@@ -49,7 +49,7 @@
               {{ formatDateTime(submission.created_at) }}
             </span>
           </div>
-          <h1>{{ submission.name }}</h1>
+          <h1>{{ submission.name }} <span class="muted">({{ submission.edition_type }})</span></h1>
           <p>{{ submission.description }}</p>
           <NuxtLink :to="`/create/sets/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
 

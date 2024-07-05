@@ -10,6 +10,16 @@
         </div>
       </slot>
     </template>
+    <template #item="{ item, image }">
+      <slot name="item" :item="item" :image="image">
+        <Image
+          @click="$emit('click', item)"
+          :image="image"
+          version="sm"
+          :aspect-ratio="1"
+        />
+      </slot>
+    </template>
   </SinglesGallery>
 </template>
 
@@ -17,6 +27,7 @@
 const props = defineProps({
   address: String,
   showEmpty: Boolean,
+  refreshKey: [Number, String],
 })
 
 const query = computed(() => {
@@ -24,6 +35,7 @@ const query = computed(() => {
 
   q.append('filter[address]', props.address)
   q.append('filter[deleted_at]', 'null')
+  q.append('refresh', props.refreshKey)
 
   return q.toString()
 })

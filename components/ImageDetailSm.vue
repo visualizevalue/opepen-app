@@ -5,20 +5,22 @@
     <slot />
 
     <aside v-if="showSub" @click.stop.prevent="null">
-      <p>
-        <NuxtLink :to="`/${computeId(account)}`">
-          <ApiAccount :account="account" hide-avatar />
-        </NuxtLink>
-      </p>
-      <p v-if="opepen" class="muted">
-        <NuxtLink :to="`/opepen/${opepen.token_id}`">{{ opepen.name }}</NuxtLink>
-      </p>
-      <p v-else-if="submission" class="muted">
-        <NuxtLink :to="`/sets/${submission.uuid}`"><span>{{ submission.name }}</span> <span v-if="extractedEdition"> 1/{{ extractedEdition }}</span></NuxtLink>
-      </p>
-      <p v-else-if="post" class="muted">
-        {{ post.body }}
-      </p>
+      <slot name="sub">
+        <p v-if="account">
+          <NuxtLink :to="`/${computeId(account)}`">
+            <ApiAccount :account="account" hide-avatar />
+          </NuxtLink>
+        </p>
+        <p v-if="opepen" class="muted">
+          <NuxtLink :to="`/opepen/${opepen.token_id}`">{{ opepen.name }}</NuxtLink>
+        </p>
+        <p v-else-if="submission" class="muted">
+          <NuxtLink :to="`/sets/${submission.uuid}`"><span>{{ submission.name }}</span> <span v-if="extractedEdition"> 1/{{ extractedEdition }}</span></NuxtLink>
+        </p>
+        <p v-else-if="post" class="muted">
+          {{ post.body }}
+        </p>
+      </slot>
     </aside>
   </article>
 </template>
@@ -66,7 +68,7 @@ const extractedEdition = computed(() => {
   return editions[index]
 })
 
-const showSub = computed(() => !! props.account)
+const showSub = computed(() => !! props.account || !! props.post?.body)
 </script>
 
 <style lang="postcss" scoped>
@@ -79,6 +81,27 @@ const showSub = computed(() => !! props.account)
 
   :deep(.image) {
     border: none;
+  }
+
+  :deep(> menu) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: var(--size-4);
+    border-bottom-left-radius: var(--size-2);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--size-4);
+    margin: 0;
+    transition: all var(--speed);
+
+    button {
+      &:--highlight {
+        .icon {
+          color: var(--color) !important;
+        }
+      }
+    }
   }
 
   > aside {

@@ -16,15 +16,13 @@
       margin: 0 auto;
     }
 
-    :deep(h1) {
-      text-transform: uppercase;
-      font-weight: var(--font-weight-bold);
-      letter-spacing: var(--letter-spacing-md);
-    }
-
     :deep(.actions) {
       display: flex;
       gap: var(--size-4);
+    }
+
+    :deep(h1) {
+      margin: 0;
     }
 
     @media (--md) {

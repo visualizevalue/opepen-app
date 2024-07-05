@@ -1,6 +1,13 @@
 <template>
   <div>
-    <SectionTitle>My Sets</SectionTitle>
+    <PageHeader>
+      <SectionTitle>My Sets</SectionTitle>
+
+      <Button to="/create/sets/submit">
+        <Icon type="plus" />
+        <span>New</span>
+      </Button>
+    </PageHeader>
 
     <div class="submissions">
       <MySetSubmissions />
@@ -17,4 +24,9 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+div {
+  display: grid;
+  gap: var(--size-4);
+  grid-auto-rows: min-content;
+}
 </style>

@@ -144,27 +144,6 @@ section {
 .post {
   position: relative;
 
-  menu {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: var(--size-4);
-    border-bottom-left-radius: var(--size-2);
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--size-4);
-    margin: 0;
-    transition: all var(--speed);
-
-    button {
-      &:--highlight {
-        .icon {
-          color: var(--color) !important;
-        }
-      }
-    }
-  }
-
   &:--highlight {
     menu {
       background: var(--semi);
