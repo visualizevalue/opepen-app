@@ -13,10 +13,19 @@
             <small class="muted">Votes</small>
             <NuxtLink :to="`/curate/view/all`"><span>View Curations</span></NuxtLink>
           </div>
+        </div>
+
+        <div class="stat-group">
+          <h1>Curators</h1>
           <div>
             <p>{{ formatNumber(stats.users.curators) }}</p>
-            <small class="muted">Curators</small>
-            <NuxtLink :to="`/curate/nodes/patrons`"><span>View Curators</span></NuxtLink>
+            <small class="muted">Opters</small>
+            <NuxtLink :to="`/curate/nodes/patrons`"><span>View Opters</span></NuxtLink>
+          </div>
+          <div>
+            <p>{{ formatNumber(stats.users.voters) }}</p>
+            <small class="muted">Voters</small>
+            <NuxtLink :to="`/curate/nodes`"><span>View Voters</span></NuxtLink>
           </div>
         </div>
 
@@ -32,10 +41,6 @@
             <small class="muted">Revealed</small>
             <NuxtLink :to="`/collect/buy/revealed`"><span>View Revealed Listings</span></NuxtLink>
           </div>
-          <div>
-            <p>{{ formatEther(stats.markets.floor.total) }} ETH</p>
-            <small class="muted">Floor Price</small>
-          </div>
         </div>
 
         <div class="stat-group">
@@ -49,11 +54,6 @@
             <p>{{ formatNumber(stats.submissions.images) }}</p>
             <small class="muted">Images</small>
           </div>
-          <div>
-            <p>{{ formatNumber(stats.users.artists) }}</p>
-            <small class="muted">Artists</small>
-            <NuxtLink :to="`/curate/nodes/artists`"><span>View Artists</span></NuxtLink>
-          </div>
         </div>
 
         <div class="stat-group">
@@ -65,6 +65,32 @@
           <div>
             <p>{{ formatNumber(stats.emails.verified) }}</p>
             <small class="muted">Verified Emails</small>
+          </div>
+        </div>
+
+        <div class="stat-group">
+          <h1>Price</h1>
+          <div>
+            <p>{{ formatEther(stats.markets.floor.revealed) }} ETH</p>
+            <small class="muted">Revealed Price</small>
+          </div>
+          <div>
+            <p>{{ formatEther(stats.markets.floor.unrevealed) }} ETH</p>
+            <small class="muted">Unrevealed Price</small>
+          </div>
+        </div>
+
+        <div class="stat-group">
+          <h1>Users</h1>
+          <div>
+            <p>{{ formatNumber(stats.users.artists) }}</p>
+            <small class="muted">Artists</small>
+            <NuxtLink :to="`/curate/nodes/artists`"><span>View Artists</span></NuxtLink>
+          </div>
+          <div>
+            <p>{{ formatNumber(stats.users.holders) }}</p>
+            <small class="muted">Owners</small>
+            <NuxtLink :to="`/curate/nodes/patrons`"><span>View Owners</span></NuxtLink>
           </div>
         </div>
       </StatsOverview>

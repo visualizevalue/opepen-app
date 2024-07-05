@@ -90,6 +90,9 @@ const { data: stats } = await useStats()
       font-family: var(--font-family-body);
       font-weight: 500;
       font-size: 2em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     small {
