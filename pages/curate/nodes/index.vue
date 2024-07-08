@@ -3,9 +3,12 @@
     <PaginatedContent
       :url="`${config.public.opepenApi}/votes/leaderboard`"
       #default="{ items }"
+      class="no-scroller"
     >
       <div class="list">
-        <article v-for="item of items">
+        <article v-for="(item, index) of items">
+          <span class="muted">{{ index + 1 }}.</span>
+
           <ApiAccount :account="item" />
 
           <span>{{ item.votes_count }} curations</span>
@@ -42,7 +45,19 @@ useMetaData({
     grid-template-columns: 1fr 1fr;
     position: relative;
 
-    > span:nth-child(2) {
+    > span:first-child.muted {
+      text-align: right;
+      position: absolute;
+      right: calc(100% + var(--size-3));
+      align-self: center;
+      display: none;
+
+      @media (--sm) {
+        display: block;
+      }
+    }
+
+    > span:nth-child(3) {
       text-align: right;
     }
 
