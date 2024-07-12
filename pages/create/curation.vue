@@ -13,6 +13,7 @@
 const query = computed(() => {
   const q = new URLSearchParams({
     sort: '-vote_score,-votes_count,id',
+    // [`filter[post_id]`]: '!null',
   })
 
   return q.toString()

@@ -18,6 +18,10 @@
           <Icon type="opepen-grid" />
           <span>Sets</span>
         </NuxtLink>
+        <NuxtLink to="/admin/mailing">
+          <Icon type="mail" />
+          <span>Mailing</span>
+        </NuxtLink>
       </SecondaryNav>
 
       <NuxtPage class="has-secondary" />

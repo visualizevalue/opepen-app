@@ -14,19 +14,27 @@
 <script setup>
 import CodeMirror from 'codemirror-editor-vue3'
 import 'codemirror/addon/display/placeholder.js'
+import 'codemirror/mode/htmlmixed/htmlmixed.js'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/theme/ayu-dark.css'
 
-const props = defineProps(['modelValue', 'placeholder'])
+const props = defineProps({
+  modelValue: String,
+  placeholder: String,
+  mode: {
+    type: String,
+    default: 'text/javascript'
+  },
+})
 const emit = defineEmits(['update:modelValue'])
 
-const cmOptions = {
-  mode: 'text/javascript',
+const cmOptions = computed(() => ({
+  mode: props.mode,
   theme: 'ayu-dark',
   indentUnit: 2,
   tabSize: 2,
   indentWithTab: false
-}
+}))
 </script>
 
 <style lang="postcss" scoped>

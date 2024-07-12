@@ -43,7 +43,7 @@
     <TertiaryNav>
       <SetOptInButton v-if="!closed" :data="submission" @update="refresh" />
       <SetMarketStat v-if="submission.set_id" :id="submission.set_id" #default="{ stats }">
-        <NuxtLink v-if="stats.floorListing" :to="`https://opensea.io/collection/opepen-edition?search%5BstringTraits%5D%5B0%5D%5Bname%5D=Release&search%5BstringTraits%5D%5B0%5D%5Bvalues%5D%5B0%5D=${pad(submission.set_id)}`">
+        <NuxtLink v-if="stats?.floorListing" :to="`https://opensea.io/collection/opepen-edition?search%5BstringTraits%5D%5B0%5D%5Bname%5D=Release&search%5BstringTraits%5D%5B0%5D%5Bvalues%5D%5B0%5D=${pad(submission.set_id)}`">
           <Icon type="opensea" />
           <span>
             <span>Buy {{ submission.name }}</span>
