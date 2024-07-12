@@ -30,6 +30,7 @@
 
   --blue-light: #BFDBFE;
   --blue-dark: #172554;
+  --ayu-dark-bg: #0A0E14;
 
   --error: var(--red);
   --success: var(--green);

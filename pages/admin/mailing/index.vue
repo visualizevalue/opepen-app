@@ -114,6 +114,15 @@ const send = async () => {
 </script>
 
 <style lang="postcss" scoped>
+section {
+  > div {
+    padding: var(--size-4);
+
+    @media (--lg) {
+      padding: 0;
+    }
+  }
+}
 
 .help {
   margin: 0 0 var(--size-4) 0;
@@ -128,7 +137,7 @@ const send = async () => {
   gap: var(--size-2);
   min-height: calc(100vh - var(--navbar-height) * 3.5);
 
-  @media (--md) {
+  @media (--lg) {
     &:has(iframe) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -139,6 +148,9 @@ const send = async () => {
     gap: var(--size-2);
     grid-template-rows: min-content;
 
+    input {
+      background: var(--ayu-dark-bg);
+    }
   }
 
   > .editor > *,
@@ -151,6 +163,7 @@ const send = async () => {
   iframe {
     width: 100%;
     height: 100%;
+    min-height: calc(100vh - var(--navbar-height) * 4);
   }
 
 }
