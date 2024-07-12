@@ -17,11 +17,17 @@
           />
         </div>
 
-        <iframe
-          v-if="preview?.rendered"
-          ref="frame"
-          frameborder="0"
-        ></iframe>
+        <div class="preview">
+          <header>
+            <p><span class="muted">Subject:</span> <span>{{ subject }}</span></p>
+            <p><span class="muted">From:</span> <span>Opepen &lt;opepen@vv.xyz&gt;</span></p>
+          </header>
+          <iframe
+            v-if="preview?.rendered"
+            ref="frame"
+            frameborder="0"
+          ></iframe>
+        </div>
       </div>
 
       <footer>
@@ -49,7 +55,8 @@ const templateString = ref(`<mj-text font-size="24px" color="#242424" font-famil
 <mj-image src="https://opepen.art/og/og.png"></mj-image>
 
 <mj-text font-size="20px" color="#242424" font-family="helvetica">
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui laboriosam corporis quidem voluptas ea quod, unde ipsa, incidunt reprehenderit pariatur corrupti est necessitatibus consequuntur blanditiis dolorum nisi repellendus ratione! Porro.</p>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui laboriosam corporis quidem voluptas ea quod, unde ipsa pariatur.</p>
+  <p>Incidunt reprehenderit pariatur corrupti est necessitatibus consequuntur blanditiis dolorum nisi repellendus ratione! Porro.</p>
 </mj-text>
 
 <mj-button
@@ -153,8 +160,34 @@ section {
     }
   }
 
+  .preview {
+    height: 100%;
+    min-height: calc(100vh - var(--navbar-height) * 4);
+    display: grid;
+    grid-template-rows: min-content;
+
+    header {
+      padding: var(--size-3) var(--size-4);
+      background: var(--gray-z-8);
+      border-bottom: 1px solid var(--gray-z-7);
+      color: var(--gray-z-2);
+      display: grid;
+      gap: var(--size-2);
+
+      p {
+        font-size: var(--font-xs);
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        white-space: nowrap;
+        display: grid;
+        grid-template-columns: 6em 1fr;
+      }
+    }
+  }
+
   > .editor > *,
-  iframe {
+  > .preview {
     border: var(--border);
     border-radius: var(--size-2);
     overflow: hidden;
@@ -163,7 +196,6 @@ section {
   iframe {
     width: 100%;
     height: 100%;
-    min-height: calc(100vh - var(--navbar-height) * 4);
   }
 
 }
