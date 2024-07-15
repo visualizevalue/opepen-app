@@ -49,6 +49,12 @@
               {{ formatDateTime(submission.created_at) }}
             </span>
           </div>
+          <div v-if="submission.votes_count" class="votes">
+            <span><Icon type="award" /> {{ parseInt((1 + submission.vote_score)/2 * 100) }}% positive</span>
+            <span><Icon type="check" style="color: var(--error)" /> <span class="muted">x</span> {{ (submission.votes_count - submission.points) / 2 }}</span>
+            <span><Icon type="check" style="color: var(--success)" /> <span class="muted">x</span> {{ (submission.votes_count + submission.points) / 2  }}</span>
+            <!-- <span></span> -->
+          </div>
           <h1>{{ submission.name }} <span class="muted">({{ submission.edition_type }})</span></h1>
           <p>{{ submission.description }}</p>
           <NuxtLink :to="`/create/sets/${submission.uuid}`"><span>Go to {{ submission.name }}</span></NuxtLink>
@@ -265,6 +271,22 @@ article.submission {
 
   @media (--md) {
     grid-column: span 2;
+  }
+}
+
+.votes {
+  display: flex;
+  gap: var(--size-4);
+  margin: var(--size-2) 0;
+
+  > span {
+    display: flex;
+    gap: var(--size-0);
+  }
+
+  .icon {
+    width: var(--size-4);
+    display: block;
   }
 }
 </style>

@@ -57,6 +57,7 @@ import { RecycleScroller } from 'vue-virtual-scroller'
 
 const props = defineProps({
   address: String,
+  type: String, // all, singles, sets, perSet
   query: String,
 })
 
@@ -65,11 +66,23 @@ const emit = defineEmits('click')
 const config = useRuntimeConfig()
 const url = computed(() => `${config.public.opepenApi}/opepen/images/curated/art`)
 const filterQuery = computed(() => {
-  if (! props.address) return props.query
+  const queryItems = [
+    props.query,
+  ]
 
-  return props.query
-    ? `${props.query}&filterAddress=${props.address}`
-    : `filterAddress=${props.address}`
+  if (props.address) {
+    queryItems.push(`filterAddress=${props.address}`)
+  }
+
+  if (props.type === 'singles') {
+    queryItems.push(`filter[post_id]=!null`)
+  }
+
+  if (props.type === 'sets') {
+    queryItems.push(`filter[set_submission_id]=!null`)
+  }
+
+  return queryItems.filter(i => !!i).join('&')
 })
 </script>
 
