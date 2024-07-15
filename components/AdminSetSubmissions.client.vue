@@ -6,7 +6,7 @@
       </h1>
 
       <div class="actions">
-        <select v-model="status" class="input sm">
+        <select v-model="status" class="input sm" title="Filter by" placeholder="Filter by">
           <option value="all">All</option>
           <option value="unapproved">To Approve</option>
           <option value="published">Approved</option>
@@ -14,6 +14,14 @@
           <option value="revealed">Revealed</option>
           <option value="shadowed">Shadowed</option>
           <option value="deleted">Deleted</option>
+        </select>
+
+        <select v-model="sort" class="input sm" title="Sort by" placeholder="Sort by">
+          <option value="-created_at">Created At</option>
+          <option value="-approved_at">Approved At</option>
+          <option value="-vote_score">Vote Score</option>
+          <option value="-votes_count">Votes Count</option>
+          <option value="-points">Points</option>
         </select>
       </div>
     </PageHeader>
@@ -100,11 +108,15 @@ const url = computed(() => `${config.public.opepenApi}/set-submissions`)
 const router = useRouter()
 const route = useRoute()
 const status = ref(route.query.status || 'unapproved')
-watch(status, () => {
-  if (route.query.status !== status.value) {
-    router.replace({ query: { ...route.query, status: status.value }})
-  }
+const sort = ref(route.query.sort || '-approved_at')
+watch([status, sort], () => {
+  router.replace({ query: {
+    ...route.query,
+    status: status.value,
+    sort: sort.value,
+  }})
 })
+const showSort = computed(() => ! ['all', 'unapproved'].includes(status.value))
 
 watch(session, () => {
   if (! isAdmin.value) navigateTo('/create/sets')
@@ -114,6 +126,10 @@ const query = computed(() => {
   const q = new URLSearchParams({
     status: status.value,
   })
+
+  if (showSort.value) {
+    q.append('sort', sort.value)
+  }
 
   return q.toString()
 })

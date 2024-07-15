@@ -19,6 +19,24 @@
     :deep(.actions) {
       display: flex;
       gap: var(--size-4);
+
+      > label {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: var(--size-2);
+        color: var(--gray-z-5);
+        width: min-content;
+        flex-shrink: 0;
+
+        > span {
+          display: block;
+        }
+
+        > *:not(span) {
+          flex-shrink: 0;
+        }
+      }
     }
 
     :deep(h1) {
