@@ -16,7 +16,7 @@
           <option value="deleted">Deleted</option>
         </select>
 
-        <select v-model="sort" class="input sm" title="Sort by" placeholder="Sort by">
+        <select v-if="showSort" v-model="sort" class="input sm" title="Sort by" placeholder="Sort by">
           <option value="-created_at">Created At</option>
           <option value="-approved_at">Approved At</option>
           <option value="-vote_score">Vote Score</option>
