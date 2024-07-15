@@ -8,6 +8,7 @@
     <PaginatedContent
       v-else-if="session?.address"
       :url="url"
+      :query="query"
       :refresh-key="`${address}.${nonce}`"
     >
       <template #after-block="{ items }">
@@ -31,6 +32,13 @@
           <div class="details">
             <h1>{{ set.name }}</h1>
             <p>{{ set.description }}</p>
+
+            <div v-if="set.votes_count" class="votes">
+              <span><Icon type="award" /> {{ parseInt((1 + set.vote_score)/2 * 100) }}% positive</span>
+              <span><Icon type="check" style="color: var(--error)" /> <span class="muted">x</span> {{ (set.votes_count - set.points) / 2 }}</span>
+              <span><Icon type="check" style="color: var(--success)" /> <span class="muted">x</span> {{ (set.votes_count + set.points) / 2  }}</span>
+            </div>
+
             <NuxtLink :to="`/create/sets/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
           </div>
         </article>
@@ -42,6 +50,10 @@
 <script setup>
 import { useAccount } from '~/helpers/use-wagmi'
 import { useSignIn } from '~/helpers/siwe'
+
+const props = defineProps({
+  query: String,
+})
 
 const config = useRuntimeConfig()
 const { session, signIn, nonce } = useSignIn()
@@ -121,6 +133,24 @@ article {
 
   @media (--md) {
     grid-column: span 2;
+  }
+}
+
+.votes {
+  display: flex;
+  gap: var(--size-4);
+  margin: var(--size-2) 0;
+  font-size: var(--font-sm);
+  color: var(--gray-z-6);
+
+  > span {
+    display: flex;
+    gap: var(--size-0);
+  }
+
+  .icon {
+    width: var(--size-4);
+    display: block;
   }
 }
 </style>

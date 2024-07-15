@@ -53,7 +53,6 @@
             <span><Icon type="award" /> {{ parseInt((1 + submission.vote_score)/2 * 100) }}% positive</span>
             <span><Icon type="check" style="color: var(--error)" /> <span class="muted">x</span> {{ (submission.votes_count - submission.points) / 2 }}</span>
             <span><Icon type="check" style="color: var(--success)" /> <span class="muted">x</span> {{ (submission.votes_count + submission.points) / 2  }}</span>
-            <!-- <span></span> -->
           </div>
           <h1>{{ submission.name }} <span class="muted">({{ submission.edition_type }})</span></h1>
           <p>{{ submission.description }}</p>

@@ -11,13 +11,14 @@
             <option value="all">All</option>
             <option value="singles">Singles</option>
             <option value="sets">Sets</option>
-            <!-- <option value="perSet">Per Set</option> -->
+            <option value="perSet">Per Set</option>
           </select>
         </div>
       </PageHeader>
 
       <Authenticated #default="{ address }">
-        <ArtistCurationList :address="address" :type="type" :query="query" />
+        <MySetSubmissions v-if="type === 'perSet'" query="sort=-vote_score&filter[votes_count]=!null" />
+        <ArtistCurationList v-else :address="address" :type="type" :query="query" />
       </Authenticated>
     </div>
   </div>
@@ -46,4 +47,7 @@ const query = computed(() => {
 </script>
 
 <style lang="postcss" scoped>
+header {
+  margin-bottom: var(--size-5) !important;
+}
 </style>
