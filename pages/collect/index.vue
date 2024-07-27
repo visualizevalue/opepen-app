@@ -39,9 +39,7 @@
         </div>
       </section>
 
-      <SetDynamicImagesPreview v-if="submission.edition_type === 'DYNAMIC'" :data="submission">
-        <template #header><span></span></template>
-      </SetDynamicImagesPreview>
+      <SetDynamicImagesPreview v-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
     </div>
 
     <TertiaryNav>
@@ -215,6 +213,10 @@ useMetaData({
         gap: 0.45em;
       }
     }
+  }
+
+  .set-opepen {
+    margin-top: var(--size-4);
   }
 
 </style>

@@ -41,17 +41,9 @@ const images = computed(() => {
 </script>
 
 <style lang="postcss" scoped>
-  .set-opepen {
-    @media (--md) {
-      :deep(h1) {
-        margin-top: -2rem;
-      }
-    }
-  }
-
   .list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
     container-type: inline-size;
     flex-wrap: wrap;
     margin: 0 auto;

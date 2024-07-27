@@ -12,15 +12,13 @@
     />
     <span>
       {{ formatNumber(totalEthPrice) }} ETH
-      <small class="muted">
+      <span class="muted">
         <span>{{ formatNumber(totalUsdPrice) }} USD</span>
         <span>·</span>
-        <span v-if="isRevealed">
-          Consensus met ({{ formatDate(data.reveals_at) }})
-        </span>
-        <span v-else-if="overallDemand === 100">Demand met</span>
-        <span v-else>{{ formatNumber(overallDemand) }}% Demand</span>
-      </small>
+        <span v-if="isRevealed">Consensus met ({{ formatDate(data.reveals_at) }})</span>
+        <span v-else-if="overallDemand === 100">Consensus met</span>
+        <span v-else>Consensus pending</span>
+      </span>
     </span>
   </p>
 </template>
@@ -144,7 +142,7 @@ p {
   > span {
     display: block;
 
-    > small {
+    > span {
       display: flex;
       gap: var(--size-1);
     }
