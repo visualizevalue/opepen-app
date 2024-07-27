@@ -1,17 +1,27 @@
 <template>
   <div>
     <button
+      v-if="mm.ready"
+      @click="connectWallet(mm)"
+      class="base"
+    >
+      <img src="/mm.svg" :alt="mm.name" />
+      MetaMask
+      <small v-if="isConnecting && pendingConnector?.id === mm.id" class="tiny upper">connecting</small>
+    </button>
+
+    <button
+      v-if="ic.name !== mm.name && ic.ready"
       :disabled="!ic.ready"
       @click="connectWallet(ic)"
       class="base"
     >
       <template v-if="ic.name === 'Coinbase Wallet'">
         <img src="/cbw.svg" :alt="ic.name" />
-        {{ ic.name }}
+        Coinbase
       </template>
       <template v-else>
-        <img src="/mm.svg" :alt="mm.name" />
-        MetaMask
+        {{ ic.name }}
       </template>
       <small v-if="isConnecting && pendingConnector?.id === ic.id" class="tiny upper">connecting</small>
     </button>
@@ -72,8 +82,7 @@ const connectWallet = async (connector) => {
     gap: var(--size-4);
 
     @media (--md) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      flex-direction: row;
     }
   }
 
