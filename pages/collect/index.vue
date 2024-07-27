@@ -38,6 +38,10 @@
           </span>
         </div>
       </section>
+
+      <SetDynamicImagesPreview v-if="submission.edition_type === 'DYNAMIC'" :data="submission">
+        <template #header><span></span></template>
+      </SetDynamicImagesPreview>
     </div>
 
     <TertiaryNav>

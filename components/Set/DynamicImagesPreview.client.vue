@@ -1,6 +1,8 @@
 <template>
   <section v-if="data?.dynamicSetImages" class="set-opepen">
-    <SectionTitle>Dynamic Images Preview</SectionTitle>
+    <slot name="header">
+      <SectionTitle>Dynamic Images Preview</SectionTitle>
+    </slot>
     <div class="list">
       <div
         v-for="image in images"
@@ -40,7 +42,6 @@ const images = computed(() => {
 
 <style lang="postcss" scoped>
   .set-opepen {
-
     @media (--md) {
       :deep(h1) {
         margin-top: -2rem;
@@ -50,11 +51,9 @@ const images = computed(() => {
 
   .list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
     container-type: inline-size;
     flex-wrap: wrap;
-    max-width: var(--content-width);
-    width: 100%;
     margin: 0 auto;
     gap: var(--size-4);
 
