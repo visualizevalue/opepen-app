@@ -10,16 +10,24 @@
             : 'inherit'
       }"
     />
-    <span v-if="isRevealed">
-      <span>Consensus met</span>
-      <small class="muted">({{ formatDate(data.reveals_at) }})</small>
+    <span>
+      {{ formatNumber(totalEthPrice) }} ETH
+      <small class="muted">
+        <span>{{ formatNumber(totalUsdPrice) }} USD</span>
+        <span>·</span>
+        <span v-if="isRevealed">
+          Consensus met ({{ formatDate(data.reveals_at) }})
+        </span>
+        <span v-else-if="overallDemand === 100">Demand met</span>
+        <span v-else>{{ formatNumber(overallDemand) }}% Demand</span>
+      </small>
     </span>
-    <span v-else-if="overallDemand === 100">Demand met</span>
-    <span v-else>{{ formatNumber(overallDemand) }}% Demand</span>
   </p>
 </template>
 
 <script setup>
+import { formatEther } from 'viem'
+import { useStats } from '~/helpers/stats'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
 
@@ -81,6 +89,43 @@ const overAllCloseToActive = computed(() =>
   edition20CloseToActive.value &&
   edition40CloseToActive.value
 )
+
+// Priced Demand
+const { data: stats } = await useStats()
+const optedOneOfOnePrice = computed(() =>
+  BigInt(stats.value.markets.floor.unrevealedEditions['1']) *
+  BigInt(props.data?.submission_stats.demand['1'])
+)
+const optedOneOfFourPrice = computed(() =>
+  BigInt(stats.value.markets.floor.unrevealedEditions['4']) *
+  BigInt(props.data?.submission_stats.demand['4'])
+)
+const optedOneOfFivePrice = computed(() =>
+  BigInt(stats.value.markets.floor.unrevealedEditions['5']) *
+  BigInt(props.data?.submission_stats.demand['5'])
+)
+const optedOneOfTenPrice = computed(() =>
+  BigInt(stats.value.markets.floor.unrevealedEditions['10']) *
+  BigInt(props.data?.submission_stats.demand['10'])
+)
+const optedOneOfTwentyPrice = computed(() =>
+  BigInt(stats.value.markets.floor.unrevealedEditions['20']) *
+  BigInt(props.data?.submission_stats.demand['20'])
+)
+const optedOneOfFortyPrice = computed(() =>
+  BigInt(stats.value.markets.floor.unrevealedEditions['40']) *
+  BigInt(props.data?.submission_stats.demand['40'])
+)
+const totalPrice = computed(() =>
+  optedOneOfOnePrice.value +
+  optedOneOfFourPrice.value +
+  optedOneOfFivePrice.value +
+  optedOneOfTenPrice.value +
+  optedOneOfTwentyPrice.value +
+  optedOneOfFortyPrice.value
+)
+const totalEthPrice = computed(() => formatEther(totalPrice.value))
+const totalUsdPrice = computed(() => parseInt(totalEthPrice.value * stats.value.ethPrice.USD))
 </script>
 
 <style lang="postcss" scoped>
@@ -99,8 +144,9 @@ p {
   > span {
     display: block;
 
-    > span {
-      display: block;
+    > small {
+      display: flex;
+      gap: var(--size-1);
     }
   }
 }
