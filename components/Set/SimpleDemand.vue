@@ -21,21 +21,30 @@
         <span class="separator">·</span>
         <span v-if="isRevealed">Consensus met ({{ formatDate(data.reveals_at) }})</span>
         <span v-else-if="overallDemand === 100">Consensus met</span>
-        <span v-else>Consensus pending</span>
+        <span v-else-if="isActive">Consensus pending</span>
+        <span v-else>Consensus not met</span>
       </span>
     </span>
   </p>
 </template>
 
 <script setup>
+import { DateTime } from 'luxon'
 import { formatEther } from 'viem'
 import { useStats } from '~/helpers/stats'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
+import { useNow } from '~/helpers/time'
 
 const props = defineProps({ data: Object })
 
 const isRevealed = computed(() => !! props.data.set)
+const now = useNow()
+const closesAt = computed(() => submission.value.reveals_at
+  ? DateTime.fromISO(submission.value.reveals_at)
+  : DateTime.fromISO(submission.value.starred_at).plus({ hours: 48 })
+)
+const isActive = computed(() => now.value > closesAt.value.toUnixInteger())
 
 const minDemand = computed(() => props.data.min_subscription_percentage)
 const edition1Demand = computed(() => parseInt(props.data?.submission_stats.demand['1'] * 100 / 1))
