@@ -6,7 +6,7 @@
 
     <form @submit.prevent="save" v-if="session">
       <ImageUpload @stored="pfp = $event" @reset="pfp = null" name="PFP" :image="pfp" class="pfp" />
-      <ImageUpload @stored="cover = $event" @reset="cover = null" name="Cover Photo" :image="cover" class="cover" />
+      <ImageUpload @stored="cover = $event" @reset="cover = null" name="Cover Photo" :image="cover" class="pfp-cover" />
 
       <label class="name">
         <span class="label">Name</span>
@@ -90,7 +90,7 @@
               <div class="images">
                 <span class="label">Images</span>
                 <div>
-                  <ImageUpload @stored="knownForLinks[index].logo = $event" @reset="knownForLinks[index].logo = null" name="PFP" :image="knownForLinks[index].logo" class="logo" />
+                  <ImageUpload @stored="knownForLinks[index].logo = $event" @reset="knownForLinks[index].logo = null" name="Icon" :image="knownForLinks[index].logo" class="logo" />
                   <ImageUpload @stored="knownForLinks[index].cover = $event" @reset="knownForLinks[index].cover = null" name="Cover" :image="knownForLinks[index].cover" class="cover" />
                 </div>
               </div>
@@ -110,7 +110,6 @@
           </template>
         </SortableList>
       </div>
-
 
       <div class="actions">
         <Button @click.stop.prevent="addKnownForLink" type="button">Add</Button>
@@ -343,7 +342,7 @@ const save = async () => {
     max-width: 8rem;
   }
 
-  .cover {
+  .pfp-cover {
     display: block;
     max-width: 24rem;
 
