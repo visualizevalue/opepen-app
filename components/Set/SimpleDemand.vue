@@ -1,7 +1,12 @@
 <template>
   <p>
     <ClientOnly>
-      <SetVisualDemand v-if="overallDemand > 0 && overallDemand < 100" :data="data" key="viz-demand" />
+      <SetVisualDemand
+        v-if="overallDemand > 0 && overallDemand < 100"
+        :data="data"
+        :pending-color="isActive ? `var(--gray-z-1)` : `var(--error)`"
+        key="viz-demand"
+      />
       <Icon
         v-else
         type="check"
@@ -40,9 +45,9 @@ const props = defineProps({ data: Object })
 
 const isRevealed = computed(() => !! props.data.set)
 const now = useNow()
-const closesAt = computed(() => submission.value.reveals_at
-  ? DateTime.fromISO(submission.value.reveals_at)
-  : DateTime.fromISO(submission.value.starred_at).plus({ hours: 48 })
+const closesAt = computed(() => props.data.reveals_at
+  ? DateTime.fromISO(props.data.reveals_at)
+  : DateTime.fromISO(props.data.starred_at).plus({ hours: 48 })
 )
 const isActive = computed(() => now.value > closesAt.value.toUnixInteger())
 

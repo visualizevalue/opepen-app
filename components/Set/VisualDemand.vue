@@ -19,8 +19,12 @@
 
 <script setup>
 const props = defineProps({
-  data: Object
+  data: Object,
+  pendingColor: {
+    type: String,
+    default: `var(--gray-z-1)`,
+  },
 })
 
-const c = e => props.data?.submission_stats.demand[e] >= e ? 'var(--gray-z-5)' : 'var(--gray-z-1)'
+const c = e => props.data?.submission_stats.demand[e] >= e ? 'var(--gray-z-5)' : props.pendingColor
 </script>
