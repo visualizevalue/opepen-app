@@ -1,17 +1,19 @@
 <template>
   <p>
-    <SetVisualDemand v-if="overallDemand > 0 && overallDemand < 100" :data="data" />
-    <Icon
-      v-else
-      type="check"
-      :style="{
-        color: overallDemand === 100
-          ? 'var(--green)'
-          : overallDemand > 0
-            ? 'var(--yellow)'
-            : 'inherit'
-      }"
-    />
+    <ClientOnly>
+      <SetVisualDemand v-if="overallDemand > 0 && overallDemand < 100" :data="data" key="viz-demand" />
+      <Icon
+        v-else
+        type="check"
+        :style="{
+          color: overallDemand === 100
+            ? 'var(--green)'
+            : overallDemand > 0
+              ? 'var(--yellow)'
+              : 'inherit'
+        }"
+      />
+    </ClientOnly>
     <span>
       <span>{{ formatNumber(totalEthPrice) }} ETH</span>
       <span class="muted">

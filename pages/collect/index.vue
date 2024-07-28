@@ -26,7 +26,7 @@
       <section class="demand">
         <SetSimpleDemand :data="submission" />
 
-        <div class="timer muted">
+        <div class="timer muted" key="timer">
           <span v-if="closed && data.nextSetAt" class="nowrap">
             <span>Next set in</span>
             <CountDown :until="DateTime.fromISO(data.nextSetAt).toUnixInteger()" />
