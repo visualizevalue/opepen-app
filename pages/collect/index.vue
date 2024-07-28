@@ -202,16 +202,18 @@ useMetaData({
 
     .timer {
       display: flex;
-      white-space: nowrap;
 
       @media (--xs) {
         justify-content: flex-end;
         text-align: right;
       }
 
-      > span {
+      :deep(> span) {
         display: flex;
-        gap: 0.45em;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        line-height: 0;
+        gap: 0 0.45em;
       }
     }
   }

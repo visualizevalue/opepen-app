@@ -1,6 +1,8 @@
 <template>
   <p>
+    <SetVisualDemand v-if="overallDemand > 0 && overallDemand < 100" :data="data" />
     <Icon
+      v-else
       type="check"
       :style="{
         color: overallDemand === 100
@@ -91,27 +93,27 @@ const overAllCloseToActive = computed(() =>
 // Priced Demand
 const { data: stats } = await useStats()
 const optedOneOfOnePrice = computed(() =>
-  BigInt(stats.value.markets.floor.unrevealedEditions['1']) *
+  BigInt(stats.value.markets.floor.unrevealedEditions['1'] || 0) *
   BigInt(props.data?.submission_stats.demand['1'])
 )
 const optedOneOfFourPrice = computed(() =>
-  BigInt(stats.value.markets.floor.unrevealedEditions['4']) *
+  BigInt(stats.value.markets.floor.unrevealedEditions['4'] || 0) *
   BigInt(props.data?.submission_stats.demand['4'])
 )
 const optedOneOfFivePrice = computed(() =>
-  BigInt(stats.value.markets.floor.unrevealedEditions['5']) *
+  BigInt(stats.value.markets.floor.unrevealedEditions['5'] || 0) *
   BigInt(props.data?.submission_stats.demand['5'])
 )
 const optedOneOfTenPrice = computed(() =>
-  BigInt(stats.value.markets.floor.unrevealedEditions['10']) *
+  BigInt(stats.value.markets.floor.unrevealedEditions['10'] || 0) *
   BigInt(props.data?.submission_stats.demand['10'])
 )
 const optedOneOfTwentyPrice = computed(() =>
-  BigInt(stats.value.markets.floor.unrevealedEditions['20']) *
+  BigInt(stats.value.markets.floor.unrevealedEditions['20'] || 0) *
   BigInt(props.data?.submission_stats.demand['20'])
 )
 const optedOneOfFortyPrice = computed(() =>
-  BigInt(stats.value.markets.floor.unrevealedEditions['40']) *
+  BigInt(stats.value.markets.floor.unrevealedEditions['40'] || 0) *
   BigInt(props.data?.submission_stats.demand['40'])
 )
 const totalPrice = computed(() =>
@@ -136,7 +138,8 @@ p {
 
   .icon {
     display: block;
-    width: var(--size-5);
+    width: calc(var(--size-7) + var(--size-2));
+    margin-top: calc(-1 * var(--size-1));
   }
 
   > span {
