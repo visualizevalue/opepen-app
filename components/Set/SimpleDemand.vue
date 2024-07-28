@@ -11,10 +11,10 @@
       }"
     />
     <span>
-      {{ formatNumber(totalEthPrice) }} ETH
+      <span>{{ formatNumber(totalEthPrice) }} ETH</span>
       <span class="muted">
         <span>{{ formatNumber(totalUsdPrice) }} USD</span>
-        <span>·</span>
+        <span class="separator">·</span>
         <span v-if="isRevealed">Consensus met ({{ formatDate(data.reveals_at) }})</span>
         <span v-else-if="overallDemand === 100">Consensus met</span>
         <span v-else>Consensus pending</span>
@@ -141,10 +141,22 @@ p {
 
   > span {
     display: block;
+    line-height: 1;
 
     > span {
       display: flex;
-      gap: var(--size-1);
+      flex-wrap: wrap;
+      line-height: 1;
+      gap: 0 var(--size-1);
+      white-space: nowrap;
+    }
+  }
+
+  .separator {
+    display: none;
+
+    @media (--sm) {
+      display: block;
     }
   }
 }

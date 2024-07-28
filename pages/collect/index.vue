@@ -202,6 +202,7 @@ useMetaData({
 
     .timer {
       display: flex;
+      white-space: nowrap;
 
       @media (--xs) {
         justify-content: flex-end;
