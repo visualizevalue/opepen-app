@@ -4,7 +4,7 @@
       <SetVisualDemand
         v-if="overallDemand > 0 && overallDemand < 100"
         :data="data"
-        :pending-color="isActive ? `var(--gray-z-1)` : `var(--error)`"
+        :pending-fill="isActive ? `var(--gray-z-1)` : `var(--red)`"
         key="viz-demand"
       />
       <Icon
@@ -49,7 +49,7 @@ const closesAt = computed(() => props.data.reveals_at
   ? DateTime.fromISO(props.data.reveals_at)
   : DateTime.fromISO(props.data.starred_at).plus({ hours: 48 })
 )
-const isActive = computed(() => now.value > closesAt.value.toUnixInteger())
+const isActive = computed(() => now.value < closesAt.value.toUnixInteger())
 
 const minDemand = computed(() => props.data.min_subscription_percentage)
 const edition1Demand = computed(() => parseInt(props.data?.submission_stats.demand['1'] * 100 / 1))
