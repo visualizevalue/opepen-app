@@ -168,7 +168,8 @@ const selectedPerGroup = computed(() => Object.keys(grouped.value)
 )
 const hasChange = computed(() =>
   opepen.value.length &&
-  JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort())
+  JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort()) ||
+  JSON.stringify(maxRevealValues.value) !== JSON.stringify(props.maxReveals)
 )
 
 const selectAll = (group) => {
