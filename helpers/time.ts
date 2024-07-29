@@ -4,6 +4,7 @@ export const BLOCKS_PER_DAY = 6200
 export const BLOCKS_PER_WEEK = BLOCKS_PER_DAY * 7
 export const BLOCKS_PER_2_WEEKS = BLOCKS_PER_WEEK * 2
 export const DEFAULT_TIME_TO_REVEAL = 172800
+export const OPT_IN_HOURS = 72
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
 

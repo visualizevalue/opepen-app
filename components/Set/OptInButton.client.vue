@@ -23,7 +23,7 @@
 <script setup>
 import { DateTime } from 'luxon'
 import { useAccount, useBlockHeight } from '~/helpers/use-wagmi'
-import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL, delay, useNow } from '~/helpers/time'
+import { timeRemainingFromSeconds, DEFAULT_TIME_TO_REVEAL, delay, useNow, OPT_IN_HOURS } from '~/helpers/time'
 
 const config = useRuntimeConfig()
 const props = defineProps({ data: Object })
@@ -35,7 +35,7 @@ const optInAvailable = computed(() => {
   const starred = DateTime.fromISO(props.data?.starred_at)
   const currentTime = DateTime.fromSeconds(now.value)
 
-  return starred < currentTime && starred.plus({ hours: 48 }) > currentTime
+  return starred < currentTime && starred.plus({ hours: OPT_IN_HOURS }) > currentTime
 })
 const published = computed(() => !!props.data.published_at)
 const revealDate = ref(DateTime.fromISO(props.data?.reveals_at).toFormat('LLL dd, yyyy'))

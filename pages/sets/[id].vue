@@ -33,6 +33,7 @@ import { DateTime } from 'luxon'
 import { isSetId } from '~/helpers/urls'
 import { useMetaData } from '~/helpers/head'
 import pad from '~/helpers/pad'
+import { OPT_IN_HOURS } from '~/helpers/time'
 import { shortenedCleanText } from '~/helpers/strings'
 
 const config = useRuntimeConfig()
@@ -54,7 +55,7 @@ const submission = computed(() => isSet ? data.value.submission : data.value)
 const curated = computed(() => {
   if (!submission.value.starred_at) return false
 
-  return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: 48 })
+  return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: OPT_IN_HOURS })
 })
 
 watch(curated, async () => {

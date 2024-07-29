@@ -39,7 +39,7 @@ import { formatEther } from 'viem'
 import { useStats } from '~/helpers/stats'
 import { formatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
-import { useNow } from '~/helpers/time'
+import { OPT_IN_HOURS, useNow } from '~/helpers/time'
 
 const props = defineProps({ data: Object })
 
@@ -47,7 +47,7 @@ const isRevealed = computed(() => !! props.data.set)
 const now = useNow()
 const closesAt = computed(() => props.data.reveals_at
   ? DateTime.fromISO(props.data.reveals_at)
-  : DateTime.fromISO(props.data.starred_at).plus({ hours: 48 })
+  : DateTime.fromISO(props.data.starred_at).plus({ hours: OPT_IN_HOURS })
 )
 const isActive = computed(() => now.value < closesAt.value.toUnixInteger())
 

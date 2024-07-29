@@ -91,7 +91,7 @@ import { formatEther } from 'viem'
 import { DateTime } from 'luxon'
 import { useMetaData } from '~/helpers/head'
 import { shortenedCleanText } from '~/helpers/strings'
-import { useNow } from '~/helpers/time'
+import { OPT_IN_HOURS, useNow } from '~/helpers/time'
 import pad from '~/helpers/pad'
 
 const config = useRuntimeConfig()
@@ -110,7 +110,7 @@ const showDescription = ref(false)
 const now = useNow()
 const closesAt = computed(() => submission.value.reveals_at
   ? DateTime.fromISO(submission.value.reveals_at)
-  : DateTime.fromISO(submission.value.starred_at).plus({ hours: 48 })
+  : DateTime.fromISO(submission.value.starred_at).plus({ hours: OPT_IN_HOURS })
 )
 const closed = computed(() => DateTime.fromSeconds(now.value) > closesAt.value)
 
