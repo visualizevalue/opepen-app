@@ -12,7 +12,7 @@
         </a>
 
         <div>
-          <Button @click="download"><Icon type="download" /> <span>Download</span></Button>
+          <Button @click="download"><Icon type="download" /> <span>Opepen</span></Button>
           <Button @click="downloadStatsCard"><Icon type="download" /> <span>Card</span></Button>
         </div>
       </div>
