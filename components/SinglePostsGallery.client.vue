@@ -2,6 +2,13 @@
   <SinglesGallery path="posts/images" :query="query" :image-accessor="post => post.images[0]" :show-empty="showEmpty">
     <template #before="{ items }">
       <slot name="before" :items="items" />
+
+      <ImageModal
+        :key="image?.uuid"
+        :image="image"
+        :open="modalOpen"
+        @close="modalOpen = false"
+      />
     </template>
     <template #empty>
       <slot name="empty">
@@ -13,7 +20,7 @@
     <template #item="{ item, image }">
       <slot name="item" :item="item" :image="image">
         <Image
-          @click="$emit('click', item)"
+          @click="clickImage(image)"
           :image="image"
           version="sm"
           :aspect-ratio="1"
@@ -30,6 +37,8 @@ const props = defineProps({
   refreshKey: [Number, String],
 })
 
+const emit = defineEmits(['click'])
+
 const query = computed(() => {
   const q = new URLSearchParams()
 
@@ -39,6 +48,17 @@ const query = computed(() => {
 
   return q.toString()
 })
+
+const image = ref()
+const modalOpen = ref(false)
+const openModal = (img) => {
+  image.value = img
+  modalOpen.value = true
+}
+const clickImage = (img) => {
+  openModal(img)
+  emit('click', img)
+}
 </script>
 
 <style lang="postcss" scoped>

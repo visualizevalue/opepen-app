@@ -4,6 +4,7 @@
     :class="{
       loaded: loaded || isSVG || isVideo
     }"
+    @click="$emit('click')"
     :style="{ padding: `0 0 ${height}` }"
     v-intersection-observer="loadImage"
   >
