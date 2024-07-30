@@ -23,6 +23,9 @@
 </template>
 
 <script setup>
+import { imageURI } from '~/helpers/images'
+import downloadImage from '~/helpers/download-image'
+
 const {
   image,
   open,
@@ -43,7 +46,7 @@ const download = async () => {
   const uri = imageURI(image)
 
   return isStatic.value
-    ? downloadImage(uri, { name: name.value })
+    ? downloadImage(uri, { name: name?.value || 'Opepen' })
     : open(uri, '_blank')
 }
 </script>
