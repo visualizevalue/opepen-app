@@ -7,14 +7,23 @@
       <div
         v-for="image in images"
         :key="image.uuid"
+        @click="openModal(image)"
       >
-        <Image :image="image" :version="image.type === 'gif' ? '' : 'sm'" :key="image.uuid">
-          <template #subline>
-            <p>Edition</p>
-          </template>
-        </Image>
+        <Image
+          :image="image"
+          :version="image.type === 'gif' ? '' : 'sm'"
+          :key="image.uuid"
+        />
       </div>
     </div>
+
+    <ImageModal
+      :key="image?.uuid"
+      :image="image"
+      :open="modalOpen"
+      @close="modalOpen = false"
+    >
+    </ImageModal>
   </section>
 </template>
 
@@ -38,6 +47,13 @@ const images = computed(() => {
 
   return array
 })
+
+const image = ref()
+const modalOpen = ref(false)
+const openModal = (img) => {
+  image.value = img
+  modalOpen.value = true
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -51,6 +67,7 @@ const images = computed(() => {
 
     > div {
       width: 100%;
+      cursor: pointer;
     }
   }
 </style>

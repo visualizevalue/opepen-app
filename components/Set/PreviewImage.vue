@@ -14,25 +14,13 @@
       <button @click="zoomed = true" class="hidden-action"><span>Show details</span></button>
     </Image>
 
-    <Modal
+    <ImageModal
+      :image="image"
       :open="zoomed"
-      :click-outside="true"
-      @close="() => zoomed = false"
-      modal-classes="preview-modal extra-wide"
-    >
-      <Image :image="image" :version="isStatic ? 'lg' : version" class="appear" auto-embed />
-
-      <footer>
-        <div class="text">
-          <h1>{{ name }}</h1>
-          <p>{{ tagline }}</p>
-        </div>
-        <Button @click="download">
-          <Icon type="download" stroke-width="2" />
-          Download
-        </Button>
-      </footer>
-    </Modal>
+      :name="name"
+      :tagline="tagline"
+      @close="zoomed = false"
+    />
   </div>
 </template>
 
@@ -134,38 +122,6 @@ const download = async () => {
 
     > .image :deep(img) {
       transform: scale(1.15);
-    }
-  }
-}
-</style>
-
-<style lang="postcss">
-.preview-modal {
-  > section {
-    padding: 0 !important;
-
-    > .image > .image {
-      border: 0;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-bottom: var(--border-dark);
-    }
-
-    > footer {
-      padding: var(--size-4);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--size-4);
-
-      h1 {
-        text-transform: none;
-      }
-
-      p {
-        font-size: var(--font-sm);
-        color: var(--gray-z-7);
-      }
     }
   }
 }

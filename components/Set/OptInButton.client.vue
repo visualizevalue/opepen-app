@@ -1,5 +1,4 @@
 <template>
-
   <button v-if="data && optInAvailable" @click="startOptIn">
     <Icon type="check" />
     <span>
