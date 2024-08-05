@@ -63,6 +63,8 @@ const wiggle = async () => {
   await delay(50)
   scale.value = 1
   rotation.value = getRandomArbitrary(-5, 5)
+  await delay(50)
+  rotation.value = 0
 }
 const onClick = async () => {
   wiggle()

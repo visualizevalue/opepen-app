@@ -6,7 +6,7 @@
 >
   <header class="select-opepen-header">
     <h1>Choose Opepen</h1>
-    <div class="filter">
+    <div v-if="filter" class="filter">
       <label>
         <div class="label">Set</div>
         <input type="number" v-model="filterSet" :min="1" :max="currentSet.id" :placeholder="`1 - ${currentSet.id}`">
@@ -40,14 +40,19 @@
 import { useAccount } from '~/helpers/use-wagmi'
 import { useSets } from '~/helpers/sets'
 
-defineProps({
+const props = defineProps({
   open: Boolean,
+  owned: Boolean,
+  filter: {
+    type: Boolean,
+    default: true,
+  }
 })
 const emit = defineEmits(['close', 'select'])
 
 const { address, isConnected } = useAccount()
 const config = useRuntimeConfig()
-const filterOwner = ref(false)
+const filterOwner = ref(!! props.owned)
 const filterSet = ref(null)
 const uri = `${config.public.opepenApi}/opepen`
 const query = computed(() => {
@@ -84,7 +89,7 @@ const select = (opepen) => {
   }
 }
 
-.select-opepen {
+:deep(.select-opepen) {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
@@ -94,9 +99,9 @@ const select = (opepen) => {
     border-right: 1px solid var(--gray-z-2);
     overflow: hidden;
 
-    > :deep(article) {
-      border-radius: 0;
-      border: 0;
+    .inner {
+      border-radius: 0 !important;
+      border: 0 !important;
     }
   }
 

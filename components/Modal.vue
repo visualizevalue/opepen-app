@@ -149,7 +149,7 @@ defineEmits(['close'])
   }
 
   :deep(.actions) {
-    margin: var(--size-7) 0 calc(-1 * var(--size-6));
+    margin: var(--size-6) 0 calc(-1 * var(--size-6));
     overflow: hidden;
     border-top: var(--border);
     gap: 0;
