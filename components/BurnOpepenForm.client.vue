@@ -19,7 +19,7 @@
               confirm: `Do you really want to burn Opepen #${opepen?.token_id}? \nThis is an irreversible action.`,
               requesting: 'Requesting Burn Signature...',
               waiting: 'Checking Burn Transaction...',
-              complete: `You burned Opepen #${burnedEvent?.args?.opepenId}, and received Burned Opepen #${burnedEvent?.args?.burnedId}.`,
+              complete: `You burned Opepen #${burnedEvent?.args?.opepenId}\nyou received &quot;${burnedMetadata?.name}&quot;\n(Consensus Met: Token #${burnedEvent?.args?.burnedId})`,
             },
             action: {
               confirm: 'Opt Out',
@@ -38,7 +38,7 @@
             />
             <Button v-if="!opepen" @click="modalOpen = true" type="button">
               <Icon type="opepen" />
-              <span>Choose Opepen</span>
+              <span>Opt Out</span>
             </Button>
           </template>
           <template #confirm>
@@ -49,7 +49,6 @@
           <template #complete="{ cancel }">
             <div class="secondary-content">
               <Image v-if="burnedImageURI" :image="burnedImageURI" />
-              <p>{{ burnedMetadata?.name }}</p>
             </div>
 
             <div class="actions">
@@ -87,7 +86,6 @@ const burn = computed(() => async () => {
     args: [
       address.value,
       config.public.burnedOpepenContract,
-      // `0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a`,
       BigInt(opepen.value?.token_id),
     ],
   })

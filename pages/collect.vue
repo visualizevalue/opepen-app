@@ -9,6 +9,10 @@
         <Icon type="opepen" />
         <span>Buy Opepen</span>
       </NuxtLink>
+      <NuxtLink to="/opt-out">
+        <Icon type="opepen-outline" />
+        <span>Burn Opepen</span>
+      </NuxtLink>
     </SecondaryNav>
 
     <NuxtPage />
