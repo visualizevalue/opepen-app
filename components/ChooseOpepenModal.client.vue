@@ -40,8 +40,12 @@
       :url="uri"
       :query="query"
       v-slot="{ items }"
+      :show-empty="true"
       class="select-opepen"
     >
+      <div v-if="! items.length" class="empty">
+        <p>No Opepen found...</p>
+      </div>
       <div
         v-for="token in items"
         :key="token.token_id"
@@ -115,6 +119,12 @@ const select = (opepen) => {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
+
+  .empty {
+    grid-column: 1 / -1;
+    padding: var(--size-4) var(--size-5);
+    color: var(--gray-z-5);
+  }
 
   > * {
     border-bottom: 1px solid var(--gray-z-2);
