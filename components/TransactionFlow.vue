@@ -150,12 +150,12 @@ defineExpose({
 </script>
 
 <style lang="postcss">
-.transaction-flow {
+.transaction-flow > section {
   .spinner {
     margin: calc(-1 * var(--size-4)) 0 var(--size-3) 0;
   }
 
-  .text {
+  > .text {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -16,7 +16,7 @@
               complete: '3. Success!'
             },
             lead: {
-              confirm: `Do you really want to burn Opepen #${opepen?.token_id}? This is an irreversible action.`,
+              confirm: `Do you really want to burn Opepen #${opepen?.token_id}? \nThis is an irreversible action.`,
               requesting: 'Requesting Burn Signature...',
               waiting: 'Checking Burn Transaction...',
               complete: `You burned Opepen #${burnedEvent?.args?.opepenId}, and received Burned Opepen #${burnedEvent?.args?.burnedId}.`,
@@ -31,7 +31,6 @@
         >
           <template #start="{ start }">
             <ChooseOpepenModal
-              :filter="false"
               :owned="true"
               :open="modalOpen"
               @close="modalOpen = false"
@@ -41,16 +40,15 @@
               <Icon type="opepen" />
               <span>Choose Opepen</span>
             </Button>
-            <!-- <Button type="button" @click="start">🔥 Opt Out</Button> -->
           </template>
           <template #confirm>
             <div class="secondary-content">
-              <Image :image="opepen.image" class="square" />
+              <OpepenCard :token="opepen" :set="opepen.data.edition" />
             </div>
           </template>
           <template #complete="{ cancel }">
             <div class="secondary-content">
-              <Image v-if="burnedImageURI" :image="burnedImageURI" class="square" />
+              <Image v-if="burnedImageURI" :image="burnedImageURI" />
               <p>{{ burnedMetadata?.name }}</p>
             </div>
 
@@ -152,12 +150,12 @@ const burned = async (event) => {
   margin: var(--size-5) 0 0;
   padding: 0 20%;
 
-  :deep(.inner) {
-    border-color: var(--gray-z-2) !important;
-  }
-
-  :deep(article.image) {
+  :deep(> article.image) {
     margin: var(--size-5) 0;
+
+    :deep(.inner) {
+      border-color: var(--gray-z-2) !important;
+    }
   }
 }
 </style>

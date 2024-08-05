@@ -7,14 +7,32 @@
   <header class="select-opepen-header">
     <h1>Choose Opepen</h1>
     <div v-if="filter" class="filter">
-      <label>
+      <!-- <label>
         <div class="label">Set</div>
         <input type="number" v-model="filterSet" :min="1" :max="currentSet.id" :placeholder="`1 - ${currentSet.id}`">
-      </label>
-      <label class="checkbox" v-if="isConnected">
+      </label> -->
+      <select v-model="statusFilter" class="input">
+        <option value="all">All</option>
+        <option value="revealed" default>Revealed</option>
+        <option value="unrevealed">Unrevealed</option>
+      </select>
+      <select v-model="editionFilter" class="input">
+        <option value="all" default>All Edition Sizes</option>
+        <option value="40">1/40</option>
+        <option value="20">1/20</option>
+        <option value="10">1/10</option>
+        <option value="5">1/5</option>
+        <option value="4">1/4</option>
+        <option value="1">1/1</option>
+      </select>
+      <!-- <label>
+        <input type="checkbox" v-model="filterRevealed">
+        <span>Revealed</span>
+      </label> -->
+      <!-- <label class="checkbox" v-if="isConnected">
         <input type="checkbox" v-model="filterOwner">
         <span>Owned</span>
-      </label>
+      </label> -->
     </div>
   </header>
   <section>
@@ -50,15 +68,19 @@ const props = defineProps({
 })
 const emit = defineEmits(['close', 'select'])
 
-const { address, isConnected } = useAccount()
+const { address } = useAccount()
 const config = useRuntimeConfig()
 const filterOwner = ref(!! props.owned)
 const filterSet = ref(null)
+const statusFilter = ref('revealed')
+const editionFilter = ref('40')
+const filterRevealed = ref(null)
 const uri = `${config.public.opepenApi}/opepen`
 const query = computed(() => {
-  let q = `sort=set_id,data.edition&filter[revealed_at]=!null`
+  let q = `sort=-data.edition,set_id`
   if (filterOwner.value) q += `&filter[owner]=${address.value.toLowerCase()}`
-  if (filterSet.value) q += `&filter[set_id]=${filterSet.value}`
+  if (statusFilter.value !== 'all') q += `&filter[set_id]=${statusFilter.value === 'revealed' ? `!null` : `null`}`
+  if (editionFilter.value !== 'all') q += `&filter[data.edition]=${editionFilter.value}`
 
   return q
 })
