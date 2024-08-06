@@ -1,5 +1,5 @@
 <template>
-  <div class="burned">
+  <div class="burned full">
     <section class="about">
       <header>
         <h1>Consensus Met</h1>
@@ -11,21 +11,8 @@
       <BurnOpepenForm />
     </section>
 
-    <section class="gallery-section">
-      <div class="gallery">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2001.png" alt="Consensus Met Preview 1">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2002.png" alt="Consensus Met Preview 2">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2003.png" alt="Consensus Met Preview 3">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2004.png" alt="Consensus Met Preview 4">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2010.png" alt="Consensus Met Preview 5">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2006.png" alt="Consensus Met Preview 6">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2007.png" alt="Consensus Met Preview 7">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2008.png" alt="Consensus Met Preview 8">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2009.png" alt="Consensus Met Preview 9">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2010.png" alt="Consensus Met Preview 10">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2011.png" alt="Consensus Met Preview 11">
-        <img src="https://ipfs.vv.xyz/ipfs/QmPuJ5Hxm9ArZud5PZ3ch684EYw9fiiA1Nyi4b1cuwRvsi/Burned%20Opepen%2012.png" alt="Consensus Met Preview 12">
-      </div>
+    <section class="burn-timeline">
+      <BurnedOpepenTimeline />
     </section>
   </div>
 </template>
@@ -42,16 +29,16 @@ useMetaData({
 
 <style lang="postcss" scoped>
 .burned {
-  max-width: var(--content-width);
-  margin: 0 auto;
   display: grid;
   gap: var(--size-9);
 
   .about {
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--size-5);
+    padding: var(--size-4);
 
     h1 {
       margin: 0 0 0.5em;
@@ -62,27 +49,38 @@ useMetaData({
       margin-bottom: 0.5em;
       color: var(--gray-z-7);
     }
+
+    @media (--md) {
+      padding-left: 10vw;
+    }
+    @media (--xl) {
+      padding-left: 20vw;
+    }
   }
 
-
-  .gallery-section {
+  .burn-timeline {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-auto-flow: dense;
-      grid-auto-rows: min-content;
-      justify-content: center;
-      align-items: center;
-      gap: var(--size-4);
+    @media (--md) {
+      overflow: auto;
+
+      :deep(> section) {
+        padding-right: 10vw;
+      }
+    }
+    @media (--xl) {
+      :deep(> section) {
+        padding-right: 20vw;
+      }
     }
   }
 
   @media (--md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: calc(100dvh - var(--navbar-height));
+    overflow: hidden;
   }
 }
 </style>
