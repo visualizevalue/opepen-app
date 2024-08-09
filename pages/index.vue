@@ -37,12 +37,6 @@ import { useSets } from '~/helpers/sets'
 import pad from '~/helpers/pad'
 
 const { completeSets } = useSets()
-
-definePageMeta({
-  middleware: [
-    'no-initial',
-  ],
-});
 </script>
 
 <style lang="postcss" scoped>

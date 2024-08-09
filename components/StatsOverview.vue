@@ -5,26 +5,31 @@
       <div class="stat-group">
         <h1>Curate</h1>
         <div>
-          <p>{{ formatNumber(stats.optIns) }}</p>
-          <small class="muted">Opt-Ins</small>
-        </div>
-        <div>
           <p>{{ formatNumber(stats.votes) }}</p>
           <small class="muted">Votes</small>
           <NuxtLink :to="`/curate/view/all`"><span>View Curations</span></NuxtLink>
+        </div>
+        <div>
+          <p>{{ formatNumber(stats.optIns) }}</p>
+          <small class="muted">Opt-Ins</small>
         </div>
       </div>
 
       <div class="stat-group">
         <h1>Collect</h1>
-        <div>
+        <!-- <div>
           <p>{{ formatNumber(16000 - stats.revealed.opepen) }}</p>
           <small class="muted">Unrevealed</small>
           <NuxtLink :to="`/collect/buy/unrevealed`"><span>View Listings</span></NuxtLink>
+        </div> -->
+        <div>
+          <p>{{ formatNumber(stats.optOuts.total) }}</p>
+          <small class="muted">Opt-Outs</small>
+          <NuxtLink :to="`/opt-out`"><span>View Opt-Outs</span></NuxtLink>
         </div>
         <div>
           <p>{{ formatNumber(stats.revealed.opepen) }}</p>
-          <small class="muted">Revealed</small>
+          <small class="muted">Revealed Opepen</small>
           <NuxtLink :to="`/collect/buy/revealed`"><span>View Revealed Listings</span></NuxtLink>
         </div>
       </div>
@@ -113,16 +118,20 @@ const { data: stats } = await useStats()
     }
 
     &:has(> a),
-    div:has(> a) {
+    > div:has(> a) {
       &:--highlight {
         background: var(--gray-z-1);
       }
     }
 
-    div {
+    > div {
       display: grid;
       gap: var(--size-3);
       position: relative;
+
+      &:has(> div) {
+        display: flex;
+      }
 
       + div {
         border-top: var(--border);
