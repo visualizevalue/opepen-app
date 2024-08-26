@@ -12,7 +12,7 @@
       <SetItemsMeta :data="submission" />
     </section>
 
-    <section class="opepen">
+    <section v-if="submission" class="opepen">
       <SetOpepen v-if="submission?.set_id" :data="submission" />
       <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
     </section>
@@ -53,7 +53,7 @@ if (! data.value) await navigateTo('/')
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
 const curated = computed(() => {
-  if (!submission.value.starred_at) return false
+  if (!submission.value?.starred_at) return false
 
   return DateTime.fromISO(submission.value.starred_at) > DateTime.now().minus({ hours: OPT_IN_HOURS })
 })
