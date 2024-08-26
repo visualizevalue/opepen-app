@@ -3,10 +3,12 @@
     <div class="submission">
       <EmailNotificationAlert />
 
+      <SetPagination v-if="submission.set" :set="submission.set" />
+
       <header>
         <h1>
           <span v-if="! submission.set">{{ submission.name }}</span>
-          <NuxtLink v-else :to="`/sets/${submission.set.id}`">{{ submission.name }} <span class="muted">(Set {{ pad(submission.set.id) }})</span></NuxtLink>
+          <NuxtLink v-else :to="`/sets/${submission.set.id}`">{{ submission.name }}</NuxtLink>
           <small @click="showDescription = true" :class="{ clickable: description !== submission.description }">
             {{ description }}
           </small>
