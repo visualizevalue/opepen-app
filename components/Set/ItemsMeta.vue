@@ -2,7 +2,7 @@
   <section class="items-meta">
     <div class="intro">
       <h1>
-        <small v-if="!data">Set {{ pad($route.id) }}</small>
+        <small v-if="!data">Set {{ pad($route.params.id) }}</small>
         <small v-else-if="data.set_id">Set {{ pad(data.set_id) }}</small>
         <small v-else>Set Submission <template v-if="! data.approved_at">(Private Preview)</template></small>
         <span :title="name">{{ name }}</span>
