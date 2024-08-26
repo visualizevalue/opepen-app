@@ -40,7 +40,6 @@ export default {
   },
 
   computed: {
-    // (Account for adjustment)
     countDownComplete () {
       return this.timeUntil <= 0
     },
