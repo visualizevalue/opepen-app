@@ -34,11 +34,6 @@
 
     <SocialLinks :links="otherSocials" class="socials" />
 
-    <!-- <SectionNav>
-      <NuxtLink :to="`/${id(account)}`">About</NuxtLink>
-      <NuxtLink :to="`/${id(account)}/activity`">Activity</NuxtLink>
-    </SectionNav> -->
-
     <NuxtPage :account="account" />
 
     <AdminMenuFloating>
@@ -52,7 +47,6 @@
 
 <script setup>
 import { imageURI } from '~/helpers/images'
-import { id } from '~/helpers/accounts'
 import shortAddress from '~/helpers/short-address'
 
 const config = useRuntimeConfig()
