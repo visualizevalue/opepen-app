@@ -3,11 +3,15 @@
     <form
       v-if="isConnected"
       class="create"
-      @submit.stop.prevent="submitPost"
+      @submit.stop.prevent="submitPosts"
     >
-      <ImageUpload @stored="image = $event" name="Media" :image="image" :disabled="saving" />
-
-      <input type="text" v-model="text"  :disabled="saving" placeholder="Name" />
+      <MultiImageUpload
+        name="Post Images"
+        :images="images"
+        @stored="$event => {
+          images = $event
+        }"
+      />
 
       <div class="actions">
         <Button type="submit" :disabled="saving">
@@ -22,21 +26,19 @@
 </template>
 
 <script setup>
-import { useAccount, address } from '~/helpers/use-wagmi'
-import { isAuthenticated, session, useSignIn } from '~/helpers/siwe'
+import { useAccount } from '~/helpers/use-wagmi'
+import { isAuthenticated, useSignIn } from '~/helpers/siwe'
 
 const router = useRouter()
 
-const text = ref('')
-const imageUpload = ref()
-const image = ref(null)
+const images = ref([])
 
 const { signIn } = useSignIn()
 const { profile } = useAccount()
 const config = useRuntimeConfig()
 const emit = defineEmits(['created'])
 const saving = ref(false)
-const submitPost = async () => {
+const submitPosts = async () => {
   if (saving.value) return
 
   if (! isAuthenticated.value) {
@@ -44,26 +46,26 @@ const submitPost = async () => {
 
     if (! isAuthenticated.value) return
 
-    return submitPost()
+    return submitPosts()
   }
 
   saving.value = true
   try {
-    const newPost = await $fetch(`${config.public.opepenApi}/posts`, {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify({
-        body: text.value,
-        image_ids: [image.value.uuid],
-      })
-    })
+    const newPosts = await Promise.all(
+      images.value.map(i => $fetch(`${config.public.opepenApi}/posts`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          image_ids: [i.uuid],
+        })
+      }))
+    )
 
-    text.value = ''
-    image.value = null
+    images.value = []
 
     emit('created', {
       account: profile.value,
-      ...newPost
+      posts: newPosts,
     })
 
     router.replace('/create/singles')
@@ -88,6 +90,16 @@ const submitPost = async () => {
     display: flex;
     gap: var(--size-4);
     justify-content: flex-end;
+  }
+
+  :deep(.multi-image-upload) {
+    padding-bottom: var(--size-5);
+    border-bottom-left-radius: var(--size-7);
+    border-bottom-right-radius: var(--size-7);
+
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    }
   }
 }
 </style>
