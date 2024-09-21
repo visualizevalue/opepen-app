@@ -47,7 +47,7 @@ const download = async () => {
 
   return isStatic.value
     ? downloadImage(uri, { name: name?.value || 'Opepen' })
-    : open(uri, '_blank')
+    : window.open(uri, '_blank')
 }
 </script>
 
