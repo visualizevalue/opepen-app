@@ -21,6 +21,8 @@
       :key="image?.uuid"
       :image="image"
       :open="modalOpen"
+      :name="modalTitle"
+      :tagline="modalTagline"
       @close="modalOpen = false"
     >
     </ImageModal>
@@ -34,12 +36,15 @@ const { data } = defineProps({
 
 const EDITIONS = [4, 5, 10, 20, 40]
 const images = computed(() => {
-  const array = [data.edition1Image]
+  const image = data.edition1Image
+  image.edition = 1
+  const array = [image]
 
   for (const edition of EDITIONS) {
     let index = 1
     while (index <= edition) {
       const image = data.dynamicSetImages[`image${edition}_${index}`]
+      image.edition = edition
       if (image) array.push(image)
       index ++
     }
@@ -49,6 +54,8 @@ const images = computed(() => {
 })
 
 const image = ref()
+const modalTitle = computed(() => data[`edition${image.value?.edition}Name`])
+const modalTagline = computed(() => `${data.name} 1/${image.value?.edition}`)
 const modalOpen = ref(false)
 const openModal = (img) => {
   image.value = img
