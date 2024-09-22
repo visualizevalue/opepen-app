@@ -13,7 +13,13 @@
           :image="image"
           :version="image.type === 'gif' ? '' : 'sm'"
           :key="image.uuid"
-        />
+        >
+          <div class="meta">
+            <h1>{{ data[`edition${image.edition}Name`] }}</h1>
+            <p>{{ `Edition 1/${image.edition}` }}</p>
+          </div>
+          <button @click="zoomed = true" class="hidden-action"><span>Show details</span></button>
+        </Image>
       </div>
     </div>
 
