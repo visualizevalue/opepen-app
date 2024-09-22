@@ -1,6 +1,11 @@
 <template>
   <article class="image-detail">
-    <Image :image="image" version="sm" @click="$emit('click', {image, account})" />
+    <Image
+      :image="image"
+      version="sm"
+      aspect-ratio="1"
+      @click="$emit('click', {image, account})"
+    />
 
     <slot />
 
