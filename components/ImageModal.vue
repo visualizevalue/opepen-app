@@ -5,7 +5,13 @@
     @close="$emit('close')"
     modal-classes="image-modal extra-wide"
   >
-    <Image :image="image" :version="isStatic ? 'lg' : version" class="appear" auto-embed />
+    <Image
+      :image="image"
+      :version="isStatic ? 'lg' : version"
+      :aspect-ratio="1"
+      class="appear"
+      auto-embed
+    />
 
     <footer>
       <slot name="footer">
