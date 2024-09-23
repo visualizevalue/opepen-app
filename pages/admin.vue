@@ -18,6 +18,10 @@
           <Icon type="opepen-grid" />
           <span>Sets</span>
         </NuxtLink>
+        <NuxtLink to="/admin/staged">
+          <Icon type="opepen" />
+          <span>Staged Set Stats</span>
+        </NuxtLink>
         <NuxtLink to="/admin/mailing">
           <Icon type="mail" />
           <span>Mailing</span>
