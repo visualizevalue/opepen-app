@@ -2,10 +2,6 @@
   <div class="full">
     <Authenticated>
       <SecondaryNav>
-        <NuxtLink to="/create/curation">
-          <Icon type="check" />
-          <span>Curation</span>
-        </NuxtLink>
         <NuxtLink to="/create/singles">
           <Icon type="opepen" />
           <span>Singles</span>
@@ -13,6 +9,10 @@
         <NuxtLink to="/create/sets">
           <Icon type="opepen-grid" />
           <span>Sets</span>
+        </NuxtLink>
+        <NuxtLink to="/create/curation">
+          <Icon type="check" />
+          <span>Feedback</span>
         </NuxtLink>
       </SecondaryNav>
 
