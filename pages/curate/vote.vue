@@ -5,7 +5,10 @@
     <ClientOnly>
       <TertiaryNav class="hidden-md">
         <template #default>
-          <CurationStats :refresh-key="refreshKey" />
+          <CurationStats v-if="isAuthenticated" :refresh-key="refreshKey" />
+          <Connect v-else>
+            <template #default>Check In To Store Votes</template>
+          </Connect>
         </template>
       </TertiaryNav>
     </ClientOnly>
@@ -14,12 +17,11 @@
 
 <script setup>
 import { useMetaData } from '~/helpers/head'
+import { isAuthenticated } from '~/helpers/siwe'
 
 useMetaData({
   title: 'Curate Opepen',
 })
-
-const stats = ref(null)
 
 const refreshKey = ref(0)
 </script>
