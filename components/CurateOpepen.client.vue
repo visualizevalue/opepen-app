@@ -38,27 +38,29 @@ const { data, pending, refresh, status } = await useFetch(`${config.public.opepe
 })
 const completedVoting = computed(() => status.value === 'success' && !data.value)
 
-const { signIn } = useSignIn()
+// const { signIn } = useSignIn()
 
 const imgLoaded = ref(false)
 const voting = ref(false)
 const loading = computed(() => pending.value || !imgLoaded.value)
 
 const vote = async (approve) => {
-  if (! isAuthenticated.value) {
-    return signIn()
-  }
+  // if (! isAuthenticated.value) {
+  //   return signIn()
+  // }
 
   voting.value = true
 
-  await $fetch(`${config.public.opepenApi}/votes`, {
-    credentials: 'include',
-    method: 'POST',
-    body: {
-      image: data.value.uuid,
-      approve,
-    }
-  })
+  if (isAuthenticated.value) {
+    await $fetch(`${config.public.opepenApi}/votes`, {
+      credentials: 'include',
+      method: 'POST',
+      body: {
+        image: data.value.uuid,
+        approve,
+      }
+    })
+  }
 
   imgLoaded.value = false
   await refresh()
