@@ -11,8 +11,6 @@
       </section>
 
       <header v-if="! minimal">
-        <Progress v-if="showProgress" :percent="progress" />
-
         <h1>
           <small v-if="data.set_id">Set {{ pad(data.set_id, 3) }}</small>
           <small v-else>Set Submission</small>
