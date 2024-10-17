@@ -190,20 +190,107 @@ watch(() => JSON.stringify(coCreators.value), () => coCreators.value = withEmpty
 
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
+const imagesComplete = computed(() => {
+  const hasPreviewImages = image1.value &&
+                           image4.value &&
+                           image5.value &&
+                           image10.value &&
+                           image20.value &&
+                           image40.value
+
+  if (! isDynamic.value) return hasPreviewImages
+
+  return hasPreviewImages && (
+    props.data.dynamicSetImages?.image4_1 &&
+    props.data.dynamicSetImages?.image4_2 &&
+    props.data.dynamicSetImages?.image4_3 &&
+    props.data.dynamicSetImages?.image4_4 &&
+    props.data.dynamicSetImages?.image5_1 &&
+    props.data.dynamicSetImages?.image5_2 &&
+    props.data.dynamicSetImages?.image5_3 &&
+    props.data.dynamicSetImages?.image5_4 &&
+    props.data.dynamicSetImages?.image5_5 &&
+    props.data.dynamicSetImages?.image10_1 &&
+    props.data.dynamicSetImages?.image10_2 &&
+    props.data.dynamicSetImages?.image10_3 &&
+    props.data.dynamicSetImages?.image10_4 &&
+    props.data.dynamicSetImages?.image10_5 &&
+    props.data.dynamicSetImages?.image10_6 &&
+    props.data.dynamicSetImages?.image10_7 &&
+    props.data.dynamicSetImages?.image10_8 &&
+    props.data.dynamicSetImages?.image10_9 &&
+    props.data.dynamicSetImages?.image10_10 &&
+    props.data.dynamicSetImages?.image20_1 &&
+    props.data.dynamicSetImages?.image20_2 &&
+    props.data.dynamicSetImages?.image20_3 &&
+    props.data.dynamicSetImages?.image20_4 &&
+    props.data.dynamicSetImages?.image20_5 &&
+    props.data.dynamicSetImages?.image20_6 &&
+    props.data.dynamicSetImages?.image20_7 &&
+    props.data.dynamicSetImages?.image20_8 &&
+    props.data.dynamicSetImages?.image20_9 &&
+    props.data.dynamicSetImages?.image20_10 &&
+    props.data.dynamicSetImages?.image20_11 &&
+    props.data.dynamicSetImages?.image20_12 &&
+    props.data.dynamicSetImages?.image20_13 &&
+    props.data.dynamicSetImages?.image20_14 &&
+    props.data.dynamicSetImages?.image20_15 &&
+    props.data.dynamicSetImages?.image20_16 &&
+    props.data.dynamicSetImages?.image20_17 &&
+    props.data.dynamicSetImages?.image20_18 &&
+    props.data.dynamicSetImages?.image20_19 &&
+    props.data.dynamicSetImages?.image20_20 &&
+    props.data.dynamicSetImages?.image40_1 &&
+    props.data.dynamicSetImages?.image40_2 &&
+    props.data.dynamicSetImages?.image40_3 &&
+    props.data.dynamicSetImages?.image40_4 &&
+    props.data.dynamicSetImages?.image40_5 &&
+    props.data.dynamicSetImages?.image40_6 &&
+    props.data.dynamicSetImages?.image40_7 &&
+    props.data.dynamicSetImages?.image40_8 &&
+    props.data.dynamicSetImages?.image40_9 &&
+    props.data.dynamicSetImages?.image40_10 &&
+    props.data.dynamicSetImages?.image40_11 &&
+    props.data.dynamicSetImages?.image40_12 &&
+    props.data.dynamicSetImages?.image40_13 &&
+    props.data.dynamicSetImages?.image40_14 &&
+    props.data.dynamicSetImages?.image40_15 &&
+    props.data.dynamicSetImages?.image40_16 &&
+    props.data.dynamicSetImages?.image40_17 &&
+    props.data.dynamicSetImages?.image40_18 &&
+    props.data.dynamicSetImages?.image40_19 &&
+    props.data.dynamicSetImages?.image40_20 &&
+    props.data.dynamicSetImages?.image40_21 &&
+    props.data.dynamicSetImages?.image40_22 &&
+    props.data.dynamicSetImages?.image40_23 &&
+    props.data.dynamicSetImages?.image40_24 &&
+    props.data.dynamicSetImages?.image40_25 &&
+    props.data.dynamicSetImages?.image40_26 &&
+    props.data.dynamicSetImages?.image40_27 &&
+    props.data.dynamicSetImages?.image40_28 &&
+    props.data.dynamicSetImages?.image40_29 &&
+    props.data.dynamicSetImages?.image40_30 &&
+    props.data.dynamicSetImages?.image40_31 &&
+    props.data.dynamicSetImages?.image40_32 &&
+    props.data.dynamicSetImages?.image40_33 &&
+    props.data.dynamicSetImages?.image40_34 &&
+    props.data.dynamicSetImages?.image40_35 &&
+    props.data.dynamicSetImages?.image40_36 &&
+    props.data.dynamicSetImages?.image40_37 &&
+    props.data.dynamicSetImages?.image40_38 &&
+    props.data.dynamicSetImages?.image40_39 &&
+    props.data.dynamicSetImages?.image40_40
+  )
+})
 const dataComplete = computed(() => {
   return name.value &&
-    image1.value &&
-    image4.value &&
-    image5.value &&
-    image10.value &&
-    image20.value &&
-    image40.value &&
     name1.value &&
     name4.value &&
     name5.value &&
     name10.value &&
     name20.value &&
     name40.value &&
+    imagesComplete.value &&
     description.value &&
     artist.value &&
     type.value
