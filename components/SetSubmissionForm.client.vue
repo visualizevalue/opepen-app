@@ -299,6 +299,8 @@ form {
   }
 
   .images {
+    height: min-content;
+    align-self: center;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--size-5);
