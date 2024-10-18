@@ -122,13 +122,16 @@
       <UnpublishSetSubmissionForm :submission="data" key="unpublish" @unpublished="$emit('updated', $event)" />
     </div>
 
-    <hr>
 
-    <RichContentLinksForm
-      :loaded-links="data.richContentLinks"
-      :new-link-data="{ address: data.creator, set_submission_id: data.id }"
-      title="Deep Dive Links"
-    />
+    <section class="deep-dive span-2">
+      <hr>
+
+      <RichContentLinksForm
+        :loaded-links="data.richContentLinks"
+        :new-link-data="{ address: data.creator, set_submission_id: data.id }"
+        title="Deep Dive Links"
+      />
+    </section>
   </form>
 </template>
 
@@ -391,6 +394,11 @@ form {
     .span-2 {
       grid-column: span 2;
     }
+  }
+
+  .deep-dive {
+    display: grid;
+    gap: var(--size-5);
   }
 
   .images {
