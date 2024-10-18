@@ -12,6 +12,11 @@
       <SetItemsMeta :data="submission" />
     </section>
 
+    <section v-if="submission.richContentLinks?.length" class="links">
+      <SectionTitle>Deep Dive</SectionTitle>
+      <RichContentLinks :links="submission.richContentLinks" />
+    </section>
+
     <section v-if="submission" class="opepen">
       <SetOpepen v-if="submission?.set_id" :data="submission" />
       <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
@@ -116,6 +121,10 @@ useMetaData({
       }
     }
 
+  }
+
+  .links > h1 + .links {
+    margin-top: calc(-1 * var(--size-5));
   }
 
   .opepen {

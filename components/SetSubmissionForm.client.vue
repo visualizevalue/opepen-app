@@ -121,6 +121,14 @@
       <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" :save="store" key="publish" />
       <UnpublishSetSubmissionForm :submission="data" key="unpublish" @unpublished="$emit('updated', $event)" />
     </div>
+
+    <hr>
+
+    <RichContentLinksForm
+      :loaded-links="data.richContentLinks"
+      :new-link-data="{ address: data.creator, set_submission_id: data.id }"
+      title="Deep Dive Links"
+    />
   </form>
 </template>
 
