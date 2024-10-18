@@ -81,51 +81,18 @@
 
       <hr>
 
-      <div>
-        <span class="label known-for-label">"Known For" Links</span>
-        <SortableList :items="knownForLinks" @update="knownForLinks = $event" class="known-for">
-          <template v-slot="{ item, index }">
-            <div class="known-for-link">
-              <button @click.stop.prevent="removeKnownForLink(index)" class="delete" type="button"><Icon type="x" stroke-width="3" /></button>
-              <div class="images">
-                <span class="label">Images</span>
-                <div>
-                  <ImageUpload @stored="knownForLinks[index].logo = $event" @reset="knownForLinks[index].logo = null" name="Icon" :image="knownForLinks[index].logo" class="logo" />
-                  <ImageUpload @stored="knownForLinks[index].cover = $event" @reset="knownForLinks[index].cover = null" name="Cover" :image="knownForLinks[index].cover" class="cover" />
-                </div>
-              </div>
-              <label class="url">
-                <span class="label">URL</span>
-                <input type="text" :value="item.url" @input="knownForLinks[index].url = $event.target.value" placeholder="URL">
-              </label>
-              <label class="title">
-                <span class="label">Title</span>
-                <input type="text" :value="item.title" @input="knownForLinks[index].title = $event.target.value" placeholder="Title">
-              </label>
-              <label class="description">
-                <span class="label">Description</span>
-                <Input type="text" :model-value="item.description" @update:model-value="knownForLinks[index].description = $event" />
-              </label>
-            </div>
-          </template>
-        </SortableList>
-      </div>
+      <RichContentLinksForm
+        :loaded-links="settings.richContentLinks"
+        :new-link-data="{ address }"
+        title="Known For Links"
+      />
 
-      <div class="actions">
-        <Button @click.stop.prevent="addKnownForLink" type="button">Add</Button>
-        <small class="muted" v-if="lastSavedKnownForLinks">Last saved {{ formatTime(lastSavedKnownForLinks) }}</small>
-        <Button @click.stop.prevent="saveKnownForLinks" type="button" :disabled="savingKnownFor">
-          <span v-if="savingKnownFor">Saving...</span>
-          <span v-else>Save</span>
-        </Button>
-      </div>
     </form>
   </div>
 </template>
 
 <script setup>
 import { DateTime } from 'luxon'
-import { formatTime } from '~/helpers/dates'
 import { useAccount, useEnsName } from '~/helpers/use-wagmi'
 import { useSignIn, isAdmin, isAuthenticated } from '~/helpers/siwe'
 import { validateURI } from '~/helpers/urls'
@@ -187,54 +154,6 @@ const sortableSocials = list => {
 const socials = ref(sortableSocials(settings.value?.socials))
 watch(() => JSON.stringify(socials.value), () => socials.value = withEmptySocialsItem(socials.value))
 
-const knownForLinks = ref(settings.value?.richContentLinks)
-const addKnownForLink = () => {
-  knownForLinks.value.push({ _id: knownForLinks.value.length, address: address.value })
-}
-const removeKnownForLink = async (index) => {
-  const item = knownForLinks.value[index]
-
-  if (item?.id && ! confirm(`Remove content?`)) return
-
-  knownForLinks.value?.splice(index, 1)
-
-  try {
-    await $fetch(`${config.public.opepenApi}/rich-links/${item.id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    })
-  } catch (e) {
-    knownForLinks.value?.splice(index, 0, item)
-  }
-}
-const savingKnownFor = ref(false)
-const lastSavedKnownForLinks = ref(null)
-const saveKnownForLinks = async () => {
-  savingKnownFor.value = true
-
-  try {
-    const data = await $fetch(`${config.public.opepenApi}/rich-links`, {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify({
-        links: knownForLinks.value?.map((link, index) => ({
-          ...link,
-          logo_image_id: link.logo?.uuid,
-          cover_image_id: link.cover?.uuid,
-          sort_index: index,
-        })),
-      })
-    })
-    knownForLinks.value = data
-
-    lastSavedKnownForLinks.value = DateTime.now()
-  } catch (e) {
-    // ...
-  }
-
-  savingKnownFor.value = false
-}
-
 const updateData = (data = {}) => {
   pfp.value = data?.pfp
   cover.value = data?.coverImage
@@ -251,7 +170,7 @@ const updateData = (data = {}) => {
   quote.value = data?.quote
   bio.value = data?.bio
   socials.value = sortableSocials(data?.socials)
-  knownForLinks.value = data?.richContentLinks
+  // knownForLinks.value = data?.richContentLinks
 }
 
 watch([status, settings, ens], () => updateData(settings.value))
@@ -303,7 +222,7 @@ const save = async () => {
     width: 100%;
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: var(--size-4) var(--container-padding-x) 0;
+    padding: var(--size-4) var(--container-padding-x) var(--size-8);
 
     @media (--md) {
       padding-left: 0;
@@ -361,62 +280,6 @@ const save = async () => {
 
   .socials {
     margin-top: var(--size-2);
-  }
-
-  .known-for {
-    margin: var(--size-5) 0;
-
-    .known-for-link {
-      position: relative;
-      width: 100%;
-      background: var(--gray-z-1);
-      border: var(--border);
-      padding: var(--size-4) var(--size-5) var(--size-5);
-      display: grid;
-      gap: var(--size-4);
-      border-radius: var(--size-4);
-      border-top-left-radius: var(--size-0);
-
-      .delete {
-        position: absolute;
-        top: var(--size-4);
-        right: var(--size-4);
-      }
-
-      .images {
-
-        > div {
-          display: flex;
-          gap: var(--size-4);
-        }
-
-        .logo,
-        .cover {
-          width: 6rem;
-          height: 6rem;
-
-          :deep(label) {
-            height: 100%;
-          }
-
-          :deep(.image) {
-            padding-bottom: 0;
-            height: 6rem;
-
-            img {
-              min-height: 100%;
-              min-width: 100%;
-              object-fit: cover;
-            }
-          }
-        }
-
-        .cover {
-          width: 12rem;
-        }
-      }
-
-    }
   }
 
   p.label {
