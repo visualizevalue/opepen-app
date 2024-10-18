@@ -12,7 +12,7 @@
       <SetItemsMeta :data="submission" />
     </section>
 
-    <section v-if="submission.richContentLinks?.length" class="links">
+    <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
       <RichContentLinks :links="submission.richContentLinks" />
     </section>
@@ -123,13 +123,13 @@ useMetaData({
 
   }
 
-  .links > h1 + .links {
-    margin-top: calc(-1 * var(--size-5));
-  }
+.deep-dive {
+  margin-bottom: calc(-1 * var(--size-4));
 
-  .opepen {
-    margin: var(--size-8) 0;
+  > h1:first-child {
+    margin-bottom: 0;
   }
+}
 
   .items {
     display: grid;
