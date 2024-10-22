@@ -376,6 +376,9 @@ const store = async () => {
     await navigateTo(`/create/sets/${set.uuid}`)
   }
 }
+onMounted(() => {
+  if (! props.data?.uuid) store()
+})
 </script>
 
 <style lang="postcss" scoped>
