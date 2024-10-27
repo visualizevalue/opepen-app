@@ -41,6 +41,13 @@
         </div>
       </section>
 
+      <section v-if="submission.richContentLinks?.length" class="deep-dive">
+        <SectionTitle>Deep Dive</SectionTitle>
+        <div class="links">
+          <RichContentLink v-for="link of submission.richContentLinks" :link="link" />
+        </div>
+      </section>
+
       <SetDynamicImagesPreview v-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
     </div>
 
@@ -217,6 +224,15 @@ useMetaData({
         line-height: 0;
         gap: 0 0.45em;
       }
+    }
+  }
+
+  .deep-dive {
+    margin-top: var(--size-4);
+
+    .links {
+      display: grid;
+      gap: var(--size-4);
     }
   }
 
