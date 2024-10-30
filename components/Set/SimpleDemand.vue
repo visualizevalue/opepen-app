@@ -20,9 +20,9 @@
       />
     </ClientOnly>
     <span>
-      <span>{{ formatNumber(totalEthPrice) }} ETH</span>
+      <span>{{ roundAndFormatNumber(totalEthPrice, 3) }} ETH</span>
       <span class="muted">
-        <span>{{ formatNumber(totalUsdPrice) }} USD</span>
+        <span>{{ roundAndFormatNumber(totalUsdPrice) }} USD</span>
         <span class="separator">·</span>
         <span v-if="isRevealed">Consensus met ({{ formatDate(data.reveals_at) }})</span>
         <span v-else-if="overallDemand === 100">Consensus met</span>
@@ -37,7 +37,7 @@
 import { DateTime } from 'luxon'
 import { formatEther } from 'viem'
 import { useStats } from '~/helpers/stats'
-import { formatNumber } from '~/helpers/format'
+import { formatNumber, roundAndFormatNumber } from '~/helpers/format'
 import { formatDate } from '~/helpers/dates'
 import { OPT_IN_HOURS, useNow } from '~/helpers/time'
 
