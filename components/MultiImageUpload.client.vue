@@ -17,7 +17,7 @@
       <input
         type="file"
         name="image"
-        accept="image/png, image/jpeg, image/gif, image/svg+xml, image/webp, video/mp4, video/webm"
+        accept="image/png, image/jpeg, image/gif, image/svg+xml, image/webp, video/mp4, video/webm, model/gltf+json, model/gltf-binary, .gltf, .glb"
         @change.prevent="addFilesEvent"
         :disabled="loading"
         multiple

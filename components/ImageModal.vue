@@ -7,7 +7,7 @@
   >
     <Image
       :image="image"
-      :version="isStatic ? 'lg' : version"
+      :version="isStatic ? 'lg' : ''"
       :aspect-ratio="1"
       class="appear"
       auto-embed

@@ -9,7 +9,8 @@
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
-      <iframe v-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
+      <ThreeModelViewer v-if="is3d" :path="imageURI(image)" @loaded="() => loaded = true" />
+      <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
       <img
         v-else-if="uri || hasImageEmbed"
@@ -43,6 +44,7 @@ const emit = defineEmits(['click','loaded'])
 
 const uri = ref('')
 const loaded = ref(false)
+const is3d = computed(() => ['gbl', 'gltf', 'glb-json', 'glb-binary', 'gltf-json', 'gltf-binary'].includes(props.image?.type))
 const isVideo = computed(() => ['mp4', 'webm'].includes(props.image?.type))
 const isSVG = computed(() => props.image?.type === 'svg')
 const hasEmbed = computed(() => props.embed || (uri.value && (isSVG.value && !props.version) && props.autoEmbed))
@@ -64,7 +66,7 @@ const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 const displayIframe = computed(() => hasEmbed.value && !hasImageEmbed.value)
 const displayVideo = computed(() => isVideo.value && !props.version)
 watch([uri, displayIframe, displayVideo], () => {
-  if (displayIframe.value || displayVideo.value) emit('loaded')
+  if (displayIframe.value || displayVideo.value || is3d.value) emit('loaded')
 })
 
 const loadImage = ([{ isIntersecting }]) => {

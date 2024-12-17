@@ -84,7 +84,10 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['@vite-pwa/nuxt'],
+  modules: [
+    '@tresjs/nuxt',
+    '@vite-pwa/nuxt',
+  ],
 
   pwa: {
     devOptions: {
