@@ -28,7 +28,7 @@ const onModelLoad = (model) => {
   const fovq = fov.value * (Math.PI / 180)
   const cameraDistance = maxDim / (2 * Math.tan(fovq / 2))
 
-  cameraPosition.value = [0, 0, cameraDistance * 1.9]
+  cameraPosition.value = [0, 0, cameraDistance * 1.618]
 
   emit('loaded')
 }
