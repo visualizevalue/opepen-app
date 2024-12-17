@@ -116,6 +116,7 @@ useMetaData({
 
 <style lang="postcss" scoped>
   .submission {
+    min-width: 0;
     width: 100%;
     height: 100%;
     padding: var(--size-7) var(--size-4) calc(var(--navbar-height) + var(--size-8));

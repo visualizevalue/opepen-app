@@ -49,7 +49,7 @@ article.content-link {
   width: 100%;
   transform: translateY(0);
   transition: all var(--speed);
-  min-width: calc(100cqw - var(--size-4) * 2);
+  min-width: calc(80cqw);
   border-radius: var(--size-4);
   border-top-left-radius: var(--size-1);
   border: var(--border);
