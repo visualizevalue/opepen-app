@@ -115,6 +115,7 @@ article.image {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: var(--background);
   }
 
   .inner {

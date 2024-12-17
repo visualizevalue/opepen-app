@@ -28,7 +28,7 @@ const onModelLoad = (model) => {
   const fovq = fov.value * (Math.PI / 180)
   const cameraDistance = maxDim / (2 * Math.tan(fovq / 2))
 
-  cameraPosition.value = [0, 0, cameraDistance * 2.3]
+  cameraPosition.value = [0, 0, cameraDistance * 1.9]
 
   emit('loaded')
 }
@@ -36,7 +36,7 @@ const onModelLoad = (model) => {
 
 <template>
   <TresCanvas
-    clear-color="#000"
+    clear-color="#000000"
     height="100%"
     width="100%"
   >
