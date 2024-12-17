@@ -1,5 +1,7 @@
 <template>
-  <slot :stats="stats" />
+  <div>
+    <slot :stats="stats" />
+  </div>
 </template>
 
 <script setup>

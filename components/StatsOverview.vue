@@ -1,5 +1,5 @@
 <template>
-  <aside v-if="stats" class="stats">
+  <aside class="stats">
 
     <slot :stats="stats">
       <div class="stat-group">

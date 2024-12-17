@@ -51,47 +51,29 @@
       <SetDynamicImagesPreview v-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
     </div>
 
-    <TertiaryNav>
-      <SetOptInButton v-if="!closed" :data="submission" @update="refresh" />
-      <SetMarketStat v-if="submission.set_id" :id="submission.set_id" #default="{ stats }">
-        <NuxtLink v-if="stats?.floorListing" :to="`https://opensea.io/collection/opepen-edition?search%5BstringTraits%5D%5B0%5D%5Bname%5D=Release&search%5BstringTraits%5D%5B0%5D%5Bvalues%5D%5B0%5D=${pad(submission.set_id)}`">
-          <Icon type="opensea" />
+    <ClientOnly>
+      <TertiaryNav>
+        <SetOptInButton v-if="!closed" :data="submission" @update="refresh" />
+        <SetMarketStat v-if="submission.set_id" :id="submission.set_id" #default="{ stats }">
+          <NuxtLink v-if="stats?.floorListing" :to="`https://opensea.io/collection/opepen-edition?search%5BstringTraits%5D%5B0%5D%5Bname%5D=Release&search%5BstringTraits%5D%5B0%5D%5Bvalues%5D%5B0%5D=${pad(submission.set_id)}`">
+            <Icon type="opensea" />
+            <span>
+              <span>Buy {{ submission.name }}</span>
+              <span class="hidden-sm"> ({{ formatEther(stats.floorListing.price) }} ETH)</span>
+            </span>
+          </NuxtLink>
+        </SetMarketStat>
+        <NuxtLink to="/collect/buy/unrevealed">
+          <Icon type="infinity-flower" />
           <span>
-            <span>Buy {{ submission.name }}</span>
-            <span class="hidden-sm"> ({{ formatEther(stats.floorListing.price) }} ETH)</span>
+            <span>Buy Unrevealed </span>
+            <Stats #default="{ stats }">
+              <span v-if="stats?.markets.floor.unrevealed" class="hidden-sm">({{ formatEther(stats.markets.floor.unrevealed) }} ETH)</span>
+            </Stats>
           </span>
         </NuxtLink>
-      </SetMarketStat>
-      <NuxtLink to="/collect/buy/unrevealed">
-        <Icon type="infinity-flower" />
-        <span>
-          <span>Buy Unrevealed </span>
-          <Stats #default="{ stats }">
-            <span v-if="stats?.markets.floor.unrevealed" class="hidden-sm">({{ formatEther(stats.markets.floor.unrevealed) }} ETH)</span>
-          </Stats>
-        </span>
-      </NuxtLink>
-    </TertiaryNav>
-
-    <!-- <SetItemsMeta :data="submission" />
-
-    <template v-if="submission?.approved_at">
-      <SetStats :data="submission" class="stats" />
-      <SetOptIn :data="submission" @update="() => refresh()" />
-      <SetStatsMeta :data="submission" />
-
-      <SetOpepen v-if="submission.set_id" :data="submission" />
-      <SetDynamicImagesPreview v-else :data="submission" />
-    </template> -->
-
-    <!-- <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh" class="horizontal">
-      <template #before>
-        <Button  :to="`/create/sets/${submission.uuid}`">
-          <Icon type="edit" />
-          <span>Edit</span>
-        </Button>
-      </template>
-    </AdminMenuSetSubmissions> -->
+      </TertiaryNav>
+    </ClientOnly>
   </div>
 </template>
 

@@ -16,7 +16,7 @@ const size = computed(() => props.size)
 const address = computed(() => props.address)
 
 const canvas = ref(null)
-const img = computed(() => canvas.value.toDataURL())
+const img = computed(() => canvas.value?.toDataURL() || '')
 
 const setCanvas = () => {
   canvas.value = createIcon({
