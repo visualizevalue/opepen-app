@@ -54,13 +54,23 @@ const onModelLoad = (model) => {
         @loaded="onModelLoad"
       />
     </Suspense>
+
+    <!-- Key light -->
     <TresDirectionalLight
-      :intensity="2"
-      :position="[3, 3, 3]"
+      :intensity="1.5"
+      :position="[10, 0, 5]"
     />
+
+    <!-- Fill light -->
     <TresDirectionalLight
-      :intensity="2"
-      :position="[-3, -3, -3]"
+      :intensity="1"
+      :position="[-10, 5, 10]"
+    />
+
+    <!-- Back light -->
+    <TresDirectionalLight
+      :intensity="0.5"
+      :position="[0, 5, -10]"
     />
     <TresAmbientLight :intensity="1" />
   </TresCanvas>
