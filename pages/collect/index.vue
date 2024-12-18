@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" class="has-tertiary">
+  <div v-if="data" :class="[ closed ? 'has-secondary' : 'has-tertiary' ]">
     <div class="submission">
       <EmailNotificationAlert />
 
@@ -52,26 +52,8 @@
     </div>
 
     <ClientOnly>
-      <TertiaryNav>
-        <SetOptInButton v-if="!closed" :data="submission" @update="refresh" />
-        <SetMarketStat v-if="submission.set_id" :id="submission.set_id" #default="{ stats }">
-          <NuxtLink v-if="stats?.floorListing" :to="`https://opensea.io/collection/opepen-edition?search%5BstringTraits%5D%5B0%5D%5Bname%5D=Release&search%5BstringTraits%5D%5B0%5D%5Bvalues%5D%5B0%5D=${pad(submission.set_id)}`">
-            <Icon type="opensea" />
-            <span>
-              <span>Buy {{ submission.name }}</span>
-              <span class="hidden-sm"> ({{ formatEther(stats.floorListing.price) }} ETH)</span>
-            </span>
-          </NuxtLink>
-        </SetMarketStat>
-        <NuxtLink to="/collect/buy/unrevealed">
-          <Icon type="infinity-flower" />
-          <span>
-            <span>Buy Unrevealed </span>
-            <Stats #default="{ stats }">
-              <span v-if="stats?.markets.floor.unrevealed" class="hidden-sm">({{ formatEther(stats.markets.floor.unrevealed) }} ETH)</span>
-            </Stats>
-          </span>
-        </NuxtLink>
+      <TertiaryNav v-if="!closed" >
+        <SetOptInButton :data="submission" @update="refresh" />
       </TertiaryNav>
     </ClientOnly>
   </div>
