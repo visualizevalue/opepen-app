@@ -83,7 +83,7 @@ defineEmits(['close'])
     width: 100%;
     margin-bottom: var(--size-6);
     max-width: min(calc(100vw - 2*var(--size-4)), 30rem);
-    max-height: calc(var(--100vh) - var(--size-4) * 2);
+    max-height: calc(100dvh - var(--size-4) * 2);
     background: var(--background);
     padding: var(--size-6) var(--size-5);
     transform: translateY(0);
@@ -114,11 +114,11 @@ defineEmits(['close'])
     }
 
     &.is-scrollable {
-      max-height: calc(0.8 * var(--100vh));
+      max-height: calc(0.8 * 100dvh);
       padding: 0;
 
       :deep(.scroll) {
-        max-height: calc(0.8 * var(--100vh));
+        max-height: calc(0.8 * 100dvh);
         border-radius: var(--size-5);
         border-top-left-radius: var(--size-1);
         height: 100%;

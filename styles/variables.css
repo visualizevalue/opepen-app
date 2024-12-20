@@ -36,7 +36,6 @@
   --success: var(--green);
 
   /* SIZES */
-  --100vh: 100dvh;
   --size-0: 0.125rem;
   --size-1: 0.25rem;
   --size-2: 0.5rem;
@@ -82,7 +81,7 @@
 
   /* COMPONENTS */
   --navbar-height: calc(var(--size-7) + 2*(var(--size-4)));
-  --page-height: calc(var(--100vh) - var(--navbar-height));
+  --page-height: calc(100dvh - var(--navbar-height));
   --content-width-wide: 90rem;
   --content-width: 60rem;
   --content-width-sm: 35rem;

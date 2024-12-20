@@ -14,13 +14,13 @@ const extra = ref([])
 <style lang="postcss" scoped>
 main {
   padding: 0;
-  min-height: var(--100vh);
+  min-height: 100dvh;
 }
 
 .inner {
   width: 100%;
   max-width: var(--content-width-sm);
-  min-height: var(--100vh);
+  min-height: 100dvh;
   padding-top: var(--navbar-height);
   padding-bottom: var(--navbar-height);
 

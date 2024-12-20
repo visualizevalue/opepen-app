@@ -129,7 +129,7 @@ article.team {
   position: relative;
   container-type: inline-size;
   width: 100%;
-  max-width: min(var(--content-width), calc(var(--100vh) - var(--navbar-height) - 6rem));
+  max-width: min(var(--content-width), calc(100dvh - var(--navbar-height) - 6rem));
   margin: var(--size-5) auto;
   overflow: hidden;
   border-radius: var(--size-2);

@@ -73,7 +73,7 @@ const isScrolled = computed(() => y.value > 5)
     /* Default Page Padding */
     :deep(+ div) {
       position: relative;
-      min-height: var(--100vh);
+      min-height: 100dvh;
       padding: calc(var(--navbar-height) + var(--size-4)) var(--container-padding-x) calc(var(--navbar-height) + env(safe-area-inset-bottom));
 
       &.full {
