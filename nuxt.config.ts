@@ -1,5 +1,20 @@
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  extends: [
+    '@visualizevalue/vveb3-layer',
+  ],
+
+  modules: [
+    '@tresjs/nuxt',
+    '@vite-pwa/nuxt',
+  ],
+
   app: {
     head: {
       htmlAttrs: {
@@ -40,20 +55,26 @@ export default defineNuxtConfig({
     }
   },
 
-  runtimeConfig: {
-    public: {
-      opepenApi: '',
-      opepenOauthApi: '',
-      signatureApi: 'https://api.signature.vv.xyz/v1',
-      opepenContract: '0x6339e5e072086621540d0362c4e3cea0d643e114',
-      burnedOpepenContract: '0x0000000000000000000000000000000000000000',
-      rpc: 'http://127.0.0.1:8545',
-      alchemy: '',
-      walletConnectProjectId: '',
-      chainName: 'mainnet',
-      chainId: '1',
-    },
-  },
+  // runtimeConfig: {
+  //   public: {
+  //     title: 'Opepen',
+  //     description: 'Consensus is temporary',
+  //     blockExplorer: 'https://etherscan.io',
+  //     chainId: 1,
+  //     rpc: 'http://127.0.0.1:8545',
+  //     rpc1: 'https://eth.llamarpc.com',
+  //     rpc2: 'https://ethereum-rpc.publicnode.com',
+  //     rpc3: 'https://eth.drpc.org',
+  //     walletConnectProjectId: '',
+  //     opepenApi: '',
+  //     opepenOauthApi: '',
+  //     signatureApi: 'https://api.signature.vv.xyz/v1',
+  //     opepenContract: '0x6339e5e072086621540d0362c4e3cea0d643e114',
+  //     burnedOpepenContract: '0x53787D1Fee8512C6dF258EBdf65903E2EA371222',
+  //     chainName: 'mainnet',
+  //     chainId: '1',
+  //   },
+  // },
 
   css: [
     '~/styles/index.css',
@@ -61,13 +82,15 @@ export default defineNuxtConfig({
 
   postcss: {
     plugins: {
+      '@csstools/postcss-global-data': {
+        files: [
+          join(currentDir, './styles/custom-selectors.css'),
+          join(currentDir, './styles/custom-media.css'),
+        ]
+      },
       'postcss-nested': {},
-      'postcss-custom-selectors': {
-        importFrom: 'styles/custom-selectors.css',
-      },
-      'postcss-custom-media': {
-        importFrom: 'styles/custom-media.css',
-      },
+      'postcss-custom-selectors': {},
+      'postcss-custom-media': {},
       'postcss-preset-env': {
         stage: 3,
         features: {},
@@ -83,11 +106,6 @@ export default defineNuxtConfig({
       }
     }
   },
-
-  modules: [
-    '@tresjs/nuxt',
-    '@vite-pwa/nuxt',
-  ],
 
   pwa: {
     devOptions: {

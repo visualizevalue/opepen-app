@@ -1,16 +1,12 @@
 {
   "name": "@visualizevalue/opepen-app",
-  "version": "0.0.4",
-  "type": "module",
   "scripts": {
     "build": "nuxi build",
     "dev": "nuxi dev --port 6969",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "postinstall": "nuxi prepare"
-  },
-  "devDependencies": {
-    "nuxt": "^3.14.159"
+    "postinstall": "nuxi prepare",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icon-fill.svg"
   },
   "dependencies": {
     "@delegatexyz/sdk": "^0.5.2",
@@ -34,6 +30,9 @@
     "vue-chartjs": "^5.3.1",
     "vue-feather": "2",
     "vue-virtual-scroller": "^2.0.0-beta.8"
+  },
+  "devDependencies": {
+    "nuxt": "^3.14.159"
   },
   "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
 }

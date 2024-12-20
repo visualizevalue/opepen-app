@@ -1,6 +1,6 @@
 <template>
   <main>
-    <NavBar />
+    <!-- <NavBar /> -->
 
     <!-- <ContentStatus /> -->
 
