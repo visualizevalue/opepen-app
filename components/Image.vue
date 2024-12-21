@@ -29,6 +29,7 @@
 <script setup>
 import { vIntersectionObserver } from '@vueuse/components'
 import { imageURI } from '~/helpers/images'
+import { normalizeURI } from '~/helpers/urls'
 
 const props = defineProps({
   image: [String, Object],
@@ -75,7 +76,7 @@ const loadImage = ([{ isIntersecting }]) => {
   if (! props.image) return
 
   if (typeof props.image === 'string') {
-    uri.value = props.image
+    uri.value = normalizeURI(props.image)
     return
   }
 
