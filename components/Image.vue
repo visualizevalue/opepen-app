@@ -2,14 +2,14 @@
   <article
     class="image"
     :class="{
-      loaded: loaded || isSVG || isVideo
+      loaded: loaded || isSVG || isVideo || is3d
     }"
     @click="$emit('click')"
     :style="{ padding: `0 0 ${height}` }"
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
-      <ThreeModelViewer v-if="is3d" :path="imageURI(image)" @loaded="() => loaded = true" />
+      <ThreeModelViewer v-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
       <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
       <img
