@@ -5,7 +5,7 @@
   line-height: var(--line-height-base);
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* color-scheme: dark light; */
   background-color: var(--background);
   color: var(--color);
 
@@ -23,3 +23,8 @@
 html {
   overflow-x: hidden;
 }
+
+body {
+  min-height: 100dvh;
+}
+

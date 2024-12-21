@@ -1,12 +1,22 @@
 <template>
-  <main>
-    <!-- <NavBar /> -->
+  <div class="layout">
 
-    <!-- <ContentStatus /> -->
+    <!-- Sidebar -->
+    <MainNav :fixed="isDesktop" />
 
-    <slot />
+    <!-- Main App Frame -->
+    <main>
+      <slot />
+    </main>
 
-    <!-- <FooterLinks /> -->
-    <!-- <ToggleDarkMode /> -->
-  </main>
+  </div>
 </template>
+
+<script setup>
+import { useWindowSize } from '@vueuse/core'
+
+const { width, height } = useWindowSize()
+const aspectRatio = computed(() => width.value / height.value)
+
+const isDesktop = computed(() => width.value >= 1024)
+</script>
