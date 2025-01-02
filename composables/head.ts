@@ -7,18 +7,16 @@ type HeadConfig = {
 }
 
 export const makeHead = ({
-  title,
-  append = '',
-  description = '',
+  title = 'Opepen',
+  description = 'Consensus is temporary.',
   og = 'https://opepen.art/og/og.png',
   meta = [],
 }: HeadConfig) => {
-  const titleCompleted = `${title}${append}`
   return {
-    title: titleCompleted,
+    title: title,
     meta: [
       { name: 'description', content: description },
-      { property: 'og:title', content: titleCompleted },
+      { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:image', content: og },
       ...meta,

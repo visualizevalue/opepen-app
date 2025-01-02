@@ -7,11 +7,11 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 export default defineNuxtConfig({
 
   alias: {
-    '@vveb3-layer': '@visualizevalue/vveb3-layer',
+    '@vv': '@visualizevalue/vveb3-layer',
   },
 
   css: [
-    '@vveb3-layer/assets/styles/index.css',
+    '@vv/assets/styles/index.css',
     join(currentDir, './styles/index.css'),
   ],
 

@@ -2,11 +2,15 @@
   <nav>
 
     <!-- Profile -->
-    Profile
+    <Connect>
+      <template #connected>
+        <NuxtLink to="/">Profile</NuxtLink>
+      </template>
+    </Connect>
 
 
     <!-- About -->
-    About
+    <NuxtLink to="/about">About</NuxtLink>
 
 
     <!-- Browse -->
@@ -20,4 +24,13 @@
 
   </nav>
 </template>
+
+<script setup>
+import { useWindowSize } from '@vueuse/core'
+
+const { width, height } = useWindowSize()
+const aspectRatio = computed(() => width.value / height.value)
+
+const isDesktop = computed(() => width.value >= 1024)
+</script>
 
