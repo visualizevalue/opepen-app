@@ -12,30 +12,15 @@
   font-style: normal;
   font-weight: 700;
   src: url('../fonts/space-mono-v13-latin-700.woff2') format('woff2');
-}
-
-@font-face {
-  font-display: swap;
-  font-family: 'Space Super';
-  font-style: normal;
-  font-weight: 700;
-  src: url('../fonts/space-mono-v13-latin-700.woff2') format('woff2');
   unicode-range: U+00B2, U+00B3, U+2070-209F;
 }
 
 @font-face {
-  font-family: "Carbonara";
+  font-family: 'Carbon';
   font-style:  normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/carbon.woff2?v=1.0") format("woff2"),
-    url("/fonts/carbon.woff?v=1.0") format("woff");
+  src: url('/fonts/carbon.woff2?v=1.0') format('woff2'),
+    url('/fonts/carbon.woff?v=1.0') format('woff');
 }
 
-@font-face {
-  font-family: "OpepenBlockSolid";
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/OpepenBlockSolid.otf") format("opentype");
-}

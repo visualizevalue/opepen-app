@@ -52,10 +52,9 @@
   --sidenav-width: max(13rem, 20vw);
 
   /* FONTS */
-  --font-family-main: Space Super, Carbonara, Space Mono, Inter, Helvetica Neue, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-main: Space Mono Bold, Inter, Helvetica Neue, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-body: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
-  /* --font-family-opepen: 'OpepenBlockSolid', 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif; */
   --font-family-opepen: var(--font-family-main);
   --font-sm: var(--size-3);
   --font-xs: calc(var(--size-2) + var(--size-1));

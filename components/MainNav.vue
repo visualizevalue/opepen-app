@@ -2,12 +2,7 @@
   <nav>
 
     <!-- Profile -->
-    <Connect>
-      <template #connected>
-        <NuxtLink to="/">Profile</NuxtLink>
-      </template>
-    </Connect>
-
+    <MainNavProfile />
 
     <!-- About -->
     <NuxtLink to="/about">About</NuxtLink>
@@ -33,4 +28,8 @@ const aspectRatio = computed(() => width.value / height.value)
 
 const isDesktop = computed(() => width.value >= 1024)
 </script>
+
+<style>
+
+</style>
 
