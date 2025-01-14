@@ -154,7 +154,7 @@ useMetaData({
       margin-bottom: var(--size-4);
     }
     h1 + div {
-      font-family: var(--font-family-body);
+      font-family: var(--font-family);
       font-weight: var(--font-weight-medium);
       white-space: pre-wrap;
       font-size: var(--font-base);

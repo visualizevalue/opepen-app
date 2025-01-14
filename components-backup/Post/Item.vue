@@ -179,7 +179,7 @@ article.post {
     word-break: break-all;
 
     > span {
-      font-family: var(--font-family-body);
+      font-family: var(--font-family);
       font-weight: var(--font-weight-medium);
       text-transform: none;
     }

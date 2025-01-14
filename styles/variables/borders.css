@@ -1,0 +1,14 @@
+:root {
+
+  --border-color: var(--gray-z-4);
+  --border-color-dark: var(--gray-z-2);
+
+  --border: var(--border-width) solid var(--border-color);
+
+  --border-radius: var(--size-4);
+
+  --shadow: 0 0.1em 0.3em 0 var(--semi-shade);
+  --shadow-lg: 0 0.2em 0.5em 0 var(--semi-shade);
+
+}
+

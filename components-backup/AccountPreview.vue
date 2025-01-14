@@ -70,7 +70,7 @@ article {
     overflow: hidden;
 
     span {
-      font-family: var(--font-family-opepen);
+      font-family: var(--ui-font-family);
       font-size: var(--font-lg);
       height: 1em;
     }

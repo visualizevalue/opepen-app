@@ -57,7 +57,7 @@ header {
     }
 
     span {
-      font-family: var(--font-family-opepen);
+      font-family: var(--ui-font-family);
       font-size: var(--font-title);
       line-height: var(--line-height-md);
       letter-spacing: 0.05em;

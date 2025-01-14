@@ -99,7 +99,7 @@ const openDynamicPreview = ref(false)
         }
 
         span {
-          font-family: var(--font-family-opepen);
+          font-family: var(--ui-font-family);
           font-size: var(--font-title);
           line-height: 0.8;
           margin-left: -0.05em;

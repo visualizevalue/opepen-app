@@ -128,7 +128,7 @@ const { completeSets } = useSets()
       }
 
       > p {
-        font-family: var(--font-family-body);
+        font-family: var(--font-family);
         line-height: var(--line-height-lg);
         text-transform: none;
         font-weight: 500;

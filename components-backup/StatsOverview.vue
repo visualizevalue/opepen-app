@@ -92,7 +92,7 @@ const { data: stats } = await useStats()
 
     p {
       padding: var(--size-5) 0.5em 0;
-      font-family: var(--font-family-body);
+      font-family: var(--font-family);
       font-weight: 500;
       font-size: 2em;
       white-space: nowrap;

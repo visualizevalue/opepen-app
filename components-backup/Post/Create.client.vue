@@ -156,7 +156,7 @@ const submitPost = async () => {
   .input,
   :deep(.input textarea) {
     z-index: 1;
-    font-family: var(--font-family-body);
+    font-family: var(--font-family);
     font-weight: var(--font-weight-medium);
   }
   :deep(.input textarea) {
@@ -287,7 +287,7 @@ const submitPost = async () => {
 
   p {
     font-size: var(--font-base);
-    font-family: var(--font-family-body);
+    font-family: var(--font-family);
     text-transform: none;
     font-weight: 500;
     text-align: center;
