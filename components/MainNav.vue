@@ -92,7 +92,20 @@ const aspectRatio = computed(() => width.value / height.value)
 const isDesktop = computed(() => width.value >= 1024)
 </script>
 
-<style>
+<style scoped>
+nav {
+  background: var(--gray-z-0);
+}
 
+section {
+  padding: var(--spacer-lg);
+  border-bottom: var(--border);
+
+  > h1 {
+    @mixin ui-font;
+    color: var(--gray-z-5);
+    margin-bottom: var(--spacer);
+  }
+}
 </style>
 
