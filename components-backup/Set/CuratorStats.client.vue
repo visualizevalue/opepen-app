@@ -71,7 +71,7 @@ const onHover = (_event, item) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   padding: 0 !important;
 

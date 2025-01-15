@@ -11,7 +11,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .progress {
   padding: 0;
   background-color: var(--gray-z-2);

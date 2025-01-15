@@ -61,7 +61,7 @@ const publish = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 form {
   display: grid;
   gap: var(--size-4);

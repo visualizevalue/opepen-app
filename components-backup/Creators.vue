@@ -33,7 +33,7 @@ const coCreators = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .creators {
   display: flex;
   justify-content: flex-start;

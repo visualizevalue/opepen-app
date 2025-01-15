@@ -149,7 +149,7 @@ defineExpose({
 })
 </script>
 
-<style lang="postcss">
+<style>
 .transaction-flow > section {
   .spinner {
     margin: calc(-1 * var(--size-4)) 0 var(--size-3) 0;

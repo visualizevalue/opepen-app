@@ -144,7 +144,7 @@ const totalEthPrice = computed(() => formatEther(totalPrice.value))
 const totalUsdPrice = computed(() => parseInt(totalEthPrice.value * stats.value.ethPrice.USD))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 p {
   display: flex;
   align-items: center;

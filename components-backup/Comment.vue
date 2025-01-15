@@ -32,7 +32,7 @@ const text = computed(() => (collapse.value && collapsed.value)
 const toggle = () => collapsed.value = !collapsed.value
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .comment {
     border: var(--border);
     border-radius: var(--size-4);

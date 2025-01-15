@@ -121,6 +121,6 @@ const withExtras = items => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 
 </style>

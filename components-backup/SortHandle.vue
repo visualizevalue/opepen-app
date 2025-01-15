@@ -4,7 +4,7 @@
   </button>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .handle {
   padding: var(--size-1) var(--size-0);
   border: var(--border);

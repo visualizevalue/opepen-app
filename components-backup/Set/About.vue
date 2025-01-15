@@ -9,7 +9,7 @@
 const { set } = defineProps({ set: Object })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .about {
   font-size: var(--font-sm);
 }

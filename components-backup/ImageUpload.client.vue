@@ -92,7 +92,7 @@ const reset = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .image-upload {
     container-type: inline-size;
     position: relative;

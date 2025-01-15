@@ -153,7 +153,7 @@ const startOptIn = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .opt-in {
     border: var(--border);
     border-radius: var(--size-5);

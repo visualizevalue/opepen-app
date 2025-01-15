@@ -109,7 +109,7 @@ const save = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 
   .rich-content {
     margin: var(--size-5) 0 0;

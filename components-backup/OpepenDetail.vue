@@ -83,7 +83,7 @@ const animationURI = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen-detail {
   container-type: inline-size;
   container-name: card;

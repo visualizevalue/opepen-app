@@ -62,7 +62,7 @@ const onClick = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen-pack {
   position: relative;
   width: 100%;

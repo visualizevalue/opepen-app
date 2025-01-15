@@ -57,7 +57,7 @@ const download = async () => {
 }
 </script>
 
-<style lang="postcss">
+<style>
 .image-modal {
   > section {
     padding: 0 !important;

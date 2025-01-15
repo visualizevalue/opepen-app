@@ -9,6 +9,6 @@
 import { isAdmin } from '~/helpers/siwe'
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 
 </style>

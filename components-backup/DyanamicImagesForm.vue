@@ -201,7 +201,7 @@ const store = async (edition, images) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .dynamic-set-images {
 
   .label {

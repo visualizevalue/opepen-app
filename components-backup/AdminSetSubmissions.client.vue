@@ -171,7 +171,7 @@ const approve = async (submission, index) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   width: 100%;
   max-width: var(--content-width);

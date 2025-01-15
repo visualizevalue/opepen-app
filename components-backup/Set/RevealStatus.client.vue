@@ -49,5 +49,5 @@ const pollReveal = async () => {
 onMounted(() => pollReveal())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

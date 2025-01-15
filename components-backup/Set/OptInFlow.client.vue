@@ -280,7 +280,7 @@ const sign = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opt-in-flow {
   --header-height: calc(var(--size-8) + var(--size-2));
 

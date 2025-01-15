@@ -77,7 +77,7 @@ const onComplete = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .set-preview {
     container-type: inline-size;
     container-name: preview;

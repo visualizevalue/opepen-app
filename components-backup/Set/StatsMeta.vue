@@ -12,7 +12,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .stats-meta {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-sm);

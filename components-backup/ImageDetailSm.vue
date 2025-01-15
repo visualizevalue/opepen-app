@@ -76,7 +76,7 @@ const extractedEdition = computed(() => {
 const showSub = computed(() => !! props.account || !! props.post?.body)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .image-detail {
   position: relative;
   border: var(--border);

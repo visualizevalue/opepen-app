@@ -30,7 +30,7 @@ const onEnter = event => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .input {
     :deep(.icon:first-child)  {
       color: var(--gray-z-7);

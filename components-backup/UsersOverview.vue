@@ -46,7 +46,7 @@ const query = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .users {
   padding: var(--size-5) var(--container-padding-x);
   display: grid;

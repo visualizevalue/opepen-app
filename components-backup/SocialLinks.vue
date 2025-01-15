@@ -56,7 +56,7 @@ const parsedLinks = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 ul {
   display: flex;
   flex-wrap: wrap;

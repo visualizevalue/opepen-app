@@ -64,7 +64,7 @@ watch(refreshKey, () => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .comments {
   margin-top: var(--size-3);
   position: relative;

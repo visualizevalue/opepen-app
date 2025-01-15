@@ -72,7 +72,7 @@ const dismiss = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .close {
     position: absolute;
     top: var(--size-4);

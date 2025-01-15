@@ -4,7 +4,7 @@
   </nav>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 nav.secondary {
   border-bottom: var(--border);
   position: fixed;

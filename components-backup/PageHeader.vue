@@ -7,7 +7,7 @@
 <script setup>
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   header {
     width: 100%;
 

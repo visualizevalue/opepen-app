@@ -60,7 +60,7 @@ import { useStats } from '~/helpers/stats'
 const { data: stats } = await useStats()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .stats {
   display: grid;
   gap: var(--size-4);

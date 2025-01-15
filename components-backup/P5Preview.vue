@@ -38,7 +38,7 @@ defineExpose({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .preview {
   width: 100%;
   height: 100%;

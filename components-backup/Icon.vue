@@ -30,7 +30,7 @@ const ICONS = {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .icon {
   :deep(svg) {
     width: 100%;

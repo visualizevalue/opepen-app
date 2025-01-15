@@ -76,7 +76,7 @@ const submitPosts = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .create {
   --spacer-left: calc(var(--spacer)*2 + var(--size-7));
   --bottom-bar-height: var(--size-8);

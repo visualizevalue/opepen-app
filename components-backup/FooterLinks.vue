@@ -23,7 +23,7 @@
   </aside>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 aside {
   position: fixed;
   bottom: 0;

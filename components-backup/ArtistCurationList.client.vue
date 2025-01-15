@@ -86,7 +86,7 @@ const filterQuery = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   .list {
     max-width: var(--content-width);

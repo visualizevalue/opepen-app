@@ -29,7 +29,7 @@ const { data } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .signature {
   justify-content: flex-start;
   max-width: 12rem;

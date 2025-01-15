@@ -87,7 +87,7 @@ onMounted(() => draw())
 watch(() => props.drawKey, () => draw())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   canvas {
     position: fixed;
     width: 1400px;

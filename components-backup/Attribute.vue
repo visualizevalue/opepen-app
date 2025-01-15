@@ -13,7 +13,7 @@ const { attribute } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .attribute {
   padding: var(--size-2) var(--size-4);
   background-color: var(--gray-z-1);

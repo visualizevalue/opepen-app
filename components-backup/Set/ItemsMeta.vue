@@ -73,7 +73,7 @@ const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.
 const openDynamicPreview = ref(false)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .items-meta {
     display: flex;
     flex-direction: column;

@@ -36,7 +36,7 @@ watch(props, () => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 nav {
   display: flex;
   gap: var(--size-2);

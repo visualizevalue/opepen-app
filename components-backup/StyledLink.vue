@@ -21,7 +21,7 @@ const {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 a {
   display: inline-flex;
   align-items: center;

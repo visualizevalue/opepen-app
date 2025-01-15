@@ -51,7 +51,7 @@ const next = computed(() => nextSet(set.id))
 const previous = computed(() => prevSet(set.id))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .pagination {
   display: grid;
   grid-template-columns: 1fr 40% 1fr;

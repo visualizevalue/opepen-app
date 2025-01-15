@@ -39,7 +39,7 @@ const { y } = useWindowScroll()
 const isScrolled = computed(() => y.value > 5)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   nav {
     position: fixed;
     left: 0;

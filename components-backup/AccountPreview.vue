@@ -28,7 +28,7 @@ const { account } = defineProps({
 const coverImageURL = imageURI(account?.coverImage, 'md')
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 article {
   position: relative;
   container-type: inline-size;

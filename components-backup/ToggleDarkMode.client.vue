@@ -28,7 +28,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   button {
     position: fixed;
     bottom: var(--size-4);

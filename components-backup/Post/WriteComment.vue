@@ -45,7 +45,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 form {
   position: relative;
   margin: var(--size-2) 0;

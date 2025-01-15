@@ -36,5 +36,5 @@ const { account, entry, submission } = defineProps({
 const authorUrl = computed(() => `/${id(account)}`)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

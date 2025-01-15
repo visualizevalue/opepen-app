@@ -117,7 +117,7 @@ const destroy = async (post, type = 'posts') => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   width: 100%;
   max-width: var(--content-width);

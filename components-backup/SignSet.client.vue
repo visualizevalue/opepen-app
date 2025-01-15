@@ -117,7 +117,7 @@ const sign = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   display: grid;
   gap: var(--size-4);

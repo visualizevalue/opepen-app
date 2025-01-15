@@ -95,7 +95,7 @@ const select = (opepen) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .select-opepen-header {
   padding: var(--size-4);
   border-bottom: 1px solid var(--gray-z-2);

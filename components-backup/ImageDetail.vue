@@ -69,7 +69,7 @@ const extractedEdition = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .image-detail {
   position: relative;
   container-type: inline-size;

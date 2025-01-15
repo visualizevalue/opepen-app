@@ -70,7 +70,7 @@ const query = computed(() => {
 })
 </script>
 
-<style lang="postcss">
+<style>
 .opt-in-timeline {
   display: flex;
   flex-direction: column;

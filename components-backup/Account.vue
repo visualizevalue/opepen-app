@@ -18,7 +18,7 @@ const address = computed(() => props.address)
 const account = await useProfile(address)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 span {
   display: inline-flex;
   align-items: center;

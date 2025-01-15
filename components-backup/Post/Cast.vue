@@ -87,7 +87,7 @@ const text = computed(() => {
 // const showMore = ref(false)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .embeds {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -64,7 +64,7 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .embed {
   position: relative;
   border: var(--border);

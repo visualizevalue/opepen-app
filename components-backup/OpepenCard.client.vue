@@ -72,7 +72,7 @@ const onClick = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen-card {
   position: relative;
   width: 100%;

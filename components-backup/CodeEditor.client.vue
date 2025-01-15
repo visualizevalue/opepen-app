@@ -37,7 +37,7 @@ const cmOptions = computed(() => ({
 }))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .code-editor {
   text-transform: none;
   height: 100%;

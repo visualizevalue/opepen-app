@@ -23,7 +23,7 @@ const setAction = async (submission, action, data = {}) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   aside {
     display: flex;
     gap: var(--size-4);

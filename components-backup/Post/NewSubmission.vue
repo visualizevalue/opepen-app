@@ -33,5 +33,5 @@ const submission = event.submission
 const authorUrl = computed(() => `/${id(account)}`)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

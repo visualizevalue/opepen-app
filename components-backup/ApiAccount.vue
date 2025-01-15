@@ -28,7 +28,7 @@ const display = computed(() => props.account.display)
 const short = computed(() => shortAddress(props.account.address))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 span {
   display: inline-flex;
   align-items: center;

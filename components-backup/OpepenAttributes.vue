@@ -58,7 +58,7 @@ const attributes = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .attributes {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));

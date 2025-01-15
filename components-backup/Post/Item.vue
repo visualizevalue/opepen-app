@@ -122,7 +122,7 @@ const unapprove = () => {
 }
 </script>
 
-<style lang="postcss">
+<style>
 article.post {
   position: relative;
   z-index: 1;

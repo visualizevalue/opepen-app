@@ -22,7 +22,7 @@
   </svg>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 svg {
   .icon {
     color: var(--gray-z-7);

@@ -13,7 +13,7 @@
 <script setup>
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   aside {
     position: fixed;
     z-index: 1000;

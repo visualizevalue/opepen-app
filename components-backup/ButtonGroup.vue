@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 div {
   display: inline-flex;
   align-items: center;

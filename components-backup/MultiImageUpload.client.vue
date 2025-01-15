@@ -136,7 +136,7 @@ defineExpose({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .multi-image-upload {
     position: relative;
     background: var(--gray-z-2);

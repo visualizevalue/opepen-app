@@ -4,7 +4,7 @@
   </aside>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 aside {
   padding: var(--size-4);
   border: var(--border-dark);

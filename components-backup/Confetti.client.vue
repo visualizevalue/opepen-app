@@ -31,7 +31,7 @@ defineExpose({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 canvas {
   width: 100%;
   height: 100%;

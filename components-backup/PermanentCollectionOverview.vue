@@ -15,7 +15,7 @@ import { useSets } from '~/helpers/sets'
 const { completeSets } = useSets()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .progress {
   margin: var(--size-7) 0 var(--size-8);
 }

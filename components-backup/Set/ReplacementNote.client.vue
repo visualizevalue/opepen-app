@@ -36,7 +36,7 @@ const props = defineProps({
 const expanded = ref(false)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .note {
   margin: 0;
   position: relative;

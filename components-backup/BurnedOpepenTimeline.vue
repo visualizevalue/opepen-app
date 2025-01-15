@@ -71,7 +71,7 @@ const submissionsQuery = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   position: relative;
 

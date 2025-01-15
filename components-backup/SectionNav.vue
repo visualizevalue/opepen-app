@@ -6,7 +6,7 @@
   </nav>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 nav {
   position: sticky;
   top: var(--navbar-height);
@@ -61,7 +61,7 @@ nav > div {
 }
 </style>
 
-<style lang="postcss">
+<style>
 .section-nav {
   border-bottom: var(--border);
 }

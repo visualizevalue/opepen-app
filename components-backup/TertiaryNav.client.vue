@@ -4,7 +4,7 @@
   </nav>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 nav.tertiary {
   top: calc(var(--navbar-height) + var(--size-4)*2 + var(--size-6) + 1px);
   position: fixed;

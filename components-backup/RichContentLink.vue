@@ -42,7 +42,7 @@ const description = computed(() => shortenDescription.value
 )
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 article.content-link {
   container-type: inline-size;
   position: relative;

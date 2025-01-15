@@ -37,7 +37,7 @@ const query = computed(() => {
 
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .opt-in-comments {
     padding-bottom: var(--size-5);
 

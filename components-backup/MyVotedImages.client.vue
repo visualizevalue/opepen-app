@@ -19,7 +19,7 @@
 import { session } from '~/helpers/siwe'
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .empty {
   display: grid;
   gap: var(--size-5);

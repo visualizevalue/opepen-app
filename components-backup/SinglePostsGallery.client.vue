@@ -61,5 +61,5 @@ const clickImage = (img) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

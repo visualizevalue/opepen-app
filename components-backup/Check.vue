@@ -13,7 +13,7 @@ const { fill } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 svg {
   background-color: var(--bg);
   max-width: 100%;

@@ -101,7 +101,7 @@ onMounted(() => requestVerifyEmail())
 watch([isAuthenticated, settingsLoaded], () => requestVerifyEmail())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   form {
     display: flex;
     justify-content: center;

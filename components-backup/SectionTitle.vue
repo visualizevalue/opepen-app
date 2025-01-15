@@ -2,7 +2,7 @@
   <h1><slot /> <Icon type="chevron-right" /></h1>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 h1 {
   display: flex;
   align-items: center;

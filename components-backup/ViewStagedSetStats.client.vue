@@ -64,7 +64,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .stats {
   margin: var(--size-4) 0;
   display: grid;

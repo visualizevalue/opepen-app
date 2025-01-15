@@ -51,7 +51,7 @@ const revealsAt = ref(DateTime.fromISO(set.reveals_at).toUnixInteger())
 const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .groups {
     display: grid;
     container-type: inline-size;

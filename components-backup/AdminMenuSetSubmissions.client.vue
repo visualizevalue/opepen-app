@@ -26,5 +26,5 @@ defineProps({
 defineEmits(['refresh'])
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

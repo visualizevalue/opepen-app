@@ -16,7 +16,7 @@
   </svg>
 </template>
 
-<style lang="postcss">
+<style>
   svg {
     max-width: min(80vw, 35rem);
     margin: 0 auto;

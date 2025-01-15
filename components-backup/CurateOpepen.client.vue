@@ -172,7 +172,7 @@ useIntervalFn(() => {
 }, 50)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen-swipe {
   --action-dimension: calc(var(--size-8) + var(--size-4));
 

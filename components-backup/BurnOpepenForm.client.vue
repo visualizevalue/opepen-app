@@ -124,7 +124,7 @@ const burned = async (event) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen {
   width: 14.5rem;
   height: 18.125rem;

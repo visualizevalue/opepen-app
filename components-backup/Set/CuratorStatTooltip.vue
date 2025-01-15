@@ -14,7 +14,7 @@ const address = computed(() => props.curator && props.curator[0])
 const demand = computed(() => props.curator && props.curator[1]?.demand)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 * {
   font-size: var(--font-sm);
 }

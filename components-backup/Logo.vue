@@ -6,7 +6,7 @@
   </span>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
   span {
     display: flex;
     align-items: center;

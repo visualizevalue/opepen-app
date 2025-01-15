@@ -49,7 +49,7 @@ const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/opepen/${token.token_id}/events`
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 
 .event {
   background: var(--gray-z-1);

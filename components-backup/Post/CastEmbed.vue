@@ -19,7 +19,7 @@ const { cast } = defineProps({
 const { data: post, loading } = await useFetch(`${config.public.opepenApi}/casts/${cast.fid}/${cast.hash}`)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .post.cast {
   border: var(--border);
   border-radius: var(--size-5);

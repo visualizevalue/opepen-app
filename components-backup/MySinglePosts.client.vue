@@ -54,7 +54,7 @@ const destroy = async (post) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .empty {
   display: grid;
   gap: var(--size-5);

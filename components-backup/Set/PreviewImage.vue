@@ -61,7 +61,7 @@ const download = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .preview {
   position: relative;
   overflow: hidden;

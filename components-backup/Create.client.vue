@@ -23,7 +23,7 @@
 import { isAdmin } from '~/helpers/siwe'
 </script>v
 
-<style lang="postcss" scoped>
+<style scoped>
   .create-set {
     display: flex;
     flex-direction: column;

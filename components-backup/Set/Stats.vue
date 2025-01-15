@@ -143,7 +143,7 @@ const overAllCloseToActive = computed(() =>
 )
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .stats {
   border-radius: var(--size-6);
   border-top-left-radius: var(--size-1);

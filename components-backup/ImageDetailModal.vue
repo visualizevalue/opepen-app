@@ -15,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 </script>
 
-<style lang="postcss">
+<style>
 .modal.image-detail-modal {
   > section {
     padding: 0;

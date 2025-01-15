@@ -15,7 +15,7 @@ import { useMouse } from '@vueuse/core'
 const { x, y } = useMouse()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 aside {
   background: var(--gray-z-1);
   border: var(--border);

@@ -15,7 +15,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen {
   display: flex;
   align-items: center;

@@ -46,7 +46,7 @@ const { pause, resume } = useIntervalFn(() => {
 watch(response, () => resume())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 aside {
   animation-name: appear;
   animation-duration: 2s;

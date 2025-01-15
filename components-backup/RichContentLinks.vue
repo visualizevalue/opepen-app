@@ -18,7 +18,7 @@ const { links } = defineProps({
 const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .links {
   --padding: var(--size-4);
   --padding-x: var(--padding);

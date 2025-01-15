@@ -13,7 +13,7 @@ const props = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .bid {
   width: 100%;
   display: grid;

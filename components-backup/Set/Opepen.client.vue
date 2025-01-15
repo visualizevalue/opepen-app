@@ -36,7 +36,7 @@ const revealsAt = ref(DateTime.fromISO(data.reveals_at).toUnixInteger())
 const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && data.set_id)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .list {
     display: grid;
 

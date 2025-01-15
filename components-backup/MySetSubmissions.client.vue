@@ -68,7 +68,7 @@ onMounted(async () => {
 const url = computed(() => `${config.public.opepenApi}/accounts/${session.value?.address}/set-submissions`)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   margin: var(--size-5) 0;
 

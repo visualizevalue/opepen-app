@@ -75,7 +75,7 @@ const connectWallet = async (connector) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   div {
     display: flex;
     flex-direction: column;

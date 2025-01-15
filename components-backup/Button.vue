@@ -14,7 +14,7 @@ const { to, exact, gridAligned } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .button,
 button {
   height: var(--size-7);
@@ -90,7 +90,7 @@ button {
 }
 </style>
 
-<style lang="postcss">
+<style>
 .button,
 button {
   display: flex;

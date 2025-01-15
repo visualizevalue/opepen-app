@@ -43,7 +43,7 @@ const { open, title, scroll } = defineProps({
 defineEmits(['close'])
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .modal {
   display: flex;
   justify-content: center;

@@ -212,7 +212,7 @@ const save = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   div, div form {
     display: grid;
     gap: var(--size-5)

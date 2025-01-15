@@ -15,7 +15,7 @@
 const { data } = defineProps({ data: Object })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .items {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -46,7 +46,7 @@ const {
 const expanded = ref(false)
 </script>
 
-<style lang="postcss">
+<style>
 .expandable-timeline {
   position: relative;
   padding-bottom: var(--size-5);
@@ -80,7 +80,7 @@ const expanded = ref(false)
 
 </style>
 
-<style lang="postcss">
+<style>
 .history-modal {
   .scroll {
     > header,

@@ -112,7 +112,7 @@ const clear = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .header {
   display: flex;
   justify-content: space-between;

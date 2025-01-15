@@ -74,7 +74,7 @@ const gridItems = computed(() => gridWidth.value > 800
 const itemSize = computed(() => Math.floor(gridWidth.value / gridItems.value))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   .grid {
     width: 100%;

@@ -124,7 +124,7 @@ export default {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .countdown {
   text-align: center;
 

@@ -43,7 +43,7 @@ const itemStyles = computed(() => ({
 }))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section.featured > h1 {
   max-width: var(--content-width);
   margin-left: auto;
