@@ -17,7 +17,7 @@ import { useSets } from '~/helpers/sets'
 const { completeSets } = useSets()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .permanent-collection {
   padding: 0 var(--container-padding-x);
 

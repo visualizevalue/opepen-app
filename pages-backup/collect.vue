@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .full {
 }
 </style>

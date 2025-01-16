@@ -35,7 +35,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   max-width: var(--content-width);
   margin: var(--size-8) auto var(--size-9);

@@ -23,7 +23,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .permanent-collection {
   padding: 0 var(--size-4);
 

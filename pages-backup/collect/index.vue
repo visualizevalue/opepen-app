@@ -96,7 +96,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .submission {
     min-width: 0;
     width: 100%;

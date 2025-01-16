@@ -71,7 +71,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .submissions {
   padding: 0 var(--container-padding-x);
 

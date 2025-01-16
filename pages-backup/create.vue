@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .full {
   :deep(.create-page > div) {
     width: 100%;

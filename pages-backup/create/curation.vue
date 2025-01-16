@@ -46,7 +46,7 @@ const query = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 header {
   margin-bottom: var(--size-5) !important;
 }

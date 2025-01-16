@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
   .colors {
     display: flex;
     justify-content: center;

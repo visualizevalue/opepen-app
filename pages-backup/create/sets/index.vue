@@ -23,7 +23,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 div {
   display: grid;
   gap: var(--size-4);

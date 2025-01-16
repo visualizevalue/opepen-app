@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .submit-single {
   max-width: var(--content-width-sm) !important;
 }

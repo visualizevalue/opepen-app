@@ -20,7 +20,7 @@ useMetaData({
 const refreshKey = ref(0)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .vote {
   height: 100%;
   padding-top: var(--navbar-height);

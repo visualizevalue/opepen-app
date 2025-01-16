@@ -32,7 +32,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 header,
 section {
   /* max-width: var(--content-width); */

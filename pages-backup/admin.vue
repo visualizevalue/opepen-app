@@ -39,7 +39,7 @@
   </Authenticated>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .center {
   display: flex;
   justify-content: center;

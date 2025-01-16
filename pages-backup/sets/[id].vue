@@ -86,7 +86,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .set {
     display: flex;
     flex-direction: column;

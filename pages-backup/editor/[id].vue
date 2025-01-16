@@ -58,7 +58,7 @@ watchDebounced(
 )
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .full {
   --theme-bg: #0a0e14;
 

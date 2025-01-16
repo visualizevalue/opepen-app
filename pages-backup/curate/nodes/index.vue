@@ -31,7 +31,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .list {
   display: flex;
   flex-direction: column;

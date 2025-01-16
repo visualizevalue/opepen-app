@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .view {
   height: 100%;
 

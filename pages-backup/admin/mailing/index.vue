@@ -120,7 +120,7 @@ const send = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   > div {
     padding: var(--size-4);

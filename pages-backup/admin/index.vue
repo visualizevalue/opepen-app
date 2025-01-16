@@ -103,7 +103,7 @@ import { formatEther } from 'viem'
 import { formatNumber } from '~/helpers/format'
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .overview {
   display: grid;
   align-items: flex-start;

@@ -98,7 +98,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .auction-wrapper {
   display: grid;
   padding: var(--navbar-height) 0 0 ;

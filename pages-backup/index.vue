@@ -39,7 +39,7 @@ import pad from '~/helpers/pad'
 const { completeSets } = useSets()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .home {
     padding: var(--navbar-height) 0 0;
     max-width: 120rem;

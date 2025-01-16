@@ -19,5 +19,5 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

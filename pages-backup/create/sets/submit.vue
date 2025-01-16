@@ -26,7 +26,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 aside {
   margin: var(--size-6) 0 0;
 }

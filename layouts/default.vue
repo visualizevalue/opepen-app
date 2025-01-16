@@ -2,7 +2,7 @@
   <div class="layout">
 
     <!-- Sidebar -->
-    <MainNav />
+    <MainSideNav />
 
     <!-- Main App Frame -->
     <main>

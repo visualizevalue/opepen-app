@@ -49,7 +49,7 @@ const query = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   margin: var(--size-5) auto var(--size-6);
   display: grid;

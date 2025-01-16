@@ -71,7 +71,7 @@ const mainSocials = computed(() => splitSocials.value ? socials.value.slice(0, 3
 const otherSocials = computed(() => splitSocials.value ? socials.value.slice(3) : [])
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .holder {
   --section-gap: var(--size-8);
 

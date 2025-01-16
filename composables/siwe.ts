@@ -1,5 +1,6 @@
 import { signMessage } from '@wagmi/core'
-import { address, useAccount } from './use-wagmi'
+import { useAccount } from '@wagmi/vue'
+import { createSiweMessage } from 'viem/siwe'
 
 type Session = {
   address: string;
@@ -12,6 +13,7 @@ type Session = {
   version: string;
 }
 
+// TODO: Refactor into server side account setting
 export const ADMIN_ADDRESSES = [
   '0xe11da9560b51f8918295edc5ab9c0a90e9ada20b',
   '0xc8f8e2f59dd95ff67c3d39109eca2e2a017d4c8a',
@@ -19,42 +21,42 @@ export const ADMIN_ADDRESSES = [
   '0x1d4c8282a408d8fe92496cccd1eaa4ff0fdd3b97',
 ]
 
+const address = ref('')
+const nonce = ref('')
 export const loading = ref(false)
 export const signingIn = ref(false)
-export const nonce = ref('')
 export const session: Ref<Session|null> = ref(null)
 export const isAuthenticated = computed(() => address.value && session.value?.address?.toLowerCase() === address.value?.toLowerCase())
 export const isAdmin = computed(() => ADMIN_ADDRESSES.includes(session.value?.address.toLowerCase() || ''))
 
 let accountWatcher: any
 
-export const loadSiwe = async () => {
-  return import('siwe')
-}
-
-export const siweMessage = async (address: string) => {
-  const domain = window.location.host
-  const origin = window.location.origin
-
-  const { SiweMessage } = await loadSiwe()
-
-  const message = new SiweMessage({
-    domain,
-    address,
-    statement: 'Opepen Check-In Check Check.',
-    uri: origin,
-    version: '1',
-    chainId: 1,
-    nonce: nonce.value,
-  })
-
-  return message
-}
+export const siweMessage = (address: string) => createSiweMessage({
+  domain: window.location.host,
+  uri: window.location.origin,
+  address,
+  chainId: 1,
+  nonce: nonce.value,
+  version: '1',
+})
 
 export const useSignIn = () => {
+  const { $wagmi } = useNuxtApp()
   const config = useRuntimeConfig()
-  const { address } = useAccount()
   const API = config.public.opepenApi
+
+  const { address } = useAccount()
+  if (! accountWatcher) {
+    // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
+    address.value = address
+    accountWatcher = watch(address, (_, prevAccount) => {
+      address.value = address
+
+      if (prevAccount) {
+        signIn()
+      }
+    })
+  }
 
   const fetchMe = async () => {
     session.value = await $fetch(`${API}/auth/me`, {
@@ -91,6 +93,7 @@ export const useSignIn = () => {
     // Check if we have a valid session
     try {
       await fetchMe()
+      console.log('fetched me', address.value, isAuthenticated, session.value)
       if (isAuthenticated.value) {
         loading.value = false
 
@@ -109,9 +112,9 @@ export const useSignIn = () => {
       await fetchNonce()
 
       // Get user confirmation
-      const message = await siweMessage(address.value)
-      const signature = await signMessage({
-        message: message.prepareMessage()
+      const message = siweMessage(address.value)
+      const signature = await signMessage($wagmi, {
+        message,
       })
 
       // Verify session
@@ -135,15 +138,6 @@ export const useSignIn = () => {
         throw new Error(`Not Authenticated`)
       }
     }
-  }
-
-  if (! accountWatcher) {
-    // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
-    accountWatcher = watch(address, (_, prevAccount) => {
-      if (prevAccount) {
-        signIn()
-      }
-    })
   }
 
   return {

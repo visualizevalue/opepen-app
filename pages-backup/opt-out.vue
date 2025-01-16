@@ -27,7 +27,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .burned {
   display: grid;
   gap: var(--size-9);

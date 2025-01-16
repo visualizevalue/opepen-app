@@ -65,7 +65,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .opepen-page {
     min-height: 100dvh;
     padding: var(--navbar-height) 0 0;

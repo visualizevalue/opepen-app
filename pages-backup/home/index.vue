@@ -11,7 +11,7 @@
 const extra = ref([])
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 main {
   padding: 0;
   min-height: 100dvh;
