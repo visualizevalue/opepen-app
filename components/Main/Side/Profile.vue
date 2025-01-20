@@ -24,7 +24,10 @@
       </div>
     </div>
 
-    <Connect v-if="! address" class-name="main-connect" />
+    <Connect v-if="! address" class-name="main-connect link-button">
+      <span>Connect</span>
+      <Icon type="chevron-right" />
+    </Connect>
     <CardLink v-else :to="`/${address}`">View Profile</CardLink>
   </section>
 </template>

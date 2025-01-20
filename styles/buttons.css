@@ -8,4 +8,28 @@
       color: var(--color);
     }
   }
+
+  &.link-button {
+    border: 0;
+    background: transparent;
+    border-radius: var(--border-radius);
+    width: min-content;
+    /* padding: var(--ui-padding-y) 0; */
+    margin-left: calc(-1 * var(--ui-padding-x));
+    margin-right: calc(-1 * var(--ui-padding-x));
+
+    &:--highlight {
+      background: var(--gray-z-2);
+      border: 0;
+    }
+
+    span {
+      width: auto;
+    }
+
+    .icon {
+      width: var(--size-4);
+      color: var(--gray-z-4);
+    }
+  }
 }

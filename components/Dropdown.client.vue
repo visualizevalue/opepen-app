@@ -97,6 +97,10 @@ const panelStyle = computed(() => {
     display: grid;
   }
 
+  .option {
+    border-radius: 0;
+  }
+
   .option:first-of-type {
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);

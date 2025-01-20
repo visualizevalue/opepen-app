@@ -8,3 +8,11 @@
   }
 }
 
+body dialog {
+  background: var(--gray-z-0);
+  border-radius: var(--border-radius);
+
+  .button {
+    width: min-content;
+  }
+}
