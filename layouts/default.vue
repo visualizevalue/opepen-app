@@ -30,6 +30,7 @@
 
   > main {
     padding: var(--spacer);
+    container-type: inline-size;
   }
 }
 

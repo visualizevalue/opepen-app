@@ -1,3 +1,7 @@
 @import "./variables.css";
 @import "./base.css";
+@import "./buttons.css";
+@import "./prose.css";
+@import "./popover.css";
+@import "./modal.css";
 

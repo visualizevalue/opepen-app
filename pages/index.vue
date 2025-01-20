@@ -1,7 +1,6 @@
 <template>
 
-  <article class="prose">
-
+  <PageFrameSm class="prose">
     <h1>About Opepen</h1>
 
     <p class="lead">
@@ -48,8 +47,7 @@
       engagement - positions Opepen as a landmark project
       in the realm of Ethereum-based art NFTs.
     </p>
-
-  </article>
+  </PageFrameSm>
 
 </template>
 

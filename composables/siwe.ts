@@ -21,12 +21,13 @@ export const ADMIN_ADDRESSES = [
   '0x1d4c8282a408d8fe92496cccd1eaa4ff0fdd3b97',
 ]
 
-const address = ref('')
+const currentAddress = ref('')
 const nonce = ref('')
 export const loading = ref(false)
 export const signingIn = ref(false)
+export const signInFailed = ref(false)
 export const session: Ref<Session|null> = ref(null)
-export const isAuthenticated = computed(() => address.value && session.value?.address?.toLowerCase() === address.value?.toLowerCase())
+export const isAuthenticated = computed(() => session.value?.address?.toLowerCase() === currentAddress.value?.toLowerCase())
 export const isAdmin = computed(() => ADMIN_ADDRESSES.includes(session.value?.address.toLowerCase() || ''))
 
 let accountWatcher: any
@@ -47,14 +48,14 @@ export const useSignIn = () => {
 
   const { address } = useAccount()
   if (! accountWatcher) {
-    // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
-    address.value = address
-    accountWatcher = watch(address, (_, prevAccount) => {
-      address.value = address
+    // Initially set the current address
+    currentAddress.value = address.value
 
-      if (prevAccount) {
-        signIn()
-      }
+    // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
+    accountWatcher = watch(address, (_, prevAccount) => {
+      currentAddress.value = address.value
+
+      if (prevAccount) signIn()
     })
   }
 
@@ -82,8 +83,9 @@ export const useSignIn = () => {
 
   const signIn = async () => {
     loading.value = true
+    signInFailed.value = false
 
-    if (! address.value) {
+    if (! currentAddress.value) {
       // @ts-ignore
       document.querySelector('#main-connect')?.click()
 
@@ -93,14 +95,13 @@ export const useSignIn = () => {
     // Check if we have a valid session
     try {
       await fetchMe()
-      console.log('fetched me', address.value, isAuthenticated, session.value)
       if (isAuthenticated.value) {
         loading.value = false
 
         // We're already signed in
         return true
       }
-      if (address.value && ! isAuthenticated.value) {
+      if (currentAddress.value && ! isAuthenticated.value) {
         await $fetch(`${API}/auth/clear`, { credentials: 'include' })
       }
     } catch (e) {}
@@ -112,7 +113,7 @@ export const useSignIn = () => {
       await fetchNonce()
 
       // Get user confirmation
-      const message = siweMessage(address.value)
+      const message = siweMessage(currentAddress.value)
       const signature = await signMessage($wagmi, {
         message,
       })
@@ -125,6 +126,7 @@ export const useSignIn = () => {
       })
     } catch (e) {
       console.error(e)
+      signInFailed.value = true
     }
 
     signingIn.value = false

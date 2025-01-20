@@ -1,0 +1,10 @@
+.modal {
+  > menu.actions {
+    margin: var(--spacer) 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+

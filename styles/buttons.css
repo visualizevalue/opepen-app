@@ -1,0 +1,11 @@
+.button {
+  &.secondary {
+    border-color: var(--gray-z-2);
+    color: var(--gray-z-6);
+
+    &:--highlight {
+      border-color: var(--button-border-color-highlight);
+      color: var(--color);
+    }
+  }
+}
