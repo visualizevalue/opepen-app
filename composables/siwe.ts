@@ -1,5 +1,4 @@
-import { signMessage } from '@wagmi/core'
-import { useAccount } from '@wagmi/vue'
+import { signMessage, getAccount, watchAccount } from '@wagmi/core'
 import { createSiweMessage } from 'viem/siwe'
 
 type Session = {
@@ -46,16 +45,18 @@ export const useSignIn = () => {
   const config = useRuntimeConfig()
   const API = config.public.opepenApi
 
-  const { address } = useAccount()
   if (! accountWatcher) {
-    // Initially set the current address
-    currentAddress.value = address.value
+    currentAddress.value = getAccount($wagmi)?.address
 
-    // If the current selected ethereum account is changed (e.g. within the users' wallet), we reauthenticate.
-    accountWatcher = watch(address, (_, prevAccount) => {
-      currentAddress.value = address.value
+    // Set up the singleton account watcher
+    accountWatcher = watchAccount($wagmi, {
+      onChange(account, prevAccount) {
+        currentAddress.value = account.address
 
-      if (prevAccount) signIn()
+        // If the current selected ethereum account is changed
+        // (e.g. within the users' wallet), we reauthenticate.
+        if (prevAccount && prevAccount.address !== account.address) signIn()
+      },
     })
   }
 

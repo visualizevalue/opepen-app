@@ -43,7 +43,7 @@ const props = defineProps({
 
 const address = computed(() => props.address)
 const account = await useProfile(address)
-const name = computed(() => account.value?.name || `Opepen Visitor`)
+const name = computed(() => account.value?.display || `Opepen Visitor`)
 const id = computed(() => shortAddress(address.value || ADDRESS_ZERO, 3))
 const stats = computed(() => ({
   submissions: formatNumber(account.value?.set_submissions_count || 0),

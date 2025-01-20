@@ -9,6 +9,9 @@
       <slot />
     </main>
 
+    <!-- Global Data -->
+    <WatchSession />
+
   </div>
 </template>
 
