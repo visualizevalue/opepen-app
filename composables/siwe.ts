@@ -22,11 +22,11 @@ export const ADMIN_ADDRESSES = [
 
 const currentAddress = ref('')
 const nonce = ref('')
-export const loading = ref(false)
+export const signInLoading = ref(false)
 export const signingIn = ref(false)
 export const signInFailed = ref(false)
 export const session: Ref<Session|null> = ref(null)
-export const isAuthenticated = computed(() => session.value?.address?.toLowerCase() === currentAddress.value?.toLowerCase())
+export const isAuthenticated = computed(() => session.value && session.value.address?.toLowerCase() === currentAddress.value?.toLowerCase())
 export const isAdmin = computed(() => ADMIN_ADDRESSES.includes(session.value?.address.toLowerCase() || ''))
 
 let accountWatcher: any
@@ -55,7 +55,10 @@ export const useSignIn = () => {
 
         // If the current selected ethereum account is changed
         // (e.g. within the users' wallet), we reauthenticate.
-        if (prevAccount && prevAccount.address !== account.address) signIn()
+        if (prevAccount && prevAccount.address !== account.address) {
+          session.value = null
+          signIn()
+        }
       },
     })
   }
@@ -83,13 +86,14 @@ export const useSignIn = () => {
   }
 
   const signIn = async () => {
-    loading.value = true
+    signInLoading.value = true
     signInFailed.value = false
 
     if (! currentAddress.value) {
       // @ts-ignore
-      document.querySelector('#main-connect')?.click()
+      document.querySelector('.main-connect')?.click()
 
+      signInLoading.value = false
       return false
     }
 
@@ -97,7 +101,7 @@ export const useSignIn = () => {
     try {
       await fetchMe()
       if (isAuthenticated.value) {
-        loading.value = false
+        signInLoading.value = false
 
         // We're already signed in
         return true
@@ -131,7 +135,7 @@ export const useSignIn = () => {
     }
 
     signingIn.value = false
-    loading.value = false
+    signInLoading.value = false
   }
 
   const ensureSignIn = async () => {
@@ -148,7 +152,7 @@ export const useSignIn = () => {
     ensureSignIn,
     fetchNonce,
     fetchMe,
-    loading,
+    signInLoading,
     signingIn,
     nonce,
     session,

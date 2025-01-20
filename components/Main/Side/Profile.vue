@@ -1,13 +1,6 @@
 <template>
   <section>
-    <NuxtLink
-      v-if="address"
-      to="/settings"
-      title="Settings"
-      class="settings"
-    >
-      <Icon type="more-vertical" />
-    </NuxtLink>
+    <MainSideOptionsDropdown v-if="address" />
 
     <Avatar :account="account" />
 
@@ -31,7 +24,7 @@
       </div>
     </div>
 
-    <Connect v-if="! address" id="main-connect" />
+    <Connect v-if="! address" class-name="main-connect" />
     <CardLink v-else :to="`/${address}`">View Profile</CardLink>
   </section>
 </template>
@@ -43,7 +36,11 @@ const props = defineProps({
 
 const address = computed(() => props.address)
 const account = await useProfile(address)
-const name = computed(() => account.value?.display || `Opepen Visitor`)
+const name = computed(() =>
+  address.value && address.value !== ADDRESS_ZERO
+    ? account.value?.display
+    : `Opepen Visitor`
+)
 const id = computed(() => shortAddress(address.value || ADDRESS_ZERO, 3))
 const stats = computed(() => ({
   submissions: formatNumber(account.value?.set_submissions_count || 0),
@@ -59,22 +56,15 @@ section {
   gap: var(--spacer);
 }
 
-.settings {
+:deep(.settings) {
   position: absolute;
   top: var(--size-4);
   right: var(--size-4);
+  top: var(--size-2);
+  right: 0;
   color: var(--gray-z-5);
   transition: color var(--speed);
   z-index: 1;
-
-  .icon {
-    width: var(--size-4);
-    height: var(--size-4);
-  }
-
-  &:--highlight {
-    color: var(--color);
-  }
 }
 
 .avatar {
