@@ -1,8 +1,8 @@
 <template>
   <Dropdown
     :items="[
-      { onClick: () => navigateTo(`/${address}`), text: 'Profile', icon: 'user' },
-      { onClick: () => navigateTo('/settings'), text: 'Settings', icon: 'settings' },
+      { onClick: () => navigateTo(`/${address}`) && $emit('sendClose'), text: 'Profile', icon: 'user' },
+      { onClick: () => navigateTo('/settings') && $emit('sendClose'), text: 'Settings', icon: 'settings' },
       { onClick: () => disconnect(), text: 'Disconnect', icon: 'log-out' },
     ]"
     class="settings"
@@ -20,6 +20,8 @@ import { useAccount } from '@wagmi/vue'
 
 const { address } = useAccount()
 const { disconnect } = useDisconnect()
+
+defineEmits(['sendClose'])
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" ref="el">
+  <div class="layout" ref="el" @touchMove.prevent="() => null">
 
     <!-- Sidebar -->
     <MainSideNav />
@@ -42,6 +42,8 @@ useSetupGlobalSwipe(el)
   }
 
   > main {
+    width: 100vw;
+    overflow: hidden;
     padding: var(--spacer);
     container-type: inline-size;
   }

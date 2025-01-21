@@ -7,6 +7,8 @@ const lengthY = ref(0)
 const coordsStart = ref(0)
 const coordsEnd = ref(0)
 
+const isHorizontal = computed(() => ['left', 'right'].includes(direction.value))
+
 export const useSetupGlobalSwipe = (el) => {
   const swipe = useSwipe(el, {
     threshold: 0,
@@ -29,4 +31,5 @@ export const useGlobalSwipe = () => ({
   lengthY,
   coordsStart,
   coordsEnd,
+  isHorizontal,
 })

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <MainSideOptionsDropdown v-if="address" />
+    <MainSideOptionsDropdown v-if="address" @sendClose="$emit('sendClose')" />
 
     <Avatar :account="account" />
 
@@ -28,7 +28,7 @@
       <span>Connect</span>
       <Icon type="chevron-right" />
     </Connect>
-    <Button v-else :to="`/${address}`" class="link-button">
+    <Button v-else :to="`/${address}`" class="link-button" @click="$emit('sendClose')">
       <span>View Profile</span>
       <Icon type="chevron-right" />
     </Button>
@@ -39,6 +39,8 @@
 const props = defineProps({
   address: String,
 })
+
+defineEmits(['sendClose'])
 
 const address = computed(() => props.address)
 const account = await useProfile(address)

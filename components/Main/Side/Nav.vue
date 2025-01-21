@@ -2,7 +2,7 @@
   <nav ref="nav" :style="style">
 
     <WithAccount v-slot="{ address }">
-      <MainSideProfile :address="address" />
+      <MainSideProfile :address="address" @sendClose="close" />
     </WithAccount>
 
     <section>
@@ -12,11 +12,13 @@
         to="/"
         title="The Opepen Protocol"
         subline="Learn how Opepen works"
+        @click="close"
       />
       <MainSideNavLink
         to="/stats"
         title="Stats"
         subline="Marketplace, Sales, Recent Transactions"
+        @click="close"
       />
     </section>
 
@@ -27,21 +29,25 @@
         to="/permanent"
         title="Permanent Collection"
         subline="Browse Opepen Sets and Tokens"
+        @click="close"
       />
       <MainSideNavLink
         title="Submissions"
         to="/submissions"
         subline="View submitted Opepen"
+        @click="close"
       />
       <MainSideNavLink
         to="/listings"
         title="Listings"
         subline="Aggregated Marketplace Listings"
+        @click="close"
       />
       <MainSideNavLink
         to="/burned"
         title="Burned Opepen"
         subline="All Opepen that have been destroyed"
+        @click="close"
       />
     </section>
 
@@ -52,11 +58,13 @@
         to="/create/set"
         title="Create Set"
         subline="Submit an Opepen Set of 6 editions"
+        @click="close"
       />
       <MainSideNavLink
         to="/create/single"
         title="Post Single"
         subline="Post a single Opepen artifact"
+        @click="close"
       />
     </section>
 
@@ -67,16 +75,19 @@
         to="/artists"
         title="Artists"
         subline="Browse Opepen Contributors"
+        @click="close"
       />
       <MainSideNavLink
         to="/collectors"
         title="Collectors"
         subline="View the network of Opepen Collectors"
+        @click="close"
       />
       <MainSideNavLink
         to="/curate"
         title="Curate"
         subline="Vote on Submissions"
+        @click="close"
       />
     </section>
 
@@ -84,30 +95,35 @@
 </template>
 
 <script setup>
-import { useElementBounding } from '@vueuse/core'
+import { useElementBounding, useScrollLock } from '@vueuse/core'
 import { gsap } from 'gsap'
 
 const { isDesktop } = useWindow()
-
-const route = useRoute()
 
 const nav = ref()
 const { width } = useElementBounding(nav)
 
 // Whether the side nav is open
-const isOpen = ref(false)
+const isOpen = ref(!! isDesktop.value)
+const close = () => isOpen.value = false
+const open = () => isOpen.value = true
 
 const {
   isSwiping,
   direction,
   lengthX,
   coordsStart,
+  isHorizontal,
 } = useGlobalSwipe()
 
+// Helpers
+const shouldOpen = (threshold = 50) => ! isOpen.value && lengthX.value < -1 * threshold && coordsStart.value.x < 80
+const shouldClose = (threshold = 0) => isOpen.value && lengthX.value >= threshold
+const closedPosition = () => -1 * width.value
+
+// State
 const translate = ref(0)
-const tweened = reactive({
-  number: 0
-})
+const tweened = reactive({ number: 0 })
 const style = computed(() => ({
   transform: `translateX(${tweened.number}px`
 }))
@@ -116,41 +132,48 @@ watch(translate, (n) => {
   gsap.to(tweened, { duration: 0.2, number: Number(n) || 0 })
 })
 
-// Helpers
-const shouldOpen = (threshold = 50) => ! isOpen.value && lengthX.value < -1 * threshold && coordsStart.value.x < 80
-const shouldClose = (threshold = 0) => isOpen.value && lengthX.value >= threshold
-
 // Update/Track the isOpen state
-watch(route, () => {
-  isOpen.value = false
-})
 watchEffect(() => {
-  if (isDesktop.value) {
-    isOpen.value = true
-  }
+  if (isDesktop.value) open()
 
   // Don't do anything while we're swiping
   if (isSwiping.value) return
 
    // Open the nav
-   if (shouldOpen(80)) {
-     isOpen.value = true
-   }
+   if (shouldOpen(80)) open()
 
    // Close the nav
-   if (shouldClose(120)) {
-     isOpen.value = false
-   }
+   if (shouldClose(120)) close()
+})
+
+// Lock the scroll on the window
+const documentScrollLocked = useScrollLock(document)
+const navScrollLocked = useScrollLock(nav)
+watchEffect(() => {
+  let lockDoc = false
+  let lockNav = false
+
+  if (isSwiping.value && isHorizontal.value) {
+    lockDoc = true
+    lockNav = true
+  }
+  if (isOpen.value && !isDesktop.value) {
+    lockDoc = true
+  }
+
+  documentScrollLocked.value = lockDoc
+  navScrollLocked.value = lockNav
 })
 
 // Update the translate position
-watchEffect(() => {
+const updateTranslatePosition = () => {
+  console.log('updateTranslatePosition')
   let updated = 0
   if (! isOpen.value) {
-    updated = -1 * width.value
+    updated = closedPosition()
   }
 
-  if (isSwiping.value) {
+  if (isSwiping.value && isHorizontal.value) {
     // Swiping left
     if (shouldClose(0)) {
       updated = lengthX.value * -1
@@ -164,15 +187,23 @@ watchEffect(() => {
 
   updated = Math.min(updated, 0)
 
-  if (isSwiping.value) tweened.number = updated
+  if (isDesktop.value) updated = 0
+  if (isSwiping.value || isDesktop.value) tweened.number = updated
+
   translate.value = updated
-})
+}
+watch([isDesktop, isOpen, lengthX, isSwiping], () => updateTranslatePosition())
 </script>
 
 <style scoped>
 nav {
   background: var(--gray-z-0);
   overscroll-behavior: auto;
+  transform: translateX(-100%);
+
+  @media (--md) {
+    transform: translateX(0);
+  }
 }
 
 section {
