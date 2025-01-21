@@ -9,6 +9,9 @@
       <slot />
     </main>
 
+    <!-- Mobile Nav -->
+    <MainMobileBottomNav />
+
     <!-- Global Data -->
     <WatchSession />
 
@@ -29,7 +32,7 @@ useSetupGlobalSwipe(el)
 
   height: 100dvh;
 
-  :deep(> nav) {
+  :deep(> .sidebar) {
     position: fixed;
     overflow-y: auto;
     -webkit-overflow-scrolling: auto;
@@ -42,9 +45,9 @@ useSetupGlobalSwipe(el)
   }
 
   > main {
+    position: relative;
     width: 100vw;
-    overflow: hidden;
-    padding: var(--spacer);
+    padding: var(--spacer-lg) var(--spacer-lg) calc(var(--bottomnav-height) + var(--spacer-lg));
     container-type: inline-size;
   }
 }
@@ -55,8 +58,9 @@ useSetupGlobalSwipe(el)
     display: grid;
     grid-template-columns: var(--nav-width) 1fr;
 
-    :deep(> nav) {
-      position: relative;
+    > main {
+      width: calc(100vw - var(--nav-width));
+      left: var(--nav-width);
     }
   }
 

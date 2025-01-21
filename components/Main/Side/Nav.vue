@@ -1,5 +1,5 @@
 <template>
-  <nav ref="nav" :style="style">
+  <nav ref="nav" :style="style" class="sidebar">
 
     <WithAccount v-slot="{ address }">
       <MainSideProfile :address="address" @sendClose="close" />
@@ -93,7 +93,7 @@
 
   </nav>
 
-  <div class="nav-overlay" :style="overlayStyle" @touchstart="close"></div>
+  <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
 </template>
 
 <script setup>
@@ -201,7 +201,7 @@ watch([isDesktop, isOpen, lengthX, isSwiping], () => updateTranslatePosition())
 </script>
 
 <style scoped>
-nav {
+.sidebar {
   background: var(--gray-z-0);
   overscroll-behavior: auto;
   transform: translateX(-100%);
@@ -222,7 +222,7 @@ section {
   }
 }
 
-.nav-overlay {
+.sidebar-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -232,6 +232,10 @@ section {
   background-color: var(--background);
   pointer-events: none;
   opacity: 0;
+
+  @media (--md) {
+    display: none;
+  }
 }
 </style>
 
