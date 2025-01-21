@@ -27,6 +27,7 @@
     "codemirror": ">=5.64.0 <6",
     "codemirror-editor-vue3": "^2.5.8",
     "feather-icons": "4",
+    "gsap": "^3.12.7",
     "hls.js": "^1.5.8",
     "opepen-standard": "^1.0.1",
     "siwe": "^2.3.2",

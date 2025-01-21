@@ -1,7 +1,7 @@
 <template>
   <Popover class="dropdown">
     <PopoverButton as="div">
-      <button ref="trigger" class="trigger unstyled">
+      <button ref="trigger" class="trigger unstyled" @click="() => repositionTrigger()">
         <slot name="trigger" />
       </button>
     </PopoverButton>
@@ -52,7 +52,10 @@ const { align, xOffset } = defineProps({
 })
 
 const trigger = ref()
-const { x, y, right, width, height } = useElementBounding(trigger)
+const { x, y, right, width, height, update: repositionTrigger } = useElementBounding(trigger, {
+  immediate: false,
+  updateTiming: 'next-frame',
+})
 const { width: windowWidth } = useWindowSize()
 
 const panelStyle = computed(() => {

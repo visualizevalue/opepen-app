@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout" ref="el">
 
     <!-- Sidebar -->
     <MainSideNav />
@@ -15,9 +15,19 @@
   </div>
 </template>
 
+<script setup>
+import { useWindowSize, useSwipe } from '@vueuse/core'
+
+// Set up global swipe tracking
+const el = ref()
+useSetupGlobalSwipe(el)
+</script>
+
 <style scoped>
 .layout {
   --nav-width: min(24rem, 100vw);
+
+  height: 100dvh;
 
   > nav {
     position: fixed;

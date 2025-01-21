@@ -28,7 +28,10 @@
       <span>Connect</span>
       <Icon type="chevron-right" />
     </Connect>
-    <CardLink v-else :to="`/${address}`">View Profile</CardLink>
+    <Button v-else :to="`/${address}`" class="link-button">
+      <span>View Profile</span>
+      <Icon type="chevron-right" />
+    </Button>
   </section>
 </template>
 
