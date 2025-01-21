@@ -92,6 +92,8 @@
     </section>
 
   </nav>
+
+  <div class="nav-overlay" :style="overlayStyle" @touchstart="close"></div>
 </template>
 
 <script setup>
@@ -125,7 +127,11 @@ const closedPosition = () => -1 * width.value
 const translate = ref(0)
 const tweened = reactive({ number: 0 })
 const style = computed(() => ({
-  transform: `translateX(${tweened.number}px`
+  transform: `translateX(${tweened.number}px)`
+}))
+const overlayStyle = computed(() => ({
+  opacity: 0.8 - Math.abs(tweened.number / width.value),
+  pointerEvents: isOpen.value ? 'all' : 'none',
 }))
 watch(translate, (n) => {
   if (tweened.number === translate.value) return
@@ -167,7 +173,6 @@ watchEffect(() => {
 
 // Update the translate position
 const updateTranslatePosition = () => {
-  console.log('updateTranslatePosition')
   let updated = 0
   if (! isOpen.value) {
     updated = closedPosition()
@@ -215,6 +220,18 @@ section {
     color: var(--gray-z-5);
     margin-bottom: var(--spacer);
   }
+}
+
+.nav-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-index-nav-overlay);
+  background-color: var(--background);
+  pointer-events: none;
+  opacity: 0;
 }
 </style>
 

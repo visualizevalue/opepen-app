@@ -29,7 +29,7 @@ useSetupGlobalSwipe(el)
 
   height: 100dvh;
 
-  > nav {
+  :deep(> nav) {
     position: fixed;
     overflow-y: auto;
     -webkit-overflow-scrolling: auto;
@@ -55,7 +55,7 @@ useSetupGlobalSwipe(el)
     display: grid;
     grid-template-columns: var(--nav-width) 1fr;
 
-    > nav {
+    :deep(> nav) {
       position: relative;
     }
   }
