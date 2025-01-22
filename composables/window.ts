@@ -7,5 +7,6 @@ export const useWindow = () => {
 
   return {
     isDesktop,
+    width,
   }
 }

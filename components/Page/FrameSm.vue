@@ -18,6 +18,10 @@ defineProps({
     max-width: var(--content-width-sm);
     margin-left: auto;
     margin-right: auto;
-    padding: 5cqw 0;
+    padding: 0;
+
+    @media (--md) {
+      padding: 3cqw 0;
+    }
   }
 </style>

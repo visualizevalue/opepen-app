@@ -5,6 +5,7 @@
       { onClick: () => navigateTo('/settings') && $emit('sendClose'), text: 'Settings', icon: 'settings' },
       { onClick: () => disconnect(), text: 'Disconnect', icon: 'log-out' },
     ]"
+    :x-offset="isDesktop ? 8 : -8"
     class="settings"
     align="right"
   >
@@ -20,6 +21,7 @@ import { useAccount } from '@wagmi/vue'
 
 const { address } = useAccount()
 const { disconnect } = useDisconnect()
+const { isDesktop } = useWindow()
 
 defineEmits(['sendClose'])
 </script>
