@@ -1,5 +1,18 @@
 <template>
 
+  <MainMobileTopNavItems
+    :items="[
+      {
+        to: '/',
+        text: 'Foo',
+      },
+      {
+        to: '/bar',
+        text: 'Baz',
+      },
+    ]"
+  />
+
   <PageFrameSm class="prose">
     <h1>About Opepen</h1>
 
@@ -21,6 +34,32 @@
     </p>
 
     <h2>Latest Sales</h2>
+
+    <p>
+      Market Impact: Since its inception, Opepen has achieved significant recognition
+      in the NFT market. It has been auctioned at Sotheby's, underscoring its acceptance
+      and value in traditional art auction settings. Moreover, the collection has seen
+      substantial trading volume, with over 80,000 ETH traded, establishing it as one
+      of the biggest art collections on the Ethereum blockchain. This trading volume
+      reflects both the community's engagement with the project and the speculative
+      investment interest in Butcher's approach to digital art.
+    </p>
+
+    <p>
+      Community and Cultural Impact: Opepen isn't just about the art; it's also about
+      community participation. The opt-in system for reveals fosters a sense of
+      involvement and anticipation among collectors. This project has also
+      sparked discussions and trends on platforms like X, where it's
+      celebrated for its innovative approach to digital art
+      and community-driven evolution.
+    </p>
+
+    <p>
+      The combination of these factors - the unique minting process, significant
+      trading volume, high-profile auction placements, and a strong community
+      engagement - positions Opepen as a landmark project
+      in the realm of Ethereum-based art NFTs.
+    </p>
 
     <p>
       Market Impact: Since its inception, Opepen has achieved significant recognition

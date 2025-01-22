@@ -1,6 +1,6 @@
 <template>
   <section>
-    <MainSideOptionsDropdown v-if="address" @sendClose="$emit('sendClose')" />
+    <MainOptionsDropdown v-if="address" @sendClose="$emit('sendClose')" />
 
     <Avatar :account="account" />
 

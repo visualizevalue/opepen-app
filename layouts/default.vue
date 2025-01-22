@@ -2,7 +2,7 @@
   <div class="layout" ref="el" @touchMove.prevent="() => null">
 
     <!-- Sidebar -->
-    <MainSideNav />
+    <MainSideNav ref="mainNav" />
 
     <!-- Main App Frame -->
     <main>
@@ -10,6 +10,7 @@
     </main>
 
     <!-- Mobile Nav -->
+    <MainMobileTopNav @openMain="mainNav.open()" />
     <MainMobileBottomNav />
 
     <!-- Global Data -->
@@ -24,13 +25,15 @@ import { useWindowSize, useSwipe } from '@vueuse/core'
 // Set up global swipe tracking
 const el = ref()
 useSetupGlobalSwipe(el)
+
+const mainNav = ref()
 </script>
 
 <style scoped>
 .layout {
   --nav-width: min(24rem, 100vw);
 
-  height: 100dvh;
+  min-height: 100dvh;
 
   :deep(> .sidebar) {
     position: fixed;
@@ -47,7 +50,10 @@ useSetupGlobalSwipe(el)
   > main {
     position: relative;
     width: 100vw;
-    padding: var(--spacer-lg) var(--spacer-lg) calc(var(--bottomnav-height) + var(--spacer-lg));
+    padding:
+      calc(var(--top-nav-total-height) + var(--spacer))
+      var(--spacer)
+      calc(var(--bottom-nav-height) + var(--spacer));
     container-type: inline-size;
   }
 }
@@ -60,6 +66,7 @@ useSetupGlobalSwipe(el)
 
     > main {
       width: calc(100vw - var(--nav-width));
+      padding: var(--spacer-lg) var(--spacer-lg);
       left: var(--nav-width);
     }
   }

@@ -1,10 +1,6 @@
 <template>
   <Dropdown
-    :items="[
-      { onClick: () => navigateTo(`/${address}`) && $emit('sendClose'), text: 'Profile', icon: 'user' },
-      { onClick: () => navigateTo('/settings') && $emit('sendClose'), text: 'Settings', icon: 'settings' },
-      { onClick: () => disconnect(), text: 'Disconnect', icon: 'log-out' },
-    ]"
+    :items="items"
     :x-offset="isDesktop ? 8 : -8"
     class="settings"
     align="right"
@@ -22,8 +18,45 @@ import { useAccount } from '@wagmi/vue'
 const { address } = useAccount()
 const { disconnect } = useDisconnect()
 const { isDesktop } = useWindow()
+const { signIn } = useSignIn()
 
-defineEmits(['sendClose'])
+const emit = defineEmits(['sendClose'])
+
+const items = computed(() => {
+  if (! address.value) {
+    return [
+      {
+        onClick: () => signIn(),
+        text: 'Connect',
+        icon: 'user'
+      }
+    ]
+  }
+
+  return [
+    {
+      onClick: () => {
+        emit('sendClose')
+        navigateTo(`/${address.value}`)
+      },
+      text: 'Profile',
+      icon: 'user'
+    },
+    {
+      onClick: () => {
+        emit('sendClose')
+        navigateTo('/settings')
+      },
+      text: 'Settings',
+      icon: 'settings'
+    },
+    {
+      onClick: () => disconnect(),
+      text: 'Disconnect',
+      icon: 'log-out'
+    },
+  ]
+})
 </script>
 
 <style scoped>

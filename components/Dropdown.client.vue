@@ -89,7 +89,7 @@ const panelStyle = computed(() => {
 .dropdown-panel {
   display: grid;
   z-index: var(--z-index-dialog);
-  position: absolute;
+  position: fixed;
 
   background: var(--gray-z-1);
   border: var(--border);

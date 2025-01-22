@@ -1,23 +1,20 @@
 <template>
-  <nav class="bottomnav">
-    <NuxtLink to="/permanent">
-      <Icon type="opepen-grid-2" />
-      <span>Browse</span>
+  <nav class="bottom-nav">
+    <NuxtLink to="/permanent" title="Browse">
+      <Icon type="opepen-grid" />
     </NuxtLink>
-    <NuxtLink to="/create/set">
+    <NuxtLink to="/create/set" title="Submit">
       <Icon type="plus" stroke-width="3" />
-      <span>Submit</span>
     </NuxtLink>
-    <NuxtLink to="/artists">
+    <NuxtLink to="/artists" title="Community">
       <Icon type="opepen" />
-      <span>Community</span>
     </NuxtLink>
   </nav>
 </template>
 
 <style scoped>
-.bottomnav {
-  height: var(--bottomnav-height);
+.bottom-nav {
+  height: var(--bottom-nav-height);
   width: 100vw;
   overflow: hidden;
   background: var(--semi);
@@ -40,6 +37,7 @@
 }
 
 a {
+  justify-self: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -47,10 +45,11 @@ a {
   gap: var(--size-2);
   color: var(--gray-z-5);
   transition: color var(--speed);
+  width: min-content;
 
   .icon {
-    width: var(--size-5);
-    height: var(--size-5);
+    width: var(--size-7);
+    height: var(--size-7);
   }
 
   span {

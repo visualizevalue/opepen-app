@@ -93,7 +93,9 @@
 
   </nav>
 
-  <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
+  <ClientOnly>
+    <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
+  </ClientOnly>
 </template>
 
 <script setup>
@@ -198,6 +200,11 @@ const updateTranslatePosition = () => {
   translate.value = updated
 }
 watch([isDesktop, isOpen, lengthX, isSwiping], () => updateTranslatePosition())
+
+defineExpose({
+  open,
+  close,
+})
 </script>
 
 <style scoped>
@@ -223,7 +230,7 @@ section {
 }
 
 .sidebar-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

@@ -1,9 +1,14 @@
 :root {
 
-  --bottomnav-height: 3.8rem;
+  --top-nav-height: 3rem;
+  --top-subnav-height: 2.5rem;
+  --top-nav-total-height: calc(var(--top-nav-height) + var(--top-subnav-height));
+  --bottom-nav-height: 3.8rem;
 
   --content-width-wide: 90rem;
   --content-width:      60rem;
   --content-width-sm:   40rem;
 
+  --dialog-width: min(27rem, calc(100vw - var(--spacer)*2));
 }
+
