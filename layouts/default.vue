@@ -50,16 +50,18 @@ const mainNav = ref()
   > main {
     position: relative;
     width: 100vw;
+    container-type: inline-size;
     padding:
       calc(var(--top-nav-total-height) + var(--spacer))
       var(--spacer)
       calc(var(--bottom-nav-height) + var(--spacer));
-    container-type: inline-size;
+  }
+
+  &:has(:deep(#top-sub-nav:empty)) > main {
   }
 }
 
 @media (--md) {
-
   .layout {
     display: grid;
     grid-template-columns: var(--nav-width) 1fr;
@@ -70,6 +72,15 @@ const mainNav = ref()
       left: var(--nav-width);
     }
   }
-
 }
 </style>
+
+<style>
+.layout:has(#top-sub-nav:empty) > main {
+  padding:
+    calc(var(--top-nav-height) + var(--spacer))
+    var(--spacer)
+    calc(var(--bottom-nav-height) + var(--spacer));
+}
+</style>
+

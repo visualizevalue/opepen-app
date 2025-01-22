@@ -16,6 +16,7 @@ import { useAccount } from '@wagmi/vue'
 
 defineEmits([ 'openMain' ])
 
+const route = useRoute()
 const { x, y, isScrolling, arrivedState, directions } = useWindowScroll({
   behavior: 'smooth',
 })
@@ -28,6 +29,9 @@ const account = await useProfile(address)
 
 const hidden = ref(false)
 
+watch(route, () => {
+  hidden.value = false
+})
 watchEffect(() => {
   if (! isScrolling.value || arrivedState.top) return
 
@@ -52,6 +56,10 @@ watchEffect(() => {
   padding: 0 0 0 var(--spacer);
   backdrop-filter: var(--blur);
   transition: transform var(--speed);
+
+  @media (--md) {
+    display: none !important;
+  }
 }
 
 .top-nav {
@@ -81,10 +89,6 @@ watchEffect(() => {
       color: var(--gray-z-5);
     }
   }
-
-  @media (--md) {
-    display: none;
-  }
 }
 
 #top-sub-nav {
@@ -95,6 +99,10 @@ watchEffect(() => {
 
   &.hidden {
     transform: translateY(calc(-1 * (var(--top-nav-height) + var(--top-subnav-height))));
+  }
+
+  &:empty {
+    display: none !important;
   }
 }
 </style>
