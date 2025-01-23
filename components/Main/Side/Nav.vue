@@ -93,9 +93,7 @@
 
   </nav>
 
-  <ClientOnly>
-    <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
-  </ClientOnly>
+  <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
 </template>
 
 <script setup>
@@ -127,7 +125,7 @@ const closedPosition = () => -1 * width.value
 
 // State
 const translate = ref(0)
-const tweened = reactive({ number: 0 })
+const tweened = reactive({ number: translate.value })
 const style = computed(() => ({
   transform: `translateX(${tweened.number}px)`
 }))
@@ -138,6 +136,17 @@ const overlayStyle = computed(() => ({
 watch(translate, (n) => {
   if (tweened.number === translate.value) return
   gsap.to(tweened, { duration: 0.2, number: Number(n) || 0 })
+})
+
+// Initial state
+onMounted(() => {
+  if (isDesktop.value) {
+    translate.value = 0
+    tweened.number = 0
+  } else {
+    translate.value = closedPosition()
+    tweened.number = translate.value
+  }
 })
 
 // Update/Track the isOpen state

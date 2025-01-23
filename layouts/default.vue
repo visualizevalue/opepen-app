@@ -29,13 +29,13 @@ useSetupGlobalSwipe(el)
 const mainNav = ref()
 </script>
 
-<style scoped>
+<style>
 .layout {
   --nav-width: min(24rem, 100vw);
 
   min-height: 100dvh;
 
-  :deep(> .sidebar) {
+  > .sidebar {
     position: fixed;
     overflow-y: auto;
     -webkit-overflow-scrolling: auto;
@@ -45,6 +45,12 @@ const mainNav = ref()
     border-right: var(--border);
 
     z-index: var(--z-index-nav);
+
+    transform: translateX(calc(-1 * var(--nav-width)));
+
+    @media (--md) {
+      transform: translateX(0);
+    }
   }
 
   > main {
@@ -57,12 +63,14 @@ const mainNav = ref()
       calc(var(--bottom-nav-height) + var(--spacer));
   }
 
-  &:has(:deep(#top-sub-nav:empty)) > main {
+  &:has(#top-sub-nav:empty) > main {
+    padding:
+      calc(var(--top-nav-height) + var(--spacer))
+      var(--spacer)
+      calc(var(--bottom-nav-height) + var(--spacer));
   }
-}
 
-@media (--md) {
-  .layout {
+  @media (--md) {
     display: grid;
     grid-template-columns: var(--nav-width) 1fr;
 
@@ -72,15 +80,6 @@ const mainNav = ref()
       left: var(--nav-width);
     }
   }
-}
-</style>
-
-<style>
-.layout:has(#top-sub-nav:empty) > main {
-  padding:
-    calc(var(--top-nav-height) + var(--spacer))
-    var(--spacer)
-    calc(var(--bottom-nav-height) + var(--spacer));
 }
 </style>
 
