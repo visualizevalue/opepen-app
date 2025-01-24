@@ -29,6 +29,7 @@ defineProps({
       background: transparent;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px;
+      transition: background var(--speed);
     }
 
     &.router-link-active {

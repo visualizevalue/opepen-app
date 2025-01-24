@@ -9,13 +9,13 @@
       <h1>About</h1>
 
       <MainSideNavLink
-        to="/"
+        to="/about/intro"
         title="The Opepen Protocol"
         subline="Learn how Opepen works"
         @click="close"
       />
       <MainSideNavLink
-        to="/stats"
+        to="/about/stats"
         title="Stats"
         subline="Marketplace, Sales, Recent Transactions"
         @click="close"
@@ -26,44 +26,45 @@
       <h1>Browse</h1>
 
       <MainSideNavLink
-        to="/permanent"
+        to="/sets"
         title="Permanent Collection"
         subline="Browse Opepen Sets and Tokens"
         @click="close"
       />
       <MainSideNavLink
-        title="Submissions"
         to="/submissions"
+        title="Submissions"
         subline="View submitted Opepen"
         @click="close"
       />
-      <MainSideNavLink
-        to="/listings"
-        title="Listings"
-        subline="Aggregated Marketplace Listings"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/burned"
-        title="Burned Opepen"
-        subline="All Opepen that have been destroyed"
-        @click="close"
-      />
+
+      <!-- <MainSideNavLink -->
+      <!--   to="/listings" -->
+      <!--   title="Listings" -->
+      <!--   subline="Aggregated Marketplace Listings" -->
+      <!--   @click="close" -->
+      <!-- /> -->
+      <!-- <MainSideNavLink -->
+      <!--   to="/burned" -->
+      <!--   title="Burned Opepen" -->
+      <!--   subline="All Opepen that have been destroyed" -->
+      <!--   @click="close" -->
+      <!-- /> -->
     </section>
 
     <section>
       <h1>Submit</h1>
 
       <MainSideNavLink
-        to="/create/set"
-        title="Create Set"
-        subline="Submit an Opepen Set of 6 editions"
+        to="/create/single"
+        title="One"
+        subline="Post a single Opepen artifact"
         @click="close"
       />
       <MainSideNavLink
-        to="/create/single"
-        title="Post Single"
-        subline="Post a single Opepen artifact"
+        to="/create/set"
+        title="Full Set"
+        subline="Submit an Opepen Set of 6 editions"
         @click="close"
       />
     </section>
@@ -72,28 +73,27 @@
       <h1>Community</h1>
 
       <MainSideNavLink
-        to="/artists"
+        to="/community/artists"
         title="Artists"
         subline="Browse Opepen Contributors"
         @click="close"
       />
       <MainSideNavLink
-        to="/collectors"
+        to="/community/collectors"
         title="Collectors"
         subline="View the network of Opepen Collectors"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/curate"
-        title="Curate"
-        subline="Vote on Submissions"
         @click="close"
       />
     </section>
 
   </nav>
 
-  <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
+  <ClientOnly>
+    <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
+    <template #fallback>
+      <div class="sidebar-overlay"></div>
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>
@@ -130,7 +130,7 @@ const style = computed(() => ({
   transform: `translateX(${tweened.number}px)`
 }))
 const overlayStyle = computed(() => ({
-  opacity: 0.8 - Math.abs(tweened.number / width.value),
+  opacity: 0.8 - (width.value ? Math.abs(tweened.number / width.value) : 0),
   pointerEvents: isOpen.value ? 'all' : 'none',
 }))
 watch(translate, (n) => {

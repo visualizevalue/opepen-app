@@ -4,12 +4,12 @@
     <MainMobileTopNavItems
       :items="[
         {
-          to: '/create/single',
-          text: 'One',
+          to: '/community/artists',
+          text: 'Artists',
         },
         {
-          to: '/create/set',
-          text: 'Full Set',
+          to: '/community/collectors',
+          text: 'Collectors',
         },
       ]"
     />

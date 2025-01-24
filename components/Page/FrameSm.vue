@@ -20,7 +20,7 @@ defineProps({
     margin-right: auto;
     padding: 0;
 
-    @media (--md) {
+    @media (--lg) {
       padding: 3cqw 0;
     }
   }

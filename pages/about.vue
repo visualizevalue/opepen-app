@@ -4,12 +4,12 @@
     <MainMobileTopNavItems
       :items="[
         {
-          to: '/create/single',
-          text: 'One',
+          to: '/about/intro',
+          text: 'About',
         },
         {
-          to: '/create/set',
-          text: 'Full Set',
+          to: '/about/stats',
+          text: 'Stats',
         },
       ]"
     />

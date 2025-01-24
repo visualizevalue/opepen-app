@@ -76,7 +76,7 @@ const mainNav = ref()
 
     > main {
       width: calc(100vw - var(--nav-width));
-      padding: var(--spacer-lg) var(--spacer-lg);
+      padding: var(--spacer-lg) !important;
       left: var(--nav-width);
     }
   }

@@ -1,12 +1,12 @@
 <template>
   <nav class="bottom-nav">
-    <NuxtLink to="/permanent" title="Browse">
+    <NuxtLink to="/sets" title="Browse">
       <Icon type="opepen-grid" />
     </NuxtLink>
-    <NuxtLink to="/create/set" title="Submit">
+    <NuxtLink to="/create" title="Submit">
       <Icon type="plus" stroke-width="3" />
     </NuxtLink>
-    <NuxtLink to="/artists" title="Community">
+    <NuxtLink to="/community" title="Community">
       <Icon type="opepen" />
     </NuxtLink>
   </nav>

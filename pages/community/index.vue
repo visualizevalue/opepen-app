@@ -3,6 +3,6 @@
 </template>
 
 <script setup lang="ts">
-await navigateTo(`/about/intro`, { redirectCode: 301 })
+await navigateTo(`/community/artists`, { redirectCode: 301 })
 </script>
 
