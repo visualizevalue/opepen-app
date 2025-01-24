@@ -6,7 +6,7 @@ type HeadConfig = {
   meta?: { name: string, content: string }[];
 }
 
-export const makeHead = ({
+const makeHead = ({
   title = 'Opepen',
   description = 'Consensus is temporary.',
   og = 'https://opepen.art/og/og.png',

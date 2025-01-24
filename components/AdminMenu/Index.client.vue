@@ -6,8 +6,6 @@
 </template>
 
 <script setup>
-import { isAdmin } from '~/helpers/siwe'
-
 const config = useRuntimeConfig()
 
 const setAction = async (submission, action, data = {}) => {

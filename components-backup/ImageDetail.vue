@@ -27,8 +27,7 @@
 </template>
 
 <script setup>
-import { id as computeId } from '~/helpers/accounts'
-import pad from '~/helpers/pad'
+import { id as computeId } from '~/utils/accounts'
 
 const props = defineProps({
   image: Object,

@@ -28,8 +28,6 @@
 
 <script setup>
 import { vIntersectionObserver } from '@vueuse/components'
-import { imageURI } from '~/helpers/images'
-import { normalizeURI } from '~/helpers/urls'
 
 const props = defineProps({
   image: [String, Object],
@@ -125,8 +123,8 @@ article.image {
     overflow: hidden;
   }
   &:not(.square) .inner {
-    border-radius: var(--size-5);
-    border-top-left-radius: var(--size-1);
+    border-radius: var(--size-1);
+    /* border-top-left-radius: var(--size-1); */
   }
   &.square .inner {
     border-radius: var(--size-1);

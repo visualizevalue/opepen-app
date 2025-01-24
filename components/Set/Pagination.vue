@@ -39,9 +39,6 @@
 </template>
 
 <script setup>
-import pad from '~/helpers/pad'
-import { useSets } from '~/helpers/sets'
-
 const { set } = defineProps({ set: Object })
 const previousSetId = computed(() => set.id > 1 ? pad(set.id - 1, 3) : '')
 const nextSetId = computed(() => set.id < 200 ? pad(set.id + 1, 3) : '')

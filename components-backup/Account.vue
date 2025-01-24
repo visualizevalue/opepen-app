@@ -7,7 +7,7 @@
 
 <script setup>
 import { useProfile } from '~/helpers/use-wagmi'
-import shortAddress from '~~/helpers/short-address'
+import shortAddress from '~/helpers/short-address'
 
 const props = defineProps({
   address: String,

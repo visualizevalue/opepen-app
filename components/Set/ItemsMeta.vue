@@ -16,7 +16,7 @@
     <ul v-if="data" class="overview">
       <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span v-if="published">{{ TYPES[data.edition_type] }} Editions</span>
+        <span v-if="published">{{ SET_TYPES[data.edition_type] }} Editions</span>
         <span v-else>Unknown Editions</span>
       </li>
       <li v-if="data.dynamicPreviewImage">
@@ -52,13 +52,6 @@
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
-import pad from '~/helpers/pad'
-import { formatNumber } from '~/helpers/format'
-import { formatDate } from '~/helpers/dates'
-import { TYPES } from '~/helpers/sets'
-import { imageURI } from '~/helpers/images'
-
 const props = defineProps({
   data: Object,
 })

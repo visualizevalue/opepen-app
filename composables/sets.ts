@@ -1,5 +1,3 @@
-import { DateTime } from 'luxon'
-
 type OpepenSet = {
   id: number
   submission: {
@@ -11,7 +9,7 @@ type KeyedSets = {
   [key: string]: OpepenSet
 }
 
-export const TYPES = {
+export const SET_TYPES = {
   PRINT: 'Print',
   NUMBERED_PRINT: 'Numbered Print',
   DYNAMIC: 'Dynamic'

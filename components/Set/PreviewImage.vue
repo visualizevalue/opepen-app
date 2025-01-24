@@ -25,10 +25,6 @@
 </template>
 
 <script setup>
-import { imageURI } from '~/helpers/images'
-import downloadImage from '~/helpers/download-image'
-import { EDITION_TAGLINES } from '~/helpers/editions'
-
 const {
   data,
   edition,

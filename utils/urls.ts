@@ -56,5 +56,5 @@ export const isUUID = (value: string|number) => {
 
 export const isSetId = (value: string|number) => {
   const n = parseInt(`${value}`)
-  return ! isUUID(value) && n < 16_000
+  return ! isUUID(value) && n <= 200
 }

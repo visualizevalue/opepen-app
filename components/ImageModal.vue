@@ -29,9 +29,6 @@
 </template>
 
 <script setup>
-import { imageURI } from '~/helpers/images'
-import downloadImage from '~/helpers/download-image'
-
 const {
   image,
   open,

@@ -10,5 +10,9 @@
   --content-width-sm:   40rem;
 
   --dialog-width: min(27rem, calc(100vw - var(--spacer)*2));
+
+  --alert-info-border-color: var(--border-color);
+  --alert-info-background-color: var(--blue-9);
+  --alert-info-color: var(--blue-1);
 }
 

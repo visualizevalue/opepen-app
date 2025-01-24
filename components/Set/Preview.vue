@@ -17,14 +17,14 @@
           <span>{{ data.name }}</span>
         </h1>
         <p v-html="shortenedCleanText(data.description, 120)"></p>
-        <Creators :data="data" :show-signature="false" />
+        <!-- <Creators :data="data" :show-signature="false" /> -->
         <ul class="overview">
           <li>
             <Icon type="layers" stroke-width="2.25" />
-            <span>{{ TYPES[data.edition_type] }} Editions</span>
+            <span>{{ SET_TYPES[data.edition_type] }} Editions</span>
           </li>
           <li v-if="revealed || revealing">
-            <IconCheck />
+            <Icon type="check" />
             <span>Consensus met on {{ consensusDate }}</span>
           </li>
         </ul>
@@ -45,13 +45,6 @@
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
-import { formatDate } from '~/helpers/dates'
-import pad from '~/helpers/pad'
-import { TYPES } from '~/helpers/sets'
-import { shortenedCleanText } from '~/helpers/strings'
-import { DEFAULT_TIME_TO_REVEAL, timeRemainingFromSeconds } from '~/helpers/time'
-
 const { data, minimal, style } = defineProps({
   data: Object,
   minimal: Boolean,
@@ -95,8 +88,7 @@ const onComplete = () => {
     margin: 0;
     padding: var(--size-2);
     border: var(--border);
-    border-radius: var(--size-6);
-    border-top-left-radius: var(--size-1);
+    border-radius: var(--border-radius);
     background-color: var(--gray-z-1);
 
     font-weight: var(--font-weight-bold);
