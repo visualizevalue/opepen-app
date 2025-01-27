@@ -15,11 +15,7 @@
           <h1>{{ opepen.name }}</h1>
         </div>
 
-        <div class="burned-opepen">
-          <!-- <OpepenCard -->
-          <!--   :token="opepen.opepen" -->
-          <!--   :set="opepen.opepen.data?.edition || 40" -->
-          <!-- /> -->
+        <NuxtLink :to="`/opepen/${opepen.opepen.token_id}`" class="burned-opepen">
           <Image v-if="opepen.opepen.metadata?.image" :image="opepen.opepen.metadata.image" />
           <OpepenImage v-else :token="opepen.opepen" />
           <div class="attributes">
@@ -27,7 +23,7 @@
             <p>Edition of {{ opepen.opepen.data.edition }}</p>
             <p>burned on {{ formatDate(opepen.burned_at) }}</p>
           </div>
-        </div>
+        </NuxtLink>
 
         <div class="row">
           <div>
@@ -171,7 +167,7 @@ const { opepen } = defineProps({ opepen: Object })
       gap: 2rem;
       align-items: flex-end;
 
-      > .attributes {
+      .attributes {
         display: grid;
         gap: var(--size-2);
 
