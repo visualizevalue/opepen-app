@@ -37,7 +37,10 @@ const {
     default: false,
   },
   uri: String,
-  subline: String,
+  subline: {
+    type: String,
+    default: (props) => `Edition of ${props.token.data.edition}`
+  },
 })
 
 const price = computed(() => token.price && formatEther(BigInt(token.price)))
