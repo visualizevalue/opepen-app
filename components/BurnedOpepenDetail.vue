@@ -8,7 +8,7 @@
 
       <!-- Right -->
       <div>
-        
+
         <!-- Title -->
         <div>
           <span class="muted"> Consensus Met </span>
@@ -16,12 +16,15 @@
         </div>
 
         <div class="burned-opepen">
-          <OpepenCard
-            :token="opepen.opepen"
-            :set="opepen.opepen.data?.edition || 40"
-          />
+          <!-- <OpepenCard -->
+          <!--   :token="opepen.opepen" -->
+          <!--   :set="opepen.opepen.data?.edition || 40" -->
+          <!-- /> -->
+          <Image v-if="opepen.opepen.metadata?.image" :image="opepen.opepen.metadata.image" />
+          <OpepenImage v-else :token="opepen.opepen" />
           <div class="attributes">
-            <p>Opepen {{ opepen.opepen.token_id }} </p>
+            <p>Opepen #{{ opepen.opepen.token_id }}</p>
+            <p>Edition of {{ opepen.opepen.data.edition }}</p>
             <p>burned on {{ formatDate(opepen.burned_at) }}</p>
           </div>
         </div>
@@ -50,7 +53,7 @@ import { formatDate } from '~/helpers/dates'
 const { opepen } = defineProps({ opepen: Object })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .opepen-detail {
   container-type: inline-size;
   container-name: card;
@@ -100,6 +103,7 @@ const { opepen } = defineProps({ opepen: Object })
     display: flex;
     padding: 10cqw;
     flex-direction: column;
+    justify-content: center;
     gap: 9cqw;
     container-type: inline-size;
     container-name: detail;
@@ -166,15 +170,19 @@ const { opepen } = defineProps({ opepen: Object })
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
       align-items: flex-end;
-    }
 
-    > .attributes {
-      display: grid;
-      gap: 0.5em;
+      > .attributes {
+        display: grid;
+        gap: var(--size-2);
 
-      p {
-        font-size: 1em;
-        line-height: 1em;
+        p {
+          font-size: 1em;
+          line-height: 1em;
+
+          &:not(:first-child) {
+            color: var(--gray-z-5);
+          }
+        }
       }
     }
 
