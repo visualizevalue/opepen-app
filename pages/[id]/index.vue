@@ -59,8 +59,10 @@
           v-for="token in items"
           :key="token.token_id"
         >
-          <BurnedOpepenCard
+          <OpepenCard
             :token="token"
+            :subline="`Burned Opepen #${token.opepen.token_id}`"
+            :url="`/burned-opepen/${token.token_id}`"
           />
         </div>
       </div>
