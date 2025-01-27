@@ -27,7 +27,7 @@
               <p>{{ item.opepen.burnedOpepen.data.name }}</p>
               <Image :image="item.opepen.burnedOpepen.image" version="sm" />
             </div>
-            <NuxtLink :to="`/burned-opepen/${(item.opepen.burnedOpepen.token_id)}`">
+            <NuxtLink :to="`/opt-out/${(item.opepen.burnedOpepen.token_id)}`">
               <span>View burned opepen {{ item.opepen.burnedOpepen.token_id }}</span>
             </NuxtLink>
           </div>
@@ -147,7 +147,7 @@ section {
       opacity: 0;
       }
     }
-    
+
   }
 }
 </style>

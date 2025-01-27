@@ -62,7 +62,7 @@
           <OpepenCard
             :token="token"
             :subline="`Burned Opepen #${token.opepen.token_id}`"
-            :url="`/burned-opepen/${token.token_id}`"
+            :url="`/opt-out/${token.token_id}`"
           />
         </div>
       </div>
