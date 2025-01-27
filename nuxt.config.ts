@@ -46,7 +46,7 @@ export default defineNuxtConfig({
       opepenOauthApi: '',
       signatureApi: 'https://api.signature.vv.xyz/v1',
       opepenContract: '0x6339e5e072086621540d0362c4e3cea0d643e114',
-      burnedOpepenContract: '0x0000000000000000000000000000000000000000',
+      burnedOpepenContract: '0x53787d1fee8512c6df258ebdf65903e2ea371222',
       rpc: 'http://127.0.0.1:8545',
       alchemy: '',
       walletConnectProjectId: '',
