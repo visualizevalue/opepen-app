@@ -47,6 +47,25 @@
       </div>
     </div>
   </PaginatedContent>
+  <PaginatedContent
+    :url="burnedTokensUrl"
+    query="limit=24"
+    v-slot="{ items, meta }"
+  >
+    <div v-if="items.length">
+      <SectionTitle>Burned Opepen ({{ meta.total }})</SectionTitle>
+      <div class="opepens">
+        <div
+          v-for="token in items"
+          :key="token.token_id"
+        >
+          <BurnedOpepenCard
+            :token="token"
+          />
+        </div>
+      </div>
+    </div>
+  </PaginatedContent>
 </template>
 
 <script setup>
@@ -59,6 +78,7 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const url = `${config.public.opepenApi}/accounts/${route.params.id}`
 const tokensUrl = `${url}/opepen`
+const burnedTokensUrl = `${url}/burned`
 
 // const frameButtons = [
 //   { property: 'fc:frame:button:1', content: `View on on Opepen.art` },
