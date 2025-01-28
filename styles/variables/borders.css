@@ -5,6 +5,7 @@
 
   --border: var(--border-width) solid var(--border-color);
 
+  --border-radius-sm: var(--size-1);
   --border-radius: var(--size-2);
 
   --shadow: 0 0.1em 0.3em 0 var(--semi-shade);

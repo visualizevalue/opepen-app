@@ -10,7 +10,7 @@
 
       <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
 
-      <Creators v-if="data" :data="data" />
+      <!-- <Creators v-if="data" :data="data" /> -->
     </div>
 
     <ul v-if="data" class="overview">
@@ -28,11 +28,11 @@
         </Modal>
       </li>
       <li v-if="revealed || revealing">
-        <IconOpepen />
+        <Icon type="opepen" />
         <span>{{ formatNumber(data?.submission_stats?.opepens.total) }} Opt-Ins</span>
       </li>
       <li v-if="revealed || revealing">
-        <IconCheck />
+        <Icon type="check"/>
         <span>Consensus met on {{ consensusDate }}</span>
       </li>
       <li v-if="data.reveal_strategy">

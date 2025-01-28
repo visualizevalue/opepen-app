@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import { validateURI } from '~/helpers/urls'
-
 const { links } = defineProps({
   links: Array,
 })

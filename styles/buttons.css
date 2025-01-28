@@ -14,7 +14,6 @@
     background: transparent;
     border-radius: var(--border-radius);
     width: min-content;
-    /* padding: var(--ui-padding-y) 0; */
     margin-left: calc(-1 * var(--ui-padding-x));
     margin-right: calc(-1 * var(--ui-padding-x));
 
@@ -32,4 +31,16 @@
       color: var(--gray-z-4);
     }
   }
+}
+
+.hidden-action {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  opacity: 0;
 }

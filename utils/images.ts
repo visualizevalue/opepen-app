@@ -22,3 +22,5 @@ export const imageURI = (image: Image, version?: keyof ImageVersions) => {
 
   return `${image.cdn}/${image.path}/${name}.${type}`
 }
+
+export const DEFAULT_TOKEN_IMAGE = `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`

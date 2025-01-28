@@ -13,7 +13,7 @@
           :set="token.data?.edition || 40"
         >
           <template #subline>
-            <p><span>owned by </span><NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null"> {{ token.ownerAccount?.display }}</NuxtLink></p>
+            <p><span>owned by </span><NuxtLink :to="`/${token.owner}`" @click.stop="() => null"> {{ token.ownerAccount?.display }}</NuxtLink></p>
           </template>
         </OpepenCard>
       </div>

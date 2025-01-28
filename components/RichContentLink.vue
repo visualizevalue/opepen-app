@@ -28,8 +28,6 @@
 </template>
 
 <script setup>
-import { imageURI } from '~/helpers/images'
-
 const { link } = defineProps({
   link: Object,
 })

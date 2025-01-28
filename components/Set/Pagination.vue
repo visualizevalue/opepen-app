@@ -13,7 +13,7 @@
     </NuxtLink>
 
     <span>
-      <NuxtLink to="/curate/view/permanent">Sets</NuxtLink>
+      <NuxtLink to="/sets">Sets</NuxtLink>
       <span class="separator">/</span>
       <span v-if="set.submission?.edition1Image" class="icon">
         <Image :image="set.submission?.edition1Image" version="sm" />
@@ -57,6 +57,7 @@ const previous = computed(() => prevSet(set.id))
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-md);
   user-select: none;
+  @mixin ui-font;
 
   .separator {
     color: var(--gray-z-5);
@@ -79,9 +80,12 @@ const previous = computed(() => prevSet(set.id))
       flex-shrink: 0;
 
       > .image {
-        border-radius: var(--size-2);
-        border-top-left-radius: var(--size-0);
+        border-radius: var(--border-radius-sm);
       }
+    }
+
+    &:first-child {
+      margin-left: -0.4em;
     }
 
     &:nth-child(2) {
@@ -90,6 +94,7 @@ const previous = computed(() => prevSet(set.id))
 
     &:last-child {
       justify-content: flex-end;
+      margin-right: -0.4em;
     }
 
     &:first-child,

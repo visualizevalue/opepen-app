@@ -1,33 +1,28 @@
 <template>
-  <div v-if="data" class="set">
-    <header>
-      <SetPagination v-if="isSet" :set="set" />
-      <SetReplacementNote v-if="submission?.set_id" :set="set" :replaced-submission="set.replacedSubmission" class="note" />
-    </header>
+  <div class="set">
+    <SetPagination v-if="isSet" :set="set" />
 
-    <section class="meta">
-      <SetPreviewImages :data="submission" class="items" />
-      <SetItemsMeta :data="submission" />
-    </section>
+    <SetPreviewImages :data="submission" class="items" />
+    <SetItemsMeta :data="submission" />
 
-    <section v-if="submission.richContentLinks?.length" class="deep-dive">
-      <SectionTitle>Deep Dive</SectionTitle>
-      <RichContentLinks :links="submission.richContentLinks" />
-    </section>
-
-    <section v-if="submission" class="opepen">
-      <SetOpepen v-if="submission?.set_id" :data="submission" />
-      <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
-    </section>
-
-    <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh">
-      <template #before>
-        <Button  :to="`/create/sets/${submission.uuid}`">
-          <Icon type="edit" />
-          <span>Edit</span>
-        </Button>
-      </template>
-    </AdminMenuSetSubmissions>
+    <!-- <section v-if="submission.richContentLinks?.length" class="deep-dive"> -->
+    <!--   <SectionTitle>Deep Dive</SectionTitle> -->
+    <!--   <RichContentLinks :links="submission.richContentLinks" /> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <section v-if="submission" class="opepen"> -->
+    <!--   <SetOpepen v-if="submission?.set_id" :data="submission" /> -->
+    <!--   <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" /> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh"> -->
+    <!--   <template #before> -->
+    <!--     <Button  :to="`/create/sets/${submission.uuid}`"> -->
+    <!--       <Icon type="edit" /> -->
+    <!--       <span>Edit</span> -->
+    <!--     </Button> -->
+    <!--   </template> -->
+    <!-- </AdminMenuSetSubmissions> -->
   </div>
 </template>
 
@@ -81,37 +76,14 @@ useMetaData({
   .set {
     display: flex;
     flex-direction: column;
-    gap: var(--size-4);
+    gap: var(--spacer);
     row-gap: var(--size-7);
-    max-width: var(--content-width);
+    max-width: var(--content-width-sm);
     margin: 0 auto;
 
     @media (--md) {
-      gap: var(--size-8);
+      gap: var(--spacer-lg);
     }
-
-    > header {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: var(--size-4);
-      padding: var(--size-5) 0;
-
-      @media (--md) {
-        gap: var(--size-7);
-      }
-    }
-
-    > section.meta {
-      display: grid;
-      gap: var(--size-4);
-
-      @media (--md) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: var(--size-7);
-      }
-    }
-
   }
 
 .deep-dive {
@@ -122,8 +94,8 @@ useMetaData({
   }
 }
 
-  .items {
-    display: grid;
-    aspect-ratio: 1;
-  }
+.items {
+  display: grid;
+  aspect-ratio: 1;
+}
 </style>

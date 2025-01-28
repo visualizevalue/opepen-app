@@ -25,8 +25,6 @@
 
 <script setup>
 import { formatEther } from 'viem'
-import { getRandomArbitrary } from '~/helpers/random'
-import { delay } from '~/helpers/time'
 
 const {
   token,

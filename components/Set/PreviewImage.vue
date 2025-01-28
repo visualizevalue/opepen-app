@@ -13,14 +13,6 @@
       </div>
       <button @click="zoomed = true" class="hidden-action"><span>Show details</span></button>
     </Image>
-
-    <ImageModal
-      :image="image"
-      :open="zoomed"
-      :name="name"
-      :tagline="tagline"
-      @close="zoomed = false"
-    />
   </div>
 </template>
 
