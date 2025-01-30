@@ -13,11 +13,6 @@
       </slot>
     </div>
 
-    <!-- <div v-if="token && token.price" class="listing">
-      <p>{{ price }} ETH</p>
-      <p>{{ token.data.order.source }}</p>
-    </div> -->
-
     <NuxtLink :to="uri || `/opepen/${token.token_id}`"><span>View Opepen #{{ token.token_id }}</span></NuxtLink>
   </div>
 </article>
@@ -40,34 +35,6 @@ const {
   },
   uri: String,
 })
-
-const price = computed(() => token.price && formatEther(BigInt(token.price)))
-
-// ==============================================================
-// Style & Interaction
-// ==============================================================
-const rotation = ref(rotate ? getRandomArbitrary(-16, 16) : 0)
-const scale = ref(1)
-const wrapperStyle = computed(() => ({
-  transform: `rotate(${rotation.value}deg) scale(${scale.value})`,
-}))
-
-const wiggle = async () => {
-  rotation.value += getRandomArbitrary(5, 10)
-  scale.value = 1.05
-  await delay(100)
-  rotation.value -= getRandomArbitrary(10, 20)
-  await delay(80)
-  rotation.value += getRandomArbitrary(5, 10)
-  await delay(50)
-  scale.value = 1
-  rotation.value = getRandomArbitrary(-5, 5)
-  await delay(50)
-  rotation.value = 0
-}
-const onClick = async () => {
-  wiggle()
-}
 </script>
 
 <style scoped>
@@ -77,7 +44,10 @@ const onClick = async () => {
   height: 0;
   padding-bottom: 125%;
   transition: all var(--speed-fast);
-  transform-origin: center;
+
+  &:--highlight {
+    transform: translateY(-0.5rem);
+  }
 
   /* Inner */
   > div {
@@ -90,9 +60,8 @@ const onClick = async () => {
     height: 100%;
     background: var(--gray-z-1);
     border: var(--border);
-    border-radius: var(--size-4);
-    border-top-left-radius: var(--size-0);
-    box-shadow: 0 var(--size-2) var(--size-5) 0 var(--semi-shade);
+    border-radius: var(--border-radius);
+    overflow: hidden;
     display: grid;
     grid-template-rows: 4fr 1fr;
 
@@ -100,8 +69,6 @@ const onClick = async () => {
     :deep(.image > .image) {
       border: none !important;
       border-radius: 0;
-      border-top-right-radius: var(--size-4);
-      border-top-left-radius: var(--size-0);
     }
     :deep(.image > .image) {
       padding-bottom: 100% !important;
@@ -111,8 +78,6 @@ const onClick = async () => {
     }
 
     img {
-      border-top-right-radius: var(--size-4);
-      border-top-left-radius: var(--size-0);
       border-bottom: var(--border);
     }
 

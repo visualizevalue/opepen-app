@@ -2,7 +2,7 @@
   <article
     :style="
       {
-        backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%), url(${coverURL})`
+        backgroundImage: `linear-gradient(to top, var(--opaque-black) 0%, var(--transparent-black) 150%), url(${coverURL})`
       }
     "
     class="content-link"
@@ -53,9 +53,6 @@ article.content-link {
 
   &:--highlight {
     transform: translateY(-0.5rem);
-    .button {
-      background-color: var(--gray-z-4);
-    }
   }
 
   > a {

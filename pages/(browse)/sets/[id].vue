@@ -10,11 +10,9 @@
       <RichContentLinks :links="submission.richContentLinks" />
     </section>
 
-    <!-- <section v-if="submission" class="opepen"> -->
-    <!--   <SetOpepen v-if="submission?.set_id" :data="submission" /> -->
-    <!--   <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" /> -->
-    <!-- </section> -->
-    <!---->
+    <SetOpepen v-if="submission?.set_id" :data="submission" />
+    <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" />
+
     <!-- <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh"> -->
     <!--   <template #before> -->
     <!--     <Button  :to="`/create/sets/${submission.uuid}`"> -->
@@ -86,13 +84,13 @@ useMetaData({
     }
   }
 
-.deep-dive {
-  display: grid;
-  gap: var(--spacer);
-}
+  .deep-dive {
+    display: grid;
+    gap: var(--spacer);
+  }
 
-.items {
-  display: grid;
-  aspect-ratio: 1;
-}
+  .items {
+    display: grid;
+    aspect-ratio: 1;
+  }
 </style>

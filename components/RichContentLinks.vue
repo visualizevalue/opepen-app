@@ -18,8 +18,6 @@ const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
   display: grid;
   gap: var(--spacer);
 
-  @container (min-width: 30rem) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
 }
 </style>
