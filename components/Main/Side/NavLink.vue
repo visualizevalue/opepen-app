@@ -1,5 +1,8 @@
 <template>
-  <NuxtLink v-bind="$attrs">
+  <NuxtLink
+    :to="to"
+    :class="{ 'router-link-active': $route.path.includes(to) }"
+  >
     <div>
       <span>{{ title }}</span>
       <small>{{ subline }}</small>
@@ -11,6 +14,7 @@
 
 <script setup>
 defineProps({
+  to: String,
   title: String,
   subline: String,
 })

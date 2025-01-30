@@ -57,6 +57,11 @@ const download = async () => {
   > .image {
     cursor: pointer;
     overflow: hidden;
+    border-radius: var(--border-radius);
+
+    :deep(.image) {
+      border-radius: var(--border-radius);
+    }
   }
 
   &:--highlight {

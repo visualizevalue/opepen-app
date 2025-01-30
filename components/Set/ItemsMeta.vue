@@ -71,7 +71,7 @@ const openDynamicPreview = ref(false)
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: var(--size-7);
+    gap: var(--spacer-lg);
 
     .intro {
       display: flex;
@@ -81,40 +81,36 @@ const openDynamicPreview = ref(false)
 
       > h1 {
         small, span {
+          @mixin ui-font;
           display: block;
         }
 
         small {
           color: var(--gray-z-6);
-          text-transform: uppercase;
           margin-bottom: var(--size-2);
-          font-size: var(--font-md);
         }
 
         span {
-          font-family: var(--ui-font-family);
-          font-size: var(--font-title);
+          font-size: var(--font-xl);
           line-height: 0.8;
           margin-left: -0.05em;
 
           @media (--md) {
-            font-size: var(--font-display);
+            font-size: var(--font-xxl);
           }
         }
       }
 
       > p {
+        @mixin ui-font;
         color: var(--gray-z-6);
-        font-size: var(--font-md);
         line-height: var(--line-height-md);
-        margin: var(--size-1) 0;
       }
     }
 
     .overview {
       display: grid;
-      gap: var(--size-1);
-      color: var(--gray-z-6);
+      gap: var(--size-2);
 
       li,
       li > a {
@@ -123,6 +119,8 @@ const openDynamicPreview = ref(false)
         align-items: center;
         gap: var(--size-2);
         transition: all var(--speed);
+        @mixin ui-font;
+        color: var(--gray-z-6);
 
         > svg, i, .vue-feathers {
           width: var(--size-4);

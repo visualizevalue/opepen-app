@@ -57,6 +57,7 @@ const previous = computed(() => prevSet(set.id))
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-md);
   user-select: none;
+  margin-top: var(--size-1);
   @mixin ui-font;
 
   .separator {

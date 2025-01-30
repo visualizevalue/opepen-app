@@ -31,8 +31,6 @@ const mainNav = ref()
 
 <style>
 .layout {
-  --nav-width: min(24rem, 100vw);
-
   min-height: 100dvh;
 
   > .sidebar {

@@ -33,7 +33,7 @@ const {
   name,
   tagline,
 } = defineProps({
-  image: Object,
+  image: [String, Object],
   name: String,
   tagline: String,
 })

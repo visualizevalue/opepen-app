@@ -16,6 +16,7 @@
     <Progress :percent="parseInt(completeSets.length / 200 * 100)">
       {{ completeSets.length }} / 200
     </Progress>
+
     <div class="grid">
       <SetPreview v-for="set in completeSets" :data="set.submission" :key="set.id" minimal />
     </div>

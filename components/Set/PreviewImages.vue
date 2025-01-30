@@ -1,6 +1,6 @@
 <template>
 
-  <section class="items">
+  <section v-if="data" class="items">
     <SetPreviewImage :data="data" :edition="1" version="" @click="open(1)" />
     <SetPreviewImage :data="data" :edition="4" version="" @click="open(4)" />
     <SetPreviewImage :data="data" :edition="5" version="" @click="open(5)" />
@@ -21,13 +21,14 @@
 <script setup>
 const { data } = defineProps({ data: Object })
 
-const image = ref()
+const edition = ref()
 const zoomed = ref(false)
-const name = computed(() => `Name`)
-const tagline = computed(() => `Tagline`)
+const image = computed(() => data[`edition${edition.value}Image`] || DEFAULT_TOKEN_IMAGE)
+const name = computed(() => data ? data[`edition${edition.value}Name`] : `Unrevealed`)
+const tagline = computed(() => EDITION_TAGLINES[edition.value])
 
-const open = (edition) => {
-  image.value = data[`edition${edition}Image`] || DEFAULT_TOKEN_IMAGE
+const open = (ed) => {
+  edition.value = ed
   zoomed.value = true
 }
 </script>
@@ -50,3 +51,4 @@ const open = (edition) => {
   }
 }
 </style>
+

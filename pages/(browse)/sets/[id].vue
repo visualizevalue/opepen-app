@@ -5,11 +5,11 @@
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
-    <!-- <section v-if="submission.richContentLinks?.length" class="deep-dive"> -->
-    <!--   <SectionTitle>Deep Dive</SectionTitle> -->
-    <!--   <RichContentLinks :links="submission.richContentLinks" /> -->
-    <!-- </section> -->
-    <!---->
+    <section v-if="submission.richContentLinks?.length" class="deep-dive">
+      <SectionTitle>Deep Dive</SectionTitle>
+      <RichContentLinks :links="submission.richContentLinks" />
+    </section>
+
     <!-- <section v-if="submission" class="opepen"> -->
     <!--   <SetOpepen v-if="submission?.set_id" :data="submission" /> -->
     <!--   <SetDynamicImagesPreview v-else-if="submission.edition_type === 'DYNAMIC'" :data="submission" /> -->
@@ -39,7 +39,7 @@ const url = isSet
 
 const { data, refresh } = await useFetch(url)
 
-if (! data.value) await navigateTo('/')
+if (! data.value.submission) await navigateTo('/sets')
 
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)
@@ -77,7 +77,7 @@ useMetaData({
     display: flex;
     flex-direction: column;
     gap: var(--spacer);
-    row-gap: var(--size-7);
+    row-gap: var(--spacer-lg);
     max-width: var(--content-width-sm);
     margin: 0 auto;
 
@@ -87,11 +87,8 @@ useMetaData({
   }
 
 .deep-dive {
-  margin-bottom: calc(-1 * var(--size-4));
-
-  > h1:first-child {
-    margin-bottom: 0;
-  }
+  display: grid;
+  gap: var(--spacer);
 }
 
 .items {
