@@ -37,7 +37,7 @@ const url = isSet
 
 const { data, refresh } = await useFetch(url)
 
-if (! data.value.submission) await navigateTo('/sets')
+if (! data.value?.submission) await navigateTo('/sets')
 
 const set = computed(() => isSet ? data.value : data.value.set)
 const submission = computed(() => isSet ? data.value.submission : data.value)

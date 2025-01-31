@@ -1,34 +1,44 @@
 <template>
   <div class="creators">
     <CreatorSignature v-if="showSignature" :data="data" />
-    <Button v-else :to="`/${id(data.creatorAccount)}`">
-      <ApiAccount :account="data.creatorAccount" :hide-address="false" />
-    </Button>
+    <component :is="linkComponent" v-else :to="`/${id(data.creatorAccount)}`">
+      <ApiAccount :account="data.creatorAccount" :hide-address="hideAddress" :hide-avatar="hideAvatar" />
+    </component>
 
-    <Button v-for="creator in coCreators" :to="`/${id(creator)}`">
-      <ApiAccount :account="creator" :hide-address="false" />
-    </Button>
+    <component :is="linkComponent" v-for="creator in coCreators" :to="`/${id(creator)}`">
+      <ApiAccount :account="creator" :hide-address="hideAddress" :hide-avatar="hideAvatar" />
+    </component>
   </div>
 </template>
 
 <script setup>
+import Button from '@vv/components/Button.vue'
+
 const { data, showSignature } = defineProps({
   data: Object,
   showSignature: {
     type: Boolean,
     default: true,
-  }
+  },
+  hideAddress: {
+    type: Boolean,
+    default: false,
+  },
+  hideAvatar: {
+    type: Boolean,
+    default: false,
+  },
+  linkComponent: {
+    type: [Function, String],
+    default: Button,
+  },
+  separator: {
+    type: String,
+    default: '',
+  },
 })
 
-const coCreators = computed(() => {
-  return [
-    data.coCreator1Account,
-    data.coCreator2Account,
-    data.coCreator3Account,
-    data.coCreator4Account,
-    data.coCreator5Account,
-  ].filter(c => !!c)
-})
+const coCreators = useCoCreators(data)
 </script>
 
 <style scoped>
@@ -50,12 +60,7 @@ const coCreators = computed(() => {
   }
 
   :deep(.button) {
-    height: calc(var(--size-8) - var(--size-1)*1.5);
-
-    .avatar {
-      height: calc(var(--size-7) + var(--size-2));
-      width: calc(var(--size-7) + var(--size-2));
-    }
+    height: calc(var(--size-8) - var(--size-1));
   }
 }
 </style>

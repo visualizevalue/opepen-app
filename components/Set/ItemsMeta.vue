@@ -1,5 +1,6 @@
 <template>
   <section class="items-meta">
+
     <div class="intro">
       <h1>
         <small v-if="!data">Set {{ pad($route.params.id) }}</small>
@@ -11,9 +12,22 @@
       <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
     </div>
 
-    <Creators v-if="data" :data="data" />
-
     <ul v-if="data" class="overview">
+      <li>
+        <Icon type="user" stroke-width="2.25" />
+        <span>
+          Created by
+          <NuxtLink :to="`/${id(data.creatorAccount)}`">
+            <ApiAccount :account="data.creatorAccount" hide-avatar hide-address />
+          </NuxtLink>
+          <template v-if="coCreators.length">, </template>
+          <template v-for="creator in coCreators">
+            <NuxtLink :to="`/${id(creator)}`">
+              <ApiAccount :account="creator" hide-avatar hide-address />
+            </NuxtLink>
+          </template>
+        </span>
+      </li>
       <li>
         <Icon type="layers" stroke-width="2.25" />
         <span v-if="published">{{ SET_TYPES[data.edition_type] }} Editions</span>
@@ -47,6 +61,13 @@
           <span>Block {{ data.reveal_block_number }}</span>
         </NuxtLink>
       </li>
+      <li v-if="data.artist_signature">
+        <Icon type="feather" />
+        <NuxtLink
+          :to="`https://etherscan.io/tx/${data.artist_signature.tx}`"
+          target="_blank"
+        >Set Signature</NuxtLink>
+      </li>
     </ul>
   </section>
 </template>
@@ -62,6 +83,7 @@ const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
 const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.data?.reveals_at))
+const coCreators = useCoCreators(props.data)
 
 const openDynamicPreview = ref(false)
 </script>
@@ -112,6 +134,10 @@ const openDynamicPreview = ref(false)
       display: grid;
       gap: var(--size-2);
 
+      @container (min-width: 30rem) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       li,
       li > a {
         display: flex;
@@ -135,9 +161,9 @@ const openDynamicPreview = ref(false)
         }
       }
 
-      li > a {
-        &:hover {
-          color: var(--gray-z-7);
+      li a {
+        &:--highlight {
+          color: var(--color);
 
           > svg, i, .vue-feathers {
             color: var(--gray-z-6);

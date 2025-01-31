@@ -17,7 +17,6 @@
           <span>{{ data.name }}</span>
         </h1>
         <p v-html="shortenedCleanText(data.description, 120)"></p>
-        <!-- <Creators :data="data" :show-signature="false" /> -->
         <ul class="overview">
           <li>
             <Icon type="layers" stroke-width="2.25" />
@@ -36,7 +35,7 @@
           </Button>
         </div>
       </header>
-      <Button v-else :to="`/sets/${id}`" :title="data.name">
+      <Button v-else-if="id" :to="`/sets/${id}`" :title="data.name">
         <Icon type="chevron-right" />
         <span>View Set</span>
       </Button>

@@ -18,13 +18,20 @@
     </Progress>
 
     <div class="grid">
-      <SetPreview v-for="set in completeSets" :data="set.submission" :key="set.id" minimal />
+      <SetPreview
+        v-for="id in allSetIds"
+        :data="setsById[id]?.submission || {}"
+        :key="id"
+        minimal
+      />
     </div>
   </PageFrameMd>
 </template>
 
 <script setup>
-const { completeSets } = useSets()
+const { completeSets, setsById } = useSets()
+
+const allSetIds = [...Array(200)].map((_ , i) => i + 1)
 
 definePageMeta({
   layout: 'page-group-browse',

@@ -44,8 +44,6 @@ const nextSet = (id: number) => {
   return setsById.value[id + 1]
 }
 
-export const RESERVED_UNTIL = 31
-
 export function useSets() {
   const config = useRuntimeConfig()
 

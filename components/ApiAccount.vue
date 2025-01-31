@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" :size="avatarSize === 'lg' ? 68 : 36" />
+    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" />
     <span>
       <span>{{ display }}</span>
       <small v-if="! hideAddress && display !== short" :title="account.address">{{ short }}</small>
@@ -16,10 +16,6 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  avatarSize: {
-    type: String,
-    default: 'lg',
-  },
 })
 
 const display = computed(() => props.account.display)
@@ -34,15 +30,10 @@ span {
   line-height: 1em;
 
   :deep(.avatar) {
-    width: var(--size-5);
-    height: var(--size-5);
+    width: var(--size-6);
+    height: var(--size-6);
     border-radius: 50%;
     align-self: center;
-
-    &.lg {
-      width: var(--size-7);
-      height: var(--size-7);
-    }
   }
 
   > span {

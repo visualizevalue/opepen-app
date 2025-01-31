@@ -10,7 +10,8 @@
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
-      <ThreeModelViewer v-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
+      <OpepenSchematics v-if="! props.image" class="schematics" />
+      <ThreeModelViewer v-else-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
       <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
       <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
       <img
@@ -21,7 +22,6 @@
         @error="loadOriginal"
         @load="imageLoaded"
       >
-      <OpepenSchematics v-else-if="! props.image" class="schematics" />
       <slot />
     </div>
   </article>
