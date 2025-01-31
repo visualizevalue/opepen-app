@@ -1,7 +1,7 @@
 <template>
-  <article v-if="data" class="set-preview" :class="{ minimal }" :style="style">
+  <article v-if="data" ref="el" class="set-preview" :class="{ minimal }" :style="style">
     <div class="wrapper">
-      <section class="items">
+      <section v-if="isVisible" class="items">
         <Image :image="data?.edition1Image" version="sm" class="appear" />
         <Image :image="data?.edition4Image" version="sm" class="appear" />
         <Image :image="data?.edition5Image" version="sm" class="appear" />
@@ -44,6 +44,11 @@
 </template>
 
 <script setup>
+import { useElementVisibility } from '@vueuse/core'
+
+const el = ref(null)
+const isVisible = useElementVisibility(el)
+
 const { data, minimal, style } = defineProps({
   data: Object,
   minimal: Boolean,
@@ -189,6 +194,14 @@ const onComplete = () => {
 
   .set-preview.minimal {
     position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+
+    .wrapper {
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
 
     .wrapper > a {
       position: absolute;

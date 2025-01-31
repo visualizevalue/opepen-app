@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="profile">
     <MainOptionsDropdown v-if="address" @sendClose="$emit('sendClose')" />
 
     <Avatar :account="account" />
@@ -58,7 +58,7 @@ const stats = computed(() => ({
 </script>
 
 <style scoped>
-section {
+section.profile {
   position: relative;
   display: grid;
   gap: var(--spacer);

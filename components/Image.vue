@@ -10,18 +10,19 @@
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
-      <OpepenSchematics v-if="! props.image" class="schematics" />
-      <ThreeModelViewer v-else-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
-      <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
-      <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
-      <img
-        v-else-if="uri || hasImageEmbed"
-        ref="imageEl"
-        alt="Opepen image"
-        :src="hasImageEmbed ? embed : uri"
-        @error="loadOriginal"
-        @load="imageLoaded"
-      >
+      <Suspense>
+        <ThreeModelViewer v-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
+        <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
+        <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
+        <img
+          v-else
+          ref="imageEl"
+          alt="Opepen image"
+          :src="props.image ? hasImageEmbed ? embed : uri : '/schematics.svg'"
+          @error="loadOriginal"
+          @load="imageLoaded"
+        >
+      </Suspense>
       <slot />
     </div>
   </article>
@@ -156,25 +157,58 @@ article.image {
   }
 
   &.appear {
-    opacity: 0.5;
-    transition: all var(--speed-slower);
+    opacity: 1;
+    transition: all var(--speed-slow);
+    /* animation: wrapper-appear var(--speed) forwards; */
 
+    iframe,
+    svg,
+    video,
     img {
       opacity: 0.001;
     }
 
     &.up {
       transform: translateY(var(--size-6));
+
+      &.loaded,
+      &.custom-loading {
+        transform: translateY(0);
+      }
     }
 
-    &.loaded {
+    &.loaded,
+    &.custom-loading {
       opacity: 1;
       transform: translateY(0);
 
+      iframe,
+      svg,
+      video,
       img {
-        opacity: 1;
+        animation: img-appear var(--speed-slow) forwards;
       }
     }
+  }
+}
+
+@keyframes wrapper-appear {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes img-appear {
+  from {
+    opacity: 0.1;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

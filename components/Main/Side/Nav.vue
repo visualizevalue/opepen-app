@@ -53,17 +53,18 @@
     </section>
 
     <section>
-      <h1>Submit</h1>
+      <h1>Create</h1>
 
       <MainSideNavLink
-        to="/create/single"
-        title="One"
-        subline="Post a single Opepen artifact"
+        to="/create"
+        title="Your Submissions"
+        subline="Manage your set submissions"
         @click="close"
+        strict-exact
       />
       <MainSideNavLink
-        to="/create/set"
-        title="Full Set"
+        to="/create/new"
+        title="Create Opepen Set"
         subline="Submit an Opepen Set of 6 editions"
         @click="close"
       />
@@ -228,13 +229,15 @@ defineExpose({
 }
 
 section {
+  display: grid;
+  gap: var(--size-2);
   padding: var(--spacer-lg);
   border-bottom: var(--border);
 
   > h1 {
     @mixin ui-font;
     color: var(--gray-z-5);
-    margin-bottom: var(--spacer);
+    margin-bottom: var(--size-2);
   }
 }
 

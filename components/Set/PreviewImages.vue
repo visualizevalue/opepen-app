@@ -1,12 +1,12 @@
 <template>
 
   <section v-if="data" class="items">
-    <SetPreviewImage :data="data" :edition="1" version="" @click="open(1)" />
-    <SetPreviewImage :data="data" :edition="4" version="" @click="open(4)" />
-    <SetPreviewImage :data="data" :edition="5" version="" @click="open(5)" />
-    <SetPreviewImage :data="data" :edition="10" version="" @click="open(10)" />
-    <SetPreviewImage :data="data" :edition="20" version="" @click="open(20)" />
-    <SetPreviewImage :data="data" :edition="40" version="" @click="open(40)" />
+    <SetPreviewImage :data="data" :edition="1" @click="open(1)" />
+    <SetPreviewImage :data="data" :edition="4" @click="open(4)" />
+    <SetPreviewImage :data="data" :edition="5" @click="open(5)" />
+    <SetPreviewImage :data="data" :edition="10" @click="open(10)" />
+    <SetPreviewImage :data="data" :edition="20" @click="open(20)" />
+    <SetPreviewImage :data="data" :edition="40" @click="open(40)" />
 
     <ImageModal
       :image="image"

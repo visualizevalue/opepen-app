@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="to"
-    :class="{ 'router-link-active': $route.path.includes(to) }"
+    :class="{ 'active': (strictExact ? $route.path == to : $route.path.includes(to)) }"
   >
     <div>
       <span>{{ title }}</span>
@@ -17,6 +17,7 @@ defineProps({
   to: String,
   title: String,
   subline: String,
+  strictExact: Boolean,
 })
 </script>
 
@@ -46,7 +47,7 @@ a {
     font-size: var(--font-sm);
   }
 
-  &.router-link-active {
+  &.active {
     background: var(--gray-z-2);
   }
 

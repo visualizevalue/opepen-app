@@ -1,8 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <h1>Manage Sets</h1>
+  </div>
 </template>
 
 <script setup lang="ts">
-await navigateTo(`/create/single`, { redirectCode: 301 })
 </script>
 

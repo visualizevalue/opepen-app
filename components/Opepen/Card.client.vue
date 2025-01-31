@@ -1,5 +1,5 @@
 <template>
-<article class="opepen-card" :style="wrapperStyle">
+<article class="opepen-card">
   <div @click="onClick">
     <Image v-if="token.metadata?.image" :image="token.metadata.image" />
     <OpepenImage v-else :token="token" />

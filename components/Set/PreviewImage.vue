@@ -20,17 +20,13 @@
 const {
   data,
   edition,
-  version,
 } = defineProps({
   data: Object,
   edition: Number,
-  version: {
-    type: String,
-    default: 'sm',
-  },
 })
 
 const image = computed(() => data ? data[`edition${edition}Image`] : `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`)
+const version = computed(() => image.value?.isAnimated === true ? '' : 'sm')
 const name = computed(() => data ? data[`edition${edition}Name`] : `Unrevealed`)
 
 const tagline = computed(() => EDITION_TAGLINES[edition])
