@@ -2,7 +2,8 @@
   <article
     class="image"
     :class="{
-      loaded: loaded || isSVG || isVideo || is3d
+      loaded,
+      'custom-loading': isSVG || isVideo || is3d,
     }"
     @click="$emit('click')"
     :style="{ padding: `0 0 ${height}` }"
@@ -15,7 +16,7 @@
       <img
         v-else-if="uri || hasImageEmbed"
         ref="imageEl"
-        :alt="`Opepen image ${image.creator ? `by ${image.creator}` : `#${image.uuid}`}`"
+        alt="Opepen image"
         :src="hasImageEmbed ? embed : uri"
         @error="loadOriginal"
         @load="imageLoaded"
@@ -114,19 +115,9 @@ article.image {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: var(--background);
-  }
-
-  .inner {
     border: 1px solid var(--gray-z-4);
     background-color: var(--gray-z-2);
     overflow: hidden;
-  }
-  &:not(.square) .inner {
-    border-radius: var(--size-1);
-    /* border-top-left-radius: var(--size-1); */
-  }
-  &.square .inner {
     border-radius: var(--size-1);
   }
 
