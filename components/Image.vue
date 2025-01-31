@@ -3,7 +3,7 @@
     class="image"
     :class="{
       loaded,
-      'custom-loading': isSVG || isVideo || is3d,
+      'custom-loading': !version && (isSVG || isVideo || is3d),
     }"
     @click="$emit('click')"
     :style="{ padding: `0 0 ${height}` }"
@@ -155,8 +155,6 @@ article.image {
   }
 
   &.appear {
-    opacity: 0.5;
-    transition: all var(--speed-slow);
     animation: wrapper-appear var(--speed) forwards;
 
     iframe,
@@ -166,18 +164,8 @@ article.image {
       opacity: 0.001;
     }
 
-    &.up {
-      transform: translateY(var(--size-6));
-
-      &.loaded,
-      &.custom-loading {
-        transform: translateY(0);
-      }
-    }
-
     &.loaded,
     &.custom-loading {
-      opacity: 1;
       transform: translateY(0);
 
       iframe,
