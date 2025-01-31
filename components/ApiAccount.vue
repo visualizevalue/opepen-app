@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import shortAddress from '~/helpers/short-address'
-
 const props = defineProps({
   account: Object,
   hideAvatar: Boolean,
@@ -44,7 +42,6 @@ span {
     &.lg {
       width: var(--size-7);
       height: var(--size-7);
-      border-top-left-radius: var(--size-1);
     }
   }
 

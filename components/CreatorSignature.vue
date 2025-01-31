@@ -1,6 +1,6 @@
 <template>
   <ButtonGroup v-if="data.creator">
-    <Button :to="`/${id(data.creatorAccount)}`">
+    <Button :to="`/${id(data.creatorAccount)}`" class="account">
       <ApiAccount
         :account="data.creatorAccount"
         :hide-address="false"
@@ -22,24 +22,34 @@
 </template>
 
 <script setup>
-import { id } from '~/helpers/accounts'
-
 const { data } = defineProps({
   data: Object,
 })
 </script>
 
 <style scoped>
+.account {
+  :deep(.avatar) {
+    width: var(--size-6) !important;
+    height: var(--size-6) !important;
+  }
+}
+
 .signature {
   justify-content: flex-start;
-  max-width: 12rem;
 
   i {
     margin-right: var(--size-1);
+    color: var(--gray-z-4);
+    width: var(--size-4);
+    height: var(--size-4);
   }
 
-  span {
+  > span {
     width: 100%;
+    display: grid;
+    gap: 0;
+    max-width: 9rem;
 
     &:has(small) {
       overflow: hidden;
@@ -53,6 +63,10 @@ const { data } = defineProps({
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    small {
+      color: var(--gray-z-6);
     }
   }
 }

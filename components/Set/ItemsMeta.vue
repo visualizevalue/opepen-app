@@ -9,9 +9,9 @@
       </h1>
 
       <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
-
-      <!-- <Creators v-if="data" :data="data" /> -->
     </div>
+
+    <Creators v-if="data" :data="data" />
 
     <ul v-if="data" class="overview">
       <li>

@@ -12,8 +12,6 @@
 </template>
 
 <script setup>
-import { id } from '~/helpers/accounts'
-
 const { data, showSignature } = defineProps({
   data: Object,
   showSignature: {
@@ -48,7 +46,7 @@ const coCreators = computed(() => {
 
   > .button,
   :deep(.button-group > .button:first-child) {
-    padding-left: 0;
+    padding-left: var(--size-2);
   }
 
   :deep(.button) {
