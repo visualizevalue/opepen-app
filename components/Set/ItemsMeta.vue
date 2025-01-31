@@ -33,14 +33,6 @@
         <span v-if="published">{{ SET_TYPES[data.edition_type] }} Editions</span>
         <span v-else>Unknown Editions</span>
       </li>
-      <li v-if="data.dynamicPreviewImage">
-        <Icon type="image" stroke-width="2.25" />
-        <a href="#" @click.stop.prevent="openDynamicPreview = true">Preview Dynamic Colorway</a>
-
-        <Modal :open="openDynamicPreview" @close="openDynamicPreview = false" modal-classes="wide">
-          <img :src="imageURI(data.dynamicPreviewImage, 'lg')" />
-        </Modal>
-      </li>
       <li v-if="revealed || revealing">
         <Icon type="opepen" />
         <span>{{ formatNumber(data?.submission_stats?.opepens.total) }} Opt-Ins</span>

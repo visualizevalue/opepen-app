@@ -66,7 +66,7 @@ computeAspectRatio()
 const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 const displayIframe = computed(() => hasEmbed.value && !hasImageEmbed.value)
 const displayVideo = computed(() => isVideo.value && !props.version)
-watch([uri, displayIframe, displayVideo], () => {
+watch([is3d, displayIframe, displayVideo], () => {
   if (displayIframe.value || displayVideo.value || is3d.value) emit('loaded')
 })
 
@@ -80,9 +80,7 @@ const loadImage = ([{ isIntersecting }]) => {
     return
   }
 
-  const version = props.image.versions[props.version] ? props.version : ''
-
-  uri.value = imageURI(props.image, version)
+  uri.value = imageURI(props.image, props.version)
 }
 const loadOriginal = () => {
   uri.value = imageURI(props.image)
@@ -157,9 +155,9 @@ article.image {
   }
 
   &.appear {
-    opacity: 1;
+    opacity: 0.5;
     transition: all var(--speed-slow);
-    /* animation: wrapper-appear var(--speed) forwards; */
+    animation: wrapper-appear var(--speed) forwards;
 
     iframe,
     svg,

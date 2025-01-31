@@ -1,8 +1,7 @@
 <template>
 <article class="opepen-card">
   <div @click="onClick">
-    <Image v-if="token.metadata?.image" :image="token.metadata.image" />
-    <OpepenImage v-else :token="token" />
+    <Image :image="token.image" version="sm" :auto-embed="false" />
 
     <div class="text">
       <slot name="title">
