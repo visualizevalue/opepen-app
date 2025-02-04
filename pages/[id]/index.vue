@@ -18,15 +18,25 @@
   </section>
 
   <section v-if="account.opepen_count">
-    <SectionTitle>Owned Opepen ({{ account.opepen_count }})</SectionTitle>
+    <SectionTitle>Owned Opepen <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template></SectionTitle>
 
     <OpepenGrid
       :url="tokensUrl"
       :key="`${account.address}-opepen`"
-      :limit="40"
+      :limit="80"
     />
   </section>
 
+  <section v-if="account.burned_opepen_count">
+    <SectionTitle>Burned Opepen <template v-if="account.burned_opepen_count > 12">({{ account.burned_opepen_count }})</template></SectionTitle>
+
+    <OpepenGrid
+      :url="burnedTokensUrl"
+      :key="`${account.address}-burned-opepen`"
+      :limit="80"
+      :subline="token => `Burned Opepen #${token.opepen.token_id}`"
+    />
+  </section>
 </template>
 
 <script setup>
@@ -39,6 +49,7 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const url = `${config.public.opepenApi}/accounts/${account.value.address}`
 const tokensUrl = `${url}/opepen`
+const burnedTokensUrl = `${url}/burned`
 
 const createdSets = computed(() => account.value.createdSets
   ? account.value.createdSets
