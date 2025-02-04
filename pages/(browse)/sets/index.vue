@@ -13,18 +13,11 @@
       </Actions>
     </Alert>
 
-    <Progress :percent="parseInt(completeSets.length / 200 * 100)">
+    <Progress :percent="parseInt(completeSets.length / 200 * 100)" >
       {{ completeSets.length }} / 200
     </Progress>
 
-    <div class="grid">
-      <SetPreview
-        v-for="id in allSetIds"
-        :data="setsById[id]?.submission || {}"
-        :key="id"
-        minimal
-      />
-    </div>
+    <SetPreviews :submissions="submissions" minimal />
   </PageFrameMd>
 </template>
 
@@ -32,6 +25,7 @@
 const { completeSets, setsById } = useSets()
 
 const allSetIds = [...Array(200)].map((_ , i) => i + 1)
+const submissions = computed(() => allSetIds.map(i => setsById.value[i]?.submission || {}))
 
 definePageMeta({
   layout: 'page-group-browse',
@@ -47,27 +41,27 @@ definePageMeta({
   margin: var(--size-4) 0 var(--size-8);
 }
 
-.grid {
-  display: grid;
-  gap: var(--size-5);
-
-  article {
-    width: 100%;
-  }
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
-  @media (--md) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (--lg) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  @media (min-width: 88rem) {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-}
+/* .grid { */
+/*   display: grid; */
+/*   gap: var(--size-5); */
+/**/
+/*   article { */
+/*     width: 100%; */
+/*   } */
+/**/
+/*   grid-template-columns: repeat(2, minmax(0, 1fr)); */
+/**/
+/*   @media (--md) { */
+/*     grid-template-columns: repeat(2, minmax(0, 1fr)); */
+/*   } */
+/**/
+/*   @media (--lg) { */
+/*     grid-template-columns: repeat(4, minmax(0, 1fr)); */
+/*   } */
+/**/
+/*   @media (min-width: 88rem) { */
+/*     grid-template-columns: repeat(5, minmax(0, 1fr)); */
+/*   } */
+/* } */
 </style>
 

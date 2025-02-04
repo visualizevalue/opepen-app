@@ -1,5 +1,5 @@
 <template>
-  <article
+  <Card
     :style="
       {
         backgroundImage: `linear-gradient(to top, var(--opaque-black) 0%, var(--transparent-black) 150%), url(${coverURL})`
@@ -15,7 +15,7 @@
         {{ description }}
       </p>
     </div>
-  </article>
+  </Card>
 </template>
 
 <script setup>
@@ -36,8 +36,6 @@ article.content-link {
   container-type: inline-size;
   position: relative;
   width: 100%;
-  transform: translateY(0);
-  transition: all var(--speed);
   border-radius: var(--border-radius);
   border: var(--border);
   overflow: hidden;
@@ -50,10 +48,7 @@ article.content-link {
   flex-direction: column;
   justify-content: flex-end;
   gap: var(--size-4);
-
-  &:--highlight {
-    transform: translateY(-0.5rem);
-  }
+  cursor: pointer;
 
   > a {
     position: absolute;
@@ -61,6 +56,8 @@ article.content-link {
     left: 0;
     right: 0;
     bottom: 0;
+    width: 100%;
+    height: 100%;
     z-index: 3;
 
     > * {
@@ -69,17 +66,18 @@ article.content-link {
   }
 
   .logo {
-    width: var(--size-9);
-    height: var(--size-9);
+    width: var(--size-8);
+    height: var(--size-8);
     padding-bottom: 0 !important;
-    border-radius: var(--size-1);
+    border-radius: var(--border-radius-sm);
+    align-self: flex-start;
   }
 
   .text {
     width: 100%;
     color: var(--gray-z-6) !important;
     display: grid;
-    gap: var(--size-1);
+    gap: var(--spacer-xs);
 
     @mixin ui-font;
   }

@@ -1,7 +1,7 @@
 <template>
   <ul v-if="links?.length || alwaysShow">
     <li v-for="item in parsedLinks">
-      <Button :to="item.url" target="_blank" class="small">
+      <Button :to="item.url" target="_blank" :class="[size]">
         <Icon :type="item.icon" />
         <span class="text"><span class="muted" v-if="item.prefix">{{ item.prefix }}</span>{{ item.name }}</span>
       </Button>
@@ -12,11 +12,13 @@
 </template>
 
 <script setup>
-import { validateURI, getMainDomain, getFirstSubpath } from '~/helpers/urls'
-
 const { links } = defineProps({
   links: Array,
   alwaysShow: Boolean,
+  size: {
+    type: String,
+    default: 'small'
+  },
 })
 
 const ICONS = {
@@ -60,7 +62,7 @@ const parsedLinks = computed(() => {
 ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--size-2);
+  gap: var(--spacer-sm);
 
   @media (--md) {
     gap: var(--size-3);

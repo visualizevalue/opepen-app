@@ -1,5 +1,5 @@
 <template>
-<article class="opepen-card">
+<Card class="opepen-card">
   <div @click="onClick">
     <Image :image="token.image" version="sm" :auto-embed="false" />
 
@@ -14,7 +14,7 @@
 
     <NuxtLink :to="uri || `/opepen/${token.token_id}`"><span>View Opepen #{{ token.token_id }}</span></NuxtLink>
   </div>
-</article>
+</Card>
 </template>
 
 <script setup>
@@ -41,12 +41,9 @@ const {
   position: relative;
   width: 100%;
   height: 0;
+  padding: 0;
   padding-bottom: 125%;
-  transition: all var(--speed-fast);
-
-  &:--highlight {
-    transform: translateY(-0.5rem);
-  }
+  border: 0;
 
   /* Inner */
   > div {
@@ -68,9 +65,6 @@ const {
     :deep(.image > .image) {
       border: none !important;
       border-radius: 0;
-    }
-    :deep(.image > .image) {
-      padding-bottom: 100% !important;
     }
     :deep(.image) {
       border-bottom: var(--border);

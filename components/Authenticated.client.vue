@@ -1,6 +1,6 @@
 <template>
   <WithAccount v-slot="{ address }">
-    <WithProfile :address="address" v-slot="{ account }">
+    <WithProfile :id="address" v-slot="{ account }">
       <slot
         :address="address"
         :account="account"

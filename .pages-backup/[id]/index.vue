@@ -182,66 +182,6 @@ header {
   }
 }
 
-.bio {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--size-8);
-  padding: var(--size-4);
-
-  > * {
-    width: 100%;
-  }
-
-  @media (--md) {
-    flex-direction: row;
-
-    > * {
-      max-width: 50%;
-    }
-
-    &.col-2 {
-      > * {
-        width: 50%;
-      }
-    }
-  }
-
-  blockquote,
-  p {
-    white-space: pre-line;
-  }
-
-  blockquote {
-    position: relative;
-
-    &:before {
-      content: '"';
-      position: absolute;
-      left: -0.7em;
-    }
-
-    &:before,
-    span {
-      font-family: var(--font-family-display);
-      font-style: italic;
-      font-size: var(--font-xl);
-      line-height: var(--line-height-md);
-    }
-
-    cite {
-      display: block;
-      font-size: var(--font-base);
-      color: var(--gray-z-5);
-      margin-top: var(--size-3);
-
-      &:before {
-        content: "- ";
-      }
-    }
-  }
-}
 
 .known-for {
   h1 {

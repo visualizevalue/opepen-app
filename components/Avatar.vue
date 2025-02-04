@@ -1,6 +1,10 @@
 <template>
   <div class="avatar">
-    <Image v-if="account?.pfp" :image="account.pfp" />
+    <Image
+      v-if="account?.pfp"
+      :image="account.pfp"
+      :aspect-ratio="1"
+    />
     <DefaultOpepenAvatar v-else :address="account?.address" :size="size" />
   </div>
 </template>
@@ -29,3 +33,4 @@ const account = computed(() => props.account?.value || props.account)
   }
 }
 </style>
+

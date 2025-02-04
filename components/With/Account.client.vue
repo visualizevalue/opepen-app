@@ -1,7 +1,7 @@
 <template>
   <slot
     v-bind="$attrs"
-    :address="address"
+    :address="address?.toLowerCase()"
   />
 </template>
 
