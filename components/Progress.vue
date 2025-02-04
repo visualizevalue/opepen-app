@@ -11,12 +11,13 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .progress {
   padding: 0;
   background-color: var(--gray-z-2);
   border-radius: var(--size-1);
   position: relative;
+  @mixin ui-font;
 
   > div:first-child {
     height: var(--size-1);

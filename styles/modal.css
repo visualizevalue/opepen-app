@@ -1,0 +1,47 @@
+.modal {
+  > menu.actions {
+    margin: var(--spacer) 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.wide {
+    max-width: min(calc(100vw - 2*var(--size-4)), 40rem);
+  }
+
+  &.extra-wide {
+    max-width: min(calc(100vw - 2*var(--size-4)), calc(100dvh - 4*var(--size-8)));
+  }
+}
+
+body dialog {
+  background: var(--gray-z-0);
+  border-radius: var(--border-radius);
+
+  .button {
+    width: min-content;
+  }
+
+  > .close {
+    width: var(--size-6);
+    height: var(--size-6);
+    border-radius: 50%;
+    background: var(--semi-shade);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background var(--speed);
+
+    .icon {
+      width: var(--size-4);
+      height: var(--size-4);
+    }
+
+    &:--highlight {
+      background: var(--semi);
+      cursor: pointer;
+    }
+  }
+}

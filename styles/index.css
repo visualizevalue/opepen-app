@@ -1,13 +1,8 @@
 @import "./variables.css";
-@import "./fonts.css";
-@import "./normalize.css";
-@import "./utilities.css";
 @import "./base.css";
-@import "./forms.css";
-@import "./animation.css";
-@import "./main-connect.css";
-@import "./breadcrumb.css";
-@import "./secondary-tertiary-navs.css";
-@import "./scroll.css";
-@import "./states.css";
-@import "./walletconnect.css";
+@import "./alert.css";
+@import "./buttons.css";
+@import "./prose.css";
+@import "./popover.css";
+@import "./modal.css";
+

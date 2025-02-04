@@ -69,7 +69,7 @@ const openModal = (img) => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));

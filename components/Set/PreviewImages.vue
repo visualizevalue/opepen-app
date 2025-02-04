@@ -1,21 +1,39 @@
 <template>
 
-  <section class="items">
-    <SetPreviewImage :data="data" :edition="1" version="" />
-    <SetPreviewImage :data="data" :edition="4" version="" />
-    <SetPreviewImage :data="data" :edition="5" version="" />
-    <SetPreviewImage :data="data" :edition="10" version="" />
-    <SetPreviewImage :data="data" :edition="20" version="" />
-    <SetPreviewImage :data="data" :edition="40" version="" />
+  <section v-if="data" class="items">
+    <SetPreviewImage :data="data" :edition="1" @click="open(1)" />
+    <SetPreviewImage :data="data" :edition="4" @click="open(4)" />
+    <SetPreviewImage :data="data" :edition="5" @click="open(5)" />
+    <SetPreviewImage :data="data" :edition="10" @click="open(10)" />
+    <SetPreviewImage :data="data" :edition="20" @click="open(20)" />
+    <SetPreviewImage :data="data" :edition="40" @click="open(40)" />
+
+    <ImageModal
+      :image="image"
+      v-model:open="zoomed"
+      :name="name"
+      :tagline="tagline"
+    />
   </section>
 
 </template>
 
 <script setup>
 const { data } = defineProps({ data: Object })
+
+const edition = ref()
+const zoomed = ref(false)
+const image = computed(() => data[`edition${edition.value}Image`] || DEFAULT_TOKEN_IMAGE)
+const name = computed(() => data ? data[`edition${edition.value}Name`] : `Unrevealed`)
+const tagline = computed(() => EDITION_TAGLINES[edition.value])
+
+const open = (ed) => {
+  edition.value = ed
+  zoomed.value = true
+}
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .items {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -33,3 +51,4 @@ const { data } = defineProps({ data: Object })
   }
 }
 </style>
+

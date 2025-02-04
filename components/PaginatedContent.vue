@@ -135,7 +135,7 @@ if (import.meta.server || props.syncInitial) {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 div,
 section {
   position: relative;

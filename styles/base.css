@@ -1,25 +1,7 @@
-:root {
-  font-family: var(--font-family-main);
-  text-transform: uppercase;
-  font-size: 16px;
-  line-height: var(--line-height-base);
-  font-weight: 400;
-
-  color-scheme: light dark;
-  background-color: var(--background);
-  color: var(--color);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-
-  * {
-    font-weight: var(--font-weight-bold);
-  }
-}
-
-html {
+html,
+body {
+  width: 100vw;
   overflow-x: hidden;
+  overscroll-behavior: none;
 }
+

@@ -2,25 +2,27 @@
   <article
     class="image"
     :class="{
-      loaded: loaded || isSVG || isVideo || is3d
+      loaded,
+      'custom-loading': !version && (isSVG || isVideo || is3d),
     }"
     @click="$emit('click')"
     :style="{ padding: `0 0 ${height}` }"
     v-intersection-observer="loadImage"
   >
     <div class="inner image">
-      <ThreeModelViewer v-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
-      <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
-      <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
-      <img
-        v-else-if="uri || hasImageEmbed"
-        ref="imageEl"
-        :alt="`Opepen image ${image.creator ? `by ${image.creator}` : `#${image.uuid}`}`"
-        :src="hasImageEmbed ? embed : uri"
-        @error="loadOriginal"
-        @load="imageLoaded"
-      >
-      <OpepenSchematics v-else-if="! props.image" class="schematics" />
+      <Suspense>
+        <ThreeModelViewer v-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
+        <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
+        <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
+        <img
+          v-else
+          ref="imageEl"
+          alt="Opepen image"
+          :src="props.image ? hasImageEmbed ? embed : uri : '/schematics.svg'"
+          @error="loadOriginal"
+          @load="imageLoaded"
+        >
+      </Suspense>
       <slot />
     </div>
   </article>
@@ -28,8 +30,6 @@
 
 <script setup>
 import { vIntersectionObserver } from '@vueuse/components'
-import { imageURI } from '~/helpers/images'
-import { normalizeURI } from '~/helpers/urls'
 
 const props = defineProps({
   image: [String, Object],
@@ -66,7 +66,7 @@ computeAspectRatio()
 const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 const displayIframe = computed(() => hasEmbed.value && !hasImageEmbed.value)
 const displayVideo = computed(() => isVideo.value && !props.version)
-watch([uri, displayIframe, displayVideo], () => {
+watch([is3d, displayIframe, displayVideo], () => {
   if (displayIframe.value || displayVideo.value || is3d.value) emit('loaded')
 })
 
@@ -80,9 +80,7 @@ const loadImage = ([{ isIntersecting }]) => {
     return
   }
 
-  const version = props.image.versions[props.version] ? props.version : ''
-
-  uri.value = imageURI(props.image, version)
+  uri.value = imageURI(props.image, props.version)
 }
 const loadOriginal = () => {
   uri.value = imageURI(props.image)
@@ -98,7 +96,7 @@ const imageLoaded = () => {
 }
 </script>
 
-<style lang="postcss">
+<style>
 article.image {
   overflow: hidden;
 
@@ -116,19 +114,9 @@ article.image {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: var(--background);
-  }
-
-  .inner {
     border: 1px solid var(--gray-z-4);
     background-color: var(--gray-z-2);
     overflow: hidden;
-  }
-  &:not(.square) .inner {
-    border-radius: var(--size-5);
-    border-top-left-radius: var(--size-1);
-  }
-  &.square .inner {
     border-radius: var(--size-1);
   }
 
@@ -167,25 +155,46 @@ article.image {
   }
 
   &.appear {
-    opacity: 0.5;
-    transition: all var(--speed-slower);
+    animation: wrapper-appear var(--speed) forwards;
 
+    iframe,
+    svg,
+    video,
     img {
       opacity: 0.001;
     }
 
-    &.up {
-      transform: translateY(var(--size-6));
-    }
-
-    &.loaded {
-      opacity: 1;
+    &.loaded,
+    &.custom-loading {
       transform: translateY(0);
 
+      iframe,
+      svg,
+      video,
       img {
-        opacity: 1;
+        animation: img-appear var(--speed-slow) forwards;
       }
     }
+  }
+}
+
+@keyframes wrapper-appear {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes img-appear {
+  from {
+    opacity: 0.1;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

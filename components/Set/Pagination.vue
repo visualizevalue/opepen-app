@@ -13,7 +13,7 @@
     </NuxtLink>
 
     <span>
-      <NuxtLink to="/curate/view/permanent">Sets</NuxtLink>
+      <NuxtLink to="/sets">Sets</NuxtLink>
       <span class="separator">/</span>
       <span v-if="set.submission?.edition1Image" class="icon">
         <Image :image="set.submission?.edition1Image" version="sm" />
@@ -39,9 +39,6 @@
 </template>
 
 <script setup>
-import pad from '~/helpers/pad'
-import { useSets } from '~/helpers/sets'
-
 const { set } = defineProps({ set: Object })
 const previousSetId = computed(() => set.id > 1 ? pad(set.id - 1, 3) : '')
 const nextSetId = computed(() => set.id < 200 ? pad(set.id + 1, 3) : '')
@@ -51,7 +48,7 @@ const next = computed(() => nextSet(set.id))
 const previous = computed(() => prevSet(set.id))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .pagination {
   display: grid;
   grid-template-columns: 1fr 40% 1fr;
@@ -60,6 +57,8 @@ const previous = computed(() => prevSet(set.id))
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-md);
   user-select: none;
+  margin-top: var(--size-1);
+  @mixin ui-font;
 
   .separator {
     color: var(--gray-z-5);
@@ -82,9 +81,12 @@ const previous = computed(() => prevSet(set.id))
       flex-shrink: 0;
 
       > .image {
-        border-radius: var(--size-2);
-        border-top-left-radius: var(--size-0);
+        border-radius: var(--border-radius-sm);
       }
+    }
+
+    &:first-child {
+      margin-left: -0.4em;
     }
 
     &:nth-child(2) {
@@ -93,6 +95,7 @@ const previous = computed(() => prevSet(set.id))
 
     &:last-child {
       justify-content: flex-end;
+      margin-right: -0.4em;
     }
 
     &:first-child,

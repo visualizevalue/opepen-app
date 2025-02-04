@@ -1,0 +1,17 @@
+.alert {
+  border-radius: var(--border-radius);
+  padding: var(--spacer) !important;
+
+  &.muted {
+    color: var(--gray-z-6) !important;
+    background: var(--gray-z-1) !important;
+
+    .close {
+      color: var(--gray-z-5);
+    }
+  }
+
+  > .actions {
+    margin-top: var(--ui-padding-y) !important;
+  }
+}

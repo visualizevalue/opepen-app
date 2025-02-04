@@ -16,11 +16,14 @@ const size = computed(() => props.size)
 const address = computed(() => props.address)
 
 const canvas = ref(null)
-const img = computed(() => canvas.value?.toDataURL() || '')
+const img = computed(() => props.address
+  ? canvas.value?.toDataURL()
+  : `/solid.svg`
+)
 
 const setCanvas = () => {
   canvas.value = createIcon({
-    seed: address.value?.toLowerCase() || Math.random().toString(),
+    seed: address.value?.toLowerCase(),
     size: size.value,
   })
 }
@@ -29,7 +32,7 @@ onMounted(() => setCanvas())
 watch(address, () => setCanvas())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   img {
     border-radius: 50%;
     border: var(--border);

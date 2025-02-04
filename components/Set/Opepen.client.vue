@@ -13,7 +13,7 @@
           :set="token.data?.edition || 40"
         >
           <template #subline>
-            <p><span>owned by </span><NuxtLink :to="`/holders/${token.owner}`" @click.stop="() => null"> {{ token.ownerAccount?.display }}</NuxtLink></p>
+            <p><span>owned by </span><NuxtLink :to="`/${token.owner}`" @click.stop="() => null"> {{ token.ownerAccount?.display }}</NuxtLink></p>
           </template>
         </OpepenCard>
       </div>
@@ -22,35 +22,35 @@
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
-
 const { data } = defineProps({
   data: Object,
 })
 
-const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/opepen/sets/${data.set_id}/opepen`
-const { data: opepen, pending } = await useLazyFetch(url, { key: 'revealed-opepen' })
-
 const revealsAt = ref(DateTime.fromISO(data.reveals_at).toUnixInteger())
 const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && data.set_id)
+
+const config = useRuntimeConfig()
+const url = `${config.public.opepenApi}/opepen/sets/${data.set_id}/opepen`
+const { data: opepen, pending } = useLazyFetch(url, { key: 'revealed-opepen' })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
+  .set-opepen {
+    display: grid;
+    gap: var(--spacer);
+  }
+
   .list {
     display: grid;
-
-    display: grid;
-    gap: var(--size-4);
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: var(--spacer);
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
 
     flex-wrap: wrap;
-    max-width: var(--content-width);
     width: 100%;
     margin: 0 auto;
 
     @media (--md) {
-      gap: var(--size-5);
+      gap: var(--spacer);
     }
 
     > div {

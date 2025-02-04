@@ -1,7 +1,7 @@
 <template>
   <ul v-if="links?.length || alwaysShow">
     <li v-for="item in parsedLinks">
-      <Button :to="item.url" target="_blank" class="small">
+      <Button :to="item.url" target="_blank" :class="[size]">
         <Icon :type="item.icon" />
         <span class="text"><span class="muted" v-if="item.prefix">{{ item.prefix }}</span>{{ item.name }}</span>
       </Button>
@@ -12,11 +12,13 @@
 </template>
 
 <script setup>
-import { validateURI, getMainDomain, getFirstSubpath } from '~/helpers/urls'
-
 const { links } = defineProps({
   links: Array,
   alwaysShow: Boolean,
+  size: {
+    type: String,
+    default: 'small'
+  },
 })
 
 const ICONS = {
@@ -39,7 +41,7 @@ const parsedLinks = computed(() => {
   for (const link of links) {
     const url = validateURI(link)
     const domain = getMainDomain(url)
-    const icon = ICONS[domain] || 'link'
+    const icon = ICONS[domain] || 'globe'
 
     const name = NAME_EXTRACTORS[domain] ? NAME_EXTRACTORS[domain](url) : domain
     const prefix = NAME_EXTRACTORS[domain] ? `@` : ``
@@ -56,11 +58,11 @@ const parsedLinks = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--size-2);
+  gap: var(--spacer-sm);
 
   @media (--md) {
     gap: var(--size-3);
@@ -76,7 +78,16 @@ ul {
   }
 
   .button {
+    .icon {
+      color: var(--gray-z-5);
+      transition: color var(--speed);
+    }
+
     &:--highlight {
+      .icon {
+        color: var(--color);
+      }
+
       .text .muted {
         color: var(--color);
       }

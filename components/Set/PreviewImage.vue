@@ -13,36 +13,20 @@
       </div>
       <button @click="zoomed = true" class="hidden-action"><span>Show details</span></button>
     </Image>
-
-    <ImageModal
-      :image="image"
-      :open="zoomed"
-      :name="name"
-      :tagline="tagline"
-      @close="zoomed = false"
-    />
   </div>
 </template>
 
 <script setup>
-import { imageURI } from '~/helpers/images'
-import downloadImage from '~/helpers/download-image'
-import { EDITION_TAGLINES } from '~/helpers/editions'
-
 const {
   data,
   edition,
-  version,
 } = defineProps({
   data: Object,
   edition: Number,
-  version: {
-    type: String,
-    default: 'sm',
-  },
 })
 
 const image = computed(() => data ? data[`edition${edition}Image`] : `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`)
+const version = computed(() => image.value?.isAnimated === true ? '' : 'sm')
 const name = computed(() => data ? data[`edition${edition}Name`] : `Unrevealed`)
 
 const tagline = computed(() => EDITION_TAGLINES[edition])
@@ -61,7 +45,7 @@ const download = async () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .preview {
   position: relative;
   overflow: hidden;
@@ -69,6 +53,11 @@ const download = async () => {
   > .image {
     cursor: pointer;
     overflow: hidden;
+    border-radius: var(--border-radius);
+
+    :deep(.image) {
+      border-radius: var(--border-radius);
+    }
   }
 
   &:--highlight {

@@ -1,5 +1,29 @@
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  alias: {
+    '@vv': '@visualizevalue/vveb3-layer',
+  },
+
+  css: [
+    '@vv/assets/styles/index.css',
+    join(currentDir, './styles/index.css'),
+  ],
+
+  extends: [
+    '@visualizevalue/vveb3-layer',
+  ],
+
+  modules: [
+    '@tresjs/nuxt',
+    '@vite-pwa/nuxt',
+  ],
+
   app: {
     head: {
       htmlAttrs: {
@@ -42,52 +66,21 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      title: 'Opepen',
+      description: 'Consensus is temporary',
+      blockExplorer: 'https://etherscan.io',
+      chainId: 1,
+      rpc1: 'https://eth.llamarpc.com',
+      rpc2: 'https://ethereum-rpc.publicnode.com',
+      rpc3: 'https://eth.drpc.org',
+      walletConnectProjectId: '',
+      burnedOpepenContract: '0x53787D1Fee8512C6dF258EBdf65903E2EA371222',
+      opepenContract: '0x6339e5e072086621540d0362c4e3cea0d643e114',
       opepenApi: '',
       opepenOauthApi: '',
       signatureApi: 'https://api.signature.vv.xyz/v1',
-      opepenContract: '0x6339e5e072086621540d0362c4e3cea0d643e114',
-      burnedOpepenContract: '0x53787d1fee8512c6df258ebdf65903e2ea371222',
-      rpc: 'http://127.0.0.1:8545',
-      alchemy: '',
-      walletConnectProjectId: '',
-      chainName: 'mainnet',
-      chainId: '1',
-    },
-  },
-
-  css: [
-    '~/styles/index.css',
-  ],
-
-  postcss: {
-    plugins: {
-      'postcss-nested': {},
-      'postcss-custom-selectors': {
-        importFrom: 'styles/custom-selectors.css',
-      },
-      'postcss-custom-media': {
-        importFrom: 'styles/custom-media.css',
-      },
-      'postcss-preset-env': {
-        stage: 3,
-        features: {},
-      },
-      'autoprefixer': {},
-    },
-  },
-
-  vite: {
-    server: {
-      hmr: {
-        overlay: false,
-      }
     }
   },
-
-  modules: [
-    '@tresjs/nuxt',
-    '@vite-pwa/nuxt',
-  ],
 
   pwa: {
     devOptions: {

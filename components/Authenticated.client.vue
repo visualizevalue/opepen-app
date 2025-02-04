@@ -1,23 +1,30 @@
 <template>
-  <WithAccount v-slot="{ isConnected, address, ens, profile }">
-    <slot
-      :address="address"
-      :ens="ens"
-      :is-connected="isConnected"
-      :profile="profile"
-      :is-admin="isAdmin"
-    />
+  <WithAccount v-slot="{ address }">
+    <WithProfile :id="address" v-slot="{ account }">
+      <slot
+        :address="address"
+        :account="account"
+        :is-admin="isAdmin"
+      />
+    </WithProfile>
   </WithAccount>
+
+  <Modal :open="! isAuthenticated && ! signInLoading" :x-close="false">
+    <h1>Sign In Required</h1>
+    <p>You have to sign in with Ethereum to view this page.</p>
+
+    <Actions>
+      <Button :to="'/'" class="secondary">Go Home</Button>
+      <Button @click="signIn">Sign In</Button>
+    </Actions>
+  </Modal>
 </template>
 
 <script setup>
-import { useSignIn, isAuthenticated, isAdmin } from '~/helpers/siwe'
-
 const { signIn } = useSignIn()
 
 onMounted(async () => {
-  if (! isAuthenticated.value)
-
-  await signIn()
+  if (! isAuthenticated.value) await signIn()
 })
 </script>
+

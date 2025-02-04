@@ -1,7 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <h1>Manage Sets</h1>
+  </div>
 </template>
 
-<script setup>
-await navigateTo('/create/singles')
+<script setup lang="ts">
 </script>
+

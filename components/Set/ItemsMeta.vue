@@ -1,5 +1,6 @@
 <template>
   <section class="items-meta">
+
     <div class="intro">
       <h1>
         <small v-if="!data">Set {{ pad($route.params.id) }}</small>
@@ -9,30 +10,35 @@
       </h1>
 
       <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
-
-      <Creators v-if="data" :data="data" />
     </div>
 
     <ul v-if="data" class="overview">
       <li>
+        <Icon type="user" stroke-width="2.25" />
+        <span>
+          Created by
+          <NuxtLink :to="`/${id(data.creatorAccount)}`">
+            <ApiAccount :account="data.creatorAccount" hide-avatar hide-address />
+          </NuxtLink>
+          <template v-if="coCreators.length">, </template>
+          <template v-for="creator in coCreators">
+            <NuxtLink :to="`/${id(creator)}`">
+              <ApiAccount :account="creator" hide-avatar hide-address />
+            </NuxtLink>
+          </template>
+        </span>
+      </li>
+      <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span v-if="published">{{ TYPES[data.edition_type] }} Editions</span>
+        <span v-if="published">{{ SET_TYPES[data.edition_type] }} Editions</span>
         <span v-else>Unknown Editions</span>
       </li>
-      <li v-if="data.dynamicPreviewImage">
-        <Icon type="image" stroke-width="2.25" />
-        <a href="#" @click.stop.prevent="openDynamicPreview = true">Preview Dynamic Colorway</a>
-
-        <Modal :open="openDynamicPreview" @close="openDynamicPreview = false" modal-classes="wide">
-          <img :src="imageURI(data.dynamicPreviewImage, 'lg')" />
-        </Modal>
-      </li>
       <li v-if="revealed || revealing">
-        <IconOpepen />
+        <Icon type="opepen" />
         <span>{{ formatNumber(data?.submission_stats?.opepens.total) }} Opt-Ins</span>
       </li>
       <li v-if="revealed || revealing">
-        <IconCheck />
+        <Icon type="check"/>
         <span>Consensus met on {{ consensusDate }}</span>
       </li>
       <li v-if="data.reveal_strategy">
@@ -47,18 +53,18 @@
           <span>Block {{ data.reveal_block_number }}</span>
         </NuxtLink>
       </li>
+      <li v-if="data.artist_signature">
+        <Icon type="feather" />
+        <NuxtLink
+          :to="`https://etherscan.io/tx/${data.artist_signature.tx}`"
+          target="_blank"
+        >Set Signature</NuxtLink>
+      </li>
     </ul>
   </section>
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
-import pad from '~/helpers/pad'
-import { formatNumber } from '~/helpers/format'
-import { formatDate } from '~/helpers/dates'
-import { TYPES } from '~/helpers/sets'
-import { imageURI } from '~/helpers/images'
-
 const props = defineProps({
   data: Object,
 })
@@ -69,16 +75,17 @@ const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
 const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.data?.reveals_at))
+const coCreators = useCoCreators(props.data)
 
 const openDynamicPreview = ref(false)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .items-meta {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: var(--size-7);
+    gap: var(--spacer-lg);
 
     .intro {
       display: flex;
@@ -88,40 +95,40 @@ const openDynamicPreview = ref(false)
 
       > h1 {
         small, span {
+          @mixin ui-font;
           display: block;
         }
 
         small {
           color: var(--gray-z-6);
-          text-transform: uppercase;
           margin-bottom: var(--size-2);
-          font-size: var(--font-md);
         }
 
         span {
-          font-family: var(--font-family-opepen);
-          font-size: var(--font-title);
+          font-size: var(--font-xl);
           line-height: 0.8;
           margin-left: -0.05em;
 
           @media (--md) {
-            font-size: var(--font-display);
+            font-size: var(--font-xxl);
           }
         }
       }
 
       > p {
+        @mixin ui-font;
         color: var(--gray-z-6);
-        font-size: var(--font-md);
         line-height: var(--line-height-md);
-        margin: var(--size-1) 0;
       }
     }
 
     .overview {
       display: grid;
-      gap: var(--size-1);
-      color: var(--gray-z-6);
+      gap: var(--size-2);
+
+      @container (min-width: 30rem) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
 
       li,
       li > a {
@@ -130,6 +137,8 @@ const openDynamicPreview = ref(false)
         align-items: center;
         gap: var(--size-2);
         transition: all var(--speed);
+        @mixin ui-font;
+        color: var(--gray-z-6);
 
         > svg, i, .vue-feathers {
           width: var(--size-4);
@@ -144,9 +153,9 @@ const openDynamicPreview = ref(false)
         }
       }
 
-      li > a {
-        &:hover {
-          color: var(--gray-z-7);
+      li a {
+        &:--highlight {
+          color: var(--color);
 
           > svg, i, .vue-feathers {
             color: var(--gray-z-6);

@@ -181,7 +181,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .text {
     text-anchor: middle;
     alignment-baseline: central;

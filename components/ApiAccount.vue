@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" :size="avatarSize === 'lg' ? 68 : 36" />
+    <Avatar v-if="!hideAvatar" :account="account" :class="avatarSize" />
     <span>
       <span>{{ display }}</span>
       <small v-if="! hideAddress && display !== short" :title="account.address">{{ short }}</small>
@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import shortAddress from '~/helpers/short-address'
-
 const props = defineProps({
   account: Object,
   hideAvatar: Boolean,
@@ -18,17 +16,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  avatarSize: {
-    type: String,
-    default: 'lg',
-  },
 })
 
 const display = computed(() => props.account.display)
 const short = computed(() => shortAddress(props.account.address))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 span {
   display: inline-flex;
   align-items: center;
@@ -36,16 +30,10 @@ span {
   line-height: 1em;
 
   :deep(.avatar) {
-    width: var(--size-5);
-    height: var(--size-5);
+    width: var(--size-6);
+    height: var(--size-6);
     border-radius: 50%;
     align-self: center;
-
-    &.lg {
-      width: var(--size-7);
-      height: var(--size-7);
-      border-top-left-radius: var(--size-1);
-    }
   }
 
   > span {

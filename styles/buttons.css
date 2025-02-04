@@ -1,0 +1,57 @@
+.button {
+
+  &.small {
+    padding: var(--size-1) var(--size-2);
+    font-size: var(--font-sm);
+    border-radius: var(--border-radius-sm);
+
+    .icon {
+      width: var(--size-4);
+    }
+  }
+
+  &.secondary {
+    border-color: var(--gray-z-2);
+    color: var(--gray-z-6);
+
+    &:--highlight {
+      border-color: var(--button-border-color-highlight);
+      color: var(--color);
+    }
+  }
+
+  &.link-button {
+    border: 0;
+    background: transparent;
+    border-radius: var(--border-radius);
+    width: min-content;
+    margin-left: calc(-1 * var(--ui-padding-x));
+    margin-right: calc(-1 * var(--ui-padding-x));
+
+    &:--highlight {
+      background: var(--gray-z-2);
+      border: 0;
+    }
+
+    span {
+      width: auto;
+    }
+
+    .icon {
+      width: var(--size-4);
+      color: var(--gray-z-4);
+    }
+  }
+}
+
+.hidden-action {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  opacity: 0;
+}

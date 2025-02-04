@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Carbon';
+  font-style:  normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/carbon.woff2?v=1.0') format('woff2'),
+    url('/fonts/carbon.woff?v=1.0') format('woff');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/space-grotesk-v16-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/space-grotesk-v16-latin-600.woff2') format('woff2');
+}
+
+
+:root {
+
+  /* FAMILIES */
+  --font-family: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-display: var(--font-family);
+
+  /* SIZES */
+  --font-base: var(--rem);
+  --font-xs: calc(var(--font-base) * 0.69);
+  --font-sm: calc(var(--font-base) * 0.85);
+  --font-lg: calc(var(--font-base) * 1.2);
+  --font-xl: calc(var(--font-base) * 2);
+  --font-xxl: calc(var(--font-base) * 3);
+
+  /* WEIGHTS & SPACING */
+  --font-weight-medium: 400;
+  --font-weight-bold: 600;
+
+  --letter-spacing-sm: -0.025em;
+  --letter-spacing: 0.025em;
+  --letter-spacing-md: 0.05em;
+  --letter-spacing-lg: 0.1em;
+
+  --line-height-sm: 105%;
+  --line-height:    100%;
+  --line-height-md: 120%;
+  --line-height-lg: 160%;
+
+  /* UI */
+  --ui-font-family: Carbon, monospace;
+  --ui-text-transform: uppercase;
+  --ui-font-size:      0.9rem;
+
+}
+
