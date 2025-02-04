@@ -75,7 +75,7 @@ const {
     }
 
     .text {
-      padding: 0 var(--size-4);
+      padding: 0 var(--spacer-sm);
       display: flex;
       flex-direction: column;
       justify-content: center;

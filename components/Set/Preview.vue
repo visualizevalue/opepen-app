@@ -106,6 +106,7 @@ const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
     display: grid;
     gap: var(--spacer-xs);
     @mixin ui-font;
+    margin-top: auto;
 
     small {
       display: block;
