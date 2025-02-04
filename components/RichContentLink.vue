@@ -8,7 +8,7 @@
     class="content-link"
   >
     <NuxtLink :to="link.url" :title="link.title" target="_blank"><span>Open</span></NuxtLink>
-    <Image :image="link.logo" v-if="link.logo" class="logo" />
+    <Image :image="link.logo" v-if="link.logo" class="logo" version="sm" />
     <div class="text">
       <h1>{{ link.title }}</h1>
       <p v-if="link.description">
