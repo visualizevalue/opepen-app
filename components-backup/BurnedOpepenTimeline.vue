@@ -17,6 +17,8 @@
             <span class="meta">
               <NuxtLink :to="id(item.fromAccount)" class="name">{{ item.fromAccount.display }}</NuxtLink>
               <span class="sep">·</span>
+              <p>Burned Opepen {{ item.opepen.token_id }}</p>
+              <span class="sep">·</span>
               <NuxtLink :to="`https://etherscan.io/tx/${item.transaction_hash}`">
                 <span class="date">{{ timeAgo(item.timestamp) }}</span>
               </NuxtLink>
@@ -25,6 +27,9 @@
               <p>{{ item.opepen.burnedOpepen.data.name }}</p>
               <Image :image="item.opepen.burnedOpepen.image" version="sm" />
             </div>
+            <NuxtLink :to="`/opt-out/${(item.opepen.burnedOpepen.token_id)}`">
+              <span>View burned opepen {{ item.opepen.burnedOpepen.token_id }}</span>
+            </NuxtLink>
           </div>
         </slot>
       </div>
@@ -130,6 +135,19 @@ section {
         }
       }
     }
+
+    > a {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      span {
+      opacity: 0;
+      }
+    }
+
   }
 }
 </style>
