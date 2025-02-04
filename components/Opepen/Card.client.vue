@@ -8,11 +8,11 @@
         <h1>{{ token.name }}</h1>
       </slot>
       <slot name="subline">
-        <p>Edition of {{ set }}</p>
+        <p>{{ subline }}</p>
       </slot>
     </div>
 
-    <NuxtLink :to="uri || `/opepen/${token.token_id}`"><span>View Opepen #{{ token.token_id }}</span></NuxtLink>
+    <NuxtLink :to="uri || `/opepen/${token.token_id}`"><span>View #{{ token.token_id }}</span></NuxtLink>
   </div>
 </Card>
 </template>
@@ -25,6 +25,7 @@ const {
   set,
   rotate,
   uri,
+  subline,
 } = defineProps({
   token: Object,
   set: [Number, String],
@@ -33,6 +34,10 @@ const {
     default: false,
   },
   uri: String,
+  subline: {
+    type: String,
+    default: (props) => `Edition of ${props.token.data.edition}`
+  },
 })
 </script>
 

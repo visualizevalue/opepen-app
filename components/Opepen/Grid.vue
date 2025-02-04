@@ -10,6 +10,7 @@
       :key="token.token_id"
       :token="token"
       :set="token.data?.edition || 40"
+      :subline="subline(token)"
     />
   </PaginatedContent>
 </template>
@@ -31,6 +32,10 @@ defineProps({
   limit: {
     type: Number,
     default: 80,
+  },
+  subline: {
+    type: Function,
+    default: token => undefined,
   },
 })
 </script>
