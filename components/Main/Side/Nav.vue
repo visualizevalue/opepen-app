@@ -90,7 +90,7 @@
   </nav>
 
   <ClientOnly>
-    <div class="sidebar-overlay" :style="overlayStyle" @touchstart="close"></div>
+    <div class="sidebar-overlay" :style="overlayStyle" @click="close" @touchstart="close"></div>
     <template #fallback>
       <div class="sidebar-overlay"></div>
     </template>
@@ -223,7 +223,7 @@ defineExpose({
   overscroll-behavior: auto;
   transform: translateX(-100%);
 
-  @media (--md) {
+  @media (--lg) {
     transform: translateX(0);
   }
 }
@@ -252,7 +252,7 @@ section {
   pointer-events: none;
   opacity: 0;
 
-  @media (--md) {
+  @media (--lg) {
     display: none;
   }
 }

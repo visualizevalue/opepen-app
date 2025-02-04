@@ -57,7 +57,7 @@ watchEffect(() => {
   backdrop-filter: var(--blur);
   transition: transform var(--speed);
 
-  @media (--md) {
+  @media (--lg) {
     display: none !important;
   }
 }

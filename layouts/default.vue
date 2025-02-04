@@ -46,7 +46,7 @@ const mainNav = ref()
 
     transform: translateX(calc(-1 * var(--nav-width)));
 
-    @media (--md) {
+    @media (--lg) {
       transform: translateX(0);
     }
   }
@@ -68,7 +68,7 @@ const mainNav = ref()
       calc(var(--bottom-nav-height) + var(--spacer));
   }
 
-  @media (--md) {
+  @media (--lg) {
     display: grid;
     grid-template-columns: var(--nav-width) 1fr;
 

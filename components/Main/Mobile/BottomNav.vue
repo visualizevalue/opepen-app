@@ -31,7 +31,7 @@
   align-items: center;
   justify-content: space-evenly;
 
-  @media (--md) {
+  @media (--lg) {
     display: none;
   }
 }
