@@ -41,7 +41,7 @@ const parsedLinks = computed(() => {
   for (const link of links) {
     const url = validateURI(link)
     const domain = getMainDomain(url)
-    const icon = ICONS[domain] || 'link'
+    const icon = ICONS[domain] || 'globe'
 
     const name = NAME_EXTRACTORS[domain] ? NAME_EXTRACTORS[domain](url) : domain
     const prefix = NAME_EXTRACTORS[domain] ? `@` : ``
@@ -78,7 +78,16 @@ ul {
   }
 
   .button {
+    .icon {
+      color: var(--gray-z-5);
+      transition: color var(--speed);
+    }
+
     &:--highlight {
+      .icon {
+        color: var(--color);
+      }
+
       .text .muted {
         color: var(--color);
       }
