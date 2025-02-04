@@ -47,7 +47,7 @@ article.content-link {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: var(--spacer);
+  gap: var(--spacer-sm);
   cursor: pointer;
 
   > a {
