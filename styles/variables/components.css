@@ -1,6 +1,6 @@
 :root {
 
-  --nav-width: min(24rem, 100vw);
+  --nav-width: min(21.5rem, 100vw);
   --top-nav-height: 3rem;
   --top-subnav-height: 2.5rem;
   --top-nav-total-height: calc(var(--top-nav-height) + var(--top-subnav-height));
