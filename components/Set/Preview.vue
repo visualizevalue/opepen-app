@@ -50,7 +50,7 @@ const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
     width: 100%;
     height: 0;
     padding: 0;
-    padding-bottom: calc(100% + var(--size-8));
+    padding-bottom: calc(100% + var(--size-7) + var(--size-2));
     background-color: var(--gray-z-1);
     border: 0;
 
