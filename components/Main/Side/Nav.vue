@@ -37,19 +37,6 @@
         subline="View submitted Opepen"
         @click="close"
       />
-
-      <!-- <MainSideNavLink -->
-      <!--   to="/listings" -->
-      <!--   title="Listings" -->
-      <!--   subline="Aggregated Marketplace Listings" -->
-      <!--   @click="close" -->
-      <!-- /> -->
-      <!-- <MainSideNavLink -->
-      <!--   to="/burned" -->
-      <!--   title="Burned Opepen" -->
-      <!--   subline="All Opepen that have been destroyed" -->
-      <!--   @click="close" -->
-      <!-- /> -->
     </section>
 
     <section>
@@ -127,9 +114,13 @@ const closedPosition = () => -1 * width.value
 // State
 const translate = ref(0)
 const tweened = reactive({ number: translate.value })
-const style = computed(() => ({
-  transform: `translateX(${tweened.number}px)`
-}))
+const style = computed(() => {
+  if (import.meta.server) return
+
+  return {
+    transform: `translateX(${tweened.number}px)`
+  }
+})
 const overlayStyle = computed(() => ({
   opacity: 0.8 - (width.value ? Math.abs(tweened.number / width.value) : 0),
   pointerEvents: isOpen.value ? 'all' : 'none',
@@ -142,18 +133,23 @@ watch(translate, (n) => {
 // Initial state
 onMounted(() => {
   if (isDesktop.value) {
+    console.log('HUUHUHUHU TRUEEE')
     translate.value = 0
     tweened.number = 0
   } else {
+    console.log('HUUHUHUHU MOBILE')
     translate.value = closedPosition()
     tweened.number = translate.value
   }
 })
 
+// Open close default state if switching between mobile and desktop
+watch(isDesktop, () => {
+  if (isDesktop.value) open()
+  else close()
+})
 // Update/Track the isOpen state
 watchEffect(() => {
-  if (isDesktop.value) open()
-
   // Don't do anything while we're swiping
   if (isSwiping.value) return
 
@@ -209,7 +205,7 @@ const updateTranslatePosition = () => {
 
   translate.value = updated
 }
-watch([isDesktop, isOpen, lengthX, isSwiping], () => updateTranslatePosition())
+watch([isOpen, lengthX, isSwiping], () => updateTranslatePosition())
 
 defineExpose({
   open,
