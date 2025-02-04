@@ -17,7 +17,7 @@
       <MainSideNavLink
         to="/about/stats"
         title="Stats"
-        subline="Marketplace, Sales, Recent Transactions"
+        subline="Marketplace, Recent Sales"
         @click="close"
       />
     </section>
@@ -52,7 +52,7 @@
       <MainSideNavLink
         to="/create/new"
         title="Create Opepen Set"
-        subline="Submit an Opepen Set of 6 editions"
+        subline="Submit an Opepen Set"
         @click="close"
       />
     </section>
