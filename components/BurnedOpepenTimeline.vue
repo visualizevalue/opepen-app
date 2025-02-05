@@ -24,7 +24,7 @@
               </NuxtLink>
             </span>
             <div class="content">
-              <p>{{ item.opepen.burnedOpepen.data.name }}</p>
+              <p>{{ item.opepen.burnedOpepen.metadata.name }}</p>
               <Image :image="item.opepen.burnedOpepen.image" version="sm" />
             </div>
             <NuxtLink :to="`/opt-out/${(item.opepen.burnedOpepen.token_id)}`">
