@@ -133,11 +133,9 @@ watch(translate, (n) => {
 // Initial state
 onMounted(() => {
   if (isDesktop.value) {
-    console.log('HUUHUHUHU TRUEEE')
     translate.value = 0
     tweened.number = 0
   } else {
-    console.log('HUUHUHUHU MOBILE')
     translate.value = closedPosition()
     tweened.number = translate.value
   }
