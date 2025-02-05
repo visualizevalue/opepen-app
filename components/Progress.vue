@@ -14,6 +14,7 @@ defineProps({
 <style scoped>
 .progress {
   padding: 0;
+  margin-bottom: var(--size-4);
   background-color: var(--gray-z-2);
   border-radius: var(--size-1);
   position: relative;
