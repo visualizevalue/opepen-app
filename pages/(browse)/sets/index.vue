@@ -32,36 +32,3 @@ definePageMeta({
 })
 </script>
 
-<style scoped>
-.alert {
-  margin: 0 0 var(--size-7);
-}
-
-.progress {
-  margin: var(--size-4) 0 var(--size-8);
-}
-
-/* .grid { */
-/*   display: grid; */
-/*   gap: var(--size-5); */
-/**/
-/*   article { */
-/*     width: 100%; */
-/*   } */
-/**/
-/*   grid-template-columns: repeat(2, minmax(0, 1fr)); */
-/**/
-/*   @media (--md) { */
-/*     grid-template-columns: repeat(2, minmax(0, 1fr)); */
-/*   } */
-/**/
-/*   @media (--lg) { */
-/*     grid-template-columns: repeat(4, minmax(0, 1fr)); */
-/*   } */
-/**/
-/*   @media (min-width: 88rem) { */
-/*     grid-template-columns: repeat(5, minmax(0, 1fr)); */
-/*   } */
-/* } */
-</style>
-

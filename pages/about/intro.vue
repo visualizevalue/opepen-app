@@ -1,5 +1,4 @@
 <template>
-
   <PageFrameSm class="prose">
     <h1>About Opepen</h1>
 
@@ -74,7 +73,6 @@
       in the realm of Ethereum-based art NFTs.
     </p>
   </PageFrameSm>
-
 </template>
 
 <script setup lang="ts">

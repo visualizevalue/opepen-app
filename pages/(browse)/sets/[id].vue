@@ -1,5 +1,5 @@
 <template>
-  <div class="set">
+  <PageFrameSm class="set">
     <SetPagination v-if="isSet" :set="set" />
 
     <SetPreviewImages :data="submission" class="items" />
@@ -21,7 +21,7 @@
     <!--     </Button> -->
     <!--   </template> -->
     <!-- </AdminMenuSetSubmissions> -->
-  </div>
+  </PageFrameSm>
 </template>
 
 <script setup>
