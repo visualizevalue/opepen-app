@@ -170,7 +170,11 @@ article.image {
 
       iframe,
       svg,
-      video,
+      video {
+        opacity: 1;
+        transform: scale(1);
+      }
+
       img {
         animation: img-appear var(--speed-slow) forwards;
       }
