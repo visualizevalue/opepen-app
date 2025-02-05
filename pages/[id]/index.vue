@@ -1,57 +1,85 @@
 <template>
+  <PageFrameSm class="holder">
+    <ProfileHeader :account="account" :links="mainSocials" />
 
-  <ProfileBio :account="account" />
+    <SocialLinks :links="otherSocials" class="socials" size="" />
 
-  <section v-if="account.richContentLinks?.length" class="known-for">
-    <SectionTitle>Known For</SectionTitle>
-    <RichContentLinks :links="account.richContentLinks" />
-  </section>
+    <ProfileBio :account="account" />
 
-  <section v-if="createdSets?.length">
-    <SectionTitle>Artist For Sets</SectionTitle>
-    <SetPreviews :submissions="createdSets" :minimal="false" />
-  </section>
+    <section v-if="account.richContentLinks?.length" class="known-for">
+      <SectionTitle>Known For</SectionTitle>
+      <RichContentLinks :links="account.richContentLinks" />
+    </section>
 
-  <section v-if="createdSubmissions?.length">
-    <SectionTitle>Submissions</SectionTitle>
-    <SetPreviews :submissions="createdSubmissions" :minimal="false" />
-  </section>
+    <section v-if="createdSets?.length">
+      <SectionTitle>Artist For Sets</SectionTitle>
+      <SetPreviews :submissions="createdSets" :minimal="false" />
+    </section>
 
-  <section v-if="account.opepen_count">
-    <SectionTitle>Owned Opepen <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template></SectionTitle>
+    <section v-if="createdSubmissions?.length">
+      <SectionTitle>Submissions</SectionTitle>
+      <SetPreviews :submissions="createdSubmissions" :minimal="false" />
+    </section>
 
-    <OpepenGrid
-      :url="tokensUrl"
-      :key="`${account.address}-opepen`"
-      :limit="80"
-    />
-  </section>
+    <section v-if="account.opepen_count">
+      <SectionTitle>Owned Opepen <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template></SectionTitle>
 
-  <section v-if="account.burned_opepen_count">
-    <SectionTitle>Burned Opepen <template v-if="account.burned_opepen_count > 12">({{ account.burned_opepen_count }})</template></SectionTitle>
+      <OpepenGrid
+        :url="`${url}/opepen`"
+        :key="`${account.address}-opepen`"
+        :limit="80"
+      />
+    </section>
 
-    <OpepenGrid
-      :url="burnedTokensUrl"
-      :key="`${account.address}-burned-opepen`"
-      :limit="80"
-      :subline="token => `Burned Opepen #${token.opepen.token_id}`"
-    />
-  </section>
+    <section v-if="account.burned_opepen_count">
+      <SectionTitle>Burned Opepen <template v-if="account.burned_opepen_count > 12">({{ account.burned_opepen_count }})</template></SectionTitle>
+
+      <OpepenGrid
+        :url="`${url}/burned`"
+        :key="`${account.address}-burned-opepen`"
+        :limit="80"
+        :subline="token => `Burned Opepen #${token.opepen.token_id}`"
+      />
+    </section>
+
+    <!-- <AdminMenuFloating> -->
+    <!--   <Button :to="`/settings/${account.address}`"> -->
+    <!--     <Icon type="settings" /> -->
+    <!--     <span>Settings</span> -->
+    <!--   </Button> -->
+    <!-- </AdminMenuFloating> -->
+  </PageFrameSm>
 
 </template>
 
 <script setup>
 // TODO: Implement `@` prefix for user routes and the needed redirects
 
-const props = defineProps({ account: Object })
-const account = computed(() => props.account)
-
 const config = useRuntimeConfig()
 const route = useRoute()
-const url = `${config.public.opepenApi}/accounts/${account.value.address}`
-const tokensUrl = `${url}/opepen`
-const burnedTokensUrl = `${url}/burned`
+const url = `${config.public.opepenApi}/accounts/${route.params.id}`
+const { data: account } = await useFetch(url)
 
+// =========================================
+// SOCIALS
+// =========================================
+const socials = computed(() => {
+  let socials = account.value?.socials || []
+
+  if (account.value?.twitterHandle) {
+    socials = [`https://x.com/${account.value.twitterHandle}`, ...socials]
+      .filter((s, index) => !(index > 0 && (s.indexOf('twitter.com') > -1 || s.indexOf('x.com') > -1)))
+  }
+
+  return socials
+})
+const splitSocials = computed(() => socials.value?.length > 3)
+const mainSocials = computed(() => splitSocials.value ? socials.value.slice(0, 2) : socials.value)
+const otherSocials = computed(() => splitSocials.value ? socials.value.slice(2) : [])
+
+// =========================================
+// SETS & SUBMISSIONS
+// =========================================
 const createdSets = computed(() => account.value.createdSets
   ? account.value.createdSets
     .filter(s => !! s.set_id)
@@ -67,6 +95,100 @@ const createdSubmissions = computed(() => account.value.createdSets
 </script>
 
 <style scoped>
+.holder {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  gap: var(--spacer-lg);
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-8);
+  padding: var(--size-4);
+
+  > * {
+    width: 100%;
+  }
+
+  @media (--md) {
+    flex-direction: row;
+
+    > * {
+      max-width: 50%;
+    }
+
+    &.col-2 {
+      > * {
+        width: 50%;
+      }
+    }
+  }
+
+  blockquote,
+  p {
+    white-space: pre-line;
+  }
+
+  blockquote {
+    position: relative;
+
+    &:before {
+      content: '"';
+      position: absolute;
+      left: -0.7em;
+    }
+
+    &:before,
+    span {
+      font-family: var(--font-family-display);
+      font-style: italic;
+      font-size: var(--font-xl);
+      line-height: var(--line-height-md);
+    }
+
+    cite {
+      display: block;
+      font-size: var(--font-base);
+      color: var(--gray-z-5);
+      margin-top: var(--size-3);
+
+      &:before {
+        content: "- ";
+      }
+    }
+  }
+}
+
+.known-for {
+  h1 {
+    margin-bottom: var(--size-2);
+  }
+}
+
+.opepens {
+  display: grid;
+  justify-content: center;
+  container-type: inline-size;
+  flex-wrap: wrap;
+  max-width: var(--content-width);
+  width: 100%;
+  margin: 5vh auto;
+  gap: var(--size-4);
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+}
+
+.created-sets {
+  display: grid;
+  gap: var(--size-4);
+
+  > * {
+    width: 100%;
+  }
+}
 section {
   display: grid;
   gap: var(--spacer);
