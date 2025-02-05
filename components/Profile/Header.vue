@@ -17,18 +17,14 @@
         </NuxtLink>
         <SocialLinks :links="links" class="socials" always-show>
           <template #last>
-            <ClientOnly>
-              <WithAccount v-slot="{ address }">
-                <Button
-                  v-if="address === account.address"
-                  to="/settings"
-                  class="small"
-                >
+            <IsMe :address="account.address">
+              <li>
+                <Button to="/settings" class="small">
                   <Icon type="settings" />
                   <span>Settings</span>
                 </Button>
-              </WithAccount>
-            </ClientOnly>
+              </li>
+            </IsMe>
           </template>
         </SocialLinks>
       </div>

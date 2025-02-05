@@ -1,9 +1,9 @@
 <template>
 
-  <Authenticated>
+  <IsAuthenticated>
     <h1>Settings</h1>
     <pre>{{ session }}</pre>
-  </Authenticated>
+  </IsAuthenticated>
 
 </template>
 
