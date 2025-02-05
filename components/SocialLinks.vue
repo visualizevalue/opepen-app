@@ -77,7 +77,7 @@ ul {
     }
   }
 
-  .button {
+  :deep(.button) {
     .icon {
       color: var(--gray-z-5);
       transition: color var(--speed);
