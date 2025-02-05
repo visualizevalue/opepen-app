@@ -15,9 +15,10 @@ defineProps({
 
 <style scoped>
   .page-frame-md {
-    max-width: var(--content-width);
+    display: grid;
+    gap: var(--spacer-lg);
     margin-left: auto;
     margin-right: auto;
-    padding: 0;
+    max-width: var(--content-width);
   }
 </style>

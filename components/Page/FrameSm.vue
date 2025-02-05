@@ -15,13 +15,17 @@ defineProps({
 
 <style scoped>
   .page-frame-sm {
-    max-width: var(--content-width-sm);
+    display: grid;
+    gap: var(--spacer-lg);
     margin-left: auto;
     margin-right: auto;
-    padding: 0;
 
-    @media (--lg) {
-      padding: 3cqw 0;
+    @media (--md) {
+      max-width: var(--content-width-sm);
+    }
+
+    &.prose {
+      gap: 0;
     }
   }
 </style>
