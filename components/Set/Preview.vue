@@ -107,9 +107,18 @@ const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
     gap: var(--spacer-xs);
     @mixin ui-font;
     margin-top: auto;
+    white-space: nowrap;
 
+    span,
     small {
       display: block;
+      width: 100%;
+      width: calc(100cqw - var(--spacer-sm)*2);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    small {
       color: var(--gray-z-6);
       font-size: var(--font-sm);
     }
