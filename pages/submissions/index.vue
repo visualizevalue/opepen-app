@@ -5,7 +5,4 @@
 </template>
 
 <script setup>
-definePageMeta({
-  layout: 'page-group-browse',
-})
 </script>

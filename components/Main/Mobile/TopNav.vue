@@ -1,18 +1,22 @@
 <template>
-  <nav class="top-nav" :class="{ hidden }">
-    <Avatar :account="account" @click="$emit('openMain')" />
+  <nav id="top-nav" :class="{ hidden }">
+    <WithAccount v-slot="{ address }">
+      <WithProfile v-if="address" :id="address" v-slot="{ account }">
+        <Avatar :account="account" @click="$emit('openMain')" />
+      </WithProfile>
+      <Avatar v-else @click="$emit('openMain')" />
+    </WithAccount>
 
     <Icon type="opepen-eye" class="main-logo" @click="scrollTop" />
 
     <MainOptionsDropdown />
   </nav>
 
-  <nav id="top-sub-nav" :class="{ hidden }"></nav>
+  <MainMobileTopSubNav :class="{ hidden }" />
 </template>
 
 <script setup lang="ts">
 import { useWindowScroll } from '@vueuse/core'
-import { useAccount } from '@wagmi/vue'
 
 defineEmits([ 'openMain' ])
 
@@ -23,9 +27,6 @@ const { x, y, isScrolling, arrivedState, directions } = useWindowScroll({
 const scrollTop = () => {
   y.value = 0
 }
-
-const { address } = useAccount()
-const account = await useProfile(address)
 
 const hidden = ref(false)
 
@@ -43,8 +44,8 @@ watchEffect(() => {
 })
 </script>
 
-<style scoped>
-.top-nav,
+<style>
+#top-nav,
 #top-sub-nav {
   position: fixed;
   height: var(--top-nav-height);
@@ -62,7 +63,7 @@ watchEffect(() => {
   }
 }
 
-.top-nav {
+#top-nav {
   top: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -82,7 +83,7 @@ watchEffect(() => {
     justify-self: center;
   }
 
-  :deep(.settings) {
+  .settings {
     justify-self: flex-end;
 
     .icon {

@@ -1,15 +1,24 @@
 <template>
-  <Teleport defer to="#top-sub-nav">
+  <nav id="top-sub-nav">
     <NuxtLink
       v-for="item in items"
       :to="item.to"
     >{{ item.text }}</NuxtLink>
-  </Teleport>
+  </nav>
 </template>
 
 <script setup>
-defineProps({
-  items: Array,
+const route = useRoute()
+
+const items = computed(() => {
+  const path = route.path
+
+  const match = Object.keys(SUB_NAV_ITEMS).find(k => {
+    const r = new RegExp(k, 'i')
+    return r.test(path)
+  })
+
+  return SUB_NAV_ITEMS[match]
 })
 </script>
 
