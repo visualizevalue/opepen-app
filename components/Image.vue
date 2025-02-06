@@ -18,8 +18,7 @@
           v-else
           ref="imageEl"
           alt="Opepen image"
-          :src="props.image ? hasImageEmbed ? embed : uri : '/schematics.svg'"
-          @error="loadOriginal"
+          :src="props.image ? uri : '/schematics.svg'"
           @load="imageLoaded"
         >
       </Suspense>
