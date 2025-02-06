@@ -5,6 +5,7 @@
       :image="account.pfp"
       :aspect-ratio="1"
       version="sm"
+      :auto-embed="false"
     />
     <DefaultOpepenAvatar v-else :address="account?.address" :size="size" />
   </div>
