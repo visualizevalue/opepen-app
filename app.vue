@@ -7,9 +7,6 @@
 </template>
 
 <script setup>
-const { fetchSets } = useSets()
-onMounted(() => fetchSets())
-
 useMetaData({
   title: 'Home',
   description: 'Consensus is temporary',
