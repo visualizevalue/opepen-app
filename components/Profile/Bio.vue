@@ -47,12 +47,12 @@ defineProps({
 
   blockquote {
     position: relative;
-    padding-left: 1em;
 
     &:before {
       content: '"';
       position: absolute;
-      left: 0;
+      left: -0.5em;
+      opacity: 0.5;
     }
 
     &:before,
@@ -71,6 +71,14 @@ defineProps({
 
       &:before {
         content: "- ";
+      }
+    }
+
+    @container (min-width: 40rem) {
+      padding-left: 1em;
+
+      &:before {
+        left: 0;
       }
     }
   }
