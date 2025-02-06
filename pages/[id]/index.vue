@@ -55,19 +55,21 @@
 <script setup>
 // TODO: Implement `@` prefix for user routes and the needed redirects
 
+const { account } = defineProps({
+  account: Object,
+})
+
 const config = useRuntimeConfig()
-const route = useRoute()
-const url = `${config.public.opepenApi}/accounts/${route.params.id}`
-const { data: account } = await useFetch(url)
+const url = `${config.public.opepenApi}/accounts/${account.address}`
 
 // =========================================
 // SOCIALS
 // =========================================
 const socials = computed(() => {
-  let socials = account.value?.socials || []
+  let socials = account?.socials || []
 
-  if (account.value?.twitterHandle) {
-    socials = [`https://x.com/${account.value.twitterHandle}`, ...socials]
+  if (account?.twitterHandle) {
+    socials = [`https://x.com/${account.twitterHandle}`, ...socials]
       .filter((s, index) => !(index > 0 && (s.indexOf('twitter.com') > -1 || s.indexOf('x.com') > -1)))
   }
 
@@ -80,14 +82,14 @@ const otherSocials = computed(() => splitSocials.value ? socials.value.slice(2) 
 // =========================================
 // SETS & SUBMISSIONS
 // =========================================
-const createdSets = computed(() => account.value.createdSets
-  ? account.value.createdSets
+const createdSets = computed(() => account.createdSets
+  ? account.createdSets
     .filter(s => !! s.set_id)
     .sort((s1, s2) => s1.set_id > s2.set_id ? 1 : -1)
   : []
 )
-const createdSubmissions = computed(() => account.value.createdSets
-  ? account.value.createdSets
+const createdSubmissions = computed(() => account.createdSets
+  ? account.createdSets
     .filter(s => ! s.set_id)
     .sort((s1, s2) => s1.created_at > s2.created_at ? -1 : 1)
   : []
