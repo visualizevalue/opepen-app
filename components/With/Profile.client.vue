@@ -16,3 +16,4 @@ const id = computed(() => props.id)
 
 const account = await useProfile(id)
 </script>
+
