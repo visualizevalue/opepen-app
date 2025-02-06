@@ -17,10 +17,6 @@
 
 <script setup>
 defineProps({
-  key: {
-    type: String,
-    default: 'opepen',
-  },
   title: {
     type: String,
     default: 'Opepen',
