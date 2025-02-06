@@ -77,7 +77,7 @@
   </nav>
 
   <ClientOnly>
-    <div class="sidebar-overlay" :style="overlayStyle" @click="close" @touchstart="close"></div>
+    <div class="sidebar-overlay" :style="overlayStyle" @click="close" @touchstart.passive="close"></div>
     <template #fallback>
       <div class="sidebar-overlay"></div>
     </template>
@@ -107,15 +107,23 @@ const {
 } = useGlobalSwipe()
 
 // Helpers
-const shouldOpen = (threshold = 50) => ! isOpen.value && lengthX.value < -1 * threshold && coordsStart.value.x < 80
-const shouldClose = (threshold = 0) => isOpen.value && lengthX.value >= threshold
+const shouldOpen = (threshold = 50) => ! isOpen.value
+                                    && lengthX.value < -1 * threshold
+                                    && coordsStart.value.x < 80
+const shouldClose = (threshold = 0) => isOpen.value
+                                    && lengthX.value >= threshold
 const closedPosition = () => -1 * width.value
+
+// We calculate custom positioning only after mount
+// to prevent unnecessary repaints
+const mounted = ref(false)
+onMounted(() => mounted.value = true)
 
 // State
 const translate = ref(0)
 const tweened = reactive({ number: translate.value })
 const style = computed(() => {
-  if (import.meta.server) return
+  if (! mounted.value) return
 
   return {
     transform: `translateX(${tweened.number}px)`
