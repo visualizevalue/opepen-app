@@ -1,5 +1,5 @@
 <template>
-  <Card v-if="data" ref="el" class="set-preview" :class="{ minimal }" :style="style">
+  <Card v-if="data" ref="el" class="borderless set-preview" :class="{ minimal }" :style="style">
     <div class="wrapper">
       <section v-if="isVisible" class="items">
         <Image :image="data?.edition1Image" version="sm" class="appear" :auto-embed="false" />
@@ -28,7 +28,9 @@
 import { useElementVisibility } from '@vueuse/core'
 
 const el = ref(null)
-const isVisible = useElementVisibility(el)
+const isVisible = useElementVisibility(el, {
+  rootMargin: '200px 0px',
+})
 
 const { data, minimal, style } = defineProps({
   data: Object,
@@ -49,10 +51,7 @@ const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
     position: relative;
     width: 100%;
     height: 0;
-    padding: 0;
     padding-bottom: calc(100% + var(--size-7) + var(--size-2));
-    background-color: var(--gray-z-1);
-    border: 0;
 
     &.minimal {
       padding-bottom: 100%;
@@ -64,6 +63,7 @@ const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
       top: 0;
       border: var(--border);
       border-radius: var(--border-radius);
+      background-color: var(--gray-z-1);
     }
 
     .wrapper > a {
