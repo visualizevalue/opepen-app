@@ -16,20 +16,18 @@
       <li>
         <Icon type="opepen-grid" />
         <NuxtLink v-if="submission" :to="`/sets/${pad(submission.set_id)}`">Set "{{ submission.name }}",</NuxtLink>
-        <span>Edition 1 of {{ opepen.data.edition }}</span>
+      </li>
+      <li>
+        <Icon type="divide-square" />
+        <span>
+          Edition one of {{ getEditionName(opepen.data.edition) }}
+        </span>
       </li>
       <li v-if="submission">
         <Icon type="calendar" stroke-width="2.25" />
         <span>Consensus met on {{ formatDate(submission.reveals_at) }}</span>
       </li>
     </DescriptionList>
-
-    <!-- <Card -->
-    <!--   v-for="item in attributes" -->
-    <!-- > -->
-    <!--   <h1>{{ item.trait_type }}</h1> -->
-    <!--   <p>{{ item.value }}</p> -->
-    <!-- </Card> -->
   </section>
 </template>
 
