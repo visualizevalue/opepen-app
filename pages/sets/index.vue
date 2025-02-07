@@ -17,7 +17,7 @@
       {{ completeSets.length }} / 200
     </Progress>
 
-    <SetPreviews :submissions="submissions" minimal />
+    <SetCardGrid :submissions="submissions" minimal />
   </PageFrameMd>
 </template>
 

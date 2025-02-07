@@ -29,7 +29,7 @@ import { useElementVisibility } from '@vueuse/core'
 
 const el = ref(null)
 const isVisible = useElementVisibility(el, {
-  rootMargin: '200px 0px',
+  rootMargin: '500px 0px',
 })
 
 const { data, minimal, style } = defineProps({

@@ -2,17 +2,17 @@
   <section class="items-meta">
 
     <div class="intro">
-      <h1>
+      <PageTitle>
         <small v-if="!data">Set {{ pad($route.params.id) }}</small>
         <small v-else-if="data.set_id">Set {{ pad(data.set_id) }}</small>
         <small v-else>Set Submission <template v-if="! data.approved_at">(Private Preview)</template></small>
         <span :title="name">{{ name }}</span>
-      </h1>
+      </PageTitle>
 
       <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
     </div>
 
-    <ul v-if="data" class="overview">
+    <DescriptionList>
       <li>
         <Icon type="user" stroke-width="2.25" />
         <span>
@@ -60,7 +60,7 @@
           target="_blank"
         >Set Signature</NuxtLink>
       </li>
-    </ul>
+    </DescriptionList>
   </section>
 </template>
 
@@ -93,74 +93,10 @@ const openDynamicPreview = ref(false)
       justify-content: center;
       gap: var(--size-2);
 
-      > h1 {
-        small, span {
-          @mixin ui-font;
-          display: block;
-        }
-
-        small {
-          color: var(--gray-z-6);
-          margin-bottom: var(--size-2);
-        }
-
-        span {
-          font-size: var(--font-xl);
-          line-height: 0.8;
-          margin-left: -0.05em;
-
-          @media (--md) {
-            font-size: var(--font-xxl);
-          }
-        }
-      }
-
       > p {
         @mixin ui-font;
         color: var(--gray-z-6);
         line-height: var(--line-height-md);
-      }
-    }
-
-    .overview {
-      display: grid;
-      gap: var(--size-2);
-
-      @container (min-width: 30rem) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      li,
-      li > a {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: var(--size-2);
-        transition: all var(--speed);
-        @mixin ui-font;
-        color: var(--gray-z-6);
-
-        > svg, i, .vue-feathers {
-          width: var(--size-4);
-          height: var(--size-4);
-          margin: 0;
-          color: var(--gray-z-5);
-          transition: all var(--speed);
-
-          &.published {
-            color: var(--success);
-          }
-        }
-      }
-
-      li a {
-        &:--highlight {
-          color: var(--color);
-
-          > svg, i, .vue-feathers {
-            color: var(--gray-z-6);
-          }
-        }
       }
     }
 

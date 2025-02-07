@@ -14,6 +14,8 @@
       :name="name"
       :tagline="tagline"
     />
+
+    <BlurFilter />
   </section>
 
 </template>
@@ -40,6 +42,8 @@ const open = (ed) => {
   grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: var(--size-2);
   grid-auto-flow: dense;
+
+  filter: url('#blur-and-scale');
 
   > :first-child {
     grid-column: span 2;

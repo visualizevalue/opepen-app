@@ -1,7 +1,7 @@
 <template>
 
     <div class="grid">
-      <SetPreview
+      <SetCard
         v-for="submission in submissions"
         :data="submission"
         :key="submission.uuid"
