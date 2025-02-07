@@ -66,8 +66,8 @@ article.content-link {
   }
 
   .logo {
-    width: var(--size-8);
-    height: var(--size-8);
+    width: var(--size-7);
+    height: var(--size-7);
     padding-bottom: 0 !important;
     border-radius: var(--border-radius-sm);
     align-self: flex-start;
