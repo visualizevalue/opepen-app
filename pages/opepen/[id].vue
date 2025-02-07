@@ -2,6 +2,8 @@
   <PageFrameSm>
     <OpepenHeader :opepen="opepen" />
     <OpepenMetadata :opepen="opepen" />
+
+    <OpepenEvents :opepen="opepen" />
   </PageFrameSm>
 </template>
 

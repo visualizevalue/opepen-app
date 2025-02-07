@@ -2,3 +2,8 @@
   color: var(--gray-z-6);
 }
 
+.visible-sm {
+  @media (--md) {
+    display: none;
+  }
+}
