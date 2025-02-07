@@ -34,6 +34,8 @@ const props = defineProps({
   image: [String, Object],
   aspectRatio: Number,
   version: String,
+  // TODO: Refactor this; We should not consider embed and image.
+  // Example problem: /opepen/11952
   embed: String,
   autoEmbed: {
     type: Boolean,
@@ -97,8 +99,7 @@ const imageLoaded = () => {
 
 <style>
 article.image {
-  overflow: hidden;
-
+  overflow: visible;
   position: relative;
   height: 0;
   padding-bottom: 100%;
@@ -113,8 +114,8 @@ article.image {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--gray-z-4);
-    background-color: var(--gray-z-2);
+    box-shadow: var(--shadow-border);
+    background-color: var(--gray-z-1);
     overflow: hidden;
     border-radius: var(--size-1);
   }
@@ -248,7 +249,7 @@ article.image {
     .meta {
       opacity: 1;
       bottom: 0;
-      background-color: var(--semi);
+      background: linear-gradient(to top, var(--semi) 0%, transparent 100%);
     }
   }
 }

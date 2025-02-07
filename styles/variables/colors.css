@@ -1,18 +1,19 @@
 :root {
   /* GRAYS */
-  --black:    #000000;
-  --gray-000: #101010;
-  --gray-100: #131313;
-  --gray-200: #1C1C1C;
-  --gray-300: #262626;
-  --gray-400: #2F2F2F;
-  --gray-500: #696969;
-  --gray-600: #ADADAD;
-  --gray-700: #D8D8D8;
-  --gray-800: #E6E6E6;
-  --gray-900: #F2F2F2;
-  --gray-999: #F8F8F8;
-  --white:    #FFFFFF;
+  --black:     #080808;
+  --gray-000:  #101010;
+  --gray-100:  #131313;
+  --gray-200:  #1C1C1C;
+  --gray-200a: #1C1C1C99;
+  --gray-300:  #262626;
+  --gray-400:  #2F2F2F;
+  --gray-500:  #696969;
+  --gray-600:  #ADADAD;
+  --gray-700:  #D8D8D8;
+  --gray-800:  #E6E6E6;
+  --gray-900:  #F2F2F2;
+  --gray-999:  #F8F8F8;
+  --white:     #FFFFFF;
 
   /* SEMI */
   --semi-light:        rgba(255, 255, 255, 0.85);
@@ -48,6 +49,7 @@
   --gray-z-0: var(--gray-000);
   --gray-z-1: var(--gray-100);
   --gray-z-2: var(--gray-200);
+  --gray-z-2a: var(--gray-200a);
   --gray-z-3: var(--gray-300);
   --gray-z-4: var(--gray-400);
   --gray-z-5: var(--gray-500);
