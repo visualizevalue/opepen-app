@@ -13,12 +13,12 @@
 
     <section v-if="createdSets?.length">
       <SectionTitle>Artist For Sets</SectionTitle>
-      <SetPreviews :submissions="createdSets" :minimal="false" />
+      <SetCardGrid :submissions="createdSets" :minimal="false" />
     </section>
 
     <section v-if="createdSubmissions?.length">
       <SectionTitle>Submissions</SectionTitle>
-      <SetPreviews :submissions="createdSubmissions" :minimal="false" />
+      <SetCardGrid :submissions="createdSubmissions" :minimal="false" />
     </section>
 
     <section v-if="account.opepen_count">

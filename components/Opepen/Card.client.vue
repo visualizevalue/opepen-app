@@ -1,5 +1,5 @@
 <template>
-<Card class="opepen-card">
+<Card class="opepen-card borderless">
   <div @click="onClick">
     <Image :image="token.image" version="sm" :auto-embed="false" />
 
@@ -46,9 +46,8 @@ const {
   position: relative;
   width: 100%;
   height: 0;
-  padding: 0;
   padding-bottom: 125%;
-  border: 0;
+  overflow: hidden;
 
   /* Inner */
   > div {
