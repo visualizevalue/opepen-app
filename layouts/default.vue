@@ -36,6 +36,22 @@ const mainNav = ref()
 .layout {
   min-height: 100dvh;
 
+  --main-padding-top: calc(var(--top-nav-total-height) + var(--spacer));
+  --main-padding-x: var(--spacer);
+  --main-padding-bottom: calc(var(--bottom-nav-height) + var(--spacer));
+  --main-content-height: calc(100dvh - var(--main-padding-top) - var(--main-padding-bottom));
+
+  &:has(#top-sub-nav:empty) {
+    --main-padding-top: calc(var(--top-nav-height) + var(--spacer));
+    --main-padding-bottom: calc(var(--bottom-nav-height) + var(--spacer));
+  }
+
+  @media (--lg) {
+    --main-padding-top: var(--spacer-lg);
+    --main-padding-x: var(--spacer-lg);
+    --main-padding-bottom: var(--spacer-lg);
+  }
+
   > .sidebar {
     position: fixed;
     overflow-y: auto;
@@ -58,17 +74,7 @@ const mainNav = ref()
     position: relative;
     width: 100vw;
     container-type: inline-size;
-    padding:
-      calc(var(--top-nav-total-height) + var(--spacer))
-      var(--spacer)
-      calc(var(--bottom-nav-height) + var(--spacer));
-  }
-
-  &:has(#top-sub-nav:empty) > main {
-    padding:
-      calc(var(--top-nav-height) + var(--spacer))
-      var(--spacer)
-      calc(var(--bottom-nav-height) + var(--spacer));
+    padding: var(--main-padding-top) var(--main-padding-x) var(--main-padding-bottom);
   }
 
   @media (--lg) {
@@ -77,7 +83,6 @@ const mainNav = ref()
 
     > main {
       width: calc(100vw - var(--nav-width));
-      padding: var(--spacer-lg) !important;
       left: var(--nav-width);
     }
   }
