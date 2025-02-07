@@ -1,6 +1,7 @@
 <template>
   <PageFrameSm>
-    <OpepenVisual :token="opepen" :version="version" />
+    <OpepenHeader :opepen="opepen" />
+    <OpepenMetadata :opepen="opepen" />
   </PageFrameSm>
 </template>
 
@@ -10,13 +11,6 @@ const config = useRuntimeConfig()
 
 const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/${route.params.id}`)
 
-const version = computed(() => {
-  if (opepen.value.image?.versions['lg']) return 'lg'
-
-  return null
-})
-
-// const metadata = computed(() => opepen.metadata)
 // const image = computed(() => imageURI(opepen.value.image))
 // const download = async () => {
 //   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.value.image?.type)
