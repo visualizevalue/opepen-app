@@ -6,8 +6,7 @@
   >
     <div class="event header">
       <span>Event</span>
-      <span>From</span>
-      <span>To</span>
+      <span>Account</span>
       <span>Price</span>
       <span>Date</span>
     </div>
@@ -21,20 +20,15 @@
         <span v-else-if="event.data?.price">Sale</span>
         <span v-else>Transfer</span>
       </span>
-      <NuxtLink :to="`/${id(event.fromAccount)}`">
-        <span class="visible-sm">From: </span>{{ event.fromAccount.display }}
-      </NuxtLink>
       <NuxtLink :to="`/${id(event.toAccount)}`">
-        <span class="visible-sm">To: </span>{{ event.toAccount.display }}
+        {{ event.toAccount.display }}
       </NuxtLink>
       <span>
         <template v-if="event.data?.price">
-          <span class="visible-sm">Price: </span>
-          <span>⟠ {{ event.data.price.amount.native }}</span>
+          ⟠ {{ event.data.price.amount.native }}
         </template>
       </span>
       <NuxtLink :to="`https://etherscan.io/tx/${event.transaction_hash}`">
-        <span class="visible-sm">Date: </span>
         <span>{{ formatDate(event.timestamp) }}</span>
         <Icon type="external-link" />
       </NuxtLink>
@@ -57,45 +51,45 @@ const url = `${config.public.opepenApi}/opepen/${opepen.token_id}/events`
 <style scoped>
 
 .event {
+  @mixin ui-font;
   background: var(--gray-z-1);
   display: grid;
   padding: var(--size-1) var(--size-2);
-
-  @mixin ui-font;
   font-size: var(--font-xs);
   border: var(--border);
   border-radius: var(--size-2);
   margin: var(--size-2) 0;
+  grid-template-columns: 20% 1fr 20% 25%;
+
+  &.header {
+    color: var(--gray-z-5);
+    border: 0;
+    background: transparent;
+    padding-bottom: 0;
+    display: grid;
+  }
+
 
   > * {
-    color: var(--gray-z-7);
+    color: var(--gray-z-6);
     display: flex;
     align-items: center;
     gap: var(--size-2);
+    white-space: nowrap;
 
     &:first-child {
-      margin-bottom: var(--spacer-xs);
-
-      @container (min-width: 30rem) {
-        margin-bottom: 0;
-      }
+      margin-bottom: 0;
     }
 
     &:last-child {
-      @media (--md) {
-        text-align: right;
-        justify-content: flex-end;
-      }
+      text-align: right;
+      justify-content: flex-end;
     }
 
     :deep(.vue-feather) {
       width: var(--size-3);
       opacity: 0.5;
     }
-  }
-
-  > *:not(:first-child) {
-    color: var(--gray-z-6);
   }
 
   > a {
@@ -110,29 +104,8 @@ const url = `${config.public.opepenApi}/opepen/${opepen.token_id}/events`
     }
   }
 
-  .visible-sm {
-    width: 2.4rem;
-  }
-
-  @container (min-width: 30rem) {
-    grid-template-columns: 15% 25% 25% 15% 20%;
-
-    .visible-sm {
-      display: none;
-    }
-  }
-
-  &.header {
-    @mixin ui-font;
-    color: var(--gray-z-5);
-    background: transparent;
-    padding-bottom: 0;
-    border: none;
-    display: none;
-
-    @container (min-width: 30rem) {
-      display: grid;
-    }
+  .icon {
+    flex-shrink: 0;
   }
 }
 </style>
