@@ -13,9 +13,9 @@
           Owned by <ApiAccount :account="opepen.ownerAccount" hide-avatar hide-address />
         </NuxtLink>
       </li>
-      <li>
+      <li v-if="submission">
         <Icon type="opepen-grid" />
-        <NuxtLink v-if="submission" :to="`/sets/${pad(submission.set_id)}`">Set "{{ submission.name }}"</NuxtLink>
+        <NuxtLink :to="`/sets/${pad(submission.set_id)}`">Set "{{ submission.name }}"</NuxtLink>
       </li>
       <li>
         <Icon type="divide-square" />
@@ -55,7 +55,7 @@ const { opepen } = defineProps({ opepen: Object, })
 const config = useRuntimeConfig()
 const contract = config.public.opepenContract
 
-const submission = computed(() => opepen.set.submission)
+const submission = computed(() => opepen.set?.submission)
 const attributes = computed(() => opepen.metadata?.attributes
   .filter(a => a.trait_type !== 'Number')
 )

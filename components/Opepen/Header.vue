@@ -7,6 +7,7 @@
         <PageTitle>
           <small v-if="opepen.set">
             <NuxtLink :to="`/sets/${pad(opepen.set_id)}`">Set {{pad(opepen.set_id)}}</NuxtLink>
+            <Separator />
             <span class="token-id">Opepen #{{ opepen.token_id }}</span>
           </small>
           <span>{{ editionName }}</span>
@@ -27,7 +28,7 @@ const version = computed(() => {
 })
 
 const editionName = computed(() => {
-  return opepen.set?.submission[`edition${opepen.data.edition}Name`]
+  return opepen.set?.submission[`edition${opepen.data.edition}Name`] || `Opepen #${opepen.token_id}`
 })
 </script>
 
@@ -64,12 +65,6 @@ const editionName = computed(() => {
 
           span {
             color: var(--gray-z-5);
-            display: flex;
-            gap: var(--spacer-sm);
-
-            &:before {
-              content: '·';
-            }
           }
         }
       }
