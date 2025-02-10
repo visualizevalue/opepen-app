@@ -9,8 +9,8 @@
     <SetPreviewImage :data="data" :edition="40" @click="open(40)" />
 
     <ImageModal
-      :image="image"
       v-model:open="zoomed"
+      :image="image"
       :name="name"
       :tagline="tagline"
     />
