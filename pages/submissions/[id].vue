@@ -29,11 +29,15 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const router = useRouter()
 
-if (isSetId(route.params.id)) await navigateTo(`/sets/${route.params.id}`)
-
 const { data: submission, refresh } = await useFetch(`${config.public.opepenApi}/set-submissions/${route.params.id}`)
 
-if (submission.value?.set_id) await navigateTo('/sets')
+if (submission.value?.set_id) {
+  console.log('poadded', pad(submission.value.set_id))
+  await navigateTo(
+    `/sets/${pad(submission.value.set_id)}`,
+    { redirectCode: 301 }
+  )
+}
 
 useMetaData({
   title: `${submission.value.name} | Set Submission | Opepen`,

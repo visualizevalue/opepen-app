@@ -28,13 +28,19 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const router = useRouter()
 
-if (! isSetId(route.params.id)) navigateTo(`/submissions/${route.params.id}`)
+definePageMeta({
+  middleware (to) {
+    if (! isSetId(to.params.id)) {
+      return navigateTo(`/submissions/${to.params.id}`, { redirectCode: 301 })
+    }
+  }
+})
 
 const { data: set, refresh } = await useFetch(`${config.public.opepenApi}/opepen/sets/${route.params.id}`)
-const submission = computed(() => set.value.submission)
+const submission = computed(() => set.value?.submission)
 
 useMetaData({
-  title: `Set ${pad(set.value.id, 3)}: ${submission.value?.name || 'Unrevealed'} | Opepen`,
+  title: `Set ${pad(set.value.id, 3)}: ${submission.value.name || 'Unrevealed'} | Opepen`,
   description: shortenedCleanText(submission.value.description),
   og: submission.value
     ? `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`
