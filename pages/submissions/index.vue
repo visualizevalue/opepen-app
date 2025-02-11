@@ -5,10 +5,9 @@
     <Alert type="muted" dismiss="explain-set-submissions">
       <h1>Set Submissions</h1>
       <p>
-        The Opepen collection consists of 16.000 unique tokens on the Ethereum blockchain
-        that are revealed in "sets" (batches of 80 tokens) as more and more artists
-        contribute to the protocol and curators vote on the inclusion of art
-        in the permanent collection.
+        Artists submit sets of 6 distinct editions for consideration of the community.
+        Anyone can create an Opepen set. If sets are highly rated by curators,
+        it will be staged for potential inclusion in the "Permanent Collection".
       </p>
       <Actions>
         <Button to="/about/intro" class="">Learn more</Button>
