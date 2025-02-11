@@ -25,27 +25,18 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig()
+definePageMeta({
+  middleware: 'enter-submission',
+})
+
 const route = useRoute()
-const router = useRouter()
 
-const { data: submission, refresh } = await useFetch(`${config.public.opepenApi}/set-submissions/${route.params.id}`)
-
-if (submission.value?.set_id) {
-  console.log('poadded', pad(submission.value.set_id))
-  await navigateTo(
-    `/sets/${pad(submission.value.set_id)}`,
-    { redirectCode: 301 }
-  )
-}
+const { data: submission } = await useApi(`/set-submissions/${route.params.id}`)
 
 useMetaData({
   title: `${submission.value.name} | Set Submission | Opepen`,
   description: shortenedCleanText(submission.value.description),
-  og: `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
-  meta: [
-    // TODO: Fix and reenable these frames
-  ],
+  og: `${useConfig('opepenApi')}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
 })
 </script>
 
