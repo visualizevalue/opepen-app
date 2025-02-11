@@ -54,30 +54,9 @@
 
 <script setup>
 // TODO: Implement `@` prefix for user routes and the needed redirects
-
-const { account } = defineProps({
-  account: Object,
-})
-
-const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/accounts/${account.address}`
-
-// =========================================
-// SOCIALS
-// =========================================
-const socials = computed(() => {
-  let socials = account?.socials || []
-
-  if (account?.twitterHandle) {
-    socials = [`https://x.com/${account.twitterHandle}`, ...socials]
-      .filter((s, index) => !(index > 0 && (s.indexOf('twitter.com') > -1 || s.indexOf('x.com') > -1)))
-  }
-
-  return socials
-})
-const splitSocials = computed(() => socials.value?.length > 3)
-const mainSocials = computed(() => splitSocials.value ? socials.value.slice(0, 2) : socials.value)
-const otherSocials = computed(() => splitSocials.value ? socials.value.slice(2) : [])
+const { account } = defineProps({ account: Object })
+const url = `${useConfig('opepenApi')}/accounts/${account.address}`
+const { mainSocials, otherSocials } = useSocials(account)
 
 // =========================================
 // SETS & SUBMISSIONS
