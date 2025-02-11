@@ -3,5 +3,10 @@ body {
   width: 100vw;
   overflow-x: hidden;
   overscroll-behavior: none;
+
+  @media (--lg) {
+    overscroll-behavior: auto;
+    overscroll-behavior-y: none;
+  }
 }
 
