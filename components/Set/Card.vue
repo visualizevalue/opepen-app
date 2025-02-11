@@ -42,6 +42,7 @@ const { data, minimal, style } = defineProps({
 })
 
 const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
+const url = computed(() => data?.set_id ? `/sets/${id.value}` : `/submissions/${id.value}`)
 </script>
 
 <style scoped>

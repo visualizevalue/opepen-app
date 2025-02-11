@@ -139,12 +139,6 @@ if (import.meta.server || props.syncInitial) {
 div,
 section {
   position: relative;
-
-  /* Fix scrolling parent watchers (e.g. for virtual scrollers) */
-  &:not(.no-scroller) {
-    overflow-x: hidden;
-    max-width: 100%;
-  }
 }
 
 aside {

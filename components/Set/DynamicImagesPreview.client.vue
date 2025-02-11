@@ -1,5 +1,5 @@
 <template>
-  <section v-if="data?.dynamicSetImages" class="set-opepen">
+  <section v-if="data?.dynamicSetImages" class="dynamic-preview">
     <slot name="header">
       <SectionTitle>Dynamic Images Preview</SectionTitle>
     </slot>
@@ -70,7 +70,13 @@ const openModal = (img) => {
 </script>
 
 <style scoped>
+  .dynamic-preview {
+    display: grid;
+    gap: var(--spacer);
+  }
+
   .list {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
     container-type: inline-size;

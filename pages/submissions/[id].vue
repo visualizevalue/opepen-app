@@ -1,8 +1,6 @@
 <template>
-  <PageFrameSm class="set">
-    <SetPagination :set="set" />
-
-    <SetPreviewImages :data="submission" />
+  <PageFrameSm class="submission">
+    <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
@@ -10,7 +8,10 @@
       <RichContentLinks :links="submission.richContentLinks" />
     </section>
 
-    <SetOpepen :data="submission" />
+    <SetDynamicImagesPreview
+      v-if="submission.edition_type === 'DYNAMIC'"
+      :data="submission"
+    />
 
     <!-- <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh"> -->
     <!--   <template #before> -->
@@ -28,22 +29,24 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const router = useRouter()
 
-if (! isSetId(route.params.id)) navigateTo(`/submissions/${route.params.id}`)
+if (isSetId(route.params.id)) await navigateTo(`/sets/${route.params.id}`)
 
-const { data: set, refresh } = await useFetch(`${config.public.opepenApi}/opepen/sets/${route.params.id}`)
-const submission = computed(() => set.value.submission)
+const { data: submission, refresh } = await useFetch(`${config.public.opepenApi}/set-submissions/${route.params.id}`)
+
+if (submission.value?.set_id) await navigateTo('/sets')
 
 useMetaData({
-  title: `Set ${pad(set.value.id, 3)}: ${submission.value?.name || 'Unrevealed'} | Opepen`,
+  title: `${submission.value.name} | Set Submission | Opepen`,
   description: shortenedCleanText(submission.value.description),
-  og: submission.value
-    ? `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`
-    : ``,
+  og: `${config.public.opepenApi}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
+  meta: [
+    // TODO: Fix and reenable these frames
+  ],
 })
 </script>
 
 <style scoped>
-  .set {
+  .submission {
     display: flex;
     flex-direction: column;
     gap: var(--spacer);

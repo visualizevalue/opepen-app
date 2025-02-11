@@ -42,6 +42,7 @@ const open = (ed) => {
   grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: var(--size-2);
   grid-auto-flow: dense;
+  aspect-ratio: 1;
 
   filter: url('#blur-and-scale');
 

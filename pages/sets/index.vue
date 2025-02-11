@@ -30,5 +30,14 @@ if (! loaded.value) {
 
 const allSetIds = [...Array(200)].map((_ , i) => i + 1)
 const submissions = computed(() => allSetIds.map(i => setsById.value[i]?.submission || {}))
+
+useMetaData({
+  title: `Permanent Collection | Opepen`,
+  description: `The Opepen collection consists of 16.000 unique tokens on the Ethereum blockchain
+                that are revealed in "sets" (batches of 80 tokens) as more and more artists
+                contribute to the protocol and curators vote on the inclusion of art
+                in the permanent collection.`,
+  og: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets.png',
+})
 </script>
 
