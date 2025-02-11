@@ -26,10 +26,9 @@
     <ImageModal
       :key="image?.uuid"
       :image="image"
-      :open="modalOpen"
       :name="modalTitle"
       :tagline="modalTagline"
-      @close="modalOpen = false"
+      v-model:open="modalOpen"
     >
     </ImageModal>
   </section>

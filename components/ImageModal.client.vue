@@ -62,13 +62,18 @@ const download = async () => {
   }
 
   > footer {
-    padding: var(--size-4);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--size-4);
+    padding: var(--spacer);
+    gap: var(--spacer);
 
-    h1 {
+    .text {
+      display: grid;
+      gap: var(--spacer-xs);
+    }
+
+    h1, p {
       @mixin ui-font;
     }
 
