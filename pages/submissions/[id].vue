@@ -8,6 +8,8 @@
       <RichContentLinks :links="submission.richContentLinks" />
     </section>
 
+    <OptIn :submission="submission" />
+
     <SetDynamicImagesPreview
       v-if="submission.edition_type === 'DYNAMIC'"
       :data="submission"

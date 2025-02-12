@@ -1,7 +1,5 @@
-export const useStagedSet = async () => {
-  const { data, refresh: reloadStagedSubmission } = await useApi('/set-submissions/curated')
-
-  const submission = computed(() => data.value?.submission)
+export const useOptIn = async () => {
+  const { submission, reloadStagedSubmission } = await useStagedSet()
 
   const now = useNow()
   const optInUntil = computed(() => DateTime

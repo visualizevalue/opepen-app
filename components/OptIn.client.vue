@@ -1,22 +1,25 @@
 <template>
-  <section v-if="optInAvailable">
-    <MainSideNavLink
-      :to="`/submissions/${submission.uuid}`"
-      :title="title"
-      :subline="subline"
-      class="success"
-    />
+  <section v-if="isStagedSet && optInAvailable">
+    <pre>{{ optInCountDown }}</pre>
   </section>
 </template>
 
 <script setup>
 import { useBlockNumber } from '@wagmi/vue'
 
+const props = defineProps({
+  submission: Object,
+})
+
 const {
-  submission,
+  submission: stagedSubmission,
   optInAvailable,
   optInCountDown,
 } = await useOptIn()
+
+const isStagedSet = computed(() =>
+  stagedSubmission.value && props.submission.uuid === stagedSubmission.value.uuid
+)
 
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
 const {
@@ -32,12 +35,12 @@ const {
 const title = computed(() => {
   return revealing.value
     ? `Set Reveal Pending ${secondsUntilReveal.value > 0 ? `(${revealCountDown.str.value})` : ``}`
-    : `Live Opt-In (${optInCountDown.str.value})`
+    : `Live Opt-In (${optInCountDown.str.value}`
 })
 const subline = computed(() => {
   return blockConfirmations.value
     ? blockConfirmationText.value
-    : submission.value.name
+    : stagedSubmission.value.name
 })
 </script>
 

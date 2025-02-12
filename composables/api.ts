@@ -1,4 +1,4 @@
-export const useApi = (endpoint: string, options = {}) => {
-  return useFetch(`${useConfig('opepenApi')}${endpoint}`, options)
+export const useApi = async (endpoint: string, options = {}) => {
+  return await useFetch(`${useConfig('opepenApi')}${endpoint}`, options)
 }
 
