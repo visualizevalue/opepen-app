@@ -43,3 +43,29 @@ export const useNow = () => {
 
   return now
 }
+
+export const useCountDown = (s: Ref<Number|BigInt>) => {
+  const duration = computed(() => Math.abs(parseInt(`${s.value}`)))
+
+  const seconds = computed(() => duration.value % 60)
+  const minutes = computed(() => Math.floor(duration.value / 60) % 60)
+  const hours   = computed(() => Math.floor(duration.value / 60 / 60) % 24)
+  const days    = computed(() => Math.floor(duration.value / 60 / 60 / 24))
+
+  const str = computed(() => [
+    days.value    ? `${days.value}d`   : null,
+    hours.value   ? `${hours.value}h`   : null,
+    minutes.value ? `${minutes.value}m` : null,
+    (duration.value < 60 * 10) && seconds.value
+      ? `${seconds.value}s`
+      : null,
+  ].filter(s => !!s).join(' '))
+
+  return {
+    seconds,
+    minutes,
+    hours,
+    str,
+  }
+}
+
