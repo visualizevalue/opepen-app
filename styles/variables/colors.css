@@ -26,8 +26,11 @@
 
   /* COLORS */
   --red:    #EF4444;
-  --green:  #94E337;
   --yellow: #F2A840;
+
+  --green:       #94E337;
+  --green-dark:  #377528;
+  --green-light: #80DB6A;
 
   --blue-light:  #BFDBFE;
   --blue-dark:   #172554;

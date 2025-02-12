@@ -51,6 +51,23 @@ a {
     background: var(--gray-z-2);
   }
 
+  &.success {
+    background: var(--green);
+    color: var(--gray-z-0);
+
+    &.active {
+      background: var(--green-light);
+    }
+
+    span {
+      color: var(--gray-z-2);
+    }
+
+    small {
+      color: var(--gray-z-0);
+    }
+  }
+
   .icon {
     color: var(--gray-z-3);
     width: var(--size-4);
