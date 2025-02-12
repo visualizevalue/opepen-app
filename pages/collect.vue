@@ -5,9 +5,11 @@
 <script setup>
 definePageMeta({
   async middleware () {
-    const { data } = await useApi(`/set-submissions/curated`)
+    const { submission, optInAvailable } = await useStagedSet()
 
-    return navigateTo(`/submissions/${data.value.submission.uuid}`)
+    if (! optInAvailable.value) return navigateTo(`/submissions`)
+
+    return navigateTo(`/submissions/${submission.value.uuid}`)
   }
 })
 </script>
