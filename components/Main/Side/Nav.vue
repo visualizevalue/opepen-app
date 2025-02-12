@@ -5,7 +5,7 @@
       <MainSideProfile :address="address" @sendClose="close" />
     </WithAccount>
 
-    <MainSideOptIn />
+    <MainSideOptIn @click="close" />
 
     <section>
       <h1>About</h1>
