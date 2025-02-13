@@ -3,12 +3,12 @@
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
+    <OptIn :submission="submission" />
+
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
       <RichContentLinks :links="submission.richContentLinks" />
     </section>
-
-    <OptIn :submission="submission" />
 
     <SetDynamicImagesPreview
       v-if="submission.edition_type === 'DYNAMIC'"
