@@ -3,7 +3,7 @@
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
-    <OptIn :submission="submission" />
+    <SetOptInCard :submission="submission" />
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>

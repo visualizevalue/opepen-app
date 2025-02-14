@@ -9,64 +9,50 @@
         </h1>
       </header>
       <section>
-        <div v-if="! isConnected" class="connect">
-          <p>Please connect your wallet in order to select the Opepen tokens you'd like to submit.</p>
-          <ChooseWallet />
+        <Loading v-if="opepenLoading" />
+
+        <div v-else-if="! opepen.length" class="empty">
+          <p>No Opepen to opt-in found.</p>
         </div>
-        <div v-else>
-          <Loading v-if="opepenLoading" />
 
-          <div v-else-if="! opepen.length" class="empty">
-            <p>No Opepen to opt-in found.</p>
-          </div>
+        <div v-else class="opepens">
+          <div v-for="(opepens, g) in grouped" class="group">
+            <div v-if="opepens.length">
+              <header>
+                <h1>Editions of {{ g }}:</h1>
 
-          <div v-else class="opepens">
-            <div v-for="(opepens, g) in grouped" class="group">
-              <div v-if="opepens.length">
-                <header>
-                  <h1>Editions of {{ g }}:</h1>
+                <Button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</Button>
+                <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
+              </header>
 
-                  <Button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</Button>
-                  <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
-                </header>
-
-                <label v-if="selectedInGroup(g).length > 1 && g !== '1'" class="setting">
-                  <span>Max Reveal:</span>
-                  <input
-                    type="number"
-                    min="1"
-                    :max="maxInGroup(g)"
-                    :value="maxRevealSetting[g] || maxInGroup(g)"
-                    @input="$event => {
-                      maxRevealSetting[g] = parseInt($event.target.value);
-                      validateMaxReveal(g)
-                    }"
-                    :placeholder="maxInGroup(g)"
-                    :style="{
-                      minWidth: hasCompleteGroupSelection(g) ? '7rem' : '6rem'
-                    }"
-                  >
-                </label>
-              </div>
-
-              <label
-                v-for="o in opepens"
-              >
-                <input type="checkbox" :value="o.token_id" v-model="selected">
-                <span>
-                  #{{ o.token_id }}
-                  <span class="submission">
-                    <template v-if="o.submission?.name !== data.name">{{ o.submission?.name }}</template>
-                    <template v-if="selected.includes(o.token_id) && (o.submission?.name !== data.name)"> → {{ data.name }}</template>
-                  </span>
-                </span>
-                <abbr :title="`Edition of ${o.data.edition}`" class="edition">({{ o.data.edition }} Ed.)</abbr>
+              <label v-if="selectedInGroup(g).length > 1 && g !== '1'" class="setting">
+                <span>Max Reveal:</span>
+                <input
+                  type="number"
+                  min="1"
+                  :max="maxInGroup(g)"
+                  :value="maxRevealSetting[g] || maxInGroup(g)"
+                  @input="$event => {
+                    maxRevealSetting[g] = parseInt($event.target.value);
+                    validateMaxReveal(g)
+                  }"
+                  :placeholder="maxInGroup(g)"
+                  :style="{
+                    minWidth: hasCompleteGroupSelection(g) ? '7rem' : '6rem'
+                  }"
+                >
               </label>
             </div>
+
+            <label v-for="o in opepens">
+              <input type="checkbox" :value="o.token_id" v-model="selected">
+              <span>#{{ o.token_id }}</span>
+              <abbr :title="`Edition of ${o.data.edition}`" class="edition">({{ o.data.edition }} Ed.)</abbr>
+            </label>
           </div>
         </div>
       </section>
-      <footer v-if="isConnected">
+      <footer>
         <div v-if="selected.length" class="left">
           <span>Submitting {{ selected.length }} Opepen</span>
           <template v-for="(_, g) in grouped">
@@ -112,13 +98,10 @@
 
 <script setup>
 import { signMessage } from '@wagmi/core'
-import { useAccount } from '~/helpers/use-wagmi'
-import { useDelegation } from '~/helpers/delegate-cash'
-import { getEditionName } from '~/helpers/editions'
-import { useOpepen } from '~/helpers/use-opepen'
-import { id, ripemd160 } from 'ethers'
 
+const config = useRuntimeConfig()
 const props = defineProps({
+  address: String,
   open: Boolean,
   data: Object,
   clickOutside: Boolean,
@@ -136,19 +119,15 @@ const props = defineProps({
     })
   },
 })
-
 const emit = defineEmits(['close', 'update'])
-
-const config = useRuntimeConfig()
-const { address, isConnected } = useAccount()
 
 // FIXME: filter to delegated tokenIDs for token specific delegations
 const { addresses: delegatedAddresses } = await useDelegation(address)
 
 const {
   opepen, opepenByEdition: grouped, opepenLoading, fetchOpepen
-} = await useOpepen([address.value, ...delegatedAddresses.value])
-watch([isConnected, delegatedAddresses], () => fetchOpepen([address.value, ...delegatedAddresses.value]))
+} = await useOpepen([props.address, ...delegatedAddresses.value])
+watch(delegatedAddresses, () => fetchOpepen([props.address, ...delegatedAddresses.value]))
 
 const validSubscribed = computed(() => [...props.subscribed]
   // All opt ins that are still owned by the owner
@@ -236,7 +215,7 @@ ${Object.keys(maxRevealValues.value)
   .join('\n')
 }
 
-OPEPEN PROOF: ${ ripemd160(id(selected.value.map(id => `#${id}`).join(', '))) }`
+OPEPEN PROOF: ${ proof(selected.value.map(id => `#${id}`).join(', '))) }`
 })
 
 const signing = ref(false)
@@ -258,7 +237,7 @@ const sign = async () => {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
-        address: address.value,
+        address: props.address,
         opepen: selected.value,
         max_reveals: maxRevealValues.value,
         message: message.value,
@@ -272,7 +251,7 @@ const sign = async () => {
     // ...
   }
 
-  await fetchOpepen([address.value, ...delegatedAddresses.value])
+  await fetchOpepen([props.address, ...delegatedAddresses.value])
 
   signing.value = false
   emit('close')
@@ -310,22 +289,6 @@ const sign = async () => {
     text-align: center;
     text-transform: uppercase;
     font-weight: var(--font-weight-bold);
-  }
-}
-
-.connect {
-  padding: var(--size-9) var(--size-4);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  p {
-    margin: var(--size-7) 0;
-    text-transform: uppercase;
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-sm);
   }
 }
 
@@ -411,7 +374,6 @@ section {
         height: var(--size-4);
       }
 
-      .submission,
       .edition {
         color: var(--gray-z-6);
         font-size: var(--font-sm);

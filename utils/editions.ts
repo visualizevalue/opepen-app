@@ -6,6 +6,7 @@ export const EDITION_NAMES = {
   20: 'Twenty',
   40: 'Forty',
 }
+
 export const EDITION_TAGLINES = {
   '1': 'One of One',
   '4': 'Four Editions',
@@ -15,6 +16,7 @@ export const EDITION_TAGLINES = {
   '40': 'Forty Editions',
 }
 
-
 export const getEditionName = (key: keyof typeof EDITION_NAMES) => EDITION_NAMES[key]
+
 export const getEditionNameLower = (key: keyof typeof EDITION_NAMES) => EDITION_NAMES[key].toLowerCase()
+

@@ -23,8 +23,8 @@ export const useDelegation = async (address: Ref<`0x${string}`>) => {
     const incoming = await v2.getIncomingDelegations(address.value)
     const outgoing = await v2.getOutgoingDelegations(address.value)
 
-    const applicableV1 = incoming.filter(filterApplicable)//.map(d => d.from)
-    const applicableV2 = outgoing.filter(filterApplicable)//.map(d => d.to)
+    const applicableV1 = incoming.filter(filterApplicable)
+    const applicableV2 = outgoing.filter(filterApplicable)
 
     addresses.value = Array.from(new Set(
       applicableV1.map(d => d.from).concat(applicableV2.map(d => d.to))
