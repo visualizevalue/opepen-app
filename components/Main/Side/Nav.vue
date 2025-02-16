@@ -102,7 +102,6 @@ const open = () => isOpen.value = true
 
 const {
   isSwiping,
-  direction,
   lengthX,
   coordsStart,
   isHorizontal,
