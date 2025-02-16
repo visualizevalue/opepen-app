@@ -215,7 +215,7 @@ ${Object.keys(maxRevealValues.value)
   .join('\n')
 }
 
-OPEPEN PROOF: ${ proof(selected.value.map(id => `#${id}`).join(', '))) }`
+OPEPEN PROOF: ${ proof(selected.value.map(id => `#${id}`).join(', ')) }`
 })
 
 const signing = ref(false)
