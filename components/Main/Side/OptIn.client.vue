@@ -1,5 +1,5 @@
 <template>
-  <section v-if="optInAvailable">
+  <section v-if="submission && optInAvailable">
     <MainSideNavLink
       :to="`/submissions/${submission.uuid}`"
       :title="title"
@@ -16,7 +16,7 @@ const {
   submission,
   optInAvailable,
   optInCountDown,
-} = await useOptIn()
+} = await useStagedOptIn()
 
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
 const {
@@ -32,7 +32,7 @@ const {
 const title = computed(() => {
   return revealing.value
     ? `Set Reveal Pending ${secondsUntilReveal.value > 0 ? `(${revealCountDown.str.value})` : ``}`
-    : `Live Opt-In (${optInCountDown.str.value})`
+    : `Live Consensus (${optInCountDown.str.value})`
 })
 const subline = computed(() => {
   return blockConfirmations.value

@@ -5,7 +5,7 @@
 <script setup>
 definePageMeta({
   async middleware () {
-    const { submission, optInAvailable } = await useOptIn()
+    const { submission, optInAvailable } = await useStagedOptIn()
 
     if (! optInAvailable.value) return navigateTo(`/submissions`)
 

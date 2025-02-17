@@ -34,6 +34,7 @@ definePageMeta({
 const route = useRoute()
 
 const { data: submission } = await useApi(`/set-submissions/${route.params.id}`)
+await useStagedOptIn()
 
 useMetaData({
   title: `${submission.value.name} | Set Submission | Opepen`,

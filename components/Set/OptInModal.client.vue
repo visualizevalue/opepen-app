@@ -51,11 +51,14 @@
             </label>
           </div>
 
-          <label v-for="o in opepens">
-            <input type="checkbox" :value="o.token_id" v-model="selected">
+          <FormCheckbox
+            v-for="o in opepens"
+            :value="o.token_id"
+            v-model="selected"
+          >
             <span>#{{ o.token_id }}</span>
             <abbr :title="`Edition of ${o.data.edition}`" class="edition">({{ o.data.edition }} Ed.)</abbr>
-          </label>
+          </FormCheckbox>
         </div>
       </div>
     </section>
@@ -72,7 +75,7 @@
       </div>
       <Actions>
         <Button @click="open = false">
-          <span v-if="hasChange || ! selected.length">Cancel</span>
+          <span v-if="hasChange || (!selected.length && opepen.length)">Cancel</span>
           <span v-else>Ok</span>
         </Button>
         <Button v-if="hasChange" :disabled="signing || !hasChange" @click="sign">
@@ -86,20 +89,7 @@
     </footer>
   </Modal>
 
-  <Modal v-model:open="signed">
-    <h1>Success</h1>
-    <template v-if="!selected.length">
-      <p>You removed all your Opepen submissions from "{{ submission.name }}"!</p>
-    </template>
-    <template v-else>
-      <p>You submitted {{ selected.length }} Opepen to be included in "{{ submission.name }}"!</p>
-      <p>If your Opepen {{ selected.length > 1 ? 'are' : 'is' }} selected as part of this set, your metadata will update after the opt-in window closes.</p>
-    </template>
-
-    <Actions>
-      <Button @click="() => signed = false">Ok</Button>
-    </Actions>
-  </Modal>
+  <SetOptInSuccessModal v-model="signed" :selected="selected" :submission="submission" />
 </template>
 
 <script setup>
@@ -267,7 +257,6 @@ const sign = async () => {
   --dialog-width: 40rem;
 
   padding: 0;
-  position: relative;
 
   &.signing {
     > section {
@@ -325,6 +314,11 @@ const sign = async () => {
 
 .opepens {
   > .group {
+    &:not(:first-child) {
+      border-top: var(--border);
+      margin-top: var(--spacer);
+    }
+
     > div {
       @mixin ui-font;
       padding: var(--size-2) var(--size-4);
@@ -334,6 +328,8 @@ const sign = async () => {
       background-color: var(--semi);
       border-bottom: var(--border);
       backdrop-filter: var(--blur);
+      margin: 0 0 var(--spacer) 0;
+      color: var(--gray-z-6);
 
       > * {
         display: flex;
@@ -379,24 +375,13 @@ const sign = async () => {
     }
 
     > label {
-      display: grid;
-      grid-template-columns: var(--size-5) 40% 1fr;
-      align-items: center;
-      gap: var(--spacer);
-      @mixin ui-font;
-      padding: var(--spacer-sm) var(--spacer);
       white-space: nowrap;
-      color: var(--gray-z-6);
-
-      input {
-        width: var(--size-4);
-        height: var(--size-4);
-      }
 
       .edition {
         color: var(--muted);
         font-size: var(--font-xs);
         text-align: right;
+        margin-left: auto;
       }
 
       &:--highlight {
@@ -415,18 +400,16 @@ footer {
   background-color: var(--semi);
   backdrop-filter: var(--blur);
   border-top: var(--border);
+  margin-top: var(--spacer);
 
   display: grid;
   gap: var(--spacer);
   align-items: center;
 
   @container (min-width: 30rem) {
-    grid-template-columns: auto 1fr;
-  }
-
-  .actions {
-    justify-content: flex-end;
-    flex-wrap: nowrap;
+    &:has(:nth-child(2)) {
+      grid-template-columns: auto 1fr;
+    }
   }
 
   .summary {
@@ -452,18 +435,11 @@ footer {
       color: var(--gray-z-9);
     }
   }
-}
 
-.success-modal {
-  p {
-    font-weight: var(--font-weight-bold);
-    margin: var(--size-2) 0;
-  }
-
-  .action {
-    margin-top: var(--size-5);
-    display: flex;
+  .actions {
+    width: 100%;
     justify-content: flex-end;
+    flex-wrap: nowrap;
   }
 }
 </style>

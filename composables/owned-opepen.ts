@@ -1,3 +1,15 @@
+export const useEditionGroups = (tokens: Ref<{ data: { edition: number } }[]>) => {
+  const grouped = computed(() => tokens.value
+    .reduce((groups, o) => {
+      groups[o.data.edition].push(o)
+
+      return groups
+    }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
+  )
+
+  return grouped
+}
+
 export const useOpepen = async (addresses: string[]) => {
   const config = useRuntimeConfig()
   const opepen = ref([])
@@ -25,15 +37,7 @@ export const useOpepen = async (addresses: string[]) => {
   onMounted(() => fetchOpepen(addresses))
 
   const unrevealedOpepen = computed(() => (opepen.value || []).filter(o => ! o.revealed_at))
-
-  const opepenByEdition = computed(() => {
-    return unrevealedOpepen.value
-      .reduce((groups, o) => {
-        groups[o.data.edition].push(o)
-
-        return groups
-      }, { 1: [], 4: [], 5: [], 10: [], 20: [], 40: [] })
-  })
+  const opepenByEdition = useEditionGroups(unrevealedOpepen)
 
   return {
     opepenLoading,
@@ -43,3 +47,4 @@ export const useOpepen = async (addresses: string[]) => {
     fetchOpepen,
   }
 }
+

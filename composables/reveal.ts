@@ -7,7 +7,7 @@ export const useReveal = async (currentBlock: Ref<BigInt>) => {
     optInUntil,
     secondsUntilOptInClose,
     optInCountDown,
-  } = await useOptIn()
+  } = await useStagedOptIn()
 
   const revealsAt = computed(() => DateTime.fromISO(submission.value?.reveals_at))
   const secondsUntilReveal = computed(() => revealsAt.value?.toUnixInteger() - now.value)
