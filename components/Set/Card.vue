@@ -2,12 +2,12 @@
   <Card v-if="data" ref="el" class="borderless set-preview" :class="{ minimal }" :style="style">
     <div class="wrapper">
       <section v-if="isVisible" class="items">
-        <Image :image="data?.edition1Image" version="sm" class="appear" :auto-embed="false" />
-        <Image :image="data?.edition4Image" version="sm" class="appear" :auto-embed="false" />
-        <Image :image="data?.edition5Image" version="sm" class="appear" :auto-embed="false" />
-        <Image :image="data?.edition10Image" version="sm" class="appear" :auto-embed="false" />
-        <Image :image="data?.edition20Image" version="sm" class="appear" :auto-embed="false" />
-        <Image :image="data?.edition40Image" version="sm" class="appear" :auto-embed="false" />
+        <Image :image="data?.edition1Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
+        <Image :image="data?.edition4Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
+        <Image :image="data?.edition5Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
+        <Image :image="data?.edition10Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
+        <Image :image="data?.edition20Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
+        <Image :image="data?.edition40Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
       </section>
 
       <h1>
