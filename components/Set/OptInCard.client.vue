@@ -9,6 +9,11 @@
         </Actions>
       </template>
 
+      <template v-else-if="!optInAvailable">
+        <SectionTitle>Opt-Ins Closed</SectionTitle>
+        <p>Set Submission didn't meet consensus to be included in the permanent collection. It was staged for community consensus on {{ formatDate(submission.starred_at) }}.</p>
+      </template>
+
       <template v-else class="connect">
         <template v-if="subscription?.opepen_ids?.length">
           <SectionTitle>Your Opt-Ins <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
@@ -38,7 +43,7 @@
         <Actions>
           <Button @click="optInOpen = true">
             <Icon type="edit" />
-            <span v-if="subscription?.opepen_ids?.length">Change Opt-In</span>
+            <span v-if="subscription?.opepen_ids?.length">Change Opt-Ins</span>
             <span v-else>Opt-In</span>
           </Button>
         </Actions>
@@ -63,6 +68,7 @@ import { useAccount } from '@wagmi/vue'
 const props = defineProps({
   submission: Object,
 })
+const emit = defineEmits(['update'])
 
 const { address, isConnected } = useAccount()
 
@@ -80,7 +86,7 @@ const isStagedSet = computed(() =>
   stagedSubmission.value && props.submission.uuid === stagedSubmission.value.uuid
 )
 
-const showOptIn = computed(() => isStagedSet.value || (optInAvailable.value && isConnected.value))
+const showOptIn = computed(() => isStagedSet.value || isConnected.value)
 const optInOpen = ref(false)
 const base = useConfig('opepenApi')
 
@@ -101,8 +107,7 @@ const {
 
 // EVENTS
 const update = async () => {
-  // TODO: Double check which submission we want to reload
-  reloadStagedSubmission()
+  emit('update')
   fetchSubscription()
 }
 onMounted(() => fetchSubscription())

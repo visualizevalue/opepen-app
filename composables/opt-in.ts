@@ -9,7 +9,12 @@ export const useOptIn = async (submission: Ref<Object>) => {
   const optInAvailable = computed(() => {
     if (submission.value?.deleted_at) return false
     if (submission.value?.revealed_at) return false
-    return true
+    if (! submission.value?.starred_at) return true
+
+    const starred = DateTime.fromISO(submission.value.starred_at)
+    const currentTime = DateTime.fromSeconds(now.value)
+
+    return starred < currentTime && optInUntil.value > currentTime
   })
 
   return {
