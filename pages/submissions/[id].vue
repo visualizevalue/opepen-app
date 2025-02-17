@@ -3,7 +3,7 @@
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :data="submission" />
 
-    <SetOptInCard :submission="submission" />
+    <SetOptInCard :submission="submission" @update="refresh" />
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
@@ -33,7 +33,7 @@ definePageMeta({
 
 const route = useRoute()
 
-const { data: submission } = await useApi(`/set-submissions/${route.params.id}`)
+const { data: submission, refresh } = await useApi(`/set-submissions/${route.params.id}`)
 await useStagedOptIn()
 
 useMetaData({
