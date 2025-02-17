@@ -1,4 +1,4 @@
-export const useOpepen = async addresses => {
+export const useOpepen = async (addresses: string[]) => {
   const config = useRuntimeConfig()
   const opepen = ref([])
   const opepenLoading = ref(false)
@@ -24,11 +24,10 @@ export const useOpepen = async addresses => {
   }
   onMounted(() => fetchOpepen(addresses))
 
-  const opepenByEdition = computed(() => {
-    const items = opepen.value || []
+  const unrevealedOpepen = computed(() => (opepen.value || []).filter(o => ! o.revealed_at))
 
-    return items
-      .filter(o => ! o.revealed_at)
+  const opepenByEdition = computed(() => {
+    return unrevealedOpepen.value
       .reduce((groups, o) => {
         groups[o.data.edition].push(o)
 
@@ -39,6 +38,7 @@ export const useOpepen = async addresses => {
   return {
     opepenLoading,
     opepen,
+    unrevealedOpepen,
     opepenByEdition,
     fetchOpepen,
   }

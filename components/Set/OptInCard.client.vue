@@ -2,23 +2,28 @@
   <section v-if="isStagedSet && optInAvailable">
     <Card class="static">
       <WithAccount v-slot="{ address, isConnected }">
-        <div v-if="! isConnected" class="connect">
-          <p>Please connect your wallet in order to select the Opepen tokens you'd like to submit.</p>
-          <Connect />
-        </div>
+        <template v-if="! isConnected" class="connect">
+          <p>Please connect your wallet to opt in to this set.</p>
+          <Actions>
+            <Connect />
+          </Actions>
+        </template>
 
-        <SetOptInModal
-          v-else
-          :address="address"
-          :submission="stagedSubmission"
-          :subscribed="subscription?.opepen_ids || []"
-          :max-reveals="subscription?.max_reveals"
-          :stored-comment="subscription?.comment"
-          :open="optInOpen"
-          @close="optInOpen = false"
-          @update="() => reloadStagedSubmission()"
-          :click-outside="false"
-        />
+        <template v-else class="connect">
+          <Actions>
+            <Button @click="optInOpen = true">Opt In</Button>
+          </Actions>
+
+          <SetOptInModal
+            v-model:open="optInOpen"
+            :address="address"
+            :submission="stagedSubmission"
+            :subscribed="subscription?.opepen_ids || []"
+            :max-reveals="subscription?.max_reveals"
+            @update="() => reloadStagedSubmission()"
+          />
+        </template>
+
       </WithAccount>
     </Card>
   </section>

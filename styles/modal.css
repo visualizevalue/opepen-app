@@ -1,4 +1,9 @@
 .modal {
+  > h1 {
+    @mixin ui-font;
+    font-size: var(--font-base);
+  }
+
   > menu.actions {
     margin: var(--spacer) 0;
 

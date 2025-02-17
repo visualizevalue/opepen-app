@@ -10,14 +10,21 @@
     <p>Please reload the page and try again.</p>
 
     <Actions>
-      <Button :to="'/'" class="secondary">Go Home</Button>
+      <Button @click="cancel" class="secondary">Cancel</Button>
       <Button @click="reload">Retry</Button>
     </Actions>
   </Modal>
 </template>
 
 <script setup>
+import { useDisconnect } from '@wagmi/vue'
+
 useSignIn()
+const { disconnect } = useDisconnect()
 
 const reload = () => window.location.reload()
+const cancel = async () => {
+  await disconnect()
+  window.location.reload()
+}
 </script>
