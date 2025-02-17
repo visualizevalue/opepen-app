@@ -47,8 +47,14 @@ a {
     font-size: var(--font-sm);
   }
 
+  &:hover {
+    background: var(--gray-z-1);
+    box-shadow: var(--border-shadow);
+  }
+
   &.active {
     background: var(--gray-z-2);
+    box-shadow: var(--border-shadow);
   }
 
   &.success {
