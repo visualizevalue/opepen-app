@@ -6,6 +6,7 @@
 h1 {
   display: flex;
   align-items: center;
+  gap: var(--spacer-sm);
   @mixin ui-font;
   color: var(--gray-z-6);
 

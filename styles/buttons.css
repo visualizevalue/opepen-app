@@ -1,11 +1,19 @@
 .button {
 
+  .icon {
+    height: var(--size-5);
+    width: var(--size-5);
+    color: var(--muted);
+    transition: color var(--speed);
+  }
+
   &.small {
     padding: var(--size-1) var(--size-2);
     font-size: var(--font-sm);
     border-radius: var(--border-radius-sm);
 
     .icon {
+      height: var(--size-4);
       width: var(--size-4);
     }
   }
@@ -39,7 +47,12 @@
 
     .icon {
       width: var(--size-4);
-      color: var(--gray-z-4);
+    }
+  }
+
+  &:--highlight {
+    .icon {
+      color: var(--gray-z-7);
     }
   }
 }
