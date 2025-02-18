@@ -1,5 +1,7 @@
 @import "./variables.css";
 @import "./base.css";
+@import "./layout.css";
+@import "./forms.css";
 @import "./alert.css";
 @import "./buttons.css";
 @import "./prose.css";

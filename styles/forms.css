@@ -1,0 +1,16 @@
+.input,
+.select {
+  --ui-padding-y: var(--size-3);
+
+  min-height: calc(var(--size-7) + var(--size-2));
+}
+
+input,
+textarea {
+  text-transform: none !important;
+}
+
+label {
+  color: var(--muted) !important;
+}
+

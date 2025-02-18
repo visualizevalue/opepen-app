@@ -2,6 +2,7 @@
 
   --border-color: var(--gray-z-2);
   --border-color-dark: var(--gray-z-1);
+  --border-color-light: var(--gray-z-6);
   --border-color-shade: var(--semi-shade);
 
   --border: var(--border-width) solid var(--border-color);
