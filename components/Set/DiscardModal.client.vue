@@ -15,9 +15,7 @@
 
 <script setup lang="ts">
 interface Props {
-  submission: {
-    uuid: string,
-  },
+  submission: SetSubmission,
 }
 const { submission } = defineProps<Props>()
 const emit = defineEmits(['update'])
