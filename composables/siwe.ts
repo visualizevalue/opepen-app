@@ -57,7 +57,7 @@ export const useSignIn = () => {
         // (e.g. within the users' wallet), we reauthenticate.
         if (prevAccount && prevAccount.address !== account.address) {
           session.value = null
-          signIn()
+          ensureSignIn()
         }
       },
     })
@@ -139,7 +139,7 @@ export const useSignIn = () => {
   }
 
   const ensureSignIn = async () => {
-    if (! isAuthenticated.value) {
+    if (! isAuthenticated.value && ! signInLoading.value) {
       await signIn()
       if (! isAuthenticated.value) {
         throw new Error(`Not Authenticated`)

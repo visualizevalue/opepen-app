@@ -2,6 +2,7 @@
   <WithAccount v-slot="{ address }">
     <WithProfile :id="address" v-slot="{ account }">
       <slot
+        v-if="isAuthenticated"
         :address="address"
         :account="account"
         :is-admin="isAdmin"
@@ -21,10 +22,8 @@
 </template>
 
 <script setup>
-const { signIn } = useSignIn()
+const { ensureSignIn } = useSignIn()
 
-onMounted(async () => {
-  if (! isAuthenticated.value) await signIn()
-})
+onMounted(() => ensureSignIn())
 </script>
 
