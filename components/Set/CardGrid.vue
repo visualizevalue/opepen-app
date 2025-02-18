@@ -27,7 +27,7 @@ defineProps({
     }
 
     display: grid;
-    gap: var(--size-5);
+    gap: var(--spacer);
     grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width), 1fr));
 
     article {

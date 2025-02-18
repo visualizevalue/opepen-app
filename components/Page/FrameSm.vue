@@ -17,12 +17,13 @@ defineProps({
   .page-frame-sm {
     container-type: inline-size;
     display: grid;
-    gap: var(--spacer-lg);
+    gap: var(--spacer);
     margin-left: auto;
     margin-right: auto;
 
     @media (--md) {
       max-width: var(--content-width-sm);
+      gap: var(--spacer-lg);
     }
 
     &.prose {

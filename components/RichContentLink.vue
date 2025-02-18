@@ -43,7 +43,7 @@ article.content-link {
   background-size: cover;
   background-position: center center;
   min-height: 9rem;
-  padding: var(--spacer-lg) var(--spacer-sm) var(--spacer-sm);
+  padding: var(--spacer-lg) var(--spacer) var(--spacer);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

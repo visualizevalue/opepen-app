@@ -41,15 +41,20 @@ const mainNav = ref()
   --main-padding-bottom: calc(var(--bottom-nav-height) + var(--spacer));
   --main-content-height: calc(100dvh - var(--main-padding-top) - var(--main-padding-bottom));
 
-  &:has(#top-sub-nav:empty) {
-    --main-padding-top: calc(var(--top-nav-height) + var(--spacer));
-    --main-padding-bottom: calc(var(--bottom-nav-height) + var(--spacer));
-  }
-
   @media (--lg) {
     --main-padding-top: var(--spacer-lg);
     --main-padding-x: var(--spacer-lg);
     --main-padding-bottom: var(--spacer-lg);
+  }
+
+  &:has(#top-sub-nav:empty) {
+    --main-padding-top: calc(var(--top-nav-height) + var(--spacer));
+    --main-padding-bottom: calc(var(--bottom-nav-height) + var(--spacer));
+
+    @media (--lg) {
+      --main-padding-top: var(--spacer-lg);
+      --main-padding-bottom: var(--spacer-lg);
+    }
   }
 
   > .sidebar {
