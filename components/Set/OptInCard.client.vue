@@ -39,9 +39,15 @@
         <template v-else>
           <SectionTitle>Opt-In <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
           <p>Opt-In your unrevealed Opepen for potential reveal.</p>
+          <p v-if="subscription?.message === 'DISCARD'">You previously discarded this set from opt-in, but you can always change your mind.</p>
         </template>
 
         <Actions>
+          <Button v-if="! subscription" @click="optOutOpen = true">
+            <Icon type="x-circle" />
+            <span>Discard</span>
+          </Button>
+
           <Button @click="optInOpen = true">
             <Icon type="edit" />
             <span v-if="subscription?.opepen_ids?.length">Change Opt-Ins</span>
@@ -49,12 +55,14 @@
           </Button>
         </Actions>
 
+        <SetDiscardModal v-model:open="optOutOpen" :submission="submission" @update="update" />
+
         <SetOptInModal
           v-model:open="optInOpen"
           :address="address"
           :submission="submission"
           :subscribed="subscription?.opepen_ids || []"
-          :max-reveals="subscription?.max_reveals"
+          :max-reveals="subscription?.max_reveals || {}"
           @update="update"
         />
       </template>
@@ -89,7 +97,7 @@ const isStagedSet = computed(() =>
 
 const showOptIn = computed(() => isStagedSet.value || isConnected.value)
 const optInOpen = ref(false)
-const base = useConfig('opepenApi')
+const optOutOpen = ref(false)
 
 const { data: subscription, refresh: fetchSubscription } =
   await useApi(`/accounts/${address.value}/set-submissions/${props.submission.uuid}/subscription`)
@@ -115,10 +123,13 @@ onMounted(() => fetchSubscription())
 </script>
 
 <style scoped>
+.card {
+  gap: var(--spacer);
+}
+
 h1 {
-  padding-bottom: var(--spacer);
-  margin-bottom: var(--spacer);
   border-bottom: var(--border);
+  padding-bottom: calc(var(--spacer) - var(--spacer-xs));
 }
 
 p,
@@ -170,33 +181,6 @@ table {
   .times {
     text-transform: lowercase;
     color: var(--gray-z-4);
-  }
-}
-
-.summary {
-  display: grid;
-  gap: var(--spacer-sm);
-  list-style: disc;
-  padding-left: 1em;
-
-  li {
-    > span {
-      display: grid;
-      gap: var(--spacer-sm);
-      grid-template-columns: 1.5rem 0.5em 1fr;
-      white-space: nowrap;
-    }
-  }
-  .amount {
-    text-align: right;
-    min-width: min-content;
-  }
-  .times {
-    text-transform: lowercase;
-    text-align: center;
-  }
-  .edition {
-    color: var(--color);
   }
 }
 </style>
