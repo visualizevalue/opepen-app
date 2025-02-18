@@ -36,7 +36,7 @@
       <MainSideNavLink
         to="/submissions"
         title="Submissions"
-        subline="View submitted Opepen"
+        subline="Vote on submitted Sets"
         @click="close"
       />
     </section>

@@ -1,3 +1,7 @@
 <template>
-<h1>New</h1>
+  <PageFrameMd>
+    <PageHeader>
+      <SectionTitle>New Set</SectionTitle>
+    </PageHeader>
+  </PageFrameMd>
 </template>
