@@ -14,8 +14,19 @@
       </Actions>
     </Alert>
 
+    <Actions>
+      <span>Sort:</span>
+      <select v-model="sort" class="select">
+        <option value="-submission_stats.demand.total">Demand</option>
+        <option value="-published_at">Latest</option>
+        <option value="published_at">Earliest</option>
+        <option value="dailyRandom">Randomly</option>
+      </select>
+    </Actions>
+
     <PaginatedContent
       :url="url"
+      :query="query"
       v-slot="{ items }"
     >
       <SetCardGrid :submissions="items" minimal />
@@ -23,9 +34,17 @@
   </PageFrameMd>
 </template>
 
-<script setup>
-const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/set-submissions?limit=40`
+<script setup lang="ts">
+
+const url = `${useConfig('opepenApi')}/set-submissions`
+const sort = ref('-submission_stats.demand.total')
+const query = computed(() => {
+  const q = new URLSearchParams(`limig=40`)
+
+  q.set('sort', sort.value)
+
+  return q.toString()
+})
 
 useMetaData({
   title: `Set Submissions | Opepen`,
@@ -33,4 +52,22 @@ useMetaData({
   og: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets.png',
 })
 </script>
+
+<style scoped>
+menu {
+  @mixin ui-font;
+  font-size: var(--font-sm);
+  align-items: center;
+  justify-content: flex-end;
+
+  span {
+    color: var(--muted);
+  }
+
+  select {
+    width: min-content;
+    font-size: var(--font-sm);
+  }
+}
+</style>
 
