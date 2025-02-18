@@ -1,7 +1,7 @@
 <template>
   <PageFrameSm class="submission">
     <SetPreviewImages :data="submission" class="items" />
-    <SetItemsMeta :data="submission" />
+    <SetItemsMeta :submission="submission" />
 
     <SetOptInCard :submission="submission" @update="refresh" />
 

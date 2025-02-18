@@ -3,7 +3,7 @@
     <SetPagination :set="set" />
 
     <SetPreviewImages :data="submission" />
-    <SetItemsMeta :data="submission" />
+    <SetItemsMeta :submission="submission" />
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
