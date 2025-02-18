@@ -1,9 +1,21 @@
 <template>
-  <div>
-    <h1>Manage Sets</h1>
-  </div>
+  <PageFrameMd>
+    <PageHeader>
+      <SectionTitle>My Sets</SectionTitle>
+
+      <Button to="/create/new" class="small">
+        <Icon type="plus" />
+        <span>New</span>
+      </Button>
+    </PageHeader>
+
+    <MySetSubmissions />
+  </PageFrameMd>
 </template>
 
-<script setup lang="ts">
+<script setup>
+useMetaData({
+  title: `My Set Submissions | Opepen`,
+})
 </script>
 
