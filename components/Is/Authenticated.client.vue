@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-const { ensureSignIn } = useSignIn()
+const { signIn, ensureSignIn } = useSignIn()
 
 onMounted(() => ensureSignIn())
 </script>
