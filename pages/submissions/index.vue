@@ -19,8 +19,8 @@
       <select v-model="sort" class="select">
         <option value="-submission_stats.demand.total">Demand</option>
         <option value="-published_at">Latest</option>
-        <option value="published_at">Earliest</option>
-        <option value="dailyRandom">Randomly</option>
+        <option value="created_at">Earliest</option>
+        <option value="dailyRandom">Random</option>
       </select>
     </Actions>
 
