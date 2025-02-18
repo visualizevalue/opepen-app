@@ -3,13 +3,12 @@
 
     <div class="intro">
       <PageTitle>
-        <small v-if="!data">Set {{ pad($route.params.id) }}</small>
-        <small v-else-if="data.set_id">Set {{ pad(data.set_id) }}</small>
-        <small v-else>Set Submission <template v-if="! data.approved_at">(Private Preview)</template></small>
+        <small v-if="submission.set_id">Set {{ pad(submission.set_id) }}</small>
+        <small v-else>Set Submission</small>
         <span :title="name">{{ name }}</span>
       </PageTitle>
 
-      <p v-if="data?.description"><ExpandableText :text="data.description" /></p>
+      <p v-if="submission?.description"><ExpandableText :text="submission.description" /></p>
     </div>
 
     <DescriptionList>
@@ -17,8 +16,8 @@
         <Icon type="user" stroke-width="2.25" />
         <span>
           Created by
-          <NuxtLink :to="`/${id(data.creatorAccount)}`">
-            <ApiAccount :account="data.creatorAccount" hide-avatar hide-address />
+          <NuxtLink :to="`/${id(submission.creatorAccount)}`">
+            <ApiAccount :account="submission.creatorAccount" hide-avatar hide-address />
           </NuxtLink>
           <template v-if="coCreators.length">, </template>
           <template v-for="creator in coCreators">
@@ -30,33 +29,33 @@
       </li>
       <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span v-if="published">{{ SET_TYPES[data.edition_type] }} Editions</span>
+        <span v-if="published">{{ SET_TYPES[submission.edition_type] }} Editions</span>
         <span v-else>Unknown Editions</span>
       </li>
       <li v-if="revealed || revealing">
         <Icon type="opepen" />
-        <span>{{ formatNumber(data?.submission_stats?.opepens.total) }} Opt-Ins</span>
+        <span>{{ formatNumber(submission?.submission_stats?.opepens.total || 0) }} Opt-Ins</span>
       </li>
       <li v-if="revealed || revealing">
         <Icon type="check"/>
         <span>Consensus met on {{ consensusDate }}</span>
       </li>
-      <li v-if="data.reveal_strategy">
+      <li v-if="submission.reveal_strategy">
         <Icon type="code" stroke-width="2.25" />
         <NuxtLink to="https://github.com/visualizevalue/opepens-metadata-api/tree/main/drops/sets">
-          <span>Reveal mechanism {{ data.reveal_strategy }}</span>
+          <span>Reveal mechanism {{ submission.reveal_strategy }}</span>
         </NuxtLink>
       </li>
-      <li v-if="data.reveal_block_number">
+      <li v-if="submission.reveal_block_number">
         <Icon type="box" stroke-width="2.25" />
-        <NuxtLink :to="`https://etherscan.io/block/${data.reveal_block_number}`">
-          <span>Block {{ data.reveal_block_number }}</span>
+        <NuxtLink :to="`https://etherscan.io/block/${submission.reveal_block_number}`">
+          <span>Block {{ submission.reveal_block_number }}</span>
         </NuxtLink>
       </li>
-      <li v-if="data.artist_signature">
+      <li v-if="submission.artist_signature">
         <Icon type="feather" />
         <NuxtLink
-          :to="`https://etherscan.io/tx/${data.artist_signature.tx}`"
+          :to="`https://etherscan.io/tx/${submission.artist_signature.tx}`"
           target="_blank"
         >Set Signature</NuxtLink>
       </li>
@@ -64,20 +63,19 @@
   </section>
 </template>
 
-<script setup>
-const props = defineProps({
-  data: Object,
-})
+<script setup lang="ts">
+interface Props {
+  submission: SetSubmission,
+}
+const { submission } = defineProps<Props>()
 
-const name = computed(() => props.data?.name || 'Unrevealed')
-const published = computed(() => !!props.data.published_at)
-const revealsAt = ref(DateTime.fromISO(props.data?.reveals_at).toUnixInteger())
+const name = computed(() => submission?.name || 'Unrevealed')
+const published = computed(() => !!submission.published_at)
+const revealsAt = ref(DateTime.fromISO(submission?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
-const revealed = computed(() => revealing.value && props.data?.reveal_block_number)
-const consensusDate = computed(() => props.data?.reveals_at && formatDate(props.data?.reveals_at))
-const coCreators = useCoCreators(props.data)
-
-const openDynamicPreview = ref(false)
+const revealed = computed(() => revealing.value && submission?.reveal_block_number)
+const consensusDate = computed(() => submission?.reveals_at && formatDate(submission?.reveals_at))
+const coCreators = useCoCreators(submission)
 </script>
 
 <style scoped>
@@ -99,31 +97,5 @@ const openDynamicPreview = ref(false)
         line-height: var(--line-height-md);
       }
     }
-
-    /* article {
-      font-weight: var(--font-weight-bold);
-      font-size: var(--font-sm);
-
-      h1 {
-        color: var(--gray-z-6);
-      }
-
-      h1,
-      p {
-        text-transform: uppercase;
-        line-height: 1.25;
-        margin-bottom: var(--size-3);
-      }
-
-      @media (--md) {
-        display: grid;
-        grid-template-columns: 35% 65%;
-        gap: var(--size-2);
-      }
-    } */
-
-    /* @media (--md) {
-      margin-top: calc(-1 * var(--size-6));
-    } */
   }
 </style>
