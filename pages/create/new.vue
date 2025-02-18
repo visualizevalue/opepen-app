@@ -1,7 +1,14 @@
 <template>
-  <PageFrameMd>
-    <PageHeader>
-      <SectionTitle>New Set</SectionTitle>
-    </PageHeader>
-  </PageFrameMd>
+  <PageFrameSm>
+    <IsAuthenticated>
+      <CreateNewSetSubmission />
+    </IsAuthenticated>
+  </PageFrameSm>
 </template>
+
+<script setup>
+useMetaData({
+  title: 'New set submission',
+})
+</script>
+

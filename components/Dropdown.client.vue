@@ -17,7 +17,6 @@
             v-for="(item, index) in items"
             :key="index"
             :disabled="item.disabled"
-            :to="item.to"
             @click="item.onClick"
             class="button option"
           >
@@ -34,7 +33,6 @@
 <script setup>
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import Button from '@vv/components/Button.vue'
 
 const { align, xOffset } = defineProps({
   items: {

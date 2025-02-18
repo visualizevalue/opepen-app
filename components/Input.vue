@@ -1,20 +1,15 @@
 <template>
-  <div class="input">
-    <slot name="before" />
-
-    <textarea
-      ref="textarea"
-      :value="modelValue"
-      :placeholder="placeholder"
-      @focus="onInput"
-      @input="onInput"
-      @keydown.enter="$emit('enter', $event)"
-      rows="1"
-      :disabled="disabled"
-    ></textarea>
-
-    <slot name="after" />
-  </div>
+  <textarea
+    ref="textarea"
+    :value="modelValue"
+    :placeholder="placeholder"
+    @focus="onInput"
+    @input="onInput"
+    @keydown.enter="$emit('enter', $event)"
+    rows="1"
+    :disabled="disabled"
+    class="input"
+  ></textarea>
 </template>
 
 <script setup>

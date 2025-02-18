@@ -9,13 +9,16 @@
     width: 100%;
     min-height: var(--size-7);
     display: flex;
+    gap: var(--spacer);
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 
     :deep(.actions) {
+      margin-left: auto;
       display: flex;
       gap: var(--spacer);
+      justify-content: flex-end;
 
       > label {
         @mixin ui-font;

@@ -1,6 +1,6 @@
 <template>
   <div class="dynamic-set-images">
-    <p class="label">Dynamic Images <template v-if="lastSaved">(last saved {{ lastSavedAt }})</template></p>
+    <label>Dynamic Images <template v-if="lastSaved">(last saved {{ lastSavedAt }})</template></label>
 
     <MultiImageUpload
       key="4"
@@ -66,10 +66,6 @@
 </template>
 
 <script setup>
-import { DateTime } from 'luxon'
-import { formatTime } from '~/helpers/dates'
-import { useSignIn } from '~/helpers/siwe'
-
 const config = useRuntimeConfig()
 
 const props = defineProps({
@@ -81,7 +77,6 @@ const emit = defineEmits(['updated'])
 
 const { session, signIn } = useSignIn()
 
-// const image1_1 = ref(props.dynamicSetImages?.image1_1)
 const edition4Images = ref([
   props.dynamicSetImages?.image4_1,
   props.dynamicSetImages?.image4_2,
@@ -203,13 +198,7 @@ const store = async (edition, images) => {
 
 <style scoped>
 .dynamic-set-images {
-
-  .label {
-    margin-bottom: var(--size-3);
-  }
-
-  .multi-image-upload {
-    margin-bottom: var(--size-4);
-  }
+  display: grid;
+  gap: var(--spacer-sm);
 }
 </style>

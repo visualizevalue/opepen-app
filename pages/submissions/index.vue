@@ -1,18 +1,16 @@
 <template>
   <PageFrameMd>
-    <!-- TODO: Add Curation -->
-
-    <Alert type="muted" dismiss="explain-set-submissions">
-      <h1>Set Submissions</h1>
-      <p>
-        Artists submit sets of 6 distinct editions for consideration of the community.
-        Anyone can create an Opepen set. If sets are highly rated by curators,
-        it will be staged for potential inclusion in the "Permanent Collection".
-      </p>
-      <Actions>
-        <Button to="/about/intro" class="">Learn more</Button>
-      </Actions>
-    </Alert>
+    <!-- <Alert type="muted" dismiss="explain-set-submissions"> -->
+    <!--   <h1>Set Submissions</h1> -->
+    <!--   <p> -->
+    <!--     Artists submit sets of 6 distinct editions for consideration of the community. -->
+    <!--     Anyone can create an Opepen set. If sets are highly rated by curators, -->
+    <!--     it will be staged for potential inclusion in the "Permanent Collection". -->
+    <!--   </p> -->
+    <!--   <Actions> -->
+    <!--     <Button to="/about/intro" class="">Learn more</Button> -->
+    <!--   </Actions> -->
+    <!-- </Alert> -->
 
     <Actions>
       <span>Sort:</span>

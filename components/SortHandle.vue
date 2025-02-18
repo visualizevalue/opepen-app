@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: center;
   background-color: var(--gray-z-2);
+  width: var(--size-5);
 
   > * {
     margin: 0 !important;

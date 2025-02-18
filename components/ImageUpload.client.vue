@@ -19,13 +19,11 @@
         @change.prevent="addFile"
       >
     </label>
-    <button v-if="image && ! disabled" @click="reset" class="reset"><Icon type="x" :stroke-width="3" /></button>
+    <button v-if="image && ! disabled" @click="reset" class="unstyled reset"><Icon type="x" :stroke-width="3" /></button>
   </div>
 </template>
 
 <script setup>
-import { useSignIn } from '~/helpers/siwe'
-
 const config = useRuntimeConfig()
 const props = defineProps({
   name: String,
@@ -40,16 +38,8 @@ const preview = ref(null)
 const previewURL = computed(() => URL.createObjectURL(preview.value))
 const image = ref(props.image)
 
-const { ensureSignIn } = useSignIn()
-
 const store = async () => {
   if (! preview.value) return
-
-  try {
-    await ensureSignIn()
-  } catch (e) {
-    return
-  }
 
   const formData = new FormData()
   formData.append('image', preview.value)
@@ -101,8 +91,7 @@ const reset = () => {
     height: 100%;
     background: var(--gray-z-2);
     border: var(--border);
-    border-radius: var(--size-5);
-    border-top-left-radius: var(--size-1);
+    border-radius: var(--border-radius);
     transition: all var(--speed);
     overflow: hidden;
     cursor: pointer;
@@ -159,10 +148,21 @@ const reset = () => {
 
     .reset {
       position: absolute;
-      top: var(--size-3);
-      right: var(--size-3);
+      top: var(--spacer-sm);
+      right: var(--spacer-sm);
       width: var(--size-5);
       height: var(--size-5);
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--semi-shade);
+      border-radius: 50%;
+
+      .icon {
+        width: var(--size-4);
+        height: var(--size-4);
+      }
     }
 
     &.loading {

@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="multi-image-upload"
-  >
-    <p class="label">{{ name }}</p>
+  <div class="multi-image-upload">
+    <label>{{ name }}</label>
     <Button type="button" @click="reset" class="small clear"><Icon type="trash" /><span>Clear</span></Button>
 
     <label
@@ -26,13 +24,13 @@
 
     <Progress v-if="loading" :percent="progress" />
 
-    <div class="grid">
+    <div v-if="images.length" class="grid">
       <Image
         v-for="(image, idx) of images"
         :key="image.uuid"
         :image="image"
       >
-        <button @click="() => deleteFile(idx)"><Icon type="x" :stroke-width="3" /></button>
+        <button @click="() => deleteFile(idx)" class="unstyled"><Icon type="x" :stroke-width="3" /></button>
       </Image>
 
       <Loading v-if="loading" txt="" />
@@ -43,8 +41,6 @@
 </template>
 
 <script setup>
-import { useSignIn } from '~/helpers/siwe'
-
 const config = useRuntimeConfig()
 const props = defineProps({
   name: String,
@@ -139,21 +135,19 @@ defineExpose({
 <style scoped>
   .multi-image-upload {
     position: relative;
-    background: var(--gray-z-2);
+    display: grid;
+    gap: var(--spacer);
+    background: var(--gray-z-0);
     border: var(--border);
-    border-radius: var(--size-5);
-    border-top-left-radius: var(--size-1);
+    border-radius: var(--border-radius);
     overflow: hidden;
-    padding: var(--size-4) var(--size-5);
+    padding: var(--spacer);
 
     .clear {
       position: absolute;
-      top: var(--size-3);
-      right: var(--size-5);
-    }
-
-    p.label {
-      margin: 0 0 var(--size-4);
+      top: var(--spacer-sm);
+      right: var(--spacer);
+      width: min-content;
     }
 
     .upload {
@@ -161,15 +155,15 @@ defineExpose({
       width: 100%;
       height: 7rem;
       border: var(--border);
-      border-radius: var(--size-4);
-      padding: var(--size-5);
+      border-radius: var(--border-radius);
+      background: var(--gray-z-2);
+      padding: var(--spacer);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: var(--size-2);
+      gap: var(--spacer-sm);
       transition: all var(--speed);
-      margin: var(--size-4) 0;
 
       .vue-feather {
         width: var(--size-5);
@@ -214,15 +208,26 @@ defineExpose({
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(10, minmax(0, 1fr));
-      gap: var(--size-4);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--spacer);
       display: relative;
 
       button {
         position: absolute;
         z-index: 100;
-        top: var(--size-2);
-        right: var(--size-2);
+        width: var(--size-5);
+        height: var(--size-5);
+        padding: var(--size-1);
+        top: var(--spacer-sm);
+        right: var(--spacer-sm);
+        background: var(--semi-shade);
+        color: var(--color);
+        border-radius: 50%;
+
+        .icon {
+          display: block;
+          width: var(--size-3);
+        }
       }
     }
 

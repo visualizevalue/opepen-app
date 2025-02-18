@@ -1,12 +1,16 @@
 <template>
   <div>
-    <span class="label rich-content-label">{{ title }}</span>
+    <label>
+      {{ title }}
+      <template v-if="lastSaved">(Last saved {{ formatTime(lastSaved) }})</template>
+    </label>
+
     <SortableList :items="links" @update="links = $event" class="rich-content">
       <template v-slot="{ item, index }">
         <div class="rich-content-link">
-          <button @click.stop.prevent="remove(index)" class="delete" type="button"><Icon type="x" stroke-width="3" /></button>
+          <button @click.stop.prevent="remove(index)" class="unstyled delete" type="button"><Icon type="x" stroke-width="3" /></button>
           <div class="images">
-            <span class="label">Images</span>
+            <label>Images</label>
             <div>
               <ImageUpload @stored="links[index].logo = $event" @reset="links[index].logo = null" name="Icon" :image="links[index].logo" class="logo" />
               <ImageUpload @stored="links[index].cover = $event" @reset="links[index].cover = null" name="Cover" :image="links[index].cover" class="cover" />
@@ -14,32 +18,29 @@
           </div>
           <label class="url">
             <span class="label">URL</span>
-            <input type="text" :value="item.url" @input="links[index].url = $event.target.value" placeholder="URL">
+            <input class="input" type="text" :value="item.url" @input="links[index].url = $event.target.value" placeholder="URL">
           </label>
           <label class="title">
             <span class="label">Title</span>
-            <input type="text" :value="item.title" @input="links[index].title = $event.target.value" placeholder="Title">
+            <input class="input" type="text" :value="item.title" @input="links[index].title = $event.target.value" placeholder="Title">
           </label>
           <label class="description">
             <span class="label">Description</span>
-            <Input type="text" :model-value="item.description" @update:model-value="links[index].description = $event" />
+            <Input class="input" type="text" :model-value="item.description" @update:model-value="links[index].description = $event" />
           </label>
         </div>
       </template>
     </SortableList>
   </div>
 
-  <div class="actions">
+  <Actions>
     <Button @click.stop.prevent="add" type="button">Add</Button>
-    <small class="muted" v-if="lastSaved">Last saved {{ formatTime(lastSaved) }}</small>
-    <Button @click.stop.prevent="save" type="button" :disabled="saving">
-      <span v-if="saving">Saving...</span>
-      <span v-else>Save</span>
-    </Button>
-  </div>
+  </Actions>
 </template>
 
 <script setup>
+import { watchDebounced } from '@vueuse/core'
+
 const props = defineProps({
   title: String,
   loadedLinks: {
@@ -55,6 +56,7 @@ const emit = defineEmits(['updated'])
 
 const config = useRuntimeConfig()
 const links = ref(props.loadedLinks)
+
 const add = () => {
   links.value.push({ _id: links.value.length, ...props.newLinkData, })
 }
@@ -107,6 +109,12 @@ const save = async () => {
 
   emit('updated', links.value)
 }
+
+watchDebounced(
+  links,
+  () => save(),
+  { debounce: 500, maxWait: 2000, deep: true },
+)
 </script>
 
 <style scoped>
@@ -120,21 +128,29 @@ const save = async () => {
       margin: 0;
       position: relative;
       width: 100%;
-      background: var(--gray-z-1);
+      background: var(--gray-z-0);
       border: var(--border);
-      padding: var(--size-4) var(--size-5) var(--size-5);
+      padding: var(--spacer);
       display: grid;
-      gap: var(--size-4);
-      border-radius: var(--size-4);
-      border-top-left-radius: var(--size-0);
+      gap: var(--spacer);
+      border-radius: var(--border-radius);
 
       .delete {
         position: absolute;
-        top: var(--size-4);
-        right: var(--size-4);
+        top: var(--spacer);
+        right: var(--spacer);
+        width: var(--size-4);
+        padding: 0;
+        outline: none;
+
+        .icon {
+          width: var(--size-4);
+        }
       }
 
       .images {
+        display: grid;
+        gap: var(--spacer-sm);
 
         > div {
           display: flex;

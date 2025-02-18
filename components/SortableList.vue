@@ -44,7 +44,7 @@ useSortable(el, list, {
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--size-4);
+  gap: var(--spacer-sm);
 }
 
 .item {

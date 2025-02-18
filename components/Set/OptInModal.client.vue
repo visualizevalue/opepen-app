@@ -452,6 +452,7 @@ footer {
     width: 100%;
     justify-content: flex-end;
     flex-wrap: nowrap;
+    grid-column: 2;
   }
 }
 </style>

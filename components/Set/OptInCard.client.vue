@@ -57,7 +57,7 @@
 
         <SetDiscardModal v-model:open="optOutOpen" :submission="submission" @update="update" />
 
-        <SetOptInModal
+        <LazySetOptInModal
           v-model:open="optInOpen"
           :address="address"
           :submission="submission"
@@ -95,7 +95,7 @@ const isStagedSet = computed(() =>
   stagedSubmission.value && props.submission.uuid === stagedSubmission.value.uuid
 )
 
-const showOptIn = computed(() => isStagedSet.value || isConnected.value)
+const showOptIn = computed(() => isStagedSet.value || (isConnected.value && props.submission.published_at))
 const optInOpen = ref(false)
 const optOutOpen = ref(false)
 

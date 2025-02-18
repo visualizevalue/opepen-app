@@ -16,6 +16,7 @@ defineProps({
 <style scoped>
   .page-frame-sm {
     container-type: inline-size;
+    container-name: page;
     display: grid;
     gap: var(--spacer);
     margin-left: auto;

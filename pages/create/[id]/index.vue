@@ -1,3 +1,12 @@
 <template>
-  <h1>Edit {{$route.params.id}}</h1>
+  <PageFrameSm>
+    <UpdateSetSubmission />
+  </PageFrameSm>
 </template>
+
+<script setup>
+useMetaData({
+  title: 'Update set submission',
+})
+</script>
+

@@ -1,16 +1,16 @@
 <template>
-  <PageFrameMd>
+  <PageFrameSm>
     <PageHeader>
       <SectionTitle>My Sets</SectionTitle>
 
-      <Button to="/create/new" class="small">
+      <Button to="/create/new">
         <Icon type="plus" />
         <span>New</span>
       </Button>
     </PageHeader>
 
     <MySetSubmissions />
-  </PageFrameMd>
+  </PageFrameSm>
 </template>
 
 <script setup>
