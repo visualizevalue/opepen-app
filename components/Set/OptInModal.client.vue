@@ -23,6 +23,11 @@
 
       <div v-else-if="! opepen.length" class="empty">
         <p>No Opepen to opt-in found.</p>
+
+        <Button to="https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Revealed%22,%22values%22:[%22No%22]}]" target="_blank">
+          <Icon type="opensea" />
+          <span>Buy Opepen</span>
+        </Button>
       </div>
 
       <div v-else class="opepens">
@@ -271,7 +276,7 @@ const sign = async () => {
 <style scoped>
 .opt-in-flow > header {
   padding: var(--spacer);
-  border-bottom: var(--border-dark);
+  border-bottom: var(--border);
 
   position: sticky;
   z-index: 4;
@@ -310,6 +315,13 @@ const sign = async () => {
   text-align: center;
   @mixin ui-font;
   color: var(--muted);
+  display: grid;
+  gap: var(--spacer);
+  justify-content: center;
+
+  .button {
+    margin: 0 auto;
+  }
 }
 
 .opepens {

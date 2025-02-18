@@ -35,6 +35,7 @@
             </tbody>
           </table>
         </template>
+
         <template v-else>
           <SectionTitle>Opt-In <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
           <p>Opt-In your unrevealed Opepen for potential reveal.</p>
