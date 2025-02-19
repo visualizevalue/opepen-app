@@ -8,45 +8,40 @@
     <span v-else>Sign Set</span>
   </Button>
 
-  <Modal
-    :open="open"
-    @close="open = false"
-    title="Artist Signature"
-    modal-classes="wide"
-  >
-    <section>
-      <Alert class="inline">Signing will initiate a transaction (0 Eth) to visualizevalue.eth containing the below data as plain text in its body.</Alert>
+  <Modal v-model:open="open">
+    <h1>Artist Signature</h1>
+
+    <form @submit.stop.prevent="sign">
+      <Alert type="muted">
+        <p>Signing will initiate a transaction (0 Eth) to visualizevalue.eth containing the below data as plain text in its body.</p>
+      </Alert>
       <label>
         <span class="label">Name</span>
-        <input type="text" :value="data.name" disabled />
+        <input class="input" type="text" :value="data.name" disabled />
       </label>
       <label>
         <span class="label">Artist</span>
-        <input type="text" :value="data.artist" disabled />
+        <input class="input" type="text" :value="data.artist" disabled />
       </label>
       <label>
         <span class="label">Note</span>
-        <Input type="text" v-model="note" placeholder="Personal note (optional)" />
+        <Input class="input" type="text" v-model="note" placeholder="Personal note (optional)" />
       </label>
-    </section>
 
-    <footer>
-      <div class="actions">
-        <Button @click="sign">
+      <Actions>
+        <Button>
           <Icon type="feather" />
           <span v-if="signing">Signing...</span>
           <span v-else>Sign Set</span>
         </Button>
-      </div>
-    </footer>
+      </Actions>
+    </form>
   </Modal>
 </template>
 
 <script setup>
-import { sendTransaction, switchNetwork } from '@wagmi/core'
-import { DateTime } from 'luxon'
+import { useSendTransaction } from '@wagmi/vue'
 import { stringToHex } from 'viem'
-import { useSignIn } from '~/helpers/siwe'
 
 const config = useRuntimeConfig()
 
@@ -75,17 +70,15 @@ const message = computed(() => {
 
   return elements.join(`\n\n`)
 })
+const { sendTransactionAsync } = useSendTransaction()
 const sign = async () => {
   if (! session.value) await signIn()
 
   signing.value = true
 
   try {
-    if (wagmi.lastUsedChainId !== 1) {
-      await switchNetwork({ chainId: 1 })
-    }
-    const { hash } = await sendTransaction({
-      to: 'visualizevalue.eth',
+    const hash = await sendTransactionAsync({
+      to: '0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a',
       value: 0,
       data: stringToHex(message.value),
       chainId: 1,
@@ -118,17 +111,8 @@ const sign = async () => {
 </script>
 
 <style scoped>
-section {
+form {
   display: grid;
-  gap: var(--size-4);
-}
-
-footer {
-  margin-top: var(--size-5);
-
-  .actions {
-    margin: 0 !important;
-    padding-top: var(--size-5);
-  }
+  gap: var(--spacer);
 }
 </style>

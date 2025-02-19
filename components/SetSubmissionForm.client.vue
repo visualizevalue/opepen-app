@@ -1,6 +1,6 @@
 <template>
-  <form @submit.stop.prevent="store" class="grid" :disabled="disabled">
-    <PageHeader class="span-2">
+  <form @submit.stop.prevent="store" :disabled="disabled">
+    <PageHeader>
       <SectionTitle>
         <span v-if="data.set_id">Permanent collection set</span>
         <span v-else>Update submission</span>
@@ -17,26 +17,18 @@
       </Actions>
     </PageHeader>
 
-    <!--   <SignSet v-if="toSign" :data="data" @signed="markSigned" key="sign" /> -->
     <!--   <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" :save="store" key="publish" /> -->
     <!--   <UnpublishSetSubmissionForm :submission="data" key="unpublish" @unpublished="$emit('updated', $event)" /> -->
 
-    <!-- <Alert v-if="toSign && published" class="span-2 inline"> -->
-    <!--   <p>Artist Signature: You can sign your set via an onchain transaction.</p> -->
-    <!---->
-    <!--   <div class="actions"> -->
-    <!--     <SignSet :data="data" @signed="markSigned" /> -->
-    <!--   </div> -->
-    <!-- </Alert> -->
-    <!-- <Alert v-else-if="isPublishedToSet" class="span-2 inline"> -->
-    <!--   <p>Note: This submission is published to <NuxtLink :to="`/sets/${data.set_id}`">set {{ pad(data.set_id, 3) }}</NuxtLink>. If you want to change antything about the set, please reach out to the VV team.</p> -->
-    <!---->
-    <!--   <div class="actions"> -->
-    <!--     <Button :to="`/sets/${data.set_id}`">View Set</Button> -->
-    <!--   </div> -->
-    <!-- </Alert> -->
+    <Alert v-if="toSign" class="inline">
+      <p>Artist Signature: You can sign your set via an onchain transaction.</p>
 
-    <Card class="static span-2 grid meta">
+      <Actions>
+        <SignSet :data="data" @signed="markSigned" />
+      </Actions>
+    </Alert>
+
+    <Card class="static grid meta">
       <label class="name span-2">
         <!-- <span>Set Name</span> -->
         <input class="input" type="text" v-model="name" placeholder="Set Name" :disabled="disabled" required />
@@ -82,7 +74,7 @@
       </label>
     </Card>
 
-    <Card class="static span-2">
+    <Card class="static">
       <label class="artist">
         <span>Artist Name</span>
         <input class="input" type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
@@ -110,7 +102,7 @@
       </label>
     </Card>
 
-    <Card class="static span-2">
+    <Card class="static">
       <label class="type">
         <span>Edition Type</span>
         <select v-model="type" class="select" :disabled="disabled">
@@ -129,7 +121,7 @@
       />
     </Card>
 
-    <Card class="static span-2">
+    <Card class="static">
       <RichContentLinksForm
         title="Deep Dive Links"
         :loaded-links="data.richContentLinks"
@@ -316,7 +308,8 @@ const isCreator = computed(() => address.value?.toLowerCase() === props.data.cre
 const toSign = computed(() =>
   isCreator.value &&
   !isSigned.value &&
-  dataComplete.value
+  dataComplete.value &&
+  !!props.data.published_at
 )
 const markSigned = (set) => {
   isSigned.value = !!set.artist_signature
@@ -394,6 +387,7 @@ form {
   }
 }
 
+form,
 .card,
 .grid {
   display: grid;
