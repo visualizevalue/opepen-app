@@ -12,26 +12,43 @@
 
   <Confirm
     v-model:open="confirmPublish"
-    title="Publish Submission"
+    title="Publish Submission?"
     text="Do you really want to publish this submission?"
     action="Publish"
     :callback="async () => {
       await executePublish()
-      await navigateTo(`/submissions/${submission.uuid}`)
+      await refresh()
+      if (submission.published_at) {
+        await navigateTo(`/submissions/${submission.uuid}`)
+      }
     }"
   />
 
   <Confirm
     v-model:open="confirmUnpublish"
-    title="Unpublish Submission"
+    title="Unpublish Submission?"
     text="Do you really want to unpublish this submission? This will clear all opt ins and remove it from the public set submissions."
     action="Unpublish"
-    :callback="executeUnpublish"
+    :callback="async () => {
+      await executeUnpublish()
+      await refresh()
+    }"
+  />
+
+  <Confirm
+    v-model:open="confirmShadow"
+    title="Shadow Submission?"
+    text="Do you really want to shadow (hide) this submission?"
+    action="Shadow"
+    :callback="async () => {
+      await executeShadow()
+      await refresh()
+    }"
   />
 
   <Confirm
     v-model:open="confirmDelete"
-    title="Delete Submission"
+    title="Delete Submission?"
     text="Do you really want to delete this submission?"
     action="Delete"
     :callback="async () => {
@@ -42,14 +59,24 @@
 </template>
 
 <script setup lang="ts">
-const { submission } = defineProps<{ submission: SetSubmission }>()
+const { submission, refresh } = defineProps<{
+  submission: SetSubmission
+  refresh(): Promise<void>
+}>()
 const emit = defineEmits(['save'])
 
 const confirmDelete = ref(false)
 const { execute: executeDelete } = await useApiDelete(`/set-submissions/${submission.uuid}`)
 
+const confirmShadow = ref(false)
+const { execute: executeShadow } = await useApiPost(`/set-submissions/${submission.uuid}/shadow`)
+
 const confirmPublish = ref(false)
-const { execute: executePublish } = await useApiPost(`/set-submissions/${submission.uuid}/publish`)
+const { execute: executePublish } = await useApiPost(`/set-submissions/${submission.uuid}/publish`, {
+  onResponseError () {
+    alert(`Publishing failed. Required data is missing.`)
+  },
+})
 
 const confirmUnpublish = ref(false)
 const { execute: executeUnpublish } = await useApiPost(`/set-submissions/${submission.uuid}/unpublish`)
@@ -89,13 +116,20 @@ const items = computed(() => {
       text: 'View',
       icon: 'eye',
     },
+    isAdmin.value ? {
+      onClick: () => confirmShadow.value = true,
+      text: 'Shadow',
+      icon: 'eye-off',
+    } : null,
     {
       onClick: () => confirmDelete.value = true,
       text: 'Delete',
       icon: 'trash',
     },
-  ]
+  ].filter(i => !!i)
 })
+
+const showAlert = (msg: string) => alert(msg)
 </script>
 
 <style scoped>

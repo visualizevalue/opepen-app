@@ -10,6 +10,7 @@
         <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
         <SetEditOptions
           :submission="data"
+          :refresh="refresh"
           @save="store"
         />
       </Actions>
@@ -151,6 +152,7 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  refresh: Function,
 })
 const emit = defineEmits(['updated'])
 
