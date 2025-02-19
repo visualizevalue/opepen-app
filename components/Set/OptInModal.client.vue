@@ -119,6 +119,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['update'])
 const open = defineModel('open', { required: true })
+const { refreshAccount } = await useProfile()
 
 // FIXME: filter to delegated tokenIDs for token specific delegations
 const address = computed(() => props.address)
@@ -244,6 +245,8 @@ const sign = async () => {
         delegated_by: delegatedAddresses.value.join(',')
       })
     })
+
+    await refreshAccount()
 
     signed.value = true
   } catch (e) {

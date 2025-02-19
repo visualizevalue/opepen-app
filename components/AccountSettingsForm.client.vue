@@ -86,6 +86,8 @@ const props = defineProps({
   id: String,
 })
 
+const { refreshAccount } = await useProfile()
+
 const { data: settings, refresh } = await useApi(`/accounts/settings/${props.id}`, {
   credentials: 'include',
 })
@@ -150,6 +152,7 @@ const save = async () => {
   saving.value = true
   await execute()
   await refresh()
+  await refreshAccount() // Update global cache
   lastSaved.value = DateTime.now()
   saving.value = false
 }

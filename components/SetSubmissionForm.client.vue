@@ -142,9 +142,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['updated'])
 
-const { session } = useSignIn()
-const address = computed(() => session.value.address)
-const account = await useProfile(address)
+const { account } = await useProfile()
 
 const name = ref(props.data.name || '')
 const image1 = ref(props.data.edition1Image || null)

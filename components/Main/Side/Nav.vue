@@ -2,7 +2,7 @@
   <nav ref="nav" :style="style" class="sidebar">
 
     <WithAccount v-slot="{ address }">
-      <MainSideProfile :address="address" @sendClose="close" />
+      <MainSideProfile @sendClose="close" />
     </WithAccount>
 
     <MainSideOptIn @click="close" />

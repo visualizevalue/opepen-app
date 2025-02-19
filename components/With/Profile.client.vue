@@ -1,19 +1,16 @@
 <template>
 
-  <slot
-    v-bind="$attrs"
-    :account="account"
-  />
+  <WithAccount v-slot="{ isConnected }">
+    <slot
+      v-bind="$attrs"
+      :account="account"
+      :is-connected="isConnected"
+    />
+  </WithAccount>
 
 </template>
 
 <script setup>
-const props = defineProps({
-  id: String, // Could be an address, or an ENS key or an opepen API id
-})
-
-const id = computed(() => props.id)
-
-const account = await useProfile(id)
+const { account } = await useProfile()
 </script>
 

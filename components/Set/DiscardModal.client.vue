@@ -20,6 +20,7 @@ interface Props {
 const { submission } = defineProps<Props>()
 const emit = defineEmits(['update'])
 const open = defineModel('open', { required: true })
+const { refreshAccount } = await useProfile()
 
 const { execute: discard, status } = await useApi(`/set-submissions/${submission.uuid}/discard`, {
   immediate: false,
@@ -27,6 +28,7 @@ const { execute: discard, status } = await useApi(`/set-submissions/${submission
   credentials: 'include',
   onResponse: () => {
     open.value = false
+    refreshAccount()
     emit('update')
   },
 })

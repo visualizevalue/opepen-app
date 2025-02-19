@@ -13,8 +13,8 @@ type Session = {
   is_admin: boolean;
 }
 
-const currentAddress = ref('')
 const nonce = ref('')
+export const currentAddress = ref('')
 export const signInLoading = ref(false)
 export const signingIn = ref(false)
 export const signInFailed = ref(false)

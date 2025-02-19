@@ -1,11 +1,9 @@
 <template>
   <nav id="top-nav" :class="{ hidden }">
-    <WithAccount v-slot="{ address }">
-      <WithProfile v-if="address" :id="address" v-slot="{ account }">
-        <Avatar :account="account" @click="$emit('openMain')" />
-      </WithProfile>
+    <WithProfile v-slot="{ account, isConnected }">
+      <Avatar v-if="isConnected" :account="account" @click="$emit('openMain')" />
       <Avatar v-else @click="$emit('openMain')" />
-    </WithAccount>
+    </WithProfile>
 
     <Icon type="opepen-eye" class="main-logo" @click="scrollTop" />
 

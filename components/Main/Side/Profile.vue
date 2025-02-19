@@ -1,6 +1,6 @@
 <template>
   <section class="profile">
-    <MainOptionsDropdown v-if="address" @sendClose="$emit('sendClose')" />
+    <MainOptionsDropdown v-if="account" @sendClose="$emit('sendClose')" />
 
     <Avatar :account="account" />
 
@@ -24,32 +24,26 @@
       </div>
     </div>
 
-    <Connect v-if="! address" class-name="main-connect link-button">
-      <span>Connect</span>
-      <Icon type="chevron-right" />
-    </Connect>
-    <Button v-else :to="`/${address}`" class="link-button" @click="$emit('sendClose')">
+    <Button v-if="account?.address" :to="`/${account.address}`" class="link-button" @click="$emit('sendClose')">
       <span>View Profile</span>
       <Icon type="chevron-right" />
     </Button>
+    <Connect v-else class-name="main-connect link-button">
+      <span>Connect</span>
+      <Icon type="chevron-right" />
+    </Connect>
   </section>
 </template>
 
 <script setup>
-const props = defineProps({
-  address: String,
-})
-
 defineEmits(['sendClose'])
 
-const address = computed(() => props.address)
-const account = await useProfile(address)
-const name = computed(() =>
-  address.value && address.value !== ADDRESS_ZERO
-    ? account.value?.display
-    : `Opepen Visitor`
+const { account } = await useProfile()
+const name = computed(() => !!account.value?.address
+  ? account.value?.display
+  : `Opepen Visitor`
 )
-const id = computed(() => shortAddress(address.value || ADDRESS_ZERO, 3))
+const id = computed(() => shortAddress(account.value?.address || ADDRESS_ZERO, 3))
 const stats = computed(() => ({
   submissions: formatNumber(account.value?.set_submissions_count || 0),
   curations: formatNumber(account.value?.opt_in_count || 0),

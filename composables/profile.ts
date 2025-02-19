@@ -1,17 +1,25 @@
+let accountWatcher: any
 const account = ref()
 
-export const useProfile = async (id: Ref<string>) => {
-  const config = useRuntimeConfig()
+export const useProfile = async () => {
+  const refreshAccount = async () => {
+    if (! currentAddress.value) {
+      account.value = null
+    } else {
+      account.value = await $fetch(`${useConfig('opepenApi')}/accounts/${currentAddress.value}`)
+    }
+  }
+  if (! accountWatcher) {
+    accountWatcher = watch(currentAddress, () => refreshAccount())
+  }
 
-  if (id.value && id.value === account.value?.address) return account
+  if (! import.meta.server && ! account.value?.address) {
+    await refreshAccount()
+  }
 
-  const url = computed(() => `${config.public.opepenApi}/accounts/${id.value}`)
-  const { data } = await useFetch(url)
-
-  watchEffect(() => {
-    account.value = data.value
-  })
-
-  return account
+  return {
+    account,
+    refreshAccount,
+  }
 }
 
