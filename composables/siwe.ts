@@ -10,15 +10,8 @@ type Session = {
   statement: string;
   uri: string;
   version: string;
+  is_admin: boolean;
 }
-
-// TODO: Refactor into server side account setting
-export const ADMIN_ADDRESSES = [
-  '0xe11da9560b51f8918295edc5ab9c0a90e9ada20b',
-  '0xc8f8e2f59dd95ff67c3d39109eca2e2a017d4c8a',
-  '0x412c84b454ee700cb22d1a7d214eb5bad1ba19b4',
-  '0x1d4c8282a408d8fe92496cccd1eaa4ff0fdd3b97',
-]
 
 const currentAddress = ref('')
 const nonce = ref('')
@@ -27,7 +20,7 @@ export const signingIn = ref(false)
 export const signInFailed = ref(false)
 export const session: Ref<Session|null> = ref(null)
 export const isAuthenticated = computed(() => session.value && session.value.address?.toLowerCase() === currentAddress.value?.toLowerCase())
-export const isAdmin = computed(() => ADMIN_ADDRESSES.includes(session.value?.address.toLowerCase() || ''))
+export const isAdmin = computed(() => session.value?.is_admin)
 
 let accountWatcher: any
 
@@ -47,6 +40,7 @@ export const useSignIn = () => {
 
   if (! accountWatcher) {
     currentAddress.value = getAccount($wagmi)?.address
+    fetchMe()
 
     // Set up the singleton account watcher
     accountWatcher = watchAccount($wagmi, {
@@ -63,7 +57,7 @@ export const useSignIn = () => {
     })
   }
 
-  const fetchMe = async () => {
+  async function fetchMe () {
     session.value = await $fetch(`${API}/auth/me`, {
       credentials: 'include',
     })

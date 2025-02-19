@@ -17,14 +17,14 @@
         </NuxtLink>
         <SocialLinks :links="links" class="socials" always-show>
           <template #last>
-            <IsMe :address="account.address">
+            <IsMeOrAdmin :address="account.address">
               <li>
-                <Button to="/settings" class="small">
+                <Button :to="`/${account.address}/settings`" class="small">
                   <Icon type="settings" />
                   <span>Settings</span>
                 </Button>
               </li>
-            </IsMe>
+            </IsMeOrAdmin>
           </template>
         </SocialLinks>
       </div>

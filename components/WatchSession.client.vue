@@ -19,7 +19,8 @@
 <script setup>
 import { useDisconnect } from '@wagmi/vue'
 
-useSignIn()
+const { fetchMe } = useSignIn()
+fetchMe()
 const { disconnect } = useDisconnect()
 
 const reload = () => window.location.reload()
