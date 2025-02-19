@@ -53,6 +53,16 @@
     </Card>
 
     <Card class="static">
+      <label>
+        <span>
+          <span>Email </span>
+          <small class="muted">
+            <template v-if="settings?.email_verified">(Verified)</template>
+            <template v-else>(Verification pending. Please check your inbox.)</template>
+          </small>
+        </span>
+        <input type="email" class="input" v-model="email" placeholder="you@domain.com" />
+      </label>
       <label>Notifications</label>
       <FormCheckbox v-model="notificationGeneral">General Information</FormCheckbox>
       <FormCheckbox v-model="notificationNewCuratedSubmission">New Set on Consensus Countdown</FormCheckbox>
@@ -146,7 +156,7 @@ const save = async () => {
 watchDebounced(
   body,
   () => save(),
-  { debounce: 500, maxWait: 2000 },
+  { debounce: 800, maxWait: 2500 },
 )
 </script>
 

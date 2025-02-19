@@ -10,7 +10,19 @@ textarea {
   text-transform: none !important;
 }
 
-label {
+form label {
   color: var(--muted) !important;
+
+  > span:first-child {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacer-sm);
+  }
+
+  small {
+    display: inline-flex;
+    gap: var(--spacer-sm);
+    align-items: center;
+  }
 }
 
