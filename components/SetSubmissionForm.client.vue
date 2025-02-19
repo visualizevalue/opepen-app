@@ -11,6 +11,7 @@
         <SetEditOptions
           :submission="data"
           :refresh="refresh"
+          :data-complete="dataComplete"
           @save="store"
         />
       </Actions>
@@ -34,9 +35,6 @@
     <!--     <Button :to="`/sets/${data.set_id}`">View Set</Button> -->
     <!--   </div> -->
     <!-- </Alert> -->
-
-    <!-- <Card class="static span-2"> -->
-    <!-- </Card> -->
 
     <Card class="static span-2 grid meta">
       <label class="name span-2">
@@ -139,7 +137,6 @@
         :disabled="disabled && !isAdmin"
       />
     </Card>
-
   </form>
 </template>
 
@@ -159,8 +156,6 @@ const emit = defineEmits(['updated'])
 const { session } = useSignIn()
 const address = computed(() => session.value.address)
 const account = await useProfile(address)
-
-const isCreator = computed(() => address.value?.toLowerCase() === props.data.creator)
 
 const name = ref(props.data.name || '')
 const image1 = ref(props.data.edition1Image || null)
@@ -210,6 +205,7 @@ watch(account, () => {
 
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
+const disabled = computed(() => props.data.set_id || (! isAdmin.value && props.data.published_at))
 const imagesComplete = computed(() => {
   const hasPreviewImages = image1.value &&
                            image4.value &&
@@ -303,7 +299,7 @@ const imagesComplete = computed(() => {
   )
 })
 const dataComplete = computed(() => {
-  return name.value &&
+  return !!(name.value &&
     name1.value &&
     name4.value &&
     name5.value &&
@@ -313,17 +309,15 @@ const dataComplete = computed(() => {
     imagesComplete.value &&
     description.value &&
     artist.value &&
-    type.value
+    type.value)
 })
 const isSigned = ref(!!props.data.artist_signature)
-const published = computed(() => !! props.data.published_at)
-const isPublishedToSet = computed(() => !!props.data.set_id)
+const isCreator = computed(() => address.value?.toLowerCase() === props.data.creator)
 const toSign = computed(() =>
   isCreator.value &&
   !isSigned.value &&
   dataComplete.value
 )
-const disabled = computed(() => props.data.set_id || (! isAdmin.value && props.data.published_at))
 const markSigned = (set) => {
   isSigned.value = !!set.artist_signature
   emit('updated', set)

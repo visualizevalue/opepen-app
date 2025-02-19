@@ -59,8 +59,9 @@
 </template>
 
 <script setup lang="ts">
-const { submission, refresh } = defineProps<{
+const { submission, dataComplete, refresh } = defineProps<{
   submission: SetSubmission
+  dataComplete: boolean
   refresh(): Promise<void>
 }>()
 const emit = defineEmits(['save'])
@@ -87,28 +88,23 @@ const items = computed(() => {
   }
 
   return [
-    ...(
-      submission.published_at
-        ? [
-          {
-            onClick: () => confirmUnpublish.value = true,
-            text: 'Unpublish',
-            icon: 'eye-off',
-          }
-        ]
-        : [
-          {
-            onClick: () => emit('save'),
-            text: 'Save',
-            icon: 'save',
-          },
-          {
-            onClick: () => confirmPublish.value = true,
-            text: 'Publish',
-            icon: 'globe',
-          },
-        ]
-    ),
+    submission.published_at
+      ? {
+        onClick: () => confirmUnpublish.value = true,
+        text: 'Unpublish',
+        icon: 'eye-off',
+      } : {
+        onClick: () => emit('save'),
+        text: 'Save',
+        icon: 'save',
+      },
+    dataComplete && ! submission.published_at
+      ? {
+        onClick: () => confirmPublish.value = true,
+        text: 'Publish',
+        icon: 'globe',
+      }
+      : null,
     {
       onClick: () => {
         navigateTo(`/submissions/${submission.uuid}`)
