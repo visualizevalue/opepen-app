@@ -41,17 +41,22 @@ const { data } = defineProps({
 
 const EDITIONS = [4, 5, 10, 20, 40]
 const images = computed(() => {
+  let array = []
   const image = data.edition1Image
-  image.edition = 1
-  const array = [image]
+  if (image) {
+    image.edition = 1
+    array.push(image)
+  }
 
   for (const edition of EDITIONS) {
     let index = 1
     while (index <= edition) {
       const image = data.dynamicSetImages[`image${edition}_${index}`]
-      image.edition = edition
-      if (image) array.push(image)
       index ++
+
+      if (! image) continue
+      image.edition = edition
+      array.push(image)
     }
   }
 
