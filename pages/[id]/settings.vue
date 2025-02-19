@@ -2,7 +2,7 @@
 
   <PageFrameSm>
     <IsAuthenticated>
-      <AccountSettingsForm :id="session?.address" />
+      <AccountSettingsForm :id="$route.params.id" />
     </IsAuthenticated>
   </PageFrameSm>
 
@@ -10,6 +10,6 @@
 
 <script setup>
 useMetaData({
-  title: `Your Settings | Opepen`,
+  title: `Account Settings | Opepen`,
 })
 </script>
