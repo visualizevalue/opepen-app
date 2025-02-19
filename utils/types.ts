@@ -54,6 +54,7 @@ export interface SetSubmission {
   published_at: string|null
   approved_at: string|null
   starred_at: string|null
+  shadowed_at: string|null
   reveals_at: string|null
   creatorAccount: Account
   submission_stats?: SubmissionStats

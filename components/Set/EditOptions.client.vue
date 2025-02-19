@@ -118,8 +118,8 @@ const items = computed(() => {
     },
     isAdmin.value ? {
       onClick: () => confirmShadow.value = true,
-      text: 'Shadow',
-      icon: 'eye-off',
+      text: submission.shadowed_at ? 'Unshadow' : 'Shadow',
+      icon: 'x-octagon',
     } : null,
     {
       onClick: () => confirmDelete.value = true,
