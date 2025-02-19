@@ -17,9 +17,6 @@
       </Actions>
     </PageHeader>
 
-    <!--   <PublishSetSubmissionForm v-if="! published && dataComplete" :submission="data" :save="store" key="publish" /> -->
-    <!--   <UnpublishSetSubmissionForm :submission="data" key="unpublish" @unpublished="$emit('updated', $event)" /> -->
-
     <Alert v-if="toSign" class="inline">
       <p>Artist Signature: You can sign your set via an onchain transaction.</p>
 

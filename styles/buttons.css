@@ -1,4 +1,5 @@
 .button {
+  width: min-content;
 
   .icon {
     height: var(--size-5);

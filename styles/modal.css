@@ -4,8 +4,9 @@
     font-size: var(--font-base);
   }
 
-  > menu.actions {
+  menu.actions {
     margin: var(--spacer) 0;
+    justify-content: flex-end;
 
     &:last-child {
       margin-bottom: 0;
