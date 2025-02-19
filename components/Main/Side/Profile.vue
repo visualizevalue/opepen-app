@@ -52,7 +52,7 @@ const name = computed(() =>
 const id = computed(() => shortAddress(address.value || ADDRESS_ZERO, 3))
 const stats = computed(() => ({
   submissions: formatNumber(account.value?.set_submissions_count || 0),
-  curations: formatNumber(account.value?.votes_count || 0),
+  curations: formatNumber(account.value?.opt_in_count || 0),
   opepen: formatNumber(account.value?.opepen_count || 0),
 }))
 </script>
