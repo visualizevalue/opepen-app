@@ -43,7 +43,7 @@ const { data: opepen, pending } = useLazyFetch(url, { key: 'revealed-opepen' })
   .list {
     display: grid;
     gap: var(--spacer);
-    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
 
     flex-wrap: wrap;
     width: 100%;

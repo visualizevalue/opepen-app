@@ -82,7 +82,7 @@ const openModal = (img) => {
   .list {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
     container-type: inline-size;
     flex-wrap: wrap;
     margin: 0 auto;
