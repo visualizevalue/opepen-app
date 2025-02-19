@@ -388,6 +388,7 @@ const sign = async () => {
 
     > label {
       white-space: nowrap;
+      padding: var(--spacer-xs) var(--spacer);
 
       .edition {
         color: var(--muted);

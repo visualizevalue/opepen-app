@@ -23,7 +23,7 @@ const checked = defineModel({ required: true })
   padding-left: 30px;
   @mixin ui-font;
   color: var(--gray-z-7);
-  padding: var(--spacer-xs) var(--spacer);
+  padding: 0;
   gap: var(--spacer-sm);
 
   input {
