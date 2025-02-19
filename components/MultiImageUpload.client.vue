@@ -1,7 +1,7 @@
 <template>
   <div class="multi-image-upload">
     <label>{{ name }}</label>
-    <Button type="button" @click="reset" class="small clear"><Icon type="trash" /><span>Clear</span></Button>
+    <Button v-if="! disabled" type="button" @click="reset" class="small clear"><Icon type="trash" /><span>Clear</span></Button>
 
     <label
       class="upload"
@@ -30,7 +30,7 @@
         :key="image.uuid"
         :image="image"
       >
-        <button @click="() => deleteFile(idx)" class="unstyled"><Icon type="x" :stroke-width="3" /></button>
+        <button v-if="! disabled" @click="() => deleteFile(idx)" class="unstyled"><Icon type="x" :stroke-width="3" /></button>
       </Image>
 
       <Loading v-if="loading" txt="" />

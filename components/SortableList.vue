@@ -1,7 +1,7 @@
 <template>
   <div ref="el" class="list">
     <div v-for="(item, index) in list" :key="item.id || item._id" class="item">
-      <SortHandle />
+      <SortHandle v-if="! disabled" />
 
       <slot :item="item" :index="index" />
     </div>
@@ -15,6 +15,7 @@ const el = ref(null)
 const props = defineProps({
   items: Array,
   max: Number,
+  disabled: Boolean,
 })
 const emit = defineEmits(['update'])
 

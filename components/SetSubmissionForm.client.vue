@@ -1,18 +1,17 @@
 <template>
-  <form @submit.stop.prevent="store" class="grid">
+  <form @submit.stop.prevent="store" class="grid" :disabled="disabled">
     <PageHeader class="span-2">
       <SectionTitle>
-        <span>Update submission</span>
+        <span v-if="data.set_id">Permanent collection set</span>
+        <span v-else>Update submission</span>
       </SectionTitle>
 
       <Actions>
         <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
-        <Button :disabled="saving">
-          <Icon type="save" />
-          <span v-if="saving">Saving...</span>
-          <span v-else>Save</span>
-        </Button>
-        <SetEditOptions :submission="data" />
+        <SetEditOptions
+          :submission="data"
+          @save="store"
+        />
       </Actions>
     </PageHeader>
 
@@ -86,7 +85,7 @@
 
     <Card class="static span-2">
       <label class="artist">
-        <span>Artist</span>
+        <span>Artist Name</span>
         <input class="input" type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
       </label>
 
@@ -96,8 +95,8 @@
       </label>
 
       <label>
-        <span>Co-Creators</span>
-        <SortableList :items="coCreators" @update="coCreators = $event" class="co-creators">
+        <span>Co-Creator Addresses</span>
+        <SortableList :items="coCreators" @update="coCreators = $event" class="co-creators" :disabled="disabled">
           <template v-slot="{ item, index }">
             <input
               type="text"
@@ -114,7 +113,7 @@
 
     <Card class="static span-2">
       <label class="type">
-        <span >Edition Type</span>
+        <span>Edition Type</span>
         <select v-model="type" class="select" :disabled="disabled">
           <option value="DYNAMIC">Dynamic</option>
           <option value="PRINT" default>Prints</option>
@@ -133,9 +132,10 @@
 
     <Card class="static span-2">
       <RichContentLinksForm
+        title="Deep Dive Links"
         :loaded-links="data.richContentLinks"
         :new-link-data="{ address: data.creator, set_submission_id: data.id }"
-        title="Deep Dive Links"
+        :disabled="disabled && !isAdmin"
       />
     </Card>
 
@@ -143,8 +143,9 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig()
+import { watchDebounced } from '@vueuse/core'
 
+const config = useRuntimeConfig()
 const props = defineProps({
   data: {
     type: Object,
@@ -320,7 +321,7 @@ const toSign = computed(() =>
   !isSigned.value &&
   dataComplete.value
 )
-const disabled = computed(() => published.value && ! isAdmin.value)
+const disabled = computed(() => props.data.set_id || (! isAdmin.value && props.data.published_at))
 const markSigned = (set) => {
   isSigned.value = !!set.artist_signature
   emit('updated', set)
@@ -329,40 +330,37 @@ const markSigned = (set) => {
 const saving = ref(false)
 const lastSaved = ref(null)
 const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
+const saveData = computed(() => ({
+    name: name.value,
+    description: description.value,
+    artist: artist.value,
+    edition_type: type.value,
+    edition_1_image_id: image1.value?.uuid,
+    edition_4_image_id: image4.value?.uuid,
+    edition_5_image_id: image5.value?.uuid,
+    edition_10_image_id: image10.value?.uuid,
+    edition_20_image_id: image20.value?.uuid,
+    edition_40_image_id: image40.value?.uuid,
+    edition_1_name: name1.value,
+    edition_4_name: name4.value,
+    edition_5_name: name5.value,
+    edition_10_name: name10.value,
+    edition_20_name: name20.value,
+    edition_40_name: name40.value,
+    creator: creator.value,
+    co_creator_1: coCreators.value[0]?.address || undefined,
+    co_creator_2: coCreators.value[1]?.address || undefined,
+    co_creator_3: coCreators.value[2]?.address || undefined,
+    co_creator_4: coCreators.value[3]?.address || undefined,
+    co_creator_5: coCreators.value[4]?.address || undefined,
+}))
 const store = async () => {
   saving.value = true
 
-  const url = props.data?.uuid
-    ? `${config.public.opepenApi}/set-submissions/${props.data.uuid}`
-    : `${config.public.opepenApi}/set-submissions`
-
-  const set = await $fetch(url, {
+  const set = await $fetch(`${config.public.opepenApi}/set-submissions/${props.data.uuid}`, {
     method: 'POST',
     credentials: 'include',
-    body: JSON.stringify({
-      name: name.value,
-      description: description.value,
-      artist: artist.value,
-      edition_type: type.value,
-      edition_1_image_id: image1.value?.uuid,
-      edition_4_image_id: image4.value?.uuid,
-      edition_5_image_id: image5.value?.uuid,
-      edition_10_image_id: image10.value?.uuid,
-      edition_20_image_id: image20.value?.uuid,
-      edition_40_image_id: image40.value?.uuid,
-      edition_1_name: name1.value,
-      edition_4_name: name4.value,
-      edition_5_name: name5.value,
-      edition_10_name: name10.value,
-      edition_20_name: name20.value,
-      edition_40_name: name40.value,
-      creator: creator.value,
-      co_creator_1: coCreators.value[0]?.address || undefined,
-      co_creator_2: coCreators.value[1]?.address || undefined,
-      co_creator_3: coCreators.value[2]?.address || undefined,
-      co_creator_4: coCreators.value[3]?.address || undefined,
-      co_creator_5: coCreators.value[4]?.address || undefined,
-    })
+    body: JSON.stringify({ ...saveData.value }),
   })
 
   saving.value = false
@@ -374,12 +372,22 @@ const store = async () => {
     await navigateTo(`/create/${set.uuid}`)
   }
 }
-onMounted(() => {
-  if (! props.data?.uuid) store()
-})
+watchDebounced(
+  saveData,
+  () => store(),
+  { debounce: 500, maxWait: 2000, deep: true },
+)
 </script>
 
 <style scoped>
+form {
+  pointer-events: none;
+
+  &:not([disabled="true"]) {
+    pointer-events: all;
+  }
+}
+
 .actions {
   align-items: center;
 

@@ -5,35 +5,35 @@
       <template v-if="lastSaved">(Last saved {{ formatTime(lastSaved) }})</template>
     </label>
 
-    <SortableList :items="links" @update="links = $event" class="rich-content">
+    <SortableList :items="links" @update="links = $event" class="rich-content" :disabled="disabled">
       <template v-slot="{ item, index }">
         <div class="rich-content-link">
-          <button @click.stop.prevent="remove(index)" class="unstyled delete" type="button"><Icon type="x" stroke-width="3" /></button>
+          <button v-if="! disabled" @click.stop.prevent="remove(index)" class="unstyled delete" type="button"><Icon type="x" stroke-width="3" /></button>
           <div class="images">
             <label>Images</label>
             <div>
-              <ImageUpload @stored="links[index].logo = $event" @reset="links[index].logo = null" name="Icon" :image="links[index].logo" class="logo" />
-              <ImageUpload @stored="links[index].cover = $event" @reset="links[index].cover = null" name="Cover" :image="links[index].cover" class="cover" />
+              <ImageUpload @stored="links[index].logo = $event" @reset="links[index].logo = null" name="Icon" :disabled="disabled" :image="links[index].logo" class="logo" />
+              <ImageUpload @stored="links[index].cover = $event" @reset="links[index].cover = null" name="Cover" :disabled="disabled" :image="links[index].cover" class="cover" />
             </div>
           </div>
           <label class="url">
             <span class="label">URL</span>
-            <input class="input" type="text" :value="item.url" @input="links[index].url = $event.target.value" placeholder="URL">
+            <input class="input" type="text" :disabled="disabled" :value="item.url" @input="links[index].url = $event.target.value" placeholder="URL">
           </label>
           <label class="title">
             <span class="label">Title</span>
-            <input class="input" type="text" :value="item.title" @input="links[index].title = $event.target.value" placeholder="Title">
+            <input class="input" type="text" :disabled="disabled" :value="item.title" @input="links[index].title = $event.target.value" placeholder="Title">
           </label>
           <label class="description">
             <span class="label">Description</span>
-            <Input class="input" type="text" :model-value="item.description" @update:model-value="links[index].description = $event" />
+            <Input class="input" type="text" :disabled="disabled" :model-value="item.description" @update:model-value="links[index].description = $event" />
           </label>
         </div>
       </template>
     </SortableList>
   </div>
 
-  <Actions>
+  <Actions v-if="! disabled">
     <Button @click.stop.prevent="add" type="button">Add</Button>
   </Actions>
 </template>
@@ -51,6 +51,7 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  disabled: Boolean,
 })
 const emit = defineEmits(['updated'])
 
@@ -142,9 +143,16 @@ watchDebounced(
         width: var(--size-4);
         padding: 0;
         outline: none;
+        color: var(--muted);
 
         .icon {
-          width: var(--size-4);
+          width: var(--size-3);
+          height: var(--size-3);
+          color: inherit;
+        }
+
+        &:--highlight {
+          color: var(--color);
         }
       }
 

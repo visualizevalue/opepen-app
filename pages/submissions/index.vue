@@ -37,7 +37,7 @@
 const url = `${useConfig('opepenApi')}/set-submissions`
 const sort = ref('-submission_stats.demand.total')
 const query = computed(() => {
-  const q = new URLSearchParams(`limig=40`)
+  const q = new URLSearchParams(`limit=40`)
 
   q.set('sort', sort.value)
 
