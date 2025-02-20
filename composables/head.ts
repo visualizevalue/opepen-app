@@ -9,7 +9,7 @@ type HeadConfig = {
 const makeHead = ({
   title = 'Opepen',
   description = 'Consensus is temporary.',
-  og = 'https://opepen.art/og/og.png',
+  og = 'https://opepen.art/og/intro.png',
   meta = [],
 }: HeadConfig) => {
   return {
