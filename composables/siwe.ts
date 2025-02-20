@@ -135,12 +135,15 @@ export const useSignIn = () => {
   const ensureSignIn = async () => {
     if (isAuthenticated.value && signInLoading.value) return
 
-    let tries = 1
-    while (! isAuthenticated.value && tries < 10) {
+    let tries = 0
+    while (! isAuthenticated.value && tries < 3) {
       try {
         await signIn()
-      } catch (e) {}
+      } catch (e) {
+        console.error('signin failed', e)
+      }
       await delay(500)
+      console.info(`signin attempt ${tries}`)
       tries ++
     }
     if (! isAuthenticated.value) {

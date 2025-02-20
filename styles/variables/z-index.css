@@ -6,6 +6,7 @@
   --z-index-nav-secondary:  7;
   --z-index-nav-overlay:    8;
   --z-index-nav:           10;
+  --z-index-overlay:       99;
   --z-index-dialog:       100;
 
 }

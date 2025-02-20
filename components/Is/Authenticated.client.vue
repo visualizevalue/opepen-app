@@ -10,7 +10,7 @@
     </WithProfile>
   </WithAccount>
 
-  <Modal :open="! isAuthenticated && ! signInLoading" :x-close="false">
+  <Modal :open="! isAuthenticated && ! signInLoading" :x-close="false" compat>
     <h1>Sign In Required</h1>
     <p>You have to sign in with Ethereum to view this page.</p>
 
@@ -22,8 +22,6 @@
 </template>
 
 <script setup>
-const { signIn, ensureSignIn } = useSignIn()
-
-onMounted(() => ensureSignIn())
+const { signIn } = useSignIn()
 </script>
 
