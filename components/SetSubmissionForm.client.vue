@@ -192,7 +192,9 @@ watch(account, () => {
 
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
-const disabled = computed(() => props.data.set_id || (! isAdmin.value && props.data.published_at))
+const disabled = computed(() =>
+  !!(props.data.set_id || (! isAdmin.value && props.data.published_at))
+)
 const imagesComplete = computed(() => {
   const hasPreviewImages = image1.value &&
                            image4.value &&
@@ -299,7 +301,7 @@ const dataComplete = computed(() => {
     type.value)
 })
 const isSigned = ref(!!props.data.artist_signature)
-const isCreator = computed(() => address.value?.toLowerCase() === props.data.creator)
+const isCreator = computed(() => currentAddress.value?.toLowerCase() === props.data.creator)
 const toSign = computed(() =>
   isCreator.value &&
   !isSigned.value &&
