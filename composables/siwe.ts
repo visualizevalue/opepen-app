@@ -133,11 +133,18 @@ export const useSignIn = () => {
   }
 
   const ensureSignIn = async () => {
-    if (! isAuthenticated.value && ! signInLoading.value) {
-      await signIn()
-      if (! isAuthenticated.value) {
-        throw new Error(`Not Authenticated`)
-      }
+    if (isAuthenticated.value && signInLoading.value) return
+
+    let tries = 1
+    while (! isAuthenticated.value && tries < 10) {
+      try {
+        await signIn()
+      } catch (e) {}
+      await delay(500)
+      tries ++
+    }
+    if (! isAuthenticated.value) {
+      throw new Error(`Not Authenticated`)
     }
   }
 
