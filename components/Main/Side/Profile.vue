@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <Button v-if="account?.address" :to="`/${account.address}`" class="link-button" @click="$emit('sendClose')">
+    <Button v-if="account?.address" :to="`/${accountId(account)}`" class="link-button" @click="$emit('sendClose')">
       <span>View Profile</span>
       <Icon type="chevron-right" />
     </Button>
@@ -36,6 +36,7 @@
 </template>
 
 <script setup>
+import { id as accountId } from '~/utils/accounts'
 defineEmits(['sendClose'])
 
 const { account } = await useProfile()
