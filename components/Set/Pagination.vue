@@ -43,7 +43,7 @@ const { set } = defineProps({ set: Object })
 const previousSetId = computed(() => set.id > 1 ? pad(set.id - 1, 3) : '')
 const nextSetId = computed(() => set.id < 200 ? pad(set.id + 1, 3) : '')
 
-const { nextSet, prevSet } = useSets()
+const { nextSet, prevSet } = await useSets()
 const next = computed(() => nextSet(set.id))
 const previous = computed(() => prevSet(set.id))
 </script>

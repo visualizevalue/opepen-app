@@ -7,8 +7,8 @@
     </p>
 
     <p>
-      Creators <strong>submit</strong> their interpretations of the Opepen silhouette. <br />
-      Collectors <strong>vote</strong> on the artwork to include in the permanent collection.
+      Creators submit their interpretations of the Opepen silhouette. <br />
+      Collectors vote on the artwork to include in the permanent collection.
     </p>
 
     <p>
@@ -39,8 +39,7 @@
 </template>
 
 <script setup lang="ts">
-const { completeSets, fetchSets, loaded } = useSets()
-if (! loaded.value) await fetchSets()
+const { completeSets } = await useSets()
 
 const { day, stats } = await useStats()
 </script>

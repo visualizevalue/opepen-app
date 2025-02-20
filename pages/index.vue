@@ -74,9 +74,7 @@
 <script setup>
 const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
 
-
-const { featuredSets, fetchSets, loaded } = useSets()
-if (! loaded.value) await fetchSets()
+const { featuredSets } = await useSets()
 const featuredSubmissions = computed(() => featuredSets.value.map(s => s.submission))
 </script>
 
