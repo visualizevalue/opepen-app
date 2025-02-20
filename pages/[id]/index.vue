@@ -144,12 +144,6 @@ const createdSubmissions = computed(() => account.createdSets
   }
 }
 
-.known-for {
-  h1 {
-    margin-bottom: var(--size-2);
-  }
-}
-
 .opepens {
   display: grid;
   justify-content: center;

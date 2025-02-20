@@ -1,3 +1,3 @@
 <template>
-  <h1>Collectors</h1>
+  <h1>Curators</h1>
 </template>

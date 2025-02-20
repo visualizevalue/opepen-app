@@ -69,8 +69,8 @@
         @click="close"
       />
       <MainSideNavLink
-        to="/community/collectors"
-        title="Collectors"
+        to="/community/curators"
+        title="Curators"
         subline="View the network of Opepen Collectors"
         @click="close"
       />

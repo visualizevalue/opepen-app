@@ -24,9 +24,7 @@
 <script setup>
 const { completeSets, fetchSets, loaded, setsById } = useSets()
 
-if (! loaded.value) {
-  await fetchSets()
-}
+if (! loaded.value) await fetchSets()
 
 const allSetIds = [...Array(200)].map((_ , i) => i + 1)
 const submissions = computed(() => allSetIds.map(i => setsById.value[i]?.submission || {}))

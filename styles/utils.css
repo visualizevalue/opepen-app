@@ -2,6 +2,10 @@
   color: var(--muted);
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .visible-sm {
   @media (--md) {
     display: none;

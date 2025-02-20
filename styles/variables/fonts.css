@@ -35,8 +35,8 @@
   --font-xs: calc(var(--font-base) * 0.69);
   --font-sm: calc(var(--font-base) * 0.85);
   --font-lg: calc(var(--font-base) * 1.2);
-  --font-xl: calc(var(--font-base) * 2);
-  --font-xxl: calc(var(--font-base) * 3);
+  --font-xl: calc(var(--font-base) * 1.8);
+  --font-xxl: calc(var(--font-base) * 2.5);
 
   /* WEIGHTS & SPACING */
   --font-weight-medium: 400;

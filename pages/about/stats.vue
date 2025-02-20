@@ -1,4 +1,6 @@
 <template>
-  <h1>Stats</h1>
+  <PageFrameSm>
+    <SectionTitle>Opepen Stats</SectionTitle>
+  </PageFrameSm>
 </template>
 

@@ -26,6 +26,10 @@
       }
     }
   }
+
+  .card-link {
+    border: 0;
+  }
 }
 </style>
 

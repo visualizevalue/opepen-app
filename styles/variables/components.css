@@ -15,5 +15,7 @@
   --alert-info-border-color: var(--border-color);
   --alert-info-background-color: var(--blue-9);
   --alert-info-color: var(--blue-1);
+
+  --card-border-color-highlight: var(--border-color);
 }
 

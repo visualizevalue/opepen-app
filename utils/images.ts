@@ -1,17 +1,3 @@
-type ImageVersions = {
-  sm?: boolean, // 512
-  lg?: boolean, // 1024
-  xl?: boolean, // 2048
-}
-
-type Image = {
-  uuid: string,
-  versions: ImageVersions,
-  cdn: string,
-  path: string,
-  type: string,
-}
-
 export const isAnimated = (type: string) => ['mp4', 'webm', 'gif'].includes(type)
 export const is3d = (type: string) => ['gbl', 'gltf', 'glb-json', 'glb-binary', 'gltf-json', 'gltf-binary'].includes(type)
 

@@ -1,7 +1,20 @@
 .prose {
 
+  > h1 {
+    @mixin ui-font;
+    font-size: var(--font-xl);
+    width: 100%;
+
+    + .lead {
+      margin-top: 0;
+    }
+  }
+
   .lead {
-    font-size: 1.2em;
+    @mixin ui-font;
+    font-size: var(--font-lg);
+    color: var(--muted);
+    margin: var(--spacer) 0;
   }
 
 }

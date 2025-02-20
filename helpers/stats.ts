@@ -1,3 +1,5 @@
+const stats = ref()
+
 export const useStats = async () => {
   const config = useRuntimeConfig()
 

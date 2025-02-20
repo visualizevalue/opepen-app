@@ -1,80 +1,55 @@
 <template>
   <PageFrameSm class="prose">
-    <h1>About Opepen</h1>
+    <h1>Where constraint meets creativity.</h1>
 
     <p class="lead">
-      The Opepen protocol is an innovative approach to digital art within the Web3 space,
-      created by artist Jack Butcher. It's characterized by its unique minting and
-      evolution process, which revolves around an "open edition" NFT collection.
-      Here's how it works:
+      Opepen Edition is a public art protocol on Ethereum <span class="no-wrap">by <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink></span>.
     </p>
 
     <p>
-      Minting and Evolution: Initially launched in January 2023, Opepen started with an
-      open edition mint where 16,000 NFTs were minted for free, excluding gas fees.
-      Unlike traditional NFT projects where value is often derived from scarcity,
-      Opepen introduces a system where the art evolves through a series of drops.
-      Each drop requires a certain level of demand (at least 200% of the
-      collection size must opt-in) for the artwork to be revealed,
-      creating rarity within an open edition framework.
-    </p>
-
-    <h2>Latest Sales</h2>
-
-    <p>
-      Market Impact: Since its inception, Opepen has achieved significant recognition
-      in the NFT market. It has been auctioned at Sotheby's, underscoring its acceptance
-      and value in traditional art auction settings. Moreover, the collection has seen
-      substantial trading volume, with over 80,000 ETH traded, establishing it as one
-      of the biggest art collections on the Ethereum blockchain. This trading volume
-      reflects both the community's engagement with the project and the speculative
-      investment interest in Butcher's approach to digital art.
+      Creators <strong>submit</strong> their interpretations of the Opepen silhouette. <br />
+      Collectors <strong>vote</strong> on the artwork to include in the permanent collection.
     </p>
 
     <p>
-      Community and Cultural Impact: Opepen isn't just about the art; it's also about
-      community participation. The opt-in system for reveals fosters a sense of
-      involvement and anticipation among collectors. This project has also
-      sparked discussions and trends on platforms like X, where it's
-      celebrated for its innovative approach to digital art
-      and community-driven evolution.
+      There are 200 spots, {{ completeSets.length }} have been filled.
+    </p>
+
+    <div class="images">
+      <Image image="/wireframe-light.png" />
+      <Image image="/interpretations.jpg" />
+    </div>
+
+    <p>
+      Permanent Opepen artists include Snowfro, ACK, VV, Diewiththemostlikes, Darkfarms, fvckrender, PIV, and more.
     </p>
 
     <p>
-      The combination of these factors - the unique minting process, significant
-      trading volume, high-profile auction placements, and a strong community
-      engagement - positions Opepen as a landmark project
-      in the realm of Ethereum-based art NFTs.
+      Collectors may opt-out of the consensus building process at any time by burning their tokens.
+      {{ formatNumber(stats?.optOuts.total || 0) }} tokens have been burned.
     </p>
 
     <p>
-      Market Impact: Since its inception, Opepen has achieved significant recognition
-      in the NFT market. It has been auctioned at Sotheby's, underscoring its acceptance
-      and value in traditional art auction settings. Moreover, the collection has seen
-      substantial trading volume, with over 80,000 ETH traded, establishing it as one
-      of the biggest art collections on the Ethereum blockchain. This trading volume
-      reflects both the community's engagement with the project and the speculative
-      investment interest in Butcher's approach to digital art.
-    </p>
-
-    <p>
-      Community and Cultural Impact: Opepen isn't just about the art; it's also about
-      community participation. The opt-in system for reveals fosters a sense of
-      involvement and anticipation among collectors. This project has also
-      sparked discussions and trends on platforms like X, where it's
-      celebrated for its innovative approach to digital art
-      and community-driven evolution.
-    </p>
-
-    <p>
-      The combination of these factors - the unique minting process, significant
-      trading volume, high-profile auction placements, and a strong community
-      engagement - positions Opepen as a landmark project
-      in the realm of Ethereum-based art NFTs.
+      It is Day {{ formatNumber(day) }} of Opepen. <br/>
+      <span v-if="stats?.markets.history">
+        ${{ formatNumber(stats.markets.history.totalUSD || 0) }} secondary sales volume.
+      </span>
     </p>
   </PageFrameSm>
 </template>
 
 <script setup lang="ts">
+const { completeSets, fetchSets, loaded } = useSets()
+if (! loaded.value) await fetchSets()
+
+const { day, stats } = await useStats()
 </script>
 
+<style scoped>
+.images {
+  margin: var(--spacer) 0;
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+</style>

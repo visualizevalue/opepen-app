@@ -1,10 +1,11 @@
 <template>
-
-  <PageFrameSm>
-    <h1>
-      <span>Opepen Edition</span>
-      <small>Public Art On Ethereum</small>
-    </h1>
+  <PageFrameSm class="landing">
+    <header>
+      <h1>
+        <span>Opepen Edition</span>
+        <small>Public Art On Ethereum</small>
+      </h1>
+    </header>
 
     <hr>
 
@@ -33,28 +34,71 @@
     </section>
 
     <hr>
-  </PageFrameSm>
 
+    <section class="prose">
+      <p>
+        Opepen is an early manifestation of a digital museum - an open art protocol inviting participation from anyone.
+        A network of curators form consensus on which artworks to add to the Permanent Collection.
+      </p>
+      <Button to="/about/intro" class="link-button">
+        <span>Learn more</span>
+        <Icon type="chevron-right" />
+      </Button>
+    </section>
+
+    <hr>
+
+    <section class="sets">
+      <header>
+        <SectionTitle>Featured Sets</SectionTitle>
+        <Button to="/sets" class="small">
+          <span>Browse more</span>
+        </Button>
+      </header>
+      <SetCardGrid :submissions="featuredSubmissions" minimal />
+    </section>
+
+    <section class="artists">
+      <header>
+        <SectionTitle>Featured Artists</SectionTitle>
+        <Button to="/community/artists" class="small">
+          <span>Browse more</span>
+        </Button>
+      </header>
+      <ProfileCardGrid :accounts="artistsResponse.data" />
+    </section>
+
+  </PageFrameSm>
 </template>
 
-<script setup lang="ts">
+<script setup>
+const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
+
+
+const { featuredSets, fetchSets, loaded } = useSets()
+if (! loaded.value) await fetchSets()
+const featuredSubmissions = computed(() => featuredSets.value.map(s => s.submission))
 </script>
 
 <style scoped>
-  h1,
-  h2,
-  p {
-    @mixin ui-font;
-    font-size: var(--font-lg);
-    line-height: 1em;
+.landing {
+  > header,
+  > .intro {
+    h1,
+    h2,
+    p {
+      @mixin ui-font;
+      font-size: var(--font-lg);
+      line-height: 1em;
 
-    small {
-      font-size: 1em;
-      color: var(--muted);
+      small {
+        font-size: 1em;
+        color: var(--muted);
+      }
     }
   }
 
-  h1 {
+  > header h1 {
     display: grid;
     gap: var(--spacer-sm);
     justify-content: center;
@@ -69,10 +113,19 @@
     }
   }
 
+  > section {
+    padding: var(--spacer-xl) 0;
+
+    > header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
   .intro {
     display: grid;
     gap: var(--spacer-xl);
-    padding: var(--spacer-xl) 0;
 
     > div {
       display: grid;
@@ -104,5 +157,12 @@
       }
     }
   }
+
+  .sets,
+  .artists {
+    display: grid;
+    gap: var(--spacer);
+  }
+}
 </style>
 

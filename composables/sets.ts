@@ -1,8 +1,6 @@
 type OpepenSet = {
   id: number
-  submission: {
-    reveals_at: string
-  }
+  submission: SetSubmission
 }
 
 type KeyedSets = {
@@ -21,7 +19,14 @@ const setsById: ComputedRef<KeyedSets> = computed(() => sets.value?.reduce((obj:
   obj[set.id] = set
   return obj
 }, {}))
-const publishedSets: ComputedRef<OpepenSet[]> = computed(() => sets.value?.filter(set => !! set.submission.reveals_at))
+const publishedSets: ComputedRef<OpepenSet[]> = computed(
+  () => sets.value?.filter(set => !! set.submission.reveals_at)
+)
+const featuredSets: ComputedRef<OpepenSet[]> = computed(
+  () => publishedSets.value
+      .filter(set => !! set.submission.featured)
+      .sort((a, b) => a.submission.featured > b.submission.featured ? -1 : 1)
+)
 const setsByPublishDate: ComputedRef<OpepenSet[]> = computed(() => publishedSets.value?.sort(
   (set1, set2) => set1.submission.reveals_at >= set2.submission.reveals_at ? 1 : -1)
 )
@@ -59,6 +64,7 @@ export function useSets() {
     publishedSets,
     setsByPublishDate,
     completeSets,
+    featuredSets,
     currentSet,
     prevSet,
     nextSet,

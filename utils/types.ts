@@ -41,9 +41,26 @@ export type ArtistSignature = {
 
 export type ArtistSocials = string[]
 
+export type ImageVersions = {
+  sm?: boolean, // 512
+  lg?: boolean, // 1024
+  xl?: boolean, // 2048
+}
+
+export type Image = {
+  uuid: string,
+  versions: ImageVersions,
+  cdn: string,
+  path: string,
+  type: string,
+}
+
 export interface Account {
   address: string
   ens?: string
+  display: string
+  tagline: string
+  coverImage: Image
 }
 
 export interface SetSubmission {
@@ -62,4 +79,5 @@ export interface SetSubmission {
   reveal_strategy: string
   reveal_block_number: string
   artist_signature?: ArtistSignature
+  featured: number
 }
