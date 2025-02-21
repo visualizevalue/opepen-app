@@ -95,11 +95,9 @@ const openOptInModal = () => {
 
 const fetchSubscriptionUrl = computed(() => `/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`)
 const { data: subscription, refresh: fetchSubscription } = await useApi(fetchSubscriptionUrl, {
-    immediate: false,
+    dedupe: 'cancel',
   }
 )
-if (currentAddress.value) fetchSubscription()
-watch(currentAddress, () => fetchSubscription())
 
 // REVEAL PROCESS
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
