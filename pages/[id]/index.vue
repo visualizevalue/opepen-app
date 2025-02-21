@@ -8,7 +8,7 @@
 
     <section v-if="createdSets?.length">
       <SectionTitle>Artist For Sets</SectionTitle>
-      <SetCardGrid :submissions="createdSets" :minimal="false" />
+      <SetCardGrid :submissions="createdSets" :minimal="false"class="set-grid" />
     </section>
 
     <section v-if="account.richContentLinks?.length" class="known-for">
@@ -18,7 +18,7 @@
 
     <section v-if="createdSubmissions?.length">
       <SectionTitle>Submissions</SectionTitle>
-      <SetCardGrid :submissions="createdSubmissions" :minimal="false" />
+      <SetCardGrid :submissions="createdSubmissions" :minimal="false" class="set-grid" />
     </section>
 
     <section v-if="account.opepen_count">
@@ -149,6 +149,10 @@ useMetaData({
   }
 }
 
+.set-grid {
+  --gap: var(--spacer) !important;
+}
+
 .opepens {
   display: grid;
   justify-content: center;
@@ -161,14 +165,6 @@ useMetaData({
   grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
 }
 
-.created-sets {
-  display: grid;
-  gap: var(--size-4);
-
-  > * {
-    width: 100%;
-  }
-}
 section {
   display: grid;
   gap: var(--spacer);
