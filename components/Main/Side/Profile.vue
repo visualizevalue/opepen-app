@@ -2,7 +2,7 @@
   <section class="profile">
     <MainOptionsDropdown v-if="account" @sendClose="$emit('sendClose')" />
 
-    <Avatar :account="account" />
+    <Avatar :account="account" class="eye" />
 
     <h1>
       <span>{{ name }}</span>

@@ -33,6 +33,13 @@ const account = computed(() => props.account?.value || props.account)
     border: var(--border);
     background-color: var(--gray-z-1);
   }
+
+  &.eye {
+    :deep(> img),
+    :deep(> .image > .image) {
+      border-top-left-radius: var(--border-radius-sm) !important;
+    }
+  }
 }
 </style>
 

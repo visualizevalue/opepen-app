@@ -31,14 +31,14 @@ const coverImageURL = imageURI(account.coverImage, 'sm')
     min-height: 9rem;
     display: flex;
     flex-direction: column;
-    gap: var(--spacer-sm);
+    gap: var(--spacer-xs);
     justify-content: center;
     align-items: center;
 
     .avatar {
       width: var(--size-8);
       height: var(--size-8);
-      margin: 0 auto;
+      margin: 0 auto var(--spacer-sm);
     }
 
     span {
