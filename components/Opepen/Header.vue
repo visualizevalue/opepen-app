@@ -1,7 +1,7 @@
 <template>
     <header>
-      <BlurFilter :std-deviation="100" :saturate="1.24" :opacity="0.25" />
       <OpepenVisual :token="opepen" :version="version" class="visual" />
+      <BlurFilter :std-deviation="200" :saturate="1.618" :opacity="0.25" />
 
       <div>
         <PageTitle>
@@ -86,7 +86,9 @@ const editionName = computed(() => {
   }
 
   .visual {
-    filter: url('#blur-and-scale');
+    @media (--md) {
+      filter: url('#blur-and-scale');
+    }
   }
 </style>
 
