@@ -13,7 +13,7 @@
     <!--   </Actions> -->
     <!-- </Alert> -->
 
-    <PageHeader>
+    <PageHeader class="visible-md">
       <SectionTitle>Permanent Collection</SectionTitle>
     </PageHeader>
 
