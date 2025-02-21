@@ -13,6 +13,10 @@
     <!--   </Actions> -->
     <!-- </Alert> -->
 
+    <PageHeader>
+      <SectionTitle>Permanent Collection</SectionTitle>
+    </PageHeader>
+
     <Progress :percent="parseInt(completeSets.length / 200 * 100)" >
       {{ completeSets.length }} / 200
     </Progress>
@@ -40,7 +44,7 @@ useMetaData({
     padding: var(--spacer) 0;
 
     @media (--lg) {
-      padding: 0 var(--spacer-lg);
+      padding: var(--spacer) var(--spacer-lg);
     }
   }
 </style>

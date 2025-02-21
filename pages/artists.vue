@@ -1,6 +1,9 @@
 <template>
-  <PageFrameSm>
-    <SectionTitle>Artists</SectionTitle>
+  <PageFrameMd>
+    <PageHeader>
+      <SectionTitle>Artists</SectionTitle>
+    </PageHeader>
+
     <PaginatedContent
       :url="url"
       :query="query"
@@ -8,7 +11,7 @@
     >
       <ProfileCardGrid :accounts="items" />
     </PaginatedContent>
-  </PageFrameSm>
+  </PageFrameMd>
 </template>
 
 <script setup lang="ts">
