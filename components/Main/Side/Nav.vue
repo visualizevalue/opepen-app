@@ -84,6 +84,14 @@
     <!--   /> -->
     <!-- </section> -->
 
+
+    <footer>
+      <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com"><Icon type="x.com" /></NuxtLink>
+      <NuxtLink to="https://opensea.io/collection/opepen-edition" target="_blank" title="View on OpenSea"><Icon type="opensea" /></NuxtLink>
+      <NuxtLink :to="`https://etherscan.io/token/${contract}`" target="_blank" title="View on Etherscan"><Icon type="etherscan" /></NuxtLink>
+      <NuxtLink to="https://github.com/visualizevalue?q=opepen" target="_blank" title="View on Github"><Icon type="github" /></NuxtLink>
+    </footer>
+
   </nav>
 
   <ClientOnly>
@@ -97,6 +105,8 @@
 <script setup>
 import { useElementBounding, useScrollLock } from '@vueuse/core'
 import { gsap } from 'gsap'
+
+const contract = useConfig('opepenContract')
 
 const { isDesktop } = useWindow()
 
@@ -233,6 +243,8 @@ defineExpose({
   background: var(--gray-z-0);
   overscroll-behavior: auto;
   transform: translateX(-100%);
+  display: flex;
+  flex-direction: column;
 
   @media (--lg) {
     transform: translateX(0);
@@ -249,6 +261,33 @@ section {
     @mixin ui-font;
     color: var(--gray-z-5);
     margin-bottom: var(--size-2);
+  }
+}
+
+footer {
+  margin-top: auto;
+  padding: var(--spacer) var(--spacer-lg);
+  display: flex;
+  gap: var(--spacer-sm);
+  align-items: center;
+
+  a {
+    width: var(--size-5);
+    color: var(--muted);
+    transition: color var(--speed);
+
+    &:--highlight {
+      color: var(--color);
+    }
+  }
+
+  .icon {
+    display: flex;
+    width: var(--size-5);
+
+    &.vue-feather--github {
+      width: calc(var(--size-5) * 0.85)
+    }
   }
 }
 
