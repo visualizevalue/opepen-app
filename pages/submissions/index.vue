@@ -49,6 +49,10 @@ const query = computed(() => {
 
   q.set('sort', sort.value)
 
+  if (sort.value === '-submission_stats.demand.total') {
+    q.set('status', 'demand')
+  }
+
   return q.toString()
 })
 
