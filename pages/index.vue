@@ -44,6 +44,8 @@
 
       <p>
         Creators submit their interpretations of the Opepen silhouette. <br />
+      </p>
+      <p>
         Collectors vote on the artwork to include in the permanent collection.
       </p>
 
@@ -77,6 +79,14 @@
         </Button>
       </header>
       <ProfileCardGrid :accounts="artistsResponse.data" />
+    </section>
+
+    <hr>
+
+    <section class="stats">
+      <SectionTitle>Stats</SectionTitle>
+
+      <Stats />
     </section>
 
   </PageFrameSm>
@@ -149,7 +159,7 @@ useMetaData({
 
       h2 {
         display: grid;
-        font-size: var(--font-md);
+        font-size: var(--font-base);
         gap: var(--spacer-xs);
       }
 
@@ -173,10 +183,23 @@ useMetaData({
 
   .prose {
     font-size: var(--font-base);
+    text-align: center;
+
+    h2 {
+      font-size: var(--font-base);
+      margin-bottom: var(--spacer-lg);
+    }
+
+    p {
+      --font-lg: 1.1rem;
+      font-size: var(--font-lg);
+      line-height: 2rem;
+    }
   }
 
   .sets,
-  .artists {
+  .artists,
+  .stats {
     display: grid;
     gap: var(--spacer);
   }
