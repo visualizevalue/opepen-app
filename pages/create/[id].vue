@@ -15,12 +15,14 @@
 <script setup>
 const route = useRoute()
 
-const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`, {
-  immediate: false,
-  credentials: 'include',
-})
+const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`)
 
-onMounted(() => refresh())
+if (! data.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Submission Not Found',
+  })
+}
 
 useMetaData({
   title: `Update ${data.value?.name || 'Submission'} | Opepen`,

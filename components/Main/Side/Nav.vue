@@ -43,29 +43,18 @@
     </section>
 
     <section>
-      <h1>Community</h1>
-
-      <MainSideNavLink
-        to="/community/artists"
-        title="Artists"
-        subline="Browse Opepen Contributors"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/community/curators"
-        title="Curators"
-        subline="View the network of Opepen Collectors"
-        @click="close"
-      />
-    </section>
-
-    <section>
       <h1>About</h1>
 
       <MainSideNavLink
         to="/about/intro"
         title="The Opepen Protocol"
         subline="Learn how Opepen works"
+        @click="close"
+      />
+      <MainSideNavLink
+        to="/artists"
+        title="Artists"
+        subline="Browse Opepen Contributors"
         @click="close"
       />
       <MainSideNavLink

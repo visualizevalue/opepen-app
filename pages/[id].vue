@@ -5,9 +5,20 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig()
+import { zeroAddress } from 'viem'
+
 const route = useRoute()
-const url = `${config.public.opepenApi}/accounts/${route.params.id}`
-const { data: account } = await useFetch(url)
+const { data: account } = await useApi(`/accounts/${route.params.id}`, {
+  onResponseError (err) {
+    console.log('responsenerr', err)
+  }
+})
+
+if (account.value.address === zeroAddress) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'User Not Found',
+  })
+}
 </script>
 

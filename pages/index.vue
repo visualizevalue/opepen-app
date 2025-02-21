@@ -61,7 +61,7 @@
     <section class="artists">
       <header>
         <SectionTitle>Featured Artists</SectionTitle>
-        <Button to="/community/artists" class="small">
+        <Button to="/artists" class="small">
           <span>Browse more</span>
         </Button>
       </header>

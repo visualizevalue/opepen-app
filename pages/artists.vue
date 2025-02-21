@@ -1,5 +1,5 @@
 <template>
-  <PageFrameMd>
+  <PageFrameSm>
     <SectionTitle>Artists</SectionTitle>
     <PaginatedContent
       :url="url"
@@ -8,12 +8,12 @@
     >
       <ProfileCardGrid :accounts="items" />
     </PaginatedContent>
-  </PageFrameMd>
+  </PageFrameSm>
 </template>
 
 <script setup lang="ts">
-const url = `${useConfig('opepenApi')}/accounts/artists`
-const sort = ref('-setsCount,-profileCompletion,-setSubmissionsCount,id')
+const url = `${useApiBase()}/accounts/artists`
+const sort = ref('-featured,-setsCount,-profileCompletion,-setSubmissionsCount,id')
 const query = computed(() => {
   const q = new URLSearchParams(`limit=40`)
 

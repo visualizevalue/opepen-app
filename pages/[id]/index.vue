@@ -6,14 +6,14 @@
 
     <ProfileBio :account="account" />
 
-    <section v-if="account.richContentLinks?.length" class="known-for">
-      <SectionTitle>Known For</SectionTitle>
-      <RichContentLinks :links="account.richContentLinks" />
-    </section>
-
     <section v-if="createdSets?.length">
       <SectionTitle>Artist For Sets</SectionTitle>
       <SetCardGrid :submissions="createdSets" :minimal="false" />
+    </section>
+
+    <section v-if="account.richContentLinks?.length" class="known-for">
+      <SectionTitle>Also Known For</SectionTitle>
+      <RichContentLinks :links="account.richContentLinks" />
     </section>
 
     <section v-if="createdSubmissions?.length">
@@ -55,7 +55,7 @@
 <script setup>
 // TODO: Implement `@` prefix for user routes and the needed redirects
 const { account } = defineProps({ account: Object })
-const url = `${useConfig('opepenApi')}/accounts/${account.address}`
+const url = `${useApiBase()}/accounts/${account.address}`
 const { mainSocials, otherSocials } = useSocials(account)
 
 // =========================================
@@ -73,6 +73,11 @@ const createdSubmissions = computed(() => account.createdSets
     .sort((s1, s2) => s1.created_at > s2.created_at ? -1 : 1)
   : []
 )
+
+useMetaData({
+  title: `${account.display} | Opepen`,
+  og: `${useApiBase()}/render/accounts/${account.address}/image`,
+})
 </script>
 
 <style scoped>

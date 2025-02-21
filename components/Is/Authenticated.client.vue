@@ -1,6 +1,6 @@
 <template>
   <WithAccount v-slot="{ address }">
-    <WithProfile :id="address" v-slot="{ account }">
+    <WithProfile v-slot="{ account }">
       <slot
         v-if="isAuthenticated"
         :address="address"
