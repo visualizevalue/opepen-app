@@ -18,8 +18,6 @@
 </template>
 
 <script setup>
-import { useMetaData } from '~/helpers/head'
-
 useMetaData({
   title: 'Opt-Out: Consensus Met',
   description: 'Opt out from the Opepen consensus protocol. This process is irreversible, and opted out tokens will no longer be able participate in the consensus building process.',
