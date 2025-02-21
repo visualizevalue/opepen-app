@@ -35,8 +35,8 @@ defineProps({
     default: token => undefined,
   },
   link: {
-    type: String,
-    default: () => (token) => `/opepen/${token.token_id}`
+    type: Function,
+    default: (token) => `/opepen/${token.token_id}`
   },
 })
 </script>
