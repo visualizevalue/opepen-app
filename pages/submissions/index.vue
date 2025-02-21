@@ -43,7 +43,7 @@
 import PageFrameMd from '~/components/Page/FrameMd.vue'
 
 const url = `${useApiBase()}/set-submissions`
-const sort = ref('-submission_stats.demand.total')
+const sort = ref('dailyRandom')
 const query = computed(() => {
   const q = new URLSearchParams(`limit=40`)
 
