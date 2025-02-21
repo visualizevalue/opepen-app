@@ -1,16 +1,4 @@
 <template>
-    <!-- <Alert type="muted" dismiss="explain-set-submissions"> -->
-    <!--   <h1>Set Submissions</h1> -->
-    <!--   <p> -->
-    <!--     Artists submit sets of 6 distinct editions for consideration of the community. -->
-    <!--     Anyone can create an Opepen set. If sets are highly rated by curators, -->
-    <!--     it will be staged for potential inclusion in the "Permanent Collection". -->
-    <!--   </p> -->
-    <!--   <Actions> -->
-    <!--     <Button to="/about/intro" class="">Learn more</Button> -->
-    <!--   </Actions> -->
-    <!-- </Alert> -->
-
     <PaginatedContent
       :url="url"
       :query="query"
@@ -49,13 +37,17 @@ const QUERY_MAP = {
   random: `dailyRandom`,
 }
 
+const router = useRouter()
+const route = useRoute()
 const url = `${useApiBase()}/set-submissions`
-const sort = ref('demand')
+const sort = ref(route.query.sort || 'demand')
 const query = computed(() => {
   const q = new URLSearchParams(`limit=40`)
 
-  // @ts-ignore
-  q.set('sort', QUERY_MAP[sort.value as string])
+  if ((sort.value as string) in QUERY_MAP) {
+    // @ts-ignore
+    q.set('sort', QUERY_MAP[sort.value as string])
+  }
 
   if (sort.value === 'demand') {
     q.set('status', 'demand')
@@ -64,11 +56,17 @@ const query = computed(() => {
   return q.toString()
 })
 
+// Maintain currently selected sorting in query parameter
+watchEffect(() => {
+  if (route.query.sort !== sort.value) {
+    router.replace({ query: { ...route.query, sort: sort.value } })
+  }
+})
+
 const { stats } = await useStats()
 
 useMetaData({
   title: `Set Submissions | Opepen`,
-  description: ``,
   og: '/og/sets.png',
 })
 </script>
