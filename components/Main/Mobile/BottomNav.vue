@@ -24,11 +24,11 @@
   left: 0;
   bottom: 0;
 
-  padding: var(--size-2);
+  padding: var(--spacer);
   border-top: var(--border);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-evenly;
 
   @media (--lg) {

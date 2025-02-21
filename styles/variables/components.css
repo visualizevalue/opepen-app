@@ -4,7 +4,7 @@
   --top-nav-height: 3rem;
   --top-subnav-height: 2.5rem;
   --top-nav-total-height: calc(var(--top-nav-height) + var(--top-subnav-height));
-  --bottom-nav-height: 3.8rem;
+  --bottom-nav-height: calc(3.8rem + env(safe-area-inset-bottom));
 
   --content-width-wide: 90rem;
   --content-width:      60rem;
