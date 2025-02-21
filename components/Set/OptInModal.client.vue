@@ -31,40 +31,42 @@
       </div>
 
       <div v-else class="opepens">
-        <div v-for="(opepens, g) in grouped" class="group">
-          <div v-if="opepens.length">
-            <header>
-              <h1>Editions of {{ g }}:</h1>
+        <template v-for="(opepens, g) in grouped">
+          <div v-if="opepens.length" class="group">
+            <div>
+              <header>
+                <h1>Editions of {{ g }}:</h1>
 
-              <Button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</Button>
-              <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
-            </header>
+                <Button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</Button>
+                <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
+              </header>
 
-            <label v-if="selectedInGroup(g).length > 1 && g !== '1'" class="setting">
-              <span>Max Reveal:</span>
-              <input
-                type="number"
-                min="1"
-                :max="maxInGroup(g)"
-                :value="maxRevealSetting[g] || maxInGroup(g)"
-                @input="$event => {
-                  maxRevealSetting[g] = parseInt($event.target.value);
-                  validateMaxReveal(g)
-                }"
-                :placeholder="maxInGroup(g)"
-              >
-            </label>
+              <label v-if="selectedInGroup(g).length > 1 && g !== '1'" class="setting">
+                <span>Max Reveal:</span>
+                <input
+                  type="number"
+                  min="1"
+                  :max="maxInGroup(g)"
+                  :value="maxRevealSetting[g] || maxInGroup(g)"
+                  @input="$event => {
+                    maxRevealSetting[g] = parseInt($event.target.value);
+                    validateMaxReveal(g)
+                  }"
+                  :placeholder="maxInGroup(g)"
+                >
+              </label>
+            </div>
+
+            <FormCheckbox
+              v-for="o in opepens"
+              :value="o.token_id"
+              v-model="selected"
+            >
+              <span>#{{ o.token_id }}</span>
+              <abbr :title="`Edition of ${o.data.edition}`" class="edition">({{ o.data.edition }} Ed.)</abbr>
+            </FormCheckbox>
           </div>
-
-          <FormCheckbox
-            v-for="o in opepens"
-            :value="o.token_id"
-            v-model="selected"
-          >
-            <span>#{{ o.token_id }}</span>
-            <abbr :title="`Edition of ${o.data.edition}`" class="edition">({{ o.data.edition }} Ed.)</abbr>
-          </FormCheckbox>
-        </div>
+        </template>
       </div>
     </section>
     <footer>
