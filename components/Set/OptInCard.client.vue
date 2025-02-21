@@ -94,8 +94,13 @@ const openOptInModal = () => {
   optInOpen.value = true
 }
 
-const { data: subscription, refresh: fetchSubscription } =
-  await useApi(`/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`)
+const { data: subscription, refresh: fetchSubscription } = await useApi(
+  `/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`, {
+    immediate: false
+  }
+)
+if (currentAddress.value) fetchSubscription()
+watch(currentAddress, () => fetchSubscription())
 
 // REVEAL PROCESS
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
