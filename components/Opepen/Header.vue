@@ -1,7 +1,7 @@
 <template>
     <header>
       <OpepenVisual :token="opepen" :version="version" class="visual" />
-      <BlurFilter :std-deviation="200" :saturate="1.618" :opacity="0.25" />
+      <BlurFilter :std-deviation="200" :saturate="1.618" :opacity="0.5" />
 
       <div>
         <PageTitle>
