@@ -96,10 +96,12 @@ const openOptInModal = () => {
 const subscription = ref()
 const subscriptionLoaded = ref(false)
 const fetchSubscription = async () => {
+  console.info(`fetchSubscription for`, currentAddress.value)
   const uri = `${useApiBase()}/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`
   subscription.value = await $fetch(uri)
   subscriptionLoaded.value = true
 }
+watch(currentAddress, () => fetchSubscription())
 
 // REVEAL PROCESS
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
