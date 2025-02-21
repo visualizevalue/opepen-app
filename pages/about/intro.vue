@@ -21,27 +21,38 @@
     </div>
 
     <p>
-      Permanent Opepen artists include Snowfro, ACK, VV, Diewiththemostlikes, Darkfarms, fvckrender, PIV, and more.
+      Permanent Opepen artists include <span v-for="artist in artistsResponse.data"><NuxtLink :to="`/${id(artist)}`">{{ artist.display }}</NuxtLink>, </span>and <NuxtLink to="/community/artists">more</NuxtLink>.
     </p>
 
     <p>
       Collectors may opt-out of the consensus building process at any time by burning their tokens.
-      {{ formatNumber(stats?.optOuts.total || 0) }} tokens have been burned.
+      So far, {{ formatNumber(stats?.optOuts.total || 0) }} tokens have been burned.
     </p>
 
-    <p>
-      It is Day {{ formatNumber(day) }} of Opepen. <br/>
-      <span v-if="stats?.markets.history">
-        ${{ formatNumber(stats.markets.history.totalUSD || 0) }} secondary sales volume.
-      </span>
-    </p>
+    <h2 id="various-stats"><NuxtLink to="#various-stats">Various Statistics</NuxtLink></h2>
+
+    <Stats />
+
+    <h2 id="history"><NuxtLink to="#history">History</NuxtLink></h2>
+    <h2 id="sets-and-submissions"><NuxtLink to="#sets-and-submissions">Sets & Submissions</NuxtLink></h2>
+
+
+    <!-- <p> -->
+    <!--   It is Day {{ formatNumber(day) }} of Opepen. -->
+    <!-- </p> -->
+    <!---->
+    <!-- <p> -->
+    <!--   So far, the collection has amassed ${{ formatNumber(stats.markets.history.totalUSD || 0) }} in secondary sales volume. -->
+    <!-- </p> -->
   </PageFrameSm>
 </template>
 
 <script setup lang="ts">
 const { completeSets } = await useSets()
 
-const { day, stats } = await useStats()
+const { stats } = await useStats()
+
+const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
 </script>
 
 <style scoped>

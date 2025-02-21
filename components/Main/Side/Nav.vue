@@ -8,23 +8,6 @@
     <MainSideOptIn @click="close" />
 
     <section>
-      <h1>About</h1>
-
-      <MainSideNavLink
-        to="/about/intro"
-        title="The Opepen Protocol"
-        subline="Learn how Opepen works"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/about/stats"
-        title="Stats"
-        subline="Marketplace, Recent Sales"
-        @click="close"
-      />
-    </section>
-
-    <section>
       <h1>Browse</h1>
 
       <MainSideNavLink
@@ -72,6 +55,23 @@
         to="/community/curators"
         title="Curators"
         subline="View the network of Opepen Collectors"
+        @click="close"
+      />
+    </section>
+
+    <section>
+      <h1>About</h1>
+
+      <MainSideNavLink
+        to="/about/intro"
+        title="The Opepen Protocol"
+        subline="Learn how Opepen works"
+        @click="close"
+      />
+      <MainSideNavLink
+        to="/about/stats"
+        title="Stats"
+        subline="Marketplace, Recent Sales"
         @click="close"
       />
     </section>

@@ -29,6 +29,8 @@ defineProps({
 
     &.prose {
       gap: 0;
+      padding-top: var(--spacer-lg);
+      padding-bottom: var(--spacer-lg);
     }
   }
 </style>

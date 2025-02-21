@@ -1,18 +1,43 @@
 .prose {
 
-  > h1 {
+  font-size: var(--font-lg);
+
+  > h1,
+  > h2 {
     @mixin ui-font;
-    font-size: var(--font-xl);
-    width: 100%;
+    font-size: var(--font-xxl);
 
     + .lead {
       margin-top: 0;
+    }
+
+    &:has(> a:first-child) {
+      padding-top: var(--spacer);
+    }
+  }
+
+  > h2 {
+    font-size: var(--font-lg);
+    color: var(--muted);
+
+    > span {
+      border-bottom: 2px solid var(--border-color);
+    }
+  }
+
+  a {
+    text-decoration: none;
+    border-bottom: 2px solid var(--border-color);
+
+    &:--highlight {
+      color: var(--color);
+      border-color: var(--color);
     }
   }
 
   .lead {
     @mixin ui-font;
-    font-size: var(--font-lg);
+    font-size: var(--font-xl);
     color: var(--muted);
     margin: var(--spacer) 0;
   }
