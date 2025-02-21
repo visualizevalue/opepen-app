@@ -49,7 +49,7 @@ const props = defineProps({
 
 const { session } = useSignIn()
 
-const url = computed(() => `${useConfig('opepenApi')}/accounts/${session.value?.address}/set-submissions`)
+const url = computed(() => `${useApiBase()}/accounts/${session.value?.address}/set-submissions`)
 const query = computed(() => `sort=-created_at`)
 </script>
 

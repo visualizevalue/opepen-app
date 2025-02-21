@@ -39,7 +39,7 @@ await useStagedOptIn()
 useMetaData({
   title: `${submission.value.name} | Set Submission | Opepen`,
   description: shortenedCleanText(submission.value.description),
-  og: `${useConfig('opepenApi')}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
+  og: `${useApiBase()}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
 })
 </script>
 

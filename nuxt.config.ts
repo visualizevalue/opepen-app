@@ -66,6 +66,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      domain: 'opepen.art',
       title: 'Opepen',
       description: 'Consensus is temporary',
       blockExplorer: 'https://etherscan.io',

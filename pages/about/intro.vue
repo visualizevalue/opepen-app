@@ -53,6 +53,10 @@ const { completeSets } = await useSets()
 const { stats } = await useStats()
 
 const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
+
+useMetaData({
+  title: `The Opepen Protocol | Opepen`,
+})
 </script>
 
 <style scoped>

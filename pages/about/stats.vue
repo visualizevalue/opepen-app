@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
-const { day, stats } = await useStats()
+useMetaData({
+  title: `Stats | Opepen`,
+})
 </script>
 

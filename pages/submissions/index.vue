@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 
-const url = `${useConfig('opepenApi')}/set-submissions`
+const url = `${useApiBase()}/set-submissions`
 const sort = ref('-submission_stats.demand.total')
 const query = computed(() => {
   const q = new URLSearchParams(`limit=40`)
@@ -47,7 +47,7 @@ const query = computed(() => {
 useMetaData({
   title: `Set Submissions | Opepen`,
   description: ``,
-  og: 'https://opepen.nyc3.cdn.digitaloceanspaces.com/OG/sets.png',
+  og: '/og/sets.png',
 })
 </script>
 

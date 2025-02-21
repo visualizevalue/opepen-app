@@ -37,7 +37,7 @@ useMetaData({
   title: `Set ${pad(set.value.id, 3)}: ${submission.value.name || 'Unrevealed'} | Opepen`,
   description: shortenedCleanText(submission.value.description),
   og: submission.value
-    ? `${useConfig('opepenApi')}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(query)}`
+    ? `${useApiBase()}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(query)}`
     : ``,
 })
 </script>
