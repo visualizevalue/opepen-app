@@ -35,7 +35,7 @@ watch(route, () => {
   if (! el.value) return
 
   nextTick(() => {
-    if (document.getElementById('top-sub-nav')?.innerHTML.trim() === '') {
+    if (document.getElementById('top-sub-nav')?.innerText.trim() === '') {
       el.value.style.setProperty('--main-padding-top', 'calc(var(--top-nav-height) + var(--spacer))')
     } else {
       el.value.style.setProperty('--main-padding-top', 'calc(var(--top-nav-total-height) + var(--spacer))')
