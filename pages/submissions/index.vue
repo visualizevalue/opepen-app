@@ -24,10 +24,10 @@
           <Actions>
             <span>Sort:</span>
             <select v-model="sort" class="select">
-              <option value="-submission_stats.demand.total">Demand</option>
-              <option value="-published_at">Latest</option>
-              <option value="created_at">Earliest</option>
-              <option value="dailyRandom">Random</option>
+              <option value="demand">Demand</option>
+              <option value="latest">Latest</option>
+              <option value="earliest">Earliest</option>
+              <option value="random">Random</option>
             </select>
           </Actions>
         </PageHeader>
@@ -42,14 +42,22 @@
 <script setup lang="ts">
 import PageFrameMd from '~/components/Page/FrameMd.vue'
 
+const QUERY_MAP = {
+  demand: `-submission_stats.demand.total`,
+  latest: `-published_at`,
+  earliest: `created_at`,
+  random: `dailyRandom`,
+}
+
 const url = `${useApiBase()}/set-submissions`
-const sort = ref('-submission_stats.demand.total')
+const sort = ref('demand')
 const query = computed(() => {
   const q = new URLSearchParams(`limit=40`)
 
-  q.set('sort', sort.value)
+  // @ts-ignore
+  q.set('sort', QUERY_MAP[sort.value as string])
 
-  if (sort.value === '-submission_stats.demand.total') {
+  if (sort.value === 'demand') {
     q.set('status', 'demand')
   }
 
