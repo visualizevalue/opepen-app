@@ -1,15 +1,25 @@
 <template>
   <section class="items-meta">
 
-    <div class="intro">
-      <PageTitle>
-        <small v-if="submission.set_id">Set {{ pad(submission.set_id) }}</small>
-        <small v-else>Set Submission</small>
-        <span :title="name">{{ name }}</span>
-      </PageTitle>
+    <PageHeader class="intro">
+      <div>
+        <PageTitle>
+          <small v-if="submission.set_id">Set {{ pad(submission.set_id) }}</small>
+          <small v-else>Set Submission</small>
+          <span :title="name">{{ name }}</span>
+        </PageTitle>
 
-      <p v-if="submission?.description"><ExpandableText :text="submission.description" /></p>
-    </div>
+        <p v-if="submission?.description"><ExpandableText :text="submission.description" /></p>
+      </div>
+
+      <OpepenEditionSVG
+        v-if="! submission.set_id"
+        :muted-editions="demandExistsFor"
+        :editions="demandMetFor"
+        :stroke="9"
+        highlight-color="var(--success)"
+      />
+    </PageHeader>
 
     <DescriptionList>
       <li>
@@ -76,6 +86,9 @@ const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && submission?.reveal_block_number)
 const consensusDate = computed(() => submission?.reveals_at && formatDate(submission?.reveals_at))
 const coCreators = useCoCreators(submission)
+
+const demandExistsFor = computed(() => getDemandEditions(submission))
+const demandMetFor = computed(() => getDemandEditions(submission, 1))
 </script>
 
 <style scoped>
@@ -85,7 +98,7 @@ const coCreators = useCoCreators(submission)
     justify-content: center;
     gap: var(--spacer-lg);
 
-    .intro {
+    .intro > div {
       display: flex;
       flex-direction: column;
       justify-content: center;

@@ -1,9 +1,9 @@
 <template>
-    <header>
+    <header class="opepen-header">
       <OpepenVisual :token="opepen" :version="version" class="visual" />
       <BlurFilter :std-deviation="200" :saturate="1.618" :opacity="0.5" />
 
-      <div>
+      <PageHeader>
         <PageTitle>
           <small v-if="opepen.set">
             <NuxtLink :to="`/sets/${pad(opepen.set_id)}`">Set {{pad(opepen.set_id)}}</NuxtLink>
@@ -12,8 +12,9 @@
           </small>
           <span>{{ editionName }}</span>
         </PageTitle>
+
         <OpepenEditionSVG :edition="opepen.data.edition" :stroke="9" />
-      </div>
+      </PageHeader>
     </header>
 </template>
 
@@ -33,7 +34,7 @@ const editionName = computed(() => {
 </script>
 
 <style scoped>
-  header {
+  header.opepen-header {
     padding-top: calc(var(--main-content-height)/2 - 50cqw - var(--size-8));
     display: flex;
     flex-direction: column;
@@ -47,42 +48,17 @@ const editionName = computed(() => {
         justify-content: flex-end;
         text-align: right;
       }
-    }
 
-    > div {
-      display: grid;
-      align-items: center;
-      grid-template-columns: 1fr var(--size-8);
-      position: relative;
+      small {
+        display: flex;
+        gap: var(--spacer-sm);
 
-      h1 {
-        grid-row: 1;
-        grid-column: 1/-1;
-
-        small {
-          display: flex;
-          gap: var(--spacer-sm);
-
-          span {
-            color: var(--gray-z-5);
-          }
-        }
-      }
-
-      svg {
-        font-size: var(--font-xl);
-        width: 0.75em;
-        width: 1em;
-        grid-row: 1;
-        grid-column: 2;
-        justify-self: flex-end;
-        align-self: center;
-
-        @media (--md) {
-          font-size: var(--font-xxl);
+        span {
+          color: var(--gray-z-5);
         }
       }
     }
+
   }
 
   .visual {
