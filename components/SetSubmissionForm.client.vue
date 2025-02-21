@@ -363,6 +363,16 @@ watchDebounced(
   () => store(),
   { debounce: 500, maxWait: 2000, deep: true },
 )
+
+// Authentication
+watchEffect(() => {
+  if (!isAdmin.value && ! isCreator.value) {
+    showError({
+      statusCode: 403,
+      statusMessage: 'Not Authorized',
+    })
+  }
+})
 </script>
 
 <style scoped>
