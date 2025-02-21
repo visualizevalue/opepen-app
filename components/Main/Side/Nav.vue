@@ -16,12 +16,12 @@
         @click="close"
         strict-exact
       />
+
+      <MainSideOptIn @click="close" />
     </section>
 
     <section>
       <h1>Browse</h1>
-
-      <MainSideOptIn @click="close" />
 
       <MainSideNavLink
         to="/sets"
