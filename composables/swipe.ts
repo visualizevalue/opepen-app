@@ -1,4 +1,4 @@
-import { useWindowSize, useSwipe } from '@vueuse/core'
+import { useSwipe } from '@vueuse/core'
 
 const isSwiping = ref(false)
 const direction = ref()
