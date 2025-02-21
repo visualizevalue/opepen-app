@@ -1,6 +1,6 @@
 <template>
     <header>
-      <BlurFilter :std-deviation="200" :saturate="1.618" :opacity="0.4" />
+      <BlurFilter :std-deviation="100" :saturate="1.24" :opacity="0.25" />
       <OpepenVisual :token="opepen" :version="version" class="visual" />
 
       <div>
