@@ -22,7 +22,7 @@
       <Loading v-if="opepenLoading" />
 
       <div v-else-if="! opepen.length" class="empty">
-        <p>No Opepen to opt-in found.</p>
+        <p>No blank Opepen to opt-in found.</p>
 
         <Button to="https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Revealed%22,%22values%22:[%22No%22]}]" target="_blank">
           <Icon type="opensea" />

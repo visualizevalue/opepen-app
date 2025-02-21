@@ -2,8 +2,8 @@
   <section v-if="showOptIn">
     <Card class="static">
       <template v-if="! isConnected" class="connect">
-        <SectionTitle>Opt-In <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
-        <p>Please connect your wallet to opt in to this set.</p>
+        <SectionTitle>Vote <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+        <p>Please connect your wallet to vote on this set.</p>
         <Actions>
           <Connect />
         </Actions>
@@ -37,25 +37,20 @@
         </template>
 
         <template v-else>
-          <SectionTitle>Opt-In <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
-          <p>Opt-In your unrevealed Opepen for potential reveal.</p>
-          <p v-if="subscription?.message === 'DISCARD'">You previously discarded this set from opt-in, but you can always change your mind.</p>
+          <SectionTitle>Vote <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+          <p v-if="subscription?.message === 'DISCARD'">You decided not to opt-in to this set, but you can always change your mind.</p>
+          <p v-else>Opt-In your unrevealed Opepen for potential reveal.</p>
         </template>
 
         <Actions>
-          <Button v-if="! subscription" @click="optOutOpen = true">
-            <Icon type="x-circle" />
-            <span>Discard</span>
-          </Button>
+          <SetDiscardButton v-if="! subscription" :submission="submission" @update="update" />
 
-          <Button @click="optInOpen = true">
+          <Button @click="openOptInModal">
             <Icon type="edit" />
             <span v-if="subscription?.opepen_ids?.length">Change Opt-Ins</span>
             <span v-else>Opt-In</span>
           </Button>
         </Actions>
-
-        <SetDiscardModal v-model:open="optOutOpen" :submission="submission" @update="update" />
 
         <LazySetOptInModal
           v-model:open="optInOpen"
@@ -95,9 +90,11 @@ const isStagedSet = computed(() =>
   stagedSubmission.value && props.submission.uuid === stagedSubmission.value.uuid
 )
 
-const showOptIn = computed(() => isStagedSet.value || (isConnected.value && props.submission.published_at))
+const showOptIn = computed(() => isStagedSet.value || props.submission.published_at)
 const optInOpen = ref(false)
-const optOutOpen = ref(false)
+const openOptInModal = () => {
+  optInOpen.value = true
+}
 
 const { data: subscription, refresh: fetchSubscription } =
   await useApi(`/accounts/${address.value}/set-submissions/${props.submission.uuid}/subscription`)

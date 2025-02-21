@@ -1,16 +1,9 @@
 <template>
-  <Modal v-model:open="open">
-    <h1>Opt-Out from Submission?</h1>
-    <p>Are you sure you want to discard this set?</p>
-
-    <Actions>
-      <Button @click="open = false">Cancel</Button>
-      <Button @click="discard" :disabled="loading">
-        <span v-if="loading">Opting out...</span>
-        <span v-else>Opt Out</span>
-      </Button>
-    </Actions>
-  </Modal>
+  <Button @click="discard" :disabled="loading">
+    <Icon type="x-circle" />
+    <span v-if="loading">Opting out...</span>
+    <span v-else>Not for me</span>
+  </Button>
 </template>
 
 <script setup lang="ts">
@@ -19,20 +12,23 @@ interface Props {
 }
 const { submission } = defineProps<Props>()
 const emit = defineEmits(['update'])
-const open = defineModel('open', { required: true })
 const { refreshAccount } = await useProfile()
 
+const loading = ref(false)
 const { execute: discard, status } = await useApi(`/set-submissions/${submission.uuid}/discard`, {
   immediate: false,
   method: 'POST',
   credentials: 'include',
   onResponse: () => {
-    open.value = false
     refreshAccount()
     emit('update')
   },
 })
-const loading = computed(() => status.value === 'pending')
+watchEffect(() => {
+  if (status.value === 'pending') {
+    loading.value = true
+  }
+})
 </script>
 
 <style scoped>
