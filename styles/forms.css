@@ -5,6 +5,14 @@
   min-height: calc(var(--size-7) + var(--size-2));
 }
 
+select {
+  text-transform: uppercase !important;
+
+  option {
+    text-transform: none !important;
+  }
+}
+
 input,
 textarea {
   text-transform: none !important;
