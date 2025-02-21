@@ -29,8 +29,6 @@ defineProps({
     }
 
     &.more-space {
-      --min-column-width: 12rem;
-
       @media (--md) {
         --min-column-width: 16rem;
       }
