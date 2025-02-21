@@ -7,8 +7,6 @@
 
 
     <section>
-      <!-- <h1>Home</h1> -->
-
       <MainSideNavLink
         to="/"
         title="Overview"
@@ -47,43 +45,20 @@
       <h1>Create</h1>
 
       <MainSideNavLink
+        to="/create/new"
+        title="Create Opepen Set"
+        subline="Submit an Opepen Set"
+        @click="close"
+      />
+
+      <MainSideNavLink
         to="/create"
         title="Your Submissions"
         subline="Manage your set submissions"
         @click="close"
         strict-exact
       />
-      <MainSideNavLink
-        to="/create/new"
-        title="Create Opepen Set"
-        subline="Submit an Opepen Set"
-        @click="close"
-      />
     </section>
-
-    <!-- <section> -->
-    <!--   <h1>About</h1> -->
-    <!---->
-    <!--   <MainSideNavLink -->
-    <!--     to="/about/intro" -->
-    <!--     title="The Opepen Protocol" -->
-    <!--     subline="Learn how Opepen works" -->
-    <!--     @click="close" -->
-    <!--   /> -->
-    <!--   <MainSideNavLink -->
-    <!--     to="/artists" -->
-    <!--     title="Artists" -->
-    <!--     subline="Browse Opepen Contributors" -->
-    <!--     @click="close" -->
-    <!--   /> -->
-    <!--   <MainSideNavLink -->
-    <!--     to="/about/stats" -->
-    <!--     title="Stats" -->
-    <!--     subline="Marketplace, Recent Sales" -->
-    <!--     @click="close" -->
-    <!--   /> -->
-    <!-- </section> -->
-
 
     <footer>
       <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com"><Icon type="x.com" /></NuxtLink>
