@@ -7,7 +7,7 @@
 <style scoped>
   header {
     width: 100%;
-    min-height: calc(var(--size-7) + var(--size-2));
+    min-height: calc(var(--size-7) + var(--size-3));
     display: flex;
     gap: var(--spacer);
     flex-wrap: wrap;

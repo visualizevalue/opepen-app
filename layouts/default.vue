@@ -32,7 +32,7 @@ const mainNav = ref()
 // Ensure proper sizing redraws on mobile safari
 const route = useRoute()
 const { isDesktop } = useWindow()
-watch(route, () => {
+watch([route, isDesktop], () => {
   if (! el.value) return
 
   nextTick(() => {

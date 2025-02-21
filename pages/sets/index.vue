@@ -41,10 +41,16 @@ useMetaData({
 <style scoped>
   .page-frame-md {
     gap: var(--spacer-lg);
-    padding: var(--spacer) 0;
+    padding-top: var(--spacer);
 
     @media (--lg) {
       padding: var(--spacer) var(--spacer-lg);
+    }
+  }
+
+  .visible-md {
+    @media (--md) {
+      display: flex !important;
     }
   }
 </style>
