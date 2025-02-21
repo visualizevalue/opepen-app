@@ -88,10 +88,11 @@ export default defineNuxtConfig({
       enabled: false,
     },
     manifest: {
-      name: 'Opepen',
+      name: 'Opepen Edition',
       short_name: 'Opepen',
-      description: 'Opepen Web Application',
+      description: 'Consensus is temporary',
       theme_color: '#000000',
+      start_url: '/sets',
       icons: [
         {
           src: 'pwa-64x64.png',
