@@ -19,7 +19,7 @@ import { useWindowScroll } from '@vueuse/core'
 defineEmits([ 'openMain' ])
 
 const route = useRoute()
-const { x, y, isScrolling, arrivedState, directions } = useWindowScroll({
+const { y, isScrolling, arrivedState, directions } = useWindowScroll({
   behavior: 'smooth',
 })
 const scrollTop = () => {
@@ -52,7 +52,7 @@ watchEffect(() => {
   align-items: center;
   background: var(--semi);
   border-bottom: var(--border);
-  padding: 0 0 0 var(--spacer);
+  padding: 0;
   backdrop-filter: var(--blur);
   transition: transform var(--speed);
 
@@ -73,6 +73,7 @@ watchEffect(() => {
   .avatar {
     width: var(--size-7);
     height: var(--size-7);
+    margin-left: var(--spacer);
   }
 
   .main-logo {
