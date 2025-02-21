@@ -111,7 +111,9 @@ header {
 
   h1 {
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: align-items;
+    justify-content: center;
     gap: var(--spacer-sm);
     flex-wrap: wrap;
     color: var(--white);
@@ -122,6 +124,12 @@ header {
 
     small {
       font-size: var(--font-base);
+    }
+
+    @container (min-width: 30rem) {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: baseline;
     }
   }
 
