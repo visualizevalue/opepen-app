@@ -7,7 +7,7 @@
     :style="style"
   >
     <div class="wrapper">
-      <Progress v-if="showDemand" :percent="demand" />
+      <Progress v-if="showDemand" :percent="demand" :class="{ muted: demand < 50 }" />
 
       <section v-if="isVisible" class="items">
         <Image :image="data?.edition1Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
@@ -73,13 +73,15 @@ const demand = computed(() => getDemandPercentage(data))
     container-name: preview;
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: calc(100% + var(--text-height) + var(--demand-height));
-    transition: transform var(--speed);
+    padding-bottom: max(100%, calc(100% + var(--text-height) + var(--demand-height)));
+    transition: transform var(--speed) !important;
+    aspect-ratio: 1 / 1;
+    height: 100%;
 
     .wrapper {
       position: absolute;
       width: 100%;
+      height: 100%;
       top: 0;
       border: var(--border);
       border-radius: var(--border-radius);

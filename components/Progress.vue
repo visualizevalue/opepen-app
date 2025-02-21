@@ -1,6 +1,6 @@
 <template>
 <div class="progress">
-  <div :style="{ width: `${percent}%` }"></div>
+  <div :style="{ width: `${Math.max(3, percent)}%` }"></div>
   <div :style="{ left: `${percent}%`}"><slot/></div>
 </div>
 </template>
@@ -28,6 +28,10 @@ defineProps({
     background-color: var(--success);
     border-radius: var(--size-0);
     transition: width var(--speed);
+  }
+
+  &.muted > div:first-child {
+    background-color: var(--gray-z-4);
   }
 
   > div:last-child {
