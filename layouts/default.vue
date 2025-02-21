@@ -31,10 +31,16 @@ const mainNav = ref()
 
 // Ensure proper sizing redraws on mobile safari
 const route = useRoute()
+const { isDesktop } = useWindow()
 watch(route, () => {
   if (! el.value) return
 
   nextTick(() => {
+    if (isDesktop.value) {
+      el.value.style.setProperty('--main-padding-top', 'var(--spacer-lg)')
+      return
+    }
+
     if (document.getElementById('top-sub-nav')?.innerText.trim() === '') {
       el.value.style.setProperty('--main-padding-top', 'calc(var(--top-nav-height) + var(--spacer))')
     } else {
