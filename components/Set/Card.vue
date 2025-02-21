@@ -83,6 +83,7 @@ const demand = computed(() => getDemandPercentage(data))
       width: 100%;
       height: 100%;
       top: 0;
+      left: 0;
       border: var(--border);
       border-radius: var(--border-radius);
       background-color: var(--gray-z-1);
