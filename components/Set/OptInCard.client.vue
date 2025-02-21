@@ -15,7 +15,7 @@
       </template>
 
       <template v-else class="connect">
-        <template v-if="subscription?.opepen_ids?.length">
+        <template v-if="subscriptionLoaded && subscription?.opepen_ids?.length">
           <SectionTitle>Your Opt-Ins <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
           <p>You opted in <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong> for potential reveal.</p>
           <table>
@@ -93,11 +93,13 @@ const openOptInModal = () => {
   optInOpen.value = true
 }
 
-const fetchSubscriptionUrl = computed(() => `/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`)
-const { data: subscription, refresh: fetchSubscription } = await useApi(fetchSubscriptionUrl, {
-    dedupe: 'cancel',
-  }
-)
+const subscription = ref()
+const subscriptionLoaded = ref(false)
+const fetchSubscription = async () => {
+  const uri = `${useApiBase()}/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`
+  subscription.value = await $fetch(uri)
+  subscriptionLoaded.value = true
+}
 
 // REVEAL PROCESS
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
