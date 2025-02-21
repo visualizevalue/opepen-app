@@ -7,7 +7,7 @@ type HeadConfig = {
 }
 
 const makeHead = ({
-  title = 'Opepen',
+  title = 'Opepen Edition',
   description = 'Consensus is temporary.',
   og = '/og/intro.png',
   meta = [],

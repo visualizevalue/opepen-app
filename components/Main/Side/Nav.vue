@@ -9,8 +9,6 @@
     <section>
       <!-- <h1>Home</h1> -->
 
-      <MainSideOptIn @click="close" />
-
       <MainSideNavLink
         to="/"
         title="Overview"
@@ -22,6 +20,9 @@
 
     <section>
       <h1>Browse</h1>
+
+      <MainSideOptIn @click="close" />
+
       <MainSideNavLink
         to="/sets"
         title="Permanent Collection"

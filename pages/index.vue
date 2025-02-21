@@ -76,6 +76,10 @@ const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-
 
 const { featuredSets } = await useSets()
 const featuredSubmissions = computed(() => featuredSets.value.map(s => s.submission))
+
+useMetaData({
+  title: `Opepen Edition | Public Art On Ethereum`,
+})
 </script>
 
 <style scoped>
