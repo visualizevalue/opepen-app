@@ -1,15 +1,27 @@
 <template>
   <nav ref="nav" :style="style" class="sidebar">
 
-    <WithAccount v-slot="{ address }">
+    <WithAccount>
       <MainSideProfile @sendClose="close" />
     </WithAccount>
 
-    <MainSideOptIn @click="close" />
+
+    <section>
+      <!-- <h1>Home</h1> -->
+
+      <MainSideOptIn @click="close" />
+
+      <MainSideNavLink
+        to="/"
+        title="Overview"
+        subline="Public Art on Ethereum"
+        @click="close"
+        strict-exact
+      />
+    </section>
 
     <section>
       <h1>Browse</h1>
-
       <MainSideNavLink
         to="/sets"
         title="Permanent Collection"
@@ -45,12 +57,12 @@
     <section>
       <h1>About</h1>
 
-      <MainSideNavLink
-        to="/about/intro"
-        title="The Opepen Protocol"
-        subline="Learn how Opepen works"
-        @click="close"
-      />
+      <!-- <MainSideNavLink -->
+      <!--   to="/about/intro" -->
+      <!--   title="The Opepen Protocol" -->
+      <!--   subline="Learn how Opepen works" -->
+      <!--   @click="close" -->
+      <!-- /> -->
       <MainSideNavLink
         to="/artists"
         title="Artists"

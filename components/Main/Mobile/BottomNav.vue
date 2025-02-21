@@ -6,7 +6,7 @@
     <NuxtLink to="/create" title="Submit">
       <Icon type="plus" stroke-width="3" />
     </NuxtLink>
-    <NuxtLink to="/community" title="Community">
+    <NuxtLink to="/artists" title="Community">
       <Icon type="opepen" />
     </NuxtLink>
   </nav>

@@ -1,12 +1,11 @@
 <template>
-  <section v-if="submission && optInAvailable">
-    <MainSideNavLink
-      :to="`/submissions/${submission.uuid}`"
-      :title="title"
-      :subline="subline"
-      class="success"
-    />
-  </section>
+  <MainSideNavLink
+    v-if="submission && optInAvailable"
+    :to="`/submissions/${submission.uuid}`"
+    :title="title"
+    :subline="subline"
+    class="success"
+  />
 </template>
 
 <script setup>
