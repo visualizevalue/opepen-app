@@ -1,6 +1,14 @@
 <template>
-  <Card v-if="data" ref="el" class="borderless set-preview" :class="{ minimal }" :style="style">
+  <Card
+    v-if="data"
+    ref="el"
+    class="borderless set-preview"
+    :class="{ minimal, showDemand }"
+    :style="style"
+  >
     <div class="wrapper">
+      <Progress v-if="showDemand" :percent="demand" />
+
       <section v-if="isVisible" class="items">
         <Image :image="data?.edition1Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
         <Image :image="data?.edition4Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
@@ -16,7 +24,7 @@
         <span>{{ data.name }}</span>
       </h1>
 
-      <Button :to="`/sets/${id}`" :title="data.name">
+      <Button :to="url" :title="data.name">
         <Icon type="chevron-right" />
         <span>View Set</span>
       </Button>
@@ -32,31 +40,42 @@ const isVisible = useElementVisibility(el, {
   rootMargin: '500px 0px',
 })
 
-const { data, minimal, style } = defineProps({
+const { data, minimal, style, showDemand } = defineProps({
   data: Object,
   minimal: Boolean,
+  showDemand: Boolean,
   style: {
     type: Object,
     default: () => ({})
-  }
+  },
 })
 
 const id = computed(() => data?.set_id ? pad(data.set_id, 3) : data?.uuid)
 const url = computed(() => data?.set_id ? `/sets/${id.value}` : `/submissions/${id.value}`)
+
+const demand = computed(() => getDemandPercentage(data))
 </script>
 
 <style scoped>
   .set-preview {
+    --text-height: calc(var(--size-7) + var(--size-2));
+    --demand-height: 0px;
+
+    &.minimal {
+      --text-height: 0px;
+    }
+
+    &.showDemand {
+      --demand-height: var(--size-3);
+    }
+
     container-type: inline-size;
     container-name: preview;
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: calc(100% + var(--size-7) + var(--size-2));
-
-    &.minimal {
-      padding-bottom: 100%;
-    }
+    padding-bottom: calc(100% + var(--text-height) + var(--demand-height));
+    transition: transform var(--speed);
 
     .wrapper {
       position: absolute;
@@ -65,6 +84,7 @@ const url = computed(() => data?.set_id ? `/sets/${id.value}` : `/submissions/${
       border: var(--border);
       border-radius: var(--border-radius);
       background-color: var(--gray-z-1);
+      overflow: hidden;
     }
 
     .wrapper > a {

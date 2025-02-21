@@ -1,5 +1,5 @@
 <template>
-<div v-if="percent" class="progress">
+<div class="progress">
   <div :style="{ width: `${percent}%` }"></div>
   <div :style="{ left: `${percent}%`}"><slot/></div>
 </div>
@@ -7,14 +7,16 @@
 
 <script setup>
 defineProps({
-  percent: Number,
+  percent: {
+    type: Number,
+    default: 0,
+  },
 })
 </script>
 
 <style scoped>
 .progress {
   padding: 0;
-  margin-bottom: var(--size-4);
   background-color: var(--gray-z-2);
   border-radius: var(--size-1);
   position: relative;

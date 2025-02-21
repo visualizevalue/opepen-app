@@ -6,6 +6,7 @@
         :data="submission"
         :key="submission.uuid"
         :minimal="minimal"
+        :show-demand="showDemand"
       />
     </div>
 
@@ -15,6 +16,7 @@
 defineProps({
   submissions: Array,
   minimal: Boolean,
+  showDemand: Boolean,
 })
 </script>
 

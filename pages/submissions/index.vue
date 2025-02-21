@@ -22,7 +22,7 @@
       </template>
 
       <template #default="{ items }">
-        <SetCardGrid :submissions="items" class="more-space" minimal />
+        <SetCardGrid :submissions="items" class="more-space" minimal show-demand />
       </template>
     </PaginatedContent>
 </template>
