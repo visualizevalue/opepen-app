@@ -11,3 +11,12 @@
     display: none;
   }
 }
+
+.visible-md {
+  display: none !important;
+
+  @media (--md) {
+    display: initial !important;
+  }
+}
+

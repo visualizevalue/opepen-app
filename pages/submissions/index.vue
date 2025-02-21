@@ -18,7 +18,9 @@
     >
       <template #before>
         <PageHeader>
-        <SectionTitle>Submissions ({{ stats.submissions.sets || 0}})</SectionTitle>
+          <SectionTitle class="visible-md">
+            Submissions ({{ stats?.submissions.sets || 0}})
+          </SectionTitle>
           <Actions>
             <span>Sort:</span>
             <select v-model="sort" class="select">
@@ -73,6 +75,12 @@ menu {
   select {
     width: min-content;
     font-size: var(--font-sm);
+  }
+}
+
+h1.visible-md {
+  @media (--md) {
+    display: flex !important;
   }
 }
 </style>
