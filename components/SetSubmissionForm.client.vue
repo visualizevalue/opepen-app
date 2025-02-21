@@ -377,10 +377,15 @@ watchEffect(() => {
 
 <style scoped>
 form {
-  pointer-events: none;
+
+  > .card {
+    pointer-events: none;
+  }
 
   &:not([disabled="true"]) {
-    pointer-events: all;
+    > .card {
+      pointer-events: all;
+    }
   }
 }
 
