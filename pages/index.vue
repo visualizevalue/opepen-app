@@ -184,16 +184,28 @@ useMetaData({
   .prose {
     font-size: var(--font-base);
     text-align: center;
+    padding-left: var(--spacer-lg);
+    padding-right: var(--spacer-lg);
+
+    @media (--md) {
+      padding-left: 0;
+      padding-right: 0;
+    }
 
     h2 {
-      font-size: var(--font-base);
+      font-size: var(--ui-font-size);
       margin-bottom: var(--spacer-lg);
     }
 
     p {
-      --font-lg: 1.1rem;
-      font-size: var(--font-lg);
-      line-height: 2rem;
+      font-size: var(--font-base);
+      line-height: var(--line-height-lg);
+      margin-bottom: var(--spacer);
+
+      @media (--md) {
+        --font-lg: 1.1rem;
+        font-size: var(--font-lg);
+      }
     }
   }
 
@@ -202,6 +214,16 @@ useMetaData({
   .stats {
     display: grid;
     gap: var(--spacer);
+  }
+
+  hr {
+    width: calc(100% + var(--spacer)*2);
+    margin-left: calc(-1*var(--spacer));
+
+    @media (--md) {
+      width: 100%;
+      margin-left: 0;
+    }
   }
 }
 </style>

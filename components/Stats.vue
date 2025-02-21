@@ -70,7 +70,7 @@ const { day, stats } = await useStats()
 
   h1 {
     @mixin ui-font;
-    font-size: var(--font-lg);
+    font-size: var(--ui-font-size);
     color: var(--muted);
     margin: 0;
   }
