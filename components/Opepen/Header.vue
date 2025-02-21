@@ -13,7 +13,7 @@
           <span>{{ editionName }}</span>
         </PageTitle>
 
-        <OpepenEditionSVG :edition="opepen.data.edition" :stroke="9" />
+        <OpepenEditionSVG :editions="[opepen.data.edition]" :stroke="9" />
       </PageHeader>
     </header>
 </template>
