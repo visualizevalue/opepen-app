@@ -52,7 +52,7 @@ const props = defineProps({
     default: true,
   },
   tag: {
-    type: String,
+    type: [String, Object],
     default: 'div',
   },
   class: String,

@@ -60,7 +60,8 @@ const stats: Ref<Stats|null> = ref(null)
 
 export const useStats = async () => {
   const { data, refresh, status } = await useApi(`/stats`, {
-    immediate: false
+    immediate: false,
+    dedupe: 'defer',
   })
 
   watchEffect(() => {

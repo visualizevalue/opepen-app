@@ -1,5 +1,4 @@
 <template>
-  <PageFrameMd>
     <!-- <Alert type="muted" dismiss="explain-set-submissions"> -->
     <!--   <h1>Set Submissions</h1> -->
     <!--   <p> -->
@@ -12,27 +11,34 @@
     <!--   </Actions> -->
     <!-- </Alert> -->
 
-    <Actions>
-      <span>Sort:</span>
-      <select v-model="sort" class="select">
-        <option value="-submission_stats.demand.total">Demand</option>
-        <option value="-published_at">Latest</option>
-        <option value="created_at">Earliest</option>
-        <option value="dailyRandom">Random</option>
-      </select>
-    </Actions>
-
     <PaginatedContent
       :url="url"
       :query="query"
-      v-slot="{ items }"
+      :tag="PageFrameMd"
     >
-      <SetCardGrid :submissions="items" minimal />
+      <template #before>
+        <PageHeader>
+        <SectionTitle>Submissions ({{ stats.submissions.sets || 0}})</SectionTitle>
+          <Actions>
+            <span>Sort:</span>
+            <select v-model="sort" class="select">
+              <option value="-submission_stats.demand.total">Demand</option>
+              <option value="-published_at">Latest</option>
+              <option value="created_at">Earliest</option>
+              <option value="dailyRandom">Random</option>
+            </select>
+          </Actions>
+        </PageHeader>
+      </template>
+
+      <template #default="{ items }">
+        <SetCardGrid :submissions="items" class="more-space" minimal />
+      </template>
     </PaginatedContent>
-  </PageFrameMd>
 </template>
 
 <script setup lang="ts">
+import PageFrameMd from '~/components/Page/FrameMd.vue'
 
 const url = `${useApiBase()}/set-submissions`
 const sort = ref('-submission_stats.demand.total')
@@ -43,6 +49,8 @@ const query = computed(() => {
 
   return q.toString()
 })
+
+const { stats } = await useStats()
 
 useMetaData({
   title: `Set Submissions | Opepen`,
