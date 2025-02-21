@@ -1,7 +1,7 @@
 <template>
   <section v-if="showOptIn">
     <Card class="static">
-      <template v-if="! isConnected" class="connect">
+      <template v-if="! currentAddress" class="connect">
         <SectionTitle>Vote <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
         <p>Please connect your wallet to vote on this set.</p>
         <Actions>
@@ -54,7 +54,7 @@
 
         <LazySetOptInModal
           v-model:open="optInOpen"
-          :address="address"
+          :address="currentAddress"
           :submission="submission"
           :subscribed="subscription?.opepen_ids || []"
           :max-reveals="subscription?.max_reveals || {}"
@@ -73,8 +73,6 @@ const props = defineProps({
   submission: Object,
 })
 const emit = defineEmits(['update'])
-
-const { address, isConnected } = useAccount()
 
 // SUBMISSION PROCESS
 const {
@@ -97,7 +95,7 @@ const openOptInModal = () => {
 }
 
 const { data: subscription, refresh: fetchSubscription } =
-  await useApi(`/accounts/${address.value}/set-submissions/${props.submission.uuid}/subscription`)
+  await useApi(`/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`)
 
 // REVEAL PROCESS
 const { data: currentBlock } = useBlockNumber({ chainId: 1 })
