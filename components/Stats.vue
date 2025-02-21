@@ -32,6 +32,11 @@
     </Card>
 
     <Card class="static">
+      <h1>Collectors</h1>
+      <p>{{ formatNumber(stats.users.holders) }}</p>
+    </Card>
+
+    <Card class="static">
       <h1>Day</h1>
       <p>{{ formatNumber(day) }}</p>
     </Card>
@@ -61,16 +66,17 @@ const { day, stats } = await useStats()
   justify-content: center;
   gap: var(--spacer-sm);
   text-align: center;
-  min-height: 6rem;
+  min-height: 9rem;
 
   h1 {
     @mixin ui-font;
+    font-size: var(--font-lg);
     color: var(--muted);
     margin: 0;
   }
 
   p {
-    font-size: var(--font-lg);
+    font-size: var(--font-xl);
   }
 }
 
@@ -78,7 +84,7 @@ const { day, stats } = await useStats()
 .card:has(> div) {
   display: grid;
   gap: var(--spacer);
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 
   .span-2 {
     grid-column: span 2;
