@@ -67,7 +67,6 @@
 
 <script setup>
 import { useBlockNumber } from '@wagmi/vue'
-import { useAccount } from '@wagmi/vue'
 
 const props = defineProps({
   submission: Object,
@@ -94,9 +93,9 @@ const openOptInModal = () => {
   optInOpen.value = true
 }
 
-const { data: subscription, refresh: fetchSubscription } = await useApi(
-  `/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`, {
-    immediate: false
+const fetchSubscriptionUrl = computed(() => `/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`)
+const { data: subscription, refresh: fetchSubscription } = await useApi(fetchSubscriptionUrl, {
+    immediate: false,
   }
 )
 if (currentAddress.value) fetchSubscription()
