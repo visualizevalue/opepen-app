@@ -32,7 +32,7 @@
       <MainSideNavLink
         to="/submissions"
         title="Set Submissions"
-        subline="Vote on submitted Sets"
+        subline="Vote on submitted Opepen Sets"
         @click="close"
       />
       <MainSideNavLink
