@@ -17,7 +17,7 @@
         <Icon type="opepen-grid" />
         <NuxtLink :to="`/sets/${pad(submission.set_id)}`">Set "{{ submission.name }}"</NuxtLink>
       </li>
-      <li>
+      <li v-if="opepen.data?.edition">
         <Icon type="divide-square" />
         <span>
           Edition one of {{ getEditionName(opepen.data.edition) }}

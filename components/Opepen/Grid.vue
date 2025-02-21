@@ -2,12 +2,13 @@
   <PaginatedContent
     :url="url"
     :query="`limit=${limit}`"
-    v-slot="{ items, meta }"
+    v-slot="{ items }"
     class="opepen-grid"
   >
     <OpepenCard
       v-for="token in items"
       :key="token.token_id"
+      :uri="link(token)"
       :token="token"
       :set="token.data?.edition || 40"
       :subline="subline(token)"
@@ -32,6 +33,10 @@ defineProps({
   subline: {
     type: Function,
     default: token => undefined,
+  },
+  link: {
+    type: String,
+    default: () => (token) => `/opepen/${token.token_id}`
   },
 })
 </script>

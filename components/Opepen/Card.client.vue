@@ -18,21 +18,12 @@
 </template>
 
 <script setup>
-import { formatEther } from 'viem'
-
 const {
   token,
-  set,
-  rotate,
   uri,
   subline,
 } = defineProps({
   token: Object,
-  set: [Number, String],
-  rotate: {
-    type: Boolean,
-    default: false,
-  },
   uri: String,
   subline: {
     type: String,

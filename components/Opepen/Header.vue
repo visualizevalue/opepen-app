@@ -10,16 +10,16 @@
             <Separator />
             <span class="token-id">Opepen #{{ opepen.token_id }}</span>
           </small>
-          <span>{{ editionName }}</span>
+          <span>{{ title }}</span>
         </PageTitle>
 
-        <OpepenEditionSVG :editions="[opepen.data.edition]" :stroke="9" />
+        <OpepenEditionSVG v-if="!burned" :editions="[opepen.data.edition]" :stroke="9" />
       </PageHeader>
     </header>
 </template>
 
 <script setup>
-const { opepen } = defineProps({ opepen: Object, })
+const { opepen, burned = false } = defineProps({ opepen: Object, burned: Boolean })
 
 const version = computed(() => {
   if (opepen.image?.isAnimated) return null
@@ -28,8 +28,10 @@ const version = computed(() => {
   return null
 })
 
-const editionName = computed(() => {
-  return opepen.set?.submission[`edition${opepen.data.edition}Name`] || `Opepen #${opepen.token_id}`
+const title = computed(() => {
+  return burned
+    ? opepen.name
+    : opepen.set?.submission[`edition${opepen.data.edition}Name`] || `Opepen #${opepen.token_id}`
 })
 </script>
 

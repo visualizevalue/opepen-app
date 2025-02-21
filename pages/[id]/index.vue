@@ -39,6 +39,7 @@
         :key="`${account.address}-burned-opepen`"
         :limit="80"
         :subline="token => `Burned Opepen #${token.opepen.token_id}`"
+        :link="token => `/opepen/burned/${token.token_id}`"
       />
     </section>
 
