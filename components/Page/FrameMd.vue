@@ -25,6 +25,7 @@ defineProps({
 
     @media (--md) {
       gap: var(--spacer-lg);
+      padding: var(--spacer) var(--spacer-lg);
     }
   }
 </style>

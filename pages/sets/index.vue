@@ -34,3 +34,14 @@ useMetaData({
 })
 </script>
 
+<style scoped>
+  .page-frame-md {
+    gap: var(--spacer-lg);
+    padding: var(--spacer) 0;
+
+    @media (--lg) {
+      padding: 0 var(--spacer-lg);
+    }
+  }
+</style>
+
