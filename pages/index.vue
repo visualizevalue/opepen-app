@@ -36,14 +36,25 @@
     <hr>
 
     <section class="prose">
+      <h2>Where constraint meets creativity.</h2>
+
       <p>
-        Opepen is an early manifestation of a digital museum - an open art protocol inviting participation from anyone.
-        A network of curators form consensus on which artworks to add to the Permanent Collection.
+        Opepen Edition is a public art protocol on Ethereum <span class="no-wrap">by <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink></span>.
       </p>
-      <Button to="/about/intro" class="link-button">
-        <span>Learn more</span>
-        <Icon type="chevron-right" />
-      </Button>
+
+      <p>
+        Creators submit their interpretations of the Opepen silhouette. <br />
+        Collectors vote on the artwork to include in the permanent collection.
+      </p>
+
+      <p>
+        There are 200 spots, {{ completeSets.length }} have been filled.
+      </p>
+
+      <!-- <Button to="/about/intro" class="link-button"> -->
+      <!--   <span>Learn more</span> -->
+      <!--   <Icon type="chevron-right" /> -->
+      <!-- </Button> -->
     </section>
 
     <hr>
@@ -74,7 +85,7 @@
 <script setup>
 const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
 
-const { featuredSets } = await useSets()
+const { featuredSets, completeSets } = await useSets()
 const featuredSubmissions = computed(() => featuredSets.value.map(s => s.submission))
 
 useMetaData({
@@ -158,6 +169,10 @@ useMetaData({
         }
       }
     }
+  }
+
+  .prose {
+    font-size: var(--font-base);
   }
 
   .sets,
