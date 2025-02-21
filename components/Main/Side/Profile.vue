@@ -20,7 +20,7 @@
       </div>
       <div class="stat">
         <span>{{ stats.curations }}</span>
-        <small>Curations</small>
+        <small>Votes</small>
       </div>
     </div>
 

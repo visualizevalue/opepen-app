@@ -35,6 +35,12 @@
         subline="Vote on submitted Sets"
         @click="close"
       />
+      <MainSideNavLink
+        to="/artists"
+        title="Artists"
+        subline="Browse Opepen Contributors"
+        @click="close"
+      />
     </section>
 
     <section>
@@ -55,28 +61,28 @@
       />
     </section>
 
-    <section>
-      <h1>About</h1>
-
-      <!-- <MainSideNavLink -->
-      <!--   to="/about/intro" -->
-      <!--   title="The Opepen Protocol" -->
-      <!--   subline="Learn how Opepen works" -->
-      <!--   @click="close" -->
-      <!-- /> -->
-      <MainSideNavLink
-        to="/artists"
-        title="Artists"
-        subline="Browse Opepen Contributors"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/about/stats"
-        title="Stats"
-        subline="Marketplace, Recent Sales"
-        @click="close"
-      />
-    </section>
+    <!-- <section> -->
+    <!--   <h1>About</h1> -->
+    <!---->
+    <!--   <MainSideNavLink -->
+    <!--     to="/about/intro" -->
+    <!--     title="The Opepen Protocol" -->
+    <!--     subline="Learn how Opepen works" -->
+    <!--     @click="close" -->
+    <!--   /> -->
+    <!--   <MainSideNavLink -->
+    <!--     to="/artists" -->
+    <!--     title="Artists" -->
+    <!--     subline="Browse Opepen Contributors" -->
+    <!--     @click="close" -->
+    <!--   /> -->
+    <!--   <MainSideNavLink -->
+    <!--     to="/about/stats" -->
+    <!--     title="Stats" -->
+    <!--     subline="Marketplace, Recent Sales" -->
+    <!--     @click="close" -->
+    <!--   /> -->
+    <!-- </section> -->
 
   </nav>
 
