@@ -1,8 +1,8 @@
 <template>
   <nav id="top-nav" :class="{ hidden }">
     <WithProfile v-slot="{ account, isConnected }">
-      <Avatar v-if="isConnected" :account="account" @click="$emit('openMain')" />
-      <Avatar v-else @click="$emit('openMain')" />
+      <Avatar v-if="isConnected" :account="account" @click="$emit('openMain')" class="eye" />
+      <Avatar v-else @click="$emit('openMain')" class="eye" />
     </WithProfile>
 
     <Icon type="opepen-eye" class="main-logo" @click="scrollTop" />
@@ -71,8 +71,8 @@ watchEffect(() => {
   }
 
   .avatar {
-    width: var(--size-7);
-    height: var(--size-7);
+    width: calc(var(--size-6) + var(--size-1));
+    height: calc(var(--size-6) + var(--size-1));
     margin-left: var(--spacer);
   }
 
