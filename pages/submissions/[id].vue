@@ -1,5 +1,7 @@
 <template>
   <PageFrameSm class="submission">
+    <SetEditLink :submission="submission" />
+
     <SetPreviewImages :data="submission" class="items" />
     <SetItemsMeta :submission="submission" />
 

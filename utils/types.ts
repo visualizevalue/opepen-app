@@ -67,6 +67,7 @@ export interface SetSubmission {
   uuid: string
   name: string
   description?: string
+  creator: string
   set_id?: number
   published_at: string|null
   approved_at: string|null

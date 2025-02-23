@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const { token, version, embed } = defineProps({
+const { token, version } = defineProps({
   token: Object,
   version: {
     type: String,
