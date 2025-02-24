@@ -3,11 +3,12 @@
       :url="url"
       :query="query"
       :tag="PageFrameMd"
+      show-empty
     >
-      <template #before>
+      <template #default="{ items, meta }">
         <PageHeader>
           <SectionTitle class="visible-md">
-            Submissions ({{ stats?.submissions.sets || 0}})
+            Submissions <span v-if="false">({{ meta.total || 0}})</span>
           </SectionTitle>
           <Actions>
             <span>Sort:</span>
@@ -17,17 +18,20 @@
               <option value="earliest">Earliest</option>
               <option value="random">Random</option>
             </select>
+            <div class="input-group">
+              <input class="input" type="text" v-model="search" placeholder="search" />
+              <Icon type="search" />
+            </div>
           </Actions>
         </PageHeader>
-      </template>
 
-      <template #default="{ items }">
         <SetCardGrid :submissions="items" class="more-space" minimal show-demand />
       </template>
     </PaginatedContent>
 </template>
 
 <script setup lang="ts">
+import { watchDebounced } from '@vueuse/core'
 import PageFrameMd from '~/components/Page/FrameMd.vue'
 
 const QUERY_MAP = {
@@ -41,7 +45,9 @@ const router = useRouter()
 const route = useRoute()
 const url = `${useApiBase()}/set-submissions`
 const sort = ref(route.query.sort || 'demand')
-const query = computed(() => {
+const search = ref(route.query.search as string || '')
+const query = ref('')
+const updateQuery = () => {
   const q = new URLSearchParams(`limit=40`)
 
   if ((sort.value as string) in QUERY_MAP) {
@@ -53,14 +59,25 @@ const query = computed(() => {
     q.set('status', 'demand')
   }
 
-  return q.toString()
-})
+  if (search.value) {
+    q.set('search', search.value)
+  }
+
+  query.value = q.toString()
+}
+updateQuery()
+watch(sort, () => updateQuery())
+watchDebounced(search, () => updateQuery(), { debounce: 500, maxWait: 2000, deep: true })
 
 // Maintain currently selected sorting in query parameter
 watchEffect(() => {
-  if (route.query.sort !== sort.value) {
-    router.replace({ query: { ...route.query, sort: sort.value } })
-  }
+  router.replace({
+    query: {
+      ...route.query,
+      sort: sort.value,
+      search: search.value,
+    }
+  })
 })
 
 const { stats } = await useStats()
@@ -77,6 +94,8 @@ menu {
   font-size: var(--font-sm);
   align-items: center;
   justify-content: flex-end;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 
   span {
     color: var(--muted);
@@ -86,6 +105,10 @@ menu {
     width: min-content;
     font-size: var(--font-sm);
   }
+}
+
+input[type="text"].input {
+  text-transform: uppercase !important;
 }
 
 h1.visible-md {

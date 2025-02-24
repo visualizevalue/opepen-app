@@ -16,6 +16,30 @@ select {
 input,
 textarea {
   text-transform: none !important;
+
+  &::placeholder {
+    color: var(--gray-z-4) !important;
+  }
+}
+
+.input-group {
+  position: relative;
+
+  .icon {
+    position: absolute;
+    right: var(--ui-padding-x);
+    top: var(--size-3);
+    width: var(--size-4);
+    color: var(--muted);
+  }
+
+  .input:has(+ .icon) {
+    padding-right: calc(var(--ui-padding-x) + var(--spacer-sm));
+
+    &:--highlight + .icon {
+      color: var(--gray-z-6);
+    }
+  }
 }
 
 form label {
