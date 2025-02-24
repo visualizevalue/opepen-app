@@ -95,7 +95,7 @@ menu {
   align-items: center;
   justify-content: flex-end;
   white-space: nowrap;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap !important;
 
   span {
     color: var(--muted);
@@ -105,11 +105,17 @@ menu {
     width: min-content;
     font-size: var(--font-sm);
   }
+
+  .input-group {
+    flex-shrink: 1;
+    width: auto;
+  }
+
+  input[type="text"].input {
+    text-transform: uppercase !important;
+  }
 }
 
-input[type="text"].input {
-  text-transform: uppercase !important;
-}
 
 h1.visible-md {
   @media (--md) {
