@@ -89,7 +89,7 @@ useMetaData({
 </script>
 
 <style scoped>
-menu {
+header.page-header menu.actions {
   @mixin ui-font;
   font-size: var(--font-sm);
   align-items: center;
