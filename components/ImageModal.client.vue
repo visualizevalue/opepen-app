@@ -5,7 +5,7 @@
   >
     <Image
       :image="image"
-      :version="isStatic ? 'lg' : ''"
+      :version="isStatic && image.versions.lg ? 'lg' : ''"
       :aspect-ratio="1"
       :key="image?.uuid"
       class="appear"
