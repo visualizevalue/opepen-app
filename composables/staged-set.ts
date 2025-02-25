@@ -11,6 +11,9 @@ export const useStagedSet = async () => {
 
   watchEffect(() => {
     // @ts-ignore
+    if (! data.value?.submission) return
+
+    // @ts-ignore
     submission.value = data.value?.submission
   })
 

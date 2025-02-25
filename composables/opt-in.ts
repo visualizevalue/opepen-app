@@ -1,4 +1,4 @@
-export const useOptIn = async (submission: Ref<Object>) => {
+export const useOptIn = async (submission: Ref<SetSubmission>) => {
   const now = useNow()
   const optInUntil = computed(() => DateTime
     .fromISO(submission.value?.starred_at)

@@ -74,6 +74,8 @@ export interface SetSubmission {
   starred_at: string|null
   shadowed_at: string|null
   reveals_at: string|null
+  revealed_at?: string
+  deleted_at?: string
   creatorAccount: Account
   submission_stats?: SubmissionStats
   edition_type: EditionType
