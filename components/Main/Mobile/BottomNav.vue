@@ -1,6 +1,12 @@
 <template>
   <nav class="bottom-nav">
-    <NuxtLink to="/sets" title="Browse">
+    <NuxtLink
+      to="/sets"
+      title="Browse"
+      :class="{
+        'router-link-active': ['/sets', '/submissions'].includes($route.path),
+      }"
+    >
       <Icon type="opepen-grid" />
     </NuxtLink>
     <NuxtLink to="/create" title="Submit">
