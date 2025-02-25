@@ -18,7 +18,7 @@
           <tr v-for="(edition, key) in EDITIONS">
             <td>{{ edition.name }}</td>
             <td>{{ submission.submission_stats?.holders[key] }}</td>
-            <td>{{ submission.submission_stats?.opepens[key] }}</td>
+            <td>{{ submission.submission_stats?.demand[key] }}</td>
             <td>
               <span>{{ asPercentageOf(submission.submission_stats?.demand[key], key) }}%</span>
               <Icon
@@ -32,7 +32,7 @@
           <tr>
             <td>Overall</td>
             <td>{{ submission.submission_stats?.holders.total }}</td>
-            <td>{{ submission.submission_stats?.opepens.total }}</td>
+            <td>{{ submission.submission_stats?.demand.total }}</td>
             <td>
               <span>{{ formatNumber(submission.submission_stats?.demand.total || 0 / 80 * 100) }}%</span>
               <Icon
