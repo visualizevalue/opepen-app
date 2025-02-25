@@ -67,6 +67,14 @@ const demandColor = (edition: EditionType) => {
 <style scoped>
 .card {
   gap: var(--spacer);
+  overflow: hidden;
+  padding-top: calc(var(--spacer) + var(--size-1));
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .icon {
