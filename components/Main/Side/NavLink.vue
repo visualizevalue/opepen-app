@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="to"
-    :class="{ 'active': (strictExact ? $route.path == to : $route.path.includes(to)) }"
+    :class="{ 'active': (strictExact ? $route.path == to : $route.path.indexOf(to) > -1) }"
   >
     <div>
       <span>{{ title }}</span>

@@ -27,7 +27,7 @@ const image = computed(() => data ? data[`edition${edition}Image`] : `https://op
 const version = computed(() => image.value?.isAnimated === true ? '' : 'sm')
 
 const name = computed(() => data ? data[`edition${edition}Name`] : `Unrevealed`)
-const tagline = computed(() => EDITION_TAGLINES[edition])
+const tagline = computed(() => EDITIONS[edition]?.tagline)
 </script>
 
 <style scoped>

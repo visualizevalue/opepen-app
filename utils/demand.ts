@@ -1,5 +1,8 @@
 const DEMAND_REQUIREMENT = 80
-const EDITIONS = [1, 4, 5, 10, 20, 40]
+
+export const getEditionDemandPercentage = (submission: SetSubmission, edition: EditionType) => {
+  return (submission.submission_stats?.demand[edition] || 0) / edition * 100
+}
 
 export const getDemandPercentage = (submission: SetSubmission) => {
   const totalDemand =
@@ -14,7 +17,6 @@ export const getDemandPercentage = (submission: SetSubmission) => {
 }
 
 export const getDemandEditions = (submission: SetSubmission, thresholdPercentage: number = 0) => {
-  // @ts-ignore
-  return EDITIONS.filter(e => (submission.submission_stats?.demand[`${e}`] || 0) / e >= thresholdPercentage)
+  return EDITION_KEYS.filter(e => (submission.submission_stats?.demand[e] || 0) / e >= thresholdPercentage)
 }
 

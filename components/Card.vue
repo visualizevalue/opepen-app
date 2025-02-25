@@ -27,6 +27,13 @@
     }
   }
 
+
+  :deep(> h1:first-child) {
+    border-bottom: var(--border);
+    padding-bottom: calc(var(--spacer) - var(--spacer-xs));
+  }
+
+
   .card-link {
     border: 0;
   }

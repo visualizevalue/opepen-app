@@ -7,6 +7,8 @@
 
     <SetOptInCard :submission="submission" @update="refresh" />
 
+    <SetOptInStatsCard :submission="submission" />
+
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
       <RichContentLinks :links="submission.richContentLinks" />
@@ -56,6 +58,10 @@ useMetaData({
 
     @media (--md) {
       gap: var(--spacer-lg);
+    }
+
+    > *:last-child {
+      margin-bottom: var(--spacer-lg);
     }
   }
 

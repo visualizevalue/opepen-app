@@ -18,7 +18,7 @@
         <template v-if="subscriptionLoaded && subscription?.opepen_ids?.length">
           <SectionTitle>Your Opt-Ins <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
           <p>You opted in <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong> for potential reveal.</p>
-          <table>
+          <Table>
             <thead>
               <tr>
                 <td>Edition</td>
@@ -33,7 +33,7 @@
                 <td>{{ subscription.max_reveals[edition] }}<span class="times">x</span></td>
               </tr>
             </tbody>
-          </table>
+          </Table>
         </template>
 
         <template v-else>
@@ -128,11 +128,6 @@ onMounted(() => fetchSubscription())
   gap: var(--spacer);
 }
 
-h1 {
-  border-bottom: var(--border);
-  padding-bottom: calc(var(--spacer) - var(--spacer-xs));
-}
-
 p,
 ul {
   @mixin ui-font;
@@ -150,29 +145,7 @@ strong,
 }
 
 table {
-  @mixin ui-font;
-  color: var(--muted);
-  margin: var(--spacer) 0;
-
-  thead {
-    color: var(--color);
-  }
-
-  tr:not(:last-child:not(:first-child)) {
-    border-bottom: var(--border);
-  }
-
   td {
-    white-space: nowrap;
-
-    padding: var(--spacer-xs) var(--spacer-sm);
-    &:first-child {
-      padding-left: 0;
-    }
-    &:last-child {
-      padding-right: 0;
-    }
-
     &:nth-child(2),
     &:nth-child(3) {
       text-align: right;

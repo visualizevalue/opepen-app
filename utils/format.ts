@@ -6,3 +6,7 @@ export const roundAndFormatNumber = (num: number, decimals: number = 2) => {
   return formatNumber(rounded === num ? num : rounded)
 }
 
+export const asPercentageOf = (num: number = 0, base: number = 1) => {
+  return formatNumber(Math.round(num / base * 100))
+}
+

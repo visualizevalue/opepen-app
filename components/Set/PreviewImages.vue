@@ -25,7 +25,7 @@ const edition = ref()
 const zoomed = ref(false)
 const image = computed(() => data[`edition${edition.value}Image`] || DEFAULT_TOKEN_IMAGE)
 const name = computed(() => data ? data[`edition${edition.value}Name`] : `Unrevealed`)
-const tagline = computed(() => EDITION_TAGLINES[edition.value])
+const tagline = computed(() => EDITIONS[edition.value]?.tagline)
 
 const open = (ed) => {
   edition.value = ed
