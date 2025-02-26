@@ -3,6 +3,7 @@
     <slot name="header">
       <SectionTitle>Dynamic Images Preview</SectionTitle>
     </slot>
+
     <div class="list">
       <div
         v-for="image in images"

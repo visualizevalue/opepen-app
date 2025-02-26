@@ -43,6 +43,11 @@
           </tr>
         </tfoot>
       </Table>
+
+      <LazySetOptInPieChart
+        v-if="submission.submission_stats?.holders.total"
+        :submission="submission"
+      />
     </Card>
   </section>
 </template>
