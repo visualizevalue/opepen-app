@@ -14,7 +14,12 @@ const props = defineProps({
 const address = computed(() => props.curator && props.curator[0])
 const demand = computed(() => props.curator && props.curator[1]?.demand)
 const url = computed(() => `/accounts/${address.value}`)
-const { data } = await useApi(url)
+const { data, execute } = await useApi(url, {
+  immediate: false,
+})
+watchEffect(() => {
+  if (address.value) execute()
+})
 </script>
 
 <style scoped>
