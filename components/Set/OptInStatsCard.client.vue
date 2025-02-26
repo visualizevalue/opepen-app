@@ -44,7 +44,7 @@
         </tfoot>
       </Table>
 
-      <LazySetOptInPieChart
+      <SetOptInPieChart
         v-if="submission.submission_stats?.holders.total"
         :submission="submission"
       />

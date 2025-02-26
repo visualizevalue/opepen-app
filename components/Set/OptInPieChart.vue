@@ -3,7 +3,7 @@
     Consensus Breakdown
   </SectionTitle>
 
-  <main>
+  <main v-if="status === 'success'">
     <div @mouseleave="highlightedIndex = null">
       <PieChart :data="data" :on-hover="onHover" />
     </div>
@@ -30,7 +30,9 @@ const props = defineProps({
   submission: Object,
 })
 
-const { data: response } = await useApi(`/set-submissions/${props.submission.uuid}/curation-stats`)
+const { data: response, status } = await useApi(`/set-submissions/${props.submission.uuid}/curation-stats`, {
+  lazy: true
+})
 
 const total = computed(() => response.value?.total || {})
 const items = computed(() => Object.entries(total.value).sort((a, b) => a[1].demand > b[1].demand ? -1 : 1))
@@ -73,7 +75,7 @@ main {
   display: grid;
   grid-template-columns: var(--chart-size) 1fr;
   gap: var(--size-5);
-  padding: 0 var(--spacer) var(--spacer);
+  padding: var(--spacer-sm) var(--spacer) var(--spacer);
   align-items: center;
   justify-content: center;
 
