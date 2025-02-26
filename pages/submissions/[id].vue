@@ -37,7 +37,12 @@ definePageMeta({
 
 const route = useRoute()
 
-const { data: submission, refresh } = await useApi(`/set-submissions/${route.params.id}`)
+const submission = ref()
+const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`)
+watchEffect(() => {
+  if (! data.value?.uuid) return
+  submission.value = data.value
+})
 await useStagedOptIn()
 
 useMetaData({
