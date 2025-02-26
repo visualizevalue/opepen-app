@@ -7,7 +7,7 @@
     :style="style"
   >
     <div class="wrapper">
-      <Progress v-if="showDemand" :percent="demand" :class="{ muted: demand < 50 }" />
+      <Progress v-if="showDemand" :percent="demand" :class="{ muted: ! data?.starred_at }" />
 
       <section v-if="isVisible" class="items">
         <Image :image="data?.edition1Image" version="sm" class="appear" :auto-embed="false" :aspect-ratio="1" />
