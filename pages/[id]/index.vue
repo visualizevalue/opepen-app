@@ -43,6 +43,8 @@
       />
     </section>
 
+    <DelegatedOpepen :address="account.address" />
+
     <!-- <AdminMenuFloating> -->
     <!--   <Button :to="`/settings/${account.address}`"> -->
     <!--     <Icon type="settings" /> -->
