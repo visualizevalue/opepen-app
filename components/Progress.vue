@@ -34,6 +34,10 @@ defineProps({
     background-color: var(--gray-z-4);
   }
 
+  &.yellow > div:first-child {
+    background-color: var(--yellow);
+  }
+
   > div:last-child {
     font-size: var(--font-sm);
     color: var(--gray-z-6);
