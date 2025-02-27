@@ -1,6 +1,6 @@
 <template>
   <PageFrameMd>
-    <PageHeader class="visible-md">
+    <PageHeader class="visible-md-flex">
       <SectionTitle>Permanent Collection</SectionTitle>
     </PageHeader>
 
@@ -37,12 +37,6 @@ useMetaData({
 
   .progress {
     margin-bottom: var(--size-5);
-  }
-
-  .visible-md {
-    @media (--md) {
-      display: flex !important;
-    }
   }
 </style>
 

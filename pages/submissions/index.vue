@@ -1,33 +1,33 @@
 <template>
-    <PaginatedContent
-      :url="url"
-      :query="query"
-      :tag="PageFrameMd"
-      show-empty
-    >
-      <template #default="{ items, meta }">
-        <PageHeader>
-          <SectionTitle class="visible-md">
-            Submissions <span v-if="false">({{ meta.total || 0}})</span>
-          </SectionTitle>
-          <Actions>
-            <span>Sort:</span>
-            <select v-model="sort" class="select">
-              <option value="demand">Demand</option>
-              <option value="latest">Latest</option>
-              <option value="earliest">Earliest</option>
-              <option value="random">Random</option>
-            </select>
-            <div class="input-group">
-              <input class="input" type="text" v-model="search" placeholder="search" />
-              <Icon type="search" />
-            </div>
-          </Actions>
-        </PageHeader>
+  <PaginatedContent
+    :url="url"
+    :query="query"
+    :tag="PageFrameMd"
+    show-empty
+  >
+    <template #default="{ items, meta }">
+      <PageHeader>
+        <SectionTitle class="visible-md-flex">
+          Submissions <span v-if="false">({{ meta.total || 0}})</span>
+        </SectionTitle>
+        <Actions>
+          <span>Sort:</span>
+          <select v-model="sort" class="select">
+            <option value="demand">Demand</option>
+            <option value="latest">Latest</option>
+            <option value="earliest">Earliest</option>
+            <option value="random">Random</option>
+          </select>
+          <div class="input-group">
+            <input class="input" type="text" v-model="search" placeholder="search" />
+            <Icon type="search" />
+          </div>
+        </Actions>
+      </PageHeader>
 
-        <SetCardGrid :submissions="items" class="more-space" minimal show-demand />
-      </template>
-    </PaginatedContent>
+      <SetCardGrid :submissions="items" class="more-space" minimal show-demand />
+    </template>
+  </PaginatedContent>
 </template>
 
 <script setup lang="ts">
@@ -113,13 +113,6 @@ header.page-header menu.actions {
 
   input[type="text"].input {
     text-transform: uppercase !important;
-  }
-}
-
-
-h1.visible-md {
-  @media (--md) {
-    display: flex !important;
   }
 }
 </style>

@@ -20,3 +20,11 @@
   }
 }
 
+.visible-md-flex {
+  display: none !important;
+
+  @media (--md) {
+    display: flex !important;
+  }
+}
+
