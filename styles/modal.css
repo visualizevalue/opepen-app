@@ -31,8 +31,8 @@ body dialog {
   }
 
   > .close {
-    width: var(--size-6);
-    height: var(--size-6);
+    width: var(--size-5) !important;
+    height: var(--size-5) !important;
     border-radius: 50%;
     background: var(--semi-shade);
     display: flex;
