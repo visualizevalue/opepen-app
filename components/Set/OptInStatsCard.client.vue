@@ -34,7 +34,7 @@
             <td>{{ submission.submission_stats?.holders.total }}</td>
             <td>{{ submission.submission_stats?.demand.total }}</td>
             <td>
-              <span>{{ formatNumber((submission.submission_stats?.demand.total || 0) / 80 * 100) }}%</span>
+              <span>{{ formatNumber(Math.round((submission.submission_stats?.demand.total || 0) / 80 * 100)) }}%</span>
               <Icon
                 type="check"
                 :style="{ color: demand >= 100 ? 'var(--success)' : demand >= 50 ? 'var(--yellow)' : 'var(--error' }"
