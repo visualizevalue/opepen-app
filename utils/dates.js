@@ -15,7 +15,7 @@ export const formatTime = (date) => {
 }
 
 export const timeAgo = (time) => {
-  const timeRelative = DateTime.fromISO(time).toRelative({ style: 'short', locale: 'us' })
-
-  return DateTime.now().diff(DateTime.fromISO(time)).as('days') > 2 ? formatDate(time) : timeRelative
+  return DateTime.now().diff(time).as('days') > 2
+    ? formatDate(time)
+    : time.toRelative({ style: 'short', locale: 'us' })
 }

@@ -7,7 +7,7 @@
 
     <SetOptInCard :submission="submission" @update="refresh" />
 
-    <SetOptInStatsCard :submission="submission" />
+    <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
@@ -38,12 +38,24 @@ definePageMeta({
 const route = useRoute()
 
 const submission = ref()
-const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`)
+const lastUpdated = ref(nowInSeconds())
+const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`, {
+  onResponse: () => {
+    lastUpdated.value = nowInSeconds()
+  }
+})
 watchEffect(() => {
   if (! data.value?.uuid) return
   submission.value = data.value
 })
 await useStagedOptIn()
+
+// Update every 2 minutes
+onMounted(() => {
+  setInterval(() => {
+    refresh()
+  }, 1000 * 120)
+})
 
 useMetaData({
   title: `${submission.value.name} | Set Submission | Opepen`,

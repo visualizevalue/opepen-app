@@ -1,7 +1,10 @@
 <template>
   <section v-if="demand > 0">
     <Card class="static">
-      <SectionTitle>Demand Stats</SectionTitle>
+      <header>
+        <SectionTitle>Demand Stats</SectionTitle>
+        <span v-if="lastUpdatedStr" class="last-updated"><span class="visible-md">Last updated </span>{{ lastUpdatedStr }}</span>
+      </header>
 
       <Progress :percent="demand" :class="{ muted: demand < 50 }" />
 
@@ -53,8 +56,17 @@
 </template>
 
 <script setup lang="ts">
+const { submission, lastUpdated } = defineProps<{
+  submission: SetSubmission
+  lastUpdated: number
+}>()
 
-const { submission } = defineProps<{ submission: SetSubmission}>()
+const now = useNow()
+const lastUpdatedStr = ref()
+watch(now, () => {
+  if (! lastUpdated) return
+  lastUpdatedStr.value = timeAgo(DateTime.fromSeconds(lastUpdated))
+})
 
 const demand = computed(() => getDemandPercentage(submission))
 
@@ -80,6 +92,17 @@ const demandColor = (edition: EditionType) => {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.last-updated {
+  @mixin ui-font;
+  color: var(--gray-z-4);
 }
 
 .icon {

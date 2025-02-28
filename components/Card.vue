@@ -28,12 +28,14 @@
   }
 
 
-  :deep(> h1:not(:last-child)) {
+  :deep(> h1:not(:last-child)),
+  :deep(> header:not(:last-child)) {
     border-bottom: var(--border);
     padding-bottom: calc(var(--spacer) - var(--spacer-xs));
   }
 
-  :deep(> h1:not(:first-child)) {
+  :deep(> h1:not(:first-child)),
+  :deep(> header:not(:first-child)) {
     padding-top: calc(var(--spacer) - var(--spacer-xs));
   }
 
