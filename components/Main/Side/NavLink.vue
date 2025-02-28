@@ -70,7 +70,7 @@ a {
     }
 
     small {
-      color: var(--gray-z-0);
+      color: var(--gray-z-4);
     }
   }
 
