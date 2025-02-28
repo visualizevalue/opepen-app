@@ -56,7 +56,7 @@ export const useCountDown = (s: Ref<Number|BigInt>) => {
     days.value    ? `${days.value}d`   : null,
     hours.value   ? `${hours.value}h`   : null,
     minutes.value ? `${minutes.value}m` : null,
-    (duration.value < 60 * 10) && seconds.value
+    (duration.value < 24 * 60 * 60) && seconds.value
       ? `${seconds.value}s`
       : null,
   ].filter(s => !!s).join(' '))
