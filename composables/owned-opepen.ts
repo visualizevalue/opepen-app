@@ -21,7 +21,7 @@ export const useOpepen = async (addresses: string[]) => {
     opepenLoading.value = true
     const responses = await Promise.all(addrs.map(async a => {
       try {
-        return await $fetch(`${config.public.opepenApi}/accounts/${a}/opepen?limit=16000&includes[]=submission`)
+        return await $fetch(`${config.public.opepenApi}/accounts/${a}/opepen?limit=16000`)
       } catch(e) {
         return null
       }
