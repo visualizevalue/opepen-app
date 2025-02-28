@@ -73,11 +73,15 @@ main {
   --chart-size: 7rem;
 
   display: grid;
-  grid-template-columns: var(--chart-size) 1fr;
   gap: var(--size-5);
   padding: var(--spacer-sm) var(--spacer) var(--spacer);
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+
+  @container (min-width: 30rem) {
+    grid-template-columns: var(--chart-size) 1fr;
+    align-items: center;
+    justify-content: center;
+  }
 
   @container (min-width: 30rem) {
     gap: var(--size-8);
@@ -86,10 +90,10 @@ main {
   > div {
     width: var(--chart-size);
     display: flex;
-    /* justify-self: flex-end; */
   }
 
   > ol {
+    width: 100%;
     padding: 0 0 0 var(--size-5);
   }
 }
