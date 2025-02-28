@@ -1,6 +1,6 @@
 <template>
   <MainSideNavLink
-    v-if="submission && optInAvailable"
+    v-if="submission && (optInAvailable || revealing)"
     :to="`/submissions/${submission.uuid}`"
     :title="title"
     :subline="subline"

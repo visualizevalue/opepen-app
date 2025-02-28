@@ -2,21 +2,28 @@
   <section v-if="showOptIn">
     <Card class="static">
       <template v-if="! currentAddress" class="connect">
-        <SectionTitle>Vote <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+        <SectionTitle>Vote <span v-if="optInAvailable">({{ optInCountDown.str }})</span></SectionTitle>
         <p>Please connect your wallet to vote on this set.</p>
         <Actions>
           <Connect />
         </Actions>
       </template>
 
-      <template v-else-if="!optInAvailable">
+      <template v-else-if="revealing">
+        <SectionTitle>Reveal Pending</SectionTitle>
+        <p>Set reveal is in progress.</p>
+        <p v-if="blockConfirmations < 0n">{{ blockConfirmationText }} remaining</p>
+        <p v-if="blockConfirmations >= 0n">{{ blockConfirmationText }} (5 block confirmations required)</p>
+      </template>
+
+      <template v-else-if="!optInAvailable && !revealing && !submission.set_id">
         <SectionTitle>Opt-Ins Closed</SectionTitle>
         <p>Set Submission didn't meet consensus to be included in the permanent collection. It was staged for community consensus on {{ formatDate(submission.starred_at) }}.</p>
       </template>
 
       <template v-else class="connect">
         <template v-if="subscriptionLoaded && subscription?.opepen_ids?.length">
-          <SectionTitle>Your Opt-Ins <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+          <SectionTitle>Your Opt-Ins <span v-if="optInAvailable">({{ optInCountDown.str }})</span></SectionTitle>
           <p>You opted in <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong> for potential reveal.</p>
           <Table>
             <thead>
@@ -37,7 +44,7 @@
         </template>
 
         <template v-else>
-          <SectionTitle>Vote <span v-if="isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+          <SectionTitle>Vote <span v-if="optInAvailable">({{ optInCountDown.str }})</span></SectionTitle>
           <p v-if="subscription?.message === 'DISCARD'">You decided not to opt-in to this set, but you can always change your mind.</p>
           <p v-else>Opt-In your unrevealed Opepen for potential reveal.</p>
         </template>
@@ -114,6 +121,12 @@ const {
   blockConfirmationText,
   revealed,
 } = await useReveal(currentBlock)
+
+watchEffect(() => {
+  if (revealed.value || stagedSubmission.value?.set_id) {
+    navigateTo(`/sets/${pad(stagedSubmission.value?.set_id)}`)
+  }
+})
 
 // EVENTS
 const update = async () => {
