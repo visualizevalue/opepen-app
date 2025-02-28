@@ -12,8 +12,8 @@
       <template v-else-if="revealing && isStagedSet">
         <SectionTitle>Reveal Pending</SectionTitle>
         <p>Set reveal is in progress.</p>
-        <p v-if="blockConfirmations < 0n">{{ blockConfirmationText }} remaining</p>
-        <p v-if="blockConfirmations >= 0n">{{ blockConfirmationText }} (5 block confirmations required)</p>
+        <p v-if="blockConfirmations < 0n">{{ blockConfirmationText }} remaining...</p>
+        <p v-else>{{ blockConfirmationText }} (5 block confirmations required).</p>
       </template>
 
       <template v-else-if="!optInAvailable && !revealing && !submission.set_id">
@@ -87,7 +87,6 @@ const {
 } = await useOptIn(toRef(props.submission))
 const {
   submission: stagedSubmission,
-  reloadStagedSubmission,
 } = await useStagedOptIn()
 
 const isStagedSet = computed(() =>
@@ -103,7 +102,7 @@ const openOptInModal = () => {
 const subscription = ref()
 const subscriptionLoaded = ref(false)
 const fetchSubscription = async () => {
-  console.info(`fetchSubscription for`, currentAddress.value)
+  if (! currentAddress.value) return
   const uri = `${useApiBase()}/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`
   subscription.value = await $fetch(uri)
   subscriptionLoaded.value = true
