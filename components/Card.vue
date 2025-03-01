@@ -39,6 +39,17 @@
     padding-top: calc(var(--spacer) - var(--spacer-xs));
   }
 
+  :deep(> header) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    > *:last-child:not(:first-child) {
+      @mixin ui-font;
+      color: var(--gray-z-4);
+    }
+  }
+
   .card-link {
     border: 0;
   }

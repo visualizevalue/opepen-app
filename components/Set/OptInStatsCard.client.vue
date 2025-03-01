@@ -3,7 +3,7 @@
     <Card class="static">
       <header>
         <SectionTitle>Demand Stats</SectionTitle>
-        <span v-if="lastUpdatedStr" class="last-updated"><span class="visible-md">Last updated </span>{{ lastUpdatedStr }}</span>
+        <span v-if="lastUpdatedStr"><span class="visible-md">Last updated </span>{{ lastUpdatedStr }}</span>
       </header>
 
       <Progress :percent="demand" :class="{ muted: demand < 50 }" />
@@ -98,11 +98,6 @@ header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-}
-
-.last-updated {
-  @mixin ui-font;
-  color: var(--gray-z-4);
 }
 
 .icon {

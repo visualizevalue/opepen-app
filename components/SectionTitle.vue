@@ -18,7 +18,7 @@ h1 {
     color: var(--gray-z-4);
     width: var(--size-4);
     height: var(--size-4);
-    margin-left: var(--size-2);
+    margin-left: var(--size-1);
     margin-top: -0.1em;
   }
 }

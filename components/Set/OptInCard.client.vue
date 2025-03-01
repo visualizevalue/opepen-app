@@ -2,7 +2,10 @@
   <section v-if="showOptIn">
     <Card class="static">
       <template v-if="! currentAddress" class="connect">
-        <SectionTitle>Vote <span v-if="optInAvailable && isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+        <header>
+          <SectionTitle>Vote</SectionTitle>
+          <span v-if="optInAvailable && isStagedSet">{{ optInCountDown.str }}</span>
+        </header>
         <p>Please connect your wallet to vote on this set.</p>
         <Actions>
           <Connect />
@@ -23,7 +26,10 @@
 
       <template v-else class="connect">
         <template v-if="subscriptionLoaded && subscription?.opepen_ids?.length">
-          <SectionTitle>Your Opt-Ins <span v-if="optInAvailable && isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+          <header>
+            <SectionTitle>Your Opt-Ins</SectionTitle>
+            <span v-if="optInAvailable && isStagedSet">{{ optInCountDown.str }}</span>
+          </header>
           <p>You opted in <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong> for potential reveal.</p>
           <Table>
             <thead>
@@ -44,7 +50,10 @@
         </template>
 
         <template v-else>
-          <SectionTitle>Vote <span v-if="optInAvailable && isStagedSet">({{ optInCountDown.str }})</span></SectionTitle>
+          <header>
+            <SectionTitle>Vote</SectionTitle>
+            <span v-if="optInAvailable && isStagedSet">{{ optInCountDown.str }}</span>
+          </header>
           <p v-if="subscription?.message === 'DISCARD'">You decided not to opt-in to this set, but you can always change your mind.</p>
           <p v-else>Opt-In your unrevealed Opepen for potential reveal.</p>
         </template>
