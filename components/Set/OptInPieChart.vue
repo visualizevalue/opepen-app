@@ -106,7 +106,8 @@ li {
   padding: var(--spacer-xs) 0;
   white-space: nowrap;
 
-  &.highlight {
+  &.highlight,
+  &:has(a:--highlight) {
     color: var(--color);
   }
 }
