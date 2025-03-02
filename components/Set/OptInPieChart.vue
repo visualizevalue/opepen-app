@@ -18,6 +18,7 @@
         </NuxtLink>
         <span v-else>Others</span>
         <span v-if="index < 3"> ({{ Math.floor(data.datasets[0].data[index] / totalCount * 100) }}%)</span>
+        <span v-if="index >= 3"> ({{ totalCount }} total)</span>
       </li>
     </ol>
 
