@@ -138,9 +138,10 @@ const validSubscribed = computed(() => [...props.subscribed]
 )
 
 const selected = ref(validSubscribed.value?.length ? [...validSubscribed.value] : [])
-// watch(validSubscribed, () => {
-//   selected.value = [...validSubscribed.value] || []
-// })
+watch(validSubscribed, () => {
+  if (selected.value?.length) return
+  selected.value = [...validSubscribed.value] || []
+})
 const selectedPerGroup = computed(() => Object.keys(grouped.value)
   .map(g => [g, selected.value.filter(id => grouped.value[g].map(g => g.token_id).includes(id))])
   .reduce((groups, [g, ids]) => {
