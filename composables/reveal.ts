@@ -21,14 +21,18 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
     currentBlock.value - BigInt(submission.value?.reveal_block_number)
   )
   const blockConfirmationText = computed(() => {
-    const b = blockConfirmations.value
-    if (b === false) return ``
+    try {
+      const b = blockConfirmations.value
+      if (b === false || b === null) return ``
 
-    if (b >= 0n) {
-      return `${b} confimation${b === 0n || b > 1n ? `s` : ``}`
+      if (b >= 0n) {
+        return `${b} confimation${b === 0n || b > 1n ? `s` : ``}`
+      }
+
+      return `${b * -1n} block${b === 0n || b < -1n ? `s` : ``}`
+    } catch (e) {
+      return ``
     }
-
-    return `${b * -1n} block${b === 0n || b < -1n ? `s` : ``}`
   })
   watch(blockConfirmations, () => {
     if (revealed.value) return
