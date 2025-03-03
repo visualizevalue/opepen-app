@@ -8,7 +8,7 @@
       :class="{ dragging, loading }"
       @dragover="dragging = true"
       @dragleave="dragging = false"
-      v-if="! disabled"
+      v-if="canAddMore"
     >
       <Icon type="image" :stroke-width="2" />
       <span>Drag / Click here to upload</span>
@@ -35,8 +35,6 @@
 
       <Loading v-if="loading" txt="" />
     </div>
-
-    <!-- <img v-if="preview && !image" :src="previewURL" :alt="preview.name" :title="preview.name"> -->
   </div>
 </template>
 
@@ -53,7 +51,7 @@ const emit = defineEmits(['stored', 'reset'])
 const { ensureSignIn } = useSignIn()
 
 const images = ref(props.images?.filter(i => !! i) || [])
-const disabled = computed(() => props.disabled || (props.maxFiles && images.value.length >= props.maxFiles))
+const canAddMore = computed(() => !props.disabled && (props.maxFiles && images.value.length < props.maxFiles))
 const loading = ref(false)
 const dragging = ref(false)
 const previews = ref([])
