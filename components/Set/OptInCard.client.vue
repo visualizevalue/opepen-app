@@ -58,15 +58,17 @@
           <p v-else>Opt-In your unrevealed Opepen for potential reveal.</p>
         </template>
 
-        <Actions>
-          <SetDiscardButton v-if="! subscription" :submission="submission" @update="update" />
+        <IsAuthenticated>
+          <Actions>
+            <SetDiscardButton v-if="! subscription" :submission="submission" @update="update" />
 
-          <Button @click="openOptInModal">
-            <Icon type="edit" />
-            <span v-if="subscription?.opepen_ids?.length">Change Opt-Ins</span>
-            <span v-else>Opt-In</span>
-          </Button>
-        </Actions>
+            <Button @click="openOptInModal">
+              <Icon type="edit" />
+              <span v-if="subscription?.opepen_ids?.length">Change Opt-Ins</span>
+              <span v-else>Opt-In</span>
+            </Button>
+          </Actions>
+        </IsAuthenticated>
 
         <LazySetOptInModal
           v-model:open="optInOpen"
