@@ -50,6 +50,7 @@
       <SetOptInPieChart
         v-if="submission.submission_stats?.holders.total"
         :submission="submission"
+        :last-updated="lastUpdated"
       />
     </Card>
   </section>

@@ -4,7 +4,7 @@
   </SectionTitle>
 
   <main v-if="status === 'success'">
-    <div @mouseleave="highlightedIndex = null" class="chart">
+    <div @mouseleave="highlightedIndex = -1" class="chart">
       <PieChart :data="data" :on-hover="onHover" />
     </div>
 
@@ -25,18 +25,21 @@
       </ol>
     </div>
 
-    <SetCuratorStatTooltip :curator="highlighted" :key="highlightedIndex" />
+    <SetCuratorStatTooltip v-if="highlighted" :curator="highlighted" :key="highlightedIndex" />
   </main>
 </template>
 
-<script setup>
-const props = defineProps({
-  submission: Object,
-})
+<script setup lang="ts">
+const { submission, lastUpdated } = defineProps<{ submission: SetSubmission, lastUpdated: number }>()
 
-const { data: response, status } = await useApi(`/set-submissions/${props.submission.uuid}/curation-stats`, {
-  lazy: true
+const { data: response, status, refresh } = await useApi<{
+  total: {
+    [key: string]: { demand: number, opepens: number }
+  }
+}>(`/set-submissions/${submission.uuid}/curation-stats`, {
+  lazy: true,
 })
+watch(() => lastUpdated, () => refresh())
 
 const total = computed(() => response.value?.total || {})
 const items = computed(() => Object.entries(total.value).sort((a, b) => a[1].demand > b[1].demand ? -1 : 1))
@@ -80,10 +83,10 @@ const list = computed(() => {
   return labels
 })
 
-const highlightedIndex = ref(null)
+const highlightedIndex = ref(-1)
 const highlighted = computed(() => Number.isInteger(highlightedIndex.value) ? items.value[highlightedIndex.value] : null)
 
-const onHover = (_event, item) => {
+const onHover = (_: null, item: {index: number}[]) => {
   highlightedIndex.value = item[0]?.index ?? null
 }
 </script>
