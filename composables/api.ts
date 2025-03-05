@@ -1,12 +1,12 @@
-export const useApi = async (endpoint: Ref<string>|string, options = {}) => {
-  return await useFetch(`${useConfig('opepenApi')}${isRef(endpoint) ? endpoint.value : endpoint}`, {
+export const useApi = async <T>(endpoint: Ref<string>|string, options = {}) => {
+  return await useFetch<T>(`${useConfig('opepenApi')}${isRef(endpoint) ? endpoint.value : endpoint}`, {
     dedupe: 'defer',
     ...options,
   })
 }
 
-export const useApiPost = async (endpoint: Ref<string>|string, options = {}) => {
-  return await useApi(endpoint, {
+export const useApiPost = async <T>(endpoint: Ref<string>|string, options = {}) => {
+  return await useApi<T>(endpoint, {
     method: 'POST',
     credentials: 'include',
     immediate: false,
@@ -14,8 +14,8 @@ export const useApiPost = async (endpoint: Ref<string>|string, options = {}) => 
   })
 }
 
-export const useApiDelete = async (endpoint: Ref<string>|string, options = {}) => {
-  return await useApiPost(endpoint, {
+export const useApiDelete = async <T>(endpoint: Ref<string>|string, options = {}) => {
+  return await useApiPost<T>(endpoint, {
     method: 'DELETE',
     ...options
   })
