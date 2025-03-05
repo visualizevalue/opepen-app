@@ -60,8 +60,8 @@ const decentralizationScore = computed(() => {
   let percentage = 0
   let holders = 0
 
-  while (percentage < 66 || holders < demandValues.length - 1) {
-    percentage += parseInt(demandValues.value[holders] / totalDemand.value * 100)
+  while (percentage < 51 || holders < demandValues.value.length - 1) {
+    percentage += parseInt(`${demandValues.value[holders] / totalDemand.value * 100}`)
     holders++
   }
 
