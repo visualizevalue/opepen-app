@@ -4,23 +4,26 @@
   </SectionTitle>
 
   <main v-if="status === 'success'">
-    <div @mouseleave="highlightedIndex = null">
+    <div @mouseleave="highlightedIndex = null" class="chart">
       <PieChart :data="data" :on-hover="onHover" />
     </div>
 
-    <ol>
-      <li
-        v-for="(item, index) in list"
-        :class="{ highlight: highlightedIndex === index || index === 3 && highlightedIndex >= 3}"
-      >
-        <NuxtLink v-if="index < 3" :to="`/${item}`">
-          <FetchApiAccount :id="item" hide-avatar />
-        </NuxtLink>
-        <span v-else>Others</span>
-        <span v-if="index < 3"> ({{ Math.floor(data.datasets[0].data[index] / totalCount * 100) }}%)</span>
-        <span v-if="index >= 3"> ({{ totalCount }} total)</span>
-      </li>
-    </ol>
+    <div class="text">
+      <p>{{ decentralizationScore.percentage }}% of demand from {{ enumerate('wallet', decentralizationScore.holders) }}.</p>
+      <ol>
+        <li
+          v-for="(item, index) in list"
+          :class="{ highlight: highlightedIndex === index || index === 3 && highlightedIndex >= 3}"
+        >
+          <NuxtLink v-if="index < 3" :to="`/${item}`">
+            <FetchApiAccount :id="item" hide-avatar />
+          </NuxtLink>
+          <span v-else>Others</span>
+          <span v-if="index < 3"> ({{ Math.floor(data.datasets[0].data[index] / totalCount * 100) }}%)</span>
+          <span v-if="index >= 3"> ({{ totalCount }} total)</span>
+        </li>
+      </ol>
+    </div>
 
     <SetCuratorStatTooltip :curator="highlighted" :key="highlightedIndex" />
   </main>
@@ -37,17 +40,33 @@ const { data: response, status } = await useApi(`/set-submissions/${props.submis
 
 const total = computed(() => response.value?.total || {})
 const items = computed(() => Object.entries(total.value).sort((a, b) => a[1].demand > b[1].demand ? -1 : 1))
+const demandValues = computed(() => items.value.map(([_, { demand }]) => demand).sort((a, b) => b - a))
+const totalDemand = computed(() => demandValues.value?.reduce((total, demand) => total + demand, 0))
 const data = computed(() => {
   return {
-    labels: items.value.map(([address, { opepens, demand }]) => address),
+    labels: items.value.map(([address]) => address),
     datasets: [
       {
-        data: items.value.map(([address, { opepens, demand }]) => demand),
+        data: demandValues.value,
       }
     ],
   }
 })
 const totalCount = computed(() => data.value.datasets[0].data?.reduce((sum, i) => sum + i, 0))
+const decentralizationScore = computed(() => {
+  let percentage = 0
+  let holders = 0
+
+  while (percentage < 50 || holders < demandValues.length - 1) {
+    percentage += parseInt(demandValues.value[holders] / totalDemand.value * 100)
+    holders++
+  }
+
+  return {
+    percentage,
+    holders,
+  }
+})
 
 const list = computed(() => {
   const all = data.value.labels
@@ -88,17 +107,23 @@ main {
     gap: var(--size-8);
   }
 
-  > div {
+  > .chart {
     width: var(--chart-size);
     display: flex;
   }
 
-  > ol {
+  > .text {
     width: 100%;
-    padding: 0 0 0 var(--size-5);
+    display: grid;
+    gap: var(--spacer-sm);
+
+    > ol {
+      padding: 0 0 0 var(--size-5);
+    }
   }
 }
 
+p,
 li {
   @mixin ui-font;
   color: var(--muted);
