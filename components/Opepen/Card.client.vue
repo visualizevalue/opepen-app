@@ -1,20 +1,17 @@
 <template>
-<Card class="opepen-card borderless">
-  <div @click="onClick">
-    <Image :image="token.image" version="sm" :auto-embed="false" />
 
-    <div class="text">
-      <slot name="title">
-        <h1>{{ token.name }}</h1>
-      </slot>
-      <slot name="subline">
-        <p>{{ subline }}</p>
-      </slot>
+  <Image
+    :image="token.image"
+    version="sm"
+  >
+    <div class="meta">
+      <h1>#{{ token.token_id }}</h1>
+      <p>{{ subline }}</p>
     </div>
 
-    <NuxtLink :to="uri || `/opepen/${token.token_id}`"><span>View #{{ token.token_id }}</span></NuxtLink>
-  </div>
-</Card>
+    <CardLink :to="uri || `/opepen/${token.token_id}`"><span>View #{{ token.token_id }}</span></CardLink>
+  </Image>
+
 </template>
 
 <script setup>
@@ -27,7 +24,7 @@ const {
   uri: String,
   subline: {
     type: String,
-    default: (props) => `Edition of ${props.token.data.edition}`
+    default: (props) => `1/${props.token.data.edition}`
   },
 })
 </script>

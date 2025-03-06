@@ -1,24 +1,23 @@
 <template>
-  <section v-if="revealed" class="set-opepen">
-    <SectionTitle>Opepen</SectionTitle>
-
+  <SetOpepenGrid v-if="revealed">
     <Loading v-if="pending" />
-    <div v-else class="list">
-      <div
-        v-for="token in opepen"
-        :key="token.token_id"
-      >
-        <OpepenCard
-          :token="token"
-          :set="token.data?.edition || 40"
-        >
-          <template #subline>
-            <p><span>owned by </span><NuxtLink :to="`/${token.owner}`" @click.stop="() => null"> {{ token.ownerAccount?.display }}</NuxtLink></p>
-          </template>
-        </OpepenCard>
+    <template v-else>
+      <div class="list list-1">
+        <SectionTitle>{{ submission[`edition1Name`] }} (1/1)</SectionTitle>
+
+        <OpepenCard :token="opepen[0]" :set="1" />
       </div>
-    </div>
-  </section>
+
+      <div v-for="edition of EDITIONS" class="list" :class="[`list-${edition}`]">
+        <SectionTitle>{{ submission[`edition${edition}Name`] }} (1/{{edition}})</SectionTitle>
+
+        <OpepenCard
+          v-for="token of opepenForEdition(edition)"
+          :token="token"
+        />
+      </div>
+    </template>
+  </SetOpepenGrid>
 </template>
 
 <script setup>
@@ -32,34 +31,8 @@ const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && submis
 const config = useRuntimeConfig()
 const url = `${config.public.opepenApi}/opepen/sets/${submission.set_id}/opepen`
 const { data: opepen, pending } = useLazyFetch(url, { key: 'revealed-opepen' })
+
+const EDITIONS = [4, 5, 10, 20, 40]
+const opepenForEdition = (edition) => opepen.value.filter(o => o.data.edition === edition)
 </script>
 
-<style scoped>
-  .set-opepen {
-    display: grid;
-    gap: var(--spacer);
-  }
-
-  .list {
-    display: grid;
-    gap: var(--spacer);
-    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
-
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 0 auto;
-
-    @media (--md) {
-      gap: var(--spacer);
-    }
-
-    > div {
-      width: 100%;
-
-      p {
-        justify-content: flex-start !important;
-        gap: 0.5em;
-      }
-    }
-  }
-</style>
