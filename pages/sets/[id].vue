@@ -1,16 +1,18 @@
 <template>
   <PageFrameSm class="set">
-    <SetPagination :set="set" />
+    <ClientOnly>
+      <SetPagination :set="set" />
 
-    <SetPreviewImages :submission="submission" />
-    <SetItemsMeta :submission="submission" />
+      <SetPreviewImages :submission="submission" />
+      <SetItemsMeta :submission="submission" />
 
-    <section v-if="submission.richContentLinks?.length" class="deep-dive">
-      <SectionTitle>Deep Dive</SectionTitle>
-      <RichContentLinks :links="submission.richContentLinks" />
-    </section>
+      <section v-if="submission.richContentLinks?.length" class="deep-dive">
+        <SectionTitle>Deep Dive</SectionTitle>
+        <RichContentLinks :links="submission.richContentLinks" />
+      </section>
 
-    <SetOpepen :submission="submission" />
+      <SetOpepen :submission="submission" />
+    </ClientOnly>
   </PageFrameSm>
 </template>
 
