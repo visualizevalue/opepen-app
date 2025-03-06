@@ -15,8 +15,18 @@
       <template v-else-if="revealing && isStagedSet">
         <SectionTitle>Reveal Pending</SectionTitle>
         <p>Set reveal is in progress.</p>
-        <p v-if="blockConfirmations < 0n">{{ blockConfirmationText }} remaining...</p>
-        <p v-else>{{ blockConfirmationText }} (5 block confirmations required).</p>
+        <p v-if="blockConfirmations === null">Waiting for reveal block...</p>
+        <p v-else>
+          <span>
+            Reveal block <NuxtLink :to="`https://etherscan.io/block/${submission.reveal_block_number}`" target="_blank">{{ submission.reveal_block_number }}</NuxtLink>
+          </span>
+          <span v-if="blockConfirmations < 0n">
+            ({{ blockConfirmationText }} remaining).
+          </span>
+          <span v-else>
+            ({{ blockConfirmationText }}; 5 block confirmations required).
+          </span>
+        </p>
       </template>
 
       <template v-else-if="!optInAvailable && !revealing && !submission.set_id">
