@@ -47,7 +47,7 @@
         </tfoot>
       </Table>
 
-      <SetOptInPieChart
+      <SetConsensusBreakdown
         v-if="submission.submission_stats?.holders.total"
         :submission="submission"
         :last-updated="lastUpdated"
