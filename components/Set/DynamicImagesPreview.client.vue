@@ -1,27 +1,36 @@
 <template>
-  <section v-if="data?.dynamicSetImages" class="dynamic-preview">
-    <slot name="header">
-      <SectionTitle>Dynamic Images Preview</SectionTitle>
-    </slot>
+  <SetOpepenGrid v-if="data?.dynamicSetImages">
+    <SectionTitle>Dynamic Images Preview</SectionTitle>
 
-    <div class="list">
-      <div
-        v-for="image in images"
-        :key="image.uuid"
-        @click="openModal(image)"
+    <div class="list list-1">
+      <SectionTitle>{{ data[`edition1Name`] }} (1/1)</SectionTitle>
+
+      <Image
+        :image="data.edition1Image"
+        :version="data.edition1Image.type === 'gif' ? '' : 'sm'"
+        :key="data.edition1Image.uuid"
       >
-        <Image
-          :image="image"
-          :version="image.type === 'gif' ? '' : 'sm'"
-          :key="image.uuid"
-        >
-          <div class="meta">
-            <h1>{{ data[`edition${image.edition}Name`] }}</h1>
-            <p>{{ `Edition 1/${image.edition}` }}</p>
-          </div>
-          <button @click="zoomed = true" class="hidden-action"><span>Show details</span></button>
-        </Image>
-      </div>
+        <div class="meta">
+          <h1>{{ data[`edition1Name`] }}</h1>
+          <p>1/1</p>
+        </div>
+      </Image>
+    </div>
+
+    <div v-for="edition of EDITIONS" class="list" :class="[`list-${edition}`]">
+      <SectionTitle>{{ data[`edition${edition}Name`] }} (1/{{edition}})</SectionTitle>
+      <Image
+        v-for="image of imagesForEdition(edition)"
+        :image="image"
+        :version="image.type === 'gif' ? '' : 'sm'"
+        :key="image.uuid"
+          @click="openModal(image)"
+      >
+        <div class="meta">
+          <h1>{{ data[`edition${edition}Name`] }}</h1>
+          <p>1/{{ edition }}</p>
+        </div>
+      </Image>
     </div>
 
     <ImageModal
@@ -32,7 +41,7 @@
       v-model:open="modalOpen"
     >
     </ImageModal>
-  </section>
+  </SetOpepenGrid>
 </template>
 
 <script setup>
@@ -41,28 +50,21 @@ const { data } = defineProps({
 })
 
 const EDITIONS = [4, 5, 10, 20, 40]
-const images = computed(() => {
+const imagesForEdition = (edition) => {
   let array = []
-  const image = data.edition1Image
-  if (image) {
-    image.edition = 1
+  let index = 1
+
+  while (index <= edition) {
+    const image = data.dynamicSetImages[`image${edition}_${index}`]
+    index ++
+
+    if (! image) continue
+    image.edition = edition
     array.push(image)
   }
 
-  for (const edition of EDITIONS) {
-    let index = 1
-    while (index <= edition) {
-      const image = data.dynamicSetImages[`image${edition}_${index}`]
-      index ++
-
-      if (! image) continue
-      image.edition = edition
-      array.push(image)
-    }
-  }
-
   return array
-})
+}
 
 const image = ref()
 const modalTitle = computed(() => data[`edition${image.value?.edition}Name`])
@@ -74,24 +76,3 @@ const openModal = (img) => {
 }
 </script>
 
-<style scoped>
-  .dynamic-preview {
-    display: grid;
-    gap: var(--spacer);
-  }
-
-  .list {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
-    container-type: inline-size;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    gap: var(--size-4);
-
-    > div {
-      width: 100%;
-      cursor: pointer;
-    }
-  }
-</style>
