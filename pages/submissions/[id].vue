@@ -1,27 +1,27 @@
 <template>
-  <PageFrameSm class="submission">
-    <SetEditLink :submission="submission" />
+  <ClientOnly>
+    <PageFrameSm class="submission">
+      <SetEditLink :submission="submission" />
 
-    <SetPreviewImages :submission="submission" class="items" />
+      <SetPreviewImages :submission="submission" class="items" />
 
-    <SetItemsMeta :submission="submission" />
+      <SetItemsMeta :submission="submission" />
 
-    <!-- <ClientOnly> -->
-    <!--   <SetOptInCard :submission="submission" @update="refresh" /> -->
-    <!---->
-    <!--   <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" /> -->
-    <!-- </ClientOnly> -->
+      <SetOptInCard :submission="submission" @update="refresh" />
 
-    <!-- <section v-if="submission.richContentLinks?.length" class="deep-dive"> -->
-    <!--   <SectionTitle>Deep Dive</SectionTitle> -->
-    <!--   <RichContentLinks :links="submission.richContentLinks" /> -->
-    <!-- </section> -->
-    <!---->
-    <!-- <SetDynamicImagesPreview -->
-    <!--   v-if="submission.edition_type === 'DYNAMIC'" -->
-    <!--   :data="submission" -->
-    <!-- /> -->
-  </PageFrameSm>
+      <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
+
+      <section v-if="submission.richContentLinks?.length" class="deep-dive">
+        <SectionTitle>Deep Dive</SectionTitle>
+        <RichContentLinks :links="submission.richContentLinks" />
+      </section>
+
+      <SetDynamicImagesPreview
+        v-if="submission.edition_type === 'DYNAMIC'"
+        :data="submission"
+      />
+    </PageFrameSm>
+  </ClientOnly>
 </template>
 
 <script setup>
