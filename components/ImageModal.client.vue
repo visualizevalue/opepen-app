@@ -2,6 +2,7 @@
   <Modal
     v-model:open="open"
     class="image-modal extra-wide"
+    compat
   >
     <Image
       :image="image"

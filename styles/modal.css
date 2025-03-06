@@ -26,6 +26,8 @@ body dialog,
 body .dialog {
   background: var(--gray-z-0);
   border-radius: var(--border-radius);
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .button {
     width: min-content;

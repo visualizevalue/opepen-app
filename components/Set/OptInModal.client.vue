@@ -1,9 +1,10 @@
 <template>
   <Modal
     v-model:open="open"
-    :class="{ signing }"
     :x-close="false"
+    :class="{ signing }"
     class="opt-in-flow"
+    compat
   >
     <header>
       <h1>
