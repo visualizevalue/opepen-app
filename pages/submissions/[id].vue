@@ -12,15 +12,15 @@
     <!--   <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" /> -->
     <!-- </ClientOnly> -->
 
-    <section v-if="submission.richContentLinks?.length" class="deep-dive">
-      <SectionTitle>Deep Dive</SectionTitle>
-      <RichContentLinks :links="submission.richContentLinks" />
-    </section>
-
-    <SetDynamicImagesPreview
-      v-if="submission.edition_type === 'DYNAMIC'"
-      :data="submission"
-    />
+    <!-- <section v-if="submission.richContentLinks?.length" class="deep-dive"> -->
+    <!--   <SectionTitle>Deep Dive</SectionTitle> -->
+    <!--   <RichContentLinks :links="submission.richContentLinks" /> -->
+    <!-- </section> -->
+    <!---->
+    <!-- <SetDynamicImagesPreview -->
+    <!--   v-if="submission.edition_type === 'DYNAMIC'" -->
+    <!--   :data="submission" -->
+    <!-- /> -->
   </PageFrameSm>
 </template>
 

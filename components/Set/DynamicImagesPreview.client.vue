@@ -37,8 +37,7 @@
       :name="modalTitle"
       :tagline="modalTagline"
       v-model:open="modalOpen"
-    >
-    </ImageModal>
+    />
   </SetOpepenGrid>
 </template>
 
