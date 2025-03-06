@@ -1,6 +1,6 @@
 <template>
 
-  <section v-if="submission" class="items">
+  <section class="items">
     <SetPreviewImage :data="submission" :edition="1" @click="open(1)" />
     <SetPreviewImage :data="submission" :edition="4" @click="open(4)" />
     <SetPreviewImage :data="submission" :edition="5" @click="open(5)" />
