@@ -22,15 +22,15 @@
 </template>
 
 <script setup>
-const { data } = defineProps({
-  data: Object,
+const { submission } = defineProps({
+  submission: Object,
 })
 
-const revealsAt = ref(DateTime.fromISO(data.reveals_at).toUnixInteger())
-const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && data.set_id)
+const revealsAt = ref(DateTime.fromISO(submission.reveals_at).toUnixInteger())
+const revealed = ref(revealsAt.value <= DateTime.now().toUnixInteger() && submission.set_id)
 
 const config = useRuntimeConfig()
-const url = `${config.public.opepenApi}/opepen/sets/${data.set_id}/opepen`
+const url = `${config.public.opepenApi}/opepen/sets/${submission.set_id}/opepen`
 const { data: opepen, pending } = useLazyFetch(url, { key: 'revealed-opepen' })
 </script>
 

@@ -83,4 +83,16 @@ export interface SetSubmission {
   reveal_block_number: string
   artist_signature?: ArtistSignature
   featured: number
+  edition1Image: Image
+  edition4Image: Image
+  edition5Image: Image
+  edition10Image: Image
+  edition20Image: Image
+  edition40Image: Image
+  edition1Name: string
+  edition4Name: string
+  edition5Name: string
+  edition10Name: string
+  edition20Name: string
+  edition40Name: string
 }

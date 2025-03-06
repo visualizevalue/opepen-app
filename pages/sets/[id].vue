@@ -2,7 +2,7 @@
   <PageFrameSm class="set">
     <SetPagination :set="set" />
 
-    <SetPreviewImages :data="submission" />
+    <SetPreviewImages :submission="submission" />
     <SetItemsMeta :submission="submission" />
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
@@ -10,16 +10,7 @@
       <RichContentLinks :links="submission.richContentLinks" />
     </section>
 
-    <SetOpepen :data="submission" />
-
-    <!-- <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh"> -->
-    <!--   <template #before> -->
-    <!--     <Button  :to="`/create/sets/${submission.uuid}`"> -->
-    <!--       <Icon type="edit" /> -->
-    <!--       <span>Edit</span> -->
-    <!--     </Button> -->
-    <!--   </template> -->
-    <!-- </AdminMenuSetSubmissions> -->
+    <SetOpepen :submission="submission" />
   </PageFrameSm>
 </template>
 
@@ -30,7 +21,7 @@ definePageMeta({
 
 const { params: { id }, query } = useRoute()
 
-const { data: set, refresh } = await useApi(`/opepen/sets/${id}`)
+const { data: set } = await useApi(`/opepen/sets/${id}`)
 const submission = computed(() => set.value?.submission)
 
 useMetaData({

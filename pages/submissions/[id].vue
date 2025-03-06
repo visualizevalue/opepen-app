@@ -2,7 +2,7 @@
   <PageFrameSm class="submission">
     <SetEditLink :submission="submission" />
 
-    <SetPreviewImages :data="submission" class="items" />
+    <SetPreviewImages :submission="submission" class="items" />
     <SetItemsMeta :submission="submission" />
 
     <SetOptInCard :submission="submission" @update="refresh" />
