@@ -143,7 +143,7 @@ const {
 } = await useReveal(currentBlock)
 
 watchEffect(() => {
-  if (revealed.value || stagedSubmission.value?.set_id) {
+  if (isStagedSet.value && (revealed.value || stagedSubmission.value?.set_id)) {
     navigateTo(`/sets/${pad(stagedSubmission.value?.set_id)}`)
   }
 })

@@ -3,6 +3,7 @@
     <SetEditLink :submission="submission" />
 
     <SetPreviewImages :submission="submission" class="items" />
+
     <SetItemsMeta :submission="submission" />
 
     <SetOptInCard :submission="submission" @update="refresh" />
@@ -18,15 +19,6 @@
       v-if="submission.edition_type === 'DYNAMIC'"
       :data="submission"
     />
-
-    <!-- <AdminMenuSetSubmissions v-if="submission" :submission="submission" @refresh="refresh"> -->
-    <!--   <template #before> -->
-    <!--     <Button  :to="`/create/sets/${submission.uuid}`"> -->
-    <!--       <Icon type="edit" /> -->
-    <!--       <span>Edit</span> -->
-    <!--     </Button> -->
-    <!--   </template> -->
-    <!-- </AdminMenuSetSubmissions> -->
   </PageFrameSm>
 </template>
 
@@ -58,9 +50,9 @@ onMounted(() => {
 })
 
 useMetaData({
-  title: `${submission.value.name} | Set Submission | Opepen`,
-  description: shortenedCleanText(submission.value.description),
-  og: `${useApiBase()}/render/sets/${submission.value.uuid}/og?${new URLSearchParams(route.query)}`,
+  title: `${submission.value?.name} | Set Submission | Opepen`,
+  description: shortenedCleanText(submission.value?.description),
+  og: `${useApiBase()}/render/sets/${submission.value?.uuid}/og?${new URLSearchParams(route.query)}`,
 })
 </script>
 
