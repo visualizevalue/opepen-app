@@ -50,7 +50,8 @@
       </p>
 
       <p>
-        There are 200 spots, {{ completeSets.length }} have been filled.
+        There are 200 spots. {{ completeSets.length }} have been filled. <br>
+        {{ formatNumber(stats.submissions.sets) }} sets have been submitted.
       </p>
 
       <!-- <Button to="/about/intro" class="link-button"> -->
@@ -97,6 +98,8 @@ const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-
 
 const { featuredSets, completeSets } = await useSets()
 const featuredSubmissions = computed(() => featuredSets.value.map(s => s.submission))
+
+const { stats } = await useStats()
 
 useMetaData({
   title: `Opepen Edition | Public Art On Ethereum`,
