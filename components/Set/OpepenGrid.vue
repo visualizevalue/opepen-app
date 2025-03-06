@@ -7,7 +7,7 @@
 <style scoped>
 .set-opepen-grid {
   display: grid;
-  gap: var(--spacer);
+  gap: var(--spacer-lg);
 }
 
 :slotted(.list) {
@@ -21,8 +21,7 @@
 
   > h1 {
     grid-column: 1/-1;
-    margin-top: var(--spacer);
-    color: var(--gray-z-5);
+    margin-bottom: var(--spacer-sm);
   }
 
   > div {
@@ -32,14 +31,13 @@
 
   &.list-1 {
     grid-template-columns: 1fr;
-    gap: var(--spacer);
 
     @container (min-width: 35rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     > h1 {
-      margin-top: var(--spacer-sm);
+      margin-top: 0;
     }
   }
 

@@ -1,9 +1,7 @@
 <template>
   <SetOpepenGrid v-if="data?.dynamicSetImages">
-    <SectionTitle>Dynamic Images Preview</SectionTitle>
-
     <div class="list list-1">
-      <SectionTitle>{{ data[`edition1Name`] }} (1/1)</SectionTitle>
+      <SectionTitle>{{ data[`edition1Name`] }} <span class="muted">(1/1)</span></SectionTitle>
 
       <Image
         :image="data.edition1Image"
@@ -18,7 +16,7 @@
     </div>
 
     <div v-for="edition of EDITIONS" class="list" :class="[`list-${edition}`]">
-      <SectionTitle>{{ data[`edition${edition}Name`] }} (1/{{edition}})</SectionTitle>
+      <SectionTitle>{{ data[`edition${edition}Name`] }} <span class="muted">(1/{{edition}})</span></SectionTitle>
       <Image
         v-for="image of imagesForEdition(edition)"
         :image="image"

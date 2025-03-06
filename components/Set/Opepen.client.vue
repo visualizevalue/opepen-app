@@ -3,13 +3,13 @@
     <Loading v-if="pending" />
     <template v-else>
       <div class="list list-1">
-        <SectionTitle>{{ submission[`edition1Name`] }} (1/1)</SectionTitle>
+        <SectionTitle>{{ submission[`edition1Name`] }} <span class="muted">(1/1)</span></SectionTitle>
 
         <OpepenCard :token="opepen[0]" :set="1" />
       </div>
 
       <div v-for="edition of EDITIONS" class="list" :class="[`list-${edition}`]">
-        <SectionTitle>{{ submission[`edition${edition}Name`] }} (1/{{edition}})</SectionTitle>
+        <SectionTitle>{{ submission[`edition${edition}Name`] }} <span class="muted">(1/{{edition}})</span></SectionTitle>
 
         <OpepenCard
           v-for="token of opepenForEdition(edition)"
