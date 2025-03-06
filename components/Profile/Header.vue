@@ -112,7 +112,7 @@ header {
   h1 {
     display: flex;
     flex-direction: column;
-    align-items: align-items;
+    align-items: center;
     justify-content: center;
     gap: var(--spacer-sm);
     flex-wrap: wrap;
