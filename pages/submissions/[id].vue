@@ -6,9 +6,11 @@
 
     <SetItemsMeta :submission="submission" />
 
-    <SetOptInCard :submission="submission" @update="refresh" />
+    <ClientOnly>
+      <SetOptInCard :submission="submission" @update="refresh" />
 
-    <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
+      <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
+    </ClientOnly>
 
     <section v-if="submission.richContentLinks?.length" class="deep-dive">
       <SectionTitle>Deep Dive</SectionTitle>
