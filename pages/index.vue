@@ -51,7 +51,7 @@
 
       <p>
         There are 200 spots. {{ completeSets.length }} have been filled. <br>
-        {{ formatNumber(stats.submissions.sets) }} sets have been submitted.
+        {{ formatNumber(stats?.submissions.sets) }} sets have been submitted.
       </p>
 
       <!-- <Button to="/about/intro" class="link-button"> -->
