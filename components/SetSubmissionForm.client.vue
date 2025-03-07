@@ -122,7 +122,6 @@
         title="Deep Dive Links"
         :loaded-links="data.richContentLinks"
         :new-link-data="{ address: data.creator, set_submission_id: data.id }"
-        :disabled="disabled && !isAdmin && false"
       />
     </Card>
   </form>
