@@ -1,5 +1,5 @@
 <template>
-  <form @submit.stop.prevent="store" :disabled="disabled">
+  <form @submit.stop.prevent="store">
     <PageHeader>
       <SectionTitle>
         <span v-if="data.set_id">Permanent collection set</span>
@@ -25,9 +25,8 @@
       </Actions>
     </Alert>
 
-    <Card class="static grid meta">
+    <Card class="static grid meta" :disabled="disabled">
       <label class="name span-2">
-        <!-- <span>Set Name</span> -->
         <input class="input" type="text" v-model="name" placeholder="Set Name" :disabled="disabled" required />
       </label>
 
@@ -71,7 +70,7 @@
       </label>
     </Card>
 
-    <Card class="static">
+    <Card class="static" :disabled="disabled">
       <label class="artist">
         <span>Artist Name</span>
         <input class="input" type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
@@ -99,7 +98,7 @@
       </label>
     </Card>
 
-    <Card class="static">
+    <Card class="static" :disabled="disabled">
       <label class="type">
         <span>Edition Type</span>
         <select v-model="type" class="select" :disabled="disabled">
@@ -123,7 +122,7 @@
         title="Deep Dive Links"
         :loaded-links="data.richContentLinks"
         :new-link-data="{ address: data.creator, set_submission_id: data.id }"
-        :disabled="disabled && !isAdmin"
+        :disabled="disabled && !isAdmin && false"
       />
     </Card>
   </form>
@@ -377,13 +376,10 @@ watchEffect(() => {
 
 <style scoped>
 form {
-
   > .card {
     pointer-events: none;
-  }
 
-  &:not([disabled="true"]) {
-    > .card {
+    &:not([disabled="true"]) {
       pointer-events: all;
     }
   }

@@ -73,6 +73,8 @@ const { day, stats } = await useStats()
     font-size: var(--ui-font-size);
     color: var(--muted);
     margin: 0;
+    border-bottom: 0 !important;
+    padding: 0 !important;
   }
 
   p {
