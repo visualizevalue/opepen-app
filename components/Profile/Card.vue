@@ -18,7 +18,7 @@ const { account } = defineProps<Props>()
 
 const coverImageURL = imageURI(account.coverImage, 'sm')
 const style = computed(() => ({
-    backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%)${coverImageURL ? `, url(${coverImageURL})` : ``}`
+  backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%)${coverImageURL ? `, url(${coverImageURL})` : ``}`
 }))
 </script>
 
