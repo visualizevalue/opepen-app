@@ -27,7 +27,6 @@
     }
   }
 
-
   :deep(> h1:not(:last-child)),
   :deep(> header:not(:last-child)) {
     border-bottom: var(--border);
