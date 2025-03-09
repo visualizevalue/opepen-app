@@ -84,8 +84,13 @@ export default defineNuxtConfig({
   },
 
   pwa: {
+    registerType: 'autoUpdate',
     devOptions: {
       enabled: false,
+    },
+    client: {
+      installPrompt: true,
+      periodicSyncForUpdates: 3600,
     },
     manifest: {
       name: 'Opepen Edition',
