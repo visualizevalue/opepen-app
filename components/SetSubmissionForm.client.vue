@@ -68,6 +68,21 @@
       <label class="description span-2">
         <Input v-model="description" :disabled="disabled" placeholder="Description" />
       </label>
+
+      <div v-if="imagesComplete" class="preview-links span-2">
+        <Button :to="previewImageOG" target="_blank" class="small">
+          <Icon type="external-link" />
+          <span>Open Graph preview</span>
+        </Button>
+        <Button :to="previewImageSquare" target="_blank" class="small">
+          <Icon type="external-link" />
+          <span>Square preview</span>
+        </Button>
+        <Button @click="() => refreshPreview()" class="small">
+          <Icon type="refresh-cw" />
+          <span>Force Refresh</span>
+        </Button>
+      </div>
     </Card>
 
     <Card class="static" :disabled="disabled">
@@ -187,6 +202,29 @@ watch(account, () => {
     artist.value = account.value?.display
   }
 })
+const hasPreviewImages = computed(() =>
+  image1.value &&
+  image4.value &&
+  image5.value &&
+  image10.value &&
+  image20.value &&
+  image40.value
+)
+const previewImageSquare = computed(() => `${config.public.opepenApi}/render/sets/${props.data.uuid}/square`)
+const previewImageOG = computed(() => `${config.public.opepenApi}/render/sets/${props.data.uuid}/og`)
+const pendingPreviewRefresh = ref(false)
+const refreshPreview = async () => await Promise.all([
+  $fetch(previewImageSquare.value, { method: 'POST' }),
+  $fetch(previewImageOG.value, { method: 'POST' }),
+])
+watch(
+  [image1, image4, image5, image10, image20, image40, name],
+  () => {
+    if (! hasPreviewImages.value || ! name.value) return
+    pendingPreviewRefresh.value = true
+  },
+)
+
 
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
@@ -194,16 +232,9 @@ const disabled = computed(() =>
   !!(props.data.set_id || (! isAdmin.value && props.data.published_at))
 )
 const imagesComplete = computed(() => {
-  const hasPreviewImages = image1.value &&
-                           image4.value &&
-                           image5.value &&
-                           image10.value &&
-                           image20.value &&
-                           image40.value
+  if (! isDynamic.value) return hasPreviewImages.value
 
-  if (! isDynamic.value) return hasPreviewImages
-
-  return hasPreviewImages && (
+  return hasPreviewImages.value && (
     props.data.dynamicSetImages?.image4_1 &&
     props.data.dynamicSetImages?.image4_2 &&
     props.data.dynamicSetImages?.image4_3 &&
@@ -350,6 +381,10 @@ const store = async () => {
   saving.value = false
   lastSaved.value = DateTime.now()
 
+  if (pendingPreviewRefresh.value) {
+    await refreshPreview()
+  }
+
   emit('updated', set)
 
   if (! props.data?.uuid && set?.uuid) {
@@ -434,6 +469,33 @@ form,
   > * {
     object-fit: contain;
     aspect-ratio: 1;
+  }
+}
+
+.preview-links {
+  border-top: var(--border);
+  padding-top: var(--spacer);
+  display: flex;
+  gap: var(--spacer-sm) var(--spacer);
+  flex-wrap: wrap;
+  align-items: center;
+
+  p {
+    @mixin ui-font;
+    color: var(--gray-z-5);
+
+    a:--highlight {
+      color: var(--color);
+    }
+  }
+
+  .button {
+    text-decoration: none;
+  }
+
+  button.button {
+    width: min-content;
+    margin-left: auto;
   }
 }
 
