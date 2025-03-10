@@ -430,8 +430,8 @@ form {
 }
 
 form,
-.card,
-.grid {
+form .card,
+form .grid {
   display: grid;
   gap: var(--spacer);
 }
