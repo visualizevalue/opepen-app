@@ -181,14 +181,6 @@ const hasCompleteGroupSelection = group => {
 }
 
 const maxRevealSetting = reactive({ ...props.maxReveals })
-watch(() => props.maxReveals, () => {
-  maxRevealSetting['1'] = props.maxReveals['1']
-  maxRevealSetting['4'] = props.maxReveals['4']
-  maxRevealSetting['5'] = props.maxReveals['5']
-  maxRevealSetting['10'] = props.maxReveals['10']
-  maxRevealSetting['20'] = props.maxReveals['20']
-  maxRevealSetting['40'] = props.maxReveals['40']
-})
 const maxRevealValues = computed(() => ({
   '1':  maxRevealSetting['1']  ? maxRevealSetting['1']  : maxInGroup('1') || null,
   '4':  maxRevealSetting['4']  ? maxRevealSetting['4']  : maxInGroup('4') || null,
