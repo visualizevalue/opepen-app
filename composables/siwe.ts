@@ -1,4 +1,5 @@
 import { signMessage, getAccount, watchAccount } from '@wagmi/core'
+import { useDisconnect } from '@wagmi/vue'
 import { createSiweMessage } from 'viem/siwe'
 
 type Session = {
@@ -135,17 +136,12 @@ export const useSignIn = () => {
   const ensureSignIn = async () => {
     if (isAuthenticated.value && signInLoading.value) return
 
-    let tries = 0
-    while (! isAuthenticated.value && tries < 3) {
-      try {
-        await signIn()
-      } catch (e) {
-        console.error('signin failed', e)
-      }
-      await delay(500)
-      console.info(`signin attempt ${tries}`)
-      tries ++
+    try {
+      await signIn()
+    } catch (e) {
+      console.error('signin failed', e)
     }
+
     if (! isAuthenticated.value) {
       throw new Error(`Not Authenticated`)
     }

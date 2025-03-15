@@ -22,13 +22,9 @@
 </template>
 
 <script setup>
-import { useDisconnect } from '@wagmi/vue'
-
 const { signIn } = useSignIn()
-const { disconnect } = useDisconnect()
 
 const cancel = async () => {
-  disconnect()
   navigateTo('/')
 }
 </script>
