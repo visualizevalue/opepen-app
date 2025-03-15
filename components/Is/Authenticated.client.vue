@@ -15,13 +15,21 @@
     <p>You have to sign in with Ethereum to view this page.</p>
 
     <Actions>
-      <Button :to="'/'" class="secondary">Go Home</Button>
+      <Button @click="cancel" class="secondary">Go Home</Button>
       <Button @click="signIn">Sign In</Button>
     </Actions>
   </Modal>
 </template>
 
 <script setup>
+import { useDisconnect } from '@wagmi/vue'
+
 const { signIn } = useSignIn()
+const { disconnect } = useDisconnect()
+
+const cancel = async () => {
+  disconnect()
+  navigateTo('/')
+}
 </script>
 
