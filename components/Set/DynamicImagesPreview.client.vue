@@ -7,6 +7,7 @@
         :image="data.edition1Image"
         :version="data.edition1Image.type === 'gif' ? '' : 'sm'"
         :key="data.edition1Image.uuid"
+        @click="openModal(data.edition1Image)"
       >
         <div class="meta">
           <h1>{{ data[`edition1Name`] }}</h1>
@@ -22,7 +23,7 @@
         :image="image"
         :version="image.type === 'gif' ? '' : 'sm'"
         :key="image.uuid"
-          @click="openModal(image)"
+        @click="openModal(image)"
       >
         <div class="meta">
           <h1>{{ data[`edition${edition}Name`] }}</h1>
@@ -65,7 +66,7 @@ const imagesForEdition = (edition) => {
 
 const image = ref()
 const modalTitle = computed(() => data[`edition${image.value?.edition}Name`])
-const modalTagline = computed(() => `${data.name} 1/${image.value?.edition}`)
+const modalTagline = computed(() => `${data.name} 1/${image.value?.edition || 1}`)
 const modalOpen = ref(false)
 const openModal = (img) => {
   image.value = img
