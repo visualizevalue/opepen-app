@@ -45,7 +45,7 @@
 
     > *:last-child:not(:first-child) {
       @mixin ui-font;
-      color: var(--gray-z-4);
+      color: var(--gray-z-5);
     }
   }
 
