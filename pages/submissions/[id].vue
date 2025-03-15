@@ -7,14 +7,14 @@
 
       <SetItemsMeta :submission="submission" />
 
-      <SetOptInCard :submission="submission" @update="refresh" />
-
-      <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
-
       <section v-if="submission.richContentLinks?.length" class="deep-dive">
         <SectionTitle>Deep Dive</SectionTitle>
         <RichContentLinks :links="submission.richContentLinks" />
       </section>
+
+      <SetOptInCard :submission="submission" @update="refresh" />
+
+      <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
 
       <SetDynamicImagesPreview
         v-if="submission.edition_type === 'DYNAMIC'"
