@@ -17,11 +17,14 @@
         </h2>
         <Image image="/wireframe.svg" />
         <Button
-          to="https://raw.githubusercontent.com/visualizevalue/opepen-api/refs/heads/main/app/Services/OpepenSVG/opepen-schematics.svg"
+          @click="() => downloadImage(
+            '/schematics.svg',
+            { name: 'schematics' }
+          )"
           target="_blank"
           class="small centered"
         >
-          <Icon type="external-link" />
+          <Icon type="download" />
           <span>Download</span>
         </Button>
       </div>
