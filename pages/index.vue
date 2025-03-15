@@ -16,6 +16,14 @@
           <small>By Visualize Value</small>
         </h2>
         <Image image="/wireframe.svg" />
+        <Button
+          to="https://raw.githubusercontent.com/visualizevalue/opepen-api/refs/heads/main/app/Services/OpepenSVG/opepen-schematics.svg"
+          target="_blank"
+          class="small"
+        >
+          <Icon type="external-link" />
+          <span>Download</span>
+        </Button>
       </div>
       <div>
         <h2>
@@ -23,6 +31,13 @@
           <small>By Anyone</small>
         </h2>
         <Image image="/submissions.png" />
+        <Button
+          to="/submissions"
+          class="small"
+        >
+          <Icon type="external-link" />
+          <span>Explore</span>
+        </Button>
       </div>
       <div>
         <h2>
@@ -30,6 +45,13 @@
           <small>By Collector Vote</small>
         </h2>
         <Image image="/sets.png" />
+        <Button
+          to="/sets"
+          class="small"
+        >
+          <Icon type="external-link" />
+          <span>Browse</span>
+        </Button>
       </div>
     </section>
 
