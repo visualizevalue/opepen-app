@@ -18,8 +18,8 @@
         <Image image="/wireframe.svg" />
         <Button
           @click="() => downloadImage(
-            '/schematics.svg',
-            { name: 'schematics' }
+            '/wireframe.png',
+            { name: 'opepen' }
           )"
           target="_blank"
           class="small centered"
