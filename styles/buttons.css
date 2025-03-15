@@ -17,6 +17,10 @@
       height: var(--size-4);
       width: var(--size-4);
     }
+
+    &.centered:has(.icon) {
+      padding-right: calc(var(--size-2) + var(--size-4));
+    }
   }
 
   &.secondary {

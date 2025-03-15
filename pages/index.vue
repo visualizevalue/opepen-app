@@ -19,7 +19,7 @@
         <Button
           to="https://raw.githubusercontent.com/visualizevalue/opepen-api/refs/heads/main/app/Services/OpepenSVG/opepen-schematics.svg"
           target="_blank"
-          class="small"
+          class="small centered"
         >
           <Icon type="external-link" />
           <span>Download</span>
@@ -33,7 +33,7 @@
         <Image image="/submissions.png" />
         <Button
           to="/submissions"
-          class="small"
+          class="small centered"
         >
           <Icon type="external-link" />
           <span>Explore</span>
@@ -47,7 +47,7 @@
         <Image image="/sets.png" />
         <Button
           to="/sets"
-          class="small"
+          class="small centered"
         >
           <Icon type="external-link" />
           <span>Browse</span>
