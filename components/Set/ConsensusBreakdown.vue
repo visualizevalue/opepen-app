@@ -9,7 +9,10 @@
     </div>
 
     <div class="text">
-      <p>{{ decentralizationScore.percentage }}% of demand from {{ enumerate('wallet', decentralizationScore.holders) }}.</p>
+      <p>
+        {{ decentralizationScore.percentage }}% of demand from {{ enumerate('wallet', decentralizationScore.holders) }};
+        {{ enumerate('opt-in', decentralizationScore.avg) }} per wallet on average.
+      </p>
       <ol>
         <li
           v-for="(item, index) in list"
@@ -57,7 +60,7 @@ const data = computed(() => {
 })
 const totalCount = computed(() => data.value.datasets[0].data?.reduce((sum, i) => sum + i, 0))
 const decentralizationScore = computed(() => {
-  const demandThreshold = totalDemand.value / 2
+  const demandThreshold = Math.ceil(totalDemand.value / 2 + 1)
 
   let demand = 0
   let holders = 0
@@ -71,6 +74,7 @@ const decentralizationScore = computed(() => {
   return {
     percentage,
     holders,
+    avg: Math.round(totalDemand.value / demandValues.value.length),
   }
 })
 
@@ -135,7 +139,6 @@ li {
   color: var(--muted);
   list-style: decimal;
   padding: var(--spacer-xs) 0;
-  white-space: nowrap;
 
   &.highlight,
   &:has(a:--highlight) {
