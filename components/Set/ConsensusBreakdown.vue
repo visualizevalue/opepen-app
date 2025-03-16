@@ -57,13 +57,16 @@ const data = computed(() => {
 })
 const totalCount = computed(() => data.value.datasets[0].data?.reduce((sum, i) => sum + i, 0))
 const decentralizationScore = computed(() => {
-  let percentage = 0
-  let holders = 0
+  const demandThreshold = totalDemand.value / 2
 
-  while (percentage < 51 || holders < demandValues.value.length - 1) {
-    percentage += parseInt(`${demandValues.value[holders] / totalDemand.value * 100}`)
+  let demand = 0
+  let holders = 0
+  while (demand < demandThreshold && holders < demandValues.value.length - 1) {
+    demand += demandValues.value[holders]
     holders++
   }
+
+  const percentage = Math.round(demand / totalDemand.value * 100)
 
   return {
     percentage,
