@@ -1,8 +1,7 @@
 <template>
   <nav id="top-nav" :class="{ hidden }">
-    <WithProfile v-slot="{ account, isConnected }">
-      <Avatar v-if="isConnected" :account="account" @click="$emit('openMain')" class="eye" />
-      <Avatar v-else @click="$emit('openMain')" class="eye" />
+    <WithProfile v-slot="{ account }">
+      <Avatar :account="account" @click="$emit('openMain')" class="eye" :class="{ 'live-opt-in': optInAvailable }" />
     </WithProfile>
 
     <Icon type="opepen-eye" class="main-logo" @click="scrollTop" />
@@ -40,6 +39,8 @@ watchEffect(() => {
     hidden.value = false
   }
 })
+
+const { optInAvailable } = await useStagedOptIn()
 </script>
 
 <style>
@@ -74,6 +75,25 @@ watchEffect(() => {
     width: calc(var(--size-6) + var(--size-1));
     height: calc(var(--size-6) + var(--size-1));
     margin-left: var(--spacer);
+    border-radius: 50%;
+    border-top-left-radius: var(--border-radius-sm);
+
+    &.live-opt-in {
+      position: relative;
+
+      &:after {
+        content: '';
+        width: calc(var(--size-1)*1.2);
+        height: calc(var(--size-1)*1.2);
+        border-radius: 50%;
+        border:  var(--border);
+        border-color: var(--green-light);
+        background: var(--green);
+        position: absolute;
+        top: var(--size-0);
+        right: var(--size-0);
+      }
+    }
   }
 
   .main-logo {
