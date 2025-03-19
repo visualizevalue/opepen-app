@@ -1,5 +1,4 @@
 import { signMessage, getAccount, watchAccount } from '@wagmi/core'
-import { useDisconnect } from '@wagmi/vue'
 import { createSiweMessage } from 'viem/siwe'
 
 type Session = {
@@ -21,7 +20,7 @@ export const signingIn = ref(false)
 export const signInFailed = ref(false)
 export const session: Ref<Session|null> = ref(null)
 export const isAuthenticated = computed(() => session.value && session.value.address?.toLowerCase() === currentAddress.value?.toLowerCase())
-export const isAdmin = computed(() => session.value?.is_admin)
+export const isAdmin = computed(() => isAuthenticated.value && session.value?.is_admin)
 
 let accountWatcher: any
 
