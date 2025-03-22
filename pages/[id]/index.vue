@@ -73,7 +73,7 @@ const createdSets = computed(() => account.createdSets
 const createdSubmissions = computed(() => account.createdSets
   ? account.createdSets
     .filter(s => ! s.set_id)
-    .sort((s1, s2) => s1.created_at > s2.created_at ? -1 : 1)
+    .sort((s1, s2) => s1.published_at > s2.published_at ? -1 : 1)
   : []
 )
 
