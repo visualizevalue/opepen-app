@@ -35,6 +35,7 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
     }
   })
   watch(blockConfirmations, () => {
+    // FIXME: This doesn't compute right
     if (revealed.value) return
     if (blockConfirmations.value < 4n) return
     reloadStagedSubmission()
