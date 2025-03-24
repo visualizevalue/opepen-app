@@ -246,6 +246,11 @@ const sign = async () => {
 
     signed.value = true
   } catch (e) {
+    console.error(e)
+    if (e.data?.message) {
+      console.debug(e.data)
+      alert(e.data.message)
+    }
     // ...
   }
 
