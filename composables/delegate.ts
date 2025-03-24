@@ -21,20 +21,13 @@ export const useDelegation = async (address: Ref<`0x${string}`>) => {
     }
 
     const incoming = await v2.getIncomingDelegations(address.value)
-    const outgoing = await v2.getOutgoingDelegations(address.value)
 
-    const applicableV1 = incoming.filter(filterApplicable)
-    const applicableV2 = outgoing.filter(filterApplicable)
+    const applicable = incoming.filter(filterApplicable)
 
-    addresses.value = Array.from(new Set(
-      applicableV1.map(d => d.from).concat(applicableV2.map(d => d.to))
-                  .map(a => a.toLowerCase())
-    ))
+    addresses.value = Array.from(new Set(applicable.map(d => d.from?.toLowerCase())))
 
     tokenIds.value = Array.from(new Set(
-      applicableV1.filter(d => d.type === 'ERC721').map(d => d.tokenId).concat(
-        applicableV2.filter(d => d.type === 'ERC721').map(d => d.tokenId)
-      )
+      applicable.filter(d => d.type === 'ERC721').map(d => d.tokenId)
     ))
   }
 
