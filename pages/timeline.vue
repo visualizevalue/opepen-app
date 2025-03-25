@@ -77,6 +77,7 @@ const body = computed(() => {
 const { error, execute } = await useApiPost('/curated-tweets', {
     body,
     immediate: false,
+  watch: false,
 })
 
 async function addTweet() {
