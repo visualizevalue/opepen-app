@@ -8,7 +8,7 @@
       >
         <img
           v-if="tweet.profile_image_url"
-          :src="tweet.profile_image_url"
+          :src="avatarURL"
           alt="Profile"
           class="avatar"
         />
@@ -51,6 +51,13 @@ const { tweet } = defineProps<{ tweet: any }>()
 
 const emit = defineEmits(['deleted'])
 
+const avatarURL = computed(() => {
+  if (tweet.profile_image_url) {
+    return tweet.profile_image_url.replace('_normal', '')
+  }
+  return tweet.profile_image_url
+})
+
 const tweetUrl = computed(() => tweet.username && tweet.tweet_id
   ? `https://twitter.com/${tweet.username}/status/${tweet.tweet_id}`
   : '#')
@@ -85,15 +92,17 @@ async function deleteTweet() {
 
 .tweet-header {
   display: flex;
-  gap: var(--spacer);
+  gap: var(--spacer-sm);
   align-items: center;
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size);
+  text-transform: uppercase;
 }
 
 .author {
   font-size: var(--font-base);
   display: flex;
   flex-direction: column;
-  gap: var(--size-1);
   line-height: 1em;
   overflow: hidden;
 
@@ -132,7 +141,9 @@ async function deleteTweet() {
 
 .date {
   color: var(--muted);
-  font-size: var(--font-sm);
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size);
+  text-transform: uppercase;
 }
 
 .tweet-text {
