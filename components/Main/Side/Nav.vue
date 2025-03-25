@@ -14,6 +14,13 @@
         @click="close"
         strict-exact
       />
+      <MainSideNavLink
+        to="/timeline"
+        title="Timeline"
+        subline="Notable Opepen Activity"
+        @click="close"
+        strict-exact
+      />
 
       <MainSideOptIn @click="close" />
     </section>
