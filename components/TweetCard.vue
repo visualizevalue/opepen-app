@@ -8,7 +8,7 @@
       >
         <img
           v-if="tweet.profile_image_url"
-          :src="tweet.profile_image_url"
+          :src="avatarURL"
           alt="Profile"
           class="avatar"
         />
@@ -50,6 +50,13 @@
 const { tweet } = defineProps<{ tweet: any }>()
 
 const emit = defineEmits(['deleted'])
+
+const avatarURL = computed(() => {
+  if (tweet.profile_image_url) {
+    return tweet.profile_image_url.replace('_normal', '')
+  }
+  return tweet.profile_image_url
+})
 
 const tweetUrl = computed(() => tweet.username && tweet.tweet_id
   ? `https://twitter.com/${tweet.username}/status/${tweet.tweet_id}`
