@@ -85,15 +85,17 @@ async function deleteTweet() {
 
 .tweet-header {
   display: flex;
-  gap: var(--spacer);
+  gap: var(--spacer-sm);
   align-items: center;
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size);
+  text-transform: uppercase;
 }
 
 .author {
   font-size: var(--font-base);
   display: flex;
   flex-direction: column;
-  gap: var(--size-1);
   line-height: 1em;
   overflow: hidden;
 
@@ -132,7 +134,9 @@ async function deleteTweet() {
 
 .date {
   color: var(--muted);
-  font-size: var(--font-sm);
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size);
+  text-transform: uppercase;
 }
 
 .tweet-text {
