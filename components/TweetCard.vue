@@ -128,7 +128,6 @@ async function deleteTweet() {
 }
 
 .author-handle {
-  font-size: var(--font-sm);
   color: var(--muted);
 }
 
