@@ -51,70 +51,52 @@ function extractTweetId(url) {
     return match ? match[1] : null
 }
 
-async function addTweet() {
-    successMessage.value = ''
-    errorMessage.value = ''
+const body = computed(() => {
+    const rawId = tweetInput.value.trim()
+    if (!rawId) {
+        return JSON.stringify({ ids: [] })
+    }
 
-    if (!tweetInput.value) {
-        errorMessage.value = 'Tweet input is empty.'
+    if (rawId.includes('twitter.com') || rawId.includes('x.com')) {
+        const extractedId = extractTweetId(rawId)
+        if (!extractedId) {
+            return JSON.stringify({ ids: [] })
+        }
+        return JSON.stringify({ ids: [extractedId] })
+    }
+
+    return JSON.stringify({ ids: [rawId] })
+})
+
+
+const { error, execute } = await useApiPost('/curated-tweets', {
+    body,
+    immediate: false,
+})
+
+async function addTweet() {
+    if (!tweetInput.value.trim()) return
+    await execute()
+
+    if (error.value) {
+        errorMessage.value = 'Error adding tweet. Please try again.'
         return
     }
 
-    let tweetId = tweetInput.value.trim()
-    if (tweetId.includes('twitter.com') || tweetId.includes('x.com')) {
-        const extractedId = extractTweetId(tweetId)
-
-        if (!extractedId) {
-            errorMessage.value = 'Could not extract Tweet ID.'
-            return
-        }
-        tweetId = extractedId
-    }
-
-    try {
-        const { data, error, execute } = await useApiPost('/curated-tweets', {
-            body: JSON.stringify({ ids: [tweetId] }),
-        })
-
-        await execute()
-
-        if (error.value) {
-            errorMessage.value = 'Error adding tweet.'
-            return
-        }
-
-        const result = data.value
-        if (!result) {
-            errorMessage.value = 'Error adding tweet.'
-            return
-        }
-        if (typeof result === 'object' && 'error' in result) {
-            errorMessage.value = result.error
-            return
-        }
-        if (Array.isArray(result) && !result.length) {
-            errorMessage.value = 'No new tweets were added.'
-            return
-        }
-
-        successMessage.value = 'Tweet added successfully.'
-        tweetInput.value = ''
-        refreshKey.value = Date.now()
-    } catch (err) {
-        errorMessage.value = 'An unexpected error occurred.'
-        console.error(err)
-    }
+    successMessage.value = 'Tweet added successfully!'
+    tweetInput.value = ''
+    refreshKey.value = Date.now()
 }
 
 function toggleSort() {
-  if (sort.value === '-tweet_created_at') {
-    sort.value = 'tweet_created_at'
-    arrowType.value = 'arrow-up'
-  } else {
-    sort.value = '-tweet_created_at'
-    arrowType.value = 'arrow-down'
-  }
-  refreshKey.value = Date.now()
+    if (sort.value === '-tweet_created_at') {
+        sort.value = 'tweet_created_at'
+        arrowType.value = 'arrow-up'
+    } else {
+        sort.value = '-tweet_created_at'
+        arrowType.value = 'arrow-down'
+    }
+    refreshKey.value = Date.now()
 }
 </script>
 
@@ -125,9 +107,9 @@ function toggleSort() {
         h1,
         h2,
         p {
-        @mixin ui-font;
-        font-size: var(--font-lg);
-        line-height: 1em;
+            @mixin ui-font;
+            font-size: var(--font-lg);
+            line-height: 1em;
 
         small {
             font-size: 1em;
@@ -145,9 +127,9 @@ function toggleSort() {
         padding: var(--spacer-lg) 0;
 
         @container (min-width: 30rem) {
-        display: flex;
-        justify-content: space-between;
-        text-align: left;
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
         }
     }
 
@@ -155,9 +137,9 @@ function toggleSort() {
         padding: var(--spacer) 0;
 
         > header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
