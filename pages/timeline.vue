@@ -27,7 +27,7 @@
             <Button @click="toggleSort" class="sort-button">
                 <Icon :type="arrowType" />
             </Button>
-            <CuratedTweets 
+            <CuratedTweets
                 :key="refreshKey"
                 :sort="sort"
             />
@@ -43,7 +43,12 @@ const successMessage = ref('')
 const errorMessage = ref('')
 
 const sort = ref('-tweet_created_at')
-const arrowType = ref('arrow-down') 
+const arrowType = ref('arrow-down')
+
+useMetaData({
+  title: `Timeline | Opepen`,
+  description: `A historical timeline of notable opepen events.`,
+})
 
 function extractTweetId(url) {
     const regex = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/[^\/]+\/status(?:es)?\/(\d+)/i
