@@ -149,6 +149,16 @@ function toggleSort() {
     }
   }
 
+  hr {
+    width: calc(100% + var(--spacer)*2);
+    margin-left: calc(-1*var(--spacer));
+
+    @media (--md) {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
   .add-tweet {
     display: flex;
     gap: var(--spacer-sm);
