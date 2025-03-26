@@ -124,13 +124,13 @@ async function deleteTweet() {
   align-items: center;
 
   > span {
-    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .icon {
-    width: var(--size-5);
+    width: var(--size-4);
+    margin-top: -2px;
   }
 }
 
