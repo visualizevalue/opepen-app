@@ -81,6 +81,9 @@ const { error, execute } = await useApiPost('/curated-tweets', {
 })
 
 async function addTweet() {
+  successMessage.value = ''
+  errorMessage.value = ''
+
   if (!tweetInput.value.trim()) return
   await execute()
 
