@@ -81,6 +81,9 @@ const { error, execute } = await useApiPost('/curated-tweets', {
 })
 
 async function addTweet() {
+  successMessage.value = ''
+  errorMessage.value = ''
+
   if (!tweetInput.value.trim()) return
   await execute()
 
@@ -146,6 +149,16 @@ function toggleSort() {
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+  }
+
+  hr {
+    width: calc(100% + var(--spacer)*2);
+    margin-left: calc(-1*var(--spacer));
+
+    @media (--md) {
+      width: 100%;
+      margin-left: 0;
     }
   }
 

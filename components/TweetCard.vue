@@ -24,12 +24,26 @@
 
       <p class="tweet-text">{{ strippedText }}</p>
 
-      <img
-        v-if="tweet.media_url"
-        :src="tweet.media_url"
-        alt="Tweet Media"
-        class="tweet-media"
-      />
+      <div v-if="tweet.media_urls && tweet.media_urls.length" class="tweet-media">
+        <div v-for="(media, index) in tweet.media_urls" :key="index" class="media-item">
+          <template v-if="media.type === 'photo'">
+            <img :src="media.url" alt="Tweet media" />
+          </template>
+          <template v-else-if="media.type === 'video'">
+            <video muted autoplay loop controls class="video-media">
+              <source :src="selectBestVariant(media.variants)" type="video/mp4" />
+            </video>
+          </template>
+          <template v-else-if="media.type === 'animated_gif'">
+            <video muted autoplay loop playsinline class="video-media">
+              <source :src="selectBestVariant(media.variants)" type="video/mp4" />
+            </video>
+          </template>
+          <template v-else>
+            <img :src="media.url" alt="Tweet media" />
+          </template>
+        </div>
+      </div>
 
       <div class="tweet-footer">
         <span class="date">{{ formatDate(tweet.tweet_created_at) }}</span>
@@ -78,6 +92,10 @@ async function deleteTweet() {
   await execute()
 
   emit('deleted', tweet.id)
+}
+
+function selectBestVariant(variants: any[]): string {
+  return variants?.sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))[0]?.url || ''
 }
 </script>
 
@@ -158,9 +176,19 @@ async function deleteTweet() {
 }
 
 .tweet-media {
-  max-width: 100%;
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-sm);
   border-radius: var(--border-radius);
+  max-width: 100%;
+}
+
+.media-item {
+  flex: 1 1 200px;
+}
+
+.video-media {
+  max-width: 100%;
 }
 
 .tweet-footer {
