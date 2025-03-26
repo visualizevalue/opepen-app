@@ -88,6 +88,7 @@ async function deleteTweet() {
   text-align: left;
   gap: var(--spacer);
   width: 100%;
+  max-width: 100cqw;
 }
 
 .tweet-header {
@@ -121,6 +122,12 @@ async function deleteTweet() {
   display: flex;
   gap: var(--size-1);
   align-items: center;
+
+  > span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   .icon {
     width: var(--size-5);
