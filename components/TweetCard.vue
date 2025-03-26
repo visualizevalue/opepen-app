@@ -1,9 +1,9 @@
 <template>
     <Card class="static tweet-card">
       <a
-        :href="authorUrl" 
-        target="_blank" 
-        rel="noopener noreferrer" 
+        :href="authorUrl"
+        target="_blank"
+        rel="noopener noreferrer"
         class="tweet-header"
       >
         <img
@@ -12,7 +12,7 @@
           alt="Profile"
           class="avatar"
         />
-  
+
         <div class="author">
           <div class="author-name">
             <span>{{ tweet.name }}</span>
@@ -21,19 +21,19 @@
           <span class="author-handle" v-if="tweet.username">@{{ tweet.username }}</span>
         </div>
       </a>
-  
+
       <p class="tweet-text">{{ strippedText }}</p>
-  
+
       <img
         v-if="tweet.media_url"
         :src="tweet.media_url"
         alt="Tweet Media"
         class="tweet-media"
       />
-  
+
       <div class="tweet-footer">
         <span class="date">{{ formatDate(tweet.tweet_created_at) }}</span>
-  
+
         <div class="tweet-actions">
           <Button :to="tweetUrl" target="_blank" rel="noopener noreferrer">
             View on X
