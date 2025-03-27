@@ -11,6 +11,7 @@
   </Dropdown>
 
   <Confirm
+    key="publish"
     v-model:open="confirmPublish"
     title="Publish Submission?"
     text="Do you really want to publish this submission?"
@@ -25,6 +26,7 @@
   />
 
   <Confirm
+    key="unpublish"
     v-model:open="confirmUnpublish"
     title="Unpublish Submission?"
     text="Do you really want to unpublish this submission? This will clear all opt ins and remove it from the public set submissions."
@@ -36,6 +38,7 @@
   />
 
   <Confirm
+    key="shadow"
     v-model:open="confirmShadow"
     title="Shadow Submission?"
     text="Do you really want to shadow (hide) this submission?"
@@ -47,6 +50,7 @@
   />
 
   <Confirm
+    key="delete"
     v-model:open="confirmDelete"
     title="Delete Submission?"
     text="Do you really want to delete this submission?"
