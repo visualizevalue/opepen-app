@@ -4,7 +4,10 @@
     :class="{ 'active': (strictExact ? $route.path == to : $route.path.indexOf(to) > -1) }"
   >
     <div>
-      <span>{{ title }}</span>
+      <div class="title">
+        <span>{{ title }}</span>
+        <span v-if="isNew" class="badge">New</span>
+      </div>
       <small>{{ subline }}</small>
     </div>
 
@@ -18,6 +21,7 @@ defineProps({
   title: String,
   subline: String,
   strictExact: Boolean,
+  isNew: Boolean,
 })
 </script>
 
@@ -29,7 +33,6 @@ a {
   width: calc(100% + 2 * var(--spacer));
   border-radius: var(--border-radius);
   transition: background var(--speed);
-
   display: grid;
   grid-template-columns: 1fr var(--size-7);
 
@@ -38,8 +41,27 @@ a {
     display: block;
   }
 
+  small {
+    margin-top: var(--spacer-xs);
+  }
+
   span {
     @mixin ui-font;
+  }
+
+  .title {
+    margin-top: var(--spacer-xs);
+    gap: var(--spacer-sm);
+    display: flex;
+  }
+
+  .badge {
+    border-radius: var(--border-radius-sm);
+    background: var(--success);
+    font-size: var(--font-xs);
+    color: var(--gray-z-0);
+    padding: 2px 4px 1px;
+    height: fit-content;
   }
 
   small {

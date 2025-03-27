@@ -65,6 +65,14 @@
         @click="close"
         strict-exact
       />
+
+      <MainSideNavLink
+        to="/generate"
+        title="Generate Opepen"
+        subline="Edit opepen with natural language"
+        @click="close"
+        is-new
+      />
     </section>
 
     <footer>

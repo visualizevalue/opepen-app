@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@delegatexyz/sdk": "^0.5.2",
+    "@google/generative-ai": "^0.24.0",
     "@headlessui/vue": "^1.7.23",
     "@tresjs/cientos": "^4.0.3",
     "@tresjs/core": "^4.3.1",
