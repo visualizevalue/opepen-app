@@ -11,6 +11,7 @@
   </Dropdown>
 
   <Confirm
+    key="publish"
     v-model:open="confirmPublish"
     title="Publish Submission?"
     text="Do you really want to publish this submission?"
@@ -25,6 +26,7 @@
   />
 
   <Confirm
+    key="unpublish"
     v-model:open="confirmUnpublish"
     title="Unpublish Submission?"
     text="Do you really want to unpublish this submission? This will clear all opt ins and remove it from the public set submissions."
@@ -36,6 +38,7 @@
   />
 
   <Confirm
+    key="shadow"
     v-model:open="confirmShadow"
     title="Shadow Submission?"
     text="Do you really want to shadow (hide) this submission?"
@@ -47,14 +50,12 @@
   />
 
   <Confirm
+    key="delete"
     v-model:open="confirmDelete"
     title="Delete Submission?"
     text="Do you really want to delete this submission?"
     action="Delete"
-    :callback="async () => {
-      await executeDelete()
-      await navigateTo('/create')
-    }"
+    :callback="confirmDeletion"
   />
 </template>
 
@@ -68,6 +69,12 @@ const emit = defineEmits(['save'])
 
 const confirmDelete = ref(false)
 const { execute: executeDelete } = await useApiDelete(`/set-submissions/${submission.uuid}`)
+const confirmDeletion = async () => {
+    if (prompt(`Are you absolutely sure? Type "DELETE" to confirm`) !== 'DELETE') return
+
+    await executeDelete()
+    await navigateTo('/create')
+}
 
 const confirmShadow = ref(false)
 const { execute: executeShadow } = await useApiPost(`/set-submissions/${submission.uuid}/shadow`)

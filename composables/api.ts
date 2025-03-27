@@ -17,6 +17,8 @@ export const useApiPost = async <T>(endpoint: Ref<string>|string, options = {}) 
 export const useApiDelete = async <T>(endpoint: Ref<string>|string, options = {}) => {
   return await useApiPost<T>(endpoint, {
     method: 'DELETE',
+    immediate: false,
+    watch: false,
     ...options
   })
 }
