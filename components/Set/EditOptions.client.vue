@@ -51,10 +51,7 @@
     title="Delete Submission?"
     text="Do you really want to delete this submission?"
     action="Delete"
-    :callback="async () => {
-      await executeDelete()
-      await navigateTo('/create')
-    }"
+    :callback="confirmDeletion"
   />
 </template>
 
@@ -68,6 +65,12 @@ const emit = defineEmits(['save'])
 
 const confirmDelete = ref(false)
 const { execute: executeDelete } = await useApiDelete(`/set-submissions/${submission.uuid}`)
+const confirmDeletion = async () => {
+    if (prompt(`Are you absolutely sure? Type "DELETE" to confirm`) !== 'DELETE') return
+
+    await executeDelete()
+    await navigateTo('/create')
+}
 
 const confirmShadow = ref(false)
 const { execute: executeShadow } = await useApiPost(`/set-submissions/${submission.uuid}/shadow`)
