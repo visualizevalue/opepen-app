@@ -30,7 +30,7 @@
             <img :src="media.url" alt="Tweet media" />
           </template>
           <template v-else-if="media.type === 'video'">
-            <video muted autoplay loop controls class="video-media">
+            <video muted autoplay loop controls playsinline class="video-media">
               <source :src="selectBestVariant(media.variants)" type="video/mp4" />
             </video>
           </template>
