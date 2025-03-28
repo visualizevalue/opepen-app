@@ -20,6 +20,7 @@
         subline="Notable Opepen Activity"
         @click="close"
         strict-exact
+        is-new
       />
 
       <MainSideOptIn @click="close" />
@@ -69,7 +70,7 @@
       <MainSideNavLink
         to="/generate"
         title="Generate Opepen"
-        subline="Edit opepen with natural language"
+        subline="Edit Opepen with natural language"
         @click="close"
         is-new
       />
