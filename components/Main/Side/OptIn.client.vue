@@ -25,14 +25,12 @@ const {
 const title = computed(() => {
   return revealing.value
     ? `Set Reveal Pending ${secondsUntilReveal.value > 0 ? `(${revealCountDown.str.value})` : ``}`
-    : `Live Consensus (${optInCountDown.str.value})`
+    : `${submission.value.name} (${optInCountDown.str.value})`
 })
-const badge = computed(() => {
-  return `live`
-})
+const badge = computed(() => `live`)
 const subline = computed(() => {
   return blockConfirmations.value
     ? blockConfirmationText.value
-    : submission.value.name
+    : `Live Consensus`
 })
 </script>
