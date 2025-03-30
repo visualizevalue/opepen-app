@@ -18,7 +18,6 @@
         subline="Notable Opepen Activity"
         @click="close"
         strict-exact
-        badge="new"
       />
 
       <MainSideOptIn @click="close" />
