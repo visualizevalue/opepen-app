@@ -1,11 +1,10 @@
-@import "./variables.css";
-@import "./base.css";
-@import "./layout.css";
-@import "./forms.css";
-@import "./alert.css";
-@import "./buttons.css";
-@import "./prose.css";
-@import "./popover.css";
-@import "./modal.css";
-@import "./utils.css";
-
+@import './variables.css';
+@import './base.css';
+@import './layout.css';
+@import './forms.css';
+@import './alert.css';
+@import './buttons.css';
+@import './prose.css';
+@import './popover.css';
+@import './modal.css';
+@import './utils.css';

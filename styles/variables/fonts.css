@@ -1,9 +1,10 @@
 @font-face {
   font-family: 'Carbon';
-  font-style:  normal;
+  font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/carbon.woff2?v=1.0') format('woff2'),
+  src:
+    url('/fonts/carbon.woff2?v=1.0') format('woff2'),
     url('/fonts/carbon.woff?v=1.0') format('woff');
 }
 
@@ -23,9 +24,7 @@
   src: url('/fonts/space-grotesk-v16-latin-600.woff2') format('woff2');
 }
 
-
 :root {
-
   /* FAMILIES */
   --font-family: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
   --font-family-display: var(--font-family);
@@ -48,14 +47,12 @@
   --letter-spacing-lg: 0.1em;
 
   --line-height-sm: 105%;
-  --line-height:    100%;
+  --line-height: 100%;
   --line-height-md: 120%;
   --line-height-lg: 160%;
 
   /* UI */
   --ui-font-family: Carbon, monospace;
   --ui-text-transform: uppercase;
-  --ui-font-size:      0.9rem;
-
+  --ui-font-size: 0.9rem;
 }
-

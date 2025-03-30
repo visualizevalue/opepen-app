@@ -5,10 +5,13 @@ export const shortenedCleanText = (str: string, length: number = 80) => {
 
   const nextSpaceIndex = txt.indexOf(' ', length)
 
-  return txt.length > length && nextSpaceIndex > 0 ? txt.substring(0, nextSpaceIndex) + '...' : txt
+  return txt.length > length && nextSpaceIndex > 0
+    ? txt.substring(0, nextSpaceIndex) + '...'
+    : txt
 }
 
-const urlPattern = /\b((http|https):\/\/)?(www\.)?([a-zA-Z0-9\-\.]+)\.([a-zA-Z]{2,})(\/[^\s]*)?\b/g
+const urlPattern =
+  /\b((http|https):\/\/)?(www\.)?([a-zA-Z0-9\-\.]+)\.([a-zA-Z]{2,})(\/[^\s]*)?\b/g
 export const extractURLs = (str: string) => {
   return {
     text: str.replace(urlPattern, ''),
@@ -17,8 +20,11 @@ export const extractURLs = (str: string) => {
 }
 
 const zoraPattern = /\bhttps:\/\/zora\.co\/[^\s]+/g
-export const enforceVVReferrer = (url: string, referrer = `0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a`) => {
-  if (! zoraPattern.test(url)) {
+export const enforceVVReferrer = (
+  url: string,
+  referrer = `0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a`,
+) => {
+  if (!zoraPattern.test(url)) {
     // Return the original url if it's not a zora url
     return url
   }

@@ -11,16 +11,16 @@ export const useStagedSet = async () => {
     immediate: false,
     onResponse: () => {
       lastUpdated.value = nowInSeconds()
-    }
+    },
   })
 
   // Load initially
-  if (! submission.value) await reloadStagedSubmission()
+  if (!submission.value) await reloadStagedSubmission()
 
   // Update every 2 minuts
   if (import.meta.client && !intervalInitialized) {
     setInterval(() => {
-      if (! submission.value) return
+      if (!submission.value) return
 
       reloadStagedSubmission()
 
@@ -35,7 +35,7 @@ export const useStagedSet = async () => {
   if (import.meta.client && !watcherInitialized) {
     watchEffect(() => {
       // @ts-ignore
-      if (! data.value?.submission) return
+      if (!data.value?.submission) return
 
       // @ts-ignore
       submission.value = data.value?.submission
@@ -51,4 +51,3 @@ export const useStagedSet = async () => {
     lastUpdated,
   }
 }
-

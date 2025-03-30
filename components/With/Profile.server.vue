@@ -1,7 +1,3 @@
 <template>
-  <slot
-    v-bind="$attrs"
-    :is-connected="false"
-  />
+  <slot v-bind="$attrs" :is-connected="false" />
 </template>
-

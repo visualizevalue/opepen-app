@@ -27,29 +27,66 @@
 
     <Card class="static grid meta" :disabled="disabled">
       <label class="name span-2">
-        <input class="input" type="text" v-model="name" placeholder="Set Name" :disabled="disabled" required />
+        <input
+          class="input"
+          type="text"
+          v-model="name"
+          placeholder="Set Name"
+          :disabled="disabled"
+          required
+        />
       </label>
 
       <div class="images">
-        <ImageUpload @stored="image1 = $event" name="1/1 Media" :image="image1" :disabled="disabled" />
-        <ImageUpload @stored="image4 = $event" name="1/4 Media" :image="image4" :disabled="disabled" />
-        <ImageUpload @stored="image5 = $event" name="1/5 Media" :image="image5" :disabled="disabled" />
-        <ImageUpload @stored="image10 = $event" name="1/10 Media" :image="image10" :disabled="disabled" />
-        <ImageUpload @stored="image20 = $event" name="1/20 Media" :image="image20" :disabled="disabled" />
-        <ImageUpload @stored="image40 = $event" name="1/40 Media" :image="image40" :disabled="disabled" />
+        <ImageUpload
+          @stored="image1 = $event"
+          name="1/1 Media"
+          :image="image1"
+          :disabled="disabled"
+        />
+        <ImageUpload
+          @stored="image4 = $event"
+          name="1/4 Media"
+          :image="image4"
+          :disabled="disabled"
+        />
+        <ImageUpload
+          @stored="image5 = $event"
+          name="1/5 Media"
+          :image="image5"
+          :disabled="disabled"
+        />
+        <ImageUpload
+          @stored="image10 = $event"
+          name="1/10 Media"
+          :image="image10"
+          :disabled="disabled"
+        />
+        <ImageUpload
+          @stored="image20 = $event"
+          name="1/20 Media"
+          :image="image20"
+          :disabled="disabled"
+        />
+        <ImageUpload
+          @stored="image40 = $event"
+          name="1/40 Media"
+          :image="image40"
+          :disabled="disabled"
+        />
       </div>
       <div class="names">
         <div>
           <div><Image :image="image1" /></div>
-          <input type="text" v-model="name1"  :disabled="disabled" placeholder="1/1 Name" />
+          <input type="text" v-model="name1" :disabled="disabled" placeholder="1/1 Name" />
         </div>
         <div>
           <div><Image :image="image4" /></div>
-          <input type="text" v-model="name4"  :disabled="disabled" placeholder="1/4 Name" />
+          <input type="text" v-model="name4" :disabled="disabled" placeholder="1/4 Name" />
         </div>
         <div>
           <div><Image :image="image5" /></div>
-          <input type="text" v-model="name5"  :disabled="disabled" placeholder="1/5 Name" />
+          <input type="text" v-model="name5" :disabled="disabled" placeholder="1/5 Name" />
         </div>
         <div>
           <div><Image :image="image10" /></div>
@@ -88,17 +125,33 @@
     <Card class="static" :disabled="disabled">
       <label class="artist">
         <span>Artist Name</span>
-        <input class="input" type="text" v-model="artist" :disabled="disabled" placeholder="Your artist name" />
+        <input
+          class="input"
+          type="text"
+          v-model="artist"
+          :disabled="disabled"
+          placeholder="Your artist name"
+        />
       </label>
 
       <label v-if="isAdmin" class="creator">
         <span>Creator Address (Ethereum Public Key)</span>
-        <input class="input" v-model="creator" :disabled="disabled" :placeholder="data.creator" />
+        <input
+          class="input"
+          v-model="creator"
+          :disabled="disabled"
+          :placeholder="data.creator"
+        />
       </label>
 
       <label>
         <span>Co-Creator Addresses</span>
-        <SortableList :items="coCreators" @update="coCreators = $event" class="co-creators" :disabled="disabled">
+        <SortableList
+          :items="coCreators"
+          @update="coCreators = $event"
+          class="co-creators"
+          :disabled="disabled"
+        >
           <template v-slot="{ item, index }">
             <input
               type="text"
@@ -107,7 +160,7 @@
               placeholder="0x000...000"
               :disabled="disabled"
               class="input"
-            >
+            />
           </template>
         </SortableList>
       </label>
@@ -119,7 +172,9 @@
         <select v-model="type" class="select" :disabled="disabled">
           <option value="DYNAMIC">Dynamic</option>
           <option value="PRINT" default>Prints</option>
-          <option v-if="isAdmin" value="NUMBERED_PRINT" default>Numbered Prints (Admins only)</option>
+          <option v-if="isAdmin" value="NUMBERED_PRINT" default>
+            Numbered Prints (Admins only)
+          </option>
         </select>
       </label>
 
@@ -149,7 +204,7 @@ const config = useRuntimeConfig()
 const props = defineProps({
   data: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   refresh: Function,
 })
@@ -173,68 +228,76 @@ const name40 = ref(props.data.edition40Name || '')
 const description = ref(props.data.description || '')
 const artist = ref(props.data.artist || account.value?.display)
 const creator = ref(props.data.creator)
-const withEmptyCoCreators = list => {
+const withEmptyCoCreators = (list) => {
   if (list.length === 5) return list
 
-  if (! list.length || list[list.length - 1].address !== '') {
+  if (!list.length || list[list.length - 1].address !== '') {
     list.push({ id: list.length, address: '' })
   }
 
   return list
 }
-const sortableCoCreators = list => {
+const sortableCoCreators = (list) => {
   const array = Array.isArray(list)
-    ? list.filter(address => !! address).map((address) => ({ id: address, address }))
+    ? list.filter((address) => !!address).map((address) => ({ id: address, address }))
     : [{ id: 0, address: '' }]
 
   return withEmptyCoCreators(array)
 }
-const coCreators = ref(sortableCoCreators([
-  props.data.co_creator_1,
-  props.data.co_creator_2,
-  props.data.co_creator_3,
-  props.data.co_creator_4,
-  props.data.co_creator_5,
-]))
-watch(() => JSON.stringify(coCreators.value), () => coCreators.value = withEmptyCoCreators(coCreators.value))
+const coCreators = ref(
+  sortableCoCreators([
+    props.data.co_creator_1,
+    props.data.co_creator_2,
+    props.data.co_creator_3,
+    props.data.co_creator_4,
+    props.data.co_creator_5,
+  ]),
+)
+watch(
+  () => JSON.stringify(coCreators.value),
+  () => (coCreators.value = withEmptyCoCreators(coCreators.value)),
+)
 watch(account, () => {
-  if (! artist.value) {
+  if (!artist.value) {
     artist.value = account.value?.display
   }
 })
-const hasPreviewImages = computed(() =>
-  image1.value &&
-  image4.value &&
-  image5.value &&
-  image10.value &&
-  image20.value &&
-  image40.value
+const hasPreviewImages = computed(
+  () =>
+    image1.value &&
+    image4.value &&
+    image5.value &&
+    image10.value &&
+    image20.value &&
+    image40.value,
 )
-const previewImageSquare = computed(() => `${config.public.opepenApi}/render/sets/${props.data.uuid}/square`)
-const previewImageOG = computed(() => `${config.public.opepenApi}/render/sets/${props.data.uuid}/og`)
+const previewImageSquare = computed(
+  () => `${config.public.opepenApi}/render/sets/${props.data.uuid}/square`,
+)
+const previewImageOG = computed(
+  () => `${config.public.opepenApi}/render/sets/${props.data.uuid}/og`,
+)
 const pendingPreviewRefresh = ref(false)
-const refreshPreview = async () => await Promise.all([
-  $fetch(previewImageSquare.value, { method: 'POST' }),
-  $fetch(previewImageOG.value, { method: 'POST' }),
-])
-watch(
-  [image1, image4, image5, image10, image20, image40, name],
-  () => {
-    if (! hasPreviewImages.value || ! name.value) return
-    pendingPreviewRefresh.value = true
-  },
-)
-
+const refreshPreview = async () =>
+  await Promise.all([
+    $fetch(previewImageSquare.value, { method: 'POST' }),
+    $fetch(previewImageOG.value, { method: 'POST' }),
+  ])
+watch([image1, image4, image5, image10, image20, image40, name], () => {
+  if (!hasPreviewImages.value || !name.value) return
+  pendingPreviewRefresh.value = true
+})
 
 const type = ref(props.data.edition_type || 'PRINT')
 const isDynamic = computed(() => type.value !== 'PRINT')
-const disabled = computed(() =>
-  !!(props.data.set_id || (! isAdmin.value && props.data.published_at))
+const disabled = computed(
+  () => !!(props.data.set_id || (!isAdmin.value && props.data.published_at)),
 )
 const imagesComplete = computed(() => {
-  if (! isDynamic.value) return hasPreviewImages.value
+  if (!isDynamic.value) return hasPreviewImages.value
 
-  return hasPreviewImages.value && (
+  return (
+    hasPreviewImages.value &&
     props.data.dynamicSetImages?.image4_1 &&
     props.data.dynamicSetImages?.image4_2 &&
     props.data.dynamicSetImages?.image4_3 &&
@@ -317,7 +380,8 @@ const imagesComplete = computed(() => {
   )
 })
 const dataComplete = computed(() => {
-  return !!(name.value &&
+  return !!(
+    name.value &&
     name1.value &&
     name4.value &&
     name5.value &&
@@ -327,15 +391,13 @@ const dataComplete = computed(() => {
     imagesComplete.value &&
     description.value &&
     artist.value &&
-    type.value)
+    type.value
+  )
 })
 const isSigned = ref(!!props.data.artist_signature)
 const isCreator = computed(() => currentAddress.value?.toLowerCase() === props.data.creator)
-const toSign = computed(() =>
-  isCreator.value &&
-  !isSigned.value &&
-  dataComplete.value &&
-  !!props.data.published_at
+const toSign = computed(
+  () => isCreator.value && !isSigned.value && dataComplete.value && !!props.data.published_at,
 )
 const markSigned = (set) => {
   isSigned.value = !!set.artist_signature
@@ -344,30 +406,30 @@ const markSigned = (set) => {
 
 const saving = ref(false)
 const lastSaved = ref(null)
-const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
+const lastSavedAt = computed(() => (lastSaved.value ? formatTime(lastSaved.value) : ''))
 const saveData = computed(() => ({
-    name: name.value,
-    description: description.value,
-    artist: artist.value,
-    edition_type: type.value,
-    edition_1_image_id: image1.value?.uuid,
-    edition_4_image_id: image4.value?.uuid,
-    edition_5_image_id: image5.value?.uuid,
-    edition_10_image_id: image10.value?.uuid,
-    edition_20_image_id: image20.value?.uuid,
-    edition_40_image_id: image40.value?.uuid,
-    edition_1_name: name1.value,
-    edition_4_name: name4.value,
-    edition_5_name: name5.value,
-    edition_10_name: name10.value,
-    edition_20_name: name20.value,
-    edition_40_name: name40.value,
-    creator: creator.value,
-    co_creator_1: coCreators.value[0]?.address || undefined,
-    co_creator_2: coCreators.value[1]?.address || undefined,
-    co_creator_3: coCreators.value[2]?.address || undefined,
-    co_creator_4: coCreators.value[3]?.address || undefined,
-    co_creator_5: coCreators.value[4]?.address || undefined,
+  name: name.value,
+  description: description.value,
+  artist: artist.value,
+  edition_type: type.value,
+  edition_1_image_id: image1.value?.uuid,
+  edition_4_image_id: image4.value?.uuid,
+  edition_5_image_id: image5.value?.uuid,
+  edition_10_image_id: image10.value?.uuid,
+  edition_20_image_id: image20.value?.uuid,
+  edition_40_image_id: image40.value?.uuid,
+  edition_1_name: name1.value,
+  edition_4_name: name4.value,
+  edition_5_name: name5.value,
+  edition_10_name: name10.value,
+  edition_20_name: name20.value,
+  edition_40_name: name40.value,
+  creator: creator.value,
+  co_creator_1: coCreators.value[0]?.address || undefined,
+  co_creator_2: coCreators.value[1]?.address || undefined,
+  co_creator_3: coCreators.value[2]?.address || undefined,
+  co_creator_4: coCreators.value[3]?.address || undefined,
+  co_creator_5: coCreators.value[4]?.address || undefined,
 }))
 const store = async () => {
   saving.value = true
@@ -387,19 +449,19 @@ const store = async () => {
 
   emit('updated', set)
 
-  if (! props.data?.uuid && set?.uuid) {
+  if (!props.data?.uuid && set?.uuid) {
     await navigateTo(`/create/${set.uuid}`)
   }
 }
-watchDebounced(
-  saveData,
-  () => store(),
-  { debounce: 500, maxWait: 2000, deep: true },
-)
+watchDebounced(saveData, () => store(), {
+  debounce: 500,
+  maxWait: 2000,
+  deep: true,
+})
 
 // Authentication
 watchEffect(() => {
-  if (!isAdmin.value && ! isCreator.value) {
+  if (!isAdmin.value && !isCreator.value) {
     showError({
       statusCode: 403,
       statusMessage: 'Not Authorized',
@@ -413,7 +475,7 @@ form {
   > .card {
     pointer-events: none;
 
-    &:not([disabled="true"]) {
+    &:not([disabled='true']) {
       pointer-events: all;
     }
   }
@@ -544,6 +606,5 @@ form {
     display: grid;
     gap: var(--size-5);
   }
-
 }
 </style>

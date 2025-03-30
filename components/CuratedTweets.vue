@@ -14,10 +14,10 @@ const { sort } = defineProps<{ sort: String }>()
 
 const config = useRuntimeConfig()
 
-const url = computed(() => 
+const url = computed(() =>
   sort
     ? `${config.public.opepenApi}/curated-tweets?sort=${sort}`
-    : `${config.public.opepenApi}/curated-tweets`
+    : `${config.public.opepenApi}/curated-tweets`,
 )
 
 const curatedTweets = ref<any[]>([])
@@ -31,7 +31,7 @@ if (error.value) {
 }
 
 function removeTweet(deletedId: number) {
-  curatedTweets.value = curatedTweets.value.filter(t => t.id !== deletedId)
+  curatedTweets.value = curatedTweets.value.filter((t) => t.id !== deletedId)
 }
 </script>
 

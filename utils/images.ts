@@ -1,11 +1,15 @@
 export const isAnimated = (type: string) => ['mp4', 'webm', 'gif'].includes(type)
-export const is3d = (type: string) => ['gbl', 'gltf', 'glb-json', 'glb-binary', 'gltf-json', 'gltf-binary'].includes(type)
+export const is3d = (type: string) =>
+  ['gbl', 'gltf', 'glb-json', 'glb-binary', 'gltf-json', 'gltf-binary'].includes(type)
 
 export const imageURI = (image: Image, version?: keyof ImageVersions) => {
-  if (! image) return null
+  if (!image) return null
 
   const name = version ? `${image.uuid}@${version}` : image.uuid
-  const type = ((isAnimated(image?.type) || is3d(image?.type) || image?.type === 'svg') && version) ? `png` : image.type
+  const type =
+    (isAnimated(image?.type) || is3d(image?.type) || image?.type === 'svg') && version
+      ? `png`
+      : image.type
 
   return `${image.cdn}/${image.path}/${name}.${type}`
 }

@@ -8,5 +8,5 @@ export const SUB_NAV_ITEMS = {
       to: '/submissions',
       text: 'Submissions',
     },
-  ]
+  ],
 }

@@ -1,5 +1,4 @@
 .prose {
-
   font-size: var(--font-lg);
 
   > h1,
@@ -41,5 +40,4 @@
     color: var(--muted);
     margin: var(--spacer) 0;
   }
-
 }

@@ -1,7 +1,7 @@
 <template>
   <header
     :style="{
-      backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%), url(${coverImageURL})`
+      backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%), url(${coverImageURL})`,
     }"
   >
     <div>
@@ -11,7 +11,11 @@
           <span>{{ account.display }}</span>
           <small v-if="account.tagline">{{ account.tagline }}</small>
         </h1>
-        <NuxtLink :to="`https://etherscan.io/address/${account.address}`" target="_blank" class="meta-separated">
+        <NuxtLink
+          :to="`https://etherscan.io/address/${account.address}`"
+          target="_blank"
+          class="meta-separated"
+        >
           <span v-if="account.ens">{{ account.ens }}</span>
           <span>{{ shortAddress(account.address, 6) }}</span>
         </NuxtLink>
@@ -49,7 +53,7 @@ header {
   background-size: cover;
   background-position: center center;
   margin: calc(-1 * var(--spacer)) calc(-1 * var(--spacer)) 0;
-  width: calc(100% + var(--spacer)*2);
+  width: calc(100% + var(--spacer) * 2);
   border-bottom: var(--border);
 
   @media (--md) {

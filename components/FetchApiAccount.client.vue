@@ -1,5 +1,10 @@
 <template>
-  <ApiAccount v-if="account" :account="account" :hide-avatar="hideAvatar" :hide-address="hideAddress" />
+  <ApiAccount
+    v-if="account"
+    :account="account"
+    :hide-avatar="hideAvatar"
+    :hide-address="hideAddress"
+  />
 </template>
 
 <script setup>
@@ -13,7 +18,6 @@ const props = defineProps({
 })
 
 const { data: account } = await useApi(`/accounts/${props.id}`, {
-  lazy: true
+  lazy: true,
 })
 </script>
-

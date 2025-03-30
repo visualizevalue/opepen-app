@@ -1,8 +1,7 @@
-@import "./variables/colors.css";
-@import "./variables/borders.css";
-@import "./variables/buttons.css";
-@import "./variables/fonts.css";
-@import "./variables/components.css";
-@import "./variables/animation.css";
-@import "./variables/z-index.css";
-
+@import './variables/colors.css';
+@import './variables/borders.css';
+@import './variables/buttons.css';
+@import './variables/fonts.css';
+@import './variables/components.css';
+@import './variables/animation.css';
+@import './variables/z-index.css';

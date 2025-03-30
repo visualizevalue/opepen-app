@@ -1,6 +1,6 @@
 {
   "htmlWhitespaceSensitivity": "ignore",
-  "printwidth": 95,
+  "printWidth": 95,
   "semi": false,
   "singleAttributePerLine": false,
   "singleQuote": true,

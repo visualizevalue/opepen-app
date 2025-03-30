@@ -1,10 +1,12 @@
 <template>
   <section v-if="showOptIn">
     <Card class="static">
-      <template v-if="! currentAddress" class="connect">
+      <template v-if="!currentAddress" class="connect">
         <header>
           <SectionTitle>Vote</SectionTitle>
-          <span v-if="optInAvailable && isStagedSet">{{ optInCountDown.str }}</span>
+          <span v-if="optInAvailable && isStagedSet">
+            {{ optInCountDown.str }}
+          </span>
         </header>
         <p>Please connect your wallet to vote on this set.</p>
         <Actions>
@@ -18,29 +20,41 @@
         <p v-if="blockConfirmations === null">Waiting for reveal block...</p>
         <p v-else>
           <span>
-            Reveal block <NuxtLink :to="`https://etherscan.io/block/${submission.reveal_block_number}`" target="_blank">{{ submission.reveal_block_number }}</NuxtLink>
+            Reveal block
+            <NuxtLink
+              :to="`https://etherscan.io/block/${submission.reveal_block_number}`"
+              target="_blank"
+            >
+              {{ submission.reveal_block_number }}
+            </NuxtLink>
           </span>
-          <span v-if="blockConfirmations < 0n">
-            ({{ blockConfirmationText }} remaining).
-          </span>
-          <span v-else>
-            ({{ blockConfirmationText }}; 5 block confirmations required).
-          </span>
+          <span v-if="blockConfirmations < 0n">({{ blockConfirmationText }} remaining).</span>
+          <span v-else>({{ blockConfirmationText }}; 5 block confirmations required).</span>
         </p>
       </template>
 
       <template v-else-if="!optInAvailable && !revealing && !submission.set_id">
         <SectionTitle>Opt-Ins Closed</SectionTitle>
-        <p>Set Submission didn't meet consensus to be included in the permanent collection. It was staged for community consensus on {{ formatDate(submission.starred_at) }}.</p>
+        <p>
+          Set Submission didn't meet consensus to be included in the permanent collection. It
+          was staged for community consensus on
+          {{ formatDate(submission.starred_at) }}.
+        </p>
       </template>
 
       <template v-else class="connect">
         <template v-if="subscriptionLoaded && subscription?.opepen_ids?.length">
           <header>
             <SectionTitle>Your Opt-Ins</SectionTitle>
-            <span v-if="optInAvailable && isStagedSet">{{ optInCountDown.str }}</span>
+            <span v-if="optInAvailable && isStagedSet">
+              {{ optInCountDown.str }}
+            </span>
           </header>
-          <p>You opted in <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong> for potential reveal.</p>
+          <p>
+            You opted in
+            <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong>
+            for potential reveal.
+          </p>
           <Table>
             <thead>
               <tr>
@@ -52,8 +66,14 @@
             <tbody>
               <tr v-for="(amount, edition) in subscription?.per_edition">
                 <td>{{ getEditionName(edition) }}</td>
-                <td>{{ amount }}<span class="times">x</span></td>
-                <td>{{ subscription.max_reveals[edition] }}<span class="times">x</span></td>
+                <td>
+                  {{ amount }}
+                  <span class="times">x</span>
+                </td>
+                <td>
+                  {{ subscription.max_reveals[edition] }}
+                  <span class="times">x</span>
+                </td>
               </tr>
             </tbody>
           </Table>
@@ -62,15 +82,19 @@
         <template v-else>
           <header>
             <SectionTitle>Vote</SectionTitle>
-            <span v-if="optInAvailable && isStagedSet">{{ optInCountDown.str }}</span>
+            <span v-if="optInAvailable && isStagedSet">
+              {{ optInCountDown.str }}
+            </span>
           </header>
-          <p v-if="subscription?.message === 'DISCARD'">You decided not to opt-in to this set, but you can always change your mind.</p>
+          <p v-if="subscription?.message === 'DISCARD'">
+            You decided not to opt-in to this set, but you can always change your mind.
+          </p>
           <p v-else>Opt-In your unrevealed Opepen for potential reveal.</p>
         </template>
 
         <IsAuthenticated>
           <Actions>
-            <SetDiscardButton v-if="! subscription" :submission="submission" @update="update" />
+            <SetDiscardButton v-if="!subscription" :submission="submission" @update="update" />
 
             <Button @click="openOptInModal">
               <Icon type="edit" />
@@ -102,16 +126,11 @@ const props = defineProps({
 const emit = defineEmits(['update'])
 
 // SUBMISSION PROCESS
-const {
-  optInAvailable,
-  optInCountDown,
-} = await useOptIn(toRef(props.submission))
-const {
-  submission: stagedSubmission,
-} = await useStagedOptIn()
+const { optInAvailable, optInCountDown } = await useOptIn(toRef(props.submission))
+const { submission: stagedSubmission } = await useStagedOptIn()
 
-const isStagedSet = computed(() =>
-  stagedSubmission.value && props.submission.uuid === stagedSubmission.value.uuid
+const isStagedSet = computed(
+  () => stagedSubmission.value && props.submission.uuid === stagedSubmission.value.uuid,
 )
 
 const showOptIn = computed(() => isStagedSet.value || props.submission.published_at)
@@ -123,7 +142,7 @@ const openOptInModal = () => {
 const subscription = ref()
 const subscriptionLoaded = ref(false)
 const fetchSubscription = async () => {
-  if (! currentAddress.value) return
+  if (!currentAddress.value) return
   const uri = `${useApiBase()}/accounts/${currentAddress.value}/set-submissions/${props.submission.uuid}/subscription`
   subscription.value = await $fetch(uri)
   subscriptionLoaded.value = true

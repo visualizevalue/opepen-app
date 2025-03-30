@@ -74,11 +74,7 @@
     </section>
 
     <footer>
-      <NuxtLink
-        to="https://x.com/opepenedition"
-        target="_blank"
-        title="View on X.com"
-      >
+      <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com">
         <Icon type="x.com" />
       </NuxtLink>
       <NuxtLink
@@ -139,8 +135,7 @@ const { isSwiping, lengthX, coordsStart, isHorizontal } = useGlobalSwipe()
 // Helpers
 const shouldOpen = (threshold = 50) =>
   !isOpen.value && lengthX.value < -1 * threshold && coordsStart.value.x < 80
-const shouldClose = (threshold = 0) =>
-  isOpen.value && lengthX.value >= threshold
+const shouldClose = (threshold = 0) => isOpen.value && lengthX.value >= threshold
 const closedPosition = () => -1 * width.value
 
 // We calculate custom positioning only after mount

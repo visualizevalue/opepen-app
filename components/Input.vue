@@ -31,11 +31,14 @@ const setHeight = () => {
 }
 
 onMounted(() => setHeight())
-const onInput = event => {
+const onInput = (event) => {
   emit('update:modelValue', event.target.value)
 
   // Adjust the height of the area on input
   setTimeout(() => setHeight(), 0)
 }
-watch(() => props.recomputeKey, () => setHeight())
+watch(
+  () => props.recomputeKey,
+  () => setHeight(),
+)
 </script>

@@ -15,11 +15,10 @@ const numberWords: { [key: number]: string } = {
   10: 'ten',
   11: 'eleven',
   12: 'twelve',
-};
+}
 
 export const enumerate = (word: string, count: number, pluralForm?: string): string => {
   const numText = count <= 12 ? numberWords[count] || count.toString() : count.toString()
 
   return `${numText} ${pluralize(word, count, pluralForm)}`
 }
-

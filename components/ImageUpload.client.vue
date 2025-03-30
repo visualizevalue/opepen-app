@@ -5,21 +5,28 @@
     @dragover="dragging = true"
     @dragleave="dragging = false"
   >
-    <img v-if="preview && !image" :src="previewURL" :alt="preview.name" :title="preview.name">
+    <img
+      v-if="preview && !image"
+      :src="previewURL"
+      :alt="preview.name"
+      :title="preview.name"
+    />
     <Loading v-if="loading" txt="" />
     <Image v-else-if="image" :image="image" />
     <label>
       <Icon type="image" :stroke-width="2" />
       <span>{{ name }}</span>
       <input
-        v-if="! disabled"
+        v-if="!disabled"
         type="file"
         name="image"
         accept="image/png, image/jpg, image/jpeg, image/gif, image/svg+xml, image/webp, video/mp4, video/webm, model/gltf+json, model/gltf-binary, .gltf, .glb"
         @change.prevent="addFile"
-      >
+      />
     </label>
-    <button v-if="image && ! disabled" @click="reset" class="unstyled reset"><Icon type="x" :stroke-width="3" /></button>
+    <button v-if="image && !disabled" @click="reset" class="unstyled reset">
+      <Icon type="x" :stroke-width="3" />
+    </button>
   </div>
 </template>
 
@@ -39,7 +46,7 @@ const previewURL = computed(() => URL.createObjectURL(preview.value))
 const image = ref(props.image)
 
 const store = async () => {
-  if (! preview.value) return
+  if (!preview.value) return
 
   const formData = new FormData()
   formData.append('image', preview.value)
@@ -83,102 +90,102 @@ const reset = () => {
 </script>
 
 <style scoped>
-  .image-upload {
-    container-type: inline-size;
-    position: relative;
-    min-height: 5rem;
-    width: 100%;
-    height: 100%;
-    background: var(--gray-z-2);
-    border: var(--border);
-    border-radius: var(--border-radius);
+.image-upload {
+  container-type: inline-size;
+  position: relative;
+  min-height: 5rem;
+  width: 100%;
+  height: 100%;
+  background: var(--gray-z-2);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  transition: all var(--speed);
+  overflow: hidden;
+  cursor: pointer;
+
+  label {
+    display: block;
+    width: 100cqw;
+    height: 100cqw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-2);
     transition: all var(--speed);
-    overflow: hidden;
-    cursor: pointer;
 
-    label {
-      display: block;
-      width: 100cqw;
-      height: 100cqw;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--size-2);
-      transition: all var(--speed);
-
-      .vue-feather {
-        width: var(--size-5);
-        color: var(--gray-z-6);
-      }
-
-      span {
-        font-size: var(--font-xs);
-        color: var(--gray-z-7);
-        text-align: center;
-      }
-
-      input {
-        opacity: 0.00001;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
+    .vue-feather {
+      width: var(--size-5);
+      color: var(--gray-z-6);
     }
 
-    .loader,
-    .image,
-    img {
+    span {
+      font-size: var(--font-xs);
+      color: var(--gray-z-7);
+      text-align: center;
+    }
+
+    input {
+      opacity: 0.00001;
       position: absolute;
+      top: 0;
       left: 0;
       right: 0;
-      top: 0;
       bottom: 0;
     }
+  }
 
+  .loader,
+  .image,
+  img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  img {
+    transition: all var(--speed);
+    width: 100%;
+    aspect-ratio: initial;
+    opacity: 0.5;
+  }
+
+  .reset {
+    position: absolute;
+    top: var(--spacer-sm);
+    right: var(--spacer-sm);
+    width: var(--size-5);
+    height: var(--size-5);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--semi-shade);
+    border-radius: 50%;
+
+    .icon {
+      width: var(--size-3);
+      height: var(--size-3);
+    }
+  }
+
+  &.loading {
     img {
-      transition: all var(--speed);
-      width: 100%;
-      aspect-ratio: initial;
       opacity: 0.5;
     }
 
-    .reset {
-      position: absolute;
-      top: var(--spacer-sm);
-      right: var(--spacer-sm);
-      width: var(--size-5);
-      height: var(--size-5);
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--semi-shade);
-      border-radius: 50%;
-
-      .icon {
-        width: var(--size-3);
-        height: var(--size-3);
-      }
-    }
-
-    &.loading {
-      img {
-        opacity: 0.5;
-      }
-
-      label {
-        opacity: 0;
-      }
-    }
-
-    &.dragging,
-    &:--highlight {
-      background: var(--gray-z-3);
-      border-color: var(--gray-z-5);
+    label {
+      opacity: 0;
     }
   }
+
+  &.dragging,
+  &:--highlight {
+    background: var(--gray-z-3);
+    border-color: var(--gray-z-5);
+  }
+}
 </style>

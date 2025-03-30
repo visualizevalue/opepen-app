@@ -21,7 +21,10 @@ definePageMeta({
   middleware: 'enter-set',
 })
 
-const { params: { id }, query } = useRoute()
+const {
+  params: { id },
+  query,
+} = useRoute()
 
 const { data: set } = await useApi(`/opepen/sets/${id}`)
 const submission = computed(() => set.value?.submission)
@@ -36,21 +39,21 @@ useMetaData({
 </script>
 
 <style scoped>
-  .set {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacer);
-    row-gap: var(--spacer-lg);
-    max-width: var(--content-width-sm);
-    margin: 0 auto;
+.set {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer);
+  row-gap: var(--spacer-lg);
+  max-width: var(--content-width-sm);
+  margin: 0 auto;
 
-    @media (--md) {
-      gap: var(--spacer-lg);
-    }
+  @media (--md) {
+    gap: var(--spacer-lg);
   }
+}
 
-  .deep-dive {
-    display: grid;
-    gap: var(--spacer);
-  }
+.deep-dive {
+  display: grid;
+  gap: var(--spacer);
+}
 </style>

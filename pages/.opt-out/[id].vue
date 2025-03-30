@@ -4,7 +4,10 @@
       <BurnedOpepenDetail :opepen="opepen" />
 
       <div class="actions">
-        <a :href="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`" target="_blank">
+        <a
+          :href="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`"
+          target="_blank"
+        >
           <Icon type="opensea" />
         </a>
         <a :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`" target="_blank">
@@ -12,8 +15,14 @@
         </a>
 
         <div>
-          <Button @click="download"><Icon type="download" /> <span>Opepen</span></Button>
-          <Button @click="downloadStatsCard"><Icon type="download" /> <span>Card</span></Button>
+          <Button @click="download">
+            <Icon type="download" />
+            <span>Opepen</span>
+          </Button>
+          <Button @click="downloadStatsCard">
+            <Icon type="download" />
+            <span>Card</span>
+          </Button>
         </div>
       </div>
 
@@ -37,7 +46,9 @@ const contract = config.public.burnedOpepenContract
 
 if (parseInt(route.params.id) > 16_000) router.replace('/')
 
-const { data: opepen } = await useFetch(`${config.public.opepenApi}/opepen/burned/${route.params.id}`)
+const { data: opepen } = await useFetch(
+  `${config.public.opepenApi}/opepen/burned/${route.params.id}`,
+)
 
 const metadata = computed(() => opepen.metadata)
 const image = computed(() => imageURI(opepen.value.image))
@@ -49,14 +60,21 @@ const download = async () => {
   }
 
   // Force update the image (in the background)
-  fetch(`${config.public.opepenApi}/opepen/${route.params.id}/image`, { method: 'POST' })
+  fetch(`${config.public.opepenApi}/opepen/${route.params.id}/image`, {
+    method: 'POST',
+  })
 
   return isStatic
-    ? downloadImage(image.value, { property: `Opepen ${opepen.value.token_id}` })
+    ? downloadImage(image.value, {
+        property: `Opepen ${opepen.value.token_id}`,
+      })
     : open(image.value, '_blank')
 }
 const downloadStatsCard = async () => {
-  return downloadImage(`${config.public.opepenApi}/render/burned/${opepen.value.token_id}/og`, { property: `Burned Opepen Card ${opepen.value.token_id}` })
+  return downloadImage(
+    `${config.public.opepenApi}/render/burned/${opepen.value.token_id}/og`,
+    { property: `Burned Opepen Card ${opepen.value.token_id}` },
+  )
 }
 
 useMetaData({
@@ -66,58 +84,58 @@ useMetaData({
 </script>
 
 <style scoped>
-  .opepen-page {
-    min-height: 100dvh;
-    padding: var(--navbar-height) 0 0;
+.opepen-page {
+  min-height: 100dvh;
+  padding: var(--navbar-height) 0 0;
 
-    .inner {
-      max-width: 69rem;
-      margin: 0 auto;
+  .inner {
+    max-width: 69rem;
+    margin: 0 auto;
 
-      .opepen-detail {
-        border-top: 0;
-        border-left: 0;
-        border-right: 0;
+    .opepen-detail {
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
 
-        @media (min-width: 69.001rem) {
-          border-top: var(--border);
-          border-left: var(--border);
-          border-right: var(--border);
-        }
+      @media (min-width: 69.001rem) {
+        border-top: var(--border);
+        border-left: var(--border);
+        border-right: var(--border);
       }
+    }
+
+    > *:not(.opepen-detail) {
+      padding-left: var(--size-5);
+      padding-right: var(--size-5);
+    }
+
+    @media (min-width: 69rem) {
+      margin: var(--size-8) auto;
 
       > *:not(.opepen-detail) {
-        padding-left: var(--size-5);
-        padding-right: var(--size-5);
-      }
-
-      @media (min-width: 69rem) {
-        margin: var(--size-8) auto;
-
-        > *:not(.opepen-detail) {
-          padding-left: 0;
-          padding-right: 0;
-        }
+        padding-left: 0;
+        padding-right: 0;
       }
     }
   }
+}
 
-  .actions,
-  .actions > div {
-    display: flex;
-    gap: var(--size-4);
-    align-items: center;
+.actions,
+.actions > div {
+  display: flex;
+  gap: var(--size-4);
+  align-items: center;
+}
+
+.actions {
+  padding: var(--size-4) 0;
+
+  .icon {
+    width: var(--size-5);
   }
+}
 
-  .actions {
-    padding: var(--size-4) 0;
-
-    .icon {
-      width: var(--size-5);
-    }
-  }
-
-  .actions > div {
-    margin-left: auto;
-  }
+.actions > div {
+  margin-left: auto;
+}
 </style>

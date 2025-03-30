@@ -29,11 +29,7 @@ export const timeRemainingFromSeconds = (seconds: number) => {
   if (!seconds) return false
   if (seconds == DEFAULT_TIME_TO_REVEAL) return false
 
-  const d = Duration.fromObject({ seconds: seconds }).shiftTo(
-    'hours',
-    'minutes',
-    'seconds',
-  )
+  const d = Duration.fromObject({ seconds: seconds }).shiftTo('hours', 'minutes', 'seconds')
 
   return `${d.hours}h ${d.minutes}m ${d.seconds}s`
 }

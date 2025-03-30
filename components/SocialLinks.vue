@@ -3,7 +3,10 @@
     <li v-for="item in parsedLinks">
       <Button :to="item.url" target="_blank" :class="[size]">
         <Icon :type="item.icon" />
-        <span class="text"><span class="muted" v-if="item.prefix">{{ item.prefix }}</span>{{ item.name }}</span>
+        <span class="text">
+          <span class="muted" v-if="item.prefix">{{ item.prefix }}</span>
+          {{ item.name }}
+        </span>
       </Button>
     </li>
 
@@ -17,7 +20,7 @@ const { links } = defineProps({
   alwaysShow: Boolean,
   size: {
     type: String,
-    default: 'small'
+    default: 'small',
   },
 })
 

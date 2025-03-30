@@ -16,10 +16,7 @@ const size = computed(() => props.size)
 const address = computed(() => props.address)
 
 const canvas = ref(null)
-const img = computed(() => props.address
-  ? canvas.value?.toDataURL()
-  : `/solid.svg`
-)
+const img = computed(() => (props.address ? canvas.value?.toDataURL() : `/solid.svg`))
 
 const setCanvas = () => {
   canvas.value = createIcon({
@@ -33,9 +30,9 @@ watch(address, () => setCanvas())
 </script>
 
 <style scoped>
-  img {
-    border-radius: 50%;
-    border: var(--border);
-    width: 100%;
-  }
+img {
+  border-radius: 50%;
+  border: var(--border);
+  width: 100%;
+}
 </style>

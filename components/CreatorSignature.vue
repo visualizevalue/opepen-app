@@ -1,10 +1,7 @@
 <template>
   <ButtonGroup v-if="data.creator">
     <Button :to="`/${id(data.creatorAccount)}`" class="account">
-      <ApiAccount
-        :account="data.creatorAccount"
-        :hide-address="false"
-      />
+      <ApiAccount :account="data.creatorAccount" :hide-address="false" />
     </Button>
     <Button
       v-if="data.artist_signature"
@@ -59,7 +56,8 @@ const { data } = defineProps({
       text-align: left;
     }
 
-    span, small {
+    span,
+    small {
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;

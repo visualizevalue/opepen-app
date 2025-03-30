@@ -50,8 +50,7 @@
     }
   }
 
-  &.list-5
-  &.list-10,
+  &.list-5 &.list-10,
   &.list-20,
   &.list-40 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -63,4 +62,3 @@
   }
 }
 </style>
-

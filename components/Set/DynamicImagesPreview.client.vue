@@ -1,7 +1,10 @@
 <template>
   <SetOpepenGrid v-if="data?.dynamicSetImages">
     <div class="list list-1">
-      <SectionTitle>{{ data[`edition1Name`] }} <span class="muted">(1/1)</span></SectionTitle>
+      <SectionTitle>
+        {{ data[`edition1Name`] }}
+        <span class="muted">(1/1)</span>
+      </SectionTitle>
 
       <Image
         :image="data.edition1Image"
@@ -17,7 +20,10 @@
     </div>
 
     <div v-for="edition of EDITIONS" class="list" :class="[`list-${edition}`]">
-      <SectionTitle>{{ data[`edition${edition}Name`] }} <span class="muted">(1/{{edition}})</span></SectionTitle>
+      <SectionTitle>
+        {{ data[`edition${edition}Name`] }}
+        <span class="muted">(1/{{ edition }})</span>
+      </SectionTitle>
       <Image
         v-for="image of imagesForEdition(edition)"
         :image="image"
@@ -54,9 +60,9 @@ const imagesForEdition = (edition) => {
 
   while (index <= edition) {
     const image = data.dynamicSetImages[`image${edition}_${index}`]
-    index ++
+    index++
 
-    if (! image) continue
+    if (!image) continue
     image.edition = edition
     array.push(image)
   }
@@ -73,4 +79,3 @@ const openModal = (img) => {
   modalOpen.value = true
 }
 </script>
-

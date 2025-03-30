@@ -1,11 +1,6 @@
 <template>
   <div class="preview">
-    <Image
-      :image="image"
-      :version="version"
-      class="appear"
-      auto-embed
-    >
+    <Image :image="image" :version="version" class="appear" auto-embed>
       <div class="meta">
         <h1>{{ name }}</h1>
         <p>{{ tagline }}</p>
@@ -15,18 +10,19 @@
 </template>
 
 <script setup>
-const {
-  data,
-  edition,
-} = defineProps({
+const { data, edition } = defineProps({
   data: Object,
   edition: Number,
 })
 
-const image = computed(() => data ? data[`edition${edition}Image`] : `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`)
-const version = computed(() => image.value?.isAnimated === true ? '' : 'sm')
+const image = computed(() =>
+  data
+    ? data[`edition${edition}Image`]
+    : `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`,
+)
+const version = computed(() => (image.value?.isAnimated === true ? '' : 'sm'))
 
-const name = computed(() => data ? data[`edition${edition}Name`] : `Unrevealed`)
+const name = computed(() => (data ? data[`edition${edition}Name`] : `Unrevealed`))
 const tagline = computed(() => EDITIONS[edition]?.tagline)
 </script>
 

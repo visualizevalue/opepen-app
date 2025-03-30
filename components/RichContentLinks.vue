@@ -9,7 +9,7 @@ const { links } = defineProps({
   links: Array,
 })
 
-const shownLinks = computed(() => links.filter(l => validateURI(l.url)))
+const shownLinks = computed(() => links.filter((l) => validateURI(l.url)))
 </script>
 
 <style scoped>

@@ -11,4 +11,3 @@ useMetaData({
   title: `Stats | Opepen`,
 })
 </script>
-

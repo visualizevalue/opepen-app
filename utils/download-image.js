@@ -1,24 +1,20 @@
-export const loadImage = url => new Promise(resolve => {
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  img.src = url
-  img.onload = () => resolve(img)
-})
+export const loadImage = (url) =>
+  new Promise((resolve) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = url
+    img.onload = () => resolve(img)
+  })
 
 export const image2Blob = (canvas, mime, quality) =>
-  new Promise(resolve => canvas.toBlob(resolve, mime, quality))
+  new Promise((resolve) => canvas.toBlob(resolve, mime, quality))
 
 export const canvas2URI = async (canvas) => {
   const URLObj = window.URL || window.webkitURL
   return URLObj.createObjectURL(await image2Blob(canvas, 'image/png'))
 }
 
-export const downloadCanvas = async (
-  name,
-  canvas,
-  mime = 'image/png',
-  quality = 0.8
-) => {
+export const downloadCanvas = async (name, canvas, mime = 'image/png', quality = 0.8) => {
   // Get the blob
   const image = await image2Blob(canvas, mime, quality)
 
@@ -32,11 +28,7 @@ export const downloadCanvas = async (
   document.body.removeChild(a)
 }
 
-const downloadImage = async (url, {
-  name = url,
-  mime = 'image/png',
-  quality = 0.8,
-} = {}) => {
+const downloadImage = async (url, { name = url, mime = 'image/png', quality = 0.8 } = {}) => {
   // Load the image
   const img = await loadImage(url)
 

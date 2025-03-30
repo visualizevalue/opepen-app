@@ -8,7 +8,7 @@
 
     <section v-if="createdSets?.length">
       <SectionTitle>Artist For Sets</SectionTitle>
-      <SetCardGrid :submissions="createdSets" :minimal="false"class="set-grid" />
+      <SetCardGrid :submissions="createdSets" :minimal="false" class="set-grid" />
     </section>
 
     <section v-if="account.richContentLinks?.length" class="known-for">
@@ -22,24 +22,28 @@
     </section>
 
     <section v-if="account.opepen_count">
-      <SectionTitle>Owned Opepen <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template></SectionTitle>
+      <SectionTitle>
+        Owned Opepen
+        <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template>
+      </SectionTitle>
 
-      <OpepenGrid
-        :url="`${url}/opepen`"
-        :key="`${account.address}-opepen`"
-        :limit="80"
-      />
+      <OpepenGrid :url="`${url}/opepen`" :key="`${account.address}-opepen`" :limit="80" />
     </section>
 
     <section v-if="account.burned_opepen_count">
-      <SectionTitle>Burned Opepen <template v-if="account.burned_opepen_count > 12">({{ account.burned_opepen_count }})</template></SectionTitle>
+      <SectionTitle>
+        Burned Opepen
+        <template v-if="account.burned_opepen_count > 12">
+          ({{ account.burned_opepen_count }})
+        </template>
+      </SectionTitle>
 
       <OpepenGrid
         :url="`${url}/burned`"
         :key="`${account.address}-burned-opepen`"
         :limit="80"
-        :subline="token => `Burned Opepen #${token.opepen.token_id}`"
-        :link="token => `/opepen/burned/${token.token_id}`"
+        :subline="(token) => `Burned Opepen #${token.opepen.token_id}`"
+        :link="(token) => `/opepen/burned/${token.token_id}`"
       />
     </section>
 
@@ -52,7 +56,6 @@
     <!--   </Button> -->
     <!-- </AdminMenuFloating> -->
   </PageFrameSm>
-
 </template>
 
 <script setup>
@@ -64,17 +67,19 @@ const { mainSocials, otherSocials } = useSocials(account)
 // =========================================
 // SETS & SUBMISSIONS
 // =========================================
-const createdSets = computed(() => account.createdSets
-  ? account.createdSets
-    .filter(s => !! s.set_id)
-    .sort((s1, s2) => s1.set_id > s2.set_id ? 1 : -1)
-  : []
+const createdSets = computed(() =>
+  account.createdSets
+    ? account.createdSets
+        .filter((s) => !!s.set_id)
+        .sort((s1, s2) => (s1.set_id > s2.set_id ? 1 : -1))
+    : [],
 )
-const createdSubmissions = computed(() => account.createdSets
-  ? account.createdSets
-    .filter(s => ! s.set_id)
-    .sort((s1, s2) => s1.published_at > s2.published_at ? -1 : 1)
-  : []
+const createdSubmissions = computed(() =>
+  account.createdSets
+    ? account.createdSets
+        .filter((s) => !s.set_id)
+        .sort((s1, s2) => (s1.published_at > s2.published_at ? -1 : 1))
+    : [],
 )
 
 useMetaData({
@@ -146,7 +151,7 @@ useMetaData({
       margin-top: var(--size-3);
 
       &:before {
-        content: "- ";
+        content: '- ';
       }
     }
   }
@@ -173,4 +178,3 @@ section {
   gap: var(--spacer);
 }
 </style>
-

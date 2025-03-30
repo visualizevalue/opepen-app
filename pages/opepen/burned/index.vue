@@ -1,14 +1,9 @@
 <template>
-  <PaginatedContent
-    :url="url"
-    :query="query"
-    :tag="PageFrameMd"
-    show-empty
-  >
+  <PaginatedContent :url="url" :query="query" :tag="PageFrameMd" show-empty>
     <template #default="{ items, meta }">
       <PageHeader>
         <SectionTitle>
-          <span>Consensus Met ({{ meta.total || 0}})</span>
+          <span>Consensus Met ({{ meta.total || 0 }})</span>
         </SectionTitle>
       </PageHeader>
 
@@ -31,4 +26,3 @@ import PageFrameMd from '~/components/Page/FrameMd.vue'
 const url = `${useConfig('opepenApi')}/opepen/burned`
 const query = `sort=-burned_at`
 </script>
-

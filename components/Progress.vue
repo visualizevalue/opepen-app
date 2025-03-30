@@ -1,8 +1,8 @@
 <template>
-<div class="progress">
-  <div :style="{ width: `${Math.max(3, percent)}%` }"></div>
-  <div :style="{ left: `${percent}%`}"><slot/></div>
-</div>
+  <div class="progress">
+    <div :style="{ width: `${Math.max(3, percent)}%` }"></div>
+    <div :style="{ left: `${percent}%` }"><slot /></div>
+  </div>
 </template>
 
 <script setup>

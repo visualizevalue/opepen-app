@@ -14,11 +14,11 @@
   }
 
   &.wide {
-    max-width: min(calc(100vw - 2*var(--size-4)), 40rem);
+    max-width: min(calc(100vw - 2 * var(--size-4)), 40rem);
   }
 
   &.extra-wide {
-    max-width: min(calc(100vw - 2*var(--size-4)), calc(100dvh - 4*var(--size-8)));
+    max-width: min(calc(100vw - 2 * var(--size-4)), calc(100dvh - 4 * var(--size-8)));
   }
 }
 

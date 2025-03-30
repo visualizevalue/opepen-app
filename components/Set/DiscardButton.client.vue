@@ -8,22 +8,25 @@
 
 <script setup lang="ts">
 interface Props {
-  submission: SetSubmission,
+  submission: SetSubmission
 }
 const { submission } = defineProps<Props>()
 const emit = defineEmits(['update'])
 const { refreshAccount } = await useProfile()
 
 const loading = ref(false)
-const { execute: discard, status } = await useApi(`/set-submissions/${submission.uuid}/discard`, {
-  immediate: false,
-  method: 'POST',
-  credentials: 'include',
-  onResponse: () => {
-    refreshAccount()
-    emit('update')
+const { execute: discard, status } = await useApi(
+  `/set-submissions/${submission.uuid}/discard`,
+  {
+    immediate: false,
+    method: 'POST',
+    credentials: 'include',
+    onResponse: () => {
+      refreshAccount()
+      emit('update')
+    },
   },
-})
+)
 watchEffect(() => {
   if (status.value === 'pending') {
     loading.value = true
@@ -37,4 +40,3 @@ p {
   font-size: var(--font-sm);
 }
 </style>
-

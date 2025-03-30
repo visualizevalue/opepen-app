@@ -11,16 +11,33 @@
   >
     <div class="inner image">
       <Suspense>
-        <ThreeModelViewer v-if="is3d && autoEmbed" :path="imageURI(image)" @loaded="() => loaded = true" />
-        <iframe v-else-if="displayIframe" :src="embedURI" frameborder="0" sandbox="allow-scripts"></iframe>
-        <video v-else-if="displayVideo" :src="uri" playsinline loop autoplay muted ref="video"></video>
+        <ThreeModelViewer
+          v-if="is3d && autoEmbed"
+          :path="imageURI(image)"
+          @loaded="() => (loaded = true)"
+        />
+        <iframe
+          v-else-if="displayIframe"
+          :src="embedURI"
+          frameborder="0"
+          sandbox="allow-scripts"
+        ></iframe>
+        <video
+          v-else-if="displayVideo"
+          :src="uri"
+          playsinline
+          loop
+          autoplay
+          muted
+          ref="video"
+        ></video>
         <img
           v-else
           ref="imageEl"
           alt="Opepen image"
           :src="props.image ? uri : '/schematics.svg'"
           @load="imageLoaded"
-        >
+        />
       </Suspense>
       <slot />
     </div>
@@ -42,26 +59,31 @@ const props = defineProps({
     default: true,
   },
 })
-const emit = defineEmits(['click','loaded'])
+const emit = defineEmits(['click', 'loaded'])
 
 const uri = ref('')
 const loaded = ref(false)
-const is3d = computed(() => ['gbl', 'gltf', 'glb-json', 'glb-binary', 'gltf-json', 'gltf-binary'].includes(props.image?.type))
+const is3d = computed(() =>
+  ['gbl', 'gltf', 'glb-json', 'glb-binary', 'gltf-json', 'gltf-binary'].includes(
+    props.image?.type,
+  ),
+)
 const isVideo = computed(() => ['mp4', 'webm'].includes(props.image?.type))
 const isSVG = computed(() => props.image?.type === 'svg')
-const hasEmbed = computed(() => props.embed || (uri.value && (isSVG.value && !props.version) && props.autoEmbed))
+const hasEmbed = computed(
+  () => props.embed || (uri.value && isSVG.value && !props.version && props.autoEmbed),
+)
 // FIXME: Refactor this...
 const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
 const embedURI = computed(() => props.embed || uri.value)
 const imageEl = ref(null)
 const aspectRatio = ref(1)
 const computeAspectRatio = () => {
-  aspectRatio.value = (
+  aspectRatio.value =
     props.aspectRatio || // The passed aspect ratio
     props.image?.aspect_ratio || // The image object aspect ratio
-    (imageEl.value?.naturalWidth / (imageEl.value?.naturalHeight || 1)) || // The natural image element ratio
+    imageEl.value?.naturalWidth / (imageEl.value?.naturalHeight || 1) || // The natural image element ratio
     1 // The default square ratio
-  )
 }
 computeAspectRatio()
 const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
@@ -72,9 +94,9 @@ watch([is3d, displayIframe, displayVideo], () => {
 })
 
 const loadImage = ([{ isIntersecting }]) => {
-  if (! isIntersecting) return
+  if (!isIntersecting) return
 
-  if (! props.image) return
+  if (!props.image) return
 
   if (typeof props.image === 'string') {
     uri.value = normalizeURI(props.image)
@@ -87,7 +109,10 @@ const loadOriginal = () => {
   uri.value = imageURI(props.image)
   emit('loaded')
 }
-watch(() => props.image?.uuid, () => loadImage([{ isIntersecting: true }]))
+watch(
+  () => props.image?.uuid,
+  () => loadImage([{ isIntersecting: true }]),
+)
 
 // Image loaded event
 const imageLoaded = () => {

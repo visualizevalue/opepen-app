@@ -14,7 +14,7 @@
 import type { NuxtError } from '#app'
 
 defineProps({
-  error: Object as () => NuxtError
+  error: Object as () => NuxtError,
 })
 </script>
 
@@ -27,7 +27,8 @@ defineProps({
   min-height: var(--main-content-height);
 }
 
-h1, p {
+h1,
+p {
   @mixin ui-font;
   font-size: var(--font-xl);
 }
@@ -37,4 +38,3 @@ p {
   color: var(--muted);
 }
 </style>
-

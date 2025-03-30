@@ -1,9 +1,11 @@
 <template>
   <div v-if="stats" class="grid">
-
     <Card class="static">
       <h1>Volume</h1>
-      <p><small class="muted">$ </small>{{ formatNumber(stats.markets.history.totalUSD || 0) }}</p>
+      <p>
+        <small class="muted">$</small>
+        {{ formatNumber(stats.markets.history.totalUSD || 0) }}
+      </p>
     </Card>
 
     <Card class="static">
@@ -42,15 +44,20 @@
     </Card>
 
     <Card class="static">
-      <h1>Opt-Outs <small>(total)</small></h1>
+      <h1>
+        Opt-Outs
+        <small>(total)</small>
+      </h1>
       <p>{{ formatNumber(stats.optOuts.total) }}</p>
     </Card>
 
     <Card class="static">
-      <h1>Opt-Outs <small>(unrevealed)</small></h1>
+      <h1>
+        Opt-Outs
+        <small>(unrevealed)</small>
+      </h1>
       <p>{{ formatNumber(stats.optOuts.unrevealed) }}</p>
     </Card>
-
   </div>
 </template>
 
@@ -94,4 +101,3 @@ const { day, stats } = await useStats()
   }
 }
 </style>
-

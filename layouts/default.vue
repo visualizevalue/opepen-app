@@ -1,6 +1,5 @@
 <template>
   <div class="layout" ref="el" @touchMove.prevent="() => null">
-
     <!-- Sidebar -->
     <MainSideNav ref="mainNav" />
 
@@ -18,7 +17,6 @@
 
     <!-- Global Data -->
     <WatchSession />
-
   </div>
 </template>
 
@@ -33,7 +31,7 @@ const mainNav = ref()
 const route = useRoute()
 const { isDesktop } = useWindow()
 watch([route, isDesktop], () => {
-  if (! el.value) return
+  if (!el.value) return
 
   nextTick(() => {
     if (isDesktop.value) {
@@ -42,11 +40,16 @@ watch([route, isDesktop], () => {
     }
 
     if (document.getElementById('top-sub-nav')?.innerText.trim() === '') {
-      el.value.style.setProperty('--main-padding-top', 'calc(var(--top-nav-height) + var(--spacer))')
+      el.value.style.setProperty(
+        '--main-padding-top',
+        'calc(var(--top-nav-height) + var(--spacer))',
+      )
     } else {
-      el.value.style.setProperty('--main-padding-top', 'calc(var(--top-nav-total-height) + var(--spacer))')
+      el.value.style.setProperty(
+        '--main-padding-top',
+        'calc(var(--top-nav-total-height) + var(--spacer))',
+      )
     }
   })
 })
 </script>
-

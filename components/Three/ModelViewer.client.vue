@@ -4,11 +4,11 @@ import { Box3, Vector3 } from 'three'
 const { path } = defineProps({
   path: {
     type: String,
-    default: '/opepen.glb'
-  }
+    default: '/opepen.glb',
+  },
 })
 
-const emit = defineEmits(['loaded']);
+const emit = defineEmits(['loaded'])
 
 const cameraPosition = ref([0, 0, 5])
 const cameraLook = ref([0, 0, 0])
@@ -35,46 +35,23 @@ const onModelLoad = (model) => {
 </script>
 
 <template>
-  <TresCanvas
-    clear-color="#000000"
-    height="100%"
-    width="100%"
-  >
-    <TresPerspectiveCamera
-      :position="cameraPosition"
-      :look-at="cameraLook"
-    />
-    <OrbitControls
-      enable-damping
-      auto-rotate
-    />
+  <TresCanvas clear-color="#000000" height="100%" width="100%">
+    <TresPerspectiveCamera :position="cameraPosition" :look-at="cameraLook" />
+    <OrbitControls enable-damping auto-rotate />
     <Suspense>
-      <ThreeModelGLTF
-        :path="path"
-        @loaded="onModelLoad"
-      />
+      <ThreeModelGLTF :path="path" @loaded="onModelLoad" />
     </Suspense>
 
     <!-- Key light -->
-    <TresDirectionalLight
-      :intensity="1.5"
-      :position="[10, 0, 5]"
-    />
+    <TresDirectionalLight :intensity="1.5" :position="[10, 0, 5]" />
 
     <!-- Fill light -->
-    <TresDirectionalLight
-      :intensity="1"
-      :position="[-10, 5, 10]"
-    />
+    <TresDirectionalLight :intensity="1" :position="[-10, 5, 10]" />
 
     <!-- Back light -->
-    <TresDirectionalLight
-      :intensity="0.5"
-      :position="[0, 5, -10]"
-    />
+    <TresDirectionalLight :intensity="0.5" :position="[0, 5, -10]" />
     <TresAmbientLight :intensity="1" />
   </TresCanvas>
 </template>
 
-<style>
-</style>
+<style></style>

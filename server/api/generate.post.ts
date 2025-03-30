@@ -4,20 +4,22 @@ export default defineEventHandler(async (event) => {
   const { prompt, imageData } = body
 
   const requestBody = {
-    contents: [{
-      parts: [
-        { text: prompt },
-        {
-          inlineData: {
-            mimeType: 'image/png',
-            data: imageData
-          }
-        }
-      ]
-    }],
+    contents: [
+      {
+        parts: [
+          { text: prompt },
+          {
+            inlineData: {
+              mimeType: 'image/png',
+              data: imageData,
+            },
+          },
+        ],
+      },
+    ],
     generationConfig: {
-      responseModalities: ['Text', 'Image']
-    }
+      responseModalities: ['Text', 'Image'],
+    },
   }
 
   const response = await fetch(
@@ -27,35 +29,37 @@ export default defineEventHandler(async (event) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestBody)
-    }
+      body: JSON.stringify(requestBody),
+    },
   )
 
   if (!response.ok) {
     const errorText = await response.text()
     throw createError({
       statusCode: response.status,
-      message: `Gemini API error: ${errorText}`
+      message: `Gemini API error: ${errorText}`,
     })
   }
 
   const result = await response.json()
-  
+
   if (!result.candidates?.[0]?.content?.parts) {
     throw createError({
       statusCode: 500,
-      message: 'Invalid response structure from Gemini API'
+      message: 'Invalid response structure from Gemini API',
     })
   }
 
   const parts = result.candidates[0].content.parts
-  const generatedImage = parts.find((part: any) => part.inlineData?.mimeType === 'image/png')?.inlineData
+  const generatedImage = parts.find(
+    (part: any) => part.inlineData?.mimeType === 'image/png',
+  )?.inlineData
   if (!generatedImage) {
     throw createError({
       statusCode: 500,
-      message: 'No image generated'
+      message: 'No image generated',
     })
   }
 
   return generatedImage.data
-}) 
+})

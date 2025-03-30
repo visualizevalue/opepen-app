@@ -3,8 +3,7 @@
 </template>
 
 <style scoped>
-  span {
-    color: var(--gray-z-5);
-  }
+span {
+  color: var(--gray-z-5);
+}
 </style>
-

@@ -29,30 +29,30 @@ export type SubmissionStats = {
   totalHolders?: number
 }
 
-export type EditionType = 'PRINT'|'NUMBERED_PRINT'|'DYNAMIC'
+export type EditionType = 'PRINT' | 'NUMBERED_PRINT' | 'DYNAMIC'
 
 export type ArtistSignature = {
-  set: number,
-  name: string,
-  artist: string,
-  note?: string,
-  tx?: string,
+  set: number
+  name: string
+  artist: string
+  note?: string
+  tx?: string
 }
 
 export type ArtistSocials = string[]
 
 export type ImageVersions = {
-  sm?: boolean, // 512
-  lg?: boolean, // 1024
-  xl?: boolean, // 2048
+  sm?: boolean // 512
+  lg?: boolean // 1024
+  xl?: boolean // 2048
 }
 
 export type Image = {
-  uuid: string,
-  versions: ImageVersions,
-  cdn: string,
-  path: string,
-  type: string,
+  uuid: string
+  versions: ImageVersions
+  cdn: string
+  path: string
+  type: string
 }
 
 export interface Account {
@@ -69,11 +69,11 @@ export interface SetSubmission {
   description?: string
   creator: string
   set_id?: number
-  published_at: string|null
-  approved_at: string|null
-  starred_at: string|null
-  shadowed_at: string|null
-  reveals_at: string|null
+  published_at: string | null
+  approved_at: string | null
+  starred_at: string | null
+  shadowed_at: string | null
+  reveals_at: string | null
   revealed_at?: string
   deleted_at?: string
   creatorAccount: Account

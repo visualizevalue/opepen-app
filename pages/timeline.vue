@@ -7,15 +7,11 @@
       </h1>
     </header>
 
-    <hr>
+    <hr />
 
     <section v-if="isAdmin">
       <div class="add-tweet">
-        <input
-          type="text"
-          v-model="tweetInput"
-          placeholder="Add a new tweet URL or Id"
-        />
+        <input type="text" v-model="tweetInput" placeholder="Add a new tweet URL or Id" />
 
         <Button class="input-button" @click="addTweet">Add</Button>
       </div>
@@ -27,14 +23,10 @@
       <Button @click="toggleSort" class="sort-button">
         <Icon :type="arrowType" />
       </Button>
-      <CuratedTweets
-        :key="refreshKey"
-        :sort="sort"
-      />
+      <CuratedTweets :key="refreshKey" :sort="sort" />
     </section>
   </PageFrameSm>
 </template>
-
 
 <script setup>
 const tweetInput = ref('')
@@ -72,7 +64,6 @@ const body = computed(() => {
 
   return JSON.stringify({ ids: [rawId] })
 })
-
 
 const { error, execute } = await useApiPost('/curated-tweets', {
   body,
@@ -153,8 +144,8 @@ function toggleSort() {
   }
 
   hr {
-    width: calc(100% + var(--spacer)*2);
-    margin-left: calc(-1*var(--spacer));
+    width: calc(100% + var(--spacer) * 2);
+    margin-left: calc(-1 * var(--spacer));
 
     @media (--md) {
       width: 100%;
@@ -171,7 +162,8 @@ function toggleSort() {
     width: auto;
   }
 
-  .success-message, .error-message {
+  .success-message,
+  .error-message {
     margin-top: var(--spacer-sm);
     font-size: var(--font-sm);
   }

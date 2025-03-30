@@ -1,6 +1,5 @@
 <template>
   <PageFrameMd>
-
     <PageHeader>
       <SectionTitle>Generate</SectionTitle>
       <div class="generate-buttons">
@@ -17,10 +16,17 @@
 
     <div class="preview-area">
       <div class="sidebar">
-        <div v-for="i in 10" :key="i" class="thumbnail" @click="() => {
-          selectedImageIndex = i;
-          selectedHistoryIndex = null;
-        }">
+        <div
+          v-for="i in 10"
+          :key="i"
+          class="thumbnail"
+          @click="
+            () => {
+              selectedImageIndex = i
+              selectedHistoryIndex = null
+            }
+          "
+        >
           <img :src="`editor/opepen-${i}.png`" :alt="`Opepen ${i}`" />
         </div>
       </div>
@@ -28,39 +34,67 @@
         <div v-if="isGenerating" class="loader">
           <img src="/icon.svg" alt="Opepen" />
         </div>
-        <img v-if="selectedHistoryIndex && versions.length > 0"
-          :src="`data:image/png;base64,${versions.find(v => v.id === selectedHistoryIndex)?.imageData}`"
-          alt="Selected Opepen" />
-        <img v-else-if="selectedHistoryIndex === 0"
-          :src="versions.find(v => v.id === 0)?.imageUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='"
-          alt="Selected Opepen" />
-        <img v-else-if="selectedImageIndex" :src="`/editor/opepen-${selectedImageIndex}.png`" alt="Selected Opepen" />
+        <img
+          v-if="selectedHistoryIndex && versions.length > 0"
+          :src="`data:image/png;base64,${versions.find((v) => v.id === selectedHistoryIndex)?.imageData}`"
+          alt="Selected Opepen"
+        />
+        <img
+          v-else-if="selectedHistoryIndex === 0"
+          :src="
+            versions.find((v) => v.id === 0)?.imageUrl ||
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+          "
+          alt="Selected Opepen"
+        />
+        <img
+          v-else-if="selectedImageIndex"
+          :src="`/editor/opepen-${selectedImageIndex}.png`"
+          alt="Selected Opepen"
+        />
         <img v-else :src="`/editor/opepen-1.png`" alt="Selected Opepen" />
       </div>
       <div class="history-sidebar">
-        <div v-for="version in versions" :key="version.id" class="history-item"
-          :class="{ active: selectedHistoryIndex === version.id }" @click="() => {
-            selectedHistoryIndex = version.id;
-            selectedImageIndex = null;
-          }">
+        <div
+          v-for="version in versions"
+          :key="version.id"
+          class="history-item"
+          :class="{ active: selectedHistoryIndex === version.id }"
+          @click="
+            () => {
+              selectedHistoryIndex = version.id
+              selectedImageIndex = null
+            }
+          "
+        >
           <Icon v-if="selectedHistoryIndex === version.id" type="check" />
           <p class="history-version">v{{ versions.length - versions.indexOf(version) - 1 }}</p>
           <p class="history-prompt">{{ version.prompt }}</p>
         </div>
         <div class="history-sidebar-footer">
-          <Button v-if="versions.length > 1" @click="clearHistory" class="small">Clear history</Button>
+          <Button v-if="versions.length > 1" @click="clearHistory" class="small">
+            Clear history
+          </Button>
         </div>
       </div>
     </div>
 
     <div class="prompt-area">
-      <input ref="promptInput" v-model="prompt" placeholder="Write your opeprompt..." class="input prompt-input"
-        autofocus @keyup.enter="generate" :disabled="isGenerating" />
+      <input
+        ref="promptInput"
+        v-model="prompt"
+        placeholder="Write your opeprompt..."
+        class="input prompt-input"
+        autofocus
+        @keyup.enter="generate"
+        :disabled="isGenerating"
+      />
       <Button @click="generate" :disabled="isGenerating" class="prompt-button">
-        <span>{{ isGenerating ? 'Generating opepen...' : 'Generate opepen' }}</span>
+        <span>
+          {{ isGenerating ? 'Generating opepen...' : 'Generate opepen' }}
+        </span>
       </Button>
     </div>
-
   </PageFrameMd>
 </template>
 
@@ -88,7 +122,7 @@ const isCopying = ref(false)
 
 const getCurrentImageUrl = () => {
   if (selectedHistoryIndex.value !== null) {
-    const selectedVersion = versions.value.find(v => v.id === selectedHistoryIndex.value)
+    const selectedVersion = versions.value.find((v) => v.id === selectedHistoryIndex.value)
     if (selectedVersion?.imageData) {
       return `data:image/png;base64,${selectedVersion.imageData}`
     }
@@ -115,8 +149,8 @@ const copy = async () => {
   const blob = await response.blob()
   await navigator.clipboard.write([
     new ClipboardItem({
-      [blob.type]: blob
-    })
+      [blob.type]: blob,
+    }),
   ])
   setTimeout(() => {
     isCopying.value = false
@@ -135,15 +169,15 @@ onMounted(async () => {
     console.log('Loading versions...')
     const [savedVersions, savedHistory] = await Promise.all([
       loadVersions(),
-      loadSelectedHistory()
+      loadSelectedHistory(),
     ])
     console.log('Loaded versions:', savedVersions)
 
     if (savedVersions && savedVersions.length > 0) {
       // Sort versions by timestamp, keeping v0 at the end
-      const v0 = savedVersions.find(v => v.id === 0)
+      const v0 = savedVersions.find((v) => v.id === 0)
       const otherVersions = savedVersions
-        .filter(v => v.id !== 0)
+        .filter((v) => v.id !== 0)
         .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
 
       versions.value = [...otherVersions]
@@ -159,12 +193,14 @@ onMounted(async () => {
       }
     } else {
       // If no versions exist, create fresh v0
-      versions.value = [{
-        id: 0,
-        prompt: 'Original opepen',
-        imageUrl: '/editor/opepen-1.png',
-        timestamp: new Date().toISOString()
-      }]
+      versions.value = [
+        {
+          id: 0,
+          prompt: 'Original opepen',
+          imageUrl: '/editor/opepen-1.png',
+          timestamp: new Date().toISOString(),
+        },
+      ]
       selectedHistoryIndex.value = 0
       await saveVersions(versions.value)
     }
@@ -178,15 +214,19 @@ onMounted(async () => {
 })
 
 // Save versions to storage whenever they change
-watch(versions, async (newVersions) => {
-  try {
-    console.log('Saving versions:', newVersions)
-    await saveVersions(newVersions)
-    console.log('Successfully saved versions')
-  } catch (error) {
-    console.error('Failed to save versions:', error)
-  }
-}, { deep: true })
+watch(
+  versions,
+  async (newVersions) => {
+    try {
+      console.log('Saving versions:', newVersions)
+      await saveVersions(newVersions)
+      console.log('Successfully saved versions')
+    } catch (error) {
+      console.error('Failed to save versions:', error)
+    }
+  },
+  { deep: true },
+)
 
 // Watch for thumbnail selection
 watch(selectedImageIndex, async (newIndex) => {
@@ -211,10 +251,10 @@ watch(selectedHistoryIndex, async (newIndex) => {
 
 const clearHistory = async () => {
   // Keep only v0
-  const v0 = versions.value.find(v => v.id === 0)
+  const v0 = versions.value.find((v) => v.id === 0)
 
   // Clear all image data from localStorage except v0
-  versions.value.forEach(version => {
+  versions.value.forEach((version) => {
     if (version.id !== 0) {
       localStorage.removeItem(`opepen-image-${version.id}`)
     }
@@ -236,7 +276,7 @@ const generate = async () => {
 
     if (selectedHistoryIndex.value !== null) {
       // If a version is selected, use that version's image
-      const selectedVersion = versions.value.find(v => v.id === selectedHistoryIndex.value)
+      const selectedVersion = versions.value.find((v) => v.id === selectedHistoryIndex.value)
       if (selectedVersion?.imageData) {
         imageUrl = `data:image/png;base64,${selectedVersion.imageData}`
       } else {
@@ -259,7 +299,7 @@ const generate = async () => {
       id: Date.now(),
       prompt: prompt.value,
       imageData: generatedImageData,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     }
 
     // If this is the first edit, store the current image as v0
@@ -268,14 +308,16 @@ const generate = async () => {
       const v0 = {
         id: 0,
         prompt: 'Original opepen',
-        imageUrl: selectedImageIndex ? `/editor/opepen-${selectedImageIndex.value}.png` : '/editor/opepen-1.png',
-        timestamp: new Date().toISOString()
+        imageUrl: selectedImageIndex
+          ? `/editor/opepen-${selectedImageIndex.value}.png`
+          : '/editor/opepen-1.png',
+        timestamp: new Date().toISOString(),
       }
       versions.value = [newVersion, v0]
     } else {
       // For subsequent edits, add new version at the beginning and keep v0 at the bottom
-      const v0 = versions.value.find(v => v.id === 0)
-      versions.value = [newVersion, ...versions.value.filter(v => v.id !== 0)]
+      const v0 = versions.value.find((v) => v.id === 0)
+      versions.value = [newVersion, ...versions.value.filter((v) => v.id !== 0)]
       if (v0) {
         versions.value.push(v0)
       }
@@ -547,7 +589,6 @@ const generate = async () => {
 }
 
 @keyframes rotate {
-
   0%,
   25% {
     transform: rotate(0deg);
@@ -569,7 +610,6 @@ const generate = async () => {
 }
 
 @media (--md) {
-
   .generate-buttons {
     .button {
       justify-content: flex-start;
@@ -633,6 +673,5 @@ const generate = async () => {
     width: fit-content;
     height: 100%;
   }
-
 }
 </style>

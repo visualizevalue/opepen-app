@@ -1,9 +1,11 @@
 <template>
   <Teleport to="body">
-    <aside :style="{
-      left: x + 'px',
-      top: y + 'px',
-    }">
+    <aside
+      :style="{
+        left: x + 'px',
+        top: y + 'px',
+      }"
+    >
       <slot />
     </aside>
   </Teleport>

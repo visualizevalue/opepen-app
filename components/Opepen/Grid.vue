@@ -32,28 +32,27 @@ defineProps({
   },
   subline: {
     type: Function,
-    default: token => undefined,
+    default: (token) => undefined,
   },
   link: {
     type: Function,
-    default: (token) => `/opepen/${token.token_id}`
+    default: (token) => `/opepen/${token.token_id}`,
   },
 })
 </script>
 
 <style>
-  .opepen-grid {
-    display: grid;
+.opepen-grid {
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+
+  @media (--md) {
     gap: var(--spacer);
-    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
-
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 0 auto;
-
-    @media (--md) {
-      gap: var(--spacer);
-    }
   }
+}
 </style>
-

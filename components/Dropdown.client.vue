@@ -7,11 +7,7 @@
     </PopoverButton>
 
     <Teleport to="body">
-      <PopoverPanel
-        class="dropdown-panel"
-        :style="panelStyle"
-        v-slot="{ close }"
-      >
+      <PopoverPanel class="dropdown-panel" :style="panelStyle" v-slot="{ close }">
         <div class="dropdown-items">
           <PopoverButton
             v-for="(item, index) in items"
@@ -50,7 +46,14 @@ const { align, xOffset } = defineProps({
 })
 
 const trigger = ref()
-const { x, y, right, width, height, update: repositionTrigger } = useElementBounding(trigger, {
+const {
+  x,
+  y,
+  right,
+  width,
+  height,
+  update: repositionTrigger,
+} = useElementBounding(trigger, {
   immediate: false,
   updateTiming: 'next-frame',
 })

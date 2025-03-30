@@ -20,7 +20,8 @@
       </span>
       <span>
         <span>
-          {{ pad(set.id, 3) }}<span v-if="set.name" class="hidden-sm">: {{ set.name }}</span>
+          {{ pad(set.id, 3) }}
+          <span v-if="set.name" class="hidden-sm">: {{ set.name }}</span>
         </span>
       </span>
     </span>
@@ -40,8 +41,8 @@
 
 <script setup>
 const { set } = defineProps({ set: Object })
-const previousSetId = computed(() => set.id > 1 ? pad(set.id - 1, 3) : '')
-const nextSetId = computed(() => set.id < 200 ? pad(set.id + 1, 3) : '')
+const previousSetId = computed(() => (set.id > 1 ? pad(set.id - 1, 3) : ''))
+const nextSetId = computed(() => (set.id < 200 ? pad(set.id + 1, 3) : ''))
 
 const { nextSet, prevSet } = await useSets()
 const next = computed(() => nextSet(set.id))
@@ -117,11 +118,11 @@ const previous = computed(() => prevSet(set.id))
   > span > a {
     color: var(--gray-z-5);
 
-    &:--highlight:not([disabled="true"]) {
+    &:--highlight:not([disabled='true']) {
       color: var(--gray-z-8);
     }
 
-    &[disabled]:not([disabled="false"]) {
+    &[disabled]:not([disabled='false']) {
       pointer-events: none;
       cursor: disabled;
       color: var(--gray-z-4);

@@ -7,7 +7,7 @@
       </h1>
     </header>
 
-    <hr>
+    <hr />
 
     <section class="intro">
       <div>
@@ -17,10 +17,7 @@
         </h2>
         <Image image="/wireframe.svg" />
         <Button
-          @click="() => downloadImage(
-            '/wireframe.png',
-            { name: 'opepen' }
-          )"
+          @click="() => downloadImage('/wireframe.png', { name: 'opepen' })"
           target="_blank"
           class="small centered"
         >
@@ -34,10 +31,7 @@
           <small>By Anyone</small>
         </h2>
         <Image image="/submissions.png" />
-        <Button
-          to="/submissions"
-          class="small centered"
-        >
+        <Button to="/submissions" class="small centered">
           <Icon type="external-link" />
           <span>Explore</span>
         </Button>
@@ -48,34 +42,36 @@
           <small>By Collector Vote</small>
         </h2>
         <Image image="/sets.png" />
-        <Button
-          to="/sets"
-          class="small centered"
-        >
+        <Button to="/sets" class="small centered">
           <Icon type="external-link" />
           <span>Browse</span>
         </Button>
       </div>
     </section>
 
-    <hr>
+    <hr />
 
     <section class="prose">
       <h2>Where constraint meets creativity.</h2>
 
       <p>
-        Opepen Edition is a public art protocol on Ethereum <span class="no-wrap">by <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink></span>.
+        Opepen Edition is a public art protocol on Ethereum
+        <span class="no-wrap">
+          by
+          <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink>
+        </span>
+        .
       </p>
 
       <p>
-        Creators submit their interpretations of the Opepen silhouette. <br />
+        Creators submit their interpretations of the Opepen silhouette.
+        <br />
       </p>
-      <p>
-        Collectors vote on the artwork to include in the permanent collection.
-      </p>
+      <p>Collectors vote on the artwork to include in the permanent collection.</p>
 
       <p>
-        There are 200 spots. {{ completeSets.length }} have been filled. <br>
+        There are 200 spots. {{ completeSets.length }} have been filled.
+        <br />
         {{ formatNumber(stats?.submissions.sets) }} sets have been submitted.
       </p>
 
@@ -85,7 +81,7 @@
       <!-- </Button> -->
     </section>
 
-    <hr>
+    <hr />
 
     <section class="sets">
       <header>
@@ -107,14 +103,13 @@
       <ProfileCardGrid :accounts="artistsResponse.data" />
     </section>
 
-    <hr>
+    <hr />
 
     <section class="stats">
       <SectionTitle>Stats</SectionTitle>
 
       <Stats />
     </section>
-
   </PageFrameSm>
 </template>
 
@@ -122,7 +117,7 @@
 const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
 
 const { featuredSets, completeSets } = await useSets()
-const featuredSubmissions = computed(() => featuredSets.value.map(s => s.submission))
+const featuredSubmissions = computed(() => featuredSets.value.map((s) => s.submission))
 
 const { stats } = await useStats()
 
@@ -245,8 +240,8 @@ useMetaData({
   }
 
   hr {
-    width: calc(100% + var(--spacer)*2);
-    margin-left: calc(-1*var(--spacer));
+    width: calc(100% + var(--spacer) * 2);
+    margin-left: calc(-1 * var(--spacer));
 
     @media (--md) {
       width: 100%;
@@ -255,4 +250,3 @@ useMetaData({
   }
 }
 </style>
-

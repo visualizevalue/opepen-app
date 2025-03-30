@@ -1,15 +1,16 @@
 export const useOptIn = async (submission: Ref<SetSubmission>) => {
   const now = useNow()
-  const optInUntil = computed(() => DateTime
-    .fromISO(submission.value?.starred_at)
-    .plus({ hours: OPT_IN_HOURS })
+  const optInUntil = computed(() =>
+    DateTime.fromISO(submission.value?.starred_at).plus({
+      hours: OPT_IN_HOURS,
+    }),
   )
   const secondsUntilOptInClose = computed(() => optInUntil.value.toUnixInteger() - now.value)
   const optInCountDown = useCountDown(secondsUntilOptInClose)
   const optInAvailable = computed(() => {
     if (submission.value?.deleted_at) return false
     if (submission.value?.revealed_at) return false
-    if (! submission.value?.starred_at) return true
+    if (!submission.value?.starred_at) return true
 
     const starred = DateTime.fromISO(submission.value.starred_at)
     const currentTime = DateTime.fromSeconds(now.value)
@@ -36,4 +37,3 @@ export const useStagedOptIn = async () => {
     reloadStagedSubmission,
   }
 }
-

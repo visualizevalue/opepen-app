@@ -1,5 +1,8 @@
 <template>
-  <h1><slot /> <Icon type="chevron-right" /></h1>
+  <h1>
+    <slot />
+    <Icon type="chevron-right" />
+  </h1>
 </template>
 
 <style scoped>

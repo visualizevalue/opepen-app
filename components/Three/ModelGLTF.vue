@@ -7,7 +7,7 @@ const { path } = defineProps({
     default: '/opepen.glb',
   },
 })
-const emit = defineEmits(['loaded']);
+const emit = defineEmits(['loaded'])
 
 const { scene } = await useGLTF(path, { draco: true })
 

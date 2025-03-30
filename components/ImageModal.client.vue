@@ -1,9 +1,5 @@
 <template>
-  <Modal
-    v-model:open="open"
-    class="image-modal extra-wide"
-    compat
-  >
+  <Modal v-model:open="open" class="image-modal extra-wide" compat>
     <Image
       :image="image"
       :version="isStatic && image.versions.lg ? 'lg' : ''"
@@ -29,11 +25,7 @@
 </template>
 
 <script setup>
-const {
-  image,
-  name,
-  tagline,
-} = defineProps({
+const { image, name, tagline } = defineProps({
   image: [String, Object],
   name: String,
   tagline: String,
@@ -74,7 +66,8 @@ const download = async () => {
       gap: var(--spacer-xs);
     }
 
-    h1, p {
+    h1,
+    p {
       @mixin ui-font;
     }
 

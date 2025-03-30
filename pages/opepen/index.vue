@@ -5,4 +5,3 @@
 <script setup>
 await navigateTo('/sets')
 </script>
-

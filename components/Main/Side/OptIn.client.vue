@@ -29,8 +29,6 @@ const title = computed(() => {
 })
 const badge = computed(() => `live`)
 const subline = computed(() => {
-  return blockConfirmations.value
-    ? blockConfirmationText.value
-    : `Live Consensus`
+  return blockConfirmations.value ? blockConfirmationText.value : `Live Consensus`
 })
 </script>

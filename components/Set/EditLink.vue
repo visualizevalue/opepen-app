@@ -1,6 +1,6 @@
 <template>
   <IsMeOrAdmin :address="submission.creator">
-    <Actions v-if="isAdmin || ! submission.set_id">
+    <Actions v-if="isAdmin || !submission.set_id">
       <Button :to="`/create/${submission.uuid}`" class="small">
         <Icon type="settings" />
         <span>Set Editor</span>
@@ -18,4 +18,3 @@ const { submission } = defineProps<{ submission: SetSubmission }>()
   justify-content: flex-end;
 }
 </style>
-

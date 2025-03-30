@@ -11,4 +11,3 @@ useMetaData({
   title: 'New set submission',
 })
 </script>
-

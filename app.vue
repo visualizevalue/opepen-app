@@ -14,8 +14,7 @@ useMetaData({
 </script>
 
 <style scoped>
-  main {
-    min-height: 100dvh;
-  }
+main {
+  min-height: 100dvh;
+}
 </style>
-

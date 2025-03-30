@@ -1,10 +1,7 @@
 :root {
-
   --button-border: var(--border);
   --button-border-radius: var(--border-radius);
   --button-background: var(--gray-z-0);
   --button-background-highlight: var(--gray-z-2);
   --button-border-color-highlight: var(--gray-z-5);
-
 }
-

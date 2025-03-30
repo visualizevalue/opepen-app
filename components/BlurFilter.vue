@@ -15,19 +15,19 @@
 defineProps({
   id: {
     type: String,
-    default: 'blur-and-scale'
+    default: 'blur-and-scale',
   },
   stdDeviation: {
     type: Number,
-    default: 100
+    default: 100,
   },
   saturate: {
     type: Number,
-    default: 1.5
+    default: 1.5,
   },
   opacity: {
     type: Number,
-    default: 0.5
+    default: 0.5,
   },
 })
 </script>
@@ -37,4 +37,3 @@ svg {
   position: absolute;
 }
 </style>
-

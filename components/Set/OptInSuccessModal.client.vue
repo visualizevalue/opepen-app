@@ -13,7 +13,7 @@
     </template>
 
     <Actions>
-      <Button @click="() => open = false">Ok</Button>
+      <Button @click="() => (open = false)">Ok</Button>
     </Actions>
   </Modal>
 </template>

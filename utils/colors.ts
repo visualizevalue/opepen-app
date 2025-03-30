@@ -12,18 +12,21 @@ export const COLORS = {
   gray999: '#F8F8F8',
 }
 
-export const Z_COLORS = computed(() => isDark.value ? {
-  grayZ1: COLORS.gray100,
-  grayZ2: COLORS.gray200,
-  grayZ8: COLORS.gray800,
-  grayZ9: COLORS.gray900,
-} : {
-  grayZ1: COLORS.gray900,
-  grayZ2: COLORS.gray800,
-  grayZ8: COLORS.gray200,
-  grayZ9: COLORS.gray100,
-})
+export const Z_COLORS = computed(() =>
+  isDark.value
+    ? {
+        grayZ1: COLORS.gray100,
+        grayZ2: COLORS.gray200,
+        grayZ8: COLORS.gray800,
+        grayZ9: COLORS.gray900,
+      }
+    : {
+        grayZ1: COLORS.gray900,
+        grayZ2: COLORS.gray800,
+        grayZ8: COLORS.gray200,
+        grayZ9: COLORS.gray100,
+      },
+)
 
 const isDark = ref(true)
-export const borderColor = computed(() => isDark.value ? COLORS.gray400 : COLORS.gray600)
-
+export const borderColor = computed(() => (isDark.value ? COLORS.gray400 : COLORS.gray600))

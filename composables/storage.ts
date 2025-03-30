@@ -22,7 +22,7 @@ const useStorage = () => {
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result
-        
+
         // Create versions store
         if (!db.objectStoreNames.contains(STORE_NAME)) {
           const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' })
@@ -39,35 +39,35 @@ const useStorage = () => {
 
   const saveVersions = async (versions: Version[]) => {
     console.log('Starting saveVersions with:', versions)
-    
-    const db = await initDB() as IDBDatabase
+
+    const db = (await initDB()) as IDBDatabase
     return new Promise((resolve, reject) => {
       const transaction = db.transaction([STORE_NAME, IMAGE_STORE_NAME], 'readwrite')
       const versionsStore = transaction.objectStore(STORE_NAME)
       const imagesStore = transaction.objectStore(IMAGE_STORE_NAME)
-      
+
       // Clear existing versions first
       const clearRequest = versionsStore.clear()
       clearRequest.onsuccess = () => {
         console.log('Store cleared successfully')
-        
+
         // Save versions and their image data
-        const requests = versions.map(version => {
+        const requests = versions.map((version) => {
           console.log('Saving version:', version)
-          
+
           // Save version metadata
           const versionRequest = versionsStore.put({
             id: version.id,
             prompt: version.prompt,
             timestamp: version.timestamp,
-            imageUrl: version.imageUrl
+            imageUrl: version.imageUrl,
           })
 
           // Save image data if it exists
           if (version.imageData) {
             const imageRequest = imagesStore.put({
               id: version.id,
-              data: version.imageData
+              data: version.imageData,
             })
             return Promise.all([
               new Promise((resolve, reject) => {
@@ -77,7 +77,7 @@ const useStorage = () => {
               new Promise((resolve, reject) => {
                 imageRequest.onsuccess = () => resolve(imageRequest.result)
                 imageRequest.onerror = () => reject(imageRequest.error)
-              })
+              }),
             ])
           }
           return new Promise((resolve, reject) => {
@@ -98,7 +98,7 @@ const useStorage = () => {
               reject(error)
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error('Error saving versions:', error)
             reject(error)
           })
@@ -112,7 +112,7 @@ const useStorage = () => {
 
   const loadVersions = async () => {
     console.log('Starting loadVersions')
-    const db = await initDB() as IDBDatabase
+    const db = (await initDB()) as IDBDatabase
     return new Promise((resolve, reject) => {
       const transaction = db.transaction([STORE_NAME, IMAGE_STORE_NAME], 'readonly')
       const versionsStore = transaction.objectStore(STORE_NAME)
@@ -122,35 +122,38 @@ const useStorage = () => {
       request.onsuccess = () => {
         const versions = request.result || []
         console.log('Loaded versions from store:', versions)
-        
+
         // Load image data for each version
-        const imageRequests = versions.map(version => 
-          new Promise<Version>((resolve) => {
-            const imageRequest = imagesStore.get(version.id)
-            imageRequest.onsuccess = () => {
-              if (imageRequest.result) {
-                version.imageData = imageRequest.result.data
+        const imageRequests = versions.map(
+          (version) =>
+            new Promise<Version>((resolve) => {
+              const imageRequest = imagesStore.get(version.id)
+              imageRequest.onsuccess = () => {
+                if (imageRequest.result) {
+                  version.imageData = imageRequest.result.data
+                }
+                resolve(version as Version)
               }
-              resolve(version as Version)
-            }
-            imageRequest.onerror = () => {
-              console.error('Error loading image data for version:', version.id)
-              resolve(version as Version)
-            }
-          })
+              imageRequest.onerror = () => {
+                console.error('Error loading image data for version:', version.id)
+                resolve(version as Version)
+              }
+            }),
         )
 
         Promise.all(imageRequests)
           .then((versionsWithImages: Version[]) => {
             // Sort by timestamp in descending order, keeping v0 at the end
-            const v0 = versionsWithImages.find(v => v.id === 0)
+            const v0 = versionsWithImages.find((v) => v.id === 0)
             const otherVersions = versionsWithImages
-              .filter(v => v.id !== 0)
-              .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-            
+              .filter((v) => v.id !== 0)
+              .sort(
+                (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+              )
+
             resolve(v0 ? [...otherVersions, v0] : otherVersions)
           })
-          .catch(error => {
+          .catch((error) => {
             console.error('Error loading image data:', error)
             reject(error)
           })
@@ -179,8 +182,8 @@ const useStorage = () => {
     saveVersions,
     loadVersions,
     saveSelectedHistory,
-    loadSelectedHistory
+    loadSelectedHistory,
   }
 }
 
-export default useStorage 
+export default useStorage

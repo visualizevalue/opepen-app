@@ -10,4 +10,3 @@ const { data: set } = await useApi(`/set-submissions`, {
 
 await navigateTo(`/create/${set.value.uuid}`, { replace: true })
 </script>
-

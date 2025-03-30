@@ -6,11 +6,7 @@
 
     <Teleport to="body">
       <MenuItems class="dropdown-items">
-        <MenuItem
-          v-for="(item, index) in items"
-          :key="index"
-          v-slot="{ active }"
-        >
+        <MenuItem v-for="(item, index) in items" :key="index" v-slot="{ active }">
           <Button
             :disabled="item.disabled"
             :class="{ active }"
@@ -34,7 +30,7 @@ defineProps({
     type: Array,
     default: () => [],
   },
-  classes: String
+  classes: String,
 })
 </script>
 

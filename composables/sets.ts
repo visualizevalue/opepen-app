@@ -10,32 +10,38 @@ type KeyedSets = {
 export const SET_TYPES = {
   PRINT: 'Print',
   NUMBERED_PRINT: 'Numbered Print',
-  DYNAMIC: 'Dynamic'
+  DYNAMIC: 'Dynamic',
 }
 
 const sets: Ref<OpepenSet[]> = ref([])
 const loaded = ref(false)
-const allSetIds = [...Array(200)].map((_ , i) => i + 1)
-const setsById: ComputedRef<KeyedSets> = computed(() => sets.value?.reduce((obj: KeyedSets, set) => {
-  obj[set.id] = set
-  return obj
-}, {}))
-const submissions = computed(() => allSetIds.map(i => setsById.value[i]?.submission || {}))
+const allSetIds = [...Array(200)].map((_, i) => i + 1)
+const setsById: ComputedRef<KeyedSets> = computed(() =>
+  sets.value?.reduce((obj: KeyedSets, set) => {
+    obj[set.id] = set
+    return obj
+  }, {}),
+)
+const submissions = computed(() => allSetIds.map((i) => setsById.value[i]?.submission || {}))
 const publishedSets: ComputedRef<OpepenSet[]> = computed(
-  () => sets.value?.filter(set => !! set.submission.reveals_at) || []
+  () => sets.value?.filter((set) => !!set.submission.reveals_at) || [],
 )
-const featuredSets: ComputedRef<OpepenSet[]> = computed(
-  () => publishedSets.value
-      .filter(set => !! set.submission.featured)
-      .sort((a, b) => a.submission.featured > b.submission.featured ? -1 : 1)
+const featuredSets: ComputedRef<OpepenSet[]> = computed(() =>
+  publishedSets.value
+    .filter((set) => !!set.submission.featured)
+    .sort((a, b) => (a.submission.featured > b.submission.featured ? -1 : 1)),
 )
-const setsByPublishDate: ComputedRef<OpepenSet[]> = computed(() => publishedSets.value?.sort(
-  (set1, set2) => (set1.submission.reveals_at || '') >= (set2.submission.reveals_at || '') ? 1 : -1)
+const setsByPublishDate: ComputedRef<OpepenSet[]> = computed(() =>
+  publishedSets.value?.sort((set1, set2) =>
+    (set1.submission.reveals_at || '') >= (set2.submission.reveals_at || '') ? 1 : -1,
+  ),
 )
 const completeSets: ComputedRef<OpepenSet[]> = computed(() => {
   const now = DateTime.now()
 
-  return publishedSets.value?.filter(set => DateTime.fromISO(set.submission.reveals_at) < now)
+  return publishedSets.value?.filter(
+    (set) => DateTime.fromISO(set.submission.reveals_at) < now,
+  )
 })
 const currentSet: ComputedRef<OpepenSet> = computed(() => {
   return sets.value[sets.value.length - 1]
@@ -51,19 +57,19 @@ const nextSet = (id: number) => {
   return setsById.value[id + 1]
 }
 
-export async function useSets () {
+export async function useSets() {
   const { data, execute: fetchSets } = await useApi(`/opepen/sets`, {
     immediate: false,
-    onResponse: () => loaded.value = true,
+    onResponse: () => (loaded.value = true),
   })
 
-  if (! sets.value?.length && ! loaded.value) {
+  if (!sets.value?.length && !loaded.value) {
     await fetchSets()
   }
 
   watchEffect(() => {
     // @ts-ignore
-    if (! data.value?.length) return
+    if (!data.value?.length) return
     sets.value = data.value as OpepenSet[]
   })
 

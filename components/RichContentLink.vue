@@ -1,13 +1,13 @@
 <template>
   <Card
-    :style="
-      {
-        backgroundImage: `linear-gradient(to top, var(--opaque-black) 0%, var(--transparent-black) 150%), url(${coverURL})`
-      }
-    "
+    :style="{
+      backgroundImage: `linear-gradient(to top, var(--opaque-black) 0%, var(--transparent-black) 150%), url(${coverURL})`,
+    }"
     class="content-link"
   >
-    <NuxtLink :to="link.url" :title="link.title" target="_blank"><span>Open</span></NuxtLink>
+    <NuxtLink :to="link.url" :title="link.title" target="_blank">
+      <span>Open</span>
+    </NuxtLink>
     <Image :image="link.logo" v-if="link.logo" class="logo" version="sm" />
     <div class="text">
       <h1>{{ link.title }}</h1>
@@ -25,9 +25,8 @@ const { link } = defineProps({
 
 const coverURL = computed(() => imageURI(link.cover, 'lg'))
 const shortenDescription = ref(link.description?.length >= 100)
-const description = computed(() => shortenDescription.value
-  ? link.description.substring(0, 80) + '...'
-  : link.description
+const description = computed(() =>
+  shortenDescription.value ? link.description.substring(0, 80) + '...' : link.description,
 )
 </script>
 

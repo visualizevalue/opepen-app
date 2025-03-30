@@ -18,4 +18,3 @@ useMetaData({
   og: `${config.public.opepenApi}/render/opepen/${route.params.id}/og`,
 })
 </script>
-

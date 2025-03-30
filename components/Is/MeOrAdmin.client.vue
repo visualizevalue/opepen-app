@@ -9,4 +9,3 @@ defineProps({
   address: String,
 })
 </script>
-

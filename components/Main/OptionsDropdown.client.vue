@@ -1,10 +1,5 @@
 <template>
-  <Dropdown
-    :items="items"
-    :x-offset="isDesktop ? 8 : -8"
-    class="settings"
-    align="right"
-  >
+  <Dropdown :items="items" :x-offset="isDesktop ? 8 : -8" class="settings" align="right">
     <template #trigger>
       <Icon type="more-vertical" />
     </template>
@@ -23,13 +18,13 @@ const { signIn } = useSignIn()
 const emit = defineEmits(['sendClose'])
 
 const items = computed(() => {
-  if (! address.value) {
+  if (!address.value) {
     return [
       {
         onClick: () => signIn(),
         text: 'Connect',
-        icon: 'user'
-      }
+        icon: 'user',
+      },
     ]
   }
 
@@ -40,7 +35,7 @@ const items = computed(() => {
         navigateTo(`/${address.value}`)
       },
       text: 'Profile',
-      icon: 'user'
+      icon: 'user',
     },
     {
       onClick: () => {
@@ -48,12 +43,12 @@ const items = computed(() => {
         navigateTo('/settings')
       },
       text: 'Settings',
-      icon: 'settings'
+      icon: 'settings',
     },
     {
       onClick: () => disconnect(),
       text: 'Disconnect',
-      icon: 'log-out'
+      icon: 'log-out',
     },
   ]
 })
@@ -85,4 +80,3 @@ const items = computed(() => {
   }
 }
 </style>
-

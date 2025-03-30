@@ -37,4 +37,3 @@ table {
   }
 }
 </style>
-
