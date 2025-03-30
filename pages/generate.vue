@@ -190,8 +190,10 @@ watch(versions, async (newVersions) => {
 
 // Watch for thumbnail selection
 watch(selectedImageIndex, async (newIndex) => {
-  // Clear selectedHistoryIndex to show the thumbnail
-  selectedHistoryIndex.value = null
+  // Only clear selectedHistoryIndex if we're actually selecting a thumbnail
+  if (newIndex !== null) {
+    selectedHistoryIndex.value = null
+  }
   focusPrompt()
 })
 
@@ -507,6 +509,14 @@ const generate = async () => {
 
   &::placeholder {
     color: var(--gray-z-5) !important;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: var(--button-background) !important;
+    border: var(--border) !important;
+    outline: none;
   }
 }
 
