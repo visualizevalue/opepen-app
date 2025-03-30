@@ -1,12 +1,14 @@
 <template>
   <NuxtLink
     :to="to"
-    :class="{ 'active': (strictExact ? $route.path == to : $route.path.indexOf(to) > -1) }"
+    :class="{
+      active: strictExact ? $route.path == to : $route.path.indexOf(to) > -1,
+    }"
   >
     <div>
       <div class="title">
         <span>{{ title }}</span>
-        <span v-if="isNew" class="badge">New</span>
+        <span v-if="badge" class="badge">{{ badge }}</span>
       </div>
       <small>{{ subline }}</small>
     </div>
@@ -21,7 +23,7 @@ defineProps({
   title: String,
   subline: String,
   strictExact: Boolean,
-  isNew: Boolean,
+  badge: String,
 })
 </script>
 
