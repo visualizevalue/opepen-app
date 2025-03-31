@@ -12,7 +12,7 @@
           <NuxtLink :to="`/${id(creator)}`">
             <ApiAccount :account="creator" hide-address hide-avatar />
           </NuxtLink>
-          <template v-if="i < coCreators.length - 1">, </template>
+          <template v-if="i < coCreators.length - 1">,</template>
         </span>
       </template>
     </div>
@@ -21,16 +21,15 @@
 
 <script setup lang="ts">
 const { coCreators } = defineProps<{
-  coCreators: any[];
-}>();
+  coCreators: any[]
+}>()
 
-const open = defineModel("open", { required: true });
+const open = defineModel('open', { required: true })
 </script>
 
 <style scoped>
 .cocreator-modal {
   padding: 0 !important;
-
 }
 .co-creator-list {
   display: flex;
@@ -47,7 +46,7 @@ const open = defineModel("open", { required: true });
     color: var(--gray-z-6);
 
     &:--highlight {
-        color: var(--color);
+      color: var(--color);
     }
   }
 }
