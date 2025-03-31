@@ -597,28 +597,4 @@ form {
     gap: var(--size-5);
   }
 }
-
-input[type='file'] {
-  display: none;
-}
-
-.csv-file-upload {
-  border: var(--border);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: var(--ui-padding-y);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-
-  > i {
-    width: var(--size-4);
-    height: var(--size-4);
-  }
-}
-
-.csv-file-upload:hover {
-  border-color: var(--highlight);
-}
 </style>
