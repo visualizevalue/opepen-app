@@ -1,9 +1,9 @@
 type HeadConfig = {
-  title: string;
-  description?: string;
-  og?: string;
-  append?: string;
-  meta?: { name: string, content: string }[];
+  title: string
+  description?: string
+  og?: string
+  append?: string
+  meta?: { name: string; content: string }[]
 }
 
 const makeHead = ({
@@ -12,7 +12,7 @@ const makeHead = ({
   og = '/og/intro.png',
   meta = [],
 }: HeadConfig) => {
-  const image = og.startsWith(`http`) ? og : ('https://' + useConfig('domain') + og)
+  const image = og.startsWith(`http`) ? og : 'https://' + useConfig('domain') + og
 
   return {
     title: title,
@@ -22,7 +22,7 @@ const makeHead = ({
       { property: 'og:description', content: description },
       { property: 'og:image', content: image },
       ...meta,
-    ]
+    ],
   }
 }
 

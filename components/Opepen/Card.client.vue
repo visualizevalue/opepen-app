@@ -1,30 +1,23 @@
 <template>
-
-  <Image
-    :image="token.image"
-    version="sm"
-  >
+  <Image :image="token.image" version="sm">
     <div class="meta">
       <h1>#{{ token.token_id }}</h1>
       <p>{{ subline }}</p>
     </div>
 
-    <CardLink :to="uri || `/opepen/${token.token_id}`"><span>View #{{ token.token_id }}</span></CardLink>
+    <CardLink :to="uri || `/opepen/${token.token_id}`">
+      <span>View #{{ token.token_id }}</span>
+    </CardLink>
   </Image>
-
 </template>
 
 <script setup>
-const {
-  token,
-  uri,
-  subline,
-} = defineProps({
+const { token, uri, subline } = defineProps({
   token: Object,
   uri: String,
   subline: {
     type: String,
-    default: (props) => `1/${props.token.data.edition}`
+    default: (props) => `1/${props.token.data.edition}`,
   },
 })
 </script>
@@ -98,7 +91,7 @@ const {
 
         display: flex;
         align-items: center;
-        justify-content: space-between
+        justify-content: space-between;
       }
     }
 

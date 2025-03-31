@@ -3,7 +3,10 @@
     <Card class="static">
       <header>
         <SectionTitle>Demand Stats</SectionTitle>
-        <span v-if="lastUpdatedStr"><span class="visible-md">Last updated </span>{{ lastUpdatedStr }}</span>
+        <span v-if="lastUpdatedStr">
+          <span class="visible-md">Last updated</span>
+          {{ lastUpdatedStr }}
+        </span>
       </header>
 
       <Progress :percent="demand" :class="{ muted: demand < 50 }" />
@@ -24,10 +27,7 @@
             <td>{{ submission.submission_stats?.demand[key] }}</td>
             <td>
               <span>{{ asPercentageOf(submission.submission_stats?.demand[key], key) }}%</span>
-              <Icon
-                type="check"
-                :style="{ color: demandColor(key) }"
-              />
+              <Icon type="check" :style="{ color: demandColor(key) }" />
             </td>
           </tr>
         </tbody>
@@ -37,10 +37,23 @@
             <td>{{ submission.submission_stats?.holders.total }}</td>
             <td>{{ submission.submission_stats?.demand.total }}</td>
             <td>
-              <span>{{ formatNumber(Math.round((submission.submission_stats?.demand.total || 0) / 80 * 100)) }}%</span>
+              <span>
+                {{
+                  formatNumber(
+                    Math.round(((submission.submission_stats?.demand.total || 0) / 80) * 100),
+                  )
+                }}%
+              </span>
               <Icon
                 type="check"
-                :style="{ color: demand >= 100 ? 'var(--success)' : demand >= 50 ? 'var(--yellow)' : 'var(--error' }"
+                :style="{
+                  color:
+                    demand >= 100
+                      ? 'var(--success)'
+                      : demand >= 50
+                        ? 'var(--yellow)'
+                        : 'var(--error',
+                }"
               />
             </td>
           </tr>
@@ -65,7 +78,7 @@ const { submission, lastUpdated } = defineProps<{
 const now = useNow()
 const lastUpdatedStr = ref()
 watch(now, () => {
-  if (! lastUpdated) return
+  if (!lastUpdated) return
   lastUpdatedStr.value = timeAgo(DateTime.fromSeconds(lastUpdated))
 })
 
@@ -74,11 +87,7 @@ const demand = computed(() => getDemandPercentage(submission))
 const demandColor = (edition: EditionType) => {
   const demand = getEditionDemandPercentage(submission, edition)
 
-  return demand >= 100
-    ? 'var(--success)'
-    : demand >= 50
-      ? 'var(--yellow)'
-      : 'var(--error)'
+  return demand >= 100 ? 'var(--success)' : demand >= 50 ? 'var(--yellow)' : 'var(--error)'
 }
 </script>
 

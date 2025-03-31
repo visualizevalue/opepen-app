@@ -9,9 +9,9 @@ import { zeroAddress } from 'viem'
 
 const route = useRoute()
 const { data: account } = await useApi(`/accounts/${route.params.id}`, {
-  onResponseError (err) {
+  onResponseError(err) {
     console.log('responsenerr', err)
-  }
+  },
 })
 
 if (account.value.address === zeroAddress) {
@@ -21,4 +21,3 @@ if (account.value.address === zeroAddress) {
   })
 }
 </script>
-

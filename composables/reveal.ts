@@ -13,12 +13,15 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
   const revealsAt = computed(() => DateTime.fromISO(submission.value?.reveals_at))
   const secondsUntilReveal = computed(() => revealsAt.value?.toUnixInteger() - now.value)
   const revealCountDown = useCountDown(secondsUntilReveal)
-  const revealed = computed(() => !! submission.value?.set_id)
-  const revealing = computed(() => revealsAt.value && secondsUntilReveal.value < 0 && ! revealed.value)
-  const blockConfirmations = computed(() =>
-    currentBlock.value &&
-    submission.value.reveal_block_number &&
-    currentBlock.value - BigInt(submission.value?.reveal_block_number)
+  const revealed = computed(() => !!submission.value?.set_id)
+  const revealing = computed(
+    () => revealsAt.value && secondsUntilReveal.value < 0 && !revealed.value,
+  )
+  const blockConfirmations = computed(
+    () =>
+      currentBlock.value &&
+      submission.value.reveal_block_number &&
+      currentBlock.value - BigInt(submission.value?.reveal_block_number),
   )
   const blockConfirmationText = computed(() => {
     try {
@@ -52,4 +55,3 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
     revealed,
   }
 }
-

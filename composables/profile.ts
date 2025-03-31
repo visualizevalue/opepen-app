@@ -3,17 +3,19 @@ const account = ref()
 
 export const useProfile = async () => {
   const refreshAccount = async () => {
-    if (! currentAddress.value) {
+    if (!currentAddress.value) {
       account.value = null
     } else {
-      account.value = await $fetch(`${useConfig('opepenApi')}/accounts/${currentAddress.value}`)
+      account.value = await $fetch(
+        `${useConfig('opepenApi')}/accounts/${currentAddress.value}`,
+      )
     }
   }
-  if (! accountWatcher) {
+  if (!accountWatcher) {
     accountWatcher = watch(currentAddress, () => refreshAccount())
   }
 
-  if (! import.meta.server && ! account.value?.address) {
+  if (!import.meta.server && !account.value?.address) {
     await refreshAccount()
   }
 
@@ -22,4 +24,3 @@ export const useProfile = async () => {
     refreshAccount,
   }
 }
-

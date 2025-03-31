@@ -1,10 +1,8 @@
 <template>
   <nav ref="nav" :style="style" class="sidebar">
-
     <WithAccount>
       <MainSideProfile @sendClose="close" />
     </WithAccount>
-
 
     <section>
       <MainSideNavLink
@@ -65,19 +63,51 @@
         @click="close"
         strict-exact
       />
+
+      <MainSideNavLink
+        to="/generate"
+        title="Generate Opepen"
+        subline="Edit Opepen with natural language"
+        @click="close"
+        badge="new"
+      />
     </section>
 
     <footer>
-      <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com"><Icon type="x.com" /></NuxtLink>
-      <NuxtLink to="https://opensea.io/collection/opepen-edition" target="_blank" title="View on OpenSea"><Icon type="opensea" /></NuxtLink>
-      <NuxtLink :to="`https://etherscan.io/token/${contract}`" target="_blank" title="View on Etherscan"><Icon type="etherscan" /></NuxtLink>
-      <NuxtLink to="https://github.com/visualizevalue?q=opepen" target="_blank" title="View on Github"><Icon type="github" /></NuxtLink>
+      <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com">
+        <Icon type="x.com" />
+      </NuxtLink>
+      <NuxtLink
+        to="https://opensea.io/collection/opepen-edition"
+        target="_blank"
+        title="View on OpenSea"
+      >
+        <Icon type="opensea" />
+      </NuxtLink>
+      <NuxtLink
+        :to="`https://etherscan.io/token/${contract}`"
+        target="_blank"
+        title="View on Etherscan"
+      >
+        <Icon type="etherscan" />
+      </NuxtLink>
+      <NuxtLink
+        to="https://github.com/visualizevalue?q=opepen"
+        target="_blank"
+        title="View on Github"
+      >
+        <Icon type="github" />
+      </NuxtLink>
     </footer>
-
   </nav>
 
   <ClientOnly>
-    <div class="sidebar-overlay" :style="overlayStyle" @click="close" @touchstart.passive="close"></div>
+    <div
+      class="sidebar-overlay"
+      :style="overlayStyle"
+      @click="close"
+      @touchstart.passive="close"
+    ></div>
     <template #fallback>
       <div class="sidebar-overlay"></div>
     </template>
@@ -96,38 +126,31 @@ const nav = ref()
 const { width } = useElementBounding(nav)
 
 // Whether the side nav is open
-const isOpen = ref(!! isDesktop.value)
-const close = () => isOpen.value = false
-const open = () => isOpen.value = true
+const isOpen = ref(!!isDesktop.value)
+const close = () => (isOpen.value = false)
+const open = () => (isOpen.value = true)
 
-const {
-  isSwiping,
-  lengthX,
-  coordsStart,
-  isHorizontal,
-} = useGlobalSwipe()
+const { isSwiping, lengthX, coordsStart, isHorizontal } = useGlobalSwipe()
 
 // Helpers
-const shouldOpen = (threshold = 50) => ! isOpen.value
-                                    && lengthX.value < -1 * threshold
-                                    && coordsStart.value.x < 80
-const shouldClose = (threshold = 0) => isOpen.value
-                                    && lengthX.value >= threshold
+const shouldOpen = (threshold = 50) =>
+  !isOpen.value && lengthX.value < -1 * threshold && coordsStart.value.x < 80
+const shouldClose = (threshold = 0) => isOpen.value && lengthX.value >= threshold
 const closedPosition = () => -1 * width.value
 
 // We calculate custom positioning only after mount
 // to prevent unnecessary repaints
 const mounted = ref(false)
-onMounted(() => mounted.value = true)
+onMounted(() => (mounted.value = true))
 
 // State
 const translate = ref(0)
 const tweened = reactive({ number: translate.value })
 const style = computed(() => {
-  if (! mounted.value) return
+  if (!mounted.value) return
 
   return {
-    transform: `translateX(${tweened.number}px)`
+    transform: `translateX(${tweened.number}px)`,
   }
 })
 const overlayStyle = computed(() => ({
@@ -160,11 +183,11 @@ watchEffect(() => {
   // Don't do anything while we're swiping
   if (isSwiping.value) return
 
-   // Open the nav
-   if (shouldOpen(80)) open()
+  // Open the nav
+  if (shouldOpen(80)) open()
 
-   // Close the nav
-   if (shouldClose(120)) close()
+  // Close the nav
+  if (shouldClose(120)) close()
 })
 
 // Lock the scroll on the window
@@ -189,7 +212,7 @@ watchEffect(() => {
 // Update the translate position
 const updateTranslatePosition = () => {
   let updated = 0
-  if (! isOpen.value) {
+  if (!isOpen.value) {
     updated = closedPosition()
   }
 
@@ -268,7 +291,7 @@ footer {
     width: var(--size-5);
 
     &.vue-feather--github {
-      width: calc(var(--size-5) * 0.85)
+      width: calc(var(--size-5) * 0.85);
     }
   }
 }
@@ -289,4 +312,3 @@ footer {
   }
 }
 </style>
-

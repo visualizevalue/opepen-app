@@ -1,6 +1,9 @@
 <template>
   <div class="dynamic-set-images">
-    <label>Dynamic Images <template v-if="lastSaved">(last saved {{ lastSavedAt }})</template></label>
+    <label>
+      Dynamic Images
+      <template v-if="lastSaved">(last saved {{ lastSavedAt }})</template>
+    </label>
 
     <MultiImageUpload
       key="4"
@@ -8,10 +11,12 @@
       :images="edition4Images"
       :disabled="disabled"
       :max-files="4"
-      @stored="$event => {
-        edition4Images = $event;
-        store(4, edition4Images)
-      }"
+      @stored="
+        ($event) => {
+          edition4Images = $event
+          store(4, edition4Images)
+        }
+      "
     />
 
     <MultiImageUpload
@@ -20,10 +25,12 @@
       :images="edition5Images"
       :disabled="disabled"
       :max-files="5"
-      @stored="$event => {
-        edition5Images = $event;
-        store(5, edition5Images)
-      }"
+      @stored="
+        ($event) => {
+          edition5Images = $event
+          store(5, edition5Images)
+        }
+      "
     />
 
     <MultiImageUpload
@@ -32,10 +39,12 @@
       :images="edition10Images"
       :disabled="disabled"
       :max-files="10"
-      @stored="$event => {
-        edition10Images = $event;
-        store(10, edition10Images)
-      }"
+      @stored="
+        ($event) => {
+          edition10Images = $event
+          store(10, edition10Images)
+        }
+      "
     />
 
     <MultiImageUpload
@@ -44,10 +53,12 @@
       :images="edition20Images"
       :disabled="disabled"
       :max-files="20"
-      @stored="$event => {
-        edition20Images = $event;
-        store(20, edition20Images)
-      }"
+      @stored="
+        ($event) => {
+          edition20Images = $event
+          store(20, edition20Images)
+        }
+      "
     />
 
     <MultiImageUpload
@@ -56,12 +67,13 @@
       :images="edition40Images"
       :disabled="disabled"
       :max-files="40"
-      @stored="$event => {
-        edition40Images = $event;
-        store(40, edition40Images)
-      }"
+      @stored="
+        ($event) => {
+          edition40Images = $event
+          store(40, edition40Images)
+        }
+      "
     />
-
   </div>
 </template>
 
@@ -173,21 +185,28 @@ const edition40Images = ref([
 
 const saving = ref(false)
 const lastSaved = ref(null)
-const lastSavedAt = computed(() => lastSaved.value ? formatTime(lastSaved.value) : '')
+const lastSavedAt = computed(() => (lastSaved.value ? formatTime(lastSaved.value) : ''))
 
 const store = async (edition, images) => {
-  if (! session.value) await signIn()
-  if (! session.value) return
+  if (!session.value) await signIn()
+  if (!session.value) return
 
   saving.value = true
 
-  const submission = await $fetch(`${config.public.opepenApi}/set-submissions/${props.setSubmissionId}/dynamic-images`, {
-    method: 'POST',
-    credentials: 'include',
-    body: JSON.stringify({
-      images: images.map((img, index) => ({ edition, index: index + 1, uuid: img.uuid }))
-    })
-  })
+  const submission = await $fetch(
+    `${config.public.opepenApi}/set-submissions/${props.setSubmissionId}/dynamic-images`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({
+        images: images.map((img, index) => ({
+          edition,
+          index: index + 1,
+          uuid: img.uuid,
+        })),
+      }),
+    },
+  )
 
   saving.value = false
   lastSaved.value = DateTime.now()

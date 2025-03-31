@@ -1,6 +1,9 @@
 <template>
   <section v-if="opepen?.length">
-    <SectionTitle>Delegated Opepen <template v-if="opepen.length > 12">({{ opepen.length }})</template></SectionTitle>
+    <SectionTitle>
+      Delegated Opepen
+      <template v-if="opepen.length > 12">({{ opepen.length }})</template>
+    </SectionTitle>
 
     <div class="opepen-grid">
       <OpepenCard
@@ -19,8 +22,6 @@ const props = defineProps({ address: String })
 const address = computed(() => props.address)
 const { addresses: delegatedAddresses } = await useDelegation(address)
 
-const {
-  opepen, fetchOpepen
-} = await useOpepen(delegatedAddresses.value)
+const { opepen, fetchOpepen } = await useOpepen(delegatedAddresses.value)
 watch(delegatedAddresses, () => fetchOpepen(delegatedAddresses.value))
 </script>

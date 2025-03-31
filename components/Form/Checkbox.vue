@@ -44,7 +44,7 @@ const checked = defineModel({ required: true })
     transition: all var(--speed);
 
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       display: none;
     }

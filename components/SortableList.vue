@@ -1,7 +1,7 @@
 <template>
   <div ref="el" class="list">
     <div v-for="(item, index) in list" :key="item.id || item._id" class="item">
-      <SortHandle v-if="! disabled" />
+      <SortHandle v-if="!disabled" />
 
       <slot :item="item" :index="index" />
     </div>
@@ -37,7 +37,7 @@ useSortable(el, list, {
     sorted.splice(e.newIndex, 0, item)
 
     emit('update', sorted)
-  }
+  },
 })
 </script>
 

@@ -19,7 +19,7 @@
     }
 
     &.centered:has(.icon) {
-      padding-right: calc(var(--size-2) + var(--size-4) + var(--ui-padding-x)/2);
+      padding-right: calc(var(--size-2) + var(--size-4) + var(--ui-padding-x) / 2);
     }
   }
 

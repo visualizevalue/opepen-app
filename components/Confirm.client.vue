@@ -1,5 +1,4 @@
 <template>
-
   <Modal v-model:open="open">
     <h1>{{ title }}</h1>
     <p v-if="text">{{ text }}</p>
@@ -12,7 +11,6 @@
       </Button>
     </Actions>
   </Modal>
-
 </template>
 
 <script setup lang="ts">
@@ -21,15 +19,10 @@ interface Props {
   text: string
   action: string
   icon?: string
-  callback (): Promise<void>
+  callback(): Promise<void>
 }
 
-const {
-  title,
-  text,
-  action = 'Ok',
-  callback
-} = defineProps<Props>()
+const { title, text, action = 'Ok', callback } = defineProps<Props>()
 
 const open = defineModel('open', { required: true })
 
@@ -41,4 +34,3 @@ const execute = async () => {
   open.value = false
 }
 </script>
-

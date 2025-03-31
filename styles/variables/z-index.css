@@ -1,13 +1,10 @@
 :root {
-
-  --z-index-n1:            -1;
-  --z-index-0:              0;
-  --z-index-ui:             2;
-  --z-index-nav-secondary:  7;
-  --z-index-nav-overlay:    8;
-  --z-index-nav:           10;
-  --z-index-overlay:       99;
-  --z-index-dialog:       100;
-
+  --z-index-n1: -1;
+  --z-index-0: 0;
+  --z-index-ui: 2;
+  --z-index-nav-secondary: 7;
+  --z-index-nav-overlay: 8;
+  --z-index-nav: 10;
+  --z-index-overlay: 99;
+  --z-index-dialog: 100;
 }
-

@@ -5,58 +5,58 @@
 </template>
 
 <style scoped>
-  header.page-header {
-    width: 100%;
-    min-height: calc(var(--size-7) + var(--size-3));
+header.page-header {
+  width: 100%;
+  min-height: calc(var(--size-7) + var(--size-3));
+  display: flex;
+  gap: var(--spacer);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  :deep(.actions) {
+    margin-left: auto;
     display: flex;
     gap: var(--spacer);
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
 
-    :deep(.actions) {
-      margin-left: auto;
+    > label {
+      @mixin ui-font;
       display: flex;
-      gap: var(--spacer);
-      justify-content: flex-end;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: var(--spacer-sm);
+      color: var(--muted);
+      width: min-content;
+      flex-shrink: 0;
+    }
+  }
 
-      > label {
-        @mixin ui-font;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: var(--spacer-sm);
-        color: var(--muted);
-        width: min-content;
-        flex-shrink: 0;
-      }
+  &:has(svg.opepen-edition) {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr var(--size-8);
+    position: relative;
+
+    :deep(> *:not(svg):first-child) {
+      grid-row: 1;
+      grid-column: 1;
     }
 
-    &:has(svg.opepen-edition) {
-      display: grid;
-      align-items: center;
-      grid-template-columns: 1fr var(--size-8);
-      position: relative;
+    :deep(> svg) {
+      font-size: var(--font-xl);
+      width: 0.75em;
+      width: 1em;
+      grid-row: 1;
+      grid-column: 2;
+      justify-self: flex-end;
+      align-self: flex-start;
+      margin-top: var(--spacer-sm);
 
-      :deep(> *:not(svg):first-child) {
-        grid-row: 1;
-        grid-column: 1;
-      }
-
-      :deep(> svg) {
-        font-size: var(--font-xl);
-        width: 0.75em;
-        width: 1em;
-        grid-row: 1;
-        grid-column: 2;
-        justify-self: flex-end;
-        align-self: flex-start;
-        margin-top: var(--spacer-sm);
-
-        @media (--md) {
-          font-size: var(--font-xxl);
-        }
+      @media (--md) {
+        font-size: var(--font-xxl);
       }
     }
   }
+}
 </style>

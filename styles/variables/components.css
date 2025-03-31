@@ -1,5 +1,4 @@
 :root {
-
   --nav-width: min(23rem, 100vw);
   --top-nav-height: 3rem;
   --top-subnav-height: 2.5rem;
@@ -7,10 +6,10 @@
   --bottom-nav-height: calc(3.8rem + env(safe-area-inset-bottom));
 
   --content-width-wide: 90rem;
-  --content-width:      60rem;
-  --content-width-sm:   40rem;
+  --content-width: 60rem;
+  --content-width-sm: 40rem;
 
-  --dialog-width: min(27rem, calc(100vw - var(--spacer)*2));
+  --dialog-width: min(27rem, calc(100vw - var(--spacer) * 2));
 
   --alert-info-border-color: var(--border-color);
   --alert-info-background-color: var(--blue-9);
@@ -18,4 +17,3 @@
 
   --card-border-color-highlight: var(--border-color);
 }
-

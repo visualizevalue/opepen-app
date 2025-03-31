@@ -1,16 +1,11 @@
 <template>
   <WithAccount v-slot="{ address }">
     <WithProfile v-slot="{ account }">
-      <slot
-        v-if="isAuthenticated"
-        :address="address"
-        :account="account"
-        :is-admin="isAdmin"
-      />
+      <slot v-if="isAuthenticated" :address="address" :account="account" :is-admin="isAdmin" />
     </WithProfile>
   </WithAccount>
 
-  <Modal :open="! isAuthenticated && ! signInLoading" :x-close="false" compat>
+  <Modal :open="!isAuthenticated && !signInLoading" :x-close="false" compat>
     <h1>Sign In Required</h1>
     <p>You have to sign in with Ethereum to view this page.</p>
 
@@ -28,4 +23,3 @@ const cancel = async () => {
   navigateTo('/')
 }
 </script>
-

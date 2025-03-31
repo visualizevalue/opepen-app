@@ -1,63 +1,57 @@
 <template>
-    <Card class="static tweet-card">
-      <a
-        :href="authorUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="tweet-header"
-      >
-        <img
-          v-if="tweet.profile_image_url"
-          :src="avatarURL"
-          alt="Profile"
-          class="avatar"
-        />
+  <Card class="static tweet-card">
+    <a :href="authorUrl" target="_blank" rel="noopener noreferrer" class="tweet-header">
+      <img v-if="tweet.profile_image_url" :src="avatarURL" alt="Profile" class="avatar" />
 
-        <div class="author">
-          <div class="author-name">
-            <span>{{ tweet.name }}</span>
-            <Icon type="check" style="color: #1d9bf0" />
-          </div>
-          <span class="author-handle" v-if="tweet.username">@{{ tweet.username }}</span>
+      <div class="author">
+        <div class="author-name">
+          <span>{{ tweet.name }}</span>
+          <Icon type="check" style="color: #1d9bf0" />
         </div>
-      </a>
-
-      <p class="tweet-text">{{ strippedText }}</p>
-
-      <div v-if="tweet.media_urls && tweet.media_urls.length" class="tweet-media">
-        <div v-for="(media, index) in tweet.media_urls" :key="index" class="media-item">
-          <template v-if="media.type === 'photo'">
-            <img :src="media.url" alt="Tweet media" />
-          </template>
-          <template v-else-if="media.type === 'video'">
-            <video muted autoplay loop controls playsinline class="video-media" :poster="media.url">
-              <source :src="selectBestVariant(media.variants)" type="video/mp4" />
-            </video>
-          </template>
-          <template v-else-if="media.type === 'animated_gif'">
-            <video muted autoplay loop playsinline class="video-media">
-              <source :src="selectBestVariant(media.variants)" type="video/mp4" />
-            </video>
-          </template>
-          <template v-else>
-            <img :src="media.url" alt="Tweet media" />
-          </template>
-        </div>
+        <span class="author-handle" v-if="tweet.username">@{{ tweet.username }}</span>
       </div>
+    </a>
 
-      <div class="tweet-footer">
-        <span class="date">{{ formatDate(tweet.tweet_created_at) }}</span>
+    <p class="tweet-text">{{ strippedText }}</p>
 
-        <div class="tweet-actions">
-          <Button :to="tweetUrl" target="_blank" rel="noopener noreferrer">
-            View on X
-          </Button>
-          <Button v-if="isAdmin" @click="deleteTweet">
-            Delete
-          </Button>
-        </div>
+    <div v-if="tweet.media_urls && tweet.media_urls.length" class="tweet-media">
+      <div v-for="(media, index) in tweet.media_urls" :key="index" class="media-item">
+        <template v-if="media.type === 'photo'">
+          <img :src="media.url" alt="Tweet media" />
+        </template>
+        <template v-else-if="media.type === 'video'">
+          <video
+            muted
+            autoplay
+            loop
+            controls
+            playsinline
+            class="video-media"
+            :poster="media.url"
+          >
+            <source :src="selectBestVariant(media.variants)" type="video/mp4" />
+          </video>
+        </template>
+        <template v-else-if="media.type === 'animated_gif'">
+          <video muted autoplay loop playsinline class="video-media">
+            <source :src="selectBestVariant(media.variants)" type="video/mp4" />
+          </video>
+        </template>
+        <template v-else>
+          <img :src="media.url" alt="Tweet media" />
+        </template>
       </div>
-    </Card>
+    </div>
+
+    <div class="tweet-footer">
+      <span class="date">{{ formatDate(tweet.tweet_created_at) }}</span>
+
+      <div class="tweet-actions">
+        <Button :to="tweetUrl" target="_blank" rel="noopener noreferrer">View on X</Button>
+        <Button v-if="isAdmin" @click="deleteTweet">Delete</Button>
+      </div>
+    </div>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -72,17 +66,15 @@ const avatarURL = computed(() => {
   return tweet.profile_image_url
 })
 
-const tweetUrl = computed(() => tweet.username && tweet.tweet_id
-  ? `https://twitter.com/${tweet.username}/status/${tweet.tweet_id}`
-  : '#')
-
-const authorUrl = computed(() => tweet.username
-  ? `https://x.com/${tweet.username}`
-  : '#')
-
-const strippedText = computed(() =>
-  tweet.text.replace(/https?:\/\/\S+/g, '')
+const tweetUrl = computed(() =>
+  tweet.username && tweet.tweet_id
+    ? `https://twitter.com/${tweet.username}/status/${tweet.tweet_id}`
+    : '#',
 )
+
+const authorUrl = computed(() => (tweet.username ? `https://x.com/${tweet.username}` : '#'))
+
+const strippedText = computed(() => tweet.text.replace(/https?:\/\/\S+/g, ''))
 
 const deleteUrl = computed(() => `/curated-tweets/${tweet.id}`)
 
@@ -147,7 +139,8 @@ function selectBestVariant(variants: any[]): string {
   }
 
   .icon {
-    width: var(--size-5);
+    width: var(--size-4);
+    margin-top: -2px;
   }
 }
 

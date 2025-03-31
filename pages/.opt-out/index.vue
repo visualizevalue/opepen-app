@@ -4,8 +4,14 @@
       <header>
         <h1>Consensus Met</h1>
         <p>Opt out from the Opepen consensus protocol.</p>
-        <p>This process is irreversible, and opted out tokens will no longer be able participate in the consensus building process.</p>
-        <p>These artifacts will be issued by a separate Ethereum contract, with a maximum supply of 16,000.</p>
+        <p>
+          This process is irreversible, and opted out tokens will no longer be able participate
+          in the consensus building process.
+        </p>
+        <p>
+          These artifacts will be issued by a separate Ethereum contract, with a maximum supply
+          of 16,000.
+        </p>
       </header>
 
       <BurnOpepenForm />
@@ -20,7 +26,8 @@
 <script setup>
 useMetaData({
   title: 'Opt-Out: Consensus Met',
-  description: 'Opt out from the Opepen consensus protocol. This process is irreversible, and opted out tokens will no longer be able participate in the consensus building process.',
+  description:
+    'Opt out from the Opepen consensus protocol. This process is irreversible, and opted out tokens will no longer be able participate in the consensus building process.',
   og: '/og/burned.jpg',
 })
 </script>

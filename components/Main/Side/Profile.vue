@@ -24,7 +24,12 @@
       </div>
     </div>
 
-    <Button v-if="account?.address" :to="`/${accountId(account)}`" class="link-button" @click="$emit('sendClose')">
+    <Button
+      v-if="account?.address"
+      :to="`/${accountId(account)}`"
+      class="link-button"
+      @click="$emit('sendClose')"
+    >
       <span>View Profile</span>
       <Icon type="chevron-right" />
     </Button>
@@ -40,9 +45,8 @@ import { id as accountId } from '~/utils/accounts'
 defineEmits(['sendClose'])
 
 const { account } = await useProfile()
-const name = computed(() => !!account.value?.address
-  ? account.value?.display
-  : `Opepen Visitor`
+const name = computed(() =>
+  !!account.value?.address ? account.value?.display : `Opepen Visitor`,
 )
 const id = computed(() => shortAddress(account.value?.address || ADDRESS_ZERO, 3))
 const stats = computed(() => ({

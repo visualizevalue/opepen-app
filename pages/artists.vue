@@ -4,11 +4,7 @@
       <SectionTitle>Artists</SectionTitle>
     </PageHeader>
 
-    <PaginatedContent
-      :url="url"
-      :query="query"
-      v-slot="{ items }"
-    >
+    <PaginatedContent :url="url" :query="query" v-slot="{ items }">
       <ProfileCardGrid :accounts="items" />
     </PaginatedContent>
   </PageFrameMd>
@@ -25,4 +21,3 @@ const query = computed(() => {
   return q.toString()
 })
 </script>
-

@@ -1,7 +1,7 @@
 type EthPrice = {
-  BTC: number; // "BTC": 0.0435,
-  USD: number; // "USD": 2794.92,
-  EUR: number; // "EUR": 2495.48
+  BTC: number // "BTC": 0.0435,
+  USD: number // "USD": 2794.92,
+  EUR: number // "EUR": 2495.48
 }
 
 type Stats = {
@@ -56,7 +56,7 @@ type Stats = {
 
 const deployment = DateTime.fromSeconds(1673158871)
 const day = Math.abs(Math.floor(deployment.diffNow('days').as('days')))
-const stats: Ref<Stats|null> = ref(null)
+const stats: Ref<Stats | null> = ref(null)
 
 export const useStats = async () => {
   const { data, refresh, status } = await useApi(`/stats`, {
@@ -68,7 +68,7 @@ export const useStats = async () => {
     stats.value = data.value as Stats
   })
 
-  if (! stats.value && status.value !== 'pending') {
+  if (!stats.value && status.value !== 'pending') {
     await refresh()
   }
 

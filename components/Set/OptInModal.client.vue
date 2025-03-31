@@ -1,31 +1,26 @@
 <template>
-  <Modal
-    v-model:open="open"
-    :x-close="false"
-    :class="{ signing }"
-    class="opt-in-flow"
-    compat
-  >
+  <Modal v-model:open="open" :x-close="false" :class="{ signing }" class="opt-in-flow" compat>
     <header>
       <h1>
-        <template v-if="subscribed?.length && !selected.length">Opt-Out of Set "{{ submission.name }}"</template>
+        <template v-if="subscribed?.length && !selected.length">
+          Opt-Out of Set "{{ submission.name }}"
+        </template>
         <template v-else>Opt-In to Set "{{ submission.name }}"</template>
       </h1>
-      <button
-        class="close unstyled"
-        @touchdown="open = false"
-        @click="open = false"
-      >
+      <button class="close unstyled" @touchdown="open = false" @click="open = false">
         <Icon type="close" />
       </button>
     </header>
     <section>
       <Loading v-if="opepenLoading" />
 
-      <div v-else-if="! opepen.length" class="empty">
+      <div v-else-if="!opepen.length" class="empty">
         <p>No blank Opepen to opt-in found.</p>
 
-        <Button to="https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Revealed%22,%22values%22:[%22No%22]}]" target="_blank">
+        <Button
+          to="https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Revealed%22,%22values%22:[%22No%22]}]"
+          target="_blank"
+        >
           <Icon type="opensea" />
           <span>Buy Opepen</span>
         </Button>
@@ -38,7 +33,13 @@
               <header>
                 <h1>Editions of {{ g }}:</h1>
 
-                <Button v-if="hasCompleteGroupSelection(g)" @click="() => deselectAll(g)" class="sm">Deselect All</Button>
+                <Button
+                  v-if="hasCompleteGroupSelection(g)"
+                  @click="() => deselectAll(g)"
+                  class="sm"
+                >
+                  Deselect All
+                </Button>
                 <Button v-else @click="() => selectAll(g)" class="sm">Select All</Button>
               </header>
 
@@ -49,22 +50,22 @@
                   min="1"
                   :max="maxInGroup(g)"
                   :value="maxRevealSetting[g] || maxInGroup(g)"
-                  @input="$event => {
-                    maxRevealSetting[g] = parseInt($event.target.value);
-                    validateMaxReveal(g)
-                  }"
+                  @input="
+                    ($event) => {
+                      maxRevealSetting[g] = parseInt($event.target.value)
+                      validateMaxReveal(g)
+                    }
+                  "
                   :placeholder="maxInGroup(g)"
-                >
+                />
               </label>
             </div>
 
-            <FormCheckbox
-              v-for="o in opepens"
-              :value="o.token_id"
-              v-model="selected"
-            >
+            <FormCheckbox v-for="o in opepens" :value="o.token_id" v-model="selected">
               <span>#{{ o.token_id }}</span>
-              <abbr :title="`Edition of ${o.data.edition}`" class="edition">({{ o.data.edition }} Ed.)</abbr>
+              <abbr :title="`Edition of ${o.data.edition}`" class="edition">
+                ({{ o.data.edition }} Ed.)
+              </abbr>
             </FormCheckbox>
           </div>
         </template>
@@ -76,7 +77,9 @@
         <template v-for="(_, g) in grouped">
           <div v-if="selectedInGroup(g).length" class="group">
             <span>
-              {{selectedInGroup(g).length}}<span class="times">x</span><span class="edition">{{ getEditionName(g) }}</span>
+              {{ selectedInGroup(g).length }}
+              <span class="times">x</span>
+              <span class="edition">{{ getEditionName(g) }}</span>
             </span>
           </div>
         </template>
@@ -111,13 +114,13 @@ const props = defineProps({
   maxReveals: {
     type: Object,
     default: () => ({
-      '1': null,
-      '4': null,
-      '5': null,
-      '10': null,
-      '20': null,
-      '40': null,
-    })
+      1: null,
+      4: null,
+      5: null,
+      10: null,
+      20: null,
+      40: null,
+    }),
   },
 })
 const emit = defineEmits(['update'])
@@ -129,13 +132,17 @@ const address = computed(() => props.address)
 const { addresses: delegatedAddresses } = await useDelegation(address)
 
 const {
-  unrevealedOpepen: opepen, opepenByEdition: grouped, opepenLoading, fetchOpepen
+  unrevealedOpepen: opepen,
+  opepenByEdition: grouped,
+  opepenLoading,
+  fetchOpepen,
 } = await useOpepen([address.value, ...delegatedAddresses.value])
 watch(delegatedAddresses, () => fetchOpepen([address.value, ...delegatedAddresses.value]))
 
-const validSubscribed = computed(() => [...props.subscribed]
-  // All opt ins that are still owned by the owner
-  .filter(i => opepen.value.map(o => o.token_id).includes(i))
+const validSubscribed = computed(() =>
+  [...props.subscribed]
+    // All opt ins that are still owned by the owner
+    .filter((i) => opepen.value.map((o) => o.token_id).includes(i)),
 )
 
 const selected = ref(validSubscribed.value?.length ? [...validSubscribed.value] : [])
@@ -143,53 +150,58 @@ watch(validSubscribed, () => {
   if (selected.value?.length) return
   selected.value = [...validSubscribed.value] || []
 })
-const selectedPerGroup = computed(() => Object.keys(grouped.value)
-  .map(g => [g, selected.value.filter(id => grouped.value[g].map(g => g.token_id).includes(id))])
-  .reduce((groups, [g, ids]) => {
-    groups[g] = ids
-    return groups
-  }, {})
+const selectedPerGroup = computed(() =>
+  Object.keys(grouped.value)
+    .map((g) => [
+      g,
+      selected.value.filter((id) => grouped.value[g].map((g) => g.token_id).includes(id)),
+    ])
+    .reduce((groups, [g, ids]) => {
+      groups[g] = ids
+      return groups
+    }, {}),
 )
-const hasChange = computed(() =>
-  JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort()) ||
-  JSON.stringify(maxRevealValues.value) !== JSON.stringify(props.maxReveals)
+const hasChange = computed(
+  () =>
+    JSON.stringify(selected.value.sort()) !== JSON.stringify(props.subscribed.sort()) ||
+    JSON.stringify(maxRevealValues.value) !== JSON.stringify(props.maxReveals),
 )
 
 const selectAll = (group) => {
-  grouped.value[group].forEach(o => {
-    if (! selected.value.includes(o.token_id)) {
+  grouped.value[group].forEach((o) => {
+    if (!selected.value.includes(o.token_id)) {
       selected.value.push(o.token_id)
     }
   })
 }
 const deselectAll = (group) => {
-  grouped.value[group].forEach(o => {
-    const i = selected.value.findIndex(s => s == o.token_id)
+  grouped.value[group].forEach((o) => {
+    const i = selected.value.findIndex((s) => s == o.token_id)
     selected.value.splice(i, 1)
   })
 }
-const selectedInGroup = group => {
+const selectedInGroup = (group) => {
   return selectedPerGroup.value[group]
 }
-const maxInGroup = group => {
+const maxInGroup = (group) => {
   const count = selectedInGroup(group).length
   const edition = parseInt(group)
   return count > edition ? edition : count
 }
-const hasCompleteGroupSelection = group => {
+const hasCompleteGroupSelection = (group) => {
   return selectedInGroup(group).length === grouped.value[group].length
 }
 
 const maxRevealSetting = reactive({ ...props.maxReveals })
 const maxRevealValues = computed(() => ({
-  '1':  maxRevealSetting['1']  ? maxRevealSetting['1']  : maxInGroup('1') || null,
-  '4':  maxRevealSetting['4']  ? maxRevealSetting['4']  : maxInGroup('4') || null,
-  '5':  maxRevealSetting['5']  ? maxRevealSetting['5']  : maxInGroup('5') || null,
-  '10': maxRevealSetting['10'] ? maxRevealSetting['10'] : maxInGroup('10') || null,
-  '20': maxRevealSetting['20'] ? maxRevealSetting['20'] : maxInGroup('20') || null,
-  '40': maxRevealSetting['40'] ? maxRevealSetting['40'] : maxInGroup('40') || null,
+  1: maxRevealSetting['1'] ? maxRevealSetting['1'] : maxInGroup('1') || null,
+  4: maxRevealSetting['4'] ? maxRevealSetting['4'] : maxInGroup('4') || null,
+  5: maxRevealSetting['5'] ? maxRevealSetting['5'] : maxInGroup('5') || null,
+  10: maxRevealSetting['10'] ? maxRevealSetting['10'] : maxInGroup('10') || null,
+  20: maxRevealSetting['20'] ? maxRevealSetting['20'] : maxInGroup('20') || null,
+  40: maxRevealSetting['40'] ? maxRevealSetting['40'] : maxInGroup('40') || null,
 }))
-const validateMaxReveal = g => {
+const validateMaxReveal = (g) => {
   if (maxRevealSetting[g] > parseInt(g)) {
     maxRevealSetting[g] = parseInt(g)
   }
@@ -205,19 +217,18 @@ SET NAME: ${props.submission.name}
 
 MAX REVEALS:
 ${Object.keys(maxRevealValues.value)
-  .filter(g => maxRevealValues.value[g])
-  .map(g => [g, maxRevealValues.value[g]])
+  .filter((g) => maxRevealValues.value[g])
+  .map((g) => [g, maxRevealValues.value[g]])
   .map(([g, max]) => `- Edition of ${g}: ${max} Reveal${max > 1 ? 's' : ''}`)
-  .join('\n')
-}
+  .join('\n')}
 
-OPEPEN PROOF: ${ proof(selected.value.map(id => `#${id}`).join(', ')) }`
+OPEPEN PROOF: ${proof(selected.value.map((id) => `#${id}`).join(', '))}`
 })
 const { $wagmi } = useNuxtApp()
 const signing = ref(false)
 const signed = ref(false)
 const sign = async () => {
-  if (! selected.value?.length && ! props.subscribed.length) {
+  if (!selected.value?.length && !props.subscribed.length) {
     alert(`Please select at least one Opepen to submit to the drop first!`)
     return
   }
@@ -229,18 +240,21 @@ const sign = async () => {
       message: message.value,
     })
 
-    await $fetch(`${config.public.opepenApi}/set-submissions/${props.submission.uuid}/subscribe`, {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify({
-        address: address.value,
-        opepen: selected.value,
-        max_reveals: maxRevealValues.value,
-        message: message.value,
-        signature,
-        delegated_by: delegatedAddresses.value.join(',')
-      })
-    })
+    await $fetch(
+      `${config.public.opepenApi}/set-submissions/${props.submission.uuid}/subscribe`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          address: address.value,
+          opepen: selected.value,
+          max_reveals: maxRevealValues.value,
+          message: message.value,
+          signature,
+          delegated_by: delegatedAddresses.value.join(','),
+        }),
+      },
+    )
 
     await refreshAccount()
 
@@ -262,7 +276,7 @@ const sign = async () => {
 
 <style>
 .opt-in-flow {
-  --header-height: calc(var(--spacer)*2 + var(--size-6));
+  --header-height: calc(var(--spacer) * 2 + var(--size-6));
   --dialog-width: 40rem;
 
   padding: 0;

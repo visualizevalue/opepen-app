@@ -1,14 +1,10 @@
 <template>
-  <PaginatedContent
-    :url="url"
-    :query="query"
-    :tag="PageFrameMd"
-    show-empty
-  >
+  <PaginatedContent :url="url" :query="query" :tag="PageFrameMd" show-empty>
     <template #default="{ items, meta }">
       <PageHeader>
         <SectionTitle class="visible-md-flex">
-          Submissions <span v-if="false">({{ meta.total || 0}})</span>
+          Submissions
+          <span v-if="false">({{ meta.total || 0 }})</span>
         </SectionTitle>
         <Actions>
           <span>Sort:</span>
@@ -45,7 +41,7 @@ const router = useRouter()
 const route = useRoute()
 const url = `${useApiBase()}/set-submissions`
 const sort = ref(route.query.sort || 'demand')
-const search = ref(route.query.search as string || '')
+const search = ref((route.query.search as string) || '')
 const query = ref('')
 const updateQuery = () => {
   const q = new URLSearchParams(`limit=40`)
@@ -67,7 +63,11 @@ const updateQuery = () => {
 }
 updateQuery()
 watch(sort, () => updateQuery())
-watchDebounced(search, () => updateQuery(), { debounce: 500, maxWait: 2000, deep: true })
+watchDebounced(search, () => updateQuery(), {
+  debounce: 500,
+  maxWait: 2000,
+  deep: true,
+})
 
 // Maintain currently selected sorting in query parameter
 watchEffect(() => {
@@ -76,7 +76,7 @@ watchEffect(() => {
       ...route.query,
       sort: sort.value,
       search: search.value,
-    }
+    },
   })
 })
 
@@ -111,9 +111,8 @@ header.page-header menu.actions {
     width: auto;
   }
 
-  input[type="text"].input {
+  input[type='text'].input {
     text-transform: uppercase !important;
   }
 }
 </style>
-

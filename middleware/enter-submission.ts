@@ -6,10 +6,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { data: submission } = await useApi(`/set-submissions/${to.params.id}`)
 
   if (submission.value?.set_id) {
-    return navigateTo(
-      `/sets/${pad(submission.value.set_id)}`,
-      { redirectCode: 301 }
-    )
+    return navigateTo(`/sets/${pad(submission.value.set_id)}`, {
+      redirectCode: 301,
+    })
   }
 })
-

@@ -1,7 +1,12 @@
 <template>
   <nav id="top-nav" :class="{ hidden }">
     <WithProfile v-slot="{ account }">
-      <Avatar :account="account" @click="$emit('openMain')" class="eye" :class="{ 'live-opt-in': optInAvailable }" />
+      <Avatar
+        :account="account"
+        @click="$emit('openMain')"
+        class="eye"
+        :class="{ 'live-opt-in': optInAvailable }"
+      />
     </WithProfile>
 
     <Icon type="opepen-eye" class="main-logo" @click="scrollTop" />
@@ -15,7 +20,7 @@
 <script setup lang="ts">
 import { useWindowScroll } from '@vueuse/core'
 
-defineEmits([ 'openMain' ])
+defineEmits(['openMain'])
 
 const route = useRoute()
 const { y, isScrolling, arrivedState, directions } = useWindowScroll({
@@ -31,7 +36,7 @@ watch(route, () => {
   hidden.value = false
 })
 watchEffect(() => {
-  if (! isScrolling.value || arrivedState.top) return
+  if (!isScrolling.value || arrivedState.top) return
 
   if (directions.bottom && y.value > 50) {
     hidden.value = true
@@ -83,10 +88,10 @@ const { optInAvailable } = await useStagedOptIn()
 
       &:after {
         content: '';
-        width: calc(var(--size-1)*1.2);
-        height: calc(var(--size-1)*1.2);
+        width: calc(var(--size-1) * 1.2);
+        height: calc(var(--size-1) * 1.2);
         border-radius: 50%;
-        border:  var(--border);
+        border: var(--border);
         border-color: var(--green-light);
         background: var(--green);
         position: absolute;
@@ -126,4 +131,3 @@ const { optInAvailable } = await useStagedOptIn()
   }
 }
 </style>
-

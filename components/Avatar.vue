@@ -42,4 +42,3 @@ const account = computed(() => props.account?.value || props.account)
   }
 }
 </style>
-

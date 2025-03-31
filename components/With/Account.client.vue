@@ -1,9 +1,5 @@
 <template>
-  <slot
-    v-bind="$attrs"
-    :address="address?.toLowerCase()"
-    :is-connected="isConnected"
-  />
+  <slot v-bind="$attrs" :address="address?.toLowerCase()" :is-connected="isConnected" />
 </template>
 
 <script setup>

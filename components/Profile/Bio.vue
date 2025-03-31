@@ -1,5 +1,9 @@
 <template>
-  <section v-if="account.quote || account.bio" class="bio" :class="{ 'col-2': account.quote && account.bio }">
+  <section
+    v-if="account.quote || account.bio"
+    class="bio"
+    :class="{ 'col-2': account.quote && account.bio }"
+  >
     <blockquote v-if="account.quote">
       <span>{{ account.quote }}</span>
       <cite>{{ account.display }}</cite>
@@ -70,7 +74,7 @@ defineProps({
       margin-top: var(--size-3);
 
       &:before {
-        content: "- ";
+        content: '- ';
       }
     }
 

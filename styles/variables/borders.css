@@ -1,5 +1,4 @@
 :root {
-
   --border-color: var(--gray-z-2);
   --border-color-dark: var(--gray-z-1);
   --border-color-light: var(--gray-z-6);
@@ -14,4 +13,3 @@
   --shadow-lg: 0 0.2em 0.5em 0 var(--semi-shade);
   --shadow-border: 0 0 0 1px var(--gray-z-2a);
 }
-

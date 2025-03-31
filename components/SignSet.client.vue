@@ -1,8 +1,5 @@
 <template>
-  <Button
-    type="button"
-    @click="open = true"
-  >
+  <Button type="button" @click="open = true">
     <Icon type="feather" />
     <span v-if="signing">Signing...</span>
     <span v-else>Sign Set</span>
@@ -13,7 +10,10 @@
 
     <form @submit.stop.prevent="sign">
       <Alert type="muted">
-        <p>Signing will initiate a transaction (0 Eth) to visualizevalue.eth containing the below data as plain text in its body.</p>
+        <p>
+          Signing will initiate a transaction (0 Eth) to visualizevalue.eth containing the
+          below data as plain text in its body.
+        </p>
       </Alert>
       <label>
         <span class="label">Name</span>
@@ -25,7 +25,12 @@
       </label>
       <label>
         <span class="label">Note</span>
-        <Input class="input" type="text" v-model="note" placeholder="Personal note (optional)" />
+        <Input
+          class="input"
+          type="text"
+          v-model="note"
+          placeholder="Personal note (optional)"
+        />
       </label>
 
       <Actions>
@@ -48,7 +53,7 @@ const config = useRuntimeConfig()
 const { data } = defineProps({
   data: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
 })
 const emit = defineEmits(['signed'])
@@ -61,10 +66,7 @@ const note = ref(data.artist_message?.note || '')
 const signing = ref(false)
 const lastSigned = ref(null)
 const message = computed(() => {
-  const elements = [
-    `Name: ${data.name}`,
-    `Artist: ${data.artist}`,
-  ]
+  const elements = [`Name: ${data.name}`, `Artist: ${data.artist}`]
 
   if (note.value) elements.push(`Note: ${note.value}`)
 
@@ -72,7 +74,7 @@ const message = computed(() => {
 })
 const { sendTransactionAsync } = useSendTransaction()
 const sign = async () => {
-  if (! session.value) await signIn()
+  if (!session.value) await signIn()
 
   signing.value = true
 
@@ -96,7 +98,7 @@ const sign = async () => {
           note: note.value,
           tx: hash,
         },
-      })
+      }),
     })
 
     emit('signed', set)

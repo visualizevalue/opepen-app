@@ -1,13 +1,14 @@
-export const normalizeURI = (url: string) => url.replace('ipfs://', 'https://ipfs.vv.xyz/ipfs/')
+export const normalizeURI = (url: string) =>
+  url.replace('ipfs://', 'https://ipfs.vv.xyz/ipfs/')
 
 export const validateURI = (url: string) => {
-  if (! url || ! url.length) return false
+  if (!url || !url.length) return false
 
   let validated = url.trim()
 
   // Normalize protocol
-  if (! validated.startsWith('https://')) validated = `https://${validated}`
-  if (! validated.startsWith('http')) validated = `http://${validated}`
+  if (!validated.startsWith('https://')) validated = `https://${validated}`
+  if (!validated.startsWith('http')) validated = `http://${validated}`
 
   // Check url validity
   try {
@@ -47,14 +48,14 @@ export const getUserNameFromSubpath = (url: string) => {
   return subpath?.startsWith('@') ? subpath : `@${subpath}`
 }
 
-export const isUUID = (value: string|number) => {
+export const isUUID = (value: string | number) => {
   const s = `${value}`
   const n = parseInt(s)
 
   return s.length > 3 && n.toString() !== s
 }
 
-export const isSetId = (value: string|number) => {
+export const isSetId = (value: string | number) => {
   const n = parseInt(`${value}`)
-  return ! isUUID(value) && n <= 200
+  return !isUUID(value) && n <= 200
 }

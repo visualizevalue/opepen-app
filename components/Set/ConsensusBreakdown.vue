@@ -1,7 +1,5 @@
 <template>
-  <SectionTitle>
-    Consensus Breakdown
-  </SectionTitle>
+  <SectionTitle>Consensus Breakdown</SectionTitle>
 
   <main v-if="status === 'success'">
     <div @mouseleave="highlightedIndex = -1" class="chart">
@@ -10,20 +8,25 @@
 
     <div class="text">
       <p>
-        {{ decentralizationScore.percentage }}% of demand from {{ enumerate('wallet', decentralizationScore.holders) }};
+        {{ decentralizationScore.percentage }}% of demand from
+        {{ enumerate('wallet', decentralizationScore.holders) }};
         {{ enumerate('opt-in', decentralizationScore.avg) }} per wallet on average.
       </p>
       <ol>
         <li
           v-for="(item, index) in list"
-          :class="{ highlight: highlightedIndex === index || index === 3 && highlightedIndex >= 3}"
+          :class="{
+            highlight: highlightedIndex === index || (index === 3 && highlightedIndex >= 3),
+          }"
         >
           <NuxtLink v-if="index < 3" :to="`/${item}`">
             <FetchApiAccount :id="item" hide-avatar />
           </NuxtLink>
           <span v-else>Others</span>
-          <span v-if="index < 3"> ({{ Math.floor(data.datasets[0].data[index] / totalCount * 100) }}%)</span>
-          <span v-if="index >= 3"> ({{ totalCount }} total)</span>
+          <span v-if="index < 3">
+            ({{ Math.floor((data.datasets[0].data[index] / totalCount) * 100) }}%)
+          </span>
+          <span v-if="index >= 3">({{ totalCount }} total)</span>
         </li>
       </ol>
     </div>
@@ -33,28 +36,44 @@
 </template>
 
 <script setup lang="ts">
-const { submission, lastUpdated } = defineProps<{ submission: SetSubmission, lastUpdated: number }>()
+const { submission, lastUpdated } = defineProps<{
+  submission: SetSubmission
+  lastUpdated: number
+}>()
 
-const { data: response, status, refresh } = await useApi<{
+const {
+  data: response,
+  status,
+  refresh,
+} = await useApi<{
   total: {
-    [key: string]: { demand: number, opepens: number }
+    [key: string]: { demand: number; opepens: number }
   }
 }>(`/set-submissions/${submission.uuid}/curation-stats`, {
   lazy: true,
 })
-watch(() => lastUpdated, () => refresh())
+watch(
+  () => lastUpdated,
+  () => refresh(),
+)
 
 const total = computed(() => response.value?.total || {})
-const items = computed(() => Object.entries(total.value).sort((a, b) => a[1].demand > b[1].demand ? -1 : 1))
-const demandValues = computed(() => items.value.map(([_, { demand }]) => demand).sort((a, b) => b - a))
-const totalDemand = computed(() => demandValues.value?.reduce((total, demand) => total + demand, 0))
+const items = computed(() =>
+  Object.entries(total.value).sort((a, b) => (a[1].demand > b[1].demand ? -1 : 1)),
+)
+const demandValues = computed(() =>
+  items.value.map(([_, { demand }]) => demand).sort((a, b) => b - a),
+)
+const totalDemand = computed(() =>
+  demandValues.value?.reduce((total, demand) => total + demand, 0),
+)
 const data = computed(() => {
   return {
     labels: items.value.map(([address]) => address),
     datasets: [
       {
         data: demandValues.value,
-      }
+      },
     ],
   }
 })
@@ -69,7 +88,7 @@ const decentralizationScore = computed(() => {
     holders++
   }
 
-  const percentage = Math.round(demand / totalDemand.value * 100)
+  const percentage = Math.round((demand / totalDemand.value) * 100)
 
   return {
     percentage,
@@ -91,9 +110,11 @@ const list = computed(() => {
 })
 
 const highlightedIndex = ref(-1)
-const highlighted = computed(() => Number.isInteger(highlightedIndex.value) ? items.value[highlightedIndex.value] : null)
+const highlighted = computed(() =>
+  Number.isInteger(highlightedIndex.value) ? items.value[highlightedIndex.value] : null,
+)
 
-const onHover = (_: null, item: {index: number}[]) => {
+const onHover = (_: null, item: { index: number }[]) => {
   highlightedIndex.value = item[0]?.index ?? null
 }
 </script>

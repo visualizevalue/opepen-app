@@ -1,20 +1,12 @@
 <template>
-  <PaginatedContent
-    :url="url"
-    v-slot="{ items }"
-    class="events"
-  >
+  <PaginatedContent :url="url" v-slot="{ items }" class="events">
     <div class="event header">
       <span>Event</span>
       <span>Account</span>
       <span>Price</span>
       <span>Date</span>
     </div>
-    <div
-      v-for="event in items"
-      :key="event.id"
-      class="event"
-    >
+    <div v-for="event in items" :key="event.id" class="event">
       <span>
         <span v-if="event.from === zeroAddress">Mint</span>
         <span v-else-if="event.data?.price">Sale</span>
@@ -24,9 +16,7 @@
         {{ event.toAccount.display }}
       </NuxtLink>
       <span>
-        <template v-if="event.data?.price">
-          ⟠ {{ event.data.price.amount.native }}
-        </template>
+        <template v-if="event.data?.price">⟠ {{ event.data.price.amount.native }}</template>
       </span>
       <NuxtLink :to="`https://etherscan.io/tx/${event.transaction_hash}`">
         <span>{{ formatDate(event.timestamp) }}</span>
@@ -49,7 +39,6 @@ const url = `${config.public.opepenApi}/opepen/${opepen.token_id}/events`
 </script>
 
 <style scoped>
-
 .event {
   @mixin ui-font;
   background: var(--gray-z-1);
@@ -68,7 +57,6 @@ const url = `${config.public.opepenApi}/opepen/${opepen.token_id}/events`
     padding-bottom: 0;
     display: grid;
   }
-
 
   > * {
     color: var(--gray-z-6);

@@ -1,45 +1,45 @@
 :root {
   /* GRAYS */
-  --black:     #080808;
-  --gray-000:  #101010;
-  --gray-100:  #131313;
-  --gray-200:  #1C1C1C;
-  --gray-200a: #1C1C1C99;
-  --gray-300:  #262626;
-  --gray-400:  #2F2F2F;
-  --gray-500:  #696969;
-  --gray-600:  #ADADAD;
-  --gray-700:  #D8D8D8;
-  --gray-800:  #E6E6E6;
-  --gray-900:  #F2F2F2;
-  --gray-999:  #F8F8F8;
-  --white:     #FFFFFF;
+  --black: #080808;
+  --gray-000: #101010;
+  --gray-100: #131313;
+  --gray-200: #1c1c1c;
+  --gray-200a: #1c1c1c99;
+  --gray-300: #262626;
+  --gray-400: #2f2f2f;
+  --gray-500: #696969;
+  --gray-600: #adadad;
+  --gray-700: #d8d8d8;
+  --gray-800: #e6e6e6;
+  --gray-900: #f2f2f2;
+  --gray-999: #f8f8f8;
+  --white: #ffffff;
 
   /* SEMI */
-  --semi-light:        rgba(255, 255, 255, 0.85);
-  --semi-dark:         rgba(0, 0, 0, 0.85);
-  --semi-shade:        rgba(0, 0, 0, 0.33);
-  --opaque-white:      rgba(255, 255, 255, 0.9);
-  --opaque-black:      rgba(0, 0, 0, 0.9);
+  --semi-light: rgba(255, 255, 255, 0.85);
+  --semi-dark: rgba(0, 0, 0, 0.85);
+  --semi-shade: rgba(0, 0, 0, 0.33);
+  --opaque-white: rgba(255, 255, 255, 0.9);
+  --opaque-black: rgba(0, 0, 0, 0.9);
   --transparent-white: rgba(255, 255, 255, 0);
   --transparent-black: rgba(0, 0, 0, 0);
 
   /* COLORS */
-  --red:    #EF4444;
-  --yellow: #F2A840;
+  --red: #ef4444;
+  --yellow: #f2a840;
 
-  --green:       #94E337;
-  --green-dark:  #377528;
-  --green-light: #80DB6A;
+  --green: #94e337;
+  --green-dark: #377528;
+  --green-light: #80db6a;
 
-  --blue-light:  #BFDBFE;
-  --blue-dark:   #172554;
-  --ayu-dark-bg: #0A0E14;
+  --blue-light: #bfdbfe;
+  --blue-dark: #172554;
+  --ayu-dark-bg: #0a0e14;
 
   /* PRIMARY PALLETTE */
-  --primary:   var(--white);
-  --success:   var(--green);
-  --error:     var(--red);
+  --primary: var(--white);
+  --success: var(--green);
+  --error: var(--red);
 
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
@@ -63,11 +63,10 @@
 
   --background: var(--black);
   --transparent-background: var(--transparent-black);
-  --semi:     var(--semi-dark);
+  --semi: var(--semi-dark);
   --inactive: var(--gray-z-5);
-  --color:    var(--white);
+  --color: var(--white);
 
   --blue-1: var(--blue-light);
   --blue-9: var(--blue-dark);
 }
-

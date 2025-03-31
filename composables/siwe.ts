@@ -2,15 +2,15 @@ import { signMessage, getAccount, watchAccount } from '@wagmi/core'
 import { createSiweMessage } from 'viem/siwe'
 
 type Session = {
-  address: string;
-  chainId: number;
-  domain: string;
-  issuedAt: string;
-  nonce: string;
-  statement: string;
-  uri: string;
-  version: string;
-  is_admin: boolean;
+  address: string
+  chainId: number
+  domain: string
+  issuedAt: string
+  nonce: string
+  statement: string
+  uri: string
+  version: string
+  is_admin: boolean
 }
 
 const nonce = ref('')
@@ -18,27 +18,32 @@ export const currentAddress = ref('')
 export const signInLoading = ref(false)
 export const signingIn = ref(false)
 export const signInFailed = ref(false)
-export const session: Ref<Session|null> = ref(null)
-export const isAuthenticated = computed(() => session.value && session.value.address?.toLowerCase() === currentAddress.value?.toLowerCase())
+export const session: Ref<Session | null> = ref(null)
+export const isAuthenticated = computed(
+  () =>
+    session.value &&
+    session.value.address?.toLowerCase() === currentAddress.value?.toLowerCase(),
+)
 export const isAdmin = computed(() => isAuthenticated.value && session.value?.is_admin)
 
 let accountWatcher: any
 
-export const siweMessage = (address: string) => createSiweMessage({
-  domain: window.location.host,
-  uri: window.location.origin,
-  address,
-  chainId: 1,
-  nonce: nonce.value,
-  version: '1',
-})
+export const siweMessage = (address: string) =>
+  createSiweMessage({
+    domain: window.location.host,
+    uri: window.location.origin,
+    address,
+    chainId: 1,
+    nonce: nonce.value,
+    version: '1',
+  })
 
 export const useSignIn = () => {
   const { $wagmi } = useNuxtApp()
   const config = useRuntimeConfig()
   const API = config.public.opepenApi
 
-  if (! accountWatcher) {
+  if (!accountWatcher) {
     currentAddress.value = getAccount($wagmi)?.address
     fetchMe()
 
@@ -57,7 +62,7 @@ export const useSignIn = () => {
     })
   }
 
-  async function fetchMe () {
+  async function fetchMe() {
     session.value = await $fetch(`${API}/auth/me`, {
       credentials: 'include',
     })
@@ -66,7 +71,7 @@ export const useSignIn = () => {
   const fetchNonce = async () => {
     try {
       const data: { nonce: string } = await $fetch(`${API}/auth/nonce`, {
-        credentials: 'include'
+        credentials: 'include',
       })
 
       nonce.value = data.nonce
@@ -83,7 +88,7 @@ export const useSignIn = () => {
     signInLoading.value = true
     signInFailed.value = false
 
-    if (! currentAddress.value) {
+    if (!currentAddress.value) {
       // @ts-ignore
       document.querySelector('.main-connect')?.click()
 
@@ -100,7 +105,7 @@ export const useSignIn = () => {
         // We're already signed in
         return true
       }
-      if (currentAddress.value && ! isAuthenticated.value) {
+      if (currentAddress.value && !isAuthenticated.value) {
         await $fetch(`${API}/auth/clear`, { credentials: 'include' })
       }
     } catch (e) {}
@@ -121,7 +126,7 @@ export const useSignIn = () => {
       session.value = await $fetch(`${API}/auth/verify`, {
         method: 'POST',
         credentials: 'include',
-        body: JSON.stringify({ message, signature })
+        body: JSON.stringify({ message, signature }),
       })
     } catch (e) {
       console.error(e)
@@ -141,7 +146,7 @@ export const useSignIn = () => {
       console.error('signin failed', e)
     }
 
-    if (! isAuthenticated.value) {
+    if (!isAuthenticated.value) {
       throw new Error(`Not Authenticated`)
     }
   }

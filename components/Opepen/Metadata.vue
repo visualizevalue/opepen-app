@@ -3,25 +3,24 @@
     <DescriptionList>
       <li v-if="submission">
         <Icon type="opepen" stroke-width="2.25" />
-        <NuxtLink :to="`/${submission.creator}`">
-          Created by {{ submission.artist }}
-        </NuxtLink>
+        <NuxtLink :to="`/${submission.creator}`">Created by {{ submission.artist }}</NuxtLink>
       </li>
       <li>
         <Icon type="user" stroke-width="2.25" />
         <NuxtLink :to="`/${id(opepen.ownerAccount)}`">
-          Owned by <ApiAccount :account="opepen.ownerAccount" hide-avatar hide-address />
+          Owned by
+          <ApiAccount :account="opepen.ownerAccount" hide-avatar hide-address />
         </NuxtLink>
       </li>
       <li v-if="submission">
         <Icon type="opepen-grid" />
-        <NuxtLink :to="`/sets/${pad(submission.set_id)}`">Set "{{ submission.name }}"</NuxtLink>
+        <NuxtLink :to="`/sets/${pad(submission.set_id)}`">
+          Set "{{ submission.name }}"
+        </NuxtLink>
       </li>
       <li v-if="opepen.data?.edition">
         <Icon type="divide-square" />
-        <span>
-          Edition one of {{ getEditionName(opepen.data.edition) }}
-        </span>
+        <span>Edition one of {{ getEditionName(opepen.data.edition) }}</span>
       </li>
       <li v-if="submission">
         <Icon type="calendar" stroke-width="2.25" />
@@ -29,13 +28,19 @@
       </li>
       <li>
         <Icon type="opensea" />
-        <NuxtLink :to="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`" target="_blank">
+        <NuxtLink
+          :to="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`"
+          target="_blank"
+        >
           View On OpenSea
         </NuxtLink>
       </li>
       <li>
         <Icon type="etherscan" />
-        <NuxtLink :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`" target="_blank">
+        <NuxtLink
+          :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`"
+          target="_blank"
+        >
           View On Etherscan
         </NuxtLink>
       </li>
@@ -50,14 +55,14 @@
 </template>
 
 <script setup>
-const { opepen } = defineProps({ opepen: Object, })
+const { opepen } = defineProps({ opepen: Object })
 
 const config = useRuntimeConfig()
 const contract = config.public.opepenContract
 
 const submission = computed(() => opepen.set?.submission)
-const attributes = computed(() => opepen.metadata?.attributes
-  .filter(a => a.trait_type !== 'Number')
+const attributes = computed(() =>
+  opepen.metadata?.attributes.filter((a) => a.trait_type !== 'Number'),
 )
 
 const image = computed(() => imageURI(opepen.image))
@@ -69,17 +74,17 @@ const download = async () => {
   }
 
   // Force update the image (in the background)
-  fetch(`${config.public.opepenApi}/opepen/${opepen.token_id}/image`, { method: 'POST' })
+  fetch(`${config.public.opepenApi}/opepen/${opepen.token_id}/image`, {
+    method: 'POST',
+  })
 
   return isStatic
     ? downloadImage(image.value, { name: `Opepen ${opepen.token_id}` })
     : open(image.value, '_blank')
 }
 const downloadStatsCard = async () => {
-  return downloadImage(
-    `${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`,
-    { name: `Opepen Card ${opepen.token_id}` }
-  )
+  return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`, {
+    name: `Opepen Card ${opepen.token_id}`,
+  })
 }
 </script>
-

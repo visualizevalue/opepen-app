@@ -4,7 +4,7 @@
       <SectionTitle>Permanent Collection</SectionTitle>
     </PageHeader>
 
-    <Progress :percent="parseInt(completeSets.length / 200 * 100)" >
+    <Progress :percent="parseInt((completeSets.length / 200) * 100)">
       <span>{{ completeSets.length }} / 200</span>
     </Progress>
 
@@ -26,17 +26,16 @@ useMetaData({
 </script>
 
 <style scoped>
-  .page-frame-md {
-    gap: var(--spacer-lg);
-    padding-top: var(--spacer);
+.page-frame-md {
+  gap: var(--spacer-lg);
+  padding-top: var(--spacer);
 
-    @media (--lg) {
-      padding: var(--spacer) var(--spacer-lg);
-    }
+  @media (--lg) {
+    padding: var(--spacer) var(--spacer-lg);
   }
+}
 
-  .progress {
-    margin-bottom: var(--size-5);
-  }
+.progress {
+  margin-bottom: var(--size-5);
+}
 </style>
-

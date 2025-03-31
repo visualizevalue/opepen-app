@@ -1,12 +1,6 @@
 <template>
-  <Pie
-    v-if="type === 'Pie'"
-    :data="data" :options="options"
-  />
-  <Doughnut
-    v-else-if="type === 'Doughnut'"
-    :data="data" :options="options"
-  />
+  <Pie v-if="type === 'Pie'" :data="data" :options="options" />
+  <Doughnut v-else-if="type === 'Doughnut'" :data="data" :options="options" />
 </template>
 
 <script setup>
@@ -32,11 +26,11 @@ const props = defineProps({
       labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
       datasets: [
         {
-          data: [40, 20, 80, 10]
-        }
-      ]
-    })
-  }
+          data: [40, 20, 80, 10],
+        },
+      ],
+    }),
+  },
 })
 
 ChartJS.register(ArcElement)

@@ -17,7 +17,7 @@ const route = useRoute()
 
 const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`)
 
-if (! data.value) {
+if (!data.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Submission Not Found',
@@ -28,4 +28,3 @@ useMetaData({
   title: `Update ${data.value?.name || 'Submission'} | Opepen`,
 })
 </script>
-

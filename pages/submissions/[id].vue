@@ -36,10 +36,10 @@ const lastUpdated = ref(nowInSeconds())
 const { data, refresh } = await useApi(`/set-submissions/${route.params.id}`, {
   onResponse: () => {
     lastUpdated.value = nowInSeconds()
-  }
+  },
 })
 watchEffect(() => {
-  if (! data.value?.uuid) return
+  if (!data.value?.uuid) return
   submission.value = data.value
 })
 await useStagedOptIn()
@@ -59,25 +59,25 @@ useMetaData({
 </script>
 
 <style scoped>
-  .submission {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacer);
-    row-gap: var(--spacer-lg);
-    max-width: var(--content-width-sm);
-    margin: 0 auto;
+.submission {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer);
+  row-gap: var(--spacer-lg);
+  max-width: var(--content-width-sm);
+  margin: 0 auto;
 
-    @media (--md) {
-      gap: var(--spacer-lg);
-    }
-
-    > *:last-child {
-      margin-bottom: var(--spacer-lg);
-    }
+  @media (--md) {
+    gap: var(--spacer-lg);
   }
 
-  .deep-dive {
-    display: grid;
-    gap: var(--spacer);
+  > *:last-child {
+    margin-bottom: var(--spacer-lg);
   }
+}
+
+.deep-dive {
+  display: grid;
+  gap: var(--spacer);
+}
 </style>

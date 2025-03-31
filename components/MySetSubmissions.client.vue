@@ -1,12 +1,9 @@
 <template>
   <section>
     <IsAuthenticated>
-      <PaginatedContent
-        :url="url"
-        :query="query"
-      >
+      <PaginatedContent :url="url" :query="query">
         <template #after-block="{ items }">
-          <div v-if="! items?.length" class="empty">
+          <div v-if="!items?.length" class="empty">
             <p class="muted">No set submissions</p>
             <Button to="/create/new">
               <Icon type="plus" />
@@ -16,11 +13,7 @@
         </template>
 
         <template #default="{ items }">
-          <article
-            v-for="set in items"
-            :key="set.uuid"
-            class="item"
-          >
+          <article v-for="set in items" :key="set.uuid" class="item">
             <div class="preview">
               <Image :image="set.edition1Image" version="sm" />
             </div>
@@ -29,11 +22,15 @@
               <h1>{{ set.name || 'Unnamed' }}</h1>
               <p>{{ set.description }}</p>
               <p>
-                <span v-if="set.published_at">Published {{ formatDate(set.published_at) }}</span>
+                <span v-if="set.published_at">
+                  Published {{ formatDate(set.published_at) }}
+                </span>
                 <span v-else>Created {{ formatDate(set.created_at) }}</span>
               </p>
 
-              <NuxtLink :to="`/create/${set.uuid}`"><span>Go to {{ set.name }}</span></NuxtLink>
+              <NuxtLink :to="`/create/${set.uuid}`">
+                <span>Go to {{ set.name }}</span>
+              </NuxtLink>
             </div>
           </article>
         </template>
@@ -49,7 +46,9 @@ const props = defineProps({
 
 const { session } = useSignIn()
 
-const url = computed(() => `${useApiBase()}/accounts/${session.value?.address}/set-submissions`)
+const url = computed(
+  () => `${useApiBase()}/accounts/${session.value?.address}/set-submissions`,
+)
 const query = computed(() => `sort=-created_at`)
 </script>
 
