@@ -174,8 +174,6 @@ const description = ref(props.data.description || '')
 const artist = ref(props.data.artist || account.value?.display)
 const creator = ref(props.data.creator)
 const withEmptyCoCreators = list => {
-  if (list.length === 5) return list
-
   if (! list.length || list[list.length - 1].address !== '') {
     list.push({ id: list.length, address: '' })
   }
@@ -189,13 +187,9 @@ const sortableCoCreators = list => {
 
   return withEmptyCoCreators(array)
 }
-const coCreators = ref(sortableCoCreators([
-  props.data.co_creator_1,
-  props.data.co_creator_2,
-  props.data.co_creator_3,
-  props.data.co_creator_4,
-  props.data.co_creator_5,
-]))
+const coCreators = ref(sortableCoCreators(
+  props.data.coCreators?.map(c => c.account?.address || c.address) || []
+))
 watch(() => JSON.stringify(coCreators.value), () => coCreators.value = withEmptyCoCreators(coCreators.value))
 watch(account, () => {
   if (! artist.value) {
@@ -363,11 +357,9 @@ const saveData = computed(() => ({
     edition_20_name: name20.value,
     edition_40_name: name40.value,
     creator: creator.value,
-    co_creator_1: coCreators.value[0]?.address || undefined,
-    co_creator_2: coCreators.value[1]?.address || undefined,
-    co_creator_3: coCreators.value[2]?.address || undefined,
-    co_creator_4: coCreators.value[3]?.address || undefined,
-    co_creator_5: coCreators.value[4]?.address || undefined,
+    co_creators: coCreators.value
+      .map((c) => c.address?.trim().toLowerCase())
+      .filter((address) => address),
 }))
 const store = async () => {
   saving.value = true
@@ -545,5 +537,29 @@ form {
     gap: var(--size-5);
   }
 
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.csv-file-upload {
+  border: var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: var(--ui-padding-y);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+
+  > i {
+    width: var(--size-4);
+    height: var(--size-4);
+  }
+}
+
+.csv-file-upload:hover {
+  border-color: var(--highlight);
 }
 </style>
