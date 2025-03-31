@@ -29,12 +29,22 @@
           <NuxtLink :to="`/${id(submission.creatorAccount)}`">
             <ApiAccount :account="submission.creatorAccount" hide-avatar hide-address />
           </NuxtLink>
-          <template v-if="coCreators.length">, </template>
-          <template v-for="creator in coCreators">
+          <template v-if="truncatedCoCreators.length">, </template>
+          <template v-for="(creator, idx) in truncatedCoCreators" :key="idx">
             <NuxtLink :to="`/${id(creator)}`">
               <ApiAccount :account="creator" hide-avatar hide-address />
             </NuxtLink>
+            <template v-if="idx < truncatedCoCreators.length - 1">, </template>
           </template>
+          <template v-if="showMore">
+            <span class="show-more" @click="openModal">
+              +{{ moreCount }} more
+            </span>
+          </template>
+          <SetCoCreators
+            :co-creators="coCreators"
+            v-model:open="modalOpen"
+          />
         </span>
       </li>
       <li v-if="published">
@@ -90,7 +100,19 @@ const revealsAt = ref(DateTime.fromISO(submission?.reveals_at).toUnixInteger())
 const revealing = ref(revealsAt.value <= DateTime.now().toUnixInteger())
 const revealed = computed(() => revealing.value && submission?.reveal_block_number)
 const consensusDate = computed(() => submission?.reveals_at && formatDate(submission?.reveals_at))
+
 const coCreators = useCoCreators(submission)
+const truncatedCoCreators = computed(() => coCreators.value.slice(0, 2))
+const showMore = computed(() => coCreators.value.length > 2)
+const moreCount = computed(() => {
+  return showMore.value ? coCreators.value.length - 2 : 0
+})
+// Modal
+const modalOpen = ref(false)
+const openModal = () => {
+  modalOpen.value = true
+}
+
 
 const demandExistsFor = computed(() => getDemandEditions(submission))
 const demandMetFor = computed(() => getDemandEditions(submission, 1))
@@ -114,6 +136,15 @@ const demandMetFor = computed(() => getDemandEditions(submission, 1))
         color: var(--gray-z-6);
         line-height: var(--line-height-md);
       }
+    }
+  }
+
+  .show-more {
+    cursor: pointer;
+    color: var(--gray-z-6);
+
+    &:--highlight {
+      color: var(--color);
     }
   }
 </style>
