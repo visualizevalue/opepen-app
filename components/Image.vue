@@ -105,10 +105,6 @@ const loadImage = ([{ isIntersecting }]) => {
 
   uri.value = imageURI(props.image, props.version)
 }
-const loadOriginal = () => {
-  uri.value = imageURI(props.image)
-  emit('loaded')
-}
 watch(
   () => props.image?.uuid,
   () => loadImage([{ isIntersecting: true }]),

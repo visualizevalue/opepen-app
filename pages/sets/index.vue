@@ -8,7 +8,7 @@
       <span>{{ completeSets.length }} / 200</span>
     </Progress>
 
-    <SetCardGrid :submissions="submissions" minimal />
+    <SetCardGrid :submissions="submissions" />
   </PageFrameMd>
 </template>
 

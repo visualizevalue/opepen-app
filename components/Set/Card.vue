@@ -3,7 +3,7 @@
     v-if="data"
     ref="el"
     class="borderless set-preview"
-    :class="{ minimal, showDemand }"
+    :class="{ minimal, showDemand, imageLoaded }"
     :style="style"
   >
     <div class="wrapper">
@@ -23,6 +23,7 @@
           class="appear"
           :auto-embed="false"
           :aspect-ratio="1"
+          @loaded="onImageLoad"
         />
         <Image
           :image="data?.edition4Image"
@@ -30,6 +31,7 @@
           class="appear"
           :auto-embed="false"
           :aspect-ratio="1"
+          @loaded="onImageLoad"
         />
         <Image
           :image="data?.edition5Image"
@@ -37,6 +39,7 @@
           class="appear"
           :auto-embed="false"
           :aspect-ratio="1"
+          @loaded="onImageLoad"
         />
         <Image
           :image="data?.edition10Image"
@@ -44,6 +47,7 @@
           class="appear"
           :auto-embed="false"
           :aspect-ratio="1"
+          @loaded="onImageLoad"
         />
         <Image
           :image="data?.edition20Image"
@@ -51,6 +55,7 @@
           class="appear"
           :auto-embed="false"
           :aspect-ratio="1"
+          @loaded="onImageLoad"
         />
         <Image
           :image="data?.edition40Image"
@@ -58,13 +63,14 @@
           class="appear"
           :auto-embed="false"
           :aspect-ratio="1"
+          @loaded="onImageLoad"
         />
       </section>
 
       <h1>
         <small v-if="data.set_id">Set {{ pad(data.set_id, 3) }}</small>
         <small v-else>Set Submission</small>
-        <span>{{ data.name }}</span>
+        <span>{{ data.name || 'Unreleased' }}</span>
       </h1>
 
       <Button :to="url" :title="data.name">
@@ -97,6 +103,9 @@ const id = computed(() => (data?.set_id ? pad(data.set_id, 3) : data?.uuid))
 const url = computed(() => (data?.set_id ? `/sets/${id.value}` : `/submissions/${id.value}`))
 
 const demand = computed(() => getDemandPercentage(data))
+
+const imageLoaded = ref(false)
+const onImageLoad = () => (imageLoaded.value = true)
 </script>
 
 <style scoped>
@@ -175,6 +184,8 @@ h1 {
   @mixin ui-font;
   margin-top: auto;
   white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--speed-slow);
 
   span,
   small {
@@ -194,6 +205,12 @@ h1 {
 .set-preview.minimal {
   h1 {
     display: none;
+  }
+}
+
+.set-preview.imageLoaded {
+  h1 {
+    opacity: 1;
   }
 }
 </style>
