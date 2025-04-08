@@ -23,24 +23,28 @@
     </PageHeader>
 
     <DescriptionList>
-      <li>
+      <li class="creators">
         <Icon type="user" stroke-width="2.25" />
         <span>
-          Created by
+          <span>Created by</span>
           <NuxtLink :to="`/${id(submission.creatorAccount)}`">
             <ApiAccount :account="submission.creatorAccount" hide-avatar hide-address />
           </NuxtLink>
-          <template v-if="truncatedCoCreators.length">,&nbsp;</template>
-          <template v-for="(creator, idx) in truncatedCoCreators" :key="idx">
-            <NuxtLink :to="`/${id(creator)}`">
-              <ApiAccount :account="creator" hide-avatar hide-address />
-            </NuxtLink>
-            <template v-if="idx < truncatedCoCreators.length - 1">,&nbsp;</template>
-          </template>
-          <template v-if="showMore">
-            <span class="show-more" @click="openModal">+{{ moreCount }} more</span>
-          </template>
-          <SetCoCreators :co-creators="coCreators" v-model:open="modalOpen" />
+          <NuxtLink
+            v-for="creator in truncatedCoCreators"
+            :key="creator.address"
+            :to="`/${id(creator)}`"
+          >
+            <ApiAccount :account="creator" hide-avatar hide-address />
+          </NuxtLink>
+          <span v-if="showMore" class="show-more" @click="openModal">
+            +{{ moreCount }} more
+          </span>
+          <SetCoCreators
+            :submission="submission"
+            :co-creators="coCreators"
+            v-model:open="modalOpen"
+          />
         </span>
       </li>
       <li v-if="published">
@@ -107,10 +111,12 @@ const consensusDate = computed(
   () => submission?.reveals_at && formatDate(submission?.reveals_at),
 )
 const coCreators = useCoCreators(submission)
-const truncatedCoCreators = computed(() => coCreators.value.slice(0, 2))
-const showMore = computed(() => coCreators.value.length > 2)
+const showMore = computed(() => coCreators.value.length > 3)
+const truncatedCoCreators = computed(() =>
+  showMore.value ? [] : coCreators.value.slice(0, 2),
+)
 const moreCount = computed(() => {
-  return showMore.value ? coCreators.value.length - 2 : 0
+  return showMore.value ? coCreators.value.length - truncatedCoCreators.value.length : 0
 })
 // Modal
 const modalOpen = ref(false)
@@ -149,6 +155,12 @@ const demandMetFor = computed(() => getDemandEditions(submission, 1))
     &:--highlight {
       color: var(--color);
     }
+  }
+}
+
+.creators {
+  > span > * {
+    margin-right: 0.3em;
   }
 }
 </style>

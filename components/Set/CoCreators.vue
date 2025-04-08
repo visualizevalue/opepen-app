@@ -1,26 +1,13 @@
 <template>
   <Modal v-model:open="open" class="co-creator-modal extra-wide" compat>
-    <PageHeader>
-      <PageTitle>
-        <small>All Co-Creators</small>
-      </PageTitle>
-    </PageHeader>
-
-    <div class="co-creator-list">
-      <template v-for="(creator, i) in coCreators" :key="i">
-        <span class="co-creator">
-          <NuxtLink :to="`/${id(creator)}`">
-            <ApiAccount :account="creator" hide-address hide-avatar />
-          </NuxtLink>
-          <template v-if="i < coCreators.length - 1">,</template>
-        </span>
-      </template>
-    </div>
+    <h1>All {{ submission.name }} Co-Creators</h1>
+    <ProfileCardGrid :accounts="coCreators" />
   </Modal>
 </template>
 
 <script setup lang="ts">
-const { coCreators } = defineProps<{
+const { submission, coCreators } = defineProps<{
+  submission: SetSubmission
   coCreators: any[]
 }>()
 
@@ -28,9 +15,15 @@ const open = defineModel('open', { required: true })
 </script>
 
 <style scoped>
-.cocreator-modal {
-  padding: 0 !important;
+.co-creator-modal {
+  display: grid;
+  gap: var(--spacer-sm);
+
+  > h1 {
+    margin-bottom: var(--spacer-lg);
+  }
 }
+
 .co-creator-list {
   display: flex;
   flex-wrap: wrap;
