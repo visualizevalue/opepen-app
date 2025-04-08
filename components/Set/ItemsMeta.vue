@@ -49,7 +49,9 @@
       </li>
       <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span v-if="published">{{ SET_TYPES[submission.edition_type] }} Editions</span>
+        <span v-if="SET_TYPES[submission.edition_type]">
+          {{ SET_TYPES[submission.edition_type] }} Editions
+        </span>
         <span v-else>Unknown Editions</span>
       </li>
       <li v-if="revealed || revealing">
