@@ -1,5 +1,5 @@
 <template>
-  <Card class="profile-card" :style="style">
+  <Card class="profile-card" :class="{ minimal }" :style="style">
     <Avatar :account="account" />
     <span>{{ account.display }}</span>
     <span v-if="account.tagline" class="tagline">{{ account.tagline }}</span>
@@ -10,13 +10,18 @@
 <script setup lang="ts">
 interface Props {
   account: Account
+  minimal: boolean
 }
-const { account } = defineProps<Props>()
+const { account, minimal } = defineProps<Props>()
 
 const coverImageURL = imageURI(account.coverImage, 'sm')
-const style = computed(() => ({
-  backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%)${coverImageURL ? `, url(${coverImageURL})` : ``}`,
-}))
+const style = computed(() =>
+  minimal
+    ? []
+    : {
+        backgroundImage: `linear-gradient(to top, var(--opaque-black) 10%, var(--transparent-black) 150%)${coverImageURL ? `, url(${coverImageURL})` : ``}`,
+      },
+)
 </script>
 
 <style scoped>
@@ -47,6 +52,26 @@ const style = computed(() => ({
 
   .tagline {
     color: var(--muted);
+  }
+
+  &.minimal {
+    align-items: flex-start;
+    background: none;
+    min-height: 0;
+    padding: var(--spacer);
+
+    .avatar {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    span {
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      grid-column: 2;
+    }
   }
 }
 </style>

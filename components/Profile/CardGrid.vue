@@ -1,7 +1,12 @@
 <template>
   <div class="grid">
     <slot>
-      <ProfileCard v-for="account in accounts" :account="account" :key="account.address" />
+      <ProfileCard
+        v-for="account in accounts"
+        :account="account"
+        :key="account.address"
+        :minimal="minimal"
+      />
     </slot>
   </div>
 </template>
@@ -9,6 +14,7 @@
 <script setup>
 defineProps({
   accounts: Array,
+  minimal: Boolean,
 })
 </script>
 

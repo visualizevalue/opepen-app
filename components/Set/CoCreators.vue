@@ -1,7 +1,7 @@
 <template>
   <Modal v-model:open="open" class="co-creator-modal extra-wide" compat>
     <h1>All {{ submission.name }} Co-Creators</h1>
-    <ProfileCardGrid :accounts="coCreators" />
+    <ProfileCardGrid :accounts="coCreators" minimal />
   </Modal>
 </template>
 
