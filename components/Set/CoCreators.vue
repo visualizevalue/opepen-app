@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model:open="open" class="co-creator-modal extra-wide" compat>
+  <Modal v-model:open="open" class="co-creator-modal" compat>
     <h1>{{ submission.name }} Co-Creators</h1>
     <ul>
       <li v-for="creator in coCreators" :key="creator.address">
