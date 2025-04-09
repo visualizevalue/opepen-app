@@ -31,8 +31,10 @@ const open = defineModel('open', { required: true })
     display: inline;
     color: var(--gray-z-6);
 
-    &:after {
-      content: ', ';
+    &:not(:last-child) {
+      &:after {
+        content: ', ';
+      }
     }
 
     a {
