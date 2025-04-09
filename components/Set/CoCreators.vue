@@ -33,7 +33,6 @@ const open = defineModel('open', { required: true })
 
     &:after {
       content: ', ';
-      text-decoration: none;
     }
 
     a {
