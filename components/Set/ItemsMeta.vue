@@ -159,8 +159,12 @@ const demandMetFor = computed(() => getDemandEditions(submission, 1))
 }
 
 .creators {
-  > span > * {
-    margin-right: 0.3em;
+  > span {
+    display: inline-flex;
+    align-items: baseline;
+    > * {
+      margin-right: 0.3em;
+    }
   }
 }
 </style>
