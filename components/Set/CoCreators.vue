@@ -1,7 +1,13 @@
 <template>
   <Modal v-model:open="open" class="co-creator-modal extra-wide" compat>
-    <h1>All {{ submission.name }} Co-Creators</h1>
-    <ProfileCardGrid :accounts="coCreators" minimal />
+    <h1>{{ submission.name }} Co-Creators</h1>
+    <ul>
+      <li v-for="creator in coCreators" :key="creator.address">
+        <NuxtLink :to="`/${id(creator)}`">
+          {{ creator.display }}
+        </NuxtLink>
+      </li>
+    </ul>
   </Modal>
 </template>
 
@@ -19,27 +25,23 @@ const open = defineModel('open', { required: true })
   display: grid;
   gap: var(--spacer-sm);
 
-  > h1 {
-    margin-bottom: var(--spacer-lg);
-  }
-}
-
-.co-creator-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--size-1);
-
-  > .co-creator {
-    white-space: nowrap;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    transition: all var(--speed);
+  li {
     @mixin ui-font;
+    line-height: var(--line-height-md);
+    display: inline;
     color: var(--gray-z-6);
 
-    &:--highlight {
-      color: var(--color);
+    &:after {
+      content: ', ';
+      text-decoration: none;
+    }
+
+    a {
+      transition: all var(--speed);
+
+      &:--highlight {
+        color: var(--color);
+      }
     }
   }
 }
