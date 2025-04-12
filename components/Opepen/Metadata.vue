@@ -75,7 +75,7 @@ const attributes = computed(() =>
 )
 
 const image = computed(() => imageURI(opepen.image))
-const pngImage = computed(() => `https://api.opepen.art/${opepen.token_id}/image`)
+const pngImage = computed(() => `https://api.opepen.art/${opepen.token_id}/render`)
 const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.image?.type)
 
