@@ -46,7 +46,14 @@
       </li>
       <li>
         <Icon type="download-cloud" />
-        <a href="#" @click.stop.prevent="download" class="no-style">Download Visual</a>
+        <template v-if="opepen.image?.type === 'svg'">
+          <a href="#" @click.stop.prevent="downloadPNG" class="no-style">Download PNG</a>
+          <Separator />
+          <a href="#" @click.stop.prevent="openSVG" class="no-style">SVG</a>
+        </template>
+        <template v-else>
+          <a href="#" @click.stop.prevent="download" class="no-style">Download Visual</a>
+        </template>
         <Separator />
         <a href="#" @click.stop.prevent="downloadStatsCard" class="no-style">Info Card</a>
       </li>
@@ -66,6 +73,7 @@ const attributes = computed(() =>
 )
 
 const image = computed(() => imageURI(opepen.image))
+const pngImage = computed(() => imageURI(opepen.image, "lg"))
 const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.image?.type)
 
@@ -82,6 +90,8 @@ const download = async () => {
     ? downloadImage(image.value, { name: `Opepen ${opepen.token_id}` })
     : open(image.value, '_blank')
 }
+const downloadPNG = () => downloadImage(pngImage.value, { name: `Opepen ${opepen.token_id}` })
+const openSVG = () => open(image.value, '_blank')
 const downloadStatsCard = async () => {
   return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`, {
     name: `Opepen Card ${opepen.token_id}`,
