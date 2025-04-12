@@ -47,7 +47,9 @@
       <li>
         <Icon type="download-cloud" />
         <template v-if="opepen.image?.type === 'svg'">
-          <a href="#" @click.stop.prevent="downloadPNG" class="no-style">Download PNG</a>
+          <a :href="pngImage" @click.stop.prevent="downloadPNG" class="no-style">
+            Download PNG
+          </a>
           <Separator />
           <a href="#" @click.stop.prevent="openSVG" class="no-style">SVG</a>
         </template>
@@ -73,7 +75,7 @@ const attributes = computed(() =>
 )
 
 const image = computed(() => imageURI(opepen.image))
-const pngImage = computed(() => imageURI(opepen.image, "lg"))
+const pngImage = computed(() => `https://api.opepen.art/${opepen.token_id}/image`)
 const download = async () => {
   const isStatic = ['png', 'jpg', 'jpeg'].includes(opepen.image?.type)
 
