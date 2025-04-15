@@ -180,7 +180,7 @@ const groupedSubmissions = computed(() => {
 
   &.summary-row {
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--speed) ease;
 
     &:hover {
       background-color: var(--gray-z-2);
@@ -249,7 +249,7 @@ const groupedSubmissions = computed(() => {
 }
 
 .expand-icon {
-  transition: transform 0.2s ease;
+  transition: transform var(--speed) ease;
   flex-shrink: 0;
   margin-right: var(--size-1);
 
@@ -260,7 +260,7 @@ const groupedSubmissions = computed(() => {
 
 .expand-enter-active,
 .expand-leave-active {
-  transition: all 0.2s ease;
+  transition: all var(--speed) ease;
   overflow: hidden;
 }
 .expand-enter-from,
