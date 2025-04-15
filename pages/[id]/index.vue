@@ -49,6 +49,8 @@
 
     <DelegatedOpepen :address="account.address" />
 
+    <ProfileOptInHistory :address="account.address" />
+
     <!-- <AdminMenuFloating> -->
     <!--   <Button :to="`/settings/${account.address}`"> -->
     <!--     <Icon type="settings" /> -->
