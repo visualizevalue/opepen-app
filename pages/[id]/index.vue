@@ -27,8 +27,15 @@
         <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template>
       </SectionTitle>
 
-      <OpepenGrid :url="`${url}/opepen`" :key="`${account.address}-opepen`" :limit="80" />
+      <OpepenGrid
+        :url="`${url}/opepen`"
+        :key="`${account.address}-opepen`"
+        :limit="80"
+        :minimal="false"
+      />
     </section>
+
+    <DelegatedOpepen :address="account.address" />
 
     <section v-if="account.burned_opepen_count">
       <SectionTitle>
@@ -44,10 +51,9 @@
         :limit="80"
         :subline="(token) => `Burned Opepen #${token.opepen.token_id}`"
         :link="(token) => `/opepen/burned/${token.token_id}`"
+        :minimal="false"
       />
     </section>
-
-    <DelegatedOpepen :address="account.address" />
 
     <ProfileOptInHistory :address="account.address" />
 

@@ -12,6 +12,7 @@
       :token="token"
       :set="token.data?.edition || 40"
       :subline="subline(token)"
+      :minimal="minimal"
     />
   </PaginatedContent>
 </template>
@@ -37,6 +38,10 @@ defineProps({
   link: {
     type: Function,
     default: (token) => `/opepen/${token.token_id}`,
+  },
+  minimal: {
+    type: Boolean,
+    default: true,
   },
 })
 </script>
