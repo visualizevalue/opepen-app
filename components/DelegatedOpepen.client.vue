@@ -11,6 +11,7 @@
         :key="token.token_id"
         :token="token"
         :set="token.data?.edition || 40"
+        :minimal="false"
       />
     </div>
   </section>

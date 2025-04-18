@@ -1,24 +1,55 @@
 <template>
-  <Image :image="token.image" version="sm">
-    <div class="meta">
-      <h1>#{{ token.token_id }}</h1>
-      <p>{{ subline }}</p>
+  <div v-if="minimal">
+    <Image :image="token.image" version="sm">
+      <div class="meta">
+        <h1>#{{ token.token_id }}</h1>
+        <p>{{ subline }}</p>
+      </div>
+
+      <CardLink :to="uri || `/opepen/${token.token_id}`">
+        <span>View #{{ token.token_id }}</span>
+      </CardLink>
+    </Image>
+  </div>
+
+  <Card v-else class="opepen-card-full">
+    <div class="wrapper">
+      <Image :image="token.image" version="sm" />
+
+      <h1>
+        <small>
+          <span v-if="token.set_id">Set {{ pad(token.set_id, 3) }}</span>
+          <span class="edition" v-if="token.data?.edition">1/{{ token.data?.edition }}</span>
+        </small>
+        <span>{{ opepenName || 'Unrevealed' }}</span>
+      </h1>
     </div>
 
     <CardLink :to="uri || `/opepen/${token.token_id}`">
       <span>View #{{ token.token_id }}</span>
     </CardLink>
-  </Image>
+  </Card>
 </template>
 
 <script setup>
-const { token, uri, subline } = defineProps({
+const { token, uri, subline, minimal } = defineProps({
   token: Object,
   uri: String,
+  minimal: {
+    type: Boolean,
+    default: true,
+  },
   subline: {
     type: String,
     default: (props) => `1/${props.token.data.edition}`,
   },
+})
+
+const opepenName = computed(() => {
+  return (
+    token.metadata?.attributes?.find((a) => a.trait_type === 'Opepen')?.value ||
+    token.metadata?.name // for burned opepen
+  )
 })
 </script>
 
@@ -102,6 +133,47 @@ const { token, uri, subline } = defineProps({
       right: 0;
       bottom: 0;
       opacity: 0.00001;
+    }
+  }
+}
+
+.opepen-card-full {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  padding: 0;
+
+  .wrapper {
+    display: grid;
+    height: 100%;
+    gap: var(--spacer-xs);
+    padding: var(--size-1);
+  }
+
+  h1 {
+    display: grid;
+    gap: var(--spacer-xs);
+    padding: var(--spacer-xs);
+    @mixin ui-font;
+    font-size: var(--font-xs);
+    font-weight: var(--ui-font-weight);
+    font-family: var(--ui-font-family);
+    text-transform: var(--ui-text-transform);
+    letter-spacing: var(--ui-letter-spacing);
+    line-height: var(--ui-line-height);
+    color: var(--ui-color);
+    white-space: nowrap;
+
+    small {
+      color: var(--gray-z-6);
+      font-size: var(--font-xs);
+      display: flex;
+      align-items: center;
+      gap: var(--size-1);
+
+      .edition {
+        color: var(--ui-color);
+      }
     }
   }
 }
