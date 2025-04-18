@@ -22,6 +22,10 @@
     </section>
 
     <section v-if="account.opepen_count">
+      <ProfileCollectionOverview :address="account.address" />
+    </section>
+
+    <section v-if="account.opepen_count">
       <SectionTitle>
         Owned Opepen
         <template v-if="account.opepen_count > 12">({{ account.opepen_count }})</template>
