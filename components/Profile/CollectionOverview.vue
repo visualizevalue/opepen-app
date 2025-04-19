@@ -33,62 +33,52 @@ const props = defineProps({
 
 const EDITIONS = [1, 4, 5, 10, 20, 40]
 
-const { data } = await useApi(`/accounts/${props.address}/opepen`)
-const directlyOwnedOpepen = computed(() => data.value?.data || [])
-
+const { data: opepen } = await useApi(`/accounts/${props.address}/opepen`)
+const { data: sets } = await useApi(`/opepen/sets`)
 const address = computed(() => props.address)
 const { addresses: delegatedAddresses } = await useDelegation(address)
 const { opepen: delegatedOpepen } = await useOpepen(delegatedAddresses.value)
 
-const ownedOpepen = computed(() => {
-  return [...directlyOwnedOpepen.value, ...delegatedOpepen.value]
-})
+const revealedSets = computed(() => sets.value?.map(set => pad(set.id)) || [])
 
-const { data: setsData } = await useApi(`/opepen/sets`)
-const sets = computed(() => setsData.value || [])
-
-const tokensBySet = computed(() => {
-  const setMap = {}
-
-  ownedOpepen.value.forEach((token) => {
-    if (!token.set_id || !token.data?.edition) return
-
-    const setId = pad(token.set_id)
-    const edition = token.data.edition
-
-    if (!setMap[setId]) setMap[setId] = { editions: {} }
-    if (!setMap[setId].editions[edition]) setMap[setId].editions[edition] = []
-
-    setMap[setId].editions[edition].push(token)
-  })
-
-  return setMap
-})
-
-const ownedSets = computed(() => {
+const collectionData = computed(() => {
+  const tokens = [...opepen.value.data, ...delegatedOpepen.value]
   const setIds = new Set()
+  const setMap = {}
+  const perfectSets = []
 
-  ownedOpepen.value.forEach((token) => {
-    if (token.set_id) setIds.add(pad(token.set_id))
+  tokens.forEach(token => {
+    if (!token.set_id) return
+    
+    const setId = pad(token.set_id)
+    setIds.add(setId)
+
+    if (token.data?.edition) {
+      if (!setMap[setId]) setMap[setId] = { editions: {} }
+      if (!setMap[setId].editions[token.data.edition]) {
+        setMap[setId].editions[token.data.edition] = []
+      }
+      
+      setMap[setId].editions[token.data.edition].push(token)
+    }
   })
 
-  return Array.from(setIds)
+  const ownedSetIds = Array.from(setIds)
+  for (const setId of ownedSetIds) {
+    if (setMap[setId] && EDITIONS.every(edition => setMap[setId].editions[edition]?.length)) {
+      perfectSets.push(setId)
+    }
+  }
+
+  return { ownedSets: ownedSetIds, perfectSets }
 })
 
-const perfectSets = computed(() => {
-  return ownedSets.value.filter((setId) => {
-    const setData = tokensBySet.value[setId]
-    return setData && EDITIONS.every((edition) => !!setData.editions[edition]?.length)
-  })
-})
+const ownedSets = computed(() => collectionData.value.ownedSets)
+const perfectSets = computed(() => collectionData.value.perfectSets)
 
-const revealedSets = computed(() => {
-  return sets.value?.map((set) => pad(set.id)) || []
-})
-
-const isSetOwned = (setNumber) => ownedSets.value.includes(pad(setNumber))
-const isSetRevealed = (setNumber) => revealedSets.value.includes(pad(setNumber))
-const isPerfectSet = (setNumber) => perfectSets.value.includes(pad(setNumber))
+const isSetOwned = setNumber => ownedSets.value.includes(pad(setNumber))
+const isSetRevealed = setNumber => revealedSets.value.includes(pad(setNumber))
+const isPerfectSet = setNumber => perfectSets.value.includes(pad(setNumber))
 </script>
 
 <style scoped>
