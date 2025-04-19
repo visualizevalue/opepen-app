@@ -84,7 +84,7 @@ const isPerfectSet = setNumber => perfectSets.value.includes(pad(setNumber))
 <style scoped>
 .set-grid {
   display: grid;
-  grid-template-columns: repeat(40, 1fr);
+  grid-template-columns: repeat(25, 1fr);
   gap: var(--spacer-xs);
 }
 
@@ -117,5 +117,11 @@ const isPerfectSet = setNumber => perfectSets.value.includes(pad(setNumber))
   font-size: var(--ui-font-size);
   color: var(--gray-z-6);
   text-transform: uppercase;
+}
+
+@media (--md) {
+  .set-grid {
+    grid-template-columns: repeat(40, 1fr);
+  }
 }
 </style>
