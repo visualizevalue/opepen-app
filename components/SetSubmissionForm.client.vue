@@ -187,6 +187,22 @@
       />
     </Card>
 
+    <Card class="static" :disabled="disabled" v-if="!props.data.published_at">
+      <label class="type">
+        <span>Open For Participation</span>
+        <select v-model="openForParticipation" class="select" :disabled="disabled">
+          <option :value="false" default>Closed</option>
+          <option :value="true">Open</option>
+        </select>
+        <p
+          class="help-text"
+          v-if="openForParticipation"
+        >
+          This allows other creators to contribute ideas to your set while it's unpublished.
+        </p>
+      </label>
+    </Card>
+
     <Card class="static">
       <RichContentLinksForm
         title="Deep Dive Links"
@@ -228,6 +244,7 @@ const name40 = ref(props.data.edition40Name || '')
 const description = ref(props.data.description || '')
 const artist = ref(props.data.artist || account.value?.display)
 const creator = ref(props.data.creator)
+const openForParticipation = ref(!!props.data.open_for_participation)
 const withEmptyCoCreators = (list) => {
   if (!list.length || list[list.length - 1].address !== '') {
     list.push({ id: list.length, address: '' })
@@ -417,6 +434,7 @@ const saveData = computed(() => ({
   edition_20_name: name20.value,
   edition_40_name: name40.value,
   creator: creator.value,
+  open_for_participation: openForParticipation.value,
   co_creators: coCreators.value
     .map((c) => c.address?.trim().toLowerCase())
     .filter((address) => address),
@@ -595,6 +613,13 @@ form {
   .deep-dive {
     display: grid;
     gap: var(--size-5);
+  }
+
+  .help-text {
+    @mixin ui-font;
+    color: var(--muted);
+    font-size: var(--font-xs);
+    margin-top: var(--spacer-xs);
   }
 }
 </style>

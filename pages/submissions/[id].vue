@@ -7,6 +7,12 @@
 
       <SetItemsMeta :submission="submission" />
 
+      <SetParticipation
+        v-if="submission.open_for_participation === true && submission.published_at === null"
+        :submission="submission"
+        @refresh="refresh"
+      />
+
       <section v-if="submission.richContentLinks?.length" class="deep-dive">
         <SectionTitle>Deep Dive</SectionTitle>
         <RichContentLinks :links="submission.richContentLinks" />
