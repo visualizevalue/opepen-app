@@ -4,7 +4,7 @@
       <SectionTitle>Participate in this set</SectionTitle>
 
       <p class="description">
-        The creator has opened this set for participation. You can contribute your own images
+        The creator has opened this set for co-creation. You can contribute your own renditions
         for consideration.
       </p>
 
