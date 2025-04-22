@@ -90,7 +90,7 @@
           <span>Browse more</span>
         </Button>
       </header>
-      <SetCardGrid :submissions="featuredSubmissions" minimal />
+      <SetCardGrid :submissions="featuredSubmissions" />
     </section>
 
     <section class="artists">
