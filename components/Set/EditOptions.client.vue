@@ -10,6 +10,11 @@
     </template>
   </Dropdown>
 
+  <div v-if="showConfirmation" class="confirmation">
+    <Icon type="check" />
+    <span>Link copied to clipboard</span>
+  </div>
+
   <Confirm
     key="publish"
     v-model:open="confirmPublish"
@@ -74,6 +79,7 @@ const { submission, dataComplete, refresh } = defineProps<{
 const emit = defineEmits(['save'])
 
 const confirmDelete = ref(false)
+const showConfirmation = ref(false)
 const { execute: executeDelete } = await useApiDelete(`/set-submissions/${submission.uuid}`)
 const confirmDeletion = async () => {
   if (prompt(`Are you absolutely sure? Type "DELETE" to confirm`) !== 'DELETE') return
@@ -133,6 +139,18 @@ const items = computed(() => {
       text: 'View',
       icon: 'eye',
     },
+    {
+      onClick: () => {
+        const url = `${window.location.origin}/submissions/${submission.uuid}`
+        navigator.clipboard.writeText(url)
+        showConfirmation.value = true
+        setTimeout(() => {
+          showConfirmation.value = false
+        }, 3000)
+      },
+      text: 'Share Preview',
+      icon: 'clipboard',
+    },
     isAdmin.value
       ? {
           onClick: () => (confirmShadow.value = true),
@@ -160,6 +178,42 @@ const showAlert = (msg: string) => alert(msg)
     width: var(--size-4);
     height: var(--size-4);
     color: var(--muted);
+  }
+}
+
+.confirmation {
+  position: fixed;
+  bottom: var(--spacer);
+  right: var(--spacer);
+  background-color: var(--gray-z-2);
+  padding: var(--spacer-sm);
+  border-radius: var(--border-radius);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out forwards;
+  display: flex;
+  align-items: center;
+  font-size: var(--ui-font-size);
+  font-family: var(--ui-font-family);
+  font-weight: var(--ui-font-weight);
+  letter-spacing: var(--ui-letter-spacing);
+  text-transform: var(--ui-text-transform);
+  border: var(--border);
+
+  > .icon {
+    width: var(--size-4);
+    height: var(--size-4);
+    margin-right: var(--spacer-sm);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
