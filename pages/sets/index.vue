@@ -21,7 +21,7 @@ useMetaData({
                 that are revealed in "sets" (batches of 80 tokens) as more and more artists
                 contribute to the protocol and curators vote on the inclusion of art
                 in the permanent collection.`,
-  og: '/og/sets.png',
+  og: '/og/og.png',
 })
 </script>
 
