@@ -1,6 +1,6 @@
 <template>
   <div class="preview">
-    <Image :image="image" :version="version" class="appear" auto-embed>
+    <Image :image="image" :version="version" class="appear" auto-embed :aspect-ratio="1">
       <div class="meta">
         <h1>{{ name }}</h1>
         <p>{{ tagline }}</p>
