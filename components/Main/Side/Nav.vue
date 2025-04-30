@@ -69,6 +69,13 @@
         title="Generate Opepen"
         subline="Edit Opepen with natural language"
         @click="close"
+      />
+
+      <MainSideNavLink
+        to="/contribute"
+        title="Contribute Opepen"
+        subline="Submissions open for participation"
+        @click="close"
         badge="new"
       />
     </section>
