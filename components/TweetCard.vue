@@ -1,10 +1,10 @@
 <template>
   <Card class="static tweet-card">
     <a :href="authorUrl" target="_blank" rel="noopener noreferrer" class="tweet-header">
-      <img 
-        :src="avatarURL" 
-        alt="Profile" 
-        class="avatar" 
+      <img
+        :src="avatarURL"
+        alt="Profile"
+        class="avatar"
         @error="handleImageError"
         ref="avatarImage"
       />
