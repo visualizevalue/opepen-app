@@ -198,7 +198,7 @@
           class="help-text"
           v-if="openForParticipation"
         >
-          This allows other creators to contribute ideas to your set while it's unpublished.
+          This allows other creators to contribute ideas to your set.
         </p>
       </label>
     </Card>
