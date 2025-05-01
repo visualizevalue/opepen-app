@@ -8,7 +8,7 @@
       <SetItemsMeta :submission="submission" />
 
       <SetParticipation
-        v-if="submission.open_for_participation === true && submission.published_at === null"
+        v-if="submission.open_for_participation === true"
         :submission="submission"
         @refresh="refresh"
       />
