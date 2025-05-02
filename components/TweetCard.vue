@@ -1,7 +1,7 @@
 <template>
   <Card class="static tweet-card">
     <a :href="authorUrl" target="_blank" rel="noopener noreferrer" class="tweet-header">
-      <img v-if="tweet.profile_image_url" :src="avatarURL" alt="Profile" class="avatar" />
+      <img :src="avatarURL" alt="Profile" class="avatar" @error="handleImageError" />
 
       <div class="author">
         <div class="author-name">
@@ -58,13 +58,7 @@
 const { tweet } = defineProps<{ tweet: any }>()
 
 const emit = defineEmits(['deleted'])
-
-const avatarURL = computed(() => {
-  if (tweet.profile_image_url) {
-    return tweet.profile_image_url.replace('_normal', '')
-  }
-  return tweet.profile_image_url
-})
+const avatarURL = ref<string>(tweet.profile_image_url.replace('_normal', ''))
 
 const tweetUrl = computed(() =>
   tweet.username && tweet.tweet_id
@@ -88,6 +82,10 @@ async function deleteTweet() {
 
 function selectBestVariant(variants: any[]): string {
   return variants?.sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))[0]?.url || ''
+}
+
+function handleImageError() {
+  avatarURL.value = '/solid.svg'
 }
 </script>
 
