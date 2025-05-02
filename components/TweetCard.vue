@@ -58,13 +58,7 @@
 const { tweet } = defineProps<{ tweet: any }>()
 
 const emit = defineEmits(['deleted'])
-const avatarURL = ref<string>()
-watchEffect(() => {
-  avatarURL.value =
-    '_normal'.indexOf(tweet.profile_image_url) > -1
-      ? tweet.profile_image_url.replace('_normal', '')
-      : tweet.profile_image_url
-})
+const avatarURL = ref<string>(tweet.profile_image_url.replace('_normal', ''))
 
 const tweetUrl = computed(() =>
   tweet.username && tweet.tweet_id
