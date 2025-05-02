@@ -98,9 +98,7 @@ function selectBestVariant(variants: any[]): string {
 }
 
 function handleImageError() {
-  if (avatarImage.value) {
-    avatarImage.value.src = '/solid.svg'
-  }
+  avatarImage.value.src = '/solid.svg'
 }
 </script>
 
