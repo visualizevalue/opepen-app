@@ -1,13 +1,7 @@
 <template>
   <Card class="static tweet-card">
     <a :href="authorUrl" target="_blank" rel="noopener noreferrer" class="tweet-header">
-      <img
-        :src="avatarURL"
-        alt="Profile"
-        class="avatar"
-        @error="handleImageError"
-        ref="avatarImage"
-      />
+      <img :src="avatarURL" alt="Profile" class="avatar" @error="handleImageError" />
 
       <div class="author">
         <div class="author-name">
@@ -64,13 +58,12 @@
 const { tweet } = defineProps<{ tweet: any }>()
 
 const emit = defineEmits(['deleted'])
-const avatarImage = ref(null)
-
-const avatarURL = computed(() => {
-  if (tweet.profile_image_url) {
-    return tweet.profile_image_url.replace('_normal', '')
-  }
-  return tweet.profile_image_url
+const avatarURL = ref<string>()
+watchEffect(() => {
+  avatarURL.value =
+    '_normal'.indexOf(tweet.profile_image_url) > -1
+      ? tweet.profile_image_url.replace('_normal', '')
+      : tweet.profile_image_url
 })
 
 const tweetUrl = computed(() =>
@@ -98,7 +91,7 @@ function selectBestVariant(variants: any[]): string {
 }
 
 function handleImageError() {
-  avatarImage.value.src = '/solid.svg'
+  avatarURL.value = '/solid.svg'
 }
 </script>
 
