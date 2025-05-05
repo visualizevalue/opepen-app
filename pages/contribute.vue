@@ -1,5 +1,5 @@
 <template>
-  <SubmissionsList :base-params="{ status: 'participation' }" :default-sort="'latest'">
+  <SubmissionsList :base-params="{ status: 'participation' }" :default-sort="'latest'" :sort-options="sortOptions" :query-map="queryMap">
     <template #title>
       <SectionTitle class="visible-md-flex">Open for Participation</SectionTitle>
     </template>
@@ -11,6 +11,20 @@
 </template>
 
 <script setup lang="ts">
+const sortOptions = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'earliest', label: 'Earliest' },
+  { value: 'contributors', label: 'Most Contributors' },
+  { value: 'random', label: 'Random' },
+]
+
+const queryMap = {
+  latest: `-created_at`,
+  earliest: `created_at`,
+  contributors: `-contributors_count`,
+  random: `dailyRandom`,
+}
+
 useMetaData({
   title: `Contribute to Sets | Opepen`,
   description:
