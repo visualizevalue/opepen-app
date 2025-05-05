@@ -34,7 +34,7 @@
       <div class="contributions-header">
         <SectionTitle>Contributions ({{ props.submission.contributions_count }})</SectionTitle>
         <span class="contributor-count">
-          {{ props.submission.contributors_count }} Contributors
+          {{ props.submission.contributors_count }} {{ props.submission.contributors_count > 1 ? 'Contributors' : 'Contributor' }}
         </span>
       </div>
 
