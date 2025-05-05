@@ -46,7 +46,7 @@
           @click="openImage(participation)"
         >
           <div class="participation-image">
-            <Image :image="participation.image" />
+            <Image :image="participation.image" version="sm" />
 
             <button
               v-if="isAdmin || isSetCreator"
