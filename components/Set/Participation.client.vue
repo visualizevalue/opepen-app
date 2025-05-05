@@ -198,7 +198,7 @@ const deleteParticipation = async (participation) => {
 .contributions-header {
   @mixin ui-font;
   display: flex;
-  row-gap: var(--spacer);
+  flex-direction: column;
   color: var(--gray-z-6);
   font-size: var(--ui-font-size);
   text-transform: var(--ui-text-transform);
@@ -206,12 +206,11 @@ const deleteParticipation = async (participation) => {
   font-weight: var(--ui-font-weight);
 
   @media (--md) {
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
   }
 
   .contributor-count {
-    display: block;
     margin-top: var(--spacer-sm);
 
     @media (--md) {
