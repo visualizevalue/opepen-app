@@ -30,12 +30,12 @@
       </div>
     </section>
 
-    <section v-if="props.submission.participationImages?.length" class="participations">
+    <section v-if="props.submission.contributions_count" class="participations">
       <div class="contributions-header">
-        <SectionTitle>
-          Contributions ({{ props.submission.participationImages.length }})
-        </SectionTitle>
-        <span class="contributor-count">{{ contributorsCount }} Contributors</span>
+        <SectionTitle>Contributions ({{ props.submission.contributions_count }})</SectionTitle>
+        <span class="contributor-count">
+          {{ props.submission.contributors_count }} Contributors
+        </span>
       </div>
 
       <div class="participation-grid">
@@ -99,12 +99,6 @@ const participationImages = ref([])
 const saving = ref(false)
 const deleting = ref(null)
 const errorMessage = ref(null)
-const contributorsCount = computed(() => {
-  const uniqueContributors = new Set(
-    props.submission.participationImages.map((p) => p.creator?.address),
-  )
-  return uniqueContributors.size
-})
 const imageModalOpen = ref(false)
 const selectedImage = ref(null)
 const selectedCreatorName = ref('')
