@@ -30,12 +30,12 @@
       </div>
     </section>
 
-    <section v-if="props.submission.participationImages?.length" class="participations">
+    <section v-if="props.submission.contributions_count" class="participations">
       <div class="contributions-header">
-        <SectionTitle>
-          Contributions ({{ props.submission.participationImages.length }})
-        </SectionTitle>
-        <span class="contributor-count">{{ contributorsCount }} Contributors</span>
+        <SectionTitle>Contributions ({{ props.submission.contributions_count }})</SectionTitle>
+        <span class="contributor-count">
+          {{ props.submission.contributors_count }} {{ props.submission.contributors_count > 1 ? 'Contributors' : 'Contributor' }}
+        </span>
       </div>
 
       <div class="participation-grid">
@@ -99,12 +99,6 @@ const participationImages = ref([])
 const saving = ref(false)
 const deleting = ref(null)
 const errorMessage = ref(null)
-const contributorsCount = computed(() => {
-  const uniqueContributors = new Set(
-    props.submission.participationImages.map((p) => p.creator?.address),
-  )
-  return uniqueContributors.size
-})
 const imageModalOpen = ref(false)
 const selectedImage = ref(null)
 const selectedCreatorName = ref('')
@@ -198,7 +192,7 @@ const deleteParticipation = async (participation) => {
 .contributions-header {
   @mixin ui-font;
   display: flex;
-  row-gap: var(--spacer);
+  flex-direction: column;
   color: var(--gray-z-6);
   font-size: var(--ui-font-size);
   text-transform: var(--ui-text-transform);
@@ -206,12 +200,11 @@ const deleteParticipation = async (participation) => {
   font-weight: var(--ui-font-weight);
 
   @media (--md) {
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
   }
 
   .contributor-count {
-    display: block;
     margin-top: var(--spacer-sm);
 
     @media (--md) {
