@@ -3,7 +3,7 @@
     class="image"
     :class="{
       loaded,
-      'custom-loading': !version && (isSVG || isVideo || is3d),
+      'custom-loading': !version && (isWebRendered || isVideo || is3d),
     }"
     @click="$emit('click')"
     :style="{ padding: `0 0 ${height}` }"
@@ -69,9 +69,9 @@ const is3d = computed(() =>
   ),
 )
 const isVideo = computed(() => ['mp4', 'webm'].includes(props.image?.type))
-const isSVG = computed(() => props.image?.type === 'svg')
+const isWebRendered = computed(() => ['svg', 'html'].includes(props.image?.type))
 const hasEmbed = computed(
-  () => props.embed || (uri.value && isSVG.value && !props.version && props.autoEmbed),
+  () => props.embed || (uri.value && isWebRendered.value && !props.version && props.autoEmbed),
 )
 // FIXME: Refactor this...
 const hasImageEmbed = computed(() => hasEmbed.value && props.embed?.endsWith('.gif'))
