@@ -30,18 +30,34 @@
       </div>
     </section>
 
-    <section v-if="props.submission.contributions_count" class="participations">
+    <section v-if="props.submission.contributions_count" class="contributions">
       <div class="contributions-header">
-        <SectionTitle>Contributions ({{ props.submission.contributions_count }})</SectionTitle>
-        <span class="contributor-count">
+        <SectionTitle>
+          {{ props.submission.contributions_count }}
+          {{ props.submission.contributions_count > 1 ? 'Contributions' : 'Contribution' }}
+          by
           {{ props.submission.contributors_count }}
-          {{ props.submission.contributors_count > 1 ? 'Contributors' : 'Contributor' }}
-        </span>
+          {{ props.submission.contributors_count > 1 ? 'Artists' : 'Artist' }}
+        </SectionTitle>
+        <div class="filter-buttons" v-if="userContributions.length">
+          <Button
+            :class="['filter-button', { active: showUserContributions }]"
+            @click="showUserContributions = true"
+          >
+            Mine ({{ userContributions.length }})
+          </Button>
+          <Button
+            :class="['filter-button', { active: !showUserContributions }]"
+            @click="showUserContributions = false"
+          >
+            All
+          </Button>
+        </div>
       </div>
 
       <div class="participation-grid">
         <div
-          v-for="(participation, index) in props.submission.participationImages"
+          v-for="(participation, index) in displayedParticipations"
           :key="index"
           class="participation-item"
           @click="openImage(participation)"
@@ -50,7 +66,7 @@
             <Image :image="participation.image" version="sm" />
 
             <button
-              v-if="isAdmin || isSetCreator"
+              v-if="isAdmin || isSetCreator || isUserContribution(participation)"
               class="delete-button"
               @click.stop="deleteParticipation(participation)"
             >
@@ -105,6 +121,27 @@ const selectedImage = ref(null)
 const selectedCreatorName = ref('')
 const selectedImageName = `${props.submission.name} Contribution`
 
+const showUserContributions = ref(false)
+
+const userContributions = computed(() => {
+  if (!currentAddress.value || !props.submission.participationImages) return []
+
+  return props.submission.participationImages.filter(
+    (participation) =>
+      participation.creator?.address?.toLowerCase() === currentAddress.value?.toLowerCase(),
+  )
+})
+const isUserContribution = (participation) => {
+  return participation.creator?.address?.toLowerCase() === currentAddress.value?.toLowerCase()
+}
+
+const displayedParticipations = computed(() => {
+  if (showUserContributions.value) {
+    return userContributions.value
+  }
+  return props.submission.participationImages || []
+})
+
 const openImage = (participation) => {
   selectedImage.value = participation.image
   selectedCreatorName.value = `By ${participation.creator?.display || participation.creator?.address}`
@@ -144,7 +181,9 @@ const store = async () => {
 }
 
 const deleteParticipation = async (participation) => {
-  if (!isAdmin.value && !isSetCreator.value) return
+  const isContributor =
+    participation.creator?.address?.toLowerCase() === currentAddress.value?.toLowerCase()
+  if (!isAdmin.value && !isSetCreator.value && !isContributor) return
 
   try {
     deleting.value = participation.id
@@ -166,7 +205,7 @@ const deleteParticipation = async (participation) => {
 
 <style scoped>
 .submit-participation,
-.participations {
+.contributions {
   display: flex;
   flex-direction: column;
   gap: var(--spacer);
@@ -193,7 +232,7 @@ const deleteParticipation = async (participation) => {
 .contributions-header {
   @mixin ui-font;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   color: var(--gray-z-6);
   font-size: var(--ui-font-size);
   text-transform: var(--ui-text-transform);
@@ -254,7 +293,7 @@ const deleteParticipation = async (participation) => {
 
   .delete-button {
     position: absolute;
-    z-index: 100;
+    z-index: 2;
     width: var(--size-5);
     height: var(--size-5);
     padding: var(--size-1);
@@ -326,5 +365,25 @@ const deleteParticipation = async (participation) => {
   @mixin ui-font;
   color: var(--muted) !important;
   font-size: var(--ui-font-size);
+}
+
+.filter-buttons {
+  display: flex;
+  gap: var(--size-1);
+  margin-top: var(--spacer);
+
+  @media (--md) {
+    margin-top: 0;
+  }
+
+  .filter-button {
+    @mixin ui-font;
+    font-size: var(--font-xs);
+    font-family: var(--ui-font-family);
+    background: var(--gray-z-2);
+    border-radius: var(--border-radius);
+    padding: var(--size-1) var(--size-2);
+    cursor: pointer;
+  }
 }
 </style>
