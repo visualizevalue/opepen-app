@@ -254,7 +254,7 @@ const deleteParticipation = async (participation) => {
 
   .delete-button {
     position: absolute;
-    z-index: 100;
+    z-index: 2;
     width: var(--size-5);
     height: var(--size-5);
     padding: var(--size-1);
