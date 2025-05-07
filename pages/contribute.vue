@@ -1,5 +1,10 @@
 <template>
-  <SubmissionsList :base-params="{ status: 'participation' }" :default-sort="'latest'" :sort-options="sortOptions" :query-map="queryMap">
+  <SubmissionsList
+    :base-params="{ status: 'participation' }"
+    :default-sort="'latest'"
+    :sort-options="sortOptions"
+    :query-map="queryMap"
+  >
     <template #title>
       <SectionTitle class="visible-md-flex">Open for Participation</SectionTitle>
     </template>

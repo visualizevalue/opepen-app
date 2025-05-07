@@ -39,7 +39,7 @@ const address = computed(() => props.address)
 const { addresses: delegatedAddresses } = await useDelegation(address)
 const { opepen: delegatedOpepen } = await useOpepen(delegatedAddresses.value)
 
-const revealedSets = computed(() => sets.value?.map(set => pad(set.id)) || [])
+const revealedSets = computed(() => sets.value?.map((set) => pad(set.id)) || [])
 
 const collectionData = computed(() => {
   const tokens = [...opepen.value.data, ...delegatedOpepen.value]
@@ -47,9 +47,9 @@ const collectionData = computed(() => {
   const setMap = {}
   const perfectSets = []
 
-  tokens.forEach(token => {
+  tokens.forEach((token) => {
     if (!token.set_id) return
-    
+
     const setId = pad(token.set_id)
     setIds.add(setId)
 
@@ -58,14 +58,17 @@ const collectionData = computed(() => {
       if (!setMap[setId].editions[token.data.edition]) {
         setMap[setId].editions[token.data.edition] = []
       }
-      
+
       setMap[setId].editions[token.data.edition].push(token)
     }
   })
 
   const ownedSetIds = Array.from(setIds)
   for (const setId of ownedSetIds) {
-    if (setMap[setId] && EDITIONS.every(edition => setMap[setId].editions[edition]?.length)) {
+    if (
+      setMap[setId] &&
+      EDITIONS.every((edition) => setMap[setId].editions[edition]?.length)
+    ) {
       perfectSets.push(setId)
     }
   }
@@ -76,9 +79,9 @@ const collectionData = computed(() => {
 const ownedSets = computed(() => collectionData.value.ownedSets)
 const perfectSets = computed(() => collectionData.value.perfectSets)
 
-const isSetOwned = setNumber => ownedSets.value.includes(pad(setNumber))
-const isSetRevealed = setNumber => revealedSets.value.includes(pad(setNumber))
-const isPerfectSet = setNumber => perfectSets.value.includes(pad(setNumber))
+const isSetOwned = (setNumber) => ownedSets.value.includes(pad(setNumber))
+const isSetRevealed = (setNumber) => revealedSets.value.includes(pad(setNumber))
+const isPerfectSet = (setNumber) => perfectSets.value.includes(pad(setNumber))
 </script>
 
 <style scoped>

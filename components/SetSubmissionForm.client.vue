@@ -194,10 +194,7 @@
           <option :value="false" default>Closed</option>
           <option :value="true">Open</option>
         </select>
-        <p
-          class="help-text"
-          v-if="openForParticipation"
-        >
+        <p class="help-text" v-if="openForParticipation">
           This allows other creators to contribute ideas to your set.
         </p>
       </label>

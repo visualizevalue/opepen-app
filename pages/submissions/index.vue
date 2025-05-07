@@ -1,9 +1,7 @@
 <template>
   <SubmissionsList :default-sort="'demand'" :sort-options="sortOptions" :query-map="queryMap">
     <template #title>
-      <SectionTitle class="visible-md-flex">
-        Submissions
-      </SectionTitle>
+      <SectionTitle class="visible-md-flex">Submissions</SectionTitle>
     </template>
 
     <template #default="{ items }">
