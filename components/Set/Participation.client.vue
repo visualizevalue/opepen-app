@@ -30,7 +30,7 @@
       </div>
     </section>
 
-    <section v-if="props.submission.contributions_count" class="participations">
+    <section v-if="props.submission.contributions_count" class="contributions">
       <div class="contributions-header">
         <SectionTitle>
           {{ props.submission.contributions_count }}
@@ -205,8 +205,7 @@ const deleteParticipation = async (participation) => {
 
 <style scoped>
 .submit-participation,
-.user-contributions,
-.participations {
+.contributions {
   display: flex;
   flex-direction: column;
   gap: var(--spacer);
