@@ -20,7 +20,9 @@ const image = computed(() =>
     ? data[`edition${edition}Image`]
     : `https://opepen.nyc3.cdn.digitaloceanspaces.com/token.svg`,
 )
-const version = computed(() => (image.value?.isAnimated === true ? '' : 'sm'))
+const version = computed(() =>
+  image.value?.isAnimated || image.value?.isWebRendered ? '' : 'sm',
+)
 
 const name = computed(() => (data ? data[`edition${edition}Name`] : `Unrevealed`))
 const tagline = computed(() => EDITIONS[edition]?.tagline)

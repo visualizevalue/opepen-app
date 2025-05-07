@@ -226,7 +226,6 @@ article.image {
 .image {
   .meta {
     user-select: none;
-    pointer-events: none;
     font-size: var(--font-sm);
     opacity: 0;
     position: absolute;
