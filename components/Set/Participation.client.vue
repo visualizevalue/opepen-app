@@ -30,6 +30,26 @@
       </div>
     </section>
 
+    <section v-if="userContributions.length" class="user-contributions">
+      <SectionTitle>Your Contributions</SectionTitle>
+
+      <div class="participation-grid">
+        <div
+          v-for="(participation, index) in userContributions"
+          :key="index"
+          class="participation-item"
+          @click="openImage(participation)"
+        >
+          <div class="participation-image">
+            <Image :image="participation.image" version="sm" />
+            <button class="delete-button" @click.stop="deleteParticipation(participation)">
+              <Icon type="x" :stroke-width="3" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section v-if="props.submission.contributions_count" class="participations">
       <div class="contributions-header">
         <SectionTitle>Contributions ({{ props.submission.contributions_count }})</SectionTitle>
@@ -105,6 +125,15 @@ const selectedImage = ref(null)
 const selectedCreatorName = ref('')
 const selectedImageName = `${props.submission.name} Contribution`
 
+const userContributions = computed(() => {
+  if (!currentAddress.value || !props.submission.participationImages) return []
+
+  return props.submission.participationImages.filter(
+    (participation) =>
+      participation.creator.address.toLowerCase() === currentAddress.value?.toLowerCase(),
+  )
+})
+
 const openImage = (participation) => {
   selectedImage.value = participation.image
   selectedCreatorName.value = `By ${participation.creator?.display || participation.creator?.address}`
@@ -144,7 +173,8 @@ const store = async () => {
 }
 
 const deleteParticipation = async (participation) => {
-  if (!isAdmin.value && !isSetCreator.value) return
+  const isContributor = participation.creator?.address?.toLowerCase() === currentAddress.value?.toLowerCase();
+  if (!isAdmin.value && !isSetCreator.value && !isContributor) return
 
   try {
     deleting.value = participation.id
@@ -166,6 +196,7 @@ const deleteParticipation = async (participation) => {
 
 <style scoped>
 .submit-participation,
+.user-contributions,
 .participations {
   display: flex;
   flex-direction: column;
