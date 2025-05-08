@@ -16,7 +16,7 @@
         {{ event.toAccount.display }}
       </NuxtLink>
       <span>
-        <template v-if="event.data?.price">⟠ {{ event.data.price.amount.native }}</template>
+        <template v-if="event.data?.price">⟠ {{ event.data.price.eth }}</template>
       </span>
       <NuxtLink :to="`https://etherscan.io/tx/${event.transaction_hash}`">
         <span>{{ formatDate(event.timestamp) }}</span>
