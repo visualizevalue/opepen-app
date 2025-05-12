@@ -57,8 +57,8 @@
 
       <div class="participation-grid">
         <div
-          v-for="(participation, index) in displayedParticipations"
-          :key="index"
+          v-for="participation in displayedParticipations"
+          :key="participation.id"
           class="participation-item"
           @click="openImage(participation)"
         >
