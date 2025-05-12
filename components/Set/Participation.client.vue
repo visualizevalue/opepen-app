@@ -57,21 +57,27 @@
 
       <div class="participation-grid">
         <div
-          v-for="(participation, index) in displayedParticipations"
-          :key="index"
+          v-for="participation in displayedParticipations"
+          :key="participation.id"
           class="participation-item"
           @click="openImage(participation)"
         >
           <div class="participation-image">
             <Image :image="participation.image" version="sm" />
 
-            <button
-              v-if="isAdmin || isSetCreator || isUserContribution(participation)"
-              class="delete-button"
-              @click.stop="deleteParticipation(participation)"
+            <div
+              v-if="isSetCreator || isUserContribution(participation) || isAdmin"
+              class="menu-container"
             >
-              <Icon type="x" :stroke-width="3" />
-            </button>
+              <SetParticipationMenu
+                :participation="participation"
+                :submission="props.submission"
+                :is-set-creator="isSetCreator"
+                :is-user-contribution="isUserContribution(participation)"
+                @refresh="emit('refresh')"
+                @click.stop
+              />
+            </div>
 
             <div class="creator-overlay">
               <div class="creator-info">
@@ -114,7 +120,6 @@ const isSetCreator = computed(
 const refreshKey = ref(1)
 const participationImages = ref([])
 const saving = ref(false)
-const deleting = ref(null)
 const errorMessage = ref(null)
 const imageModalOpen = ref(false)
 const selectedImage = ref(null)
@@ -177,28 +182,6 @@ const store = async () => {
     errorMessage.value = 'Failed to submit. Please try again.'
   } finally {
     saving.value = false
-  }
-}
-
-const deleteParticipation = async (participation) => {
-  const isContributor =
-    participation.creator?.address?.toLowerCase() === currentAddress.value?.toLowerCase()
-  if (!isAdmin.value && !isSetCreator.value && !isContributor) return
-
-  try {
-    deleting.value = participation.id
-
-    await $fetch(`${config.public.opepenApi}/participation/${participation.id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    })
-
-    emit('refresh')
-  } catch (error) {
-    console.error('Failed to delete participation:', error)
-    alert('Failed to delete participation. Please try again.')
-  } finally {
-    deleting.value = null
   }
 }
 </script>
@@ -291,29 +274,10 @@ const deleteParticipation = async (participation) => {
     transform: scale(1.05);
   }
 
-  .delete-button {
+  .menu-container {
     position: absolute;
-    z-index: 2;
-    width: var(--size-5);
-    height: var(--size-5);
-    padding: var(--size-1);
     top: var(--spacer-sm);
     right: var(--spacer-sm);
-    background: var(--semi-shade);
-    color: var(--color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color var(--speed);
-
-    &:hover {
-      background: var(--gray-z-3);
-    }
-
-    .icon {
-      display: block;
-      width: var(--size-3);
-    }
   }
 }
 

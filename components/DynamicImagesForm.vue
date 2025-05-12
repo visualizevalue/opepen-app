@@ -17,6 +17,11 @@
           store(4, edition4Images)
         }
       "
+      @delete="
+        (index) => {
+          deleteImage(4, index)
+        }
+      "
     />
 
     <MultiImageUpload
@@ -29,6 +34,11 @@
         ($event) => {
           edition5Images = $event
           store(5, edition5Images)
+        }
+      "
+      @delete="
+        (index) => {
+          deleteImage(5, index)
         }
       "
     />
@@ -45,6 +55,11 @@
           store(10, edition10Images)
         }
       "
+      @delete="
+        (index) => {
+          deleteImage(10, index)
+        }
+      "
     />
 
     <MultiImageUpload
@@ -57,6 +72,11 @@
         ($event) => {
           edition20Images = $event
           store(20, edition20Images)
+        }
+      "
+      @delete="
+        (index) => {
+          deleteImage(20, index)
         }
       "
     />
@@ -73,6 +93,11 @@
           store(40, edition40Images)
         }
       "
+      @delete="
+        (index) => {
+          deleteImage(40, index)
+        }
+      "
     />
   </div>
 </template>
@@ -85,7 +110,7 @@ const props = defineProps({
   dynamicSetImages: Object,
   disabled: Boolean,
 })
-const emit = defineEmits(['updated'])
+const emit = defineEmits(['updated', 'delete'])
 
 const { session, signIn } = useSignIn()
 
@@ -194,7 +219,7 @@ const store = async (edition, images) => {
   saving.value = true
 
   const submission = await $fetch(
-    `${config.public.opepenApi}/set-submissions/${props.setSubmissionId}/dynamic-images`,
+    `${config.public.opepenApi}/set-submissions/${props.setSubmissionId}/images`,
     {
       method: 'POST',
       credentials: 'include',
@@ -204,6 +229,33 @@ const store = async (edition, images) => {
           index: index + 1,
           uuid: img.uuid,
         })),
+      }),
+    },
+  )
+
+  saving.value = false
+  lastSaved.value = DateTime.now()
+
+  emit('updated', submission)
+}
+
+const deleteImage = async (edition, index) => {
+  if (!session.value) await signIn()
+  if (!session.value) return
+
+  saving.value = true
+
+  const submission = await $fetch(
+    `${config.public.opepenApi}/set-submissions/${props.setSubmissionId}/images`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({
+        images: [{
+          edition,
+          index: index + 1,
+          uuid: null,
+        }],
       }),
     },
   )

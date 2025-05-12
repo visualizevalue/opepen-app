@@ -47,7 +47,7 @@ const props = defineProps({
   maxFiles: Number,
   disabled: Boolean,
 })
-const emit = defineEmits(['stored', 'reset'])
+const emit = defineEmits(['stored', 'reset', 'delete'])
 
 const { ensureSignIn } = useSignIn()
 
@@ -119,6 +119,7 @@ const addFilesEvent = (event) => addFiles(event.target.files)
 
 const deleteFile = (idx) => {
   images.value.splice(idx, 1)
+  emit('delete', idx)
 }
 
 const reset = () => {

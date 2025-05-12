@@ -178,7 +178,7 @@
         </select>
       </label>
 
-      <DyanamicImagesForm
+      <DynamicImagesForm
         v-if="isDynamic && data.uuid"
         :set-submission-id="data.uuid"
         :dynamic-set-images="data.dynamicSetImages"
