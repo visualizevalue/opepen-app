@@ -92,6 +92,21 @@
           Set Signature
         </NuxtLink>
       </li>
+      <li v-if="revealed">
+        <Icon type="opensea" />
+        <NuxtLink
+          :to="`https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Set%22,%22values%22:[%22${submission.name}%22]}]`"
+          target="_blank"
+        >
+          Opensea
+        </NuxtLink>/
+        <NuxtLink
+          :to="`https://highlight.xyz/mint/ethereum:0x6339e5E072086621540D0362C4e3Cea0d643E114:0834a9ca0b26caec66dcd7b2c62e8e5d?attributes=%7B%22Set%22%3A%5B%22${submission.name}%22%5D%7D`"
+          target="_blank"
+        >
+          Highlight
+        </NuxtLink>
+      </li>
     </DescriptionList>
   </section>
 </template>
