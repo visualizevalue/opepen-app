@@ -98,13 +98,7 @@
           :to="`https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Set%22,%22values%22:[%22${submission.name}%22]}]`"
           target="_blank"
         >
-          Opensea
-        </NuxtLink>/
-        <NuxtLink
-          :to="`https://highlight.xyz/mint/ethereum:0x6339e5E072086621540D0362C4e3Cea0d643E114:0834a9ca0b26caec66dcd7b2c62e8e5d?attributes=%7B%22Set%22%3A%5B%22${submission.name}%22%5D%7D`"
-          target="_blank"
-        >
-          Highlight
+          Opensea ({{ totalListings }} listed)
         </NuxtLink>
       </li>
     </DescriptionList>
@@ -141,6 +135,11 @@ const openModal = () => {
 
 const demandExistsFor = computed(() => getDemandEditions(submission))
 const demandMetFor = computed(() => getDemandEditions(submission, 1))
+
+const { data: listings } = await useApi(`/opepen/sets/${submission.set_id}/stats/listings`)
+const totalListings = computed(() =>
+  Object.values(listings.value?.totals || {}).reduce((sum, count) => sum + count, 0),
+)
 </script>
 
 <style scoped>
