@@ -98,7 +98,8 @@
           :to="`https://opensea.io/collection/opepen-edition?traits=[{%22traitType%22:%22Set%22,%22values%22:[%22${submission.name}%22]}]`"
           target="_blank"
         >
-          Opensea ({{ totalListings }} listed)
+          Opensea
+          <span v-if="listingStatus === 'success'">({{ totalListings }} listed)</span>
         </NuxtLink>
       </li>
     </DescriptionList>
@@ -136,7 +137,19 @@ const openModal = () => {
 const demandExistsFor = computed(() => getDemandEditions(submission))
 const demandMetFor = computed(() => getDemandEditions(submission, 1))
 
-const { data: listings } = await useApi(`/opepen/sets/${submission.set_id}/stats/listings`)
+const listingsUrl = computed(() => `/opepen/sets/${submission.set_id}/stats/listings`)
+const {
+  data: listings,
+  execute: loadListings,
+  status: listingStatus,
+} = await useApi(listingsUrl, {
+  immediate: false,
+})
+watchEffect(() => {
+  if (submission.set_id) {
+    loadListings()
+  }
+})
 const totalListings = computed(() =>
   Object.values(listings.value?.totals || {}).reduce((sum, count) => sum + count, 0),
 )
