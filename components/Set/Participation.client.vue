@@ -62,7 +62,10 @@
           class="participation-item"
           @click="openImage(participation)"
         >
-          <div class="participation-image">
+          <div
+            class="participation-image"
+            :style="{ aspectRatio: props.submission.aspect_ratio || '1' }"
+          >
             <Image :image="participation.image" version="sm" />
 
             <div
