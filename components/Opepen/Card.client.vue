@@ -146,6 +146,8 @@ const opepenName = computed(() => {
   .wrapper {
     display: grid;
     height: 100%;
+    width: 100cqw;
+    overflow: hidden;
     gap: var(--spacer-xs);
     padding: var(--size-1);
   }
@@ -163,6 +165,8 @@ const opepenName = computed(() => {
     line-height: var(--ui-line-height);
     color: var(--ui-color);
     white-space: nowrap;
+    width: calc(100cqw - var(--size-1) * 2);
+    overflow: hidden;
 
     small {
       color: var(--gray-z-6);
