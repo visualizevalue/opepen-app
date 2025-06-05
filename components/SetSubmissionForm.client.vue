@@ -17,6 +17,21 @@
       </Actions>
     </PageHeader>
 
+    <Alert v-if="!hasPreviewImages">
+      <p>Base your art on the opepen schematics...</p>
+
+      <Actions>
+        <Button
+          to="https://raw.githubusercontent.com/visualizevalue/opepen-api/refs/heads/main/app/Services/OpepenSVG/opepen-schematics.svg"
+          target="_blank"
+          class="small"
+        >
+          <Icon type="external-link" />
+          <span>Opepen Schematics</span>
+        </Button>
+      </Actions>
+    </Alert>
+
     <Alert v-if="toSign" class="inline">
       <p>Artist Signature: You can sign your set via an onchain transaction.</p>
 
