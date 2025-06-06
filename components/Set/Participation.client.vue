@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <section class="submit-participation">
+  <div
+    v-if="submission.open_for_participation === true"
+  >
+    <section v-if="canEdit" class="submit-participation">
       <SectionTitle>Participate in this set</SectionTitle>
 
       <p class="description">
@@ -73,6 +75,7 @@
               class="menu-container"
             >
               <SetParticipationMenu
+                v-if="canEdit"
                 :participation="participation"
                 :submission="props.submission"
                 :is-set-creator="isSetCreator"
@@ -130,6 +133,8 @@ const selectedCreatorName = ref('')
 const selectedImageName = `${props.submission.name} Contribution`
 
 const showUserContributions = ref(false)
+
+const canEdit = computed(() => !props.submission.published_at)
 
 const userContributions = computed(() => {
   if (!currentAddress.value || !props.submission.participationImages) return []

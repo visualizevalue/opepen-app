@@ -7,12 +7,6 @@
 
       <SetItemsMeta :submission="submission" />
 
-      <SetParticipation
-        v-if="submission.open_for_participation === true && !submission.published_at"
-        :submission="submission"
-        @refresh="refresh"
-      />
-
       <section v-if="submission.richContentLinks?.length" class="deep-dive">
         <SectionTitle>Deep Dive</SectionTitle>
         <RichContentLinks :links="submission.richContentLinks" />
@@ -26,6 +20,8 @@
         v-if="submission.edition_type === 'DYNAMIC'"
         :data="submission"
       />
+
+      <SetParticipation :submission="submission" @refresh="refresh" />
     </PageFrameSm>
   </ClientOnly>
 </template>
