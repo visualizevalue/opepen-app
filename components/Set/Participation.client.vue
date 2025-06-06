@@ -1,6 +1,8 @@
 <template>
   <div
     v-if="submission.open_for_participation === true"
+    :class="{ 'participation-complete': !canEdit }"
+    class="participation"
   >
     <section v-if="canEdit" class="submit-participation">
       <SectionTitle>Participate in this set</SectionTitle>
@@ -35,6 +37,7 @@
     <section v-if="props.submission.contributions_count" class="contributions">
       <div class="contributions-header">
         <SectionTitle>
+          {{ canEdit ? '' : 'Based on ' }}
           {{ props.submission.contributions_count }}
           {{ props.submission.contributions_count > 1 ? 'Contributions' : 'Contribution' }}
           by
@@ -251,6 +254,11 @@ const store = async () => {
 
   @media (--md) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.participation-complete .participation-grid {
+  @media (--md) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
