@@ -36,6 +36,14 @@ const tagline = computed(() => EDITIONS[edition]?.tagline)
     cursor: pointer;
     border-radius: var(--border-radius);
 
+    &.loaded {
+      background: var(--background);
+
+      :deep(.image) {
+        background: var(--background);
+      }
+    }
+
     :deep(.image) {
       border-radius: var(--border-radius);
     }

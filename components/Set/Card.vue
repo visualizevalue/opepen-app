@@ -175,6 +175,16 @@ const onImageLoad = () => (imageLoaded.value = true)
       grid-column: span 2;
       grid-row: span 2;
     }
+
+    > .image {
+      &.loaded {
+        background: var(--background);
+
+        :deep(.image) {
+          background: var(--background);
+        }
+      }
+    }
   }
 }
 
