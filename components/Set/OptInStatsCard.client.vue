@@ -64,7 +64,7 @@
       <div class="market-value">
         <p class="stat">
           {{ marketDemand.eth }}
-          <span class="muted">ETH</span>
+          <span class="muted">ETH ({{ marketDemand.usd }} USD)</span>
         </p>
 
         <p class="muted">
