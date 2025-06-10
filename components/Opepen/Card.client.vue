@@ -1,6 +1,6 @@
 <template>
   <div v-if="minimal">
-    <Image :image="token.image" version="sm" :aspect-ratio="1">
+    <Image :image="token.image" version="sm">
       <div class="meta">
         <h1>#{{ token.token_id }}</h1>
         <p>{{ subline }}</p>
