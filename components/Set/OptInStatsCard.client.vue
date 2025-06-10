@@ -60,6 +60,19 @@
         </tfoot>
       </Table>
 
+      <SectionTitle>Market Value</SectionTitle>
+      <div class="market-value">
+        <p class="stat">
+          {{ marketDemand.eth }}
+          <span class="muted">ETH</span>
+        </p>
+
+        <p class="muted">
+          Calculated by multiplying the number of opt-ins with the floor price for unrevealed
+          tokens within their respective edition bracket.
+        </p>
+      </div>
+
       <SetConsensusBreakdown
         v-if="submission.submission_stats?.holders.total"
         :submission="submission"
@@ -83,6 +96,8 @@ watch(now, () => {
 })
 
 const demand = computed(() => getDemandPercentage(submission))
+
+const marketDemand = await useSetEthDemand(submission)
 
 const demandColor = (edition: EditionType) => {
   const demand = getEditionDemandPercentage(submission, edition)
@@ -124,5 +139,24 @@ td:last-child {
   align-items: center;
   justify-content: flex-end;
   gap: var(--spacer-sm);
+}
+
+.market-value {
+  p {
+    @mixin ui-font;
+
+    &.muted {
+      color: var(--muted);
+    }
+  }
+
+  .stat {
+    font-size: var(--font-xl);
+    padding-bottom: var(--spacer-sm);
+
+    .muted {
+      font-size: var(--font-lg);
+    }
+  }
 }
 </style>

@@ -1,3 +1,5 @@
+import { formatEther } from 'viem'
+
 type EthPrice = {
   BTC: number // "BTC": 0.0435,
   USD: number // "USD": 2794.92,
@@ -76,5 +78,30 @@ export const useStats = async () => {
     day,
     stats,
     refresh,
+  }
+}
+
+export const useSetEthDemand = async (submission: SetSubmission) => {
+  const { stats } = await useStats()
+
+  let totalDemand = 0n
+
+  if (stats.value?.markets.floor.unrevealedEditions) {
+    for (const edition of EDITION_KEYS) {
+      console.log(
+        totalDemand,
+        edition,
+        submission.submission_stats?.demand[edition],
+        formatEther(BigInt(stats.value.markets.floor.unrevealedEditions[edition])),
+      )
+      totalDemand +=
+        BigInt(submission.submission_stats?.demand[edition] || 0) *
+        BigInt(stats.value.markets.floor.unrevealedEditions[edition])
+    }
+  }
+
+  return {
+    wei: totalDemand,
+    eth: formatEther(totalDemand),
   }
 }
