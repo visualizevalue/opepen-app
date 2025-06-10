@@ -1,6 +1,6 @@
 <template>
   <div v-if="minimal">
-    <Image :image="token.image" version="sm">
+    <Image :image="token.image" version="sm" :aspect-ratio="1">
       <div class="meta">
         <h1>#{{ token.token_id }}</h1>
         <p>{{ subline }}</p>
@@ -14,7 +14,7 @@
 
   <Card v-else class="opepen-card-full">
     <div class="wrapper">
-      <Image :image="token.image" version="sm" />
+      <Image :image="token.image" version="sm" :aspect-ratio="1" />
 
       <h1>
         <small>
@@ -85,9 +85,8 @@ const opepenName = computed(() => {
     :deep(.image) {
       border-bottom: var(--border);
     }
-
-    img {
-      border-bottom: var(--border);
+    :deep(img) {
+      background: var(--background);
     }
 
     .text {
