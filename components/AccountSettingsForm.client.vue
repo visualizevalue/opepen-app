@@ -173,8 +173,11 @@ const { execute } = await useApiPost(`/accounts/settings/${props.id}`, {
 const save = async () => {
   saving.value = true
   await execute()
-  await refresh()
-  await refreshAccount() // Update global cache
+
+  await Promise.all([
+    refresh(),
+    refreshAccount(), // Update global cache
+  ])
   lastSaved.value = DateTime.now()
   saving.value = false
 }
