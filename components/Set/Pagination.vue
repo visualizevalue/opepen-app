@@ -16,7 +16,7 @@
       <NuxtLink to="/sets">Sets</NuxtLink>
       <span class="separator">/</span>
       <span v-if="set.submission?.edition1Image" class="icon">
-        <Image :image="set.submission?.edition1Image" version="sm" />
+        <Image :image="set.submission?.edition1Image" version="sm" :aspect-ratio="1" />
       </span>
       <span>
         <span>
