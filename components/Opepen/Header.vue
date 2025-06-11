@@ -41,7 +41,6 @@ const title = computed(() => {
 
 <style scoped>
 header.opepen-header {
-  padding-top: calc(var(--main-content-height) / 2 - 50cqw - var(--size-8));
   display: flex;
   flex-direction: column;
   justify-content: center;
