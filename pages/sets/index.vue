@@ -4,8 +4,18 @@
       <SectionTitle>Permanent Collection</SectionTitle>
     </PageHeader>
 
-    <Progress :percent="parseInt((completeSets.length / 200) * 100)">
-      <span>{{ completeSets.length }} / 200</span>
+    <Progress
+      :percent="parseInt((completeSets.length / 200) * 100)"
+      :secondary-percent="parseInt(burnedPercentage)"
+      secondary-link="/opepen/burned"
+      class="progress"
+    >
+      <template #primary>
+        <span>{{ completeSets.length }} Sets Complete</span>
+      </template>
+      <template #secondary>
+        <span>{{ burnedPercentage }}% burned</span>
+      </template>
     </Progress>
 
     <SetCardGrid :submissions="submissions" />
@@ -14,6 +24,12 @@
 
 <script setup>
 const { completeSets, submissions } = await useSets()
+const config = useRuntimeConfig()
+
+const { data: burnedData } = await useFetch(`${config.public.opepenApi}/opepen/burned`)
+const burnedTokens = computed(() => burnedData.value.meta.total || 0)
+const totalTokens = 16000
+const burnedPercentage = computed(() => (burnedTokens.value / totalTokens) * 100)
 
 useMetaData({
   title: `Permanent Collection | Opepen`,
