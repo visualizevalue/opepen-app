@@ -84,7 +84,7 @@ const select = (token) => {
 }
 
 const burn = computed(() => async () => {
-  const { hash } = await writeContract($wagmi, {
+  const hash = await writeContract($wagmi, {
     address: config.public.opepenContract,
     abi: parseAbi([
       'function safeTransferFrom(address from, address to, uint256 tokenId) public',
