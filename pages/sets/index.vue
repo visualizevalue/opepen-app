@@ -29,7 +29,7 @@ const config = useRuntimeConfig()
 const { data: burnedData } = await useFetch(`${config.public.opepenApi}/opepen/burned`)
 const burnedTokens = computed(() => burnedData.value.meta.total || 0)
 const totalTokens = 16000
-const burnedPercentage = computed(() => (burnedTokens.value / totalTokens) * 100)
+const burnedPercentage = computed(() => ((burnedTokens.value / totalTokens) * 100).toFixed(2))
 
 useMetaData({
   title: `Permanent Collection | Opepen`,
