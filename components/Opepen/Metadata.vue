@@ -60,22 +60,6 @@
         <a href="#" @click.stop.prevent="downloadStatsCard" class="no-style">Info Card</a>
       </li>
     </DescriptionList>
-    <div class="burned" v-if="burned">
-      <div class="burned-opepen">
-        <div class="info">
-          <NuxtLink
-            :to="`/opepen/${opepen.opepen.token_id}`"
-            @click.stop.prevent
-            class="title"
-          >
-            <span>Opepen #{{ opepen.opepen.token_id }}</span>
-          </NuxtLink>
-          <span>{{ opepen.opepen.name }}</span>
-          <span>Burned on {{ formatDate(opepen.burned_at) }}</span>
-        </div>
-        <Image :image="opepen.opepen.image" />
-      </div>
-    </div>
   </section>
 </template>
 
@@ -125,46 +109,3 @@ const downloadStatsCard = async () => {
     })
 }
 </script>
-
-<style scoped>
-.burned {
-  margin-top: var(--spacer);
-  padding: var(--size-3);
-  border-radius: var(--border-radius);
-  background: var(--gray-z-0);
-
-  @media (--md) {
-    margin-top: var(--spacer-lg);
-    padding: var(--size-6);
-  }
-
-  .burned-opepen {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--size-2);
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--size-2);
-  }
-
-  span {
-    font-family: var(--ui-font-family);
-    font-size: var(--ui-font-size);
-    color: var(--gray-z-6);
-    text-transform: uppercase;
-  }
-
-  .title > span {
-    font-size: var(--font-lg);
-    color: var(--color);
-    cursor: pointer;
-
-    &:hover {
-      color: var(--gray-z-6);
-    }
-  }
-}
-</style>

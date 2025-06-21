@@ -2,6 +2,7 @@
   <PageFrameSm>
     <OpepenHeader :opepen="opepen" burned />
     <OpepenMetadata :opepen="opepen" burned />
+    <BurnedOpepenCard :opepen="opepen" />
     <OpepenEvents :opepen="opepen" burned />
   </PageFrameSm>
 </template>
