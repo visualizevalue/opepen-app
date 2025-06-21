@@ -29,7 +29,7 @@
       <li>
         <Icon type="opensea" />
         <NuxtLink
-          :to="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`"
+          :to="`https://opensea.io/assets/ethereum/${burned ? burnedContract : contract}/${opepen.token_id}`"
           target="_blank"
         >
           View On OpenSea
@@ -38,7 +38,7 @@
       <li>
         <Icon type="etherscan" />
         <NuxtLink
-          :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`"
+          :href="`https://etherscan.io/nft/${burned ? burnedContract : contract}/${opepen.token_id}`"
           target="_blank"
         >
           View On Etherscan
@@ -64,10 +64,14 @@
 </template>
 
 <script setup>
-const { opepen } = defineProps({ opepen: Object })
+const { opepen, burned = false } = defineProps({
+  opepen: Object,
+  burned: Boolean,
+})
 
 const config = useRuntimeConfig()
 const contract = config.public.opepenContract
+const burnedContract = config.public.burnedOpepenContract
 
 const submission = computed(() => opepen.set?.submission)
 const attributes = computed(() =>
@@ -95,8 +99,13 @@ const download = async () => {
 const downloadPNG = () => downloadImage(pngImage.value, { name: `Opepen ${opepen.token_id}` })
 const openSVG = () => open(image.value, '_blank')
 const downloadStatsCard = async () => {
-  return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`, {
-    name: `Opepen Card ${opepen.token_id}`,
-  })
+  if (!burned) {
+    return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`, {
+      name: `Opepen Card ${opepen.token_id}`,
+    })
+  } else
+    return downloadImage(`${config.public.opepenApi}/render/burned/${opepen.token_id}/og`, {
+      name: `Burned Opepen Card ${opepen.token_id}`,
+    })
 }
 </script>
