@@ -1,7 +1,7 @@
 <template>
   <PageFrameSm>
     <OpepenHeader :opepen="opepen" burned />
-    <!-- <OpepenMetadata :opepen="opepen" /> -->
+    <OpepenMetadata :opepen="opepen" burned />
     <!-- <OpepenEvents :opepen="opepen" /> -->
   </PageFrameSm>
 </template>

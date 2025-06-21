@@ -29,7 +29,7 @@
       <li>
         <Icon type="opensea" />
         <NuxtLink
-          :to="`https://opensea.io/assets/ethereum/${contract}/${opepen.token_id}`"
+          :to="`https://opensea.io/assets/ethereum/${burned ? burnedContract : contract}/${opepen.token_id}`"
           target="_blank"
         >
           View On OpenSea
@@ -38,7 +38,7 @@
       <li>
         <Icon type="etherscan" />
         <NuxtLink
-          :href="`https://etherscan.io/nft/${contract}/${opepen.token_id}`"
+          :href="`https://etherscan.io/nft/${burned ? burnedContract : contract}/${opepen.token_id}`"
           target="_blank"
         >
           View On Etherscan
@@ -60,14 +60,34 @@
         <a href="#" @click.stop.prevent="downloadStatsCard" class="no-style">Info Card</a>
       </li>
     </DescriptionList>
+    <div class="burned" v-if="burned">
+      <div class="burned-opepen">
+        <div class="info">
+          <NuxtLink
+            :to="`/opepen/${opepen.opepen.token_id}`"
+            @click.stop.prevent
+            class="title"
+          >
+            <span>Opepen #{{ opepen.opepen.token_id }}</span>
+          </NuxtLink>
+          <span>{{ opepen.opepen.name }}</span>
+          <span>Burned on {{ formatDate(opepen.burned_at) }}</span>
+        </div>
+        <Image :image="opepen.opepen.image" />
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup>
-const { opepen } = defineProps({ opepen: Object })
+const { opepen, burned = false } = defineProps({
+  opepen: Object,
+  burned: Boolean,
+})
 
 const config = useRuntimeConfig()
 const contract = config.public.opepenContract
+const burnedContract = config.public.burnedOpepenContract
 
 const submission = computed(() => opepen.set?.submission)
 const attributes = computed(() =>
@@ -95,8 +115,56 @@ const download = async () => {
 const downloadPNG = () => downloadImage(pngImage.value, { name: `Opepen ${opepen.token_id}` })
 const openSVG = () => open(image.value, '_blank')
 const downloadStatsCard = async () => {
-  return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`, {
-    name: `Opepen Card ${opepen.token_id}`,
-  })
+  if (!burned) {
+    return downloadImage(`${config.public.opepenApi}/render/opepen/${opepen.token_id}/og`, {
+      name: `Opepen Card ${opepen.token_id}`,
+    })
+  } else
+    return downloadImage(`${config.public.opepenApi}/render/burned/${opepen.token_id}/og`, {
+      name: `Burned Opepen Card ${opepen.token_id}`,
+    })
 }
 </script>
+
+<style scoped>
+.burned {
+  margin-top: var(--spacer);
+  padding: var(--size-3);
+  border-radius: var(--border-radius);
+  background: var(--gray-z-0);
+
+  @media (--md) {
+    margin-top: var(--spacer-lg);
+    padding: var(--size-6);
+  }
+
+  .burned-opepen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--size-2);
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+  }
+
+  span {
+    font-family: var(--ui-font-family);
+    font-size: var(--ui-font-size);
+    color: var(--gray-z-6);
+    text-transform: uppercase;
+  }
+
+  .title > span {
+    font-size: var(--font-lg);
+    color: var(--color);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--gray-z-6);
+    }
+  }
+}
+</style>
