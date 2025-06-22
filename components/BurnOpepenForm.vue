@@ -41,10 +41,12 @@
                 }
               "
             />
-            <Button v-if="!opepen" @click="modalOpen = true" type="button">
-              <Icon type="opepen" />
-              <span>Choose Opepen</span>
-            </Button>
+            <Actions>
+              <Button v-if="!opepen" @click="modalOpen = true" type="button">
+                <Icon type="opepen" />
+                <span>Choose Opepen</span>
+              </Button>
+            </Actions>
           </template>
           <template #confirm>
             <div class="secondary-content">
