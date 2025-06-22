@@ -50,7 +50,7 @@ const { opepen } = defineProps({
     :deep(.icon) {
       width: var(--size-4) !important;
       height: var(--size-4) !important;
-      color: var(--gray-z-6);
+      color: var(--muted);
     }
   }
 
