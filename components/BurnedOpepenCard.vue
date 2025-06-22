@@ -35,7 +35,7 @@ const { opepen } = defineProps({
   display: grid;
   grid-template-columns: 0.6fr 1fr;
   gap: var(--size-4);
-  
+
   .info {
     display: flex;
     flex-direction: column;
