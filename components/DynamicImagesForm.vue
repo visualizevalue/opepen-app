@@ -251,11 +251,13 @@ const deleteImage = async (edition, index) => {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
-        images: [{
-          edition,
-          index: index + 1,
-          uuid: null,
-        }],
+        images: [
+          {
+            edition,
+            index: index + 1,
+            uuid: null,
+          },
+        ],
       }),
     },
   )

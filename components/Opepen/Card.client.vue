@@ -1,12 +1,20 @@
 <template>
-  <div v-if="minimal">
-    <Image :image="token.image" version="sm">
+  <div
+    v-if="minimal"
+    :class="{ 'burned-card': burned }"
+    @mouseenter="burned && (showBurned = true)"
+    @mouseleave="burned && (showBurned = false)"
+  >
+    <Image
+      :image="burned ? (showBurned ? token.opepen.image : token.image) : token.image"
+      version="sm"
+    >
       <div class="meta">
         <h1>#{{ token.token_id }}</h1>
         <p>{{ subline }}</p>
       </div>
 
-      <CardLink :to="uri || `/opepen/${token.token_id}`">
+      <CardLink v-if="!selectable" :to="uri || `/opepen/${token.token_id}`">
         <span>View #{{ token.token_id }}</span>
       </CardLink>
     </Image>
@@ -25,14 +33,14 @@
       </h1>
     </div>
 
-    <CardLink :to="uri || `/opepen/${token.token_id}`">
+    <CardLink v-if="!selectable" :to="uri || `/opepen/${token.token_id}`">
       <span>View #{{ token.token_id }}</span>
     </CardLink>
   </Card>
 </template>
 
 <script setup>
-const { token, uri, subline, minimal } = defineProps({
+const { token, uri, subline, minimal, selectable, burned } = defineProps({
   token: Object,
   uri: String,
   minimal: {
@@ -43,7 +51,17 @@ const { token, uri, subline, minimal } = defineProps({
     type: String,
     default: (props) => `1/${props.token.data.edition}`,
   },
+  selectable: {
+    type: Boolean,
+    default: false,
+  },
+  burned: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const showBurned = ref(false)
 
 const opepenName = computed(() => {
   return (
@@ -178,6 +196,12 @@ const opepenName = computed(() => {
         color: var(--ui-color);
       }
     }
+  }
+}
+
+.burned-card {
+  :deep(.image img) {
+    transition: all 0.4s ease;
   }
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
   <PageFrameSm>
     <OpepenHeader :opepen="opepen" burned />
-    <!-- <OpepenMetadata :opepen="opepen" /> -->
-    <!-- <OpepenEvents :opepen="opepen" /> -->
+    <OpepenMetadata :opepen="opepen" burned />
+    <BurnedOpepenCard :opepen="opepen" />
+    <OpepenEvents :opepen="opepen" burned />
   </PageFrameSm>
 </template>
 

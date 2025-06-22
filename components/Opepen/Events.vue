@@ -29,13 +29,16 @@
 <script setup>
 import { zeroAddress } from 'viem'
 
-const { opepen } = defineProps({
+const { opepen, burned = false } = defineProps({
   opepen: Object,
+  burned: Boolean,
 })
 
 const config = useRuntimeConfig()
 
-const url = `${config.public.opepenApi}/opepen/${opepen.token_id}/events`
+const url = burned
+  ? `${config.public.opepenApi}/opepen/burned/${opepen.token_id}/events`
+  : `${config.public.opepenApi}/opepen/${opepen.token_id}/events`
 </script>
 
 <style scoped>

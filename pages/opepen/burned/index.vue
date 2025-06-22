@@ -5,6 +5,9 @@
         <SectionTitle>
           <span>Consensus Met ({{ meta.total || 0 }})</span>
         </SectionTitle>
+        <Actions class="actions-container">
+          <Button to="/opt-out">Opt out</Button>
+        </Actions>
       </PageHeader>
 
       <div class="opepen-grid">
@@ -14,6 +17,7 @@
           :uri="`/opepen/burned/${token.token_id}`"
           :token="token"
           :subline="`Burned Opepen #${token.opepen.token_id}`"
+          :burned="true"
         />
       </div>
     </template>
