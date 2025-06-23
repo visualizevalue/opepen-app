@@ -12,6 +12,8 @@
       </section>
 
       <SetOpepen :submission="submission" />
+
+      <SetCollectors :submission="submission" />
     </ClientOnly>
   </PageFrameSm>
 </template>
