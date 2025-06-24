@@ -16,11 +16,11 @@
         <Table>
           <thead>
             <tr>
+              <td class="rank-column"></td>
               <td></td>
-              <td></td>
-              <td>Opt Ins</td>
-              <td v-if="submission.set_id > 10">Max Reveals</td>
-              <td>Holdings</td>
+              <td class="opt-ins-column">Opt Ins</td>
+              <td v-if="submission.set_id > 10" class="max-reveals-column">Max Reveals</td>
+              <td class="holdings-column">Holdings</td>
             </tr>
           </thead>
           <tbody>
@@ -32,11 +32,13 @@
                   <span class="name">{{ collector.account.display }}</span>
                 </NuxtLink>
               </td>
-              <td>{{ dataLoading ? '...' : collector.subscriptions }}</td>
-              <td v-if="submission.set_id > 10">
+              <td class="opt-ins-column">
+                {{ dataLoading ? '...' : collector.subscriptions }}
+              </td>
+              <td v-if="submission.set_id > 10" class="max-reveals-column">
                 {{ dataLoading ? '...' : collector.maxReveals }}
               </td>
-              <td>{{ collector.count }}</td>
+              <td class="holdings-column">{{ collector.count }}</td>
             </tr>
           </tbody>
         </Table>
@@ -181,13 +183,18 @@ onMounted(async () => {
   }
 
   > p {
-    color: var(--muted);
-    font-family: var(--ui-font-family);
-    font-size: var(--ui-font-size);
-    font-weight: var(--ui-font-weight);
-    text-transform: var(--ui-text-transform);
-    letter-spacing: var(--ui-letter-spacing);
-    line-height: var(--ui-line-height);
+    display: none;
+
+    @media (--md) {
+      display: block;
+      color: var(--muted);
+      font-family: var(--ui-font-family);
+      font-size: var(--ui-font-size);
+      font-weight: var(--ui-font-weight);
+      text-transform: var(--ui-text-transform);
+      letter-spacing: var(--ui-letter-spacing);
+      line-height: var(--ui-line-height);
+    }
   }
 }
 
@@ -223,28 +230,35 @@ onMounted(async () => {
 table {
   width: 100%;
 
-  td:nth-child(1) {
+  .rank-column {
     display: table-cell;
     width: auto;
     text-align: center;
   }
 
-  td:nth-child(2) {
-    width: 100%;
-  }
-
-  td:nth-child(3),
-  td:nth-child(4) {
+  .opt-ins-column,
+  .max-reveals-column {
     display: none;
   }
-  td:nth-child(5) {
+
+  .holdings-column {
     width: auto;
     text-align: right;
   }
 
   @media (--md) {
-    td:nth-child(3),
-    td:nth-child(4) {
+    .rank-column {
+      display: table-cell;
+      width: auto;
+      text-align: center;
+    }
+
+    td:nth-child(2) {
+      width: 100%;
+    }
+
+    .opt-ins-column,
+    .max-reveals-column {
       display: table-cell;
       width: auto;
       text-align: right;
