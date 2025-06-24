@@ -4,8 +4,8 @@
       <header>
         <SectionTitle>Collectors</SectionTitle>
         <div class="header-buttons">
-          <Button @click="downloadCSV('subscribers')" class="button">Subscribers CSV</Button>
-          <Button v-if="submission.set_id" @click="downloadCSV('holders')" class="button">
+          <Button @click="downloadCSV('opt-ins')" class="small">Opt-In CSV</Button>
+          <Button v-if="submission.set_id" @click="downloadCSV('holders')" class="small">
             Holders CSV
           </Button>
         </div>
