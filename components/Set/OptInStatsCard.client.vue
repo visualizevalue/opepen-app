@@ -3,6 +3,9 @@
     <Card class="static">
       <header>
         <SectionTitle>Demand Stats</SectionTitle>
+        <Button v-if="isSetCreator || isAdmin" @click="downloadSubscribersCSV" class="button">
+          Subscribers CSV
+        </Button>
         <span v-if="lastUpdatedStr">
           <span class="visible-md">Last updated</span>
           {{ lastUpdatedStr }}
@@ -88,6 +91,10 @@ const { submission, lastUpdated } = defineProps<{
   lastUpdated: number
 }>()
 
+const isSetCreator = computed(
+  () => currentAddress.value?.toLowerCase() === submission.creator?.toLowerCase(),
+)
+
 const now = useNow()
 const lastUpdatedStr = ref()
 watch(now, () => {
@@ -103,6 +110,16 @@ const demandColor = (edition: EditionType) => {
   const demand = getEditionDemandPercentage(submission, edition)
 
   return demand >= 100 ? 'var(--success)' : demand >= 50 ? 'var(--yellow)' : 'var(--error)'
+}
+
+const downloadSubscribersCSV = async () => {
+  try {
+    const subscribers = await fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`)
+    const addresses = subscribers.map((subscriber) => subscriber.address)
+    downloadCsv(addresses, `${submission.name}-subscribers.csv`)
+  } catch (error) {
+    console.error('Failed to download subscribers CSV:', error)
+  }
 }
 </script>
 
@@ -123,6 +140,12 @@ header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+
+  > .button {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: var(--spacer);
+  }
 }
 
 .icon {
