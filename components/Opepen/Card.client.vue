@@ -1,6 +1,14 @@
 <template>
-  <div v-if="minimal" :class="{ 'burned-card': burned }" @mouseenter="burned && (showBurned = true)" @mouseleave="burned && (showBurned = false)">
-    <Image :image="burned ? (showBurned ? token.opepen.image : token.image) : token.image" version="sm">
+  <div
+    v-if="minimal"
+    :class="{ 'burned-card': burned }"
+    @mouseenter="burned && (showBurned = true)"
+    @mouseleave="burned && (showBurned = false)"
+  >
+    <Image
+      :image="burned ? (showBurned ? token.opepen.image : token.image) : token.image"
+      version="sm"
+    >
       <div class="meta">
         <h1>#{{ token.token_id }}</h1>
         <p>{{ subline }}</p>

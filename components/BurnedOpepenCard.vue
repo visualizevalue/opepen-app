@@ -35,7 +35,7 @@ const { opepen } = defineProps({
   display: grid;
   grid-template-columns: 0.6fr 1fr;
   gap: var(--size-4);
-  
+
   .info {
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@ const { opepen } = defineProps({
     :deep(.icon) {
       width: var(--size-4) !important;
       height: var(--size-4) !important;
-      color: var(--gray-z-6);
+      color: var(--muted);
     }
   }
 

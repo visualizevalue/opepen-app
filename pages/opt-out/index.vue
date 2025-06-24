@@ -65,8 +65,9 @@ useMetaData({
 <style>
 .about {
   font-size: var(--font-base);
+  container-type: inline-size;
 
-  @media (--md) {
+  @container (min-width: 45rem) {
     display: flex;
     flex-direction: row;
     gap: var(--size-6);

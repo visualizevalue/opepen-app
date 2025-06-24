@@ -41,10 +41,12 @@
                 }
               "
             />
-            <Button v-if="!opepen" @click="modalOpen = true" type="button">
-              <Icon type="opepen" />
-              <span>Choose Opepen</span>
-            </Button>
+            <Actions>
+              <Button v-if="!opepen" @click="modalOpen = true" type="button">
+                <Icon type="opepen" />
+                <span>Choose Opepen</span>
+              </Button>
+            </Actions>
           </template>
           <template #confirm>
             <div class="secondary-content">
@@ -90,12 +92,7 @@ const burn = computed(() => async () => {
       'function safeTransferFrom(address from, address to, uint256 tokenId) public',
     ]),
     functionName: 'safeTransferFrom',
-    args: [
-      address.value,
-      config.public.burnedOpepenContract,
-      // `0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a`,
-      BigInt(opepen.value?.token_id),
-    ],
+    args: [address.value, config.public.burnedOpepenContract, BigInt(opepen.value?.token_id)],
   })
 
   return hash
