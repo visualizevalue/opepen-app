@@ -62,59 +62,18 @@ const config = useRuntimeConfig()
 
 const showAll = ref(false)
 const collectors = ref([])
-const historyData = ref([])
 const subscribersData = ref([])
 const dataLoading = ref(true)
-
-const subscriberStats = computed(() => {
-  if (!historyData.value.length || !subscribersData.value.length) return {}
-
-  const optIns = {}
-  historyData.value.forEach((record) => {
-    const address = record.address.toLowerCase()
-    if (!optIns[address]) optIns[address] = new Set()
-
-    record.opepen_ids?.forEach((id) => {
-      if (record.is_opt_in) {
-        optIns[address].add(id)
-      } else {
-        optIns[address].delete(id)
-      }
-    })
-  })
-
-  const stats = {}
-
-  Object.entries(optIns).forEach(([address, ids]) => {
-    stats[address] = { optIns: ids.size, maxReveals: 0 }
-  })
-
-  subscribersData.value.forEach((subscriber) => {
-    const address = subscriber.address.toLowerCase()
-    const reveals = Object.values(subscriber.max_reveals || {}).reduce((a, b) => a + b, 0)
-
-    if (stats[address]) {
-      stats[address].maxReveals = reveals
-    }
-  })
-
-  return stats
-})
 
 const collectorsWithStats = computed(() => {
   if (!collectors.value.length) return []
 
-  return collectors.value.map((account) => {
-    const address = account.address?.toLowerCase()
-    const stats = subscriberStats.value[address] || { optIns: 0, maxReveals: 0 }
-
-    return {
-      account,
-      count: account.opepen_count || 0,
-      subscriptions: stats.optIns,
-      maxReveals: stats.maxReveals,
-    }
-  })
+  return collectors.value.map((account) => ({
+    account,
+    count: account.opepen_count || 0,
+    subscriptions: account.total_opt_ins || 0,
+    maxReveals: account.total_max_reveals || 0,
+  }))
 })
 
 const displayedCollectors = computed(() =>
@@ -142,13 +101,19 @@ onMounted(async () => {
     )
     collectors.value = collectorsResponse
 
-    const [history, subscribers] = await Promise.all([
-      fetchPaginated(`/set-submissions/${submission.uuid}/history`),
-      fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`),
-    ])
-
-    historyData.value = history
+    const subscribers = await fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`)
     subscribersData.value = subscribers
+
+    // fetch subscription stats for each collector (from history)
+    await Promise.all(
+      collectors.value.map(async (collector) => {
+        const stats = await $fetch(
+          `${config.public.opepenApi}/accounts/${collector.address}/set-submissions/${submission.uuid}/subscription-history`,
+        )
+        collector.total_opt_ins = stats.total_opt_ins || 0
+        collector.total_max_reveals = stats.total_max_reveals || 0
+      }),
+    )
   } catch (error) {
     console.error('Failed to fetch data:', error)
   } finally {
