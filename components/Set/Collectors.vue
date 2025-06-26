@@ -4,9 +4,11 @@
       <header>
         <SectionTitle>Collectors</SectionTitle>
         <div class="header-buttons">
-          <Button @click="downloadCSV('opt-ins')" class="small">Opt-In CSV</Button>
-          <Button v-if="submission.set_id" @click="downloadCSV('holders')" class="small">
-            Holders CSV
+          <Button :disabled="optInsLoading" @click="downloadOptInsCSV" class="small">
+            {{ optInsLoading ? 'Loading...' : 'Opt-In CSV' }}
+          </Button>
+          <Button :disabled="holdersLoading" @click="downloadHoldersCSV" class="small">
+            {{ holdersLoading ? 'Loading...' : 'Holders CSV' }}
           </Button>
         </div>
       </header>
@@ -54,6 +56,8 @@
 </template>
 
 <script setup>
+import { useAsyncState } from '@vueuse/core'
+
 const { submission } = defineProps({
   submission: Object,
 })
@@ -101,6 +105,24 @@ const downloadCSV = async (type) => {
     console.error('Failed to download CSV:', error)
   }
 }
+
+const { isLoading: optInsLoading, execute: downloadOptInsCSV } = useAsyncState(
+  async () => await downloadCSV('opt-ins'),
+  null,
+  {
+    immediate: false,
+    onError: (e) => console.error('CSV download failed:', e),
+  },
+)
+
+const { isLoading: holdersLoading, execute: downloadHoldersCSV } = useAsyncState(
+  async () => await downloadCSV('holders'),
+  null,
+  {
+    immediate: false,
+    onError: (e) => console.error('CSV download failed:', e),
+  },
+)
 
 onMounted(async () => {
   try {
