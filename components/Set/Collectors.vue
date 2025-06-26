@@ -62,7 +62,6 @@ const config = useRuntimeConfig()
 
 const showAll = ref(false)
 const collectors = ref([])
-const subscribersData = ref([])
 const dataLoading = ref(true)
 
 const collectorsWithStats = computed(() => {
@@ -86,23 +85,29 @@ const showLess = () => {
   showAll.value = false
 }
 
-const downloadCSV = (type) => {
-  const data = type === 'holders' ? collectors.value : subscribersData.value
-  if (!data?.length) return
-
-  const addresses = data.map((item) => item.address)
-  downloadCsv(addresses, `set-${submission.set_id}-${type}.csv`)
+const downloadCSV = async (type) => {
+  try {
+    if (type === 'holders') {
+      const addresses = collectors.value.map((collector) => collector.address)
+      downloadCsv(addresses, `set-${submission.set_id}-holders.csv`)
+    } else {
+      const subscribers = await fetchPaginated(
+        `/set-submissions/${submission.uuid}/subscribers`,
+      )
+      const addresses = subscribers.map((subscriber) => subscriber.address)
+      downloadCsv(addresses, `set-${submission.set_id}-opt-ins.csv`)
+    }
+  } catch (error) {
+    console.error('Failed to download CSV:', error)
+  }
 }
 
 onMounted(async () => {
   try {
-    const [nodeStatsResponse, subscribers] = await Promise.all([
-      $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`),
-      fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`),
-    ])
-
+    const nodeStatsResponse = await $fetch(
+      `${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`,
+    )
     collectors.value = nodeStatsResponse || []
-    subscribersData.value = subscribers
   } catch (error) {
     console.error('Failed to fetch data:', error)
   } finally {
