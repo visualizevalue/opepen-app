@@ -96,24 +96,13 @@ const downloadCSV = (type) => {
 
 onMounted(async () => {
   try {
-    const collectorsResponse = await $fetch(
-      `${config.public.opepenApi}/opepen/sets/${submission.set_id}/collectors`,
-    )
-    collectors.value = collectorsResponse
+    const [nodeStatsResponse, subscribers] = await Promise.all([
+      $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`),
+      fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`),
+    ])
 
-    const subscribers = await fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`)
+    collectors.value = nodeStatsResponse || []
     subscribersData.value = subscribers
-
-    // fetch subscription stats for each collector (from history)
-    await Promise.all(
-      collectors.value.map(async (collector) => {
-        const stats = await $fetch(
-          `${config.public.opepenApi}/accounts/${collector.address}/set-submissions/${submission.uuid}/subscription-history`,
-        )
-        collector.total_opt_ins = stats.total_opt_ins || 0
-        collector.total_max_reveals = stats.total_max_reveals || 0
-      }),
-    )
   } catch (error) {
     console.error('Failed to fetch data:', error)
   } finally {
