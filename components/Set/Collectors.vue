@@ -4,9 +4,11 @@
       <header>
         <SectionTitle>Collectors</SectionTitle>
         <div class="header-buttons">
-          <Button @click="downloadCSV('opt-ins')" class="small">Opt-In CSV</Button>
-          <Button v-if="submission.set_id" @click="downloadCSV('holders')" class="small">
-            Holders CSV
+          <Button :disabled="optInsLoading" @click="downloadOptInsCSV" class="small">
+            {{ optInsLoading ? 'Loading...' : 'Opt-In CSV' }}
+          </Button>
+          <Button :disabled="holdersLoading" @click="downloadHoldersCSV" class="small">
+            {{ holdersLoading ? 'Loading...' : 'Holders CSV' }}
           </Button>
         </div>
       </header>
@@ -54,6 +56,8 @@
 </template>
 
 <script setup>
+import { useAsyncState } from '@vueuse/core'
+
 const { submission } = defineProps({
   submission: Object,
 })
@@ -62,7 +66,6 @@ const config = useRuntimeConfig()
 
 const showAll = ref(false)
 const collectors = ref([])
-const subscribersData = ref([])
 const dataLoading = ref(true)
 
 const collectorsWithStats = computed(() => {
@@ -86,23 +89,47 @@ const showLess = () => {
   showAll.value = false
 }
 
-const downloadCSV = (type) => {
-  const data = type === 'holders' ? collectors.value : subscribersData.value
-  if (!data?.length) return
-
-  const addresses = data.map((item) => item.address)
-  downloadCsv(addresses, `set-${submission.set_id}-${type}.csv`)
+const downloadCSV = async (type) => {
+  try {
+    if (type === 'holders') {
+      const addresses = collectors.value.map((collector) => collector.address)
+      downloadCsv(addresses, `set-${submission.set_id}-holders.csv`)
+    } else {
+      const subscribers = await fetchPaginated(
+        `/set-submissions/${submission.uuid}/subscribers`,
+      )
+      const addresses = subscribers.map((subscriber) => subscriber.address)
+      downloadCsv(addresses, `set-${submission.set_id}-opt-ins.csv`)
+    }
+  } catch (error) {
+    console.error('Failed to download CSV:', error)
+  }
 }
+
+const { isLoading: optInsLoading, execute: downloadOptInsCSV } = useAsyncState(
+  async () => await downloadCSV('opt-ins'),
+  null,
+  {
+    immediate: false,
+    onError: (e) => console.error('CSV download failed:', e),
+  },
+)
+
+const { isLoading: holdersLoading, execute: downloadHoldersCSV } = useAsyncState(
+  async () => await downloadCSV('holders'),
+  null,
+  {
+    immediate: false,
+    onError: (e) => console.error('CSV download failed:', e),
+  },
+)
 
 onMounted(async () => {
   try {
-    const [nodeStatsResponse, subscribers] = await Promise.all([
-      $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`),
-      fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`),
-    ])
-
+    const nodeStatsResponse = await $fetch(
+      `${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`,
+    )
     collectors.value = nodeStatsResponse || []
-    subscribersData.value = subscribers
   } catch (error) {
     console.error('Failed to fetch data:', error)
   } finally {

@@ -3,8 +3,13 @@
     <Card class="static">
       <header>
         <SectionTitle>Demand Stats</SectionTitle>
-        <Button v-if="isSetCreator || isAdmin" @click="downloadSubscribersCSV" class="button">
-          Subscribers CSV
+        <Button
+          v-if="isSetCreator || isAdmin"
+          :disabled="isLoading"
+          @click="downloadSubscribersCSV"
+          class="button"
+        >
+          {{ isLoading ? 'Loading...' : 'Subscribers CSV' }}
         </Button>
         <span v-if="lastUpdatedStr">
           <span class="visible-md">Last updated</span>
@@ -86,6 +91,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAsyncState } from '@vueuse/core'
+
 const { submission, lastUpdated } = defineProps<{
   submission: SetSubmission
   lastUpdated: number
@@ -112,15 +119,16 @@ const demandColor = (edition: EditionType) => {
   return demand >= 100 ? 'var(--success)' : demand >= 50 ? 'var(--yellow)' : 'var(--error)'
 }
 
-const downloadSubscribersCSV = async () => {
-  try {
-    const subscribers = await fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`)
-    const addresses = subscribers.map((subscriber) => subscriber.address)
-    downloadCsv(addresses, `${submission.name}-subscribers.csv`)
-  } catch (error) {
-    console.error('Failed to download subscribers CSV:', error)
-  }
+const downloadCSV = async () => {
+  const subscribers = await fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`)
+  const addresses = subscribers.map((s) => s.address)
+  downloadCsv(addresses, `${submission.name}-subscribers.csv`)
 }
+
+const { isLoading, execute: downloadSubscribersCSV } = useAsyncState(downloadCSV, null, {
+  immediate: false,
+  onError: (e) => console.error('CSV download failed:', e),
+})
 </script>
 
 <style scoped>
