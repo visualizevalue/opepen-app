@@ -5,7 +5,8 @@
         <SectionTitle>
           <span>Consensus Met ({{ meta.total || 0 }})</span>
         </SectionTitle>
-        <Actions class="actions-container">
+        <Actions>
+          <Button class="stats-button" to="/opepen/burned/stats">Stats</Button>
           <Button to="/opt-out">Opt out</Button>
         </Actions>
       </PageHeader>
@@ -30,3 +31,15 @@ import PageFrameMd from '~/components/Page/FrameMd.vue'
 const url = `${useConfig('opepenApi')}/opepen/burned`
 const query = `sort=-burned_at`
 </script>
+
+<style scoped>
+.stats-button {
+  display: none;
+}
+
+@media (--lg) {
+  .stats-button {
+    display: inline-block;
+  }
+}
+</style>

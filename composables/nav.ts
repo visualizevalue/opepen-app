@@ -9,4 +9,14 @@ export const SUB_NAV_ITEMS = {
       text: 'Submissions',
     },
   ],
+  '^/opepen/burned': [
+    {
+      to: '/opepen/burned',
+      text: 'Gallery',
+    },
+    {
+      to: '/opepen/burned/stats',
+      text: 'Stats',
+    },
+  ],
 }
