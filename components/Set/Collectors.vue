@@ -4,9 +4,11 @@
       <header>
         <SectionTitle>Collectors</SectionTitle>
         <div class="header-buttons">
-          <Button @click="downloadCSV('subscribers')" class="button">Subscribers CSV</Button>
-          <Button v-if="submission.set_id" @click="downloadCSV('holders')" class="button">
-            Holders CSV
+          <Button :disabled="optInsLoading" @click="downloadOptInsCSV" class="small">
+            {{ optInsLoading ? 'Loading...' : 'Opt-In CSV' }}
+          </Button>
+          <Button :disabled="holdersLoading" @click="downloadHoldersCSV" class="small">
+            {{ holdersLoading ? 'Loading...' : 'Holders CSV' }}
           </Button>
         </div>
       </header>
@@ -16,11 +18,11 @@
         <Table>
           <thead>
             <tr>
+              <td class="rank-column"></td>
               <td></td>
-              <td></td>
-              <td>Opt Ins</td>
-              <td v-if="submission.set_id > 10">Max Reveals</td>
-              <td>Holdings</td>
+              <td class="opt-ins-column">Opt Ins</td>
+              <td v-if="submission.set_id > 10" class="max-reveals-column">Max Reveals</td>
+              <td class="holdings-column">Holdings</td>
             </tr>
           </thead>
           <tbody>
@@ -32,11 +34,13 @@
                   <span class="name">{{ collector.account.display }}</span>
                 </NuxtLink>
               </td>
-              <td>{{ dataLoading ? '...' : collector.subscriptions }}</td>
-              <td v-if="submission.set_id > 10">
+              <td class="opt-ins-column">
+                {{ dataLoading ? '...' : collector.subscriptions }}
+              </td>
+              <td v-if="submission.set_id > 10" class="max-reveals-column">
                 {{ dataLoading ? '...' : collector.maxReveals }}
               </td>
-              <td>{{ collector.count }}</td>
+              <td class="holdings-column">{{ collector.count }}</td>
             </tr>
           </tbody>
         </Table>
@@ -52,6 +56,8 @@
 </template>
 
 <script setup>
+import { useAsyncState } from '@vueuse/core'
+
 const { submission } = defineProps({
   submission: Object,
 })
@@ -60,59 +66,17 @@ const config = useRuntimeConfig()
 
 const showAll = ref(false)
 const collectors = ref([])
-const historyData = ref([])
-const subscribersData = ref([])
 const dataLoading = ref(true)
-
-const subscriberStats = computed(() => {
-  if (!historyData.value.length || !subscribersData.value.length) return {}
-
-  const optIns = {}
-  historyData.value.forEach((record) => {
-    const address = record.address.toLowerCase()
-    if (!optIns[address]) optIns[address] = new Set()
-
-    record.opepen_ids?.forEach((id) => {
-      if (record.is_opt_in) {
-        optIns[address].add(id)
-      } else {
-        optIns[address].delete(id)
-      }
-    })
-  })
-
-  const stats = {}
-
-  Object.entries(optIns).forEach(([address, ids]) => {
-    stats[address] = { optIns: ids.size, maxReveals: 0 }
-  })
-
-  subscribersData.value.forEach((subscriber) => {
-    const address = subscriber.address.toLowerCase()
-    const reveals = Object.values(subscriber.max_reveals || {}).reduce((a, b) => a + b, 0)
-
-    if (stats[address]) {
-      stats[address].maxReveals = reveals
-    }
-  })
-
-  return stats
-})
 
 const collectorsWithStats = computed(() => {
   if (!collectors.value.length) return []
 
-  return collectors.value.map((account) => {
-    const address = account.address?.toLowerCase()
-    const stats = subscriberStats.value[address] || { optIns: 0, maxReveals: 0 }
-
-    return {
-      account,
-      count: account.opepen_count || 0,
-      subscriptions: stats.optIns,
-      maxReveals: stats.maxReveals,
-    }
-  })
+  return collectors.value.map((account) => ({
+    account,
+    count: account.opepen_count || 0,
+    subscriptions: account.total_opt_ins || 0,
+    maxReveals: account.total_max_reveals || 0,
+  }))
 })
 
 const displayedCollectors = computed(() =>
@@ -125,28 +89,47 @@ const showLess = () => {
   showAll.value = false
 }
 
-const downloadCSV = (type) => {
-  const data = type === 'holders' ? collectors.value : subscribersData.value
-  if (!data?.length) return
-
-  const addresses = data.map((item) => item.address)
-  downloadCsv(addresses, `set-${submission.set_id}-${type}.csv`)
+const downloadCSV = async (type) => {
+  try {
+    if (type === 'holders') {
+      const addresses = collectors.value.map((collector) => collector.address)
+      downloadCsv(addresses, `set-${submission.set_id}-holders.csv`)
+    } else {
+      const subscribers = await fetchPaginated(
+        `/set-submissions/${submission.uuid}/subscribers`,
+      )
+      const addresses = subscribers.map((subscriber) => subscriber.address)
+      downloadCsv(addresses, `set-${submission.set_id}-opt-ins.csv`)
+    }
+  } catch (error) {
+    console.error('Failed to download CSV:', error)
+  }
 }
+
+const { isLoading: optInsLoading, execute: downloadOptInsCSV } = useAsyncState(
+  async () => await downloadCSV('opt-ins'),
+  null,
+  {
+    immediate: false,
+    onError: (e) => console.error('CSV download failed:', e),
+  },
+)
+
+const { isLoading: holdersLoading, execute: downloadHoldersCSV } = useAsyncState(
+  async () => await downloadCSV('holders'),
+  null,
+  {
+    immediate: false,
+    onError: (e) => console.error('CSV download failed:', e),
+  },
+)
 
 onMounted(async () => {
   try {
-    const collectorsResponse = await $fetch(
-      `${config.public.opepenApi}/opepen/sets/${submission.set_id}/collectors`,
+    const nodeStatsResponse = await $fetch(
+      `${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`,
     )
-    collectors.value = collectorsResponse
-
-    const [history, subscribers] = await Promise.all([
-      fetchPaginated(`/set-submissions/${submission.uuid}/history`),
-      fetchPaginated(`/set-submissions/${submission.uuid}/subscribers`),
-    ])
-
-    historyData.value = history
-    subscribersData.value = subscribers
+    collectors.value = nodeStatsResponse || []
   } catch (error) {
     console.error('Failed to fetch data:', error)
   } finally {
@@ -181,13 +164,18 @@ onMounted(async () => {
   }
 
   > p {
-    color: var(--muted);
-    font-family: var(--ui-font-family);
-    font-size: var(--ui-font-size);
-    font-weight: var(--ui-font-weight);
-    text-transform: var(--ui-text-transform);
-    letter-spacing: var(--ui-letter-spacing);
-    line-height: var(--ui-line-height);
+    display: none;
+
+    @media (--md) {
+      display: block;
+      color: var(--muted);
+      font-family: var(--ui-font-family);
+      font-size: var(--ui-font-size);
+      font-weight: var(--ui-font-weight);
+      text-transform: var(--ui-text-transform);
+      letter-spacing: var(--ui-letter-spacing);
+      line-height: var(--ui-line-height);
+    }
   }
 }
 
@@ -223,28 +211,35 @@ onMounted(async () => {
 table {
   width: 100%;
 
-  td:nth-child(1) {
+  .rank-column {
     display: table-cell;
     width: auto;
     text-align: center;
   }
 
-  td:nth-child(2) {
-    width: 100%;
-  }
-
-  td:nth-child(3),
-  td:nth-child(4) {
+  .opt-ins-column,
+  .max-reveals-column {
     display: none;
   }
-  td:nth-child(5) {
+
+  .holdings-column {
     width: auto;
     text-align: right;
   }
 
   @media (--md) {
-    td:nth-child(3),
-    td:nth-child(4) {
+    .rank-column {
+      display: table-cell;
+      width: auto;
+      text-align: center;
+    }
+
+    td:nth-child(2) {
+      width: 100%;
+    }
+
+    .opt-ins-column,
+    .max-reveals-column {
       display: table-cell;
       width: auto;
       text-align: right;
