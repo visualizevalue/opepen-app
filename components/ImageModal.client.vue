@@ -15,7 +15,17 @@
           <h1>{{ name }}</h1>
           <p>{{ tagline }}</p>
         </div>
-        <Button @click="download">
+        <div v-if="isSVG" class="download-buttons">
+          <Button @click="downloadSVG">
+            <Icon type="download" stroke-width="2" />
+            <span>Download SVG</span>
+          </Button>
+          <Button @click="downloadPNG">
+            <Icon type="download" stroke-width="2" />
+            <span>Download PNG</span>
+          </Button>
+        </div>
+        <Button v-else @click="download">
           <Icon type="download" stroke-width="2" />
           <span>Download</span>
         </Button>
@@ -31,9 +41,22 @@ const { image, name, tagline } = defineProps({
   tagline: String,
 })
 
+const config = useRuntimeConfig()
+
 const open = defineModel('open', { required: true })
 
 const isStatic = computed(() => ['png', 'jpg', 'jpeg'].includes(image?.type))
+const isSVG = computed(() => image?.type === 'svg')
+
+const downloadSVG = async () => {
+  const uri = imageURI(image)
+  window.open(uri, '_blank')
+}
+
+const downloadPNG = async () => {
+  const uri = `${config.public.opepenApi}/opepen/images/${image.uuid}/render`
+  await downloadImage(uri, { name: name ? `Opepen ${name}` : 'Opepen' })
+}
 
 const download = async () => {
   const uri = imageURI(image)
@@ -74,6 +97,12 @@ const download = async () => {
     p {
       font-size: var(--font-sm);
       color: var(--gray-z-6);
+    }
+
+    .download-buttons {
+      display: flex;
+      gap: var(--size-2);
+      flex-wrap: wrap;
     }
   }
 }
