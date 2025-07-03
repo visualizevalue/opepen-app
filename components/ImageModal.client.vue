@@ -103,6 +103,7 @@ const download = async () => {
       display: flex;
       gap: var(--size-2);
       flex-wrap: wrap;
+      justify-content: flex-end;
     }
   }
 }
