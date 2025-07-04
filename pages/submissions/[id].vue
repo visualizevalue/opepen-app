@@ -16,6 +16,8 @@
 
       <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
 
+      <SetOptInHistory :submission="submission" />
+
       <SetDynamicImagesPreview
         v-if="submission.edition_type === 'DYNAMIC'"
         :data="submission"
