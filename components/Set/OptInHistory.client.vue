@@ -29,7 +29,7 @@
             <span>Opepen</span>
           </span>
         </span>
-        <span>{{ formatDateTime(event.created_at) }}</span>
+        <span>{{ timeAgo(DateTime.fromISO(event.created_at)) }}</span>
       </div>
 
       <div v-if="isLoadingMore" class="loading-more">Loading...</div>
