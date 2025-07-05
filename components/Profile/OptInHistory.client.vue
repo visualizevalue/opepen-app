@@ -90,11 +90,6 @@ const filteredHistory = computed(() => {
     return hasValidSetSubmission && hasCountChanges
   })
 })
-const subscriptionsHistory = computed(() => {
-  return [...filteredHistory.value].sort((a, b) => {
-    return new Date(b.created_at) - new Date(a.created_at)
-  })
-})
 const groupedSubmissions = computed(() => {
   const history = filteredHistory.value
   if (!history.length) return []
