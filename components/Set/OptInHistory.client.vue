@@ -149,9 +149,6 @@ const optInHistory = computed(() => {
       created_at: event.created_at,
     }))
     .filter((event) => event.optedInCount > 0) // filter out 0 opt-ins -> max reveal adjustments
-    .sort((a, b) => {
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    })
 })
 </script>
 
