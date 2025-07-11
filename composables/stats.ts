@@ -100,12 +100,12 @@ export const useSetEthDemand = async (submission: SetSubmission) => {
     }
   }
 
-  const ethDemand = formatETH(formatEther(totalDemand))
+  const ethDemand = formatEther(totalDemand)
   const usdDemand = formatUSD(parseFloat(ethDemand) * (stats.value?.ethPrice?.USD || 2000))
 
   return {
     wei: totalDemand,
-    eth: ethDemand,
+    eth: formatETH(ethDemand),
     usd: usdDemand,
   }
 }
