@@ -72,7 +72,10 @@
       <div class="market-value">
         <p class="stat">
           {{ marketDemand.eth }}
-          <span class="muted">ETH ({{ marketDemand.usd }} USD)</span>
+          <span class="muted">
+            ETH
+            <span class="unit">({{ marketDemand.usd }} USD)</span>
+          </span>
         </p>
 
         <p class="muted">
@@ -183,10 +186,15 @@ td:last-child {
 
   .stat {
     font-size: var(--font-xl);
+    line-height: 1;
     padding-bottom: var(--spacer-sm);
 
     .muted {
       font-size: var(--font-lg);
+
+      .unit {
+        white-space: nowrap;
+      }
     }
   }
 }
