@@ -59,6 +59,13 @@
         <Separator />
         <a href="#" @click.stop.prevent="downloadStatsCard" class="no-style">Info Card</a>
       </li>
+      <li v-if="opepen.revealed_at === null">
+        <Icon type="check" />
+        <span @click.stop.prevent="openModal" class="open-modal">
+          {{ totalOptIns }} Opt-Ins
+        </span>
+        <OpepenOptInStats v-model:open="modalOpen" :opepen="opepen" :optInStats="data" />
+      </li>
     </DescriptionList>
   </section>
 </template>
@@ -74,9 +81,15 @@ const contract = config.public.opepenContract
 const burnedContract = config.public.burnedOpepenContract
 
 const submission = computed(() => opepen.set?.submission)
-const attributes = computed(() =>
-  opepen.metadata?.attributes.filter((a) => a.trait_type !== 'Number'),
-)
+
+const modalOpen = ref(false)
+const { data } = await useApi(`/opepen/${opepen.token_id}/opt-in-stats`)
+
+const totalOptIns = computed(() => data.value?.total_opt_ins || 0)
+
+const openModal = async () => {
+  modalOpen.value = true
+}
 
 const image = computed(() => imageURI(opepen.image))
 const pngImage = computed(() => `https://api.opepen.art/${opepen.token_id}/render`)
@@ -109,3 +122,14 @@ const downloadStatsCard = async () => {
     })
 }
 </script>
+
+<style scoped>
+.open-modal {
+  cursor: pointer;
+  transition: color var(--speed);
+
+  &:hover {
+    color: var(--color);
+  }
+}
+</style>
