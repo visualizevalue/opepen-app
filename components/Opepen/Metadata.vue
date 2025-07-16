@@ -62,7 +62,7 @@
       <li >
         <Icon type="check" />
         <span @click.stop.prevent="openModal" class="open-modal">
-          {{ totalOptIns }} Opt-Ins
+          {{ totalOptIns }} Opt-In{{ totalOptIns > 1 ? 's' : '' }}
         </span>
         <OpepenOptInStats v-model:open="modalOpen" :opepen="opepen" :optInStats="data" />
       </li>
