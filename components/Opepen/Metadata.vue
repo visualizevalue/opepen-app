@@ -59,10 +59,10 @@
         <Separator />
         <a href="#" @click.stop.prevent="downloadStatsCard" class="no-style">Info Card</a>
       </li>
-      <li v-if="opepen.revealed_at === null">
+      <li >
         <Icon type="check" />
         <span @click.stop.prevent="openModal" class="open-modal">
-          {{ totalOptIns }} Opt-Ins
+          {{ totalOptIns }} Opt-In{{ totalOptIns > 1 ? 's' : '' }}
         </span>
         <OpepenOptInStats v-model:open="modalOpen" :opepen="opepen" :optInStats="data" />
       </li>

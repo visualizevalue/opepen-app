@@ -49,6 +49,7 @@
                   (Set {{ pad(event.submission.set_id, 3) }})
                 </span>
                 <span v-if="event.is_live" class="live-dot"></span>
+                <span v-if="isRevealed(event)" class="revealed-badge">Revealed</span>
               </NuxtLink>
             </span>
             <span class="submission-date">
@@ -105,6 +106,19 @@ const ownershipGroups = computed(() => {
 
   return groups
 })
+
+const isRevealed = (event) => {
+  if (opepen.set?.submission?.uuid !== event.submission.uuid) return false
+
+  const revealedSubmissionEvents = (optInStats?.opt_in_history || [])
+    .filter((e) => e.submission.uuid === opepen.set.submission.uuid)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+
+  return (
+    revealedSubmissionEvents.length > 0 &&
+    revealedSubmissionEvents[0].created_at === event.created_at
+  )
+}
 
 const expandedGroups = ref(new Set())
 
@@ -297,6 +311,15 @@ const isGroupExpanded = (group) => {
     background: var(--green-light);
     border-radius: 50%;
     margin-left: var(--size-1);
+  }
+
+  .revealed-badge {
+    color: var(--green-dark);
+    font-size: var(--font-xs);
+    margin-left: var(--size-1);
+    background: var(--green-light);
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--size-1);
   }
 }
 
