@@ -59,7 +59,7 @@
         <Separator />
         <a href="#" @click.stop.prevent="downloadStatsCard" class="no-style">Info Card</a>
       </li>
-      <li >
+      <li v-if="!burned">
         <Icon type="check" />
         <span @click.stop.prevent="openModal" class="open-modal">
           {{ totalOptIns }} Opt-In{{ totalOptIns > 1 ? 's' : '' }}
