@@ -2,6 +2,48 @@
   <div v-if="loading" class="loading">Loading...</div>
 
   <div v-else-if="sortedBurnedStats.length">
+    <section class="stats">
+      <div class="stats-grid">
+        <Card class="static">
+          <h1>
+            Opt-Outs
+            <small>(total)</small>
+          </h1>
+          <p>{{ totalBurns }}</p>
+        </Card>
+
+        <Card class="static">
+          <h1>
+            Opt-Outs
+            <small>(unrevealed)</small>
+          </h1>
+          <p>{{ unrevealedBurns }}</p>
+        </Card>
+
+        <Card class="static">
+          <h1>Active Days</h1>
+          <p>{{ activeDays }}</p>
+        </Card>
+
+        <Card class="static">
+          <h1>Max Burns in One Day</h1>
+          <p>{{ maxDayCount }}</p>
+        </Card>
+
+        <Card class="static">
+          <h1>Max Burns by One Address</h1>
+          <p>{{ maxBurnsByAddress }}</p>
+        </Card>
+
+        <Card class="static">
+          <h1>Max Burns from One Set</h1>
+          <p>{{ maxBurnsFromSet }}</p>
+        </Card>
+      </div>
+    </section>
+
+    <BurnedHeatmap :burned-data="burnedData" :sets-by-id="setsById" />
+
     <div>
       <div class="tab-nav">
         <button
@@ -123,6 +165,42 @@ const sortedBurnerAccounts = computed(() => {
 
   return Array.from(accountMap.values()).sort((a, b) => b.burnedCount - a.burnedCount)
 })
+
+const totalBurns = computed(() => {
+  return burnedData.value.length
+})
+
+const dailyStats = computed(() => {
+  const stats = new Map()
+  burnedData.value.forEach((token) => {
+    const date = new Date(token.burned_at).toISOString().split('T')[0]
+    stats.set(date, (stats.get(date) || 0) + 1)
+  })
+  return stats
+})
+
+const activeDays = computed(() => {
+  return dailyStats.value.size
+})
+
+const maxDayCount = computed(() => {
+  return Math.max(...Array.from(dailyStats.value.values()), 0)
+})
+
+const unrevealedBurns = computed(() => {
+  return burnedData.value.filter((token) => !token.opepen?.set_id).length
+})
+
+const maxBurnsByAddress = computed(() => {
+  if (!sortedBurnerAccounts.value.length) return 0
+  return sortedBurnerAccounts.value[0].burnedCount
+})
+
+const maxBurnsFromSet = computed(() => {
+  const revealedStats = sortedBurnedStats.value.filter(stat => stat.setId !== null)
+  if (!revealedStats.length) return 0
+  return revealedStats[0].count
+})
 </script>
 
 <style scoped>
@@ -167,6 +245,8 @@ const sortedBurnerAccounts = computed(() => {
 }
 
 .stats-section {
+  overflow-x: auto;
+
   h3 {
     margin-bottom: var(--spacer);
     color: var(--color);
@@ -209,9 +289,42 @@ table {
   }
 
   td:nth-child(3) {
-    width: 20px;
+    width: 60px;
     text-align: right;
     white-space: nowrap;
+  }
+}
+
+.stats {
+  margin-bottom: calc(var(--spacer) * 2);
+}
+
+.stats-grid {
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+
+.stats :deep(.card),
+.stats :deep(.card > div) {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  gap: var(--spacer-sm);
+  text-align: center;
+  min-height: 9rem;
+
+  h1 {
+    @mixin ui-font;
+    font-size: var(--ui-font-size);
+    color: var(--muted);
+    margin: 0;
+    border-bottom: 0 !important;
+    padding: 0 !important;
+  }
+
+  p {
+    font-size: var(--font-xl);
   }
 }
 </style>
