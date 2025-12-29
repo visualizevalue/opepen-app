@@ -20,7 +20,7 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
   const blockConfirmations = computed(
     () =>
       currentBlock.value &&
-      submission.value.reveal_block_number &&
+      submission.value?.reveal_block_number &&
       currentBlock.value - BigInt(submission.value?.reveal_block_number),
   )
   const blockConfirmationText = computed(() => {
