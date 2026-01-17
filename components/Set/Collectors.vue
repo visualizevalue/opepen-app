@@ -51,6 +51,42 @@
 
         <Button v-else @click="showLess" class="toggle-list-button">Show Less</Button>
       </div>
+
+      <header v-if="contenderData.length">
+        <SectionTitle>Full Set Contenders</SectionTitle>
+      </header>
+
+      <div v-if="contenderData.length" class="contender-container">
+        <Table>
+          <thead>
+            <tr>
+              <td></td>
+              <td v-for="edition in EDITIONS" :key="`h-${edition}`" class="edition-column">{{ edition }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="contender in contenderData" :key="contender.account.id">
+              <td class="holder-column">
+                <NuxtLink :to="`/${id(contender.account)}`" class="collector-info">
+                  <Avatar :account="contender.account" />
+                  <span class="name">{{ contender.account.display }}</span>
+                </NuxtLink>
+              </td>
+              <td
+                v-for="edition in EDITIONS"
+                :key="`${contender.account.id}-${edition}`"
+                class="edition-column"
+                :class="{
+                  'is-missing': contender.editions[edition] === 0 && contender.missingCount > 0,
+                  'is-complete': contender.missingCount === 0
+                }"
+              >
+                {{ contender.editions[edition] }}
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
     </Card>
   </section>
 </template>
@@ -64,8 +100,11 @@ const { submission } = defineProps({
 
 const config = useRuntimeConfig()
 
+const EDITIONS = [1, 4, 5, 10, 20, 40]
+
 const showAll = ref(false)
 const collectors = ref([])
+const opepen = ref([])
 const dataLoading = ref(true)
 
 const collectorsWithStats = computed(() => {
@@ -124,12 +163,60 @@ const { isLoading: holdersLoading, execute: downloadHoldersCSV } = useAsyncState
   },
 )
 
+const contenderData = computed(() => {
+  if (!collectors.value.length || !opepen.value.length) return []
+
+  const editionMap = {}
+  opepen.value.forEach((token) => {
+    const address = token.owner_address || token.owner?.address || token.address || token.owner
+    const edition = token.data?.edition || token.edition
+
+    if (!address || !edition || !EDITIONS.includes(edition)) return
+
+    if (!editionMap[address]) {
+      editionMap[address] = { 1: 0, 4: 0, 5: 0, 10: 0, 20: 0, 40: 0 }
+    }
+    editionMap[address][edition]++
+  })
+
+  const contendersWithEditions = collectors.value
+    .map((collector) => {
+      const editions = editionMap[collector.address] || { 1: 0, 4: 0, 5: 0, 10: 0, 20: 0, 40: 0 }
+      const ownedEditions = EDITIONS.filter((edition) => editions[edition] > 0)
+      const missingCount = 6 - ownedEditions.length
+
+      return {
+        account: collector,
+        editions,
+        missingCount,
+      }
+    })
+    .filter((contender) => contender.missingCount <= 3) // Only show 0-3 missing
+
+  contendersWithEditions.sort((a, b) => {
+    if (a.missingCount !== b.missingCount) {
+      return a.missingCount - b.missingCount
+    }
+    const aTotal = EDITIONS.reduce((sum, ed) => sum + a.editions[ed], 0)
+    const bTotal = EDITIONS.reduce((sum, ed) => sum + b.editions[ed], 0)
+    return bTotal - aTotal
+  })
+
+  return contendersWithEditions
+})
+
+const fullSetHolders = computed(() => {
+  return contenderData.value.filter((contender) => contender.missingCount === 0)
+})
+
 onMounted(async () => {
   try {
-    const nodeStatsResponse = await $fetch(
-      `${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`,
-    )
+    const [nodeStatsResponse, opepenResponse] = await Promise.all([
+      $fetch(`${config.public.opepenApi}/set-submissions/${submission.uuid}/nodes-stats`),
+      $fetch(`${config.public.opepenApi}/opepen/sets/${submission.set_id}/opepen`)
+    ])
     collectors.value = nodeStatsResponse || []
+    opepen.value = opepenResponse || []
   } catch (error) {
     console.error('Failed to fetch data:', error)
   } finally {
@@ -206,6 +293,70 @@ onMounted(async () => {
 
 .toggle-list-button {
   margin-top: var(--size-3);
+}
+
+.contender-container {
+  table thead td {
+    color: var(--white) !important;
+    padding-bottom: var(--size-2);
+  }
+
+  .holder-column {
+    min-width: 60px;
+    max-width: 100px;
+    padding-right: var(--spacer-sm);
+
+    @media (--md) {
+      min-width: 150px;
+      max-width: none;
+      padding-right: var(--spacer);
+    }
+  }
+
+  .collector-info {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    text-decoration: none;
+    color: var(--color);
+    transition: color var(--speed);
+
+    &:hover {
+      color: var(--gray-z-6);
+    }
+
+    .avatar {
+      width: var(--size-4);
+      height: var(--size-4);
+      flex-shrink: 0;
+    }
+
+    .name {
+      font-size: var(--font-sm);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      @media (--md) {
+        font-size: var(--font-md);
+      }
+    }
+  }
+
+  .edition-column {
+    width: 60px;
+    text-align: right;
+    padding: var(--size-1) 0;
+    color: var(--muted);
+
+    &.is-missing {
+      color: var(--red);
+    }
+
+    &.is-complete {
+      color: var(--green);
+    }
+  }
 }
 
 table {
