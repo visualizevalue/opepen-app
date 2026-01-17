@@ -12,7 +12,7 @@
           </Button>
         </div>
       </header>
-      <p v-if="submission.set_id < 11">Opt-in history of the early sets can be incomplete</p>
+      <!-- <p v-if="submission.set_id < 11">Opt-in history of the early sets can be incomplete</p>
 
       <div class="collector-container">
         <Table>
@@ -50,11 +50,7 @@
         </Button>
 
         <Button v-else @click="showLess" class="toggle-list-button">Show Less</Button>
-      </div>
-
-      <header v-if="contenderData.length">
-        <SectionTitle>Full Set Contenders</SectionTitle>
-      </header>
+      </div> -->
 
       <div v-if="contenderData.length" class="contender-container">
         <Table>
@@ -62,14 +58,16 @@
             <tr>
               <td></td>
               <td v-for="edition in EDITIONS" :key="`h-${edition}`" class="edition-column">{{ edition }}</td>
+              <td class="total-column">Total</td>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="contender in contenderData" :key="contender.account.id">
+            <tr v-for="contender in displayedContenders" :key="contender.account.id">
               <td class="holder-column">
                 <NuxtLink :to="`/${id(contender.account)}`" class="collector-info">
                   <Avatar :account="contender.account" />
                   <span class="name">{{ contender.account.display }}</span>
+                  <span v-if="contender.missingCount === 0" class="full-set-tag">Full Set</span>
                 </NuxtLink>
               </td>
               <td
@@ -81,11 +79,20 @@
                   'is-complete': contender.missingCount === 0
                 }"
               >
-                {{ contender.editions[edition] }}
+                {{ contender.editions[edition] || '' }}
+              </td>
+              <td class="total-column">
+                {{ contender.totalHoldings }}
               </td>
             </tr>
           </tbody>
         </Table>
+
+        <Button v-if="showMoreContendersButton" @click="showAllContenders = true" class="toggle-list-button">
+          Show More
+        </Button>
+
+        <Button v-else-if="showAllContenders" @click="showLessContenders" class="toggle-list-button">Show Less</Button>
       </div>
     </Card>
   </section>
@@ -103,6 +110,7 @@ const config = useRuntimeConfig()
 const EDITIONS = [1, 4, 5, 10, 20, 40]
 
 const showAll = ref(false)
+const showAllContenders = ref(false)
 const collectors = ref([])
 const opepen = ref([])
 const dataLoading = ref(true)
@@ -184,22 +192,30 @@ const contenderData = computed(() => {
       const editions = editionMap[collector.address] || { 1: 0, 4: 0, 5: 0, 10: 0, 20: 0, 40: 0 }
       const ownedEditions = EDITIONS.filter((edition) => editions[edition] > 0)
       const missingCount = 6 - ownedEditions.length
+      const totalHoldings = EDITIONS.reduce((sum, ed) => sum + editions[ed], 0)
 
       return {
         account: collector,
         editions,
         missingCount,
+        ownedEditionsCount: ownedEditions.length,
+        totalHoldings,
       }
     })
-    .filter((contender) => contender.missingCount <= 3) // Only show 0-3 missing
 
   contendersWithEditions.sort((a, b) => {
-    if (a.missingCount !== b.missingCount) {
-      return a.missingCount - b.missingCount
+    if (a.ownedEditionsCount !== b.ownedEditionsCount) {
+      return b.ownedEditionsCount - a.ownedEditionsCount
     }
-    const aTotal = EDITIONS.reduce((sum, ed) => sum + a.editions[ed], 0)
-    const bTotal = EDITIONS.reduce((sum, ed) => sum + b.editions[ed], 0)
-    return bTotal - aTotal
+    if (a.totalHoldings !== b.totalHoldings) {
+      return b.totalHoldings - a.totalHoldings
+    }
+    for (const edition of EDITIONS) {
+      if (a.editions[edition] !== b.editions[edition]) {
+        return b.editions[edition] - a.editions[edition]
+      }
+    }
+    return 0
   })
 
   return contendersWithEditions
@@ -208,6 +224,16 @@ const contenderData = computed(() => {
 const fullSetHolders = computed(() => {
   return contenderData.value.filter((contender) => contender.missingCount === 0)
 })
+
+const displayedContenders = computed(() =>
+  contenderData.value.slice(0, showAllContenders.value ? Infinity : 10),
+)
+
+const showMoreContendersButton = computed(() => !showAllContenders.value && contenderData.value.length > 10)
+
+const showLessContenders = () => {
+  showAllContenders.value = false
+}
 
 onMounted(async () => {
   try {
@@ -341,21 +367,31 @@ onMounted(async () => {
         font-size: var(--font-md);
       }
     }
+
+    .full-set-tag {
+      font-size: var(--font-xs);
+      color: var(--green);
+      background: rgba(0, 255, 0, 0.1);
+      padding: var(--size-0) var(--size-1);
+      border-radius: var(--size-1);
+      white-space: nowrap;
+      margin-left: var(--size-1);
+    }
   }
 
   .edition-column {
-    width: 60px;
+    width: 45px;
     text-align: right;
     padding: var(--size-1) 0;
     color: var(--muted);
+  }
 
-    &.is-missing {
-      color: var(--red);
-    }
-
-    &.is-complete {
-      color: var(--green);
-    }
+  .total-column {
+    width: 80px;
+    text-align: right;
+    padding: var(--size-1) 0;
+    color: var(--white);
+    font-weight: bold;
   }
 }
 
