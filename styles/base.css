@@ -6,6 +6,6 @@ body {
 
   @media (--lg) {
     overscroll-behavior: auto;
-    overscroll-behavior-y: none;
+    /* overscroll-behavior-y: none; */
   }
 }
