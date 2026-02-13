@@ -44,19 +44,35 @@
           {{ props.submission.contributors_count }}
           {{ props.submission.contributors_count > 1 ? 'Artists' : 'Artist' }}
         </SectionTitle>
-        <div class="filter-buttons" v-if="userContributions.length">
-          <Button
-            :class="['filter-button', { active: showUserContributions }]"
-            @click="showUserContributions = true"
-          >
-            Mine ({{ userContributions.length }})
-          </Button>
-          <Button
-            :class="['filter-button', { active: !showUserContributions }]"
-            @click="showUserContributions = false"
-          >
-            All
-          </Button>
+        <div class="controls">
+          <div class="filter-buttons" v-if="userContributions.length">
+            <Button
+              :class="['filter-button', { active: showUserContributions }]"
+              @click="showUserContributions = true"
+            >
+              Mine ({{ userContributions.length }})
+            </Button>
+            <Button
+              :class="['filter-button', { active: !showUserContributions }]"
+              @click="showUserContributions = false"
+            >
+              All
+            </Button>
+          </div>
+          <div class="sort-buttons">
+            <Button
+              :class="['filter-button', { active: sortBy === 'recent' }]"
+              @click="sortBy = 'recent'"
+            >
+              Recent
+            </Button>
+            <Button
+              :class="['filter-button', { active: sortBy === 'likes' }]"
+              @click="sortBy = 'likes'"
+            >
+              Most Liked
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -86,6 +102,20 @@
                 @refresh="emit('refresh')"
                 @click.stop
               />
+            </div>
+
+            <div class="like-container" @click.stop>
+              <button
+                class="like-button"
+                :class="{ liked: isLiked(participation.image.uuid) }"
+                :disabled="likingImages.has(participation.image.uuid)"
+                @click="toggleLike(participation)"
+              >
+                <Icon type="heart" />
+                <span v-if="getLikeCount(participation.image) > 0" class="like-count">
+                  {{ getLikeCount(participation.image) }}
+                </span>
+              </button>
             </div>
 
             <div class="creator-overlay">
@@ -136,6 +166,7 @@ const selectedCreatorName = ref('')
 const selectedImageName = `${props.submission.name} Contribution`
 
 const showUserContributions = ref(false)
+const sortBy = ref('recent')
 
 const canEdit = computed(() => !props.submission.published_at)
 
@@ -152,10 +183,19 @@ const isUserContribution = (participation) => {
 }
 
 const displayedParticipations = computed(() => {
-  if (showUserContributions.value) {
-    return userContributions.value
+  let participations = showUserContributions.value
+    ? userContributions.value
+    : props.submission.participationImages || []
+
+  if (sortBy.value === 'likes') {
+    return [...participations].sort((a, b) => {
+      const likesA = a.image?.points || 0
+      const likesB = b.image?.points || 0
+      return likesB - likesA
+    })
   }
-  return props.submission.participationImages || []
+
+  return participations
 })
 
 const openImage = (participation) => {
@@ -165,6 +205,72 @@ const openImage = (participation) => {
 }
 
 const { session, signIn } = useSignIn()
+
+const likedImages = ref(new Set())
+const likingImages = ref(new Set())
+
+onMounted(() => {
+  const stored = localStorage.getItem('liked-participation-images')
+  if (stored) {
+    try {
+      likedImages.value = new Set(JSON.parse(stored))
+    } catch (e) {
+      console.error('Failed to load liked images', e)
+    }
+  }
+})
+
+const isLiked = (imageUuid) => {
+  return likedImages.value.has(imageUuid)
+}
+
+const getLikeCount = (image) => {
+  return image?.points || 0
+}
+
+const toggleLike = async (participation) => {
+  const imageUuid = participation.image.uuid
+
+  if (likingImages.value.has(imageUuid)) return
+
+  try {
+    if (!session.value) await signIn()
+    if (!session.value) return
+
+    likingImages.value.add(imageUuid)
+
+    const wasLiked = likedImages.value.has(imageUuid)
+
+    if (wasLiked) {
+      likedImages.value.delete(imageUuid)
+    } else {
+      likedImages.value.add(imageUuid)
+    }
+
+    localStorage.setItem('liked-participation-images', JSON.stringify(Array.from(likedImages.value)))
+
+    await $fetch(`${config.public.opepenApi}/votes`, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({
+        image: imageUuid,
+        approve: !wasLiked,
+      }),
+    })
+
+    emit('refresh')
+  } catch (error) {
+    console.error('Failed to toggle like:', error)
+    if (likedImages.value.has(imageUuid)) {
+      likedImages.value.delete(imageUuid)
+    } else {
+      likedImages.value.add(imageUuid)
+    }
+    localStorage.setItem('liked-participation-images', JSON.stringify(Array.from(likedImages.value)))
+  } finally {
+    likingImages.value.delete(imageUuid)
+  }
+}
 
 const store = async () => {
   if (!participationImages.value.length) return
@@ -297,6 +403,73 @@ const store = async () => {
   }
 }
 
+.like-container {
+  position: absolute;
+  top: var(--spacer-sm);
+  right: var(--spacer-sm);
+
+  .menu-container ~ & {
+    top: calc(var(--spacer-sm) + var(--size-6) + var(--size-1));
+  }
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-1);
+  background-color: var(--semi-shade);
+  width: var(--size-6);
+  height: var(--size-6);
+  padding: var(--size-1);
+  color: var(--gray-z-7);
+  border-radius: 50%;
+  border: none;
+  transition: all var(--speed);
+  cursor: pointer;
+
+  .icon {
+    width: var(--size-3);
+    height: var(--size-3);
+    flex-shrink: 0;
+
+    :deep(svg) {
+      transition: fill var(--speed);
+    }
+  }
+
+  .like-count {
+    @mixin ui-font;
+    font-size: var(--font-sm);
+    line-height: 1;
+  }
+
+  &:has(.like-count) {
+    width: auto;
+    padding: var(--size-1) var(--size-2);
+    border-radius: calc(var(--size-6) / 2);
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--gray-z-3);
+    color: var(--color);
+  }
+
+  &.liked {
+    background-color: var(--gray-z-3);
+    color: var(--color);
+
+    :deep(svg) {
+      fill: currentColor;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
 .creator-overlay {
   position: absolute;
   bottom: 0;
@@ -347,14 +520,23 @@ const store = async () => {
   font-size: var(--ui-font-size);
 }
 
-.filter-buttons {
+.controls {
   display: flex;
-  gap: var(--size-1);
+  flex-direction: column;
+  gap: var(--spacer-sm);
   margin-top: var(--spacer);
 
   @media (--md) {
+    flex-direction: row;
     margin-top: 0;
+    gap: var(--spacer);
   }
+}
+
+.filter-buttons,
+.sort-buttons {
+  display: flex;
+  gap: var(--size-1);
 
   .filter-button {
     @mixin ui-font;
@@ -364,6 +546,11 @@ const store = async () => {
     border-radius: var(--border-radius);
     padding: var(--size-1) var(--size-2);
     cursor: pointer;
+
+    &.active {
+      background: var(--gray-z-4);
+      color: var(--color);
+    }
   }
 }
 </style>
