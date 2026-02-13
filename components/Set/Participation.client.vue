@@ -169,6 +169,7 @@ const showUserContributions = ref(false)
 const sortBy = ref('recent')
 
 const canEdit = computed(() => !props.submission.published_at)
+const disabled = computed(() => saving.value)
 
 const userContributions = computed(() => {
   if (!currentAddress.value || !props.submission.participationImages) return []
