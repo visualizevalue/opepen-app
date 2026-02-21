@@ -1,6 +1,6 @@
 <template>
   <form @submit.stop.prevent="store">
-    <PageHeader>
+    <PageHeader v-if="!walkthroughMode">
       <SectionTitle>
         <span v-if="data.set_id">Permanent collection set</span>
         <span v-else>Update submission</span>
@@ -235,6 +235,10 @@ const props = defineProps({
     default: () => ({}),
   },
   refresh: Function,
+  walkthroughMode: {
+    type: Boolean,
+    default: false,
+  },
 })
 const emit = defineEmits(['updated'])
 
@@ -487,6 +491,16 @@ watchEffect(() => {
       statusMessage: 'Not Authorized',
     })
   }
+})
+
+// Expose completion state and validation methods for external use
+defineExpose({
+  dataComplete,
+  imagesComplete,
+  hasPreviewImages,
+  isDynamic,
+  store,
+  saveData,
 })
 </script>
 
