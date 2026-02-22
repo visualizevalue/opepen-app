@@ -7,6 +7,14 @@
       </SectionTitle>
 
       <Actions>
+        <Button
+          v-if="!data.published_at"
+          @click="showHelp = true"
+          class="secondary small"
+        >
+          <Icon type="help-circle" />
+          <span>Guided Help</span>
+        </Button>
         <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
         <SetEditOptions
           :submission="data"
@@ -16,6 +24,8 @@
         />
       </Actions>
     </PageHeader>
+
+    <SetSubmissionHelp v-model:open="showHelp" />
 
     <Alert v-if="!hasPreviewImages">
       <p>Base your art on the opepen schematics...</p>
@@ -241,6 +251,9 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['updated'])
+
+// Optional help drawer
+const showHelp = ref(false)
 
 const { account } = await useProfile()
 

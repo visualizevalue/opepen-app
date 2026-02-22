@@ -108,11 +108,9 @@ watch(() => props.formData.coCreators, (newCreators) => {
   if (newCreators) {
     coCreatorsList.value = sortableCoCreators(newCreators)
   }
-}, { deep: true })
+}, { deep: true, flush: 'post' })
 
-watch(coCreatorsList, () => {
-  coCreatorsList.value = withEmptyCoCreators(coCreatorsList.value)
-}, { deep: true })
+// Removed the second watch to prevent infinite loops - withEmptyCoCreators is called in updateCoCreators
 
 const handleCoCreatorInput = (index, value) => {
   coCreatorsList.value[index].address = value

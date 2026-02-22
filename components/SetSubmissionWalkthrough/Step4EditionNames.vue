@@ -101,14 +101,14 @@ onMounted(() => {
   emit('validate')
 })
 
-// Sync with formData changes
+// Sync with formData changes - only update if actually different to prevent loops
 watch(() => props.formData, (newData) => {
   Object.keys(editionNames).forEach(key => {
-    if (newData[key] !== undefined) {
+    if (newData[key] !== undefined && newData[key] !== editionNames[key]) {
       editionNames[key] = newData[key]
     }
   })
-}, { deep: true })
+}, { deep: true, flush: 'post' })
 </script>
 
 <style scoped>

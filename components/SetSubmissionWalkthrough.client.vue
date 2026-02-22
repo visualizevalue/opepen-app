@@ -176,10 +176,12 @@ const handleClose = () => {
   emit('exit', 'closed')
 }
 
-// Watch for step changes
+// Watch for step changes - debounced to prevent infinite loops
 watch(currentStepNumber, (newStep) => {
-  handleValidate()
-})
+  nextTick(() => {
+    handleValidate()
+  })
+}, { flush: 'post' })
 </script>
 
 <style scoped>

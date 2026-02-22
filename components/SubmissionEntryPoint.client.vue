@@ -112,9 +112,9 @@ const props = defineProps({
 
 const emit = defineEmits(['updated'])
 
-const submissionDataRef = toRef(props, 'submissionData')
+// Setup walkthrough composable with readonly ref to prevent circular updates
+const submissionDataRef = computed(() => props.submissionData)
 
-// Setup walkthrough composable
 const {
   walkthroughActive,
   preference,

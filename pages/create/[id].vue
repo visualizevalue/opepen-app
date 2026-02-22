@@ -1,9 +1,9 @@
 <template>
   <PageFrameSm>
     <IsAuthenticated>
-      <SubmissionEntryPoint
+      <SetSubmissionForm
         v-if="data"
-        :submission-data="data"
+        :data="data"
         :refresh="refresh"
         @updated="data = $event"
       />
