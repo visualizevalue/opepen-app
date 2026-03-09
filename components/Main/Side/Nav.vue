@@ -201,19 +201,10 @@ watchEffect(() => {
 const documentScrollLocked = useScrollLock(document)
 const navScrollLocked = useScrollLock(nav)
 watchEffect(() => {
-  let lockDoc = false
-  let lockNav = false
-
-  if (isSwiping.value && isHorizontal.value) {
-    lockDoc = true
-    lockNav = true
-  }
-  if (isOpen.value && !isDesktop.value) {
-    lockDoc = true
-  }
-
-  documentScrollLocked.value = lockDoc
-  navScrollLocked.value = lockNav
+  // Lock document scroll only when sidebar is open on mobile
+  documentScrollLocked.value = isOpen.value && !isDesktop.value
+  // Lock nav scroll during horizontal swipe to prevent sidebar internal scroll
+  navScrollLocked.value = isSwiping.value && isHorizontal.value
 })
 
 // Update the translate position
