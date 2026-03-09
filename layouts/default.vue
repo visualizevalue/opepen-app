@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" ref="el" @touchMove.prevent="() => null">
+  <div class="layout" ref="el">
     <!-- Sidebar -->
     <MainSideNav ref="mainNav" />
 
