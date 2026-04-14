@@ -12,7 +12,7 @@ export const useDelegation = async (address: Ref<`0x${string}`>) => {
   const tokenIds: Ref<number[]> = ref([])
 
   // @ts-ignore
-  const v2 = new DelegateV2(http(config.public.rpc))
+  const v2 = new DelegateV2(http(config.public.rpc1))
 
   const update = async () => {
     if (!address.value) {
