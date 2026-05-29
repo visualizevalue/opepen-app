@@ -1,13 +1,59 @@
 <template>
   <PageFrameSm class="landing">
-    <header>
+    <!-- Momentum first: what's live, then how close to completion, then the art. -->
+    <HomeLiveSet />
+
+    <HomeProgress :filled="completeSets.length" />
+
+    <section class="sets">
+      <header>
+        <SectionTitle>Featured Sets</SectionTitle>
+        <Button to="/sets" class="small">
+          <span>Browse more</span>
+        </Button>
+      </header>
+      <SetCardGrid :submissions="featuredSubmissions" />
+    </section>
+
+    <section class="sets">
+      <header>
+        <SectionTitle>Recent Sets</SectionTitle>
+        <Button to="/sets" class="small">
+          <span>Browse more</span>
+        </Button>
+      </header>
+      <SetCardGrid :submissions="recentSubmissions" />
+    </section>
+
+    <HomePopularSets />
+
+    <HomeRecentSales />
+
+    <section class="artists">
+      <header>
+        <SectionTitle>Featured Artists</SectionTitle>
+        <Button to="/artists" class="small">
+          <span>Browse more</span>
+        </Button>
+      </header>
+      <ProfileCardGrid :accounts="artistsResponse.data" />
+    </section>
+
+    <section class="stats">
+      <SectionTitle>Stats</SectionTitle>
+
+      <Stats />
+    </section>
+
+    <hr />
+
+    <!-- How it works — demoted below the fold for newcomers. -->
+    <header class="about-header">
       <h1>
         <span>Opepen Edition</span>
         <small>Public Art On Ethereum</small>
       </h1>
     </header>
-
-    <hr />
 
     <section class="intro">
       <div>
@@ -49,8 +95,6 @@
       </div>
     </section>
 
-    <hr />
-
     <section class="prose">
       <h2>Where constraint meets creativity.</h2>
 
@@ -74,41 +118,6 @@
         <br />
         {{ formatNumber(stats?.submissions.sets) }} sets have been submitted.
       </p>
-
-      <!-- <Button to="/about/intro" class="link-button"> -->
-      <!--   <span>Learn more</span> -->
-      <!--   <Icon type="chevron-right" /> -->
-      <!-- </Button> -->
-    </section>
-
-    <hr />
-
-    <section class="sets">
-      <header>
-        <SectionTitle>Featured Sets</SectionTitle>
-        <Button to="/sets" class="small">
-          <span>Browse more</span>
-        </Button>
-      </header>
-      <SetCardGrid :submissions="featuredSubmissions" />
-    </section>
-
-    <section class="artists">
-      <header>
-        <SectionTitle>Featured Artists</SectionTitle>
-        <Button to="/artists" class="small">
-          <span>Browse more</span>
-        </Button>
-      </header>
-      <ProfileCardGrid :accounts="artistsResponse.data" />
-    </section>
-
-    <hr />
-
-    <section class="stats">
-      <SectionTitle>Stats</SectionTitle>
-
-      <Stats />
     </section>
   </PageFrameSm>
 </template>
@@ -119,6 +128,16 @@ const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-
 const { featuredSets, completeSets } = await useSets()
 const featuredSubmissions = computed(() => featuredSets.value.map((s) => s.submission))
 
+// Most recently revealed permanent sets.
+const recentSubmissions = computed(() =>
+  [...completeSets.value]
+    .sort((a, b) =>
+      (a.submission.reveals_at || '') < (b.submission.reveals_at || '') ? 1 : -1,
+    )
+    .slice(0, 8)
+    .map((s) => s.submission),
+)
+
 const { stats } = await useStats()
 
 useMetaData({
@@ -128,6 +147,13 @@ useMetaData({
 
 <style scoped>
 .landing {
+  /* Live-set hero sits at the very top — pull it up near the nav rather than
+     inheriting the full section top padding. */
+  > .live-set {
+    padding-top: var(--spacer);
+    padding-bottom: var(--spacer-xl);
+  }
+
   > header,
   > .intro {
     h1,
