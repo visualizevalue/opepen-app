@@ -47,11 +47,57 @@
             :aspect-ratio="1"
             class="thumb"
           />
+          <span v-else class="thumb placeholder"><Icon type="opepen" /></span>
           <span class="body">
             <span class="title">
               Set {{ pad(entry.data.id, 3) }} · {{ entry.data.submission.name }}
             </span>
             <span class="sub">Revealed · by {{ entry.data.submission.artist }}</span>
+          </span>
+          <time>{{ timeAgo(entry.timestamp) }}</time>
+        </NuxtLink>
+
+        <!-- Newly submitted set -->
+        <NuxtLink
+          v-else-if="entry.type === 'submission'"
+          :to="`/submissions/${entry.data.uuid}`"
+          class="entry"
+        >
+          <span class="icon"><Icon type="plus" /></span>
+          <Image
+            v-if="entry.data.edition1Image"
+            :image="entry.data.edition1Image"
+            :aspect-ratio="1"
+            class="thumb"
+          />
+          <span v-else class="thumb placeholder"><Icon type="opepen" /></span>
+          <span class="body">
+            <span class="title">{{ entry.data.name }}</span>
+            <span class="sub">Submitted · by {{ entry.data.artist }}</span>
+          </span>
+          <time>{{ timeAgo(entry.timestamp) }}</time>
+        </NuxtLink>
+
+        <!-- Opt-in / opt-out (macro coordination activity) -->
+        <NuxtLink
+          v-else-if="entry.type === 'optin'"
+          :to="`/submissions/${entry.data.submission.uuid}`"
+          class="entry"
+        >
+          <span class="icon"><Icon type="check" /></span>
+          <Image
+            v-if="entry.data.submission.edition1Image"
+            :image="entry.data.submission.edition1Image"
+            :aspect-ratio="1"
+            class="thumb"
+          />
+          <span v-else class="thumb placeholder"><Icon type="opepen" /></span>
+          <span class="body">
+            <span class="title">
+              {{ shortAddr(entry.data.address) }} {{ optInVerb(entry.data) }}
+              {{ optInCount(entry.data) }} Opepen
+            </span>
+            <span class="sub">{{ entry.data.submission.name }}</span>
           </span>
           <time>{{ timeAgo(entry.timestamp) }}</time>
         </NuxtLink>
@@ -69,6 +115,7 @@
             :aspect-ratio="1"
             class="thumb"
           />
+          <span v-else class="thumb placeholder"><Icon type="opepen" /></span>
           <span class="body">
             <span class="title">
               #{{ entry.data.token_id }} sold for {{ priceEth(entry.data) }} Ξ
@@ -92,9 +139,19 @@ const { filtered, filter, reloadTweets } = await useActivity()
 const filters = [
   { key: 'all', label: 'All' },
   { key: 'reveals', label: 'Reveals' },
+  { key: 'submissions', label: 'Submissions' },
+  { key: 'optins', label: 'Opt-ins' },
   { key: 'sales', label: 'Sales' },
   { key: 'notable', label: 'Notable' },
 ]
+
+// Opt-in history rows: opt-in when the count grew (or first time), else opt-out.
+const optInCount = (h) => h.opepen_count ?? 0
+const optInVerb = (h) =>
+  (h.opepen_count ?? 0) >= (h.previous_opepen_count ?? 0) && (h.opepen_count ?? 0) > 0
+    ? 'opted in'
+    : 'opted out'
+const shortAddr = (a) => (a ? `${a.slice(0, 6)}…${a.slice(-4)}` : '')
 
 const priceEth = (sale) => {
   const eth = sale?.data?.price?.eth
@@ -285,6 +342,14 @@ useMetaData({
     height: var(--size-8);
     border-radius: var(--size-1);
     overflow: hidden;
+  }
+
+  .thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-z-1);
+    color: var(--gray-z-4);
   }
 
   .body {
