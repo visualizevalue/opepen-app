@@ -66,12 +66,24 @@
               <abbr :title="`Edition of ${o.data.edition}`" class="edition">
                 ({{ o.data.edition }} Ed.)
               </abbr>
+              <abbr
+                v-if="isMigrating(o)"
+                :title="`Revealed in Set ${migratingFromSet(o)}. If selected here, it migrates forward and permanently leaves that set.`"
+                class="migrating"
+              >
+                ⤳ migrates from Set {{ migratingFromSet(o) }}
+              </abbr>
             </FormCheckbox>
           </div>
         </template>
       </div>
     </section>
     <footer>
+      <p v-if="selectedMigrating.length" class="migration-warning">
+        {{ selectedMigrating.length }} revealed Opepen will
+        <strong>migrate forward</strong> if selected — permanently leaving their
+        current set. This cannot be undone.
+      </p>
       <div v-if="selected.length" class="summary">
         <span>Submitting {{ selected.length }} Opepen</span>
         <template v-for="(_, g) in grouped">
@@ -131,13 +143,29 @@ const { refreshAccount } = await useProfile()
 const address = computed(() => props.address)
 const { addresses: delegatedAddresses } = await useDelegation(address)
 
+const v5 = useV5Migration()
 const {
-  unrevealedOpepen: opepen,
-  opepenByEdition: grouped,
+  unrevealedOpepen,
+  opepenByEdition,
+  optInableOpepen,
+  optInableByEdition,
   opepenLoading,
   fetchOpepen,
 } = await useOpepen([address.value, ...delegatedAddresses.value])
 watch(delegatedAddresses, () => fetchOpepen([address.value, ...delegatedAddresses.value]))
+
+// Under v5 the selectable pool also includes revealed Opepen (which migrate
+// forward, vacating their prior set). When the flag is off this is exactly the
+// previous behaviour: blank Opepen only.
+const opepen = computed(() => (v5 ? optInableOpepen.value : unrevealedOpepen.value))
+const grouped = computed(() => (v5 ? optInableByEdition.value : opepenByEdition.value))
+
+// A revealed token in the pool is one that would migrate forward if selected.
+const isMigrating = (o) => !!o?.revealed_at
+const migratingFromSet = (o) => o?.set_id ?? o?.set?.id ?? o?.data?.set_id ?? null
+const selectedMigrating = computed(() =>
+  opepen.value.filter((o) => isMigrating(o) && selected.value.includes(o.token_id)),
+)
 
 const validSubscribed = computed(() =>
   [...props.subscribed]
@@ -325,6 +353,27 @@ const sign = async () => {
     &:--highlight {
       outline: none;
     }
+  }
+}
+
+.migrating {
+  margin-left: var(--size-2);
+  font-size: var(--font-xs);
+  color: var(--blue, var(--gray-z-6));
+  white-space: nowrap;
+  border: none;
+  text-decoration: none;
+}
+
+.migration-warning {
+  padding: var(--size-3) var(--size-4);
+  font-size: var(--font-xs);
+  line-height: 1.4;
+  color: var(--gray-z-6);
+  border-bottom: var(--border);
+
+  strong {
+    color: var(--color);
   }
 }
 

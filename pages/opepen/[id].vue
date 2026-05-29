@@ -3,6 +3,8 @@
     <OpepenHeader :opepen="opepen" />
     <OpepenMetadata :opepen="opepen" />
 
+    <OpepenMigrationHistory v-if="opepen" :opepen="opepen" />
+
     <OpepenEvents :opepen="opepen" />
   </PageFrameSm>
 </template>

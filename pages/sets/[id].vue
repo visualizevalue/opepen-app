@@ -5,6 +5,7 @@
 
       <SetPreviewImages :submission="submission" />
       <SetItemsMeta :submission="submission" />
+      <SetMigrationComposition :set="set" />
 
       <section v-if="submission.richContentLinks?.length" class="deep-dive">
         <SectionTitle>Deep Dive</SectionTitle>

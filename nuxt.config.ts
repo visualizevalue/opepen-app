@@ -72,6 +72,10 @@ export default defineNuxtConfig({
       opepenApi: '',
       opepenOauthApi: '',
       signatureApi: 'https://api.signature.vv.xyz/v1',
+      // v5: forward-only migration. Lets revealed Opepen opt into new sets.
+      // When selected, a token migrates forward and vacates its prior set
+      // (old sets monotonically shrink; supply never refills). Off by default.
+      v5Migration: false,
     },
     geminiApiKey: '',
   },

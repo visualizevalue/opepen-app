@@ -44,11 +44,29 @@ export const useOpepen = async (addresses: string[]) => {
   const unrevealedOpepen = computed(() => (opepen.value || []).filter((o) => !o.revealed_at))
   const opepenByEdition = useEditionGroups(unrevealedOpepen)
 
+  // v5: revealed Opepen that may migrate forward into a new set. Empty unless
+  // the migration flag is on, so current behaviour is untouched when off.
+  const v5 = useV5Migration()
+  const migratableOpepen = computed(() =>
+    v5 ? (opepen.value || []).filter((o) => !!o.revealed_at) : [],
+  )
+
+  // The full pool eligible to opt into a new set: blank Opepen always, plus
+  // revealed Opepen under v5. Grouped by edition for the opt-in UI.
+  const optInableOpepen = computed(() => [
+    ...unrevealedOpepen.value,
+    ...migratableOpepen.value,
+  ])
+  const optInableByEdition = useEditionGroups(optInableOpepen)
+
   return {
     opepenLoading,
     opepen,
     unrevealedOpepen,
     opepenByEdition,
+    migratableOpepen,
+    optInableOpepen,
+    optInableByEdition,
     fetchOpepen,
   }
 }
