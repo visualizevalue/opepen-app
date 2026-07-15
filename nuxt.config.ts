@@ -73,7 +73,6 @@ export default defineNuxtConfig({
       opepenOauthApi: '',
       signatureApi: 'https://api.signature.vv.xyz/v1',
     },
-    geminiApiKey: '',
   },
 
   pwa: {
