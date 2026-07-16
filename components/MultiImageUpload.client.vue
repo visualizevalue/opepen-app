@@ -110,7 +110,7 @@ const addFiles = async (files) => {
   }
 
   if (props.maxFiles) {
-    previews.value = previews.value.slice(0, props.maxFiles)
+    previews.value = previews.value.slice(0, Math.max(props.maxFiles - images.value.length, 0))
   }
 
   storeFiles()

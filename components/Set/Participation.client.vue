@@ -10,15 +10,19 @@
       <p class="description">
         The creator has opened this set for co-creation. You can contribute your own renditions
         for consideration.
+        <template v-if="contributionLimit">
+          Each artist may submit up to {{ contributionLimit }}
+          {{ contributionLimit > 1 ? 'contributions' : 'contribution' }}.
+        </template>
       </p>
 
-      <div class="upload-section">
+      <div class="upload-section" v-if="!limitReached">
         <MultiImageUpload
           name="Contribute"
           :key="refreshKey"
           :images="participationImages"
           :disabled="disabled"
-          :max-files="10"
+          :max-files="maxUploadFiles"
           @stored="
             ($event) => {
               participationImages = $event
@@ -31,7 +35,15 @@
             <span>Submit Contribution</span>
           </Button>
         </div>
+
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       </div>
+
+      <p v-else class="limit-reached">
+        You have submitted the maximum of {{ contributionLimit }}
+        {{ contributionLimit > 1 ? 'contributions' : 'contribution' }} for this set. Delete one
+        of your contributions below to submit a new one.
+      </p>
     </section>
 
     <section v-if="props.submission.contributions_count" class="contributions">
@@ -183,6 +195,22 @@ const isUserContribution = (participation) => {
   return participation.creator?.address?.toLowerCase() === currentAddress.value?.toLowerCase()
 }
 
+const MAX_UPLOAD_BATCH = 10
+const contributionLimit = computed(
+  () => props.submission.max_contributions_per_contributor || null,
+)
+const remainingContributions = computed(() =>
+  contributionLimit.value
+    ? Math.max(contributionLimit.value - userContributions.value.length, 0)
+    : null,
+)
+const limitReached = computed(() => remainingContributions.value === 0)
+const maxUploadFiles = computed(() =>
+  remainingContributions.value === null
+    ? MAX_UPLOAD_BATCH
+    : Math.min(MAX_UPLOAD_BATCH, remainingContributions.value),
+)
+
 const displayedParticipations = computed(() => {
   let participations = showUserContributions.value
     ? userContributions.value
@@ -248,7 +276,10 @@ const toggleLike = async (participation) => {
       likedImages.value.add(imageUuid)
     }
 
-    localStorage.setItem('liked-participation-images', JSON.stringify(Array.from(likedImages.value)))
+    localStorage.setItem(
+      'liked-participation-images',
+      JSON.stringify(Array.from(likedImages.value)),
+    )
 
     await $fetch(`${config.public.opepenApi}/votes`, {
       method: 'POST',
@@ -267,7 +298,10 @@ const toggleLike = async (participation) => {
     } else {
       likedImages.value.add(imageUuid)
     }
-    localStorage.setItem('liked-participation-images', JSON.stringify(Array.from(likedImages.value)))
+    localStorage.setItem(
+      'liked-participation-images',
+      JSON.stringify(Array.from(likedImages.value)),
+    )
   } finally {
     likingImages.value.delete(imageUuid)
   }
@@ -297,7 +331,7 @@ const store = async () => {
     emit('refresh')
   } catch (error) {
     console.error('Failed to submit participation:', error)
-    errorMessage.value = 'Failed to submit. Please try again.'
+    errorMessage.value = error.data?.message || 'Failed to submit. Please try again.'
   } finally {
     saving.value = false
   }
@@ -321,6 +355,21 @@ const store = async () => {
   color: var(--muted);
   font-size: var(--font-sm);
   margin-bottom: var(--spacer-sm);
+}
+
+.limit-reached {
+  color: var(--muted);
+  font-size: var(--font-sm);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: var(--spacer);
+  background-color: var(--gray-z-2);
+}
+
+.error-message {
+  color: var(--error, var(--red));
+  font-size: var(--font-sm);
+  margin-top: var(--spacer-sm);
 }
 
 .submission-actions {

@@ -213,6 +213,22 @@
           This allows other creators to contribute ideas to your set.
         </p>
       </label>
+
+      <label class="type" v-if="openForParticipation">
+        <span>Max Contributions Per Artist</span>
+        <input
+          class="input"
+          type="number"
+          min="1"
+          step="1"
+          v-model="maxContributionsPerContributor"
+          placeholder="Unlimited"
+          :disabled="disabled"
+        />
+        <p class="help-text">
+          Limit how many contributions each artist may submit. Leave empty for unlimited.
+        </p>
+      </label>
     </Card>
 
     <Card class="static">
@@ -257,6 +273,9 @@ const description = ref(props.data.description || '')
 const artist = ref(props.data.artist || account.value?.display)
 const creator = ref(props.data.creator)
 const openForParticipation = ref(!!props.data.open_for_participation)
+const maxContributionsPerContributor = ref(
+  props.data.max_contributions_per_contributor || null,
+)
 const withEmptyCoCreators = (list) => {
   if (!list.length || list[list.length - 1].address !== '') {
     list.push({ id: list.length, address: '' })
@@ -447,6 +466,7 @@ const saveData = computed(() => ({
   edition_40_name: name40.value,
   creator: creator.value,
   open_for_participation: openForParticipation.value,
+  max_contributions_per_contributor: parseInt(maxContributionsPerContributor.value) || null,
   co_creators: coCreators.value
     .map((c) => c.address?.trim().toLowerCase())
     .filter((address) => address),
