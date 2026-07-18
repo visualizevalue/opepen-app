@@ -121,7 +121,7 @@ const consensusDate = computed(
   () => submission?.reveals_at && formatDate(submission?.reveals_at),
 )
 const coCreators = useCoCreators(() => submission)
-const truncatedCoCreators = computed(() => coCreators.value.slice(0, 2))
+const truncatedCoCreators = computed(() => coCreators.value.length > 2 ? [] : coCreators.value.slice(0, 2))
 const moreCount = computed(
   () => coCreators.value.length - truncatedCoCreators.value.length,
 )
