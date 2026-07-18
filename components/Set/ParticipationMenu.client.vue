@@ -241,7 +241,10 @@ async function updateImages({ edition, uuid, baseUrl }) {
     await $fetch(baseUrl, {
       method: 'POST',
       credentials: 'include',
-      body: { images: [{ edition, index, uuid }] },
+      body: {
+        participationId: props.participation.id,
+        images: [{ edition, index, uuid }],
+      },
     })
     return
   }
@@ -251,7 +254,10 @@ async function updateImages({ edition, uuid, baseUrl }) {
   await $fetch(baseUrl, {
     method: 'POST',
     credentials: 'include',
-    body: { [field]: uuid },
+    body: {
+      participationId: props.participation.id,
+      [field]: uuid,
+    },
   })
 }
 </script>
