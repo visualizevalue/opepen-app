@@ -120,7 +120,7 @@ const revealed = computed(() => revealing.value && submission?.reveal_block_numb
 const consensusDate = computed(
   () => submission?.reveals_at && formatDate(submission?.reveals_at),
 )
-const coCreators = useCoCreators(submission)
+const coCreators = useCoCreators(() => submission)
 const showMore = computed(() => coCreators.value.length > 3)
 const truncatedCoCreators = computed(() =>
   showMore.value ? [] : coCreators.value.slice(0, 2),
