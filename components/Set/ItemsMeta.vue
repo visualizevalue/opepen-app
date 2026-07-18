@@ -121,13 +121,11 @@ const consensusDate = computed(
   () => submission?.reveals_at && formatDate(submission?.reveals_at),
 )
 const coCreators = useCoCreators(() => submission)
-const showMore = computed(() => coCreators.value.length > 3)
-const truncatedCoCreators = computed(() =>
-  showMore.value ? [] : coCreators.value.slice(0, 2),
+const truncatedCoCreators = computed(() => coCreators.value.slice(0, 2))
+const moreCount = computed(
+  () => coCreators.value.length - truncatedCoCreators.value.length,
 )
-const moreCount = computed(() => {
-  return showMore.value ? coCreators.value.length - truncatedCoCreators.value.length : 0
-})
+const showMore = computed(() => moreCount.value > 0)
 // Modal
 const modalOpen = ref(false)
 const openModal = () => {
