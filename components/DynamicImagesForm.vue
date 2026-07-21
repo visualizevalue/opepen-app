@@ -12,9 +12,9 @@
       :disabled="disabled"
       :max-files="4"
       @stored="
-        ($event) => {
-          edition4Images = $event
-          store(4, edition4Images)
+        (images, slots) => {
+          edition4Images = images
+          store(4, edition4Images, slots)
         }
       "
       @delete="
@@ -31,9 +31,9 @@
       :disabled="disabled"
       :max-files="5"
       @stored="
-        ($event) => {
-          edition5Images = $event
-          store(5, edition5Images)
+        (images, slots) => {
+          edition5Images = images
+          store(5, edition5Images, slots)
         }
       "
       @delete="
@@ -50,9 +50,9 @@
       :disabled="disabled"
       :max-files="10"
       @stored="
-        ($event) => {
-          edition10Images = $event
-          store(10, edition10Images)
+        (images, slots) => {
+          edition10Images = images
+          store(10, edition10Images, slots)
         }
       "
       @delete="
@@ -69,9 +69,9 @@
       :disabled="disabled"
       :max-files="20"
       @stored="
-        ($event) => {
-          edition20Images = $event
-          store(20, edition20Images)
+        (images, slots) => {
+          edition20Images = images
+          store(20, edition20Images, slots)
         }
       "
       @delete="
@@ -88,9 +88,9 @@
       :disabled="disabled"
       :max-files="40"
       @stored="
-        ($event) => {
-          edition40Images = $event
-          store(40, edition40Images)
+        (images, slots) => {
+          edition40Images = images
+          store(40, edition40Images, slots)
         }
       "
       @delete="
@@ -212,7 +212,7 @@ const saving = ref(false)
 const lastSaved = ref(null)
 const lastSavedAt = computed(() => (lastSaved.value ? formatTime(lastSaved.value) : ''))
 
-const store = async (edition, images) => {
+const store = async (edition, images, slots) => {
   if (!session.value) await signIn()
   if (!session.value) return
 
@@ -226,7 +226,7 @@ const store = async (edition, images) => {
       body: JSON.stringify({
         images: images.map((img, index) => ({
           edition,
-          index: index + 1,
+          index: (slots[index] ?? index) + 1,
           uuid: img.uuid,
         })),
       }),

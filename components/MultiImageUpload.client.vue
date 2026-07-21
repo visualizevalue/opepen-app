@@ -29,7 +29,7 @@
 
     <div v-if="images.length" class="grid">
       <Image v-for="(image, idx) of images" :key="image.uuid" :image="image">
-        <button v-if="!disabled" @click="() => deleteFile(idx)" class="unstyled">
+        <button v-if="!disabled" type="button" @click="() => deleteFile(idx)" class="unstyled">
           <Icon type="x" :stroke-width="3" />
         </button>
       </Image>
@@ -51,7 +51,8 @@ const emit = defineEmits(['stored', 'reset', 'delete'])
 
 const { ensureSignIn } = useSignIn()
 
-const images = ref(props.images?.filter((i) => !!i) || [])
+const imageSlots = ref(props.images?.flatMap((image, index) => (image ? [index] : [])) || [])
+const images = ref(imageSlots.value.map((index) => props.images[index]))
 const canAddMore = computed(
   () => !props.disabled && props.maxFiles && images.value.length < props.maxFiles,
 )
@@ -71,10 +72,11 @@ const storeFiles = async () => {
   try {
     for (const preview of previews.value) {
       images.value.push(await storeFile(preview))
+      imageSlots.value.push(nextAvailableSlot())
       currentUpload.value += 1
     }
 
-    emit('stored', images.value)
+    emit('stored', images.value, imageSlots.value)
   } catch (e) {
     console.error(e)
     let message = e.message || `Something went wrong...`
@@ -117,13 +119,24 @@ const addFiles = async (files) => {
 }
 const addFilesEvent = (event) => addFiles(event.target.files)
 
+const nextAvailableSlot = () => {
+  const usedSlots = new Set(imageSlots.value)
+  let slot = 0
+
+  while (usedSlots.has(slot)) slot++
+
+  return slot
+}
+
 const deleteFile = (idx) => {
+  const [slot] = imageSlots.value.splice(idx, 1)
   images.value.splice(idx, 1)
-  emit('delete', idx)
+  emit('delete', slot ?? idx)
 }
 
 const reset = () => {
   images.value = []
+  imageSlots.value = []
   previews.value = []
 }
 
