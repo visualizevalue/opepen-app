@@ -138,6 +138,7 @@ const reset = () => {
   images.value = []
   imageSlots.value = []
   previews.value = []
+  emit('reset')
 }
 
 defineExpose({

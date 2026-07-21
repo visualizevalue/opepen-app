@@ -199,6 +199,7 @@
         :dynamic-set-images="data.dynamicSetImages"
         :disabled="disabled"
         class="span-2"
+        @updated="emit('updated', $event)"
       />
     </Card>
 

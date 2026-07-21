@@ -22,6 +22,7 @@
           deleteImage(4, index)
         }
       "
+      @reset="clearEdition(4)"
     />
 
     <MultiImageUpload
@@ -41,6 +42,7 @@
           deleteImage(5, index)
         }
       "
+      @reset="clearEdition(5)"
     />
 
     <MultiImageUpload
@@ -60,6 +62,7 @@
           deleteImage(10, index)
         }
       "
+      @reset="clearEdition(10)"
     />
 
     <MultiImageUpload
@@ -79,6 +82,7 @@
           deleteImage(20, index)
         }
       "
+      @reset="clearEdition(20)"
     />
 
     <MultiImageUpload
@@ -98,6 +102,7 @@
           deleteImage(40, index)
         }
       "
+      @reset="clearEdition(40)"
     />
   </div>
 </template>
@@ -239,7 +244,7 @@ const store = async (edition, images, slots) => {
   emit('updated', submission)
 }
 
-const deleteImage = async (edition, index) => {
+const deleteImages = async (images) => {
   if (!session.value) await signIn()
   if (!session.value) return
 
@@ -250,15 +255,7 @@ const deleteImage = async (edition, index) => {
     {
       method: 'POST',
       credentials: 'include',
-      body: JSON.stringify({
-        images: [
-          {
-            edition,
-            index: index + 1,
-            uuid: null,
-          },
-        ],
-      }),
+      body: JSON.stringify({ images }),
     },
   )
 
@@ -266,6 +263,20 @@ const deleteImage = async (edition, index) => {
   lastSaved.value = DateTime.now()
 
   emit('updated', submission)
+}
+
+const deleteImage = (edition, index) => {
+  return deleteImages([{ edition, index: index + 1, uuid: null }])
+}
+
+const clearEdition = (edition) => {
+  return deleteImages(
+    Array.from({ length: edition }, (_, index) => ({
+      edition,
+      index: index + 1,
+      uuid: null,
+    })),
+  )
 }
 </script>
 
