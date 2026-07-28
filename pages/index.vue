@@ -75,6 +75,16 @@
         {{ formatNumber(stats?.submissions.sets) }} sets have been submitted.
       </p>
 
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/ac8QxuHyfkk?controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+          title="Opepen"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+
       <!-- <Button to="/about/intro" class="link-button"> -->
       <!--   <span>Learn more</span> -->
       <!--   <Icon type="chevron-right" /> -->
@@ -229,6 +239,23 @@ useMetaData({
         --font-lg: 1.1rem;
         font-size: var(--font-lg);
       }
+    }
+  }
+
+  .prose .video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    margin-top: var(--spacer-lg);
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
   }
 
