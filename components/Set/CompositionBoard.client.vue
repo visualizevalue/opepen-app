@@ -1,15 +1,8 @@
 <template>
   <div ref="workspace" class="composition-workspace" :class="{ saving }">
-    <header class="workspace-header">
-      <div class="workspace-heading">
-        <SectionTitle>Arrange Contributions</SectionTitle>
-        <p>Drag pieces between the pool and edition slots. Changes save automatically.</p>
-      </div>
-
-      <div class="save-status" aria-live="polite">
-        <span class="save-status-label">{{ saveStatus }}</span>
-      </div>
-    </header>
+    <div class="save-status" aria-live="polite">
+      <span class="save-status-label">{{ saveStatus }}</span>
+    </div>
 
     <Alert v-if="errorMessage" class="inline">
       <p>{{ errorMessage }}</p>
@@ -386,7 +379,6 @@ onBeforeUnmount(() => {
   gap: var(--composition-section-gap);
 }
 
-.workspace-header,
 .panel-header {
   display: flex;
   align-items: flex-end;
@@ -394,13 +386,11 @@ onBeforeUnmount(() => {
   gap: var(--composition-gap);
 }
 
-.workspace-heading,
 .panel-header > div {
   display: grid;
   gap: var(--size-1);
 }
 
-.workspace-header p,
 .panel-header small {
   color: var(--muted);
 }
@@ -410,6 +400,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  justify-self: end;
   color: var(--muted);
   white-space: nowrap;
 }
