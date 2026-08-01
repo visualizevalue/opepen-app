@@ -1,7 +1,7 @@
 <template>
   <div ref="workspace" class="composition-workspace" :class="{ saving }">
     <header class="workspace-header">
-      <div>
+      <div class="workspace-heading">
         <SectionTitle>Arrange Contributions</SectionTitle>
         <p>Drag pieces between the pool and edition slots. Changes save automatically.</p>
       </div>
@@ -399,7 +399,7 @@ onBeforeUnmount(() => {
   gap: var(--composition-gap);
 }
 
-.workspace-header > div,
+.workspace-heading,
 .panel-header > div {
   display: grid;
   gap: var(--size-1);
