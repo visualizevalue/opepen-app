@@ -93,6 +93,13 @@
           v-for="participation in displayedParticipations"
           :key="participation.id"
           class="participation-item"
+          :class="{ selected: isParticipationSelected(participation) }"
+          :aria-disabled="isParticipationSelected(participation)"
+          :title="
+            isParticipationSelected(participation)
+              ? 'Already selected for this set'
+              : undefined
+          "
           @click="openImage(participation)"
         >
           <div
@@ -100,6 +107,11 @@
             :style="{ aspectRatio: props.submission.aspect_ratio || '1' }"
           >
             <Image :image="participation.image" version="sm" />
+
+            <div v-if="isParticipationSelected(participation)" class="selection-status">
+              <Icon type="check" />
+              <span>Selected</span>
+            </div>
 
             <div
               v-if="isSetCreator || isUserContribution(participation) || isAdmin"
@@ -111,6 +123,7 @@
                 :submission="props.submission"
                 :is-set-creator="isSetCreator"
                 :is-user-contribution="isUserContribution(participation)"
+                :is-selected="isParticipationSelected(participation)"
                 @refresh="emit('refresh')"
                 @click.stop
               />
@@ -182,6 +195,30 @@ const sortBy = ref('recent')
 
 const canEdit = computed(() => !props.submission.published_at)
 const disabled = computed(() => saving.value)
+
+const selectedImageUuids = computed(() => {
+  const uuids = new Set()
+
+  if (props.submission.edition_type === 'DYNAMIC') {
+    if (props.submission.edition1Image?.uuid) {
+      uuids.add(props.submission.edition1Image.uuid)
+    }
+
+    for (const image of Object.values(props.submission.dynamicSetImages || {})) {
+      if (image?.uuid) uuids.add(image.uuid)
+    }
+  } else {
+    for (const edition of EDITION_KEYS) {
+      const image = props.submission[`edition${edition}Image`]
+      if (image?.uuid) uuids.add(image.uuid)
+    }
+  }
+
+  return uuids
+})
+
+const isParticipationSelected = (participation) =>
+  selectedImageUuids.value.has(participation.image?.uuid)
 
 const userContributions = computed(() => {
   if (!currentAddress.value || !props.submission.participationImages) return []
@@ -425,6 +462,23 @@ const store = async () => {
   &:--highlight {
     transform: translateY(-2px);
   }
+
+  &.selected {
+    cursor: default;
+
+    .participation-image > :deep(.image) {
+      filter: grayscale(1);
+      opacity: 0.35;
+    }
+
+    &:--highlight {
+      transform: none;
+    }
+
+    .participation-image:--highlight :deep(img) {
+      transform: none;
+    }
+  }
 }
 
 .participation-image {
@@ -450,6 +504,28 @@ const store = async () => {
     position: absolute;
     top: var(--spacer-sm);
     right: var(--spacer-sm);
+  }
+
+  .selection-status {
+    @mixin ui-font;
+    position: absolute;
+    top: var(--spacer-sm);
+    left: var(--spacer-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-2);
+    color: var(--color);
+    background: var(--gray-z-2);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    font-size: var(--font-xs);
+    pointer-events: none;
+
+    .icon {
+      width: var(--size-3);
+      height: var(--size-3);
+    }
   }
 }
 

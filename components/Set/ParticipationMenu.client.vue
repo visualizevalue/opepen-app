@@ -50,6 +50,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isSelected: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['refresh'])
@@ -73,6 +77,7 @@ const editionOptions = computed(() => {
 
   const createOption = (edition, icon = 'layers') => {
     const name = `1/${edition}`
+    const text = props.isSelected ? `${name} — already selected` : `Set as ${name}`
 
     // for dynamic sets, disable if all slots are taken
     if (isDynamicSet.value && edition !== EditionType.One) {
@@ -81,18 +86,18 @@ const editionOptions = computed(() => {
 
       return {
         icon,
-        text: `Set as ${name}`,
+        text,
         onClick: () => selectEdition(edition),
-        disabled: available === 0,
+        disabled: props.isSelected || available === 0,
       }
     }
 
     // for 1/1s and print sets never disable
     return {
       icon,
-      text: `Set as ${name}`,
+      text,
       onClick: () => selectEdition(edition),
-      disabled: false,
+      disabled: props.isSelected,
     }
   }
 
@@ -125,6 +130,8 @@ function getEdition(editionTypeStr) {
 }
 
 function selectEdition(edition) {
+  if (props.isSelected) return
+
   editionType.value = `edition_${edition}`
   confirmSetAsEdition.value = true
 }
@@ -217,6 +224,10 @@ const deleteContribution = async () => {
 
 const setAsEdition = async () => {
   try {
+    if (props.isSelected) {
+      throw new Error('Image is already selected')
+    }
+
     const edition = getEdition(editionType.value)
     if (!edition) {
       throw new Error('Invalid edition type')
