@@ -385,7 +385,8 @@ onBeforeUnmount(() => {
 .composition-workspace {
   --composition-gap: var(--spacer-sm);
   --composition-section-gap: var(--spacer);
-  --composition-tile: clamp(2.75rem, 4vw, 3.75rem);
+  --composition-pool-tile: 5.5rem;
+  --composition-tile: clamp(3.5rem, 5vw, 4.5rem);
   display: grid;
   gap: var(--composition-section-gap);
 }
@@ -479,7 +480,7 @@ onBeforeUnmount(() => {
 
 .pool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--composition-pool-tile), 1fr));
   gap: var(--composition-gap);
   min-height: 100%;
   align-content: start;
@@ -578,7 +579,7 @@ onBeforeUnmount(() => {
   }
 
   .edition-slots {
-    grid-template-columns: repeat(10, var(--composition-tile));
+    grid-template-columns: repeat(8, minmax(0, var(--composition-tile)));
   }
 
   .composition-slot {

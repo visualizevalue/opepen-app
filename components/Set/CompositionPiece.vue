@@ -70,7 +70,7 @@ const title = computed(() => (props.participation ? `By ${creatorName.value}` : 
     display: grid;
     aspect-ratio: 1;
     content-visibility: auto;
-    contain-intrinsic-size: 4.25rem;
+    contain-intrinsic-size: 5.5rem;
   }
 
   :deep(.image) {
