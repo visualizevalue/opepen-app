@@ -2,11 +2,11 @@
   <button
     type="button"
     class="composition-piece"
-    :class="{ picked, 'with-meta': showMeta }"
+    :class="{ 'with-meta': showMeta }"
     :data-image-uuid="image.uuid"
     :data-participation-id="participation?.id"
     :title="title"
-    @click.stop="emit('click')"
+    @click.stop="emit('view')"
   >
     <Image :image="image" version="sm" />
 
@@ -27,10 +27,9 @@ const props = defineProps({
     type: Object,
     default: null,
   },
-  picked: Boolean,
   showMeta: Boolean,
 })
-const emit = defineEmits(['click'])
+const emit = defineEmits(['view'])
 
 const creatorName = computed(
   () =>
@@ -59,11 +58,6 @@ const title = computed(() => (props.participation ? `By ${creatorName.value}` : 
 
   &:active {
     cursor: grabbing;
-  }
-
-  &.picked {
-    border-color: var(--color);
-    box-shadow: 0 0 0 1px var(--color);
   }
 
   &.with-meta {

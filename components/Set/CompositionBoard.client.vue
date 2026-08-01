@@ -15,14 +15,6 @@
             <SectionTitle>Contribution Pool</SectionTitle>
             <small>{{ availableParticipations.length }} available</small>
           </div>
-
-          <Button
-            v-if="pickedPiece"
-            class="small"
-            @click="canReturnPickedPiece ? movePickedToPool() : clearPickedPiece()"
-          >
-            {{ canReturnPickedPiece ? 'Return to pool' : 'Cancel' }}
-          </Button>
         </header>
 
         <div class="pool-controls">
@@ -50,9 +42,8 @@
               :key="participation.id"
               :image="participation.image"
               :participation="participation"
-              :picked="isPicked(participation.image)"
               show-meta
-              @click="pickPiece(participation.image, { type: 'pool' }, participation.id)"
+              @view="openPreview(participation.image, participation)"
             />
 
             <p v-if="!displayedParticipations.length" class="empty-pool">
@@ -68,9 +59,6 @@
             <SectionTitle>Edition Board</SectionTitle>
             <small>{{ selectedCount }} / {{ slotCount }} slots filled</small>
           </div>
-          <Button v-if="pickedPiece" class="small" @click="clearPickedPiece">
-            Cancel selection
-          </Button>
         </header>
 
         <div class="edition-rows">
@@ -85,30 +73,17 @@
                 v-for="(image, offset) in slots[edition]"
                 :key="`${edition}-${offset + 1}`"
                 class="composition-slot composition-drop-zone"
-                :class="{ filled: image, target: pickedPiece && !isPicked(image) }"
+                :class="{ filled: image }"
                 data-composition-zone="slot"
                 :data-edition="edition"
                 :data-index="offset + 1"
                 :style="{ aspectRatio: submission.aspect_ratio || '1' }"
-                :role="image ? undefined : 'button'"
-                :tabindex="image ? undefined : 0"
-                :aria-label="image ? undefined : `Empty 1/${edition} slot ${offset + 1}`"
-                @click="placePickedPiece({ type: 'slot', edition, index: offset + 1 })"
-                @keydown.enter.prevent="
-                  placePickedPiece({ type: 'slot', edition, index: offset + 1 })
-                "
-                @keydown.space.prevent="
-                  placePickedPiece({ type: 'slot', edition, index: offset + 1 })
-                "
               >
                 <SetCompositionPiece
                   v-if="image"
                   :image="image"
                   :participation="participationFor(image)"
-                  :picked="isPicked(image)"
-                  @click="
-                    pickOrPlacePiece(image, { type: 'slot', edition, index: offset + 1 })
-                  "
+                  @view="openPreview(image, participationFor(image))"
                 />
                 <span v-else class="slot-number">{{ offset + 1 }}</span>
               </div>
@@ -117,6 +92,14 @@
         </div>
       </section>
     </div>
+
+    <ImageModal
+      v-if="previewImage"
+      v-model:open="previewOpen"
+      :image="previewImage"
+      :name="previewName"
+      :tagline="previewTagline"
+    />
   </div>
 </template>
 
@@ -145,7 +128,10 @@ const errorMessage = ref('')
 const lastSaved = ref(null)
 const search = ref('')
 const sort = ref('recent')
-const pickedPiece = ref(null)
+const previewOpen = ref(false)
+const previewImage = ref(null)
+const previewName = ref('')
+const previewTagline = ref('')
 const sortables = []
 
 const participations = computed(() => props.submission.participationImages || [])
@@ -195,11 +181,6 @@ const displayedParticipations = computed(() => {
 
 const selectedCount = computed(() => Object.values(slots.value).flat().filter(Boolean).length)
 const slotCount = computed(() => Object.values(slots.value).flat().length)
-const canReturnPickedPiece = computed(
-  () =>
-    pickedPiece.value?.from.type === 'slot' &&
-    !!participationByImageUuid.value.get(pickedPiece.value.image.uuid),
-)
 const saveStatus = computed(() => {
   if (saving.value) return 'Saving…'
   if (lastSaved.value) return 'Saved'
@@ -210,38 +191,14 @@ const creatorName = (participation) =>
   participation.creator?.display || participation.creator?.address || 'Unknown artist'
 const participationFor = (image) => participationByImageUuid.value.get(image?.uuid)
 const filledSlotCount = (edition) => slots.value[edition].filter(Boolean).length
-const isPicked = (image) => pickedPiece.value?.image.uuid === image?.uuid
 
-const clearPickedPiece = () => {
-  pickedPiece.value = null
-}
-
-const pickPiece = (image, from, participationId) => {
-  if (saving.value) return
-
-  if (isPicked(image)) {
-    clearPickedPiece()
-    return
-  }
-
-  pickedPiece.value = { image, from, participationId }
-}
-
-const pickOrPlacePiece = (image, location) => {
-  if (!pickedPiece.value || isPicked(image)) {
-    pickPiece(image, location, participationFor(image)?.id)
-    return
-  }
-
-  movePiece(pickedPiece.value, location)
-}
-
-const placePickedPiece = (location) => {
-  if (pickedPiece.value) movePiece(pickedPiece.value, location)
-}
-
-const movePickedToPool = () => {
-  if (pickedPiece.value) movePiece(pickedPiece.value, { type: 'pool' })
+const openPreview = (image, participation) => {
+  previewImage.value = image
+  previewName.value = participation
+    ? `${props.submission.name} Contribution`
+    : `${props.submission.name} Artwork`
+  previewTagline.value = participation ? `By ${creatorName(participation)}` : ''
+  previewOpen.value = true
 }
 
 const restoreDraggedElement = (event) => {
@@ -301,7 +258,6 @@ const movePiece = async (piece, to) => {
   }
 
   slots.value = result.slots
-  clearPickedPiece()
   saving.value = true
 
   try {
@@ -510,12 +466,6 @@ onBeforeUnmount(() => {
   transition:
     background-color var(--speed),
     border-color var(--speed);
-
-  &.target:hover {
-    background: var(--gray-z-3);
-    border-color: var(--color);
-    cursor: pointer;
-  }
 
   .composition-piece {
     position: absolute;
