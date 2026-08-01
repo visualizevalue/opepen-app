@@ -146,7 +146,7 @@ const items = computed(() => {
     canCompose.value
       ? {
           onClick: () => navigateTo(`/create/${submission.uuid}/compose`),
-          text: 'Arrange Contributions',
+          text: 'Compose Contributions',
           icon: 'layers',
         }
       : null,
