@@ -106,7 +106,7 @@
                   :image="image"
                   :participation="participationFor(image)"
                   :picked="isPicked(image)"
-                  @click.stop="
+                  @click="
                     pickOrPlacePiece(image, { type: 'slot', edition, index: offset + 1 })
                   "
                 />
