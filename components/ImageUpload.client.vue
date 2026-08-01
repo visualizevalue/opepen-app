@@ -24,7 +24,7 @@
         @change.prevent="addFile"
       />
     </label>
-    <button v-if="image && !disabled" @click="reset" class="unstyled reset">
+    <button v-if="image && !disabled" type="button" @click="reset" class="unstyled reset">
       <Icon type="x" :stroke-width="3" />
     </button>
   </div>

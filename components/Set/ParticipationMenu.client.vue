@@ -113,11 +113,12 @@ const items = computed(() => {
 
   if (props.isUserContribution || props.isSetCreator || isAdmin.value) {
     menuItems.push({
-      text: 'Delete',
+      text: props.isSelected ? 'Remove from set before deleting' : 'Delete',
       icon: 'trash',
       onClick: () => {
         confirmDelete.value = true
       },
+      disabled: props.isSelected,
     })
   }
 
@@ -218,7 +219,7 @@ const deleteContribution = async () => {
     })
     emit('refresh')
   } catch (error) {
-    alert('Failed to delete contribution. Please try again.')
+    alert(error?.data?.message || 'Failed to delete contribution. Please try again.')
   }
 }
 

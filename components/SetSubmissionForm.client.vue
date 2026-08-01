@@ -55,36 +55,42 @@
       <div class="images">
         <ImageUpload
           @stored="image1 = $event"
+          @reset="image1 = null"
           name="1/1 Media"
           :image="image1"
           :disabled="disabled"
         />
         <ImageUpload
           @stored="image4 = $event"
+          @reset="image4 = null"
           name="1/4 Media"
           :image="image4"
           :disabled="disabled"
         />
         <ImageUpload
           @stored="image5 = $event"
+          @reset="image5 = null"
           name="1/5 Media"
           :image="image5"
           :disabled="disabled"
         />
         <ImageUpload
           @stored="image10 = $event"
+          @reset="image10 = null"
           name="1/10 Media"
           :image="image10"
           :disabled="disabled"
         />
         <ImageUpload
           @stored="image20 = $event"
+          @reset="image20 = null"
           name="1/20 Media"
           :image="image20"
           :disabled="disabled"
         />
         <ImageUpload
           @stored="image40 = $event"
+          @reset="image40 = null"
           name="1/40 Media"
           :image="image40"
           :disabled="disabled"
@@ -179,6 +185,22 @@
           </template>
         </SortableList>
       </label>
+
+      <div v-if="selectedContributors.length" class="selected-contributors">
+        <span>Selected Contributors</span>
+        <p class="help-text">
+          These co-creators are credited automatically while at least one of their pieces is
+          selected.
+        </p>
+        <ul>
+          <li
+            v-for="creator in selectedContributors"
+            :key="creator.account?.address || creator.address"
+          >
+            {{ creator.account?.address || creator.address }}
+          </li>
+        </ul>
+      </div>
     </Card>
 
     <Card class="static" :disabled="disabled">
@@ -292,7 +314,14 @@ const sortableCoCreators = (list) => {
   return withEmptyCoCreators(array)
 }
 const coCreators = ref(
-  sortableCoCreators(props.data.coCreators?.map((c) => c.account?.address || c.address) || []),
+  sortableCoCreators(
+    props.data.coCreators
+      ?.filter((coCreator) => coCreator.isManual !== false)
+      .map((coCreator) => coCreator.account?.address || coCreator.address) || [],
+  ),
+)
+const selectedContributors = computed(
+  () => props.data.coCreators?.filter((coCreator) => coCreator.isSelectedContributor) || [],
 )
 watch(
   () => JSON.stringify(coCreators.value),
@@ -653,6 +682,22 @@ form {
     color: var(--muted);
     font-size: var(--font-xs);
     margin-top: var(--spacer-xs);
+  }
+
+  .selected-contributors {
+    min-width: 0;
+
+    ul {
+      display: grid;
+      gap: var(--spacer-xs);
+      margin-top: var(--spacer-sm);
+    }
+
+    li {
+      @mixin ui-font;
+      color: var(--gray-z-6);
+      overflow-wrap: anywhere;
+    }
   }
 }
 </style>
