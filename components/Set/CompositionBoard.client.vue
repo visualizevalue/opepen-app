@@ -537,7 +537,7 @@ onBeforeUnmount(() => {
   opacity: 0.65;
 }
 
-@media (--md) {
+@media (--lg) {
   .composition-layout {
     grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
   }
