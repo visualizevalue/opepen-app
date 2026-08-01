@@ -381,17 +381,25 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .composition-workspace {
+  --composition-gap: var(--spacer-sm);
+  --composition-section-gap: var(--spacer);
   --composition-tile: clamp(2.75rem, 4vw, 3.75rem);
   display: grid;
-  gap: var(--spacer);
+  gap: var(--composition-section-gap);
 }
 
 .workspace-header,
 .panel-header {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: var(--spacer-sm);
+  gap: var(--composition-gap);
+}
+
+.workspace-header > div,
+.panel-header > div {
+  display: grid;
+  gap: var(--size-1);
 }
 
 .workspace-header p,
@@ -416,13 +424,13 @@ onBeforeUnmount(() => {
 .composition-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--spacer);
-  align-items: start;
+  gap: var(--composition-gap);
+  align-items: stretch;
 }
 
 .panel {
   min-width: 0;
-  padding: var(--spacer-sm);
+  padding: var(--composition-section-gap);
   background: var(--gray-z-1);
   border: var(--border);
   border-radius: var(--border-radius);
@@ -431,32 +439,39 @@ onBeforeUnmount(() => {
 .pool-panel {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
-  gap: var(--spacer-sm);
+  gap: var(--composition-section-gap);
+  min-height: 0;
   height: 20rem;
 }
 
 .pool-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--size-2);
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  gap: var(--composition-gap);
 }
 
 .pool-scroll {
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .pool-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
-  gap: var(--size-2);
+  gap: var(--composition-gap);
   min-height: 100%;
   align-content: start;
+
+  &:has(.empty-pool) {
+    align-content: center;
+  }
 }
 
 .empty-pool {
   grid-column: 1 / -1;
-  padding: var(--spacer);
+  padding: var(--composition-section-gap);
   color: var(--muted);
   text-align: center;
 }
@@ -464,13 +479,17 @@ onBeforeUnmount(() => {
 .edition-board,
 .edition-rows {
   display: grid;
-  gap: var(--spacer-sm);
+  gap: var(--composition-section-gap);
+}
+
+.edition-board {
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 .edition-row {
   display: grid;
   grid-template-columns: var(--size-10) minmax(0, 1fr);
-  gap: var(--spacer-sm);
+  gap: var(--composition-gap);
   align-items: start;
 
   > header {
@@ -531,13 +550,11 @@ onBeforeUnmount(() => {
 
 @media (--md) {
   .composition-layout {
-    grid-template-columns: minmax(15rem, 20rem) minmax(0, 1fr);
+    grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
   }
 
   .pool-panel {
-    position: sticky;
-    top: var(--spacer-sm);
-    height: calc(100dvh - 2 * var(--spacer));
+    height: auto;
   }
 
   .edition-slots {
