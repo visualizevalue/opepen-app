@@ -322,7 +322,11 @@ const movePiece = async (piece, to) => {
         body: createCompositionUpdateBody({
           submission: props.submission,
           changes: result.changes,
-          participationId: piece.participationId,
+          participationId: result.changes.some(
+            (change) => change.image?.uuid === piece.image.uuid,
+          )
+            ? piece.participationId
+            : undefined,
         }),
       },
     )
