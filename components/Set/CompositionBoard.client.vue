@@ -430,6 +430,10 @@ onBeforeUnmount(() => {
   grid-template-rows: auto minmax(0, 1fr);
 }
 
+.edition-rows {
+  align-content: start;
+}
+
 .edition-row {
   display: grid;
   grid-template-columns: var(--size-10) minmax(0, 1fr);
@@ -492,7 +496,9 @@ onBeforeUnmount(() => {
   }
 
   .pool-panel {
+    contain: size;
     height: auto;
+    overflow: hidden;
   }
 }
 </style>
