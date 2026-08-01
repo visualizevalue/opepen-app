@@ -88,15 +88,11 @@ export const useSetEthDemand = async (submission: SetSubmission) => {
 
   if (stats.value?.markets.floor.unrevealedEditions) {
     for (const edition of EDITION_KEYS) {
-      console.log(
-        totalDemand,
-        edition,
-        submission.submission_stats?.demand[edition],
-        formatEther(BigInt(stats.value.markets.floor.unrevealedEditions[edition])),
-      )
-      totalDemand +=
-        BigInt(submission.submission_stats?.demand[edition] || 0) *
-        BigInt(stats.value.markets.floor.unrevealedEditions[edition])
+      const floorPrice =
+        toBigIntOrNull(stats.value.markets.floor.unrevealedEditions[edition]) ?? 0n
+      const editionDemand = toBigIntOrNull(submission.submission_stats?.demand[edition]) ?? 0n
+
+      totalDemand += editionDemand * floorPrice
     }
   }
 

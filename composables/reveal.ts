@@ -17,16 +17,18 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
   const revealing = computed(
     () => revealsAt.value && secondsUntilReveal.value < 0 && !revealed.value,
   )
-  const blockConfirmations = computed(
-    () =>
-      currentBlock.value &&
-      submission.value?.reveal_block_number &&
-      currentBlock.value - BigInt(submission.value?.reveal_block_number),
+  const revealBlockNumber = computed(() =>
+    toBigIntOrNull(submission.value?.reveal_block_number),
   )
+  const blockConfirmations = computed(() => {
+    if (!currentBlock.value || revealBlockNumber.value === null) return null
+
+    return currentBlock.value - revealBlockNumber.value
+  })
   const blockConfirmationText = computed(() => {
     try {
       const b = blockConfirmations.value
-      if (b === false || b === null) return ``
+      if (b === null) return ``
 
       if (b >= 0n) {
         return `${b} confimation${b === 0n || b > 1n ? `s` : ``}`
@@ -40,7 +42,7 @@ export const useReveal = async (currentBlock: Ref<bigint>) => {
   watch(blockConfirmations, () => {
     // FIXME: This doesn't compute right
     if (revealed.value) return
-    if (blockConfirmations.value < 4n) return
+    if (blockConfirmations.value === null || blockConfirmations.value < 4n) return
     reloadStagedSubmission()
   })
 
