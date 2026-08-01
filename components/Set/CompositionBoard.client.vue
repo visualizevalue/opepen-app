@@ -13,7 +13,10 @@
         <header class="panel-header">
           <div>
             <SectionTitle>Contribution Pool</SectionTitle>
-            <small>{{ availableParticipations.length }} available</small>
+            <small>
+              {{ availableParticipations.length }} available · {{ availableArtistCount }}
+              {{ availableArtistCount === 1 ? 'artist' : 'artists' }}
+            </small>
           </div>
         </header>
 
@@ -140,6 +143,14 @@ const availableParticipations = computed(() =>
   participations.value.filter(
     (participation) => !selectedImageUuids.value.has(participation.image?.uuid),
   ),
+)
+const availableArtistCount = computed(
+  () =>
+    new Set(
+      availableParticipations.value
+        .map((participation) => participation.creator?.address?.toLowerCase())
+        .filter(Boolean),
+    ).size,
 )
 const participationByImageUuid = computed(
   () =>
