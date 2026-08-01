@@ -7,10 +7,6 @@
       </div>
 
       <div class="save-status" aria-live="polite">
-        <span class="save-status-icon" aria-hidden="true">
-          <Icon v-show="saving" class="saving-icon" type="loader" />
-          <Icon v-show="!saving && lastSaved" type="check" />
-        </span>
         <span class="save-status-label">{{ saveStatus }}</span>
       </div>
     </header>
@@ -414,31 +410,13 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--size-2);
   color: var(--muted);
   white-space: nowrap;
-}
-
-.save-status-icon {
-  display: grid;
-  flex: 0 0 var(--size-4);
-  width: var(--size-4);
-  height: var(--size-4);
-
-  .icon {
-    grid-area: 1 / 1;
-    width: var(--size-4);
-    height: var(--size-4);
-  }
 }
 
 .save-status-label {
   width: 14ch;
   text-align: right;
-}
-
-.saving-icon {
-  animation: spin 1s linear infinite;
 }
 
 .composition-layout {
