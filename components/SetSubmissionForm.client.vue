@@ -8,10 +8,6 @@
 
       <Actions>
         <small class="muted" v-if="lastSaved">Last saved {{ lastSavedAt }}</small>
-        <Button v-if="canCompose" :to="`/create/${data.uuid}/compose`" class="small">
-          <Icon type="layers" />
-          <span>Arrange contributions</span>
-        </Button>
         <SetEditOptions
           :submission="data"
           :refresh="refresh"
@@ -471,13 +467,6 @@ const dataComplete = computed(() => {
 const isSigned = ref(!!props.data.artist_signature)
 const isCreator = computed(
   () => currentAddress.value?.toLowerCase() === props.data.creator?.toLowerCase(),
-)
-const canCompose = computed(
-  () =>
-    props.data.open_for_participation &&
-    !props.data.set_id &&
-    (!props.data.published_at || isAdmin.value) &&
-    (isCreator.value || isAdmin.value),
 )
 const toSign = computed(
   () => isCreator.value && !isSigned.value && dataComplete.value && !!props.data.published_at,

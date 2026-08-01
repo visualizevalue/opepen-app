@@ -82,6 +82,7 @@ export interface SetSubmission {
   reveal_strategy: string
   reveal_block_number: string
   artist_signature?: ArtistSignature
+  open_for_participation?: boolean
   featured: number
   edition1Image: Image
   edition4Image: Image

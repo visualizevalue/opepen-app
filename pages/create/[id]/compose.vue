@@ -23,7 +23,10 @@
         <SetCompositionBoard v-if="canCompose" :submission="data" @updated="data = $event" />
 
         <Alert v-else>
-          <p>This composition workspace is only available to the submission creator.</p>
+          <p>
+            This workspace is only available to creators and admins while participation is open
+            on an editable dynamic submission.
+          </p>
         </Alert>
       </template>
 
@@ -49,6 +52,8 @@ const isCreator = computed(
 const canCompose = computed(
   () =>
     !data.value.set_id &&
+    data.value.edition_type === 'DYNAMIC' &&
+    data.value.open_for_participation === true &&
     (!data.value.published_at || isAdmin.value) &&
     (isCreator.value || isAdmin.value),
 )

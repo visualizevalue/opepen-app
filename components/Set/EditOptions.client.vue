@@ -108,6 +108,17 @@ const { execute: executeUnpublish } = await useApiPost(
   `/set-submissions/${submission.uuid}/unpublish`,
 )
 
+const isCreator = computed(
+  () => currentAddress.value?.toLowerCase() === submission.creator?.toLowerCase(),
+)
+const canCompose = computed(
+  () =>
+    submission.edition_type === 'DYNAMIC' &&
+    submission.open_for_participation === true &&
+    (!submission.published_at || isAdmin.value) &&
+    (isCreator.value || isAdmin.value),
+)
+
 const items = computed(() => {
   if (submission.set_id) {
     return []
@@ -130,6 +141,13 @@ const items = computed(() => {
           onClick: () => (confirmPublish.value = true),
           text: 'Publish',
           icon: 'globe',
+        }
+      : null,
+    canCompose.value
+      ? {
+          onClick: () => navigateTo(`/create/${submission.uuid}/compose`),
+          text: 'Arrange Contributions',
+          icon: 'layers',
         }
       : null,
     {
