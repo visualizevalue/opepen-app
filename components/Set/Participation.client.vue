@@ -514,6 +514,7 @@ const store = async () => {
     display: flex;
     align-items: center;
     gap: var(--size-1);
+    height: var(--size-6);
     padding: var(--size-1) var(--size-2);
     color: var(--color);
     background: var(--gray-z-2);
