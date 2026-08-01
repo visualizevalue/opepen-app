@@ -495,7 +495,7 @@ onBeforeUnmount(() => {
 
 .edition-slots {
   display: grid;
-  grid-template-columns: repeat(10, minmax(2.25rem, 1fr));
+  grid-template-columns: repeat(10, minmax(0, 1fr));
   gap: var(--size-1);
 }
 
@@ -544,10 +544,6 @@ onBeforeUnmount(() => {
 
   .pool-panel {
     height: auto;
-  }
-
-  .edition-slots {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
   }
 }
 </style>
