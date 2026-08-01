@@ -69,6 +69,8 @@ const title = computed(() => (props.participation ? `By ${creatorName.value}` : 
   &.with-meta {
     display: grid;
     aspect-ratio: 1;
+    content-visibility: auto;
+    contain-intrinsic-size: 4.25rem;
   }
 
   :deep(.image) {
