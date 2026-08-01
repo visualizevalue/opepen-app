@@ -386,7 +386,6 @@ onBeforeUnmount(() => {
   --composition-gap: var(--spacer-sm);
   --composition-section-gap: var(--spacer);
   --composition-pool-tile: 5.5rem;
-  --composition-tile: clamp(3.5rem, 5vw, 4.5rem);
   display: grid;
   gap: var(--composition-section-gap);
 }
@@ -579,11 +578,7 @@ onBeforeUnmount(() => {
   }
 
   .edition-slots {
-    grid-template-columns: repeat(8, minmax(0, var(--composition-tile)));
-  }
-
-  .composition-slot {
-    width: var(--composition-tile);
+    grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 }
 </style>
