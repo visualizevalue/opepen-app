@@ -253,7 +253,6 @@ const movePiece = async (piece, to) => {
   })
 
   if (!result.changes.length) {
-    clearPickedPiece()
     return
   }
 
