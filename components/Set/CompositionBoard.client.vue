@@ -578,7 +578,7 @@ onBeforeUnmount(() => {
   }
 
   .edition-slots {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: repeat(10, minmax(0, 1fr));
   }
 }
 </style>
