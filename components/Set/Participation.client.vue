@@ -88,9 +88,9 @@
         </div>
       </div>
 
-      <div class="participation-grid">
+      <div ref="participationGrid" class="participation-grid" :style="gridStyle">
         <div
-          v-for="participation in displayedParticipations"
+          v-for="participation in visibleParticipations"
           :key="participation.id"
           class="participation-item"
           :class="{ selected: isParticipationSelected(participation) }"
@@ -263,6 +263,30 @@ const displayedParticipations = computed(() => {
 
   return participations
 })
+
+// Big contribution lists are windowed: only the rows on screen are rendered,
+// which keeps the DOM (and its images) bounded no matter how many come in.
+const participationGrid = ref(null)
+const { width } = useWindow()
+const gridColumns = computed(() => {
+  if (width.value < BREAKPOINTS.MD) return 2
+
+  return canEdit.value ? 3 : 5
+})
+const {
+  start: gridStart,
+  end: gridEnd,
+  style: gridStyle,
+} = useVirtualGrid({
+  content: participationGrid,
+  count: () => displayedParticipations.value.length,
+  columns: () => gridColumns.value,
+  aspectRatio: () => Number(props.submission.aspect_ratio) || 1,
+  overscanRows: 3,
+})
+const visibleParticipations = computed(() =>
+  displayedParticipations.value.slice(gridStart.value, gridEnd.value),
+)
 
 const openImage = (participation) => {
   selectedImage.value = participation.image
@@ -456,6 +480,8 @@ const store = async () => {
 }
 
 .participation-item {
+  height: 100%;
+  min-height: 0;
   transition: transform var(--speed);
   cursor: pointer;
 
@@ -483,6 +509,7 @@ const store = async () => {
 
 .participation-image {
   position: relative;
+  height: 100%;
   overflow: hidden;
   border-radius: var(--border-radius);
   aspect-ratio: 1;
