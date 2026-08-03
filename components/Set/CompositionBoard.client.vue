@@ -1,5 +1,5 @@
 <template>
-  <div ref="workspace" class="composition-workspace" :class="{ saving }">
+  <div ref="workspace" class="composition-workspace" :class="{ saving, dragging }">
     <div class="save-status" aria-live="polite">
       <span class="save-status-label">{{ saveStatus }}</span>
     </div>
@@ -34,25 +34,28 @@
           </select>
         </div>
 
-        <div class="pool-scroll">
+        <div ref="poolScroll" class="pool-scroll">
           <div
+            ref="poolGrid"
             class="pool-grid composition-drop-zone"
             data-composition-zone="pool"
+            data-drop-zone
+            :style="poolStyle"
             :aria-busy="saving"
           >
             <SetCompositionPiece
-              v-for="participation in displayedParticipations"
+              v-for="participation in visibleParticipations"
               :key="participation.id"
               :image="participation.image"
               :participation="participation"
               show-meta
               @view="openPreview(participation.image, participation)"
             />
-
-            <p v-if="!displayedParticipations.length" class="empty-pool">
-              {{ search ? 'No matching contributions' : 'All contributions are selected' }}
-            </p>
           </div>
+
+          <p v-if="!displayedParticipations.length" class="empty-pool">
+            {{ search ? 'No matching contributions' : 'All contributions are selected' }}
+          </p>
         </div>
       </aside>
 
@@ -78,6 +81,7 @@
                 class="composition-slot composition-drop-zone"
                 :class="{ filled: image }"
                 data-composition-zone="slot"
+                data-drop-zone
                 :data-edition="edition"
                 :data-index="offset + 1"
                 :style="{ aspectRatio: submission.aspect_ratio || '1' }"
@@ -107,13 +111,15 @@
 </template>
 
 <script setup>
-import Sortable from 'sortablejs'
+import { refDebounced } from '@vueuse/core'
 import {
   applyCompositionDrop,
   createCompositionSlots,
   createCompositionUpdateBody,
   selectedCompositionImageUuids,
 } from '~/utils/set-composition'
+
+const POOL_TILE_MIN = 88
 
 const props = defineProps({
   submission: {
@@ -125,8 +131,10 @@ const emit = defineEmits(['updated'])
 const config = useRuntimeConfig()
 
 const workspace = ref(null)
+const poolScroll = ref(null)
+const poolGrid = ref(null)
 const slots = ref(createCompositionSlots(props.submission))
-const saving = ref(false)
+const pendingSaves = ref(0)
 const errorMessage = ref('')
 const lastSaved = ref(null)
 const search = ref('')
@@ -135,9 +143,28 @@ const previewOpen = ref(false)
 const previewImage = ref(null)
 const previewName = ref('')
 const previewTagline = ref('')
-const sortables = []
+
+const saving = computed(() => pendingSaves.value > 0)
+const debouncedSearch = refDebounced(search, 120)
 
 const participations = computed(() => props.submission.participationImages || [])
+// Searchable text is precomputed once per contribution rather than per keystroke.
+const searchIndex = computed(
+  () =>
+    new Map(
+      participations.value.map((participation) => [
+        participation.id,
+        [
+          participation.image?.uuid,
+          participation.creator?.display,
+          participation.creator?.address,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase(),
+      ]),
+    ),
+)
 const selectedImageUuids = computed(() => selectedCompositionImageUuids(slots.value))
 const availableParticipations = computed(() =>
   participations.value.filter(
@@ -168,14 +195,10 @@ const imageByUuid = computed(() => {
 })
 
 const displayedParticipations = computed(() => {
-  const query = search.value.trim().toLowerCase()
+  const query = debouncedSearch.value.trim().toLowerCase()
   const filtered = query
     ? availableParticipations.value.filter((participation) =>
-        [
-          participation.image?.uuid,
-          participation.creator?.display,
-          participation.creator?.address,
-        ].some((value) => value?.toLowerCase().includes(query)),
+        searchIndex.value.get(participation.id)?.includes(query),
       )
     : availableParticipations.value
 
@@ -190,10 +213,31 @@ const displayedParticipations = computed(() => {
   return filtered
 })
 
+// Only the contributions in view are rendered: the pool stays cheap at any size.
+const {
+  start: poolStart,
+  end: poolEnd,
+  style: poolStyle,
+} = useVirtualGrid({
+  content: poolGrid,
+  viewport: poolScroll,
+  count: () => displayedParticipations.value.length,
+  minTileWidth: POOL_TILE_MIN,
+  aspectRatio: () => Number(props.submission.aspect_ratio) || 1,
+})
+const visibleParticipations = computed(() =>
+  displayedParticipations.value.slice(poolStart.value, poolEnd.value),
+)
+
+watch([debouncedSearch, sort], () => {
+  if (poolScroll.value) poolScroll.value.scrollTop = 0
+})
+
 const selectedCount = computed(() => Object.values(slots.value).flat().filter(Boolean).length)
 const slotCount = computed(() => Object.values(slots.value).flat().length)
 const saveStatus = computed(() => {
   if (saving.value) return 'Saving…'
+  if (errorMessage.value) return 'Not saved'
   if (lastSaved.value) return 'Saved'
   return 'Autosave ready'
 })
@@ -212,14 +256,8 @@ const openPreview = (image, participation) => {
   previewOpen.value = true
 }
 
-const restoreDraggedElement = (event) => {
-  if (event.from === event.to) return
-
-  const siblings = [...event.from.children].filter((element) => element !== event.item)
-  event.from.insertBefore(event.item, siblings[event.oldIndex] || null)
-}
-
 const locationFromElement = (element) => {
+  if (!element) return null
   if (element.dataset.compositionZone === 'pool') return { type: 'pool' }
 
   return {
@@ -229,25 +267,65 @@ const locationFromElement = (element) => {
   }
 }
 
-const handleDrop = (event) => {
-  restoreDraggedElement(event)
+const { dragging } = useDragAndDrop({
+  root: workspace,
+  itemSelector: '.composition-piece',
+  zoneSelector: '[data-composition-zone]',
+  onDrop: ({ item, from, to }) => {
+    const image = imageByUuid.value.get(item.dataset.imageUuid)
+    const target = locationFromElement(to)
+    const source = locationFromElement(from)
+    if (!image || !target || !source) return
 
-  const image = imageByUuid.value.get(event.item.dataset.imageUuid)
-  if (!image) return
+    movePiece(
+      {
+        image,
+        from: source,
+        participationId: Number(item.dataset.participationId) || undefined,
+      },
+      target,
+    )
+  },
+})
 
-  movePiece(
-    {
-      image,
-      from: locationFromElement(event.from),
-      participationId: Number(event.item.dataset.participationId) || undefined,
-    },
-    locationFromElement(event.to),
-  )
+// Saves are queued rather than blocking: every drop lands immediately and the
+// requests go out one after another, in the order they were made.
+let saveQueue = Promise.resolve()
+let saveGeneration = 0
+
+const persist = async (body, snapshot) => {
+  try {
+    const response = await $fetch(
+      `${config.public.opepenApi}/set-submissions/${props.submission.uuid}/images`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body,
+      },
+    )
+
+    const updatedSubmission = {
+      ...props.submission,
+      ...response,
+      participationImages: props.submission.participationImages,
+    }
+
+    // Only the last save in flight may overwrite the board, so a slow response
+    // can't undo a move the user has already made.
+    if (pendingSaves.value === 1) slots.value = createCompositionSlots(updatedSubmission)
+
+    lastSaved.value = Date.now()
+    emit('updated', updatedSubmission)
+  } catch (error) {
+    // Roll back to the last state the server confirmed and drop whatever was
+    // queued behind this change, since it was built on top of it.
+    slots.value = snapshot
+    saveGeneration += 1
+    errorMessage.value = error?.data?.message || 'The new arrangement could not be saved.'
+  }
 }
 
-const movePiece = async (piece, to) => {
-  if (saving.value) return
-
+const movePiece = (piece, to) => {
   errorMessage.value = ''
 
   if (to.type === 'pool' && piece.from.type === 'slot' && !participationFor(piece.image)) {
@@ -255,7 +333,7 @@ const movePiece = async (piece, to) => {
     return
   }
 
-  const previousSlots = slots.value
+  const snapshot = slots.value
   const result = applyCompositionDrop({
     slots: slots.value,
     image: piece.image,
@@ -263,65 +341,26 @@ const movePiece = async (piece, to) => {
     to,
   })
 
-  if (!result.changes.length) {
-    return
-  }
+  if (!result.changes.length) return
 
   slots.value = result.slots
-  saving.value = true
 
-  try {
-    const response = await $fetch(
-      `${config.public.opepenApi}/set-submissions/${props.submission.uuid}/images`,
-      {
-        method: 'POST',
-        credentials: 'include',
-        body: createCompositionUpdateBody({
-          submission: props.submission,
-          changes: result.changes,
-          participationId: result.changes.some(
-            (change) => change.image?.uuid === piece.image.uuid,
-          )
-            ? piece.participationId
-            : undefined,
-        }),
-      },
-    )
-    const updatedSubmission = {
-      ...props.submission,
-      ...response,
-      participationImages: props.submission.participationImages,
-    }
+  const body = createCompositionUpdateBody({
+    submission: props.submission,
+    changes: result.changes,
+    participationId: result.changes.some((change) => change.image?.uuid === piece.image.uuid)
+      ? piece.participationId
+      : undefined,
+  })
 
-    slots.value = createCompositionSlots(updatedSubmission)
-    lastSaved.value = Date.now()
-    emit('updated', updatedSubmission)
-  } catch (error) {
-    slots.value = previousSlots
-    errorMessage.value = error?.data?.message || 'The new arrangement could not be saved.'
-  } finally {
-    saving.value = false
-  }
+  const generation = saveGeneration
+  pendingSaves.value += 1
+  saveQueue = saveQueue
+    .then(() => (generation === saveGeneration ? persist(body, snapshot) : undefined))
+    .finally(() => {
+      pendingSaves.value -= 1
+    })
 }
-
-const initializeSortables = () => {
-  for (const element of workspace.value?.querySelectorAll('[data-composition-zone]') || []) {
-    sortables.push(
-      Sortable.create(element, {
-        group: 'set-composition',
-        animation: 150,
-        sort: false,
-        draggable: '.composition-piece',
-        emptyInsertThreshold: 24,
-        onEnd: handleDrop,
-      }),
-    )
-  }
-}
-
-watch(saving, (disabled) => {
-  for (const sortable of sortables) sortable.option('disabled', disabled)
-})
 
 watch(
   () => props.submission,
@@ -329,18 +368,12 @@ watch(
     if (!saving.value) slots.value = createCompositionSlots(submission)
   },
 )
-
-onMounted(initializeSortables)
-onBeforeUnmount(() => {
-  for (const sortable of sortables) sortable.destroy()
-})
 </script>
 
 <style scoped>
 .composition-workspace {
   --composition-gap: var(--spacer-sm);
   --composition-section-gap: var(--spacer);
-  --composition-pool-tile: 5.5rem;
   display: grid;
   gap: var(--composition-section-gap);
 }
@@ -380,7 +413,7 @@ onBeforeUnmount(() => {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--composition-gap);
-  align-items: stretch;
+  align-items: start;
 }
 
 .panel {
@@ -396,7 +429,7 @@ onBeforeUnmount(() => {
   grid-template-rows: auto auto minmax(0, 1fr);
   gap: var(--composition-section-gap);
   min-height: 0;
-  height: 20rem;
+  height: 22rem;
 }
 
 .pool-controls {
@@ -406,6 +439,7 @@ onBeforeUnmount(() => {
 }
 
 .pool-scroll {
+  position: relative;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -414,21 +448,27 @@ onBeforeUnmount(() => {
 
 .pool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--composition-pool-tile), 1fr));
   gap: var(--composition-gap);
   min-height: 100%;
   align-content: start;
+  border-radius: var(--border-radius);
+  transition: background-color var(--speed);
 
-  &:has(.empty-pool) {
-    align-content: center;
+  &.is-drop-target {
+    background: var(--gray-z-2);
+    box-shadow: inset 0 0 0 1px var(--gray-z-5);
   }
 }
 
 .empty-pool {
-  grid-column: 1 / -1;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
   padding: var(--composition-section-gap);
   color: var(--muted);
   text-align: center;
+  pointer-events: none;
 }
 
 .edition-board,
@@ -479,12 +519,20 @@ onBeforeUnmount(() => {
   border-radius: var(--border-radius);
   transition:
     background-color var(--speed),
-    border-color var(--speed);
+    border-color var(--speed),
+    transform var(--speed);
 
   .composition-piece {
     position: absolute;
     inset: 0;
     border: 0;
+  }
+
+  &.is-drop-target {
+    background: var(--gray-z-4);
+    border-color: var(--color);
+    transform: scale(1.06);
+    z-index: 2;
   }
 }
 
@@ -496,19 +544,28 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
-.saving .composition-piece {
-  cursor: wait;
-  opacity: 0.65;
+/* Drop targets are hit tested under the pointer, so nothing may swallow it. */
+.dragging {
+  .composition-piece,
+  .composition-piece :deep(*) {
+    pointer-events: none;
+  }
 }
 
 @media (--lg) {
   .composition-layout {
     grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
+    align-items: stretch;
   }
 
+  /* `contain: size` keeps the (very tall) pool from sizing the row, so the
+     panel matches the board and follows it down the page. */
   .pool-panel {
+    position: sticky;
+    top: var(--spacer);
     contain: size;
     height: auto;
+    max-height: calc(100dvh - var(--spacer) * 2);
     overflow: hidden;
   }
 }

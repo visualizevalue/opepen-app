@@ -3,6 +3,7 @@
     type="button"
     class="composition-piece"
     :class="{ 'with-meta': showMeta }"
+    data-drag-item
     :data-image-uuid="image.uuid"
     :data-participation-id="participation?.id"
     :title="title"
@@ -51,6 +52,7 @@ const title = computed(() => (props.participation ? `By ${creatorName.value}` : 
   border: var(--border);
   border-radius: var(--border-radius);
   cursor: grab;
+  touch-action: manipulation;
   transition:
     opacity var(--speed),
     border-color var(--speed),
@@ -62,14 +64,26 @@ const title = computed(() => (props.participation ? `By ${creatorName.value}` : 
 
   &.with-meta {
     display: grid;
-    aspect-ratio: 1;
-    content-visibility: auto;
-    contain-intrinsic-size: 5.5rem;
+    height: 100%;
+  }
+
+  &.is-dragging-source {
+    opacity: 0.25;
+  }
+
+  &.drag-ghost {
+    cursor: grabbing;
+    border-color: var(--color);
   }
 
   :deep(.image) {
     width: 100%;
     height: 100%;
+  }
+
+  :deep(img) {
+    -webkit-user-drag: none;
+    user-select: none;
   }
 }
 
