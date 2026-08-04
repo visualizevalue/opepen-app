@@ -6,16 +6,6 @@
       <p class="hero-summary">One symbol. Infinite remixes. 200 final sets.</p>
     </header>
 
-    <section class="hero-video video-embed">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/2RF6cQCE1bA?controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
-        title="Opepen"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
-    </section>
-
     <section class="intro">
       <article class="intro-card">
         <header>
@@ -49,6 +39,16 @@
           <span>Explore</span>
         </Button>
       </article>
+    </section>
+
+    <section class="hero-video video-embed">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/2RF6cQCE1bA?controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+        title="Opepen"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
     </section>
 
     <section class="prose">
@@ -96,7 +96,7 @@
           <span>Browse more</span>
         </Button>
       </header>
-      <ProfileCardGrid :accounts="artistsResponse?.data || []" />
+      <ProfileCardGrid :accounts="featuredArtists" />
     </section>
 
     <section class="stats">
@@ -109,6 +109,13 @@
 
 <script setup>
 const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
+const { data: additionalArtistResponse } = await useApi(
+  `/accounts/artists?limit=1&filter[address]=0xc8404bdf586b617298c06b8acd398baf5a407377`,
+)
+const featuredArtists = computed(() => [
+  ...(artistsResponse.value?.data || []),
+  ...(additionalArtistResponse.value?.data || []),
+])
 
 const { data: elevenByEleven } = await useApi(
   `/set-submissions/1ac33bf4-3afe-4c74-8963-c60646c2accc`,
