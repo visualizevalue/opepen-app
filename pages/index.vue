@@ -1,99 +1,85 @@
 <template>
-  <PageFrameSm class="landing">
-    <header>
-      <h1>
-        <span>Opepen Edition</span>
-        <small>Public Art On Ethereum</small>
-      </h1>
+  <PageFrameMd class="landing">
+    <header class="hero">
+      <p class="eyebrow">Public Art On Ethereum</p>
+      <h1>Opepen Edition</h1>
+      <p class="hero-summary">One symbol. Infinite remixes. 200 final sets.</p>
     </header>
 
-    <hr />
+    <section class="hero-video video-embed">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/2RF6cQCE1bA?controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+        title="Opepen"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </section>
 
     <section class="intro">
-      <div>
-        <h2>
-          <span>One Symbol</span>
-          <small>By Visualize Value</small>
-        </h2>
+      <article class="intro-card">
+        <header>
+          <span>01</span>
+          <h2>
+            One Symbol
+            <small>By Visualize Value</small>
+          </h2>
+        </header>
         <Image image="/wireframe.svg" />
         <Button
           @click="() => downloadImage('/wireframe.png', { name: 'opepen' })"
           target="_blank"
-          class="small centered"
+          class="small"
         >
           <Icon type="download" />
           <span>Download</span>
         </Button>
-      </div>
-      <div>
-        <h2>
-          <span>Infinite Remixes</span>
-          <small>By Anyone</small>
-        </h2>
-        <Image image="/submissions.png" />
-        <Button to="/submissions" class="small centered">
+      </article>
+      <article class="intro-card">
+        <header>
+          <span>02</span>
+          <h2>
+            Infinite Remixes
+            <small>By Anyone</small>
+          </h2>
+        </header>
+        <Image image="/remixes.gif" />
+        <Button to="/submissions" class="small">
           <Icon type="external-link" />
           <span>Explore</span>
         </Button>
-      </div>
-      <div>
-        <h2>
-          <span>200 Final Sets</span>
-          <small>By Collector Vote</small>
-        </h2>
-        <Image image="/sets.png" />
-        <Button to="/sets" class="small centered">
-          <Icon type="external-link" />
-          <span>Browse</span>
-        </Button>
-      </div>
+      </article>
     </section>
-
-    <hr />
 
     <section class="prose">
+      <p class="eyebrow prose-label">The protocol</p>
       <h2>Where constraint meets creativity.</h2>
 
-      <p>
-        Opepen Edition is a public art protocol on Ethereum
-        <span class="no-wrap">
-          by
-          <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink>
-        </span>
-        .
-      </p>
-
-      <p>
-        Creators submit their interpretations of the Opepen silhouette.
-        <br />
-      </p>
-      <p>Collectors vote on the artwork to include in the permanent collection.</p>
-
-      <p>
-        There are 200 spots. {{ completeSets.length }} have been filled.
-        <br />
-        {{ formatNumber(stats?.submissions.sets) }} sets have been submitted.
-      </p>
-
-      <div class="video-embed">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/ac8QxuHyfkk?controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
-          title="Opepen"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+      <div class="prose-copy">
+        <p class="lead-copy">
+          Opepen is a public art protocol by
+          <span class="no-wrap">
+            <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink>,
+          </span>
+          built on Ethereum. Anyone can reinterpret the silhouette; collectors vote to shape a
+          permanent collection of 200 sets.
+        </p>
       </div>
 
-      <!-- <Button to="/about/intro" class="link-button"> -->
-      <!--   <span>Learn more</span> -->
-      <!--   <Icon type="chevron-right" /> -->
-      <!-- </Button> -->
+      <div class="protocol-status">
+        <p>
+          <strong>{{ completeSets.length }}</strong>
+          <span>of 200 spots filled</span>
+        </p>
+        <p>
+          <strong>{{ formatNumber(stats?.submissions.sets) }}</strong>
+          <span>sets submitted</span>
+        </p>
+      </div>
+
     </section>
 
-    <hr />
-
-    <section class="sets">
+    <section class="sets collection-section">
       <header>
         <SectionTitle>Featured Sets</SectionTitle>
         <Button to="/sets" class="small">
@@ -103,31 +89,43 @@
       <SetCardGrid :submissions="featuredSubmissions" />
     </section>
 
-    <section class="artists">
+    <section class="artists collection-section">
       <header>
         <SectionTitle>Featured Artists</SectionTitle>
         <Button to="/artists" class="small">
           <span>Browse more</span>
         </Button>
       </header>
-      <ProfileCardGrid :accounts="artistsResponse.data" />
+      <ProfileCardGrid :accounts="artistsResponse?.data || []" />
     </section>
-
-    <hr />
 
     <section class="stats">
       <SectionTitle>Stats</SectionTitle>
 
       <Stats />
     </section>
-  </PageFrameSm>
+  </PageFrameMd>
 </template>
 
 <script setup>
 const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
 
-const { featuredSets, completeSets } = await useSets()
-const featuredSubmissions = computed(() => featuredSets.value.map((s) => s.submission))
+const { data: elevenByEleven } = await useApi(
+  `/set-submissions/1ac33bf4-3afe-4c74-8963-c60646c2accc`,
+)
+
+const { featuredSets, completeSets, setsById } = await useSets()
+const featuredSubmissions = computed(() => {
+  const pinned = [elevenByEleven.value, setsById.value[71]?.submission].filter(Boolean)
+  const pinnedIds = new Set(pinned.map((submission) => submission.uuid))
+
+  return [
+    ...pinned,
+    ...featuredSets.value
+      .map((set) => set.submission)
+      .filter((submission) => !pinnedIds.has(submission.uuid)),
+  ]
+})
 
 const { stats } = await useStats()
 
@@ -138,39 +136,40 @@ useMetaData({
 
 <style scoped>
 .landing {
-  > header,
-  > .intro {
-    h1,
-    h2,
-    p {
-      @mixin ui-font;
-      font-size: var(--font-lg);
-      line-height: 1em;
+  gap: 0;
 
-      small {
-        font-size: 1em;
-        color: var(--muted);
-      }
-    }
+  .eyebrow {
+    @mixin ui-font;
+    color: var(--muted);
+    font-size: var(--ui-font-size);
   }
 
-  > header h1 {
+  > .hero {
     display: grid;
-    gap: var(--spacer-sm);
-    justify-content: center;
-    text-align: center;
-    padding: var(--spacer-lg) 0 calc(var(--spacer-lg) + var(--spacer));
-    padding: var(--spacer-lg) 0;
+    align-content: center;
+    gap: var(--spacer-lg);
+    min-height: clamp(18rem, 45cqw, 28rem);
+    padding: clamp(var(--spacer-lg), 5cqw, 4rem) 0;
+    border-bottom: var(--border);
 
-    @container (min-width: 30rem) {
-      display: flex;
-      justify-content: space-between;
-      text-align: left;
+    h1 {
+      @mixin ui-font;
+      font-size: clamp(2.4rem, 6cqw, 4rem);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--letter-spacing-sm);
+      line-height: 1;
+    }
+
+    .hero-summary {
+      max-width: 32rem;
+      font-size: clamp(var(--font-lg), 2.3cqw, var(--font-xl));
+      line-height: var(--line-height-md);
     }
   }
 
   > section {
-    padding: var(--spacer-xl) 0;
+    padding: clamp(var(--spacer-xl), 7cqw, 5rem) 0;
+    border-bottom: var(--border);
 
     > header {
       display: flex;
@@ -179,76 +178,130 @@ useMetaData({
     }
   }
 
+  > .hero-video {
+    padding: 0;
+  }
+
   .intro {
     display: grid;
     gap: var(--spacer-xl);
 
-    > div {
+    .intro-card {
       display: grid;
-      gap: var(--spacer);
-      justify-content: center;
-      align-items: flex-start;
-      text-align: center;
+      gap: var(--spacer-lg);
+      align-content: start;
+
+      > header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--spacer);
+        align-items: start;
+        min-height: 3rem;
+        @mixin ui-font;
+
+        > span {
+          color: var(--gray-z-5);
+        }
+      }
 
       h2 {
         display: grid;
-        font-size: var(--font-base);
         gap: var(--spacer-xs);
+        font-size: var(--font-base);
+
+        small {
+          color: var(--muted);
+          font-size: 1em;
+        }
       }
 
-      > * {
-        width: min(69cqw, 20rem);
+      > .button {
+        justify-self: center;
+        justify-content: center;
+        width: 7.5rem;
       }
     }
 
-    @container (min-width: 38rem) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    @container page (min-width: 44rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--spacer-lg);
-      /* padding: var(--spacer-lg) 0; */
-
-      > div {
-        > * {
-          width: calc(33cqw - var(--spacer));
-        }
-      }
     }
   }
 
   .prose {
-    font-size: var(--font-base);
-    text-align: center;
-    padding-left: var(--spacer-lg);
-    padding-right: var(--spacer-lg);
-
-    @media (--md) {
-      padding-left: 0;
-      padding-right: 0;
-    }
+    display: grid;
+    gap: var(--spacer-lg);
 
     h2 {
-      font-size: var(--ui-font-size);
-      margin-bottom: var(--spacer-lg);
+      max-width: 18ch;
+      font-size: clamp(var(--font-lg), 2.4cqw, 1.75rem);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--letter-spacing-sm);
+      line-height: 1.05;
     }
 
-    p {
-      font-size: var(--font-base);
-      line-height: var(--line-height-lg);
-      margin-bottom: var(--spacer);
+    .prose-copy {
+      display: grid;
+      align-content: start;
+      gap: var(--spacer-lg);
 
-      @media (--md) {
-        --font-lg: 1.1rem;
-        font-size: var(--font-lg);
+      p {
+        max-width: 34rem;
+        font-size: clamp(var(--font-lg), 2.2cqw, 1.5rem);
+        letter-spacing: var(--letter-spacing-sm);
+        line-height: 1.45;
+      }
+    }
+
+    .protocol-status {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: var(--border);
+      border-bottom: var(--border);
+
+      p {
+        display: grid;
+        gap: var(--spacer-sm);
+        padding: var(--spacer-lg) 0;
+      }
+
+      p + p {
+        padding-left: var(--spacer-lg);
+        border-left: var(--border);
+      }
+
+      strong {
+        font-size: clamp(var(--font-xl), 5cqw, var(--font-xxl));
+        font-weight: var(--font-weight-medium);
+        letter-spacing: var(--letter-spacing-sm);
+      }
+
+      span {
+        @mixin ui-font;
+        color: var(--muted);
+      }
+    }
+
+    @container page (min-width: 44rem) {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      column-gap: clamp(var(--spacer-xl), 7cqw, 5rem);
+
+      .prose-label {
+        grid-column: 1 / -1;
+        margin-bottom: var(--spacer);
+      }
+
+      .protocol-status {
+        grid-column: 1 / -1;
       }
     }
   }
 
-  .prose .video-embed {
+  .video-embed {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-radius: var(--border-radius);
-    margin-top: var(--spacer-lg);
 
     iframe {
       position: absolute;
@@ -259,20 +312,24 @@ useMetaData({
     }
   }
 
-  .sets,
-  .artists,
+  .collection-section,
   .stats {
     display: grid;
-    gap: var(--spacer);
+    gap: var(--spacer-lg);
   }
 
-  hr {
-    width: calc(100% + var(--spacer) * 2);
-    margin-left: calc(-1 * var(--spacer));
+  .stats {
+    border-bottom: 0;
+  }
 
-    @media (--md) {
-      width: 100%;
-      margin-left: 0;
+  @container page (max-width: 32rem) {
+    > .hero {
+      min-height: 18rem;
+    }
+
+    .prose .prose-copy p {
+      font-size: var(--font-base);
+      line-height: var(--line-height-lg);
     }
   }
 }
