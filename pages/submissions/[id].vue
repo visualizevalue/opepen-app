@@ -5,12 +5,12 @@
         <div class="artwork">
           <SetEditLink :submission="submission" />
 
-          <div class="cell art-cell">
-            <SetPreviewImages :submission="submission" class="items" />
-          </div>
-
           <div class="cell">
             <SetItemsMeta :submission="submission" />
+          </div>
+
+          <div class="cell art-cell">
+            <SetPreviewImages :submission="submission" class="items" />
           </div>
         </div>
 
@@ -20,25 +20,25 @@
             <RichContentLinks :links="submission.richContentLinks" />
           </section>
 
-          <div class="cell">
-            <SetOptInCard :submission="submission" @update="refresh" />
-          </div>
+          <SetOptInCard class="cell" :submission="submission" @update="refresh" />
 
-          <div class="cell">
-            <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
-          </div>
+          <SetOptInStatsCard
+            class="cell"
+            :submission="submission"
+            :last-updated="lastUpdated"
+          />
 
-          <div class="cell">
-            <SetOptInHistory :submission="submission" />
-          </div>
+          <SetOptInChart class="cell" :submission="submission" />
 
-          <div v-if="submission.edition_type === 'DYNAMIC'" class="cell">
-            <SetDynamicImagesPreview :data="submission" />
-          </div>
+          <SetOptInHistory class="cell" :submission="submission" />
 
-          <div class="cell">
-            <SetParticipation :submission="submission" @refresh="refresh" />
-          </div>
+          <SetDynamicImagesPreview
+            v-if="submission.edition_type === 'DYNAMIC'"
+            class="cell"
+            :data="submission"
+          />
+
+          <SetParticipation class="cell" :submission="submission" @refresh="refresh" />
         </div>
       </div>
     </PageFrameLg>
@@ -104,6 +104,20 @@ useMetaData({
   align-content: start;
 }
 
+/*
+ * Stacked, the vote card keeps its original position below the artwork and set
+ * info. Wide, it is hoisted into a full-width band across the top.
+ */
+.artwork {
+  order: 1;
+}
+.vote-bar {
+  order: 2;
+}
+.details {
+  order: 3;
+}
+
 .artwork,
 .details {
   display: flex;
@@ -146,12 +160,18 @@ useMetaData({
  */
 @container page (min-width: 56rem) {
   .set-layout {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
+  }
+
+  .vote-bar {
+    order: 0;
+    grid-column: 1 / -1;
   }
 
   /* The rule sits on the taller column so it runs the full height of the grid. */
   .details {
+    order: 2;
     border-left: var(--border);
   }
 

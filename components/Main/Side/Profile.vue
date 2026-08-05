@@ -6,7 +6,8 @@
 
     <h1>
       <span>{{ name }}</span>
-      <small>#{{ formatNumber(id) }}</small>
+      <!-- Without an account this is only the zero address, which reads as noise. -->
+      <small v-if="account?.address">#{{ formatNumber(id) }}</small>
     </h1>
 
     <div class="stats">
@@ -92,6 +93,19 @@ h1 {
     @mixin ui-font;
     font-size: var(--font-base);
     color: var(--gray-z-5);
+  }
+}
+
+/* Signed out, connecting is the only thing to do here: make it the one accent. */
+:deep(.main-connect) {
+  color: var(--success);
+
+  .icon {
+    color: inherit;
+  }
+
+  &:--highlight {
+    color: var(--green-light);
   }
 }
 

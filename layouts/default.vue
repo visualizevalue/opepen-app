@@ -12,9 +12,6 @@
     <MainMobileTopNav @openMain="mainNav.open()" />
     <MainMobileBottomNav />
 
-    <!-- Floating -->
-    <BuiltOnEthereum />
-
     <!-- Global Data -->
     <WatchSession />
   </div>

@@ -16,29 +16,6 @@
     </section>
 
     <section>
-      <h1>Browse</h1>
-
-      <MainSideNavLink
-        to="/sets"
-        title="Permanent Collection"
-        subline="Browse Opepen Sets and Tokens"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/submissions"
-        title="Set Submissions"
-        subline="Vote on submitted Opepen Sets"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/artists"
-        title="Artists"
-        subline="Browse Opepen Contributors"
-        @click="close"
-      />
-    </section>
-
-    <section>
       <h1>Create</h1>
 
       <MainSideNavLink
@@ -62,6 +39,29 @@
         subline="Submissions open for participation"
         @click="close"
         badge="new"
+      />
+    </section>
+
+    <section>
+      <h1>Browse</h1>
+
+      <MainSideNavLink
+        to="/sets"
+        title="Permanent Collection"
+        subline="Browse Opepen Sets and Tokens"
+        @click="close"
+      />
+      <MainSideNavLink
+        to="/submissions"
+        title="Set Submissions"
+        subline="Vote on submitted Opepen Sets"
+        @click="close"
+      />
+      <MainSideNavLink
+        to="/artists"
+        title="Artists"
+        subline="Browse Opepen Contributors"
+        @click="close"
       />
     </section>
 
@@ -90,6 +90,8 @@
       >
         <Icon type="github" />
       </NuxtLink>
+
+      <BuiltOnEthereum class="built-on-ethereum" />
     </footer>
   </nav>
 
@@ -228,7 +230,7 @@ defineExpose({
 
 <style scoped>
 .sidebar {
-  background: var(--gray-z-0);
+  background: var(--gray-z-05);
   overscroll-behavior: auto;
   transform: translateX(-100%);
   display: flex;
@@ -276,6 +278,11 @@ footer {
     &.vue-feather--github {
       width: calc(var(--size-5) * 0.85);
     }
+  }
+
+  .built-on-ethereum {
+    margin-left: auto;
+    width: auto;
   }
 }
 

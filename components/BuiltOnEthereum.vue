@@ -5,20 +5,14 @@
 </template>
 
 <style scoped>
+/* Sits inline wherever it is placed; the sidebar footer positions it. */
 img {
-  position: fixed;
-  bottom: var(--spacer);
-  right: var(--spacer);
+  display: block;
   width: 3.5rem;
-  background: var(--semi);
-  transition: all var(--speed);
-  transform-origin: bottom right;
-  box-shadow: var(--shadow);
+  transition: opacity var(--speed);
   opacity: 0.69;
 
   &:hover {
-    transform: scale(1.25);
-    box-shadow: var(--shadow-lg);
     opacity: 1;
   }
 }

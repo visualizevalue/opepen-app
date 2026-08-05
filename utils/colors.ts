@@ -15,14 +15,24 @@ export const COLORS = {
 export const Z_COLORS = computed(() =>
   isDark.value
     ? {
+        grayZ0: COLORS.gray000,
         grayZ1: COLORS.gray100,
         grayZ2: COLORS.gray200,
+        grayZ3: COLORS.gray300,
+        grayZ5: COLORS.gray500,
+        grayZ6: COLORS.gray600,
+        grayZ7: COLORS.gray700,
         grayZ8: COLORS.gray800,
         grayZ9: COLORS.gray900,
       }
     : {
+        grayZ0: COLORS.gray999,
         grayZ1: COLORS.gray900,
         grayZ2: COLORS.gray800,
+        grayZ3: COLORS.gray700,
+        grayZ5: COLORS.gray500,
+        grayZ6: COLORS.gray400,
+        grayZ7: COLORS.gray300,
         grayZ8: COLORS.gray200,
         grayZ9: COLORS.gray100,
       },

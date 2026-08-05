@@ -40,7 +40,7 @@
 <script setup>
 const props = defineProps({
   submission: {
-    type: String,
+    type: Object,
     required: true,
   },
 })
