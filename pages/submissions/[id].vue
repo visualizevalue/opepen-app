@@ -5,29 +5,40 @@
         <div class="artwork">
           <SetEditLink :submission="submission" />
 
-          <SetPreviewImages :submission="submission" class="items" />
+          <div class="cell art-cell">
+            <SetPreviewImages :submission="submission" class="items" />
+          </div>
+
+          <div class="cell">
+            <SetItemsMeta :submission="submission" />
+          </div>
         </div>
 
         <div class="details">
-          <SetItemsMeta :submission="submission" />
-
-          <section v-if="submission.richContentLinks?.length" class="deep-dive">
+          <section v-if="submission.richContentLinks?.length" class="cell deep-dive">
             <SectionTitle>Deep Dive</SectionTitle>
             <RichContentLinks :links="submission.richContentLinks" />
           </section>
 
-          <SetOptInCard :submission="submission" @update="refresh" />
+          <div class="cell">
+            <SetOptInCard :submission="submission" @update="refresh" />
+          </div>
 
-          <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
+          <div class="cell">
+            <SetOptInStatsCard :submission="submission" :last-updated="lastUpdated" />
+          </div>
 
-          <SetOptInHistory :submission="submission" />
+          <div class="cell">
+            <SetOptInHistory :submission="submission" />
+          </div>
 
-          <SetDynamicImagesPreview
-            v-if="submission.edition_type === 'DYNAMIC'"
-            :data="submission"
-          />
+          <div v-if="submission.edition_type === 'DYNAMIC'" class="cell">
+            <SetDynamicImagesPreview :data="submission" />
+          </div>
 
-          <SetParticipation :submission="submission" @refresh="refresh" />
+          <div class="cell">
+            <SetParticipation :submission="submission" @refresh="refresh" />
+          </div>
         </div>
       </div>
     </PageFrameLg>
@@ -70,8 +81,17 @@ useMetaData({
 </script>
 
 <style scoped>
+/*
+ * Full bleed: cancel main's horizontal padding so the rules run to the edges of
+ * the content area rather than floating inside it.
+ */
 .submission {
   display: block;
+  max-width: none;
+  padding: 0;
+  width: calc(100% + var(--main-padding-x) * 2);
+  margin-left: calc(-1 * var(--main-padding-x));
+  border-top: var(--border);
 }
 
 /*
@@ -82,52 +102,70 @@ useMetaData({
 .set-layout {
   display: grid;
   align-content: start;
-  gap: var(--spacer-lg);
-  max-width: var(--content-width-sm);
-  margin: 0 auto;
-
-  > *:last-child {
-    margin-bottom: var(--spacer-lg);
-  }
 }
 
 .artwork,
 .details {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer);
-  row-gap: var(--spacer-lg);
   min-width: 0;
-
-  @media (--md) {
-    gap: var(--spacer-lg);
-  }
 }
 
-/*
- * Wide screens: pin the editions beside the data instead of above it, so the
- * artwork stays on screen while demand, history and participation scroll.
- */
-@container page (min-width: 56rem) {
-  .set-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-    column-gap: var(--spacer-xl);
-    max-width: none;
-  }
+/* Every section is a bordered cell; the shared hairlines form the grid. */
+.cell {
+  padding: var(--spacer-lg) var(--main-padding-x);
+  border-bottom: var(--border);
+  min-width: 0;
+}
 
-  .artwork {
-    position: sticky;
-    /* Matches main's padding plus the frame's, so the columns line up at rest.
-     * This layout only applies wide, where the nav is the sidebar, not a top bar. */
-    top: calc(var(--spacer-lg) + var(--spacer));
-    /* Keep the square mosaic inside the viewport so sticky has somewhere to go. */
-    max-width: min(100%, calc(100dvh - var(--spacer-lg) * 2 - var(--spacer) * 2));
-  }
+.art-cell {
+  padding: var(--main-padding-x);
 }
 
 .deep-dive {
   display: grid;
   gap: var(--spacer);
+}
+
+/*
+ * The nested components ship their own card chrome. Flatten it so the cell
+ * borders are the only rules on the page. Vertical padding is left alone:
+ * the demand card uses its own padding-top to clear an absolute progress bar.
+ */
+.cell :deep(.card) {
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+  background: transparent;
+  height: auto;
+}
+
+/*
+ * Wide screens: pin the editions and set info beside the data instead of above
+ * it, so the artwork stays on screen while demand and history scroll.
+ */
+@container page (min-width: 56rem) {
+  .set-layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: start;
+  }
+
+  /* The rule sits on the taller column so it runs the full height of the grid. */
+  .details {
+    border-left: var(--border);
+  }
+
+  .artwork {
+    position: sticky;
+    top: 0;
+    /* Sticky only helps while the column fits; scroll it internally if not. */
+    max-height: 100dvh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .artwork::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
