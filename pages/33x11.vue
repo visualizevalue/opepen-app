@@ -93,6 +93,19 @@
             <span>{{ layer.name }}</span>
           </button>
 
+          <input
+            type="range"
+            class="opacity"
+            min="0"
+            max="100"
+            step="1"
+            :value="Math.round(layer.opacity * 100)"
+            :title="`Preview opacity ${Math.round(layer.opacity * 100)}% (exports at 100%)`"
+            :aria-label="`${layer.name} preview opacity`"
+            @pointerdown="commit()"
+            @input="setOpacity(layer.index, $event.target.value)"
+          />
+
           <button
             type="button"
             class="remove unstyled"
@@ -154,9 +167,20 @@ const emptyLayer = (name) => ({
   id: nextId++,
   name,
   visible: true,
+  // Working aid only: see through a layer while drawing. Never exported.
+  opacity: 1,
   // null is transparent; anything else indexes the palette.
   cells: Array(SIZE).fill(null),
 })
+
+const PALETTE_RGB = PALETTE_11.map(({ hex }) => [
+  parseInt(hex.slice(1, 3), 16),
+  parseInt(hex.slice(3, 5), 16),
+  parseInt(hex.slice(5, 7), 16),
+])
+const GROUND_RGB = [255, 255, 255]
+const toHex = (rgb) =>
+  `#${rgb.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('')}`
 
 const layers = ref([emptyLayer('Layer 1')])
 const activeLayer = ref(0)
@@ -174,8 +198,40 @@ const stack = computed(() =>
     .reverse(),
 )
 
-/* Flatten what is visible: the highest layer holding a pixel wins. */
+/*
+ * What you see: layers blended bottom-up using their preview opacity. Blending
+ * two palette colours lands between them, which is why this is preview only.
+ */
 const composite = computed(() => {
+  const out = Array.from({ length: SIZE }, () => GROUND_RGB.slice())
+
+  for (const layer of layers.value) {
+    if (!layer.visible || layer.opacity === 0) continue
+
+    const alpha = layer.opacity
+
+    for (let i = 0; i < SIZE; i++) {
+      const cell = layer.cells[i]
+      if (cell === null) continue
+
+      const src = PALETTE_RGB[cell]
+      const dst = out[i]
+      out[i] = [
+        src[0] * alpha + dst[0] * (1 - alpha),
+        src[1] * alpha + dst[1] * (1 - alpha),
+        src[2] * alpha + dst[2] * (1 - alpha),
+      ]
+    }
+  }
+
+  return out.map(toHex)
+})
+
+/*
+ * What you get: the highest layer holding a pixel wins, at full strength.
+ * Opacity is deliberately ignored so every exported pixel is one of the eleven.
+ */
+const flattened = computed(() => {
   const out = Array(SIZE).fill(GROUND)
 
   for (const layer of layers.value) {
@@ -334,6 +390,12 @@ const removeLayer = (index) => {
   layers.value = layers.value.filter((_, i) => i !== index)
   activeLayer.value = Math.min(activeLayer.value, layers.value.length - 1)
 }
+const setOpacity = (index, value) => {
+  const next = layers.value.slice()
+  next[index] = { ...next[index], opacity: Number(value) / 100 }
+  layers.value = next
+}
+
 const toggleVisible = (index) => {
   const next = layers.value.slice()
   next[index] = { ...next[index], visible: !next[index].visible }
@@ -357,7 +419,7 @@ const download = () => {
   const sourceContext = source.getContext('2d')
   const image = sourceContext.createImageData(COMPOSITION_WIDTH, COMPOSITION_HEIGHT)
 
-  composite.value.forEach((hex, index) => {
+  flattened.value.forEach((hex, index) => {
     const offset = index * 4
     image.data[offset] = parseInt(hex.slice(1, 3), 16)
     image.data[offset + 1] = parseInt(hex.slice(3, 5), 16)
@@ -540,7 +602,7 @@ useMetaData({
 
 .layer {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: var(--spacer-sm);
   padding: var(--spacer-xs) 0;
@@ -568,6 +630,15 @@ useMetaData({
   .select {
     text-align: left;
     width: 100%;
+  }
+
+  .opacity {
+    width: 6rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    accent-color: var(--color);
+    cursor: pointer;
   }
 
   .icon {
