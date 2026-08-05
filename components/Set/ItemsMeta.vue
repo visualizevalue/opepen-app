@@ -102,6 +102,7 @@
           <span v-if="listingStatus === 'success'">({{ totalListings }} listed)</span>
         </NuxtLink>
       </li>
+      <SetEditLink :submission="submission" />
     </DescriptionList>
   </section>
 </template>

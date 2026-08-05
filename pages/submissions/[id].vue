@@ -3,8 +3,6 @@
     <PageFrameLg class="submission">
       <div class="set-layout">
         <div class="artwork">
-          <SetEditLink :submission="submission" />
-
           <div class="cell">
             <SetItemsMeta :submission="submission" />
           </div>
@@ -64,14 +62,35 @@ watchEffect(() => {
   submission.value = data.value
 })
 
-// Update every 2 minutes
+/*
+ * Update every 2 minutes, but only while the tab is visible. This endpoint
+ * returns the whole submission including every participation image (megabytes
+ * on a busy set), so polling it in a background tab is pure waste. On return,
+ * refresh straight away if the data is already older than the interval.
+ */
+const REFRESH_INTERVAL = 120
+
 let refreshInterval
+const refreshIfVisible = () => {
+  if (document.hidden) return
+
+  refresh()
+}
+const onVisibilityChange = () => {
+  if (document.hidden) return
+  if (nowInSeconds() - lastUpdated.value < REFRESH_INTERVAL) return
+
+  refresh()
+}
+
 onMounted(() => {
-  refreshInterval = window.setInterval(() => {
-    refresh()
-  }, 1000 * 120)
+  refreshInterval = window.setInterval(refreshIfVisible, REFRESH_INTERVAL * 1000)
+  document.addEventListener('visibilitychange', onVisibilityChange)
 })
-onBeforeUnmount(() => window.clearInterval(refreshInterval))
+onBeforeUnmount(() => {
+  window.clearInterval(refreshInterval)
+  document.removeEventListener('visibilitychange', onVisibilityChange)
+})
 
 useMetaData({
   title: `${submission.value?.name} | Set Submission | Opepen`,
