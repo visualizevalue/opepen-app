@@ -10,6 +10,8 @@ export const COLORS = {
   gray800: '#E6E6E6',
   gray900: '#F2F2F2',
   gray999: '#F8F8F8',
+  green: '#94E337',
+  greenDark: '#377528',
 }
 
 export const Z_COLORS = computed(() =>

@@ -95,6 +95,17 @@ useMetaData({
 }
 
 /*
+ * Wide, the nav is the sidebar rather than a fixed top bar, so main's top
+ * padding is just an empty band above the grid. Pull the grid up into it.
+ */
+@media (--lg) {
+  .submission {
+    margin-top: calc(-1 * var(--main-padding-top));
+    border-top: 0;
+  }
+}
+
+/*
  * The grid lives on .set-layout, not on .submission: .submission is the frame
  * that declares `container-name: page`, and an element cannot query its own
  * container. The name is prefixed because .layout is the global app shell.

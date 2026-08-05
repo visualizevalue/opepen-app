@@ -179,7 +179,13 @@ td:last-child {
   p {
     @mixin ui-font;
 
+    /* Explanatory copy reads as prose, not as a UI label. */
     &.muted {
+      font-family: var(--font-family);
+      font-size: var(--font-base);
+      text-transform: none;
+      letter-spacing: normal;
+      line-height: var(--line-height-lg);
       color: var(--muted);
     }
   }

@@ -2,13 +2,19 @@
   <section v-if="optInHistory && optInHistory.length > 0">
     <div class="header">
       <SectionTitle>Opt-In History</SectionTitle>
-      <Button @click="refresh" :disabled="loading" class="refresh-button">
-        <Icon type="refresh-cw" :class="{ spinning: loading }" />
-        <span>Refresh</span>
-      </Button>
+      <div class="header-actions">
+        <Button v-if="expanded" @click="refresh" :disabled="loading" class="refresh-button">
+          <Icon type="refresh-cw" :class="{ spinning: loading }" />
+          <span>Refresh</span>
+        </Button>
+        <Button @click="expanded = !expanded" class="small">
+          <span>{{ expanded ? 'Hide' : `Show ${optInHistory.length}` }}</span>
+          <Icon :type="expanded ? 'chevron-up' : 'chevron-down'" />
+        </Button>
+      </div>
     </div>
 
-    <div class="history-container" @scroll="handleScroll">
+    <div v-if="expanded" class="history-container" @scroll="handleScroll">
       <div v-for="event in optInHistory" :key="event.id" class="event">
         <span>
           <NuxtLink :to="`/${id(event.account)}`" class="account-link">
@@ -48,6 +54,8 @@ const props = defineProps({
 const config = useRuntimeConfig()
 const allHistory = ref([])
 const loading = ref(false)
+// Collapsed by default: the curve above summarises this, the list is the detail.
+const expanded = ref(false)
 const hasMorePages = ref(true)
 const currentPage = ref(3)
 const isLoadingMore = ref(false)
@@ -252,6 +260,12 @@ const optInHistory = computed(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacer);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-sm);
 }
 
 .refresh-button {
