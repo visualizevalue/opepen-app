@@ -68,18 +68,21 @@
         </tfoot>
       </Table>
 
-      <SectionTitle>Market Value</SectionTitle>
+      <header class="value-header">
+        <SectionTitle>Opt-In Value</SectionTitle>
+        <span
+          class="explainer"
+          @mouseenter="explainMarketValue = true"
+          @mouseleave="explainMarketValue = false"
+        >
+          ?
+        </span>
+      </header>
+
       <div class="market-value">
         <p class="stat">
           <span class="line">{{ marketDemand.eth }} ETH</span>
-          <span class="line">
-            {{ marketDemand.usd }} USD<sup
-              class="explainer"
-              @mouseenter="explainMarketValue = true"
-              @mouseleave="explainMarketValue = false"
-              >?</sup
-            >
-          </span>
+          <span class="line">{{ marketDemand.usd }} USD</span>
         </p>
 
         <MouseTooltip v-if="explainMarketValue">
@@ -189,17 +192,16 @@ td:last-child {
   gap: var(--spacer-sm);
 }
 
-.market-value {
-  p {
-    @mixin ui-font;
-  }
+/* Title left, the explainer parked at the right edge of the same line. */
+.value-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  /* Superscript, so it hangs off the end of the USD rather than sitting on it. */
   .explainer {
     @mixin ui-font;
-    top: -0.5em;
-    margin-left: 0.15em;
-    font-size: 0.45em;
+    font-size: var(--font-base);
+    line-height: 1;
     color: var(--gray-z-5);
     cursor: help;
     transition: color var(--speed);
@@ -207,6 +209,12 @@ td:last-child {
     &:hover {
       color: var(--color);
     }
+  }
+}
+
+.market-value {
+  p {
+    @mixin ui-font;
   }
 
   /* Both figures read as one block: same size, same weight, all white. */
