@@ -1,11 +1,7 @@
 <template>
   <PageFrameMd class="tool">
     <header class="intro">
-      <p class="eyebrow">Tool</p>
-      <h1>33x11</h1>
-      <p class="summary">
-        Three panels. Eleven colors. Draw a composition and take it with you at any size.
-      </p>
+      <h1 class="eyebrow">33x11</h1>
     </header>
 
     <section class="toolbar">
@@ -429,19 +425,6 @@ useMetaData({
 
 .intro {
   display: grid;
-  gap: var(--spacer-sm);
-
-  h1 {
-    @mixin ui-font;
-    font-size: clamp(2rem, 6cqw, 3rem);
-    letter-spacing: var(--letter-spacing-sm);
-    line-height: 1;
-  }
-
-  .summary {
-    max-width: 32rem;
-    color: var(--muted);
-  }
 }
 
 .toolbar {

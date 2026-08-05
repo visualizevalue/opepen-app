@@ -5,14 +5,14 @@
     </WithAccount>
 
     <section>
-      <h1>Now</h1>
+      <h1 title="Now"><Icon type="home" /></h1>
 
       <MainSideNavLink to="/" title="Overview" @click="close" strict-exact />
       <MainSideOptIn @click="close" />
     </section>
 
     <section>
-      <h1>Create</h1>
+      <h1 title="Create"><Icon type="edit-2" /></h1>
 
       <MainSideNavLink to="/create/new" title="Create Opepen Set" @click="close" />
 
@@ -32,7 +32,7 @@
     </section>
 
     <section>
-      <h1>Browse</h1>
+      <h1 title="Browse"><Icon type="opepen-grid" /></h1>
 
       <MainSideNavLink to="/sets" title="Permanent Collection" @click="close" />
       <MainSideNavLink to="/submissions" title="Set Submissions" @click="close" />
@@ -221,10 +221,24 @@ section {
   padding: var(--spacer-lg);
   border-bottom: var(--border);
 
+  /* The section name is carried by an icon rather than a label. */
   > h1 {
     @mixin ui-font;
     color: var(--gray-z-5);
     margin-bottom: var(--size-2);
+
+    .icon {
+      display: block;
+      width: var(--size-5);
+      height: var(--size-5);
+    }
+
+    /* The feather glyphs read heavier than the Opepen grid; ease them back. */
+    .vue-feather--home,
+    .vue-feather--edit-2 {
+      width: calc(var(--size-5) * 0.95);
+      height: calc(var(--size-5) * 0.95);
+    }
   }
 }
 
