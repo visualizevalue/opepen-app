@@ -71,18 +71,14 @@
       <SectionTitle>Market Value</SectionTitle>
       <div class="market-value">
         <p class="stat">
-          {{ marketDemand.eth }}
-          <span class="muted">
-            ETH
-            <span class="unit">({{ marketDemand.usd }} USD)</span>
-          </span>
-
-          <span
-            class="explainer"
-            @mouseenter="explainMarketValue = true"
-            @mouseleave="explainMarketValue = false"
-          >
-            ?
+          <span class="line">{{ marketDemand.eth }} ETH</span>
+          <span class="line">
+            {{ marketDemand.usd }} USD<sup
+              class="explainer"
+              @mouseenter="explainMarketValue = true"
+              @mouseleave="explainMarketValue = false"
+              >?</sup
+            >
           </span>
         </p>
 
@@ -198,12 +194,12 @@ td:last-child {
     @mixin ui-font;
   }
 
+  /* Superscript, so it hangs off the end of the USD rather than sitting on it. */
   .explainer {
     @mixin ui-font;
-    display: inline-flex;
-    align-items: center;
-    margin-left: var(--spacer-xs);
-    font-size: var(--font-base);
+    top: -0.5em;
+    margin-left: 0.15em;
+    font-size: 0.45em;
     color: var(--gray-z-5);
     cursor: help;
     transition: color var(--speed);
@@ -213,21 +209,18 @@ td:last-child {
     }
   }
 
+  /* Both figures read as one block: same size, same weight, all white. */
   .stat {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    justify-items: start;
     gap: var(--spacer-xs);
     font-size: var(--font-xl);
     line-height: 1;
     padding-bottom: var(--spacer-sm);
+    color: var(--color);
 
-    .muted {
-      font-size: var(--font-lg);
-
-      .unit {
-        white-space: nowrap;
-      }
+    .line {
+      white-space: nowrap;
     }
   }
 }
