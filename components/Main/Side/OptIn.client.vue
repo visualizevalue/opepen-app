@@ -4,6 +4,7 @@
     :to="`/submissions/${submission.uuid}`"
     :title="title"
     :badge="badge"
+    :note="note"
   />
 </template>
 
@@ -26,14 +27,16 @@ const title = computed(() => {
     ? `Set Reveal Pending ${secondsUntilReveal.value > 0 ? `(${revealCountDown.str.value})` : ``}`
     : `${submission.value.name}`
 })
-/*
- * The countdown rides inside the live chip rather than a second line. While a
- * set is revealing the title already carries its own countdown, so the chip
- * falls back to the block confirmations, then to a bare "live".
- */
-const badge = computed(() => {
-  if (revealing.value) return blockConfirmations.value ? blockConfirmationText.value : `live`
+const badge = computed(() => `live`)
 
-  return optInCountDown.str.value ? `live ${optInCountDown.str.value}` : `live`
+/*
+ * The countdown sits in its own chip beside the live one rather than on a
+ * second line. While a set is revealing the title already carries its own
+ * countdown, so this shows the block confirmations instead.
+ */
+const note = computed(() => {
+  if (revealing.value) return blockConfirmations.value ? blockConfirmationText.value : ``
+
+  return optInCountDown.str.value || ``
 })
 </script>

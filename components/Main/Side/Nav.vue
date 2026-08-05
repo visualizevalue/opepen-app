@@ -53,7 +53,7 @@
         target="_blank"
         title="View on Etherscan"
       >
-        <Icon type="etherscan" />
+        <Icon type="etherscan" class="etherscan" />
       </NuxtLink>
       <NuxtLink
         to="https://github.com/visualizevalue?q=opepen"
@@ -231,7 +231,8 @@ footer {
   padding: var(--spacer) var(--spacer-lg);
   display: flex;
   gap: var(--spacer-sm);
-  align-items: center;
+  /* Bottoms, not centres: the badge is taller than the social icons. */
+  align-items: flex-end;
 
   a {
     width: var(--size-5);
@@ -252,9 +253,22 @@ footer {
     }
   }
 
+  /*
+   * Optical alignment. These glyphs are drawn lower inside their boxes than the
+   * X and OpenSea marks, so box alignment alone leaves them sitting low.
+   */
+  .icon.etherscan {
+    transform: translateY(-1px);
+  }
+
+  .vue-feather--github {
+    transform: translateY(-2px);
+  }
+
   .built-on-ethereum {
     margin-left: auto;
     width: auto;
+    transform: translateY(-3px);
   }
 }
 
