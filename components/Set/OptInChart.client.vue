@@ -70,8 +70,12 @@ const points = computed(() => {
       for (const edition of EDITION_KEYS) demand += reveals[edition] || 0
     }
 
+    const hours = DateTime.fromISO(event.created_at).diff(windowStart.value, 'hours').hours
+
     return {
-      x: DateTime.fromISO(event.created_at).toMillis(),
+      // Collectors can opt in before a set is staged. Those land at negative
+      // hours, so fold them into hour zero as the demand the window opens with.
+      x: Math.max(0, hours),
       y: (demand / TOTAL_EDITION_SIZE) * 100,
       demand,
       account: event.account?.display || shortAddress(event.address),
@@ -80,20 +84,27 @@ const points = computed(() => {
   })
 })
 
+/** Consensus runs from the moment the set is staged until it reveals. */
+const windowStart = computed(() =>
+  props.submission.starred_at
+    ? DateTime.fromISO(props.submission.starred_at)
+    : DateTime.fromISO(events.value[0]?.created_at || new Date().toISOString()),
+)
+
+const windowHours = computed(() => {
+  if (!props.submission.starred_at || !props.submission.reveals_at) return 72
+
+  const span = DateTime.fromISO(props.submission.reveals_at).diff(windowStart.value, 'hours').hours
+
+  return Math.round(span) || 72
+})
+
 const EDITION_KEYS = ['1', '4', '5', '10', '20', '40']
 // 1 + 4 + 5 + 10 + 20 + 40; the same basis the demand table uses.
 const TOTAL_EDITION_SIZE = 80
 
 const total = computed(() => Math.round(points.value[points.value.length - 1]?.y || 0))
 
-/* Opt-in windows are days, not months: show the hour or every tick reads alike. */
-const tickFormat = computed(() => {
-  const first = points.value[0]?.x
-  const last = points.value[points.value.length - 1]?.x
-  const days = first && last ? (last - first) / 86400000 : 0
-
-  return days > 3 ? 'LLL d' : 'LLL d, HH:mm'
-})
 
 const data = computed(() => ({
   datasets: [
@@ -120,17 +131,19 @@ const options = computed(() => ({
   animation: false,
   interaction: { mode: 'nearest', intersect: false },
   scales: {
-    // A linear scale of timestamps: chart.js only ships a time scale with a
-    // date adapter, and this avoids pulling one in for a single chart.
+    // Hours into the consensus window, so every set reads on the same axis
+    // regardless of when it was staged.
     x: {
       type: 'linear',
+      min: 0,
+      max: windowHours.value,
       border: { color: Z_COLORS.value.grayZ2 },
       grid: { display: false },
       ticks: {
-        maxTicksLimit: 4,
+        stepSize: 12,
         color: Z_COLORS.value.grayZ5,
         font: { size: 10 },
-        callback: (value) => DateTime.fromMillis(value).toFormat(tickFormat.value),
+        callback: (value) => `${value}h`,
       },
     },
     // Ruled every 100%. Only the 100% line is green: that is consensus met.
@@ -164,7 +177,7 @@ const options = computed(() => ({
           const point = points.value[item.dataIndex]
           if (!point) return ''
           const action = point.optIn ? 'Opted in' : 'Opted out'
-          return `${action}  ·  ${formatNumber(Math.round(point.y))}% demand`
+          return `${action} at ${Math.round(point.x)}h  ·  ${formatNumber(Math.round(point.y))}% demand`
         },
       },
     },
