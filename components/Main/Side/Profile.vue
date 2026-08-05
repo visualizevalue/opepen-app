@@ -1,7 +1,5 @@
 <template>
   <section class="profile">
-    <MainOptionsDropdown v-if="account" @sendClose="$emit('sendClose')" />
-
     <div class="identity">
       <Avatar :account="account" class="eye" />
 
@@ -12,51 +10,49 @@
       </h1>
     </div>
 
-    <div class="stats">
-      <div class="stat">
-        <span>{{ stats.submissions }}</span>
-        <small>Submissions</small>
-      </div>
-      <div class="stat">
-        <span>{{ stats.opepen }}</span>
-        <small>Opepen</small>
-      </div>
-      <div class="stat">
-        <span>{{ stats.curations }}</span>
-        <small>Votes</small>
-      </div>
-    </div>
+    <!-- Exposed as rows rather than hidden behind a dropdown. -->
+    <div class="account-actions">
+      <template v-if="account?.address">
+        <Button
+          :to="`/${accountId(account)}`"
+          class="link-button"
+          @click="$emit('sendClose')"
+        >
+          <span>View Profile</span>
+          <Icon type="chevron-right" />
+        </Button>
 
-    <Button
-      v-if="account?.address"
-      :to="`/${accountId(account)}`"
-      class="link-button"
-      @click="$emit('sendClose')"
-    >
-      <span>View Profile</span>
-      <Icon type="chevron-right" />
-    </Button>
-    <Connect v-else class-name="main-connect link-button">
-      <span>Connect</span>
-      <Icon type="chevron-right" />
-    </Connect>
+        <Button to="/settings" class="link-button" @click="$emit('sendClose')">
+          <span>Edit Profile</span>
+          <Icon type="chevron-right" />
+        </Button>
+
+        <Button class="link-button" @click="disconnect()">
+          <span>Disconnect</span>
+          <Icon type="chevron-right" />
+        </Button>
+      </template>
+
+      <Connect v-else class-name="main-connect link-button">
+        <span>Connect</span>
+        <Icon type="chevron-right" />
+      </Connect>
+    </div>
   </section>
 </template>
 
 <script setup>
+import { useDisconnect } from '@wagmi/vue'
 import { id as accountId } from '~/utils/accounts'
 defineEmits(['sendClose'])
+
+const { disconnect } = useDisconnect()
 
 const { account } = await useProfile()
 const name = computed(() =>
   !!account.value?.address ? account.value?.display : `Opepen Visitor`,
 )
 const id = computed(() => shortAddress(account.value?.address || ADDRESS_ZERO, 3))
-const stats = computed(() => ({
-  submissions: formatNumber(account.value?.set_submissions_count || 0),
-  curations: formatNumber(account.value?.opt_in_count || 0),
-  opepen: formatNumber(account.value?.opepen_count || 0),
-}))
 </script>
 
 <style scoped>
@@ -66,16 +62,6 @@ section.profile {
   gap: var(--spacer);
 }
 
-:deep(.settings) {
-  position: absolute;
-  top: var(--size-4);
-  right: var(--size-4);
-  top: var(--size-2);
-  right: 0;
-  color: var(--gray-z-5);
-  transition: color var(--speed);
-  z-index: 1;
-}
 
 .avatar {
   width: var(--size-7);
@@ -107,6 +93,45 @@ h1 {
   }
 }
 
+/* Secondary to the nav proper: tighter stack, quieter colour. */
+.account-actions {
+  display: grid;
+}
+
+/*
+ * Match the nav links: full-bleed row with the chevron pushed to the right
+ * edge, rather than a chevron trailing the label.
+ */
+:deep(.link-button) {
+  display: grid;
+  grid-template-columns: 1fr var(--size-7);
+  align-items: center;
+  justify-items: start;
+  text-align: left;
+  gap: var(--spacer-sm);
+  width: calc(100% + 2 * var(--spacer));
+  margin-left: calc(-1 * var(--spacer));
+  margin-right: calc(-1 * var(--spacer));
+  padding: var(--spacer-xs) var(--spacer);
+  border-radius: var(--border-radius);
+  color: var(--gray-z-5);
+  transition:
+    background var(--speed),
+    color var(--speed);
+
+  .icon {
+    justify-self: flex-end;
+    width: var(--size-4);
+    color: var(--gray-z-3);
+  }
+
+  &:--highlight {
+    background: var(--gray-z-1);
+    box-shadow: var(--border-shadow);
+    color: var(--color);
+  }
+}
+
 /* Signed out, connecting is the only thing to do here: make it the one accent. */
 :deep(.main-connect) {
   color: var(--success);
@@ -120,25 +145,4 @@ h1 {
   }
 }
 
-/* One stat per line rather than a wrapping row. */
-.stats {
-  display: grid;
-  justify-items: start;
-  gap: var(--spacer-xs);
-
-  .stat {
-    @mixin ui-font;
-    display: flex;
-    gap: var(--size-0);
-
-    span,
-    small {
-      font-size: var(--ui-font-size);
-    }
-
-    small {
-      color: var(--gray-z-5);
-    }
-  }
-}
 </style>

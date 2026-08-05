@@ -5,6 +5,8 @@
     </WithAccount>
 
     <section>
+      <h1>Now</h1>
+
       <MainSideNavLink to="/" title="Overview" @click="close" strict-exact />
       <MainSideOptIn @click="close" />
     </section>
