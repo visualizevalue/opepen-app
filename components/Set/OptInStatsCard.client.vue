@@ -76,12 +76,22 @@
             ETH
             <span class="unit">({{ marketDemand.usd }} USD)</span>
           </span>
+
+          <span
+            class="explainer"
+            @mouseenter="explainMarketValue = true"
+            @mouseleave="explainMarketValue = false"
+          >
+            ?
+          </span>
         </p>
 
-        <p class="muted">
-          Calculated by multiplying the number of opt-ins with the floor price for unrevealed
-          tokens within their respective edition bracket.
-        </p>
+        <MouseTooltip v-if="explainMarketValue">
+          <p class="market-value-note">
+            Calculated by multiplying the number of opt-ins with the floor price for
+            unrevealed tokens within their respective edition bracket.
+          </p>
+        </MouseTooltip>
       </div>
 
       <SetConsensusBreakdown
@@ -107,6 +117,7 @@ const isSetCreator = computed(
 
 const now = useNow()
 const lastUpdatedStr = ref()
+const explainMarketValue = ref(false)
 watch(now, () => {
   if (!lastUpdated) return
   lastUpdatedStr.value = timeAgo(DateTime.fromSeconds(lastUpdated))
@@ -185,19 +196,28 @@ td:last-child {
 .market-value {
   p {
     @mixin ui-font;
+  }
 
-    /* Explanatory copy reads as prose, not as a UI label. */
-    &.muted {
-      font-family: var(--font-family);
-      font-size: var(--font-base);
-      text-transform: none;
-      letter-spacing: normal;
-      line-height: var(--line-height-lg);
-      color: var(--muted);
+  .explainer {
+    @mixin ui-font;
+    display: inline-flex;
+    align-items: center;
+    margin-left: var(--spacer-xs);
+    font-size: var(--font-base);
+    color: var(--gray-z-5);
+    cursor: help;
+    transition: color var(--speed);
+
+    &:hover {
+      color: var(--color);
     }
   }
 
   .stat {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacer-xs);
     font-size: var(--font-xl);
     line-height: 1;
     padding-bottom: var(--spacer-sm);

@@ -2,13 +2,15 @@
   <section class="profile">
     <MainOptionsDropdown v-if="account" @sendClose="$emit('sendClose')" />
 
-    <Avatar :account="account" class="eye" />
+    <div class="identity">
+      <Avatar :account="account" class="eye" />
 
-    <h1>
-      <span>{{ name }}</span>
-      <!-- Without an account this is only the zero address, which reads as noise. -->
-      <small v-if="account?.address">#{{ formatNumber(id) }}</small>
-    </h1>
+      <h1>
+        <span>{{ name }}</span>
+        <!-- Without an account this is only the zero address, which reads as noise. -->
+        <small v-if="account?.address">#{{ formatNumber(id) }}</small>
+      </h1>
+    </div>
 
     <div class="stats">
       <div class="stat">
@@ -79,21 +81,28 @@ section.profile {
   width: var(--size-7);
 }
 
-h1 {
+/* Avatar left, name and address stacked to its right. */
+.identity {
   display: flex;
+  align-items: center;
   gap: var(--spacer-sm);
-  align-items: baseline;
+}
 
-  /* One treatment throughout this box: Carbon, uppercase. */
+h1 {
+  display: grid;
+  gap: var(--spacer-xs);
+  min-width: 0;
+
+  /* One treatment throughout this box: Carbon, uppercase, one size. */
   span {
     @mixin ui-font;
-    font-size: var(--font-lg);
+    font-size: var(--ui-font-size);
     font-weight: var(--font-weight-bold);
   }
 
   small {
     @mixin ui-font;
-    font-size: var(--font-base);
+    font-size: var(--ui-font-size);
     color: var(--gray-z-5);
   }
 }
