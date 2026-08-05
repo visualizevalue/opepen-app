@@ -3,6 +3,7 @@ export const useApi = async <T>(endpoint: Ref<string> | string, options = {}) =>
     `${useConfig('opepenApi')}${isRef(endpoint) ? endpoint.value : endpoint}`,
     {
       dedupe: 'defer',
+      retry: 0,
       ...options,
     },
   )

@@ -46,14 +46,15 @@ watchEffect(() => {
   if (!data.value?.uuid) return
   submission.value = data.value
 })
-await useStagedOptIn()
 
 // Update every 2 minutes
+let refreshInterval
 onMounted(() => {
-  setInterval(() => {
+  refreshInterval = window.setInterval(() => {
     refresh()
   }, 1000 * 120)
 })
+onBeforeUnmount(() => window.clearInterval(refreshInterval))
 
 useMetaData({
   title: `${submission.value?.name} | Set Submission | Opepen`,

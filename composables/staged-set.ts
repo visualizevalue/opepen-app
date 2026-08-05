@@ -1,10 +1,9 @@
 const INTERVAL = 2 * 60 * 1000 // 2 minutes
 let intervalInitialized: boolean = false
-let watcherInitialized: boolean = false
-const submission = ref()
-const lastUpdated = ref()
 
 export const useStagedSet = async () => {
+  const submission = useState<SetSubmission | undefined>('staged-set:submission')
+  const lastUpdated = useState<number | undefined>('staged-set:last-updated')
   const { data, refresh: reloadStagedSubmission } = await useApi('/set-submissions/curated', {
     key: 'curated-submission',
     dedupe: 'defer',
@@ -14,8 +13,17 @@ export const useStagedSet = async () => {
     },
   })
 
+  const syncSubmission = () => {
+    if (!data.value?.submission) return
+
+    submission.value = data.value.submission
+  }
+
   // Load initially
-  if (!submission.value) await reloadStagedSubmission()
+  if (!submission.value) {
+    await reloadStagedSubmission()
+    syncSubmission()
+  }
 
   // Update every 2 minuts
   if (import.meta.client && !intervalInitialized) {
@@ -31,19 +39,8 @@ export const useStagedSet = async () => {
     intervalInitialized = true
   }
 
-  // Update our cache
-  if (import.meta.client && !watcherInitialized) {
-    watchEffect(() => {
-      // @ts-ignore
-      if (!data.value?.submission) return
-
-      // @ts-ignore
-      submission.value = data.value?.submission
-
-      console.info(`Updated staged set cache: ${submission.value.name}`)
-    })
-    watcherInitialized = true
-  }
+  // Keep the shared state aligned with manual and interval refreshes.
+  watch(data, syncSubmission, { immediate: true })
 
   return {
     submission,
