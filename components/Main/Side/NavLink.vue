@@ -10,7 +10,8 @@
         <span>{{ title }}</span>
         <span v-if="badge" class="badge">{{ badge }}</span>
       </div>
-      <small>{{ subline }}</small>
+      <!-- Without this the empty element still contributes its top margin. -->
+      <small v-if="subline">{{ subline }}</small>
     </div>
 
     <Icon type="chevron-right" />

@@ -111,6 +111,9 @@ const data = computed(() => ({
     {
       data: points.value,
       parsing: false,
+      // Points sitting exactly on hour zero straddle the chart edge, so allow a
+      // little overdraw or they render as half circles against the axis.
+      clip: 8,
       borderColor: Z_COLORS.value.grayZ7,
       backgroundColor: Z_COLORS.value.grayZ1,
       borderWidth: 1,

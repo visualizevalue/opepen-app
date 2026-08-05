@@ -3,7 +3,8 @@
     <div class="header">
       <SectionTitle>Opt-In History</SectionTitle>
       <div class="header-actions">
-        <Button v-if="expanded" @click="refresh" :disabled="loading" class="refresh-button">
+        <!-- Same size as the toggle, or the header grows and shifts the title. -->
+        <Button v-if="expanded" @click="refresh" :disabled="loading" class="small refresh-button">
           <Icon type="refresh-cw" :class="{ spinning: loading }" />
           <span>Refresh</span>
         </Button>
@@ -255,11 +256,19 @@ const optInHistory = computed(() => {
   }
 }
 
+/*
+ * Spacing comes from the section's gap rather than a margin on the header, so
+ * a collapsed section is evenly padded instead of bottom-heavy.
+ */
+section {
+  display: grid;
+  gap: var(--spacer);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacer);
 }
 
 .header-actions {

@@ -18,17 +18,11 @@
     <section>
       <h1>Create</h1>
 
-      <MainSideNavLink
-        to="/create/new"
-        title="Create Opepen Set"
-        subline="Submit an Opepen Set"
-        @click="close"
-      />
+      <MainSideNavLink to="/create/new" title="Create Opepen Set" @click="close" />
 
       <MainSideNavLink
         to="/create"
         title="Your Submissions"
-        subline="Manage your set submissions"
         @click="close"
         strict-exact
       />
@@ -36,7 +30,6 @@
       <MainSideNavLink
         to="/contribute"
         title="Contribute Opepen"
-        subline="Submissions open for participation"
         @click="close"
         badge="new"
       />
@@ -45,24 +38,9 @@
     <section>
       <h1>Browse</h1>
 
-      <MainSideNavLink
-        to="/sets"
-        title="Permanent Collection"
-        subline="Browse Opepen Sets and Tokens"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/submissions"
-        title="Set Submissions"
-        subline="Vote on submitted Opepen Sets"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/artists"
-        title="Artists"
-        subline="Browse Opepen Contributors"
-        @click="close"
-      />
+      <MainSideNavLink to="/sets" title="Permanent Collection" @click="close" />
+      <MainSideNavLink to="/submissions" title="Set Submissions" @click="close" />
+      <MainSideNavLink to="/artists" title="Artists" @click="close" />
     </section>
 
     <footer>
