@@ -5,12 +5,16 @@
 </template>
 
 <style scoped>
-/* Sits inline wherever it is placed; the sidebar footer positions it. */
+/*
+ * Sits inline wherever it is placed; the sidebar footer positions it.
+ * The artwork is white, so opacity is what sets its grey. 0.383 over the
+ * sidebar's #0c0c0c composites to #696969, matching the social icons.
+ */
 img {
   display: block;
   width: 3.5rem;
   transition: opacity var(--speed);
-  opacity: 0.69;
+  opacity: 0.383;
 
   &:hover {
     opacity: 1;

@@ -145,6 +145,13 @@ const { isLoading, execute: downloadSubscribersCSV } = useAsyncState(downloadCSV
   position: absolute;
   top: 0;
   left: 0;
+  /* Square: this no longer sits inside a rounded card. */
+  border-radius: 0;
+
+  :deep(.primary-bar),
+  :deep(.secondary-bar) {
+    border-radius: 0;
+  }
 }
 
 header {

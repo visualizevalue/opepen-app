@@ -180,6 +180,8 @@ useMetaData({
   padding-left: 0;
   padding-right: 0;
   border: 0;
+  /* Cards clip their contents, so a leftover radius rounds the demand bar. */
+  border-radius: 0;
   background: transparent;
   height: auto;
 }

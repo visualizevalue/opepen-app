@@ -84,7 +84,9 @@ h1 {
   gap: var(--spacer-sm);
   align-items: baseline;
 
+  /* One treatment throughout this box: Carbon, uppercase. */
   span {
+    @mixin ui-font;
     font-size: var(--font-lg);
     font-weight: var(--font-weight-bold);
   }
@@ -109,10 +111,11 @@ h1 {
   }
 }
 
+/* One stat per line rather than a wrapping row. */
 .stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacer-sm);
+  display: grid;
+  justify-items: start;
+  gap: var(--spacer-xs);
 
   .stat {
     @mixin ui-font;

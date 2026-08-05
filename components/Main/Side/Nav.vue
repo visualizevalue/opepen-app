@@ -227,6 +227,8 @@ section {
 }
 
 footer {
+  --social-icon: calc(var(--size-5) * 0.85);
+
   margin-top: auto;
   padding: var(--spacer) var(--spacer-lg);
   display: flex;
@@ -235,8 +237,8 @@ footer {
   align-items: flex-end;
 
   a {
-    width: var(--size-5);
-    color: var(--muted);
+    width: var(--social-icon);
+    color: var(--gray-z-5);
     transition: color var(--speed);
 
     &:--highlight {
@@ -246,10 +248,10 @@ footer {
 
   .icon {
     display: flex;
-    width: var(--size-5);
+    width: var(--social-icon);
 
     &.vue-feather--github {
-      width: calc(var(--size-5) * 0.85);
+      width: calc(var(--social-icon) * 0.85);
     }
   }
 
