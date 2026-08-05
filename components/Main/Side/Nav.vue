@@ -5,13 +5,7 @@
     </WithAccount>
 
     <section>
-      <MainSideNavLink
-        to="/"
-        title="Overview"
-        subline="Public Art on Ethereum"
-        @click="close"
-        strict-exact
-      />
+      <MainSideNavLink to="/" title="Overview" @click="close" strict-exact />
       <MainSideOptIn @click="close" />
     </section>
 

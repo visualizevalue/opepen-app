@@ -3,7 +3,6 @@
     v-if="submission && (optInAvailable || revealing)"
     :to="`/submissions/${submission.uuid}`"
     :title="title"
-    :subline="subline"
     :badge="badge"
   />
 </template>
@@ -27,10 +26,14 @@ const title = computed(() => {
     ? `Set Reveal Pending ${secondsUntilReveal.value > 0 ? `(${revealCountDown.str.value})` : ``}`
     : `${submission.value.name}`
 })
-const subline = computed(() => {
-  return blockConfirmations.value
-    ? blockConfirmationText.value
-    : `Live Consensus (${optInCountDown.str.value})`
+/*
+ * The countdown rides inside the live chip rather than a second line. While a
+ * set is revealing the title already carries its own countdown, so the chip
+ * falls back to the block confirmations, then to a bare "live".
+ */
+const badge = computed(() => {
+  if (revealing.value) return blockConfirmations.value ? blockConfirmationText.value : `live`
+
+  return optInCountDown.str.value ? `live ${optInCountDown.str.value}` : `live`
 })
-const badge = computed(() => `live`)
 </script>
