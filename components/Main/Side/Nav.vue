@@ -5,53 +5,20 @@
     </WithAccount>
 
     <section>
-      <MainSideNavLink
-        to="/"
-        title="Overview"
-        subline="Public Art on Ethereum"
-        @click="close"
-        strict-exact
-      />
+      <h1>Now</h1>
+
+      <MainSideNavLink to="/" title="Overview" @click="close" strict-exact />
       <MainSideOptIn @click="close" />
-    </section>
-
-    <section>
-      <h1>Browse</h1>
-
-      <MainSideNavLink
-        to="/sets"
-        title="Permanent Collection"
-        subline="Browse Opepen Sets and Tokens"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/submissions"
-        title="Set Submissions"
-        subline="Vote on submitted Opepen Sets"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/artists"
-        title="Artists"
-        subline="Browse Opepen Contributors"
-        @click="close"
-      />
     </section>
 
     <section>
       <h1>Create</h1>
 
-      <MainSideNavLink
-        to="/create/new"
-        title="Create Opepen Set"
-        subline="Submit an Opepen Set"
-        @click="close"
-      />
+      <MainSideNavLink to="/create/new" title="Create Opepen Set" @click="close" />
 
       <MainSideNavLink
         to="/create"
         title="Your Submissions"
-        subline="Manage your set submissions"
         @click="close"
         strict-exact
       />
@@ -59,10 +26,17 @@
       <MainSideNavLink
         to="/contribute"
         title="Contribute Opepen"
-        subline="Submissions open for participation"
         @click="close"
         badge="new"
       />
+    </section>
+
+    <section>
+      <h1>Browse</h1>
+
+      <MainSideNavLink to="/sets" title="Permanent Collection" @click="close" />
+      <MainSideNavLink to="/submissions" title="Set Submissions" @click="close" />
+      <MainSideNavLink to="/artists" title="Artists" @click="close" />
     </section>
 
     <footer>
@@ -81,7 +55,7 @@
         target="_blank"
         title="View on Etherscan"
       >
-        <Icon type="etherscan" />
+        <Icon type="etherscan" class="etherscan" />
       </NuxtLink>
       <NuxtLink
         to="https://github.com/visualizevalue?q=opepen"
@@ -90,6 +64,8 @@
       >
         <Icon type="github" />
       </NuxtLink>
+
+      <BuiltOnEthereum class="built-on-ethereum" />
     </footer>
   </nav>
 
@@ -228,7 +204,7 @@ defineExpose({
 
 <style scoped>
 .sidebar {
-  background: var(--gray-z-0);
+  background: var(--gray-z-05);
   overscroll-behavior: auto;
   transform: translateX(-100%);
   display: flex;
@@ -253,15 +229,18 @@ section {
 }
 
 footer {
+  --social-icon: calc(var(--size-5) * 0.85);
+
   margin-top: auto;
   padding: var(--spacer) var(--spacer-lg);
   display: flex;
   gap: var(--spacer-sm);
-  align-items: center;
+  /* Bottoms, not centres: the badge is taller than the social icons. */
+  align-items: flex-end;
 
   a {
-    width: var(--size-5);
-    color: var(--muted);
+    width: var(--social-icon);
+    color: var(--gray-z-5);
     transition: color var(--speed);
 
     &:--highlight {
@@ -271,11 +250,29 @@ footer {
 
   .icon {
     display: flex;
-    width: var(--size-5);
+    width: var(--social-icon);
 
     &.vue-feather--github {
-      width: calc(var(--size-5) * 0.85);
+      width: calc(var(--social-icon) * 0.85);
     }
+  }
+
+  /*
+   * Optical alignment. These glyphs are drawn lower inside their boxes than the
+   * X and OpenSea marks, so box alignment alone leaves them sitting low.
+   */
+  .icon.etherscan {
+    transform: translateY(-1px);
+  }
+
+  .vue-feather--github {
+    transform: translateY(-2px);
+  }
+
+  .built-on-ethereum {
+    margin-left: auto;
+    width: auto;
+    transform: translateY(-3px);
   }
 }
 

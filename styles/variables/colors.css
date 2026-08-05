@@ -1,6 +1,7 @@
 :root {
   /* GRAYS */
   --black: #080808;
+  --gray-025: #0c0c0c;
   --gray-000: #101010;
   --gray-100: #131313;
   --gray-200: #1c1c1c;
@@ -49,6 +50,7 @@
   * This makes migrating to dark/light modes much easier.
   * We're not thinking about color per se, but about the viewers perspective.
   */
+  --gray-z-05: var(--gray-025);
   --gray-z-0: var(--gray-000);
   --gray-z-1: var(--gray-100);
   --gray-z-2: var(--gray-200);

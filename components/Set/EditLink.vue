@@ -1,11 +1,16 @@
 <template>
+  <!--
+    Renders as a row of the set's attribute list so the creator finds the editor
+    alongside the other set facts. IsMeOrAdmin and WithAccount are both
+    renderless, so this <li> lands directly in the DescriptionList's <ul>.
+  -->
   <IsMeOrAdmin :address="submission.creator">
-    <Actions v-if="isAdmin || !submission.set_id">
-      <Button :to="`/create/${submission.uuid}`" class="small">
-        <Icon type="settings" />
+    <li v-if="isAdmin || !submission.set_id" class="set-edit-link">
+      <Icon type="settings" stroke-width="2.25" />
+      <NuxtLink :to="`/create/${submission.uuid}`">
         <span>Set Editor</span>
-      </Button>
-    </Actions>
+      </NuxtLink>
+    </li>
   </IsMeOrAdmin>
 </template>
 
@@ -14,7 +19,7 @@ const { submission } = defineProps<{ submission: SetSubmission }>()
 </script>
 
 <style scoped>
-.actions {
-  justify-content: flex-end;
+.set-edit-link :deep(a) {
+  color: var(--color);
 }
 </style>

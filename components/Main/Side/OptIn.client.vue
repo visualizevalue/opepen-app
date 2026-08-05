@@ -3,8 +3,8 @@
     v-if="submission && (optInAvailable || revealing)"
     :to="`/submissions/${submission.uuid}`"
     :title="title"
-    :subline="subline"
     :badge="badge"
+    :note="note"
   />
 </template>
 
@@ -27,10 +27,16 @@ const title = computed(() => {
     ? `Set Reveal Pending ${secondsUntilReveal.value > 0 ? `(${revealCountDown.str.value})` : ``}`
     : `${submission.value.name}`
 })
-const subline = computed(() => {
-  return blockConfirmations.value
-    ? blockConfirmationText.value
-    : `Live Consensus (${optInCountDown.str.value})`
-})
 const badge = computed(() => `live`)
+
+/*
+ * The countdown sits in its own chip beside the live one rather than on a
+ * second line. While a set is revealing the title already carries its own
+ * countdown, so this shows the block confirmations instead.
+ */
+const note = computed(() => {
+  if (revealing.value) return blockConfirmations.value ? blockConfirmationText.value : ``
+
+  return optInCountDown.str.value || ``
+})
 </script>

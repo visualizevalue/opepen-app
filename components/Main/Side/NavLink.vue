@@ -9,8 +9,10 @@
       <div class="title">
         <span>{{ title }}</span>
         <span v-if="badge" class="badge">{{ badge }}</span>
+        <span v-if="note" class="badge note">{{ note }}</span>
       </div>
-      <small>{{ subline }}</small>
+      <!-- Without this the empty element still contributes its top margin. -->
+      <small v-if="subline">{{ subline }}</small>
     </div>
 
     <Icon type="chevron-right" />
@@ -24,6 +26,8 @@ defineProps({
   subline: String,
   strictExact: Boolean,
   badge: String,
+  // Secondary chip sitting beside the badge, for live values like a countdown.
+  note: String,
 })
 </script>
 
@@ -64,6 +68,12 @@ a {
     color: var(--gray-z-0);
     padding: 2px 4px 1px;
     height: fit-content;
+
+    /* A step above the active row's background, or the chip vanishes into it. */
+    &.note {
+      background: var(--gray-z-3);
+      color: var(--color);
+    }
   }
 
   small {

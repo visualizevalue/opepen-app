@@ -45,7 +45,9 @@ export const useSignIn = () => {
 
   if (!accountWatcher) {
     currentAddress.value = getAccount($wagmi)?.address
-    fetchMe()
+    void fetchMe().catch(() => {
+      session.value = null
+    })
 
     // Set up the singleton account watcher
     accountWatcher = watchAccount($wagmi, {
