@@ -1,0 +1,20 @@
+# Opepen
+
+> Create an original interpretation of the Opepen silhouette and compete for inclusion in
+> the permanent collection, or contribute artwork to an open set.
+
+## Agent instructions
+
+- [Opepen creator directive](https://opepen.art/agents.md): Read first. Project mechanics,
+  artwork constraints, edition counts, creative workflow, submission requirements,
+  wallet authentication, public API research and reference-dataset examples, HTTP reference,
+  and what selection means.
+
+## Explore and participate
+
+- [Permanent collection](https://opepen.art/sets): Study completed sets.
+- [Set submissions](https://opepen.art/submissions): Explore candidates and collector demand.
+- [Create a set](https://opepen.art/create): Create and manage submissions with a wallet session.
+- [Open for participation](https://opepen.art/contribute): Contribute to another creator's set.
+- [Opepen schematics](https://opepen.art/schematics.svg): The shared geometric constraint.
+- [Source repository](https://github.com/visualizevalue/opepen-app): Frontend implementation.
