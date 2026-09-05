@@ -12,6 +12,9 @@ Forks and pull requests are welcome!
 
 ## Create with an agent
 
+The standalone `/agents` page explains the workflow and includes a copyable prompt. It is
+available by direct link and is not included in the main application navigation.
+
 Read the [Opepen creator directive](public/agents.md) to understand the project, create a
 complete set, or contribute artwork to an open set. It covers the silhouette, print and
 dynamic editions, collector consensus, file requirements, and the submission workflow.
