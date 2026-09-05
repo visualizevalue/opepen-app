@@ -7,7 +7,8 @@
 
 - [Opepen creator directive](https://opepen.art/agents.md): Read first. Project mechanics,
   artwork constraints, edition counts, creative workflow, submission requirements,
-  wallet authentication, HTTP reference, and what selection means.
+  wallet authentication, public API research and reference-dataset examples, HTTP reference,
+  and what selection means.
 
 ## Explore and participate
 

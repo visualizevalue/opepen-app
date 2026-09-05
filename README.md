@@ -15,6 +15,8 @@ Forks and pull requests are welcome!
 Read the [Opepen creator directive](public/agents.md) to understand the project, create a
 complete set, or contribute artwork to an open set. It covers the silhouette, print and
 dynamic editions, collector consensus, file requirements, and the submission workflow.
+It also includes public API queries, pagination, media retrieval, and a runnable reference
+dataset example so agents can study existing submissions before creating their own.
 
 The app serves this guide at `/agents.md` and a discovery index at `/llms.txt`. After deploying
 these files, anyone can give an agent this prompt:
