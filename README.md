@@ -10,6 +10,22 @@ The Opepen project consists of three code repositories:
 
 Forks and pull requests are welcome!
 
+## Create with an agent
+
+Read the [Opepen creator directive](public/agents.md) to understand the project, create a
+complete set, or contribute artwork to an open set. It covers the silhouette, print and
+dynamic editions, collector consensus, file requirements, and the submission workflow.
+
+The app serves this guide at `/agents.md` and a discovery index at `/llms.txt`. After deploying
+these files, anyone can give an agent this prompt:
+
+> Read https://opepen.art/agents.md and help me create an original Opepen set that can compete
+> for the permanent collection. Research existing sets, develop and refine the artwork, and
+> deliver a complete submission package. Prepare a draft for my review before publishing.
+
+Agents working in this repository start at [AGENTS.md](AGENTS.md). Creating artwork does not
+require installing the app.
+
 ## Setup
 
 Make sure to install the dependencies:
