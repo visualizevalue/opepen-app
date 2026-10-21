@@ -10,6 +10,7 @@ proxy:
   ssl: true
   hosts:
     - opepen.art
+    - www.opepen.art
   app_port: 3000
   response_timeout: 120
   healthcheck:
