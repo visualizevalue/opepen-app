@@ -25,12 +25,15 @@ production environment. The Gemini key stays in the server environment.
 Kamal routes `opepen.art` and redirects `www.opepen.art` to the canonical domain,
 with automatic HTTPS for both. Existing unexpired certificates
 were securely seeded into the proxy's ACME cache to allow direct HTTPS checks
-before DNS changes. Renewal is automatic after DNS points to the new server.
+before DNS changes. Renewal is automatic.
 
-Set `opepen.art`, `api.opepen.art`, and `metadata.opepen.art` A records to
-`5.78.66.101` for the cutover. The old Cleavr Nginx forwards to the new server
-while DNS propagates; its application processes and jobs are stopped.
-Keep the old server until public DNS and behavior have been verified.
+`opepen.art`, `api.opepen.art`, and `metadata.opepen.art` A records now point to
+`5.78.66.101`; `www` remains a CNAME to the apex, with no AAAA records.
+Public checks passed with old Hetzner server `44713170` powered off and again
+after its permanent deletion. Its primary IPs, Cleavr server entry, sites and
+deployment workflows were removed. Validated full database backups and an archive
+of the old server's databases/source/configuration remain on Kamal; the full
+production backup also has a private local copy. See the API migration receipt.
 
 ```sh
 curl --resolve opepen.art:443:5.78.66.101 https://opepen.art/sets
