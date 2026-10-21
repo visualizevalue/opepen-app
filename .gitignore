@@ -7,3 +7,8 @@ node_modules
 .env
 dist
 .DS_Store
+
+# Deployment credentials, certificates and migration backups
+.env.production
+.local/
+.bundle/

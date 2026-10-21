@@ -1,0 +1,16 @@
+.git
+node_modules
+build
+.output
+.nuxt
+.nitro
+.cache
+.env*
+.local
+.kamal
+.bundle
+coverage
+tmp
+sets
+*.log
+.claude

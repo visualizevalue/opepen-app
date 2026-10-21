@@ -1,0 +1,54 @@
+service: opepen-app
+image: <%= ENV.fetch("DOCKER_REGISTRY_USERNAME") %>/opepen-app
+
+servers:
+  web:
+    hosts:
+      - 5.78.66.101
+
+proxy:
+  ssl: true
+  hosts:
+    - opepen.art
+  app_port: 3000
+  response_timeout: 120
+  healthcheck:
+    path: /
+    interval: 5
+    timeout: 30
+
+deploy_timeout: 300
+
+registry:
+  username: <%= ENV.fetch("DOCKER_REGISTRY_USERNAME") %>
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+
+env:
+  clear:
+    NODE_ENV: production
+    HOST: 0.0.0.0
+    PORT: 3000
+    NITRO_HOST: 0.0.0.0
+    NITRO_PORT: 3000
+  secret:
+    - BASE_URL
+    - NUXT_PUBLIC_DOMAIN
+    - NUXT_PUBLIC_OPEPEN_API
+    - NUXT_PUBLIC_OPEPEN_OAUTH_API
+    - NUXT_PUBLIC_SIGNATURE_API
+    - NUXT_PUBLIC_RPC1
+    - NUXT_PUBLIC_RPC2
+    - NUXT_PUBLIC_RPC3
+    - NUXT_PUBLIC_ALCHEMY
+    - NUXT_PUBLIC_CHAIN_NAME
+    - NUXT_PUBLIC_CHAIN_ID
+    - NUXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
+    - NUXT_PUBLIC_BURNED_OPEPEN_CONTRACT
+    - NUXT_GEMINI_API_KEY
+
+ssh:
+  user: root
