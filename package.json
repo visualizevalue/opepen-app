@@ -42,7 +42,8 @@
     "overrides": {
       "h3": "^1.15.11",
       "vue": "^3.5.44",
-      "@nuxtjs/i18n>@intlify/unplugin-vue-i18n": "^6.0.8"
+      "@nuxtjs/i18n>@intlify/unplugin-vue-i18n": "^6.0.8",
+      "@visualizevalue/vveb3-layer>pinia": "^3.0.4"
     }
   }
 }
