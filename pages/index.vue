@@ -15,7 +15,7 @@
         <figcaption>One symbol</figcaption>
       </figure>
       <figure>
-        <Image image="/remixes.gif" />
+        <Image image="/remixes.webp" />
         <figcaption>Infinite remixes</figcaption>
       </figure>
     </section>
@@ -70,13 +70,13 @@ const featuredArtists = computed(() => [
   ...(additionalArtistResponse.value?.data || []),
 ])
 
-const { data: elevenByEleven } = await useApi(
-  `/set-submissions/1ac33bf4-3afe-4c74-8963-c60646c2accc`,
-)
+const PINNED_SET_IDS = [83, 71]
 
 const { featuredSets, completeSets, setsById } = await useSets()
 const featuredSubmissions = computed(() => {
-  const pinned = [elevenByEleven.value, setsById.value[71]?.submission].filter(Boolean)
+  // 11x11 and Zoopepen lead. Both come from the sets list: fetching 11x11 on
+  // its own pulled every contribution with it and put megabytes in the page.
+  const pinned = PINNED_SET_IDS.map((id) => setsById.value[id]?.submission).filter(Boolean)
   const pinnedIds = new Set(pinned.map((submission) => submission.uuid))
 
   return [

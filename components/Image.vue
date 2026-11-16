@@ -11,7 +11,8 @@
   >
     <div class="inner image">
       <Suspense>
-        <ThreeModelViewer
+        <!-- Lazy: three.js is large and almost no image needs it. -->
+        <LazyThreeModelViewer
           v-if="is3d && autoEmbed"
           :path="imageURI(image)"
           @loaded="() => (loaded = true)"

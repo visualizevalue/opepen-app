@@ -75,6 +75,34 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    // Ship .gz and .br copies of the built JS and CSS and serve them when accepted.
+    compressPublicAssets: true,
+  },
+
+  /*
+   * These pages render the same for every visitor: sign-in state is resolved
+   * in the browser, and Nitro drops request headers (cookies included) when it
+   * renders a cached route. Serve them from memory and refresh in the
+   * background, so a visit no longer waits on the API.
+   *
+   * Left uncached on purpose: submission pages (live vote counts), profiles
+   * and anything under /create or /settings.
+   */
+  routeRules: {
+    '/': { swr: 60 },
+    '/about': { swr: 300 },
+    '/sets': { swr: 60 },
+    '/sets/**': { swr: 60 },
+    '/artists': { swr: 60 },
+    '/submissions': { swr: 60 },
+    '/contribute': { swr: 60 },
+
+    // Static files in public/ change rarely; fonts never without a new name.
+    '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+    '/og/**': { headers: { 'cache-control': 'public, max-age=86400' } },
+  },
+
   pwa: {
     registerType: 'autoUpdate',
     devOptions: {

@@ -57,9 +57,50 @@ const nextSet = (id: number) => {
   return setsById.value[id + 1]
 }
 
+/*
+ * The sets list is embedded in the HTML of every page that reads it, so keep
+ * only what those pages draw: names, dates, flags and the six preview images.
+ * The full record (creator, co-creators, links, signatures) is ~7x larger and
+ * is loaded by the set page itself.
+ */
+const SUBMISSION_FIELDS = [
+  'uuid',
+  'set_id',
+  'name',
+  'artist',
+  'edition_type',
+  'featured',
+  'published_at',
+  'starred_at',
+  'reveals_at',
+  'aspect_ratio',
+  'submission_stats',
+] as const
+const IMAGE_FIELDS = ['uuid', 'type', 'cdn', 'path', 'aspect_ratio', 'versions'] as const
+const EDITION_IMAGES = [1, 4, 5, 10, 20, 40].map((edition) => `edition${edition}Image`)
+
+const pick = (source: Record<string, any> | null | undefined, fields: readonly string[]) =>
+  source
+    ? Object.fromEntries(fields.filter((f) => f in source).map((f) => [f, source[f]]))
+    : source
+
+const slimSets = (response: any): OpepenSet[] =>
+  Array.isArray(response)
+    ? response.map((set) => ({
+        id: set.id,
+        submission: {
+          ...pick(set.submission, SUBMISSION_FIELDS),
+          ...Object.fromEntries(
+            EDITION_IMAGES.map((key) => [key, pick(set.submission?.[key], IMAGE_FIELDS)]),
+          ),
+        } as SetSubmission,
+      }))
+    : response
+
 export async function useSets() {
   const { data, execute: fetchSets } = await useApi(`/opepen/sets`, {
     immediate: false,
+    transform: slimSets,
     onResponse: () => (loaded.value = true),
   })
 

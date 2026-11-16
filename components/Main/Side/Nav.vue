@@ -84,7 +84,6 @@
 
 <script setup>
 import { useElementBounding, useScrollLock } from '@vueuse/core'
-import { gsap } from 'gsap'
 
 const contract = useConfig('opepenContract')
 
@@ -104,42 +103,50 @@ const { isSwiping, lengthX, coordsStart, isHorizontal } = useGlobalSwipe()
 const shouldOpen = (threshold = 50) =>
   !isOpen.value && lengthX.value < -1 * threshold && coordsStart.value.x < 80
 const shouldClose = (threshold = 0) => isOpen.value && lengthX.value >= threshold
-const closedPosition = () => -1 * width.value
 
 // We calculate custom positioning only after mount
 // to prevent unnecessary repaints
 const mounted = ref(false)
 onMounted(() => (mounted.value = true))
 
-// State
-const translate = ref(0)
-const tweened = reactive({ number: translate.value })
+/*
+ * Position. While a finger drags the drawer it follows in pixels with no
+ * easing; otherwise it rests fully open or fully closed and CSS animates the
+ * change. (This used to be a gsap tween, which pulled an animation library,
+ * and the 3D engine bundled beside it, into every page.)
+ */
+const SLIDE = '0.2s ease-out'
+const dragging = computed(() => isSwiping.value && isHorizontal.value && !isDesktop.value)
+const dragX = computed(() => {
+  // Swiping left, closing
+  if (shouldClose(0)) return Math.min(lengthX.value * -1, 0)
+  // Swiping right from the edge, opening
+  if (shouldOpen(50)) return Math.min(-1 * width.value - lengthX.value, 0)
+
+  return isOpen.value ? 0 : -1 * width.value
+})
 const style = computed(() => {
   if (!mounted.value) return
+  if (isDesktop.value) return { transform: 'translateX(0)' }
+  if (dragging.value) return { transform: `translateX(${dragX.value}px)`, transition: 'none' }
 
   return {
-    transform: `translateX(${tweened.number}px)`,
+    transform: isOpen.value ? 'translateX(0)' : 'translateX(-100%)',
+    transition: `transform ${SLIDE}`,
   }
-})
-const overlayStyle = computed(() => ({
-  opacity: 0.8 - (width.value ? Math.abs(tweened.number / width.value) : 0),
-  pointerEvents: isOpen.value ? 'all' : 'none',
-}))
-watch(translate, (n) => {
-  if (tweened.number === translate.value) return
-  gsap.to(tweened, { duration: 0.2, number: Number(n) || 0 })
 })
 
-// Initial state
-onMounted(() => {
-  if (isDesktop.value) {
-    translate.value = 0
-    tweened.number = 0
-  } else {
-    translate.value = closedPosition()
-    tweened.number = translate.value
-  }
+// How far open the drawer is, 0 to 1. Drives the dimming overlay.
+const progress = computed(() => {
+  if (!dragging.value) return isOpen.value ? 1 : 0
+
+  return width.value ? Math.max(0, 1 - Math.abs(dragX.value / width.value)) : 0
 })
+const overlayStyle = computed(() => ({
+  opacity: 0.8 * progress.value,
+  transition: dragging.value ? 'none' : `opacity ${SLIDE}`,
+  pointerEvents: isOpen.value ? 'all' : 'none',
+}))
 
 // Open close default state if switching between mobile and desktop
 watch(isDesktop, () => {
@@ -167,34 +174,6 @@ watchEffect(() => {
   // Lock nav scroll during horizontal swipe to prevent sidebar internal scroll
   navScrollLocked.value = isSwiping.value && isHorizontal.value
 })
-
-// Update the translate position
-const updateTranslatePosition = () => {
-  let updated = 0
-  if (!isOpen.value) {
-    updated = closedPosition()
-  }
-
-  if (isSwiping.value && isHorizontal.value) {
-    // Swiping left
-    if (shouldClose(0)) {
-      updated = lengthX.value * -1
-    }
-
-    // Swiping right
-    if (shouldOpen(50)) {
-      updated = -1 * width.value + -1 * lengthX.value
-    }
-  }
-
-  updated = Math.min(updated, 0)
-
-  if (isDesktop.value) updated = 0
-  if (isSwiping.value || isDesktop.value) tweened.number = updated
-
-  translate.value = updated
-}
-watch([isOpen, lengthX, isSwiping], () => updateTranslatePosition())
 
 defineExpose({
   open,
