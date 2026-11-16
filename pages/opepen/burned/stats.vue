@@ -13,6 +13,13 @@
   </PageFrameMd>
 </template>
 
+<script setup>
+useMetaData({
+  title: `Burned Opepen Stats | Opepen`,
+  og: '/og/burned.jpg',
+})
+</script>
+
 <style scoped>
 .gallery-button {
   display: none;

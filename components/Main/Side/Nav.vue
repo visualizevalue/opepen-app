@@ -8,17 +8,24 @@
       <h1 title="Now"><Icon type="home" /></h1>
 
       <MainSideNavLink to="/" title="Overview" @click="close" strict-exact />
+      <MainSideNavLink to="/about" title="How It Works" @click="close" />
       <MainSideOptIn @click="close" />
     </section>
 
     <section>
       <h1 title="Create"><Icon type="edit-2" /></h1>
 
-      <MainSideNavLink to="/create/new" title="Create Opepen Set" @click="close" />
+      <MainSideNavLink
+        to="/create/new"
+        title="Create Opepen Set"
+        subline="Submit your own set"
+        @click="close"
+      />
 
       <MainSideNavLink
         to="/create"
         title="Your Submissions"
+        subline="Drafts and published sets"
         @click="close"
         strict-exact
       />
@@ -26,17 +33,32 @@
       <MainSideNavLink
         to="/contribute"
         title="Contribute Opepen"
+        subline="Add art to open sets"
         @click="close"
-        badge="new"
       />
     </section>
 
     <section>
       <h1 title="Browse"><Icon type="opepen-grid" /></h1>
 
-      <MainSideNavLink to="/sets" title="Permanent Collection" @click="close" />
-      <MainSideNavLink to="/submissions" title="Set Submissions" @click="close" />
-      <MainSideNavLink to="/artists" title="Artists" @click="close" />
+      <MainSideNavLink
+        to="/sets"
+        title="Permanent Collection"
+        subline="Revealed sets"
+        @click="close"
+      />
+      <MainSideNavLink
+        to="/submissions"
+        title="Set Submissions"
+        subline="Candidates awaiting votes"
+        @click="close"
+      />
+      <MainSideNavLink
+        to="/artists"
+        title="Artists"
+        subline="Creators and contributors"
+        @click="close"
+      />
     </section>
 
     <footer>

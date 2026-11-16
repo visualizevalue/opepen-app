@@ -53,9 +53,13 @@
       </li>
       <li>
         <Icon type="layers" stroke-width="2.25" />
-        <span v-if="SET_TYPES[submission.edition_type]">
-          {{ SET_TYPES[submission.edition_type] }} Editions
-        </span>
+        <NuxtLink
+          v-if="SET_TYPES[submission.edition_type]"
+          to="/about#sets"
+          title="What print and dynamic editions are"
+        >
+          <span>{{ SET_TYPES[submission.edition_type] }} Editions</span>
+        </NuxtLink>
         <span v-else>Unknown Editions</span>
       </li>
       <li v-if="revealed || revealing">

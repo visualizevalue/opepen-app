@@ -11,7 +11,7 @@
       class="progress"
     >
       <template #primary>
-        <span>{{ completeSets.length }} Sets Complete</span>
+        <span>{{ completeSets.length }} of 200 Sets Complete</span>
       </template>
       <template #secondary>
         <span>{{ burnedPercentage }}% burned</span>

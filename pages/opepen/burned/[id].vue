@@ -16,7 +16,7 @@ const { data: opepen } = await useFetch(
 )
 
 useMetaData({
-  title: `Burned Opepen #${route.params.id}`,
+  title: `Burned Opepen #${route.params.id} | Opepen`,
   og: `${config.public.opepenApi}/render/burned/${route.params.id}/og`,
 })
 </script>

@@ -4,6 +4,20 @@
       <p class="eyebrow">Public Art On Ethereum</p>
       <h1>Opepen Edition</h1>
       <p class="hero-summary">One symbol. Infinite remixes. 200 final sets.</p>
+      <nav class="hero-actions" aria-label="Start here">
+        <Button to="/about" class="small">
+          <Icon type="book-open" />
+          <span>How it works</span>
+        </Button>
+        <Button to="/sets" class="small">
+          <Icon type="opepen-grid" />
+          <span>Browse the collection</span>
+        </Button>
+        <Button to="/create" class="small">
+          <Icon type="edit-2" />
+          <span>Create a set</span>
+        </Button>
+      </nav>
     </header>
 
     <section class="intro">
@@ -35,7 +49,7 @@
         </header>
         <Image image="/remixes.gif" />
         <Button to="/submissions" class="small">
-          <Icon type="external-link" />
+          <Icon type="arrow-right" />
           <span>Explore</span>
         </Button>
       </article>
@@ -73,7 +87,7 @@
         </p>
         <p>
           <strong>{{ formatNumber(stats?.submissions.sets) }}</strong>
-          <span>sets submitted</span>
+          <span>submissions so far</span>
         </p>
       </div>
 
@@ -171,6 +185,12 @@ useMetaData({
       max-width: 32rem;
       font-size: clamp(var(--font-lg), 2.3cqw, var(--font-xl));
       line-height: var(--line-height-md);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacer-sm);
     }
   }
 

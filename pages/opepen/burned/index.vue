@@ -3,7 +3,7 @@
     <template #default="{ items, meta }">
       <PageHeader>
         <SectionTitle>
-          <span>Consensus Met ({{ meta.total || 0 }})</span>
+          <span>Burned Opepen ({{ meta.total || 0 }})</span>
         </SectionTitle>
         <Actions>
           <Button class="stats-button" to="/opepen/burned/stats">Stats</Button>
@@ -30,6 +30,12 @@ import PageFrameMd from '~/components/Page/FrameMd.vue'
 
 const url = `${useConfig('opepenApi')}/opepen/burned`
 const query = `sort=-burned_at`
+
+useMetaData({
+  title: `Burned Opepen | Opepen`,
+  description: `Opepen whose collectors opted out of the consensus process by burning them.`,
+  og: '/og/burned.jpg',
+})
 </script>
 
 <style scoped>

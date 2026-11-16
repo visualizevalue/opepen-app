@@ -29,7 +29,7 @@
 
     <Card class="borderless static metric-card">
       <p class="metric-value">{{ formatNumber(stats.optIns) }}</p>
-      <h3>Votes</h3>
+      <h3>Opt-In Votes</h3>
     </Card>
 
     <Card class="borderless static metric-card">
@@ -39,7 +39,7 @@
 
     <Card class="borderless static metric-card">
       <p class="metric-value">{{ formatNumber(day) }}</p>
-      <h3>Day</h3>
+      <h3>Days Since Launch</h3>
     </Card>
 
     <Card class="borderless static metric-card">

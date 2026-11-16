@@ -8,7 +8,11 @@
             {{ optInCountDown.str }}
           </span>
         </header>
-        <p>Please connect your wallet to vote on this set.</p>
+        <p>
+          Connect your wallet to vote. Voting means opting in unrevealed Opepen you own; if
+          this set reaches consensus, they reveal as this art.
+          <NuxtLink to="/about#voting">How voting works</NuxtLink>
+        </p>
         <Actions>
           <Connect />
         </Actions>
@@ -36,9 +40,9 @@
       <template v-else-if="!optInAvailable && !revealing && !submission.set_id">
         <SectionTitle>Opt-Ins Closed</SectionTitle>
         <p>
-          Set Submission didn't meet consensus to be included in the permanent collection. It
-          was staged for community consensus on
-          {{ formatDate(submission.starred_at) }}.
+          This submission was put up for a vote on {{ formatDate(submission.starred_at) }}
+          but did not reach the demand needed to join the permanent collection.
+          <NuxtLink to="/about#voting">How voting works</NuxtLink>
         </p>
       </template>
 

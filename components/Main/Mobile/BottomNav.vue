@@ -8,12 +8,15 @@
       }"
     >
       <Icon type="opepen-grid" />
+      <span>Browse</span>
     </NuxtLink>
-    <NuxtLink to="/create" title="Submit">
+    <NuxtLink to="/create" title="Create">
       <Icon type="plus" stroke-width="3" />
+      <span>Create</span>
     </NuxtLink>
-    <NuxtLink to="/artists" title="Community">
+    <NuxtLink to="/artists" title="Artists">
       <Icon type="opepen" />
+      <span>Artists</span>
     </NuxtLink>
   </nav>
 </template>
@@ -48,14 +51,14 @@ a {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: var(--size-2);
+  gap: var(--size-1);
   color: var(--gray-z-5);
   transition: color var(--speed);
   width: min-content;
 
   .icon {
-    width: var(--size-7);
-    height: var(--size-7);
+    width: var(--size-6);
+    height: var(--size-6);
   }
 
   span {

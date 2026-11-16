@@ -19,6 +19,10 @@ export const signInLoading = ref(false)
 export const signingIn = ref(false)
 export const signInFailed = ref(false)
 export const session: Ref<Session | null> = ref(null)
+// True once the initial session lookup has settled, signed in or not. Pages
+// that show different content to visitors and members wait on this instead of
+// flashing the visitor view at signed-in users.
+export const sessionChecked = ref(false)
 export const isAuthenticated = computed(
   () =>
     session.value &&
@@ -45,9 +49,13 @@ export const useSignIn = () => {
 
   if (!accountWatcher) {
     currentAddress.value = getAccount($wagmi)?.address
-    void fetchMe().catch(() => {
-      session.value = null
-    })
+    void fetchMe()
+      .catch(() => {
+        session.value = null
+      })
+      .finally(() => {
+        sessionChecked.value = true
+      })
 
     // Set up the singleton account watcher
     accountWatcher = watchAccount($wagmi, {

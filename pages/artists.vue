@@ -20,4 +20,10 @@ const query = computed(() => {
 
   return q.toString()
 })
+
+useMetaData({
+  title: `Artists | Opepen`,
+  description: `The artists and contributors behind Opepen sets and submissions.`,
+  og: '/og/og.png',
+})
 </script>

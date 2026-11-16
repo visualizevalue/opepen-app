@@ -133,7 +133,8 @@ watchEffect(() => {
   }
 
   select {
-    width: min-content;
+    /* min-content clipped the longest option ("Demand" rendered as "Demanc"). */
+    width: auto;
     font-size: var(--font-sm);
   }
 

@@ -14,10 +14,12 @@ const { data: account } = await useApi(`/accounts/${route.params.id}`, {
   },
 })
 
+// This route catches every unknown single-segment path, so a mistyped link
+// lands here too. Say "page", not "user": most visitors were not looking for one.
 if (account.value.address === zeroAddress) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'User Not Found',
+    statusMessage: `Page not found: /${route.params.id}`,
   })
 }
 </script>

@@ -1,20 +1,35 @@
 <template>
   <PageFrameSm>
-    <PageHeader>
-      <SectionTitle>My Sets</SectionTitle>
+    <ClientOnly>
+      <Loading v-if="!sessionChecked" />
 
-      <Button to="/create/new">
-        <Icon type="plus" />
-        <span>New</span>
-      </Button>
-    </PageHeader>
+      <template v-else-if="isAuthenticated">
+        <PageHeader>
+          <SectionTitle>Your Submissions</SectionTitle>
 
-    <MySetSubmissions />
+          <Button to="/create/new">
+            <Icon type="plus" />
+            <span>New</span>
+          </Button>
+        </PageHeader>
+
+        <MySetSubmissions />
+      </template>
+
+      <CreateIntro v-else />
+
+      <template #fallback>
+        <CreateIntro />
+      </template>
+    </ClientOnly>
   </PageFrameSm>
 </template>
 
 <script setup>
+// Starts the session lookup that drives sessionChecked / isAuthenticated.
+onMounted(() => useSignIn())
+
 useMetaData({
-  title: `My Set Submissions | Opepen`,
+  title: `Your Submissions | Opepen`,
 })
 </script>
