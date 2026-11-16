@@ -17,8 +17,10 @@
 </template>
 
 <script setup>
-const { fetchMe } = useSignIn()
-fetchMe()
+// useSignIn() already fetches the session once on first use and treats a
+// 401 as "signed out". Calling fetchMe() again here fired a second request on
+// every page load and surfaced its 401 as an uncaught error in the console.
+useSignIn()
 
 const reload = () => window.location.reload()
 const cancel = async () => {
