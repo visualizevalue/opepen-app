@@ -1,15 +1,17 @@
 :root {
+  /* Hairline separators. */
   --border-color: var(--gray-z-2);
   --border-color-dark: var(--gray-z-1);
-  --border-color-light: var(--gray-z-6);
+  --border-color-light: var(--gray-z-5);
   --border-color-shade: var(--semi-shade);
 
   --border: var(--border-width) solid var(--border-color);
 
-  --border-radius-sm: var(--size-1);
-  --border-radius: var(--size-2);
+  --border-radius-sm: 0.5rem;
+  --border-radius: 0.75rem;
+  --border-radius-lg: 1rem;
 
   --shadow: 0 0.1em 0.3em 0 var(--semi-shade);
-  --shadow-lg: 0 0.2em 0.5em 0 var(--semi-shade);
+  --shadow-lg: 0 0.6em 2em 0 rgba(0, 0, 0, 0.5);
   --shadow-border: 0 0 0 1px var(--gray-z-2a);
 }

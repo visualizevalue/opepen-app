@@ -5,11 +5,11 @@
 
       <template v-else-if="isAuthenticated">
         <PageHeader>
-          <SectionTitle>Your Submissions</SectionTitle>
+          <SectionTitle>Your Sets</SectionTitle>
 
-          <Button to="/create/new">
+          <Button to="/create/new" class="primary">
             <Icon type="plus" />
-            <span>New</span>
+            <span>New Set</span>
           </Button>
         </PageHeader>
 
@@ -30,6 +30,6 @@
 onMounted(() => useSignIn())
 
 useMetaData({
-  title: `Your Submissions | Opepen`,
+  title: `Your Sets | Opepen`,
 })
 </script>

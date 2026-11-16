@@ -1,0 +1,94 @@
+/*
+ * Inset grouped list: rows on one rounded surface, split by hairlines that
+ * start at the text edge. Rows can be links, with a trailing chevron.
+ */
+.list-group {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--gray-z-1);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+
+  > * {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacer);
+    min-height: 2.75rem;
+    padding: 0.6875rem var(--spacer);
+    font-size: var(--ui-font-size);
+    line-height: var(--ui-line-height);
+    text-decoration: none;
+    transition: background var(--speed-fast);
+  }
+
+  > * + *::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--spacer);
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+  }
+
+  > a:hover,
+  > a:active {
+    background: var(--gray-z-2);
+  }
+
+  /* Title over a quieter second line. */
+  .stack {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+
+    > :last-child:not(:first-child) {
+      color: var(--muted);
+      font-size: var(--font-sm);
+    }
+  }
+
+  /* Trailing value. */
+  .detail {
+    flex-shrink: 0;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    width: var(--size-4);
+    height: var(--size-4);
+    color: var(--gray-z-4);
+  }
+}
+
+/* A section heading with a quiet "See All" on the trailing edge. */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacer);
+
+  h2 {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: 1.375rem;
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+  }
+
+  a {
+    color: var(--muted);
+    font-size: var(--ui-font-size);
+    transition: color var(--speed);
+
+    &:--highlight {
+      color: var(--color);
+    }
+  }
+}

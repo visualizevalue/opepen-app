@@ -1,15 +1,31 @@
 .input,
 .select {
-  --ui-padding-y: var(--size-3);
+  --ui-padding-y: 0.625rem;
 
-  min-height: calc(var(--size-7) + var(--size-2));
+  min-height: 2.5rem;
 }
 
-select {
-  text-transform: uppercase !important;
+/* Fields are filled rounded rectangles; only buttons are capsules. */
+input:not(.unstyled),
+textarea:not(.unstyled),
+select:not(.unstyled) {
+  border-radius: var(--border-radius);
+}
 
-  option {
-    text-transform: none !important;
+.input,
+.textarea,
+.select {
+  border-color: transparent;
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--ui-line-height);
+
+  &:--highlight {
+    background: var(--fill-highlight);
+    border-color: transparent;
+  }
+
+  &:focus-visible {
+    border-color: var(--gray-z-5);
   }
 }
 
@@ -18,7 +34,7 @@ textarea {
   text-transform: none !important;
 
   &::placeholder {
-    color: var(--gray-z-4) !important;
+    color: var(--gray-z-5) !important;
   }
 }
 
@@ -28,13 +44,14 @@ textarea {
   .icon {
     position: absolute;
     right: var(--ui-padding-x);
-    top: var(--size-3);
+    top: 50%;
+    transform: translateY(-50%);
     width: var(--size-4);
     color: var(--muted);
   }
 
   .input:has(+ .icon) {
-    padding-right: calc(var(--ui-padding-x) + var(--spacer-sm));
+    padding-right: calc(var(--ui-padding-x) + var(--size-5));
 
     &:--highlight + .icon {
       color: var(--gray-z-6);
@@ -44,6 +61,7 @@ textarea {
 
 form label {
   color: var(--muted) !important;
+  font-size: var(--font-sm);
 
   > span:first-child {
     display: flex;

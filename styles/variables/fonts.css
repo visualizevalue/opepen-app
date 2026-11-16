@@ -1,3 +1,4 @@
+/* The Visualize Value face. Used for display titles and small labels only. */
 @font-face {
   font-family: 'Carbon';
   font-style: normal;
@@ -10,33 +11,52 @@
 
 :root {
   /* FAMILIES */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --font-family-display: var(--font-family);
+  --font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-family-display:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-family-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-family-brand: Carbon, ui-monospace, 'SF Mono', Menlo, monospace;
 
-  /* SIZES */
+  /*
+   * SIZES
+   * The iOS type ramp: caption (12), footnote (13), body (16 on the web),
+   * title 3 (20), title 1 (28), large title (34).
+   */
   --font-base: var(--rem);
-  --font-xs: calc(var(--font-base) * 0.69);
-  --font-sm: calc(var(--font-base) * 0.85);
-  --font-lg: calc(var(--font-base) * 1.2);
-  --font-xl: calc(var(--font-base) * 1.8);
-  --font-xxl: calc(var(--font-base) * 2.5);
+  --font-xs: calc(var(--font-base) * 0.75);
+  --font-sm: calc(var(--font-base) * 0.8125);
+  --font-lg: calc(var(--font-base) * 1.25);
+  --font-xl: calc(var(--font-base) * 1.75);
+  --font-xxl: calc(var(--font-base) * 2.125);
 
   /* WEIGHTS & SPACING */
-  --font-weight-medium: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 600;
+  --font-weight-heavy: 700;
 
-  --letter-spacing-sm: -0.025em;
-  --letter-spacing: 0.025em;
-  --letter-spacing-md: 0.05em;
-  --letter-spacing-lg: 0.1em;
+  --letter-spacing-sm: -0.022em;
+  --letter-spacing: -0.011em;
+  --letter-spacing-md: 0;
+  --letter-spacing-lg: 0.02em;
 
+  /* Carbon is set uppercase: titles slightly open, small labels wider. */
+  --brand-letter-spacing: 0.01em;
+  --label-letter-spacing: 0.06em;
+  --label-font-size: 0.6875rem;
+
+  --line-height-base: 1.35;
   --line-height-sm: 105%;
   --line-height: 100%;
-  --line-height-md: 120%;
-  --line-height-lg: 160%;
+  --line-height-md: 130%;
+  --line-height-lg: 150%;
 
-  /* UI */
-  --ui-font-family: Carbon, monospace;
-  --ui-text-transform: uppercase;
-  --ui-font-size: 0.9rem;
+  /* UI: same family as body text, sentence case. */
+  --ui-font-family: var(--font-family);
+  --ui-text-transform: none;
+  --ui-font-size: 0.9375rem;
+  --ui-letter-spacing: -0.011em;
+  --ui-line-height: 1.3;
 }

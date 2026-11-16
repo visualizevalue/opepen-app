@@ -112,7 +112,6 @@ const opepenName = computed(() => {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      text-transform: uppercase;
       font-weight: var(--font-weight-bold);
       letter-spacing: var(--letter-spacing-md);
       user-select: none;

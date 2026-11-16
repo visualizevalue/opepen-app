@@ -92,10 +92,11 @@ const panelStyle = computed(() => {
   z-index: var(--z-index-dialog);
   position: fixed;
 
-  background: var(--gray-z-1);
-  border: var(--border);
+  background: var(--gray-z-2);
+  border: 0;
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
+  min-width: 11rem;
 
   .dropdown-items {
     display: grid;
@@ -131,16 +132,15 @@ const panelStyle = computed(() => {
     width: 100%;
 
     &:--highlight {
-      background: var(--gray-z-2);
+      background: var(--gray-z-3);
     }
 
     .icon {
-      color: var(--gray-z-5);
+      color: var(--gray-z-6);
     }
 
     span {
       display: block;
-      height: 1em;
       width: 100%;
       text-align: left;
     }

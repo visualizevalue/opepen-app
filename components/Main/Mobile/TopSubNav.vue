@@ -1,6 +1,9 @@
 <template>
   <nav id="top-sub-nav">
-    <NuxtLink v-for="item in items" :to="item.to">{{ item.text }}</NuxtLink>
+    <!-- A segmented control. The nav stays :empty when there is nothing to switch. -->
+    <div v-if="items" class="segmented">
+      <NuxtLink v-for="item in items" :key="item.to" :to="item.to">{{ item.text }}</NuxtLink>
+    </div>
   </nav>
 </template>
 
@@ -20,30 +23,27 @@ const items = computed(() => {
 </script>
 
 <style scoped>
-a {
-  @mixin ui-font;
-  padding: var(--size-3) var(--spacer-lg);
-  position: relative;
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  width: min(100% - var(--spacer) * 2, 22rem);
+  padding: 2px;
+  border-radius: 0.5625rem;
+  background: var(--fill);
+}
 
-  &:after {
-    position: absolute;
-    height: 3px;
-    width: 100%;
-    bottom: -1px;
-    left: 0;
-    content: '';
-    background: transparent;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    transition: background var(--speed);
-  }
+a {
+  padding: 0.3125rem var(--size-3);
+  border-radius: 0.4375rem;
+  text-align: center;
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
+  transition: background var(--speed-fast);
 
   &.router-link-active {
-    border-color: var(--color);
-
-    &:after {
-      background: var(--color);
-    }
+    background: var(--gray-z-4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 }
 </style>

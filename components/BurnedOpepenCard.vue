@@ -58,7 +58,6 @@ const { opepen } = defineProps({
     font-family: var(--ui-font-family);
     font-size: var(--ui-font-size);
     color: var(--gray-z-6);
-    text-transform: uppercase;
   }
 
   .title > span {

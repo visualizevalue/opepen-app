@@ -68,15 +68,13 @@
       </section>
 
       <h1>
-        <small v-if="data.set_id">Set {{ pad(data.set_id, 3) }}</small>
-        <small v-else>Set Submission</small>
         <span>{{ data.name || 'Unreleased' }}</span>
+        <small v-if="data.set_id">Set {{ pad(data.set_id, 3) }}</small>
+        <small v-else>Submission</small>
       </h1>
 
-      <Button :to="url" :title="data.name">
-        <Icon type="chevron-right" />
-        <span>View Set</span>
-      </Button>
+      <!-- The whole card is the link; the name is its label. -->
+      <NuxtLink :to="url" :aria-label="label"></NuxtLink>
     </div>
   </Card>
 </template>
@@ -102,6 +100,12 @@ const { data, minimal, style, showDemand } = defineProps({
 const id = computed(() => (data?.set_id ? pad(data.set_id, 3) : data?.uuid))
 const url = computed(() => (data?.set_id ? `/sets/${id.value}` : `/submissions/${id.value}`))
 
+const label = computed(() =>
+  data?.set_id
+    ? `Set ${pad(data.set_id, 3)}: ${data?.name || 'Unreleased'}`
+    : data?.name || 'Submission',
+)
+
 const demand = computed(() => getDemandPercentage(data))
 
 const imageLoaded = ref(false)
@@ -110,7 +114,7 @@ const onImageLoad = () => (imageLoaded.value = true)
 
 <style scoped>
 .set-preview {
-  --text-height: calc(var(--size-7) + var(--size-2));
+  --text-height: calc(var(--size-7) + var(--size-3));
   --demand-height: 0px;
 
   &.minimal {
@@ -136,10 +140,14 @@ const onImageLoad = () => (imageLoaded.value = true)
     height: 100%;
     top: 0;
     left: 0;
-    border: var(--border);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     background-color: var(--gray-z-1);
     overflow: hidden;
+    transition: background-color var(--speed);
+  }
+
+  &:hover .wrapper {
+    background-color: var(--gray-z-2);
   }
 
   .wrapper > a {
@@ -190,9 +198,9 @@ const onImageLoad = () => (imageLoaded.value = true)
 
 h1 {
   display: grid;
-  gap: var(--spacer-xs);
-  @mixin ui-font;
+  gap: 1px;
   margin-top: auto;
+  padding: 0 var(--size-1) var(--size-1);
   white-space: nowrap;
   opacity: 0;
   transition: opacity var(--speed-slow);
@@ -200,15 +208,24 @@ h1 {
   span,
   small {
     display: block;
-    width: 100%;
-    width: calc(100cqw - var(--spacer-sm) * 2);
+    width: calc(100cqw - var(--size-2) * 2 - var(--size-1) * 2);
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  span {
+    font-size: var(--ui-font-size);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--ui-line-height);
+  }
+
   small {
-    color: var(--gray-z-6);
-    font-size: var(--font-sm);
+    color: var(--muted);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
   }
 }
 

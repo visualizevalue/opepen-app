@@ -1,20 +1,24 @@
 <template>
-  <nav class="bottom-nav">
+  <nav class="bottom-nav" aria-label="Main">
+    <NuxtLink to="/" :class="{ active: $route.path === '/' }">
+      <Icon type="home" />
+      <span>Home</span>
+    </NuxtLink>
     <NuxtLink
       to="/sets"
-      title="Browse"
-      :class="{
-        'router-link-active': ['/sets', '/submissions'].includes($route.path),
-      }"
+      :class="{ active: ['/sets', '/submissions'].some((p) => $route.path.startsWith(p)) }"
     >
       <Icon type="opepen-grid" />
       <span>Browse</span>
     </NuxtLink>
-    <NuxtLink to="/create" title="Create">
-      <Icon type="plus" stroke-width="3" />
+    <NuxtLink
+      to="/create"
+      :class="{ active: ['/create', '/contribute'].some((p) => $route.path.startsWith(p)) }"
+    >
+      <Icon type="plus-circle" />
       <span>Create</span>
     </NuxtLink>
-    <NuxtLink to="/artists" title="Artists">
+    <NuxtLink to="/artists" :class="{ active: $route.path.startsWith('/artists') }">
       <Icon type="opepen" />
       <span>Artists</span>
     </NuxtLink>
@@ -28,17 +32,16 @@
   overflow: hidden;
   background: var(--semi);
   backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
   position: fixed;
   z-index: var(--z-index-nav-secondary);
   left: 0;
   bottom: 0;
 
-  padding: var(--spacer);
+  padding: var(--size-1) var(--size-2) env(safe-area-inset-bottom);
   border-top: var(--border);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: flex-start;
-  justify-content: space-evenly;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 
   @media (--lg) {
     display: none;
@@ -46,15 +49,13 @@
 }
 
 a {
-  justify-self: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: var(--size-1);
+  justify-content: center;
+  gap: 2px;
   color: var(--gray-z-5);
-  transition: color var(--speed);
-  width: min-content;
+  transition: color var(--speed-fast);
 
   .icon {
     width: var(--size-6);
@@ -62,12 +63,14 @@ a {
   }
 
   span {
-    @mixin ui-font;
-    font-size: var(--font-xs);
-    color: inherit;
+    font-family: var(--font-family-brand);
+    font-size: 0.5625rem;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
   }
 
-  &.router-link-active {
+  /* Route matching is done above: "/" would otherwise stay lit everywhere. */
+  &.active {
     color: var(--color);
   }
 }

@@ -2,6 +2,7 @@
   <MainSideNavLink
     v-if="submission && (optInAvailable || revealing)"
     :to="`/submissions/${submission.uuid}`"
+    icon="zap"
     :title="title"
     :badge="badge"
     :note="note"

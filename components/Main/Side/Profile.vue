@@ -1,43 +1,23 @@
 <template>
   <section class="profile">
-    <div class="identity">
-      <Avatar :account="account" class="eye" />
+    <template v-if="account?.address">
+      <NuxtLink :to="`/${accountId(account)}`" class="identity" @click="$emit('sendClose')">
+        <Avatar :account="account" class="eye" />
 
-      <h1>
-        <span>{{ name }}</span>
-        <!-- Without an account this is only the zero address, which reads as noise. -->
-        <small v-if="account?.address">#{{ formatNumber(id) }}</small>
-      </h1>
-    </div>
+        <span class="who">
+          <span class="name">{{ account.display }}</span>
+          <small>{{ shortAddress(account.address, 4) }}</small>
+        </span>
+      </NuxtLink>
 
-    <!-- Exposed as rows rather than hidden behind a dropdown. -->
-    <div class="account-actions">
-      <template v-if="account?.address">
-        <Button
-          :to="`/${accountId(account)}`"
-          class="link-button"
-          @click="$emit('sendClose')"
-        >
-          <span>View Profile</span>
-          <Icon type="chevron-right" />
-        </Button>
+      <div class="account-actions">
+        <NuxtLink to="/settings" @click="$emit('sendClose')">Settings</NuxtLink>
+        <button class="unstyled" @click="disconnect()">Disconnect</button>
+      </div>
+    </template>
 
-        <Button to="/settings" class="link-button" @click="$emit('sendClose')">
-          <span>Edit Profile</span>
-          <Icon type="chevron-right" />
-        </Button>
-
-        <Button class="link-button" @click="disconnect()">
-          <span>Disconnect</span>
-          <Icon type="chevron-right" />
-        </Button>
-      </template>
-
-      <Connect v-else class-name="main-connect link-button">
-        <span>Connect</span>
-        <Icon type="chevron-right" />
-      </Connect>
-    </div>
+    <!-- `main-connect` is the hook useSignIn() clicks to open the wallet picker. -->
+    <Connect v-else class-name="main-connect primary">Connect Wallet</Connect>
   </section>
 </template>
 
@@ -49,100 +29,71 @@ defineEmits(['sendClose'])
 const { disconnect } = useDisconnect()
 
 const { account } = await useProfile()
-const name = computed(() =>
-  !!account.value?.address ? account.value?.display : `Opepen Visitor`,
-)
-const id = computed(() => shortAddress(account.value?.address || ADDRESS_ZERO, 3))
 </script>
 
 <style scoped>
 section.profile {
-  position: relative;
   display: grid;
-  gap: var(--spacer);
+  gap: var(--size-2);
 }
 
-
-.avatar {
-  width: var(--size-7);
-}
-
-/* Avatar left, name and address stacked to its right. */
 .identity {
   display: flex;
   align-items: center;
-  gap: var(--spacer-sm);
-}
+  gap: var(--size-3);
+  padding: var(--size-2) var(--size-3);
+  border-radius: 0.625rem;
+  transition: background var(--speed-fast);
 
-h1 {
-  display: grid;
-  gap: var(--spacer-xs);
-  min-width: 0;
+  &:hover {
+    background: var(--fill);
+  }
 
-  /* One treatment throughout this box: Carbon, uppercase, one size. */
-  span {
-    @mixin ui-font;
+  .avatar {
+    width: var(--size-7);
+    flex-shrink: 0;
+  }
+
+  .who {
+    display: grid;
+    min-width: 0;
+  }
+
+  .name {
     font-size: var(--ui-font-size);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-medium);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   small {
-    @mixin ui-font;
-    font-size: var(--ui-font-size);
     color: var(--gray-z-5);
+    font-size: var(--font-xs);
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* Secondary to the nav proper: tighter stack, quieter colour. */
 .account-actions {
-  display: grid;
-}
+  display: flex;
+  gap: var(--size-4);
+  padding: 0 var(--size-3);
 
-/*
- * Match the nav links: full-bleed row with the chevron pushed to the right
- * edge, rather than a chevron trailing the label.
- */
-:deep(.link-button) {
-  display: grid;
-  grid-template-columns: 1fr var(--size-7);
-  align-items: center;
-  justify-items: start;
-  text-align: left;
-  gap: var(--spacer-sm);
-  width: calc(100% + 2 * var(--spacer));
-  margin-left: calc(-1 * var(--spacer));
-  margin-right: calc(-1 * var(--spacer));
-  padding: var(--spacer-xs) var(--spacer);
-  border-radius: var(--border-radius);
-  color: var(--gray-z-5);
-  transition:
-    background var(--speed),
-    color var(--speed);
+  a,
+  button {
+    font-size: var(--font-sm);
+    color: var(--gray-z-5);
+    cursor: pointer;
+    transition: color var(--speed);
 
-  .icon {
-    justify-self: flex-end;
-    width: var(--size-4);
-    color: var(--gray-z-3);
-  }
-
-  &:--highlight {
-    background: var(--gray-z-1);
-    box-shadow: var(--border-shadow);
-    color: var(--color);
+    &:--highlight {
+      color: var(--color);
+    }
   }
 }
 
-/* Signed out, connecting is the only thing to do here: make it the one accent. */
 :deep(.main-connect) {
-  color: var(--success);
-
-  .icon {
-    color: inherit;
-  }
-
-  &:--highlight {
-    color: var(--green-light);
-  }
+  width: 100%;
+  min-height: 2.5rem;
 }
-
 </style>

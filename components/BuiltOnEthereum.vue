@@ -7,14 +7,14 @@
 <style scoped>
 /*
  * Sits inline wherever it is placed; the sidebar footer positions it.
- * The artwork is white, so opacity is what sets its grey. 0.383 over the
- * sidebar's #0c0c0c composites to #696969, matching the social icons.
+ * The artwork is white, so opacity is what sets its grey: 0.53 lands near
+ * the social icons' #8e8e93 on the sidebar.
  */
 img {
   display: block;
-  width: 3.5rem;
+  width: 3.25rem;
   transition: opacity var(--speed);
-  opacity: 0.383;
+  opacity: 0.53;
 
   &:hover {
     opacity: 1;

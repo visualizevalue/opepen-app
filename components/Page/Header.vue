@@ -14,6 +14,16 @@ header.page-header {
   justify-content: space-between;
   align-items: center;
 
+  /* The page's own title, set large. */
+  :deep(> h1) {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: var(--font-xl);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: var(--brand-letter-spacing);
+  }
+
   :deep(.actions) {
     margin-left: auto;
     display: flex;
@@ -22,6 +32,7 @@ header.page-header {
 
     > label {
       @mixin ui-font;
+      font-size: var(--font-sm);
       display: flex;
       flex-wrap: nowrap;
       align-items: center;

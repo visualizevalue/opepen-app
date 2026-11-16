@@ -1,7 +1,11 @@
 :root {
-  --button-border: var(--border);
-  --button-border-radius: var(--border-radius);
-  --button-background: var(--gray-z-0);
-  --button-background-highlight: var(--gray-z-2);
-  --button-border-color-highlight: var(--gray-z-5);
+  /* Gray filled capsules. The border is kept, transparent, so sizes hold. */
+  --button-border: var(--border-width) solid transparent;
+  --button-border-radius: 999px;
+  --button-background: var(--fill);
+  --button-background-highlight: var(--fill-highlight);
+  --button-border-color-highlight: transparent;
+
+  --ui-padding-y: 0.5rem;
+  --ui-padding-x: 1rem;
 }

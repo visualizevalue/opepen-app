@@ -7,7 +7,7 @@
     <ProfileBio :account="account" />
 
     <section v-if="createdSets?.length">
-      <SectionTitle>Artist For Sets</SectionTitle>
+      <SectionTitle>Sets</SectionTitle>
       <SetCardGrid :submissions="createdSets" :minimal="false" class="set-grid" />
     </section>
 

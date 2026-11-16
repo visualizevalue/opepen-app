@@ -8,19 +8,26 @@
 h1 {
   :deep(> small),
   :deep(> span) {
-    @mixin ui-font;
     display: block;
   }
 
   :deep(> small) {
-    color: var(--gray-z-6);
+    color: var(--muted);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
     margin-bottom: var(--size-2);
   }
 
   :deep(> span) {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
     font-size: var(--font-xl);
-    line-height: 0.8;
-    margin-left: -0.05em;
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+    line-height: 1.1;
 
     @media (--md) {
       font-size: var(--font-xxl);

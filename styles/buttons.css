@@ -1,21 +1,22 @@
 .button {
   width: min-content;
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
 
   .icon {
-    height: var(--size-5);
-    width: var(--size-5);
-    color: var(--muted);
-    transition: color var(--speed);
+    height: var(--size-4);
+    width: var(--size-4);
+    color: inherit;
+    opacity: 0.8;
   }
 
   &.small {
-    padding: var(--size-1) var(--size-2);
+    padding: 0.3125rem 0.75rem;
     font-size: var(--font-sm);
-    border-radius: var(--border-radius-sm);
 
     .icon {
-      height: var(--size-4);
-      width: var(--size-4);
+      height: 0.875rem;
+      width: 0.875rem;
     }
 
     &.centered:has(.icon) {
@@ -23,12 +24,29 @@
     }
   }
 
-  &.secondary {
-    border-color: var(--gray-z-2);
-    color: var(--gray-z-6);
+  /* The one prominent action on a screen. */
+  &.primary {
+    background: var(--color);
+    color: var(--background);
+    font-weight: var(--font-weight-bold);
 
     &:--highlight {
-      border-color: var(--button-border-color-highlight);
+      background: var(--gray-z-8);
+    }
+
+    &[disabled]:not([disabled='false']) {
+      background: var(--fill);
+      color: var(--muted);
+    }
+  }
+
+  /* Plain: text only, for the quieter choice next to a filled button. */
+  &.secondary {
+    background: transparent;
+    color: var(--muted);
+
+    &:--highlight {
+      background: var(--fill);
       color: var(--color);
     }
   }
@@ -42,7 +60,7 @@
     margin-right: calc(-1 * var(--ui-padding-x));
 
     &:--highlight {
-      background: var(--gray-z-2);
+      background: var(--fill);
       border: 0;
     }
 
@@ -55,13 +73,12 @@
       width: var(--size-4);
       height: var(--size-4);
       margin-left: var(--size-2);
-      margin-top: -0.1em;
     }
   }
 
   &:--highlight {
     .icon {
-      color: var(--gray-z-7);
+      opacity: 1;
     }
   }
 }

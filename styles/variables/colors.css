@@ -1,19 +1,23 @@
 :root {
-  /* GRAYS */
-  --black: #080808;
-  --gray-025: #0c0c0c;
-  --gray-000: #101010;
-  --gray-100: #131313;
-  --gray-200: #1c1c1c;
-  --gray-200a: #1c1c1c99;
-  --gray-300: #262626;
-  --gray-400: #2f2f2f;
-  --gray-500: #696969;
-  --gray-600: #adadad;
-  --gray-700: #d8d8d8;
-  --gray-800: #e6e6e6;
-  --gray-900: #f2f2f2;
-  --gray-999: #f8f8f8;
+  /*
+   * GRAYS
+   * The iOS dark system grays: pure black base, elevated surfaces at
+   * #1c1c1e / #2c2c2e, and the systemGray ramp for text and fills.
+   */
+  --black: #000000;
+  --gray-025: #0b0b0c;
+  --gray-000: #121214;
+  --gray-100: #1c1c1e;
+  --gray-200: #2c2c2e;
+  --gray-200a: #2c2c2e99;
+  --gray-300: #3a3a3c;
+  --gray-400: #48484a;
+  --gray-500: #8e8e93;
+  --gray-600: #aeaeb2;
+  --gray-700: #c7c7cc;
+  --gray-800: #d1d1d6;
+  --gray-900: #e5e5ea;
+  --gray-999: #f2f2f7;
   --white: #ffffff;
 
   /* SEMI */
@@ -25,9 +29,9 @@
   --transparent-white: rgba(255, 255, 255, 0);
   --transparent-black: rgba(0, 0, 0, 0);
 
-  /* COLORS */
-  --red: #ef4444;
-  --yellow: #f2a840;
+  /* COLORS: iOS dark red and orange; the green is Visualize Value's. */
+  --red: #ff453a;
+  --yellow: #ff9f0a;
 
   --green: #94e337;
   --green-dark: #377528;
@@ -42,8 +46,15 @@
   --success: var(--green);
   --error: var(--red);
 
-  /* BACKGROUNDS */
-  --blur: blur(var(--size-1));
+  /* Secondary label. */
+  --muted: #98989f;
+
+  /* Translucent fills for controls: they sit on any surface. */
+  --fill: rgba(120, 120, 128, 0.24);
+  --fill-highlight: rgba(120, 120, 128, 0.36);
+
+  /* BACKGROUNDS: bar material. */
+  --blur: saturate(180%) blur(20px);
 
   /*
   * Z-COLORS
@@ -65,7 +76,7 @@
 
   --background: var(--black);
   --transparent-background: var(--transparent-black);
-  --semi: var(--semi-dark);
+  --semi: rgba(12, 12, 14, 0.72);
   --inactive: var(--gray-z-5);
   --color: var(--white);
 

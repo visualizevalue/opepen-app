@@ -36,7 +36,7 @@ defineProps({
 .progress {
   padding: 0;
   background-color: var(--gray-z-2);
-  border-radius: var(--size-1);
+  border-radius: 999px;
   position: relative;
   height: var(--size-1);
   @mixin ui-font;
@@ -83,10 +83,13 @@ defineProps({
   }
 
   .label {
-    font-size: var(--font-sm);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
     color: var(--gray-z-6);
     position: absolute;
-    top: var(--size-2);
+    top: var(--size-3);
     left: auto;
     text-align: center;
     width: 20rem;
@@ -94,10 +97,13 @@ defineProps({
   }
 
   .secondary-label {
-    font-size: var(--font-sm);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
     color: var(--gray-z-6);
     position: absolute;
-    top: var(--size-2);
+    top: var(--size-3);
     left: auto;
     text-align: center;
     margin-left: -9.7rem;

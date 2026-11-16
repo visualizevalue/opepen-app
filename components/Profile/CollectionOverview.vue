@@ -237,7 +237,6 @@ const getSetName = (setNumber) => {
   font-weight: var(--ui-font-weight);
   font-size: var(--ui-font-size);
   color: var(--gray-z-6);
-  text-transform: uppercase;
 }
 
 @media (--md) {

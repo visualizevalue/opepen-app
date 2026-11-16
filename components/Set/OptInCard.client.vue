@@ -9,18 +9,17 @@
           </span>
         </header>
         <p>
-          Connect your wallet to vote. Voting means opting in unrevealed Opepen you own; if
-          this set reaches consensus, they reveal as this art.
+          Connect a wallet to vote with your unrevealed Opepen.
           <NuxtLink to="/about#voting">How voting works</NuxtLink>
         </p>
         <Actions>
-          <Connect />
+          <Connect class-name="primary">Connect Wallet</Connect>
         </Actions>
       </template>
 
       <template v-else-if="revealing && isStagedSet">
         <SectionTitle>Reveal Pending</SectionTitle>
-        <p>Set reveal is in progress.</p>
+        <p>The reveal is in progress.</p>
         <p v-if="blockConfirmations === null">Waiting for reveal block...</p>
         <p v-else>
           <span>
@@ -38,10 +37,9 @@
       </template>
 
       <template v-else-if="!optInAvailable && !revealing && !submission.set_id">
-        <SectionTitle>Opt-Ins Closed</SectionTitle>
+        <SectionTitle>Voting Closed</SectionTitle>
         <p>
-          This submission was put up for a vote on {{ formatDate(submission.starred_at) }}
-          but did not reach the demand needed to join the permanent collection.
+          Staged {{ formatDate(submission.starred_at) }}. It did not reach consensus.
           <NuxtLink to="/about#voting">How voting works</NuxtLink>
         </p>
       </template>
@@ -57,7 +55,6 @@
           <p>
             You opted in
             <strong>{{ subscription?.opepen_ids?.length }} Opepen</strong>
-            for potential reveal.
           </p>
           <Table>
             <thead>
@@ -91,16 +88,16 @@
             </span>
           </header>
           <p v-if="subscription?.message === 'DISCARD'">
-            You decided not to opt-in to this set, but you can always change your mind.
+            You passed on this set. You can still opt in.
           </p>
-          <p v-else>Opt-In your unrevealed Opepen for potential reveal.</p>
+          <p v-else>Opt in your unrevealed Opepen to vote for this set.</p>
         </template>
 
         <IsAuthenticated>
           <Actions>
             <SetDiscardButton v-if="!subscription" :submission="submission" @update="update" />
 
-            <Button @click="openOptInModal">
+            <Button class="primary" @click="openOptInModal">
               <Icon type="edit" />
               <span v-if="subscription?.opepen_ids?.length">Change Opt-Ins</span>
               <span v-else>Opt-In</span>
@@ -188,6 +185,11 @@ p,
 ul {
   @mixin ui-font;
   color: var(--muted);
+
+  a {
+    color: var(--color);
+    white-space: nowrap;
+  }
 }
 
 strong,

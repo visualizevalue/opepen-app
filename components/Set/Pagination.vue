@@ -55,8 +55,6 @@ const previous = computed(() => prevSet(set.id))
   grid-template-columns: 1fr 40% 1fr;
   align-items: center;
   gap: var(--size-5);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-md);
   user-select: none;
   margin-top: var(--size-1);
   @mixin ui-font;

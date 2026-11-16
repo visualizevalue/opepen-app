@@ -1,181 +1,127 @@
 <template>
-  <PageFrameSm class="prose about">
-    <h1>How Opepen works</h1>
+  <PageFrameSm class="about">
+    <header class="intro">
+      <h1>How Opepen Works</h1>
+      <p>
+        16,000 tokens share one silhouette. Artists reinterpret it. Collectors vote on what
+        becomes permanent.
+      </p>
+    </header>
 
-    <p class="lead">
-      A public art protocol on Ethereum by
-      <NuxtLink to="https://visualizevalue.com">Visualize Value.</NuxtLink>
-      One silhouette, reinterpreted by anyone, curated by its collectors.
-    </p>
+    <div class="video">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/2RF6cQCE1bA?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+        title="Opepen, explained"
+        frameborder="0"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
 
     <section id="token">
-      <h2><NuxtLink to="#token">The token</NuxtLink></h2>
+      <h2>Tokens</h2>
       <p>
-        Opepen Edition is a collection of 16,000 tokens that all start as the same blank
-        silhouette. A token stays blank until its collector opts it into a set that reaches
-        consensus. Then it reveals as that set's artwork, permanently.
+        Every Opepen starts blank. It reveals when its owner opts it into a set that reaches
+        consensus. Reveals are permanent.
       </p>
-      <div class="images">
-        <Image image="/wireframe-light.png" />
-        <Image image="/interpretations.jpg" />
-      </div>
     </section>
 
     <section id="sets">
-      <h2><NuxtLink to="#sets">Sets and editions</NuxtLink></h2>
+      <h2>Sets</h2>
       <p>
-        Artwork enters the collection in sets. A set is 80 tokens revealed as one body of work,
-        split into six edition sizes: one 1/1, four 1/4s, five 1/5s, ten 1/10s, twenty 1/20s
-        and forty 1/40s.
+        A set is 80 tokens in six editions: 1, 4, 5, 10, 20 and 40. A print set has one artwork
+        per edition. A dynamic set has one per token.
       </p>
-      <p>
-        A
-        <strong>print</strong>
-        set uses one artwork per edition size, six in total. A
-        <strong>dynamic</strong>
-        set gives every one of the 80 tokens its own artwork.
-      </p>
-      <p>
-        There is room for 200 sets. {{ completeSets.length }} are complete so far.
-        <NuxtLink to="/sets">Browse the collection</NuxtLink>
-      </p>
+      <p>There are 200 slots. {{ completeSets.length }} are filled.</p>
     </section>
 
     <section id="voting">
-      <h2><NuxtLink to="#voting">Voting</NuxtLink></h2>
+      <h2>Voting</h2>
       <p>
-        Anyone can publish a set as a
-        <strong>submission</strong>
-        for collectors to vote on. Collectors vote by
-        <strong>opting in</strong>
-        unrevealed tokens they own: the token is pledged to that submission and, if the set
-        reveals, becomes one of its 80 pieces. The number of pledged tokens is the submission's
-        <strong>demand</strong>
-        and is counted per edition size.
-      </p>
-      <p>
-        Submissions with enough demand are
-        <strong>staged</strong>
-        one at a time, at most one every three days, for a 72-hour consensus window. To reveal,
-        a staged submission needs at least 1, 4, 5, 10, 20 and 40 opted-in tokens in the
-        matching edition sizes. Demand in one size cannot fill another. If the window closes
-        short, the submission is not revealed and the pledged tokens stay blank, free to vote
-        again.
-      </p>
-      <p>
-        Which token receives which piece is seeded by a future Ethereum block, so nobody
-        chooses.
-        <NuxtLink to="/submissions">See the current candidates</NuxtLink>
+        Anyone can submit a set. Collectors vote by opting in unrevealed tokens. The leading
+        submission is staged for 72 hours. If every edition fills, the set reveals. If not, the
+        tokens stay blank.
       </p>
     </section>
 
-    <section id="roles" class="roles">
-      <h2><NuxtLink to="#roles">Three ways in</NuxtLink></h2>
-      <div class="role-grid">
-        <article>
-          <h3>Collect and vote</h3>
-          <p>
-            Hold an unrevealed Opepen and opt it into the submissions you want to see revealed.
-          </p>
-          <Button to="/submissions" class="small">
-            <span>Browse submissions</span>
-          </Button>
-        </article>
-        <article>
-          <h3>Create a set</h3>
-          <p>
-            Make six or eighty artworks on the silhouette and publish them for collectors to
-            vote on. No token needed.
-          </p>
-          <Button to="/create" class="small">
-            <span>Create a set</span>
-          </Button>
-        </article>
-        <article>
-          <h3>Contribute to a set</h3>
-          <p>
-            Some creators open their set to co-creation. Submit pieces and the creator picks
-            which to include.
-          </p>
-          <Button to="/contribute" class="small">
-            <span>Open sets</span>
-          </Button>
-        </article>
-      </div>
+    <section id="roles">
+      <h2>Take Part</h2>
+      <nav class="list-group">
+        <NuxtLink to="/submissions">
+          <span class="stack">
+            <span>Vote</span>
+            <span>Opt in your unrevealed Opepen</span>
+          </span>
+          <Icon type="chevron-right" class="chevron" />
+        </NuxtLink>
+        <NuxtLink to="/create">
+          <span class="stack">
+            <span>Create</span>
+            <span>Submit a set. No token needed</span>
+          </span>
+          <Icon type="chevron-right" class="chevron" />
+        </NuxtLink>
+        <NuxtLink to="/contribute">
+          <span class="stack">
+            <span>Contribute</span>
+            <span>Add art to an open set</span>
+          </span>
+          <Icon type="chevron-right" class="chevron" />
+        </NuxtLink>
+      </nav>
     </section>
 
     <section id="opt-out">
-      <h2><NuxtLink to="#opt-out">Opting out</NuxtLink></h2>
+      <h2>Opting Out</h2>
       <p>
-        Collectors who want no part in consensus can burn a token. Burned tokens leave the
-        voting process for good and are reissued by a separate contract. So far
-        {{ formatNumber(stats?.optOuts.total || 0) }} tokens have been burned.
-        <NuxtLink to="/opepen/burned">See them</NuxtLink>
+        Burn a token to leave the process for good.
+        {{ formatNumber(stats?.optOuts.total || 0) }} burned so far.
       </p>
+      <nav class="list-group">
+        <NuxtLink to="/opepen/burned">
+          <span>Burned Opepen</span>
+          <Icon type="chevron-right" class="chevron" />
+        </NuxtLink>
+      </nav>
     </section>
 
     <section id="glossary">
-      <h2><NuxtLink to="#glossary">Glossary</NuxtLink></h2>
-      <dl>
-        <dt>Opepen</dt>
-        <dd>One of the 16,000 tokens. Blank until revealed.</dd>
-        <dt>Set</dt>
-        <dd>80 tokens revealed as one artwork across six edition sizes. 200 sets in total.</dd>
-        <dt>Edition</dt>
-        <dd>
-          The size group a token belongs to: 1/1, 1/4, 1/5, 1/10, 1/20 or 1/40. The 1/1 is
-          unique; forty tokens share the 1/40.
-        </dd>
-        <dt>Print and dynamic</dt>
-        <dd>
-          A print set has one artwork per edition size. A dynamic set has one artwork per
-          token.
-        </dd>
-        <dt>Submission</dt>
-        <dd>A published set that is a candidate for the collection.</dd>
-        <dt>Opt-in</dt>
-        <dd>A collector's vote: pledging an unrevealed token to a submission.</dd>
-        <dt>Demand</dt>
-        <dd>How many tokens are opted into a submission, per edition size.</dd>
-        <dt>Staged</dt>
-        <dd>A submission in its 72-hour consensus window.</dd>
-        <dt>Consensus</dt>
-        <dd>Enough demand in every edition size: 1, 4, 5, 10, 20 and 40.</dd>
-        <dt>Reveal</dt>
-        <dd>The moment a set's 80 tokens take on its artwork.</dd>
-        <dt>Contribution</dt>
-        <dd>A piece submitted to another creator's open set, included at their discretion.</dd>
-        <dt>Artist signature</dt>
-        <dd>An optional onchain transaction a creator can make to sign their set.</dd>
-        <dt>Opt-out</dt>
-        <dd>Burning a token to leave the consensus process permanently.</dd>
+      <h2>Glossary</h2>
+      <dl class="list-group">
+        <div v-for="[term, meaning] in GLOSSARY" :key="term" class="stack">
+          <dt>{{ term }}</dt>
+          <dd>{{ meaning }}</dd>
+        </div>
       </dl>
     </section>
 
-    <section id="artists">
-      <h2><NuxtLink to="#artists">Artists</NuxtLink></h2>
-      <p>
-        Permanent Opepen artists include
-        <!-- inline-flex drops the whitespace prettier puts before the generated comma. -->
-        <span v-for="artist in artistsResponse?.data" :key="artist.address" class="artist">
-          <NuxtLink :to="`/${id(artist)}`">{{ artist.display }}</NuxtLink>
-        </span>
-        and
-        <NuxtLink to="/artists">many more</NuxtLink>
-      </p>
-    </section>
-
     <section id="stats">
-      <h2><NuxtLink to="#stats">Statistics</NuxtLink></h2>
+      <h2>Numbers</h2>
       <Stats />
     </section>
   </PageFrameSm>
 </template>
 
 <script setup lang="ts">
+const GLOSSARY = [
+  ['Opepen', 'One of 16,000 tokens. Blank until revealed.'],
+  ['Set', '80 tokens revealed as one body of work.'],
+  ['Edition', 'A token’s group within a set: 1, 4, 5, 10, 20 or 40.'],
+  ['Print', 'One artwork per edition. Six in total.'],
+  ['Dynamic', 'One artwork per token. Eighty in total.'],
+  ['Submission', 'A published set awaiting votes.'],
+  ['Opt-in', 'A vote: pledging an unrevealed token to a submission.'],
+  ['Demand', 'Tokens opted into a submission, counted per edition.'],
+  ['Staged', 'In its 72-hour voting window.'],
+  ['Consensus', 'Every edition filled.'],
+  ['Reveal', 'A set’s tokens take on its artwork.'],
+  ['Contribution', 'A piece offered to another creator’s set.'],
+  ['Opt-out', 'Burning a token to leave for good.'],
+]
+
 const { completeSets } = await useSets()
 const { stats } = await useStats()
-const { data: artistsResponse } = await useApi(`/accounts/artists?limit=8&sort=-featured`)
 
 useMetaData({
   title: `How Opepen Works | Opepen`,
@@ -185,93 +131,84 @@ useMetaData({
 
 <style scoped>
 .about {
+  gap: var(--size-7);
+  padding-bottom: var(--spacer-lg);
+
+  @media (--md) {
+    gap: var(--size-8);
+  }
+
   section {
     display: grid;
-    gap: var(--spacer);
-    padding: var(--spacer-lg) 0;
-    border-bottom: var(--border);
+    gap: var(--size-3);
+    scroll-margin-top: calc(var(--top-nav-height) + var(--spacer));
+  }
 
-    &:last-child {
-      border-bottom: 0;
-    }
+  h2 {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: 1.375rem;
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
   }
 
   p {
-    line-height: var(--line-height-md);
-  }
-
-  strong {
-    color: var(--color);
-  }
-
-  .artist {
-    display: inline-flex;
-
-    &::after {
-      content: ',';
-      margin-right: 0.3em;
-    }
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    color: var(--gray-z-7);
   }
 }
 
-.images {
+.intro {
   display: grid;
-  gap: var(--spacer);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
+  gap: var(--size-3);
+  padding-top: var(--spacer);
 
-.role-grid {
-  display: grid;
-  gap: var(--spacer);
-
-  @container page (min-width: 36rem) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  h1 {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: clamp(var(--font-xl), 7cqw, 2.75rem);
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+    line-height: 1.05;
   }
 
-  article {
-    display: grid;
-    gap: var(--spacer-sm);
-    align-content: start;
-    padding: var(--spacer);
-    border: var(--border);
-    border-radius: var(--border-radius);
-    background: var(--gray-z-1);
+  p {
+    color: var(--muted);
+    font-size: var(--font-lg);
+    letter-spacing: var(--letter-spacing-sm);
+    line-height: 1.3;
+  }
+}
 
-    h3 {
-      @mixin ui-font;
-    }
+.video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--border-radius-lg);
+  background: var(--gray-z-1);
 
-    p {
-      font-size: var(--font-base);
-      color: var(--muted);
-    }
-
-    .button {
-      margin-top: auto;
-    }
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 }
 
 dl {
-  display: grid;
-  gap: var(--spacer-sm) var(--spacer);
-  font-size: var(--font-base);
-
-  @container page (min-width: 36rem) {
-    grid-template-columns: max-content 1fr;
+  /* Each row is the stack itself: dt and dd must sit directly in the div. */
+  .stack {
+    align-content: center;
   }
 
   dt {
-    @mixin ui-font;
+    font-weight: var(--font-weight-medium);
   }
 
   dd {
-    color: var(--muted);
-    margin: 0 0 var(--spacer-sm);
-
-    @container page (min-width: 36rem) {
-      margin: 0;
-    }
+    margin: 0;
   }
 }
 </style>

@@ -138,7 +138,7 @@ article.image {
     box-shadow: var(--shadow-border);
     background-color: var(--gray-z-1);
     overflow: hidden;
-    border-radius: var(--size-1);
+    border-radius: var(--border-radius-sm);
   }
 
   .image {
@@ -240,7 +240,6 @@ article.image {
     margin: 0;
     line-height: 1;
     font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
     text-shadow: 0 0.1em 0.5em var(--black);
     color: var(--gray-z-8);
     display: flex;

@@ -1,105 +1,49 @@
 <template>
-  <div v-if="stats" class="stats-grid">
-    <Card class="borderless static metric-card">
-      <p class="metric-value">
-        <small class="currency muted">$</small>{{ formatNumber(stats.markets.history.totalUSD || 0) }}
-      </p>
-      <h3>Volume</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.users.permanentArtists) }}</p>
-      <h3>Permanent Artists</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.users.artists) }}</p>
-      <h3>Artists</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.submissions.sets) }}</p>
-      <h3>Submissions</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.users.curators) }}</p>
-      <h3>Curators</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.optIns) }}</p>
-      <h3>Opt-In Votes</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.users.holders) }}</p>
-      <h3>Collectors</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(day) }}</p>
-      <h3>Days Since Launch</h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.optOuts.total) }}</p>
-      <h3>Opt-Outs <small>(total)</small></h3>
-    </Card>
-
-    <Card class="borderless static metric-card">
-      <p class="metric-value">{{ formatNumber(stats.optOuts.unrevealed) }}</p>
-      <h3>Opt-Outs <small>(unrevealed)</small></h3>
-    </Card>
-  </div>
+  <ul v-if="stats" class="list-group">
+    <li>
+      <span>Sets complete</span>
+      <span class="detail">{{ completeSets.length }} of 200</span>
+    </li>
+    <li>
+      <span>Submissions</span>
+      <span class="detail">{{ formatNumber(stats.submissions.sets) }}</span>
+    </li>
+    <li>
+      <span>Artists</span>
+      <span class="detail">{{ formatNumber(stats.users.artists) }}</span>
+    </li>
+    <li>
+      <span>Artists in the collection</span>
+      <span class="detail">{{ formatNumber(stats.users.permanentArtists) }}</span>
+    </li>
+    <li>
+      <span>Collectors</span>
+      <span class="detail">{{ formatNumber(stats.users.holders) }}</span>
+    </li>
+    <li>
+      <span>Voters</span>
+      <span class="detail">{{ formatNumber(stats.users.curators) }}</span>
+    </li>
+    <li>
+      <span>Votes cast</span>
+      <span class="detail">{{ formatNumber(stats.optIns) }}</span>
+    </li>
+    <li>
+      <span>Tokens burned</span>
+      <span class="detail">{{ formatNumber(stats.optOuts.total) }}</span>
+    </li>
+    <li>
+      <span>Sales volume</span>
+      <span class="detail">${{ formatNumber(stats.markets.history.totalUSD || 0) }}</span>
+    </li>
+    <li>
+      <span>Days since launch</span>
+      <span class="detail">{{ formatNumber(day) }}</span>
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
 const { day, stats } = await useStats()
+const { completeSets } = await useSets()
 </script>
-
-<style scoped>
-.stats-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  border-top: var(--border);
-  border-left: var(--border);
-
-  @container page (min-width: 44rem) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.metric-card {
-  display: grid;
-  align-content: center;
-  gap: var(--spacer-sm);
-  min-height: 0;
-  padding: var(--spacer-lg);
-  border-right: var(--border);
-  border-bottom: var(--border);
-
-  h3 {
-    grid-row: 1;
-    @mixin ui-font;
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: var(--line-height-md);
-    margin: 0;
-    border-bottom: 0 !important;
-    padding: 0 !important;
-  }
-
-  .metric-value {
-    grid-row: 2;
-    font-size: clamp(var(--font-xl), 4cqw, var(--font-xxl));
-    letter-spacing: var(--letter-spacing-sm);
-    white-space: nowrap;
-
-    .currency {
-      margin-right: 0.1em;
-      font-size: 0.7em;
-    }
-  }
-}
-</style>

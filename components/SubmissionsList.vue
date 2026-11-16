@@ -18,12 +18,7 @@
               </select>
             </div>
             <div class="input-group">
-              <input
-                class="input uppercase-input"
-                type="text"
-                v-model="search"
-                placeholder="search"
-              />
+              <input class="input" type="text" v-model="search" placeholder="Search" />
               <Icon type="search" />
             </div>
           </Actions>
@@ -132,9 +127,11 @@ watchEffect(() => {
     color: var(--muted);
   }
 
+  /* Sized to its longest option, and never squeezed by the search field. */
   select {
-    /* min-content clipped the longest option ("Demand" rendered as "Demanc"). */
     width: auto;
+    min-width: 8.5rem;
+    flex-shrink: 0;
     font-size: var(--font-sm);
   }
 
@@ -155,9 +152,5 @@ watchEffect(() => {
   display: flex;
   align-items: center;
   gap: var(--spacer);
-}
-
-:global(.uppercase-input) {
-  text-transform: uppercase !important;
 }
 </style>

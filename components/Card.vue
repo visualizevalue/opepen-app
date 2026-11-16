@@ -13,7 +13,7 @@
 
   &:--highlight {
     &:not(.static) {
-      transform: translateY(-0.5rem);
+      transform: translateY(-2px);
     }
   }
 

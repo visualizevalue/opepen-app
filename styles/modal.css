@@ -1,7 +1,13 @@
 .modal {
   > h1 {
     @mixin ui-font;
-    font-size: var(--font-base);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+  }
+
+  > p {
+    color: var(--muted);
+    font-size: var(--ui-font-size);
   }
 
   menu.actions {
@@ -22,12 +28,21 @@
   }
 }
 
+/* Sheets: an elevated surface over a dimmed page, no outline. */
 body dialog,
 body .dialog {
-  background: var(--gray-z-0);
-  border-radius: var(--border-radius);
+  background: var(--gray-z-1);
+  border: 0;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--size-6);
   overflow-x: hidden;
   overflow-y: auto;
+
+  &[open]::backdrop,
+  &.open + .overlay {
+    backdrop-filter: none;
+  }
 
   .button {
     width: min-content;
@@ -37,19 +52,19 @@ body .dialog {
     width: var(--size-6);
     height: var(--size-6);
     border-radius: 50%;
-    background: var(--semi-shade);
+    background: var(--fill);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: background var(--speed);
 
     .icon {
-      width: var(--size-4);
-      height: var(--size-4);
+      width: 0.875rem;
+      height: 0.875rem;
     }
 
     &:--highlight {
-      background: var(--semi);
+      background: var(--fill-highlight);
       cursor: pointer;
     }
   }

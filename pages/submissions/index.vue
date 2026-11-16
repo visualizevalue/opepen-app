@@ -5,7 +5,7 @@
     </template>
 
     <template #default="{ items }">
-      <SetCardGrid :submissions="items" class="more-space" minimal show-demand />
+      <SetCardGrid :submissions="items" class="more-space" show-demand />
     </template>
   </SubmissionsList>
 </template>

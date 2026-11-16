@@ -1,17 +1,16 @@
 <template>
   <Popover :open="signingIn">
     <h1>Signing In</h1>
-    <p>Requesting "Sign In With Ethereum" confirmation...</p>
+    <p>Confirm in your wallet.</p>
   </Popover>
 
   <Modal :open="signInFailed" :x-close="false">
     <h1>Sign In Failed</h1>
-    <p>Request for "Sign In With Ethereum" failed...</p>
-    <p>Please reload the page and try again.</p>
+    <p>The wallet request did not complete.</p>
 
     <Actions>
       <Button @click="cancel" class="secondary">Go Home</Button>
-      <Button @click="reload">Retry</Button>
+      <Button class="primary" @click="reload">Try Again</Button>
     </Actions>
   </Modal>
 </template>

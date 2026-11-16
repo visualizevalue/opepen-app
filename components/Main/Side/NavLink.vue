@@ -5,17 +5,15 @@
       active: strictExact ? $route.path == to : $route.path.indexOf(to) > -1,
     }"
   >
-    <div>
-      <div class="title">
-        <span>{{ title }}</span>
-        <span v-if="badge" class="badge">{{ badge }}</span>
-        <span v-if="note" class="badge note">{{ note }}</span>
-      </div>
-      <!-- Without this the empty element still contributes its top margin. -->
-      <small v-if="subline">{{ subline }}</small>
-    </div>
+    <Icon v-if="icon" :type="icon" class="leading" />
 
-    <Icon type="chevron-right" />
+    <span class="label">
+      <span class="title">{{ title }}</span>
+      <small v-if="subline">{{ subline }}</small>
+    </span>
+
+    <span v-if="note" class="badge note">{{ note }}</span>
+    <span v-if="badge" class="badge">{{ badge }}</span>
   </NuxtLink>
 </template>
 
@@ -23,6 +21,8 @@
 defineProps({
   to: String,
   title: String,
+  // Leading glyph, as in a system sidebar row.
+  icon: String,
   subline: String,
   strictExact: Boolean,
   badge: String,
@@ -33,85 +33,68 @@ defineProps({
 
 <style scoped>
 a {
-  margin-left: calc(-1 * var(--spacer));
-  margin-right: calc(-1 * var(--spacer));
-  padding: var(--spacer-sm) var(--spacer);
-  width: calc(100% + 2 * var(--spacer));
-  border-radius: var(--border-radius);
-  transition: background var(--speed);
-  display: grid;
-  grid-template-columns: 1fr var(--size-7);
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  min-height: 2.5rem;
+  padding: var(--size-2) var(--size-3);
+  border-radius: 0.625rem;
+  font-size: var(--ui-font-size);
+  transition: background var(--speed-fast);
 
-  span,
-  small {
-    display: block;
+  .leading {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--gray-z-6);
   }
 
-  small {
-    margin-top: var(--spacer-xs);
-  }
-
-  span {
-    @mixin ui-font;
+  .label {
+    display: grid;
+    min-width: 0;
+    flex: 1;
   }
 
   .title {
-    margin-top: var(--spacer-xs);
-    gap: var(--spacer-sm);
-    display: flex;
-  }
-
-  .badge {
-    border-radius: var(--border-radius-sm);
-    background: var(--success);
-    font-size: var(--font-xs);
-    color: var(--gray-z-0);
-    padding: 2px 4px 1px;
-    height: fit-content;
-
-    /* A step above the active row's background, or the chip vanishes into it. */
-    &.note {
-      background: var(--gray-z-3);
-      color: var(--color);
-    }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   small {
     color: var(--gray-z-5);
-    font-size: var(--font-sm);
+    font-size: var(--font-xs);
+  }
+
+  .badge {
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--success);
+    color: var(--black);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    padding: 2px 0.5rem 1px;
+
+    &.note {
+      background: var(--fill);
+      color: var(--gray-z-7);
+    }
   }
 
   &:hover {
-    background: var(--gray-z-1);
-    box-shadow: var(--border-shadow);
+    background: var(--fill);
   }
 
   &.active {
-    background: var(--gray-z-2);
-    box-shadow: var(--border-shadow);
-  }
+    background: var(--fill-highlight);
+    font-weight: var(--font-weight-medium);
 
-  &.success {
-    background: var(--green);
-    color: var(--gray-z-0);
-
-    &.active {
-      background: var(--green-light);
+    .leading {
+      color: var(--color);
     }
-
-    span {
-      color: var(--gray-z-2);
-    }
-
-    small {
-      color: var(--gray-z-4);
-    }
-  }
-
-  .icon {
-    color: var(--gray-z-3);
-    width: var(--size-4);
-    justify-self: flex-end;
   }
 }
 </style>

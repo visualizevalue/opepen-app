@@ -2,19 +2,13 @@
   <div>
     <NuxtLayout>
       <PageFrameSm>
-        <h1 v-if="notFound">Page not found</h1>
-        <h1 v-else>{{ error?.statusCode || 'Something went wrong' }}</h1>
+        <h1>{{ notFound ? 'Page Not Found' : 'Something Went Wrong' }}</h1>
+        <p v-if="notFound">Nothing lives at this address.</p>
+        <p v-else>{{ error?.statusMessage || 'Try again in a moment.' }}</p>
 
-        <p v-if="notFound">
-          There is nothing at this address. The link may be wrong, or the page may have moved.
-        </p>
-        <p v-else>{{ error?.statusMessage || 'Unknown Error' }}</p>
-
-        <nav class="links">
-          <Button to="/">Home</Button>
+        <nav>
+          <Button to="/" class="primary">Home</Button>
           <Button to="/sets">Collection</Button>
-          <Button to="/submissions">Submissions</Button>
-          <Button to="/artists">Artists</Button>
         </nav>
       </PageFrameSm>
     </NuxtLayout>
@@ -41,27 +35,27 @@ useHead({
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--size-2);
   text-align: center;
   min-height: var(--main-content-height);
 }
 
-h1,
-p {
-  @mixin ui-font;
+h1 {
+  font-family: var(--font-family-brand);
+  text-transform: uppercase;
   font-size: var(--font-xl);
+  font-weight: 400;
+  letter-spacing: var(--brand-letter-spacing);
 }
 
 p {
-  font-size: var(--font-lg);
   color: var(--muted);
-  max-width: 28rem;
+  font-size: 1.0625rem;
 }
 
-.links {
+nav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacer-sm);
+  gap: var(--size-2);
   margin-top: var(--spacer);
 }
 </style>

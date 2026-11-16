@@ -6,12 +6,12 @@
   </WithAccount>
 
   <Modal :open="!isAuthenticated && !signInLoading" :x-close="false" compat>
-    <h1>Sign In Required</h1>
-    <p>You have to sign in with Ethereum to view this page.</p>
+    <h1>Sign In</h1>
+    <p>Sign in with your wallet to continue.</p>
 
     <Actions>
       <Button @click="cancel" class="secondary">Back</Button>
-      <Button @click="signIn">Sign In</Button>
+      <Button class="primary" @click="signIn">Sign In</Button>
     </Actions>
   </Modal>
 </template>

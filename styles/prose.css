@@ -1,43 +1,44 @@
 .prose {
-  font-size: var(--font-lg);
+  font-size: 1.0625rem;
+  line-height: 1.5;
 
-  > h1,
-  > h2 {
-    @mixin ui-font;
+  > h1 {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
     font-size: var(--font-xxl);
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+    line-height: 1.1;
 
     + .lead {
-      margin-top: 0;
-    }
-
-    &:has(> a:first-child) {
-      padding-top: var(--spacer);
+      margin-top: var(--spacer-sm);
     }
   }
 
-  > h2 {
+  h2 {
     font-size: var(--font-lg);
-    color: var(--muted);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-sm);
+    color: var(--color);
 
-    > span {
-      border-bottom: 2px solid var(--border-color);
+    a {
+      border: 0;
     }
   }
 
-  a {
-    text-decoration: none;
-    border-bottom: 2px solid var(--border-color);
+  p a {
+    text-decoration: underline;
+    text-decoration-color: var(--gray-z-4);
+    text-underline-offset: 0.2em;
 
     &:--highlight {
-      color: var(--color);
-      border-color: var(--color);
+      text-decoration-color: var(--color);
     }
   }
 
   .lead {
-    @mixin ui-font;
-    font-size: var(--font-xl);
+    font-size: var(--font-lg);
     color: var(--muted);
-    margin: var(--spacer) 0;
+    line-height: 1.4;
   }
 }

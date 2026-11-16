@@ -60,6 +60,7 @@ const { optInAvailable } = await useStagedOptIn()
   border-bottom: var(--border);
   padding: 0;
   backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
   transition: transform var(--speed);
 
   @media (--lg) {
@@ -74,6 +75,11 @@ const { optInAvailable } = await useStagedOptIn()
 
   &.hidden {
     transform: translateY(calc(-1 * var(--top-nav-height)));
+  }
+
+  /* With a segmented control below, the two rows read as one bar. */
+  &:has(+ #top-sub-nav:not(:empty)) {
+    border-bottom-color: transparent;
   }
 
   .avatar {
@@ -121,6 +127,8 @@ const { optInAvailable } = await useStagedOptIn()
   justify-content: center;
   top: var(--top-nav-height);
   height: var(--top-subnav-height);
+  /* One bar with the row above it: the hairline belongs under the pair. */
+  margin-top: -1px;
 
   &.hidden {
     transform: translateY(calc(-1 * (var(--top-nav-height) + var(--top-subnav-height))));

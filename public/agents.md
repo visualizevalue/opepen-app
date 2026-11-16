@@ -349,7 +349,7 @@ Before uploading, provide:
    [Opepen](https://opepen.art/create). Authentication uses a wallet-signed login message and
    a cookie session. Creating artwork and creating a submission do not require buying tokens;
    collector opt-ins are a separate token-holder action.
-2. Open **Create Opepen Set** (`/create/new`). This creates a server-side draft and opens
+2. Open **New Set** (`/create/new`). This creates a server-side draft and opens
    `/create/{submission-uuid}`. Save the UUID; avoid creating another draft just to resume.
 3. Fill the set name, description, artist name, edition type, six edition names, and six base
    media slots. Add co-creators and Deep Dive Links where relevant. Ordinary creators use the

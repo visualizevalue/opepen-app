@@ -1,9 +1,9 @@
 :root {
-  --nav-width: min(23rem, 100vw);
-  --top-nav-height: 3rem;
-  --top-subnav-height: 2.5rem;
+  --nav-width: min(18rem, 86vw);
+  --top-nav-height: 2.75rem;
+  --top-subnav-height: 2.75rem;
   --top-nav-total-height: calc(var(--top-nav-height) + var(--top-subnav-height));
-  --bottom-nav-height: calc(3.8rem + env(safe-area-inset-bottom));
+  --bottom-nav-height: calc(3.25rem + env(safe-area-inset-bottom));
 
   --content-width-wide: 90rem;
   --content-width: 60rem;
@@ -15,5 +15,12 @@
   --alert-info-background-color: var(--blue-9);
   --alert-info-color: var(--blue-1);
 
-  --card-border-color-highlight: var(--border-color);
+  --card-border: 0 solid transparent;
+  --card-border-radius: var(--border-radius-lg);
+  /* Surfaces are set per card; a borderless card has none of its own. */
+  --card-background: transparent;
+  --card-background-highlight: transparent;
+  --card-border-color-highlight: transparent;
+
+  --dialog-background-color: rgba(0, 0, 0, 0.5);
 }

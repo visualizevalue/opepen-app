@@ -1,55 +1,49 @@
 <template>
   <section class="create-intro">
-    <PageHeader>
-      <SectionTitle>Create an Opepen Set</SectionTitle>
-    </PageHeader>
+    <header>
+      <h1>Create a Set</h1>
+      <p>Reinterpret the silhouette. If collectors vote it in, it becomes permanent.</p>
+    </header>
 
-    <p class="lead">
-      Submit your interpretation of the silhouette. If collectors vote it in, it becomes one of
-      the 200 permanent sets.
-    </p>
-
-    <ol class="steps">
+    <ol class="list-group">
       <li>
-        <strong>Make the art.</strong>
-        <span>
-          A set has six edition sizes: 1, 4, 5, 10, 20 and 40. A print set needs six artworks,
-          one per size. A dynamic set needs a unique artwork for each of its 80 tokens. Start
-          from the
-          <NuxtLink to="/schematics.svg" target="_blank">schematics.</NuxtLink>
+        <span class="stack">
+          <span>Make the art</span>
+          <span>Six pieces, one per edition. Or eighty, one per token.</span>
         </span>
       </li>
       <li>
-        <strong>Fill in the draft.</strong>
-        <span>
-          Name the set and each edition, add a description and your artist name, and upload the
-          files. Drafts autosave and stay unpublished until you publish them.
+        <span class="stack">
+          <span>Publish</span>
+          <span>Free. No Opepen needed. Sign in with your wallet.</span>
         </span>
       </li>
       <li>
-        <strong>Publish and gather votes.</strong>
-        <span>
-          Collectors opt in their unrevealed Opepen. Once the set reaches consensus it reveals.
-          <NuxtLink to="/about#voting">How voting works</NuxtLink>
+        <span class="stack">
+          <span>Collect votes</span>
+          <span>The set reveals when every edition fills.</span>
         </span>
       </li>
     </ol>
 
-    <p class="note">
-      Creating a set is free and does not require owning an Opepen. You sign a message with
-      your wallet to prove the set is yours; no transaction is needed.
-    </p>
+    <Button class="primary" @click="start">
+      {{ currentAddress ? 'Sign In' : 'Connect Wallet' }}
+    </Button>
 
-    <Actions>
-      <Button to="/agents" class="secondary">
-        <Icon type="cpu" />
+    <nav class="list-group">
+      <NuxtLink to="/schematics.svg" target="_blank">
+        <span>Schematics</span>
+        <Icon type="chevron-right" class="chevron" />
+      </NuxtLink>
+      <NuxtLink to="/agents">
         <span>Create with an agent</span>
-      </Button>
-      <Button @click="start">
-        <Icon type="user" />
-        <span>{{ currentAddress ? 'Sign in to start' : 'Connect wallet to start' }}</span>
-      </Button>
-    </Actions>
+        <Icon type="chevron-right" class="chevron" />
+      </NuxtLink>
+      <NuxtLink to="/about#voting">
+        <span>How voting works</span>
+        <Icon type="chevron-right" class="chevron" />
+      </NuxtLink>
+    </nav>
   </section>
 </template>
 
@@ -64,65 +58,65 @@ const start = () => {
 <style scoped>
 .create-intro {
   display: grid;
-  gap: var(--spacer);
+  gap: var(--size-5);
+  padding-top: var(--spacer);
 }
 
-.lead,
-.note,
-.steps {
-  @mixin ui-font;
-  color: var(--muted);
-  line-height: var(--line-height-md);
-}
-
-.lead {
-  color: var(--color);
-  font-size: var(--font-lg);
-}
-
-.steps {
+header {
   display: grid;
-  gap: var(--spacer);
-  padding: 0;
-  list-style: none;
+  gap: var(--size-2);
+
+  h1 {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: var(--font-xxl);
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+    line-height: 1.1;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: var(--font-lg);
+    letter-spacing: var(--letter-spacing-sm);
+    line-height: 1.3;
+  }
+}
+
+ol {
   counter-reset: step;
 
   li {
-    display: grid;
-    grid-template-columns: var(--size-6) 1fr;
-    gap: var(--spacer-sm);
-    padding: var(--spacer);
-    border: var(--border);
-    border-radius: var(--border-radius);
-    background: var(--gray-z-1);
+    justify-content: flex-start;
 
-    &::before {
+    /* A numbered badge leads each step. */
+    &::after {
       counter-increment: step;
-      content: counter(step, decimal-leading-zero);
-      color: var(--gray-z-5);
+      content: counter(step);
+      order: -1;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: var(--size-6);
+      height: var(--size-6);
+      border-radius: 50%;
+      background: var(--fill);
+      color: var(--gray-z-7);
+      font-size: var(--font-sm);
+      font-weight: var(--font-weight-bold);
     }
 
-    strong {
-      grid-column: 2;
-      color: var(--color);
-    }
-
-    span {
-      grid-column: 2;
+    /* Start the hairline at the text, past the badge. */
+    & + li::before {
+      left: calc(var(--spacer) * 2 + var(--size-6));
     }
   }
 }
 
-a {
-  color: var(--color);
-  border-bottom: 1px solid var(--border-color);
-
-  &:--highlight {
-    border-color: var(--color);
-  }
-}
-
-.actions {
-  justify-content: flex-end;
+.button.primary {
+  width: 100%;
+  min-height: 3.125rem;
+  border-radius: var(--border-radius-lg);
+  font-size: 1.0625rem;
 }
 </style>

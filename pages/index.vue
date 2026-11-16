@@ -1,122 +1,61 @@
 <template>
-  <PageFrameMd class="landing">
+  <PageFrameMd class="home">
     <header class="hero">
-      <p class="eyebrow">Public Art On Ethereum</p>
-      <h1>Opepen Edition</h1>
-      <p class="hero-summary">One symbol. Infinite remixes. 200 final sets.</p>
-      <nav class="hero-actions" aria-label="Start here">
-        <Button to="/about" class="small">
-          <Icon type="book-open" />
-          <span>How it works</span>
-        </Button>
-        <Button to="/sets" class="small">
-          <Icon type="opepen-grid" />
-          <span>Browse the collection</span>
-        </Button>
-        <Button to="/create" class="small">
-          <Icon type="edit-2" />
-          <span>Create a set</span>
-        </Button>
+      <h1>Opepen</h1>
+      <p>One symbol. Infinite remixes. 200 final sets.</p>
+      <nav aria-label="Start here">
+        <Button to="/about" class="primary">How It Works</Button>
+        <Button to="/sets">Browse Collection</Button>
       </nav>
     </header>
 
-    <section class="intro">
-      <article class="intro-card">
-        <header>
-          <span>01</span>
-          <h2>
-            One Symbol
-            <small>By Visualize Value</small>
-          </h2>
-        </header>
+    <section class="duo">
+      <figure>
         <Image image="/wireframe.svg" />
-        <Button
-          @click="() => downloadImage('/wireframe.png', { name: 'opepen' })"
-          target="_blank"
-          class="small"
-        >
-          <Icon type="download" />
-          <span>Download</span>
-        </Button>
-      </article>
-      <article class="intro-card">
-        <header>
-          <span>02</span>
-          <h2>
-            Infinite Remixes
-            <small>By Anyone</small>
-          </h2>
-        </header>
+        <figcaption>One symbol</figcaption>
+      </figure>
+      <figure>
         <Image image="/remixes.gif" />
-        <Button to="/submissions" class="small">
-          <Icon type="arrow-right" />
-          <span>Explore</span>
-        </Button>
-      </article>
+        <figcaption>Infinite remixes</figcaption>
+      </figure>
     </section>
 
-    <section class="hero-video video-embed">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/2RF6cQCE1bA?controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
-        title="Opepen"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
-    </section>
-
-    <section class="prose">
-      <p class="eyebrow prose-label">The protocol</p>
-      <h2>Where constraint meets creativity.</h2>
-
-      <div class="prose-copy">
-        <p class="lead-copy">
-          Opepen is a public art protocol by
-          <span class="no-wrap">
-            <NuxtLink to="https://visualizevalue.com">Visualize Value</NuxtLink>,
-          </span>
-          built on Ethereum. Anyone can reinterpret the silhouette; collectors vote to shape a
-          permanent collection of 200 sets.
-        </p>
+    <section class="figures">
+      <NuxtLink to="/sets">
+        <strong>
+          {{ completeSets.length }}
+          <small>/ 200</small>
+        </strong>
+        <span>Sets</span>
+      </NuxtLink>
+      <NuxtLink to="/submissions">
+        <strong>{{ formatNumber(stats?.submissions.sets) }}</strong>
+        <span>Submissions</span>
+      </NuxtLink>
+      <NuxtLink to="/artists">
+        <strong>{{ formatNumber(stats?.users.artists) }}</strong>
+        <span>Artists</span>
+      </NuxtLink>
+      <div>
+        <strong>{{ formatNumber(stats?.users.holders) }}</strong>
+        <span>Collectors</span>
       </div>
-
-      <div class="protocol-status">
-        <p>
-          <strong>{{ completeSets.length }}</strong>
-          <span>of 200 spots filled</span>
-        </p>
-        <p>
-          <strong>{{ formatNumber(stats?.submissions.sets) }}</strong>
-          <span>submissions so far</span>
-        </p>
-      </div>
-
     </section>
 
-    <section class="sets collection-section">
-      <header>
-        <SectionTitle>Featured Sets</SectionTitle>
-        <Button to="/sets" class="small">
-          <span>Browse more</span>
-        </Button>
+    <section>
+      <header class="section-header">
+        <h2>Featured Sets</h2>
+        <NuxtLink to="/sets">See All</NuxtLink>
       </header>
       <SetCardGrid :submissions="featuredSubmissions" />
     </section>
 
-    <section class="artists collection-section">
-      <header>
-        <SectionTitle>Featured Artists</SectionTitle>
-        <Button to="/artists" class="small">
-          <span>Browse more</span>
-        </Button>
+    <section>
+      <header class="section-header">
+        <h2>Featured Artists</h2>
+        <NuxtLink to="/artists">See All</NuxtLink>
       </header>
       <ProfileCardGrid :accounts="featuredArtists" />
-    </section>
-
-    <section class="stats">
-      <SectionTitle>Stats</SectionTitle>
-
-      <Stats />
     </section>
   </PageFrameMd>
 </template>
@@ -156,208 +95,117 @@ useMetaData({
 </script>
 
 <style scoped>
-.landing {
-  gap: 0;
-
-  .eyebrow {
-    @mixin ui-font;
-    color: var(--muted);
-    font-size: var(--ui-font-size);
-  }
-
-  > .hero {
-    display: grid;
-    align-content: center;
-    gap: var(--spacer-lg);
-    min-height: clamp(18rem, 45cqw, 28rem);
-    padding: clamp(var(--spacer-lg), 5cqw, 4rem) 0;
-    border-bottom: var(--border);
-
-    h1 {
-      @mixin ui-font;
-      font-size: clamp(2.4rem, 6cqw, 4rem);
-      font-weight: var(--font-weight-medium);
-      letter-spacing: var(--letter-spacing-sm);
-      line-height: 1;
-    }
-
-    .hero-summary {
-      max-width: 32rem;
-      font-size: clamp(var(--font-lg), 2.3cqw, var(--font-xl));
-      line-height: var(--line-height-md);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--spacer-sm);
-    }
-  }
+.home {
+  gap: var(--size-8);
 
   > section {
-    padding: clamp(var(--spacer-xl), 7cqw, 5rem) 0;
-    border-bottom: var(--border);
-
-    > header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  > .hero-video {
-    padding: 0;
-  }
-
-  .intro {
     display: grid;
-    gap: var(--spacer-xl);
+    gap: var(--spacer);
+  }
+}
 
-    .intro-card {
-      display: grid;
-      gap: var(--spacer-lg);
-      align-content: start;
+.hero {
+  display: grid;
+  gap: var(--size-3);
+  padding-top: clamp(var(--spacer), 6cqw, var(--size-9));
 
-      > header {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: var(--spacer);
-        align-items: start;
-        min-height: 3rem;
-        @mixin ui-font;
-
-        > span {
-          color: var(--gray-z-5);
-        }
-      }
-
-      h2 {
-        display: grid;
-        gap: var(--spacer-xs);
-        font-size: var(--font-base);
-
-        small {
-          color: var(--muted);
-          font-size: 1em;
-        }
-      }
-
-      > .button {
-        justify-self: center;
-        justify-content: center;
-        width: 7.5rem;
-      }
-    }
-
-    @container page (min-width: 44rem) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--spacer-lg);
-    }
+  h1 {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: clamp(2.5rem, 9cqw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+    line-height: 1;
   }
 
-  .prose {
-    display: grid;
-    gap: var(--spacer-lg);
+  p {
+    color: var(--muted);
+    font-size: clamp(var(--font-lg), 3cqw, 1.5rem);
+    letter-spacing: var(--letter-spacing-sm);
+    line-height: 1.25;
+  }
 
-    h2 {
-      max-width: 18ch;
-      font-size: clamp(var(--font-lg), 2.4cqw, 1.75rem);
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+    margin-top: var(--size-3);
+  }
+
+  .button {
+    min-height: 2.75rem;
+    padding-inline: var(--size-5);
+  }
+}
+
+.home > .duo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacer);
+
+  figure {
+    display: grid;
+    gap: var(--size-2);
+    margin: 0;
+  }
+
+  :deep(.image .inner) {
+    border-radius: var(--border-radius-lg);
+  }
+
+  figcaption {
+    color: var(--muted);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+  }
+}
+
+.home > .figures {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--size-3);
+
+  @container page (min-width: 40rem) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  > * {
+    display: grid;
+    gap: 2px;
+    padding: var(--spacer);
+    border-radius: var(--border-radius-lg);
+    background: var(--gray-z-1);
+    transition: background var(--speed);
+  }
+
+  > a:hover {
+    background: var(--gray-z-2);
+  }
+
+  strong {
+    font-family: var(--font-family-brand);
+    text-transform: uppercase;
+    font-size: var(--font-xl);
+    font-weight: 400;
+    letter-spacing: var(--brand-letter-spacing);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+
+    small {
+      color: var(--gray-z-5);
+      font-size: 0.6em;
       font-weight: var(--font-weight-medium);
-      letter-spacing: var(--letter-spacing-sm);
-      line-height: 1.05;
-    }
-
-    .prose-copy {
-      display: grid;
-      align-content: start;
-      gap: var(--spacer-lg);
-
-      p {
-        max-width: 34rem;
-        font-size: clamp(var(--font-lg), 2.2cqw, 1.5rem);
-        letter-spacing: var(--letter-spacing-sm);
-        line-height: 1.45;
-      }
-    }
-
-    .protocol-status {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      border-top: var(--border);
-      border-bottom: var(--border);
-
-      p {
-        display: grid;
-        gap: var(--spacer-sm);
-        padding: var(--spacer-lg) 0;
-      }
-
-      p + p {
-        padding-left: var(--spacer-lg);
-        border-left: var(--border);
-      }
-
-      strong {
-        font-size: clamp(var(--font-xl), 5cqw, var(--font-xxl));
-        font-weight: var(--font-weight-medium);
-        letter-spacing: var(--letter-spacing-sm);
-      }
-
-      span {
-        @mixin ui-font;
-        color: var(--muted);
-      }
-    }
-
-    @container page (min-width: 44rem) {
-      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-      column-gap: clamp(var(--spacer-xl), 7cqw, 5rem);
-
-      .prose-label {
-        grid-column: 1 / -1;
-        margin-bottom: var(--spacer);
-      }
-
-      .protocol-status {
-        grid-column: 1 / -1;
-      }
     }
   }
 
-  .video-embed {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-
-    iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  }
-
-  .collection-section,
-  .stats {
-    display: grid;
-    gap: var(--spacer-lg);
-  }
-
-  .stats {
-    border-bottom: 0;
-  }
-
-  @container page (max-width: 32rem) {
-    > .hero {
-      min-height: 18rem;
-    }
-
-    .prose .prose-copy p {
-      font-size: var(--font-base);
-      line-height: var(--line-height-lg);
-    }
+  span {
+    color: var(--muted);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
   }
 }
 </style>

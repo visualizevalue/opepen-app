@@ -1,94 +1,72 @@
 <template>
   <nav ref="nav" :style="style" class="sidebar">
-    <WithAccount>
-      <MainSideProfile @sendClose="close" />
-    </WithAccount>
+    <NuxtLink to="/" class="brand" @click="close">
+      <Icon type="opepen-eye" />
+      <span>Opepen</span>
+    </NuxtLink>
 
     <section>
-      <h1 title="Now"><Icon type="home" /></h1>
-
-      <MainSideNavLink to="/" title="Overview" @click="close" strict-exact />
-      <MainSideNavLink to="/about" title="How It Works" @click="close" />
+      <MainSideNavLink to="/" icon="home" title="Home" @click="close" strict-exact />
+      <MainSideNavLink to="/about" icon="info" title="How It Works" @click="close" />
       <MainSideOptIn @click="close" />
     </section>
 
     <section>
-      <h1 title="Create"><Icon type="edit-2" /></h1>
+      <h2>Browse</h2>
 
-      <MainSideNavLink
-        to="/create/new"
-        title="Create Opepen Set"
-        subline="Submit your own set"
-        @click="close"
-      />
-
-      <MainSideNavLink
-        to="/create"
-        title="Your Submissions"
-        subline="Drafts and published sets"
-        @click="close"
-        strict-exact
-      />
-
-      <MainSideNavLink
-        to="/contribute"
-        title="Contribute Opepen"
-        subline="Add art to open sets"
-        @click="close"
-      />
+      <MainSideNavLink to="/sets" icon="opepen-grid" title="Collection" @click="close" />
+      <MainSideNavLink to="/submissions" icon="layers" title="Submissions" @click="close" />
+      <MainSideNavLink to="/artists" icon="users" title="Artists" @click="close" />
     </section>
 
     <section>
-      <h1 title="Browse"><Icon type="opepen-grid" /></h1>
+      <h2>Create</h2>
 
+      <MainSideNavLink to="/create/new" icon="plus-circle" title="New Set" @click="close" />
       <MainSideNavLink
-        to="/sets"
-        title="Permanent Collection"
-        subline="Revealed sets"
+        to="/create"
+        icon="folder"
+        title="Your Sets"
         @click="close"
+        strict-exact
       />
-      <MainSideNavLink
-        to="/submissions"
-        title="Set Submissions"
-        subline="Candidates awaiting votes"
-        @click="close"
-      />
-      <MainSideNavLink
-        to="/artists"
-        title="Artists"
-        subline="Creators and contributors"
-        @click="close"
-      />
+      <MainSideNavLink to="/contribute" icon="edit-3" title="Contribute" @click="close" />
     </section>
 
-    <footer>
-      <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com">
-        <Icon type="x.com" />
-      </NuxtLink>
-      <NuxtLink
-        to="https://opensea.io/collection/opepen-edition"
-        target="_blank"
-        title="View on OpenSea"
-      >
-        <Icon type="opensea" />
-      </NuxtLink>
-      <NuxtLink
-        :to="`https://etherscan.io/token/${contract}`"
-        target="_blank"
-        title="View on Etherscan"
-      >
-        <Icon type="etherscan" class="etherscan" />
-      </NuxtLink>
-      <NuxtLink
-        to="https://github.com/visualizevalue?q=opepen"
-        target="_blank"
-        title="View on Github"
-      >
-        <Icon type="github" />
-      </NuxtLink>
+    <div class="bottom">
+      <WithAccount>
+        <MainSideProfile @sendClose="close" />
+      </WithAccount>
 
-      <BuiltOnEthereum class="built-on-ethereum" />
-    </footer>
+      <footer>
+        <NuxtLink to="https://x.com/opepenedition" target="_blank" title="View on X.com">
+          <Icon type="x.com" />
+        </NuxtLink>
+        <NuxtLink
+          to="https://opensea.io/collection/opepen-edition"
+          target="_blank"
+          title="View on OpenSea"
+        >
+          <Icon type="opensea" />
+        </NuxtLink>
+        <NuxtLink
+          :to="`https://etherscan.io/token/${contract}`"
+          target="_blank"
+          title="View on Etherscan"
+        >
+          <Icon type="etherscan" />
+        </NuxtLink>
+        <NuxtLink
+          to="https://github.com/visualizevalue?q=opepen"
+          target="_blank"
+          title="View on Github"
+        >
+          <Icon type="github" />
+        </NuxtLink>
+
+        <BuiltOnEthereum class="built-on-ethereum" />
+      </footer>
+    </div>
   </nav>
 
   <ClientOnly>
@@ -231,51 +209,61 @@ defineExpose({
   transform: translateX(-100%);
   display: flex;
   flex-direction: column;
+  padding: var(--spacer) var(--size-3) calc(var(--size-3) + env(safe-area-inset-bottom));
 
   @media (--lg) {
     transform: translateX(0);
   }
 }
 
-section {
-  display: grid;
+/* The app name, set like a sidebar's large title. */
+.brand {
+  display: flex;
+  align-items: center;
   gap: var(--size-2);
-  padding: var(--spacer-lg);
-  border-bottom: var(--border);
+  padding: var(--size-2) var(--size-3) var(--size-4);
+  font-family: var(--font-family-brand);
+  text-transform: uppercase;
+  font-size: 1.375rem;
+  font-weight: 400;
+  letter-spacing: var(--brand-letter-spacing);
 
-  /* The section name is carried by an icon rather than a label. */
-  > h1 {
-    @mixin ui-font;
-    color: var(--gray-z-5);
-    margin-bottom: var(--size-2);
-
-    .icon {
-      display: block;
-      width: var(--size-5);
-      height: var(--size-5);
-    }
-
-    /* The feather glyphs read heavier than the Opepen grid; ease them back. */
-    .vue-feather--home,
-    .vue-feather--edit-2 {
-      width: calc(var(--size-5) * 0.95);
-      height: calc(var(--size-5) * 0.95);
-    }
+  .icon {
+    width: var(--size-6);
+    height: var(--size-6);
   }
 }
 
-footer {
-  --social-icon: calc(var(--size-5) * 0.85);
+section {
+  display: grid;
+  gap: 2px;
+  padding-bottom: var(--size-5);
 
+  /* Section header: small and quiet, above its rows. */
+  > h2 {
+    padding: 0 var(--size-3) var(--size-1);
+    font-family: var(--font-family-brand);
+    font-size: var(--label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--gray-z-5);
+  }
+}
+
+.bottom {
   margin-top: auto;
-  padding: var(--spacer) var(--spacer-lg);
+  display: grid;
+  gap: var(--size-3);
+}
+
+footer {
+  padding: 0 var(--size-3);
   display: flex;
-  gap: var(--spacer-sm);
-  /* Bottoms, not centres: the badge is taller than the social icons. */
-  align-items: flex-end;
+  gap: var(--size-4);
+  align-items: center;
 
   a {
-    width: var(--social-icon);
     color: var(--gray-z-5);
     transition: color var(--speed);
 
@@ -286,29 +274,12 @@ footer {
 
   .icon {
     display: flex;
-    width: var(--social-icon);
-
-    &.vue-feather--github {
-      width: calc(var(--social-icon) * 0.85);
-    }
-  }
-
-  /*
-   * Optical alignment. These glyphs are drawn lower inside their boxes than the
-   * X and OpenSea marks, so box alignment alone leaves them sitting low.
-   */
-  .icon.etherscan {
-    transform: translateY(-1px);
-  }
-
-  .vue-feather--github {
-    transform: translateY(-2px);
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   .built-on-ethereum {
     margin-left: auto;
-    width: auto;
-    transform: translateY(-3px);
   }
 }
 

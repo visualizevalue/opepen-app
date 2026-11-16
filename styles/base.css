@@ -12,5 +12,14 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--gray-z-2) transparent;
+  scrollbar-color: var(--gray-z-3) transparent;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gray-z-6);
+  outline-offset: 2px;
 }

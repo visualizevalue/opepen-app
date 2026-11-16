@@ -6,16 +6,20 @@ body [popover] {
   left: auto;
   top: var(--main-padding-top);
   right: var(--main-padding-x);
-  background: var(--gray-z-0);
-  border-radius: var(--border-radius);
+  background: var(--gray-z-2);
+  border: 0;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
   padding: var(--spacer);
 
   > h1 {
     @mixin ui-font;
+    font-weight: var(--font-weight-bold);
   }
 
   p {
     font-size: var(--font-sm);
+    color: var(--muted);
   }
 
   .button {
